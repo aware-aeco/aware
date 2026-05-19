@@ -1,0 +1,220 @@
+{
+  "name": "GetCone",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Class provides user interface to define a cone.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_GetCone.htm",
+  "constructors": [
+    {
+      "name": "GetCone",
+      "signature": "public GetCone()",
+      "summary": "Initializes a new instance of the GetCone class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out Cone cone)",
+      "summary": "Prompt for the getting of a cone.",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "The cone geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone_Get.htm"
+    },
+    {
+      "name": "GetMesh(Int32, Int32, Cone)",
+      "signature": "public Result GetMesh(ref int verticalFaces, ref int aroundFaces, out Cone cone)",
+      "summary": "Prompt for the getting of a mesh cone.",
+      "params": [
+        {
+          "name": "verticalFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the vertical direction.",
+          "optional": false
+        },
+        {
+          "name": "aroundFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the around direction",
+          "optional": false
+        },
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "The cone geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone_GetMesh.htm"
+    },
+    {
+      "name": "GetMesh(Int32, Int32, Int32, Cone)",
+      "signature": "public Result GetMesh(ref int verticalFaces, ref int aroundFaces, ref int capStyle, out Cone cone)",
+      "summary": "Prompt for the getting of a mesh cone.",
+      "remarks": "The prompt for capStyle will only be seen if it\u0027s not zero, aroundFaces is even and the solid option is on.",
+      "params": [
+        {
+          "name": "verticalFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the vertical direction.",
+          "optional": false
+        },
+        {
+          "name": "aroundFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the around direction",
+          "optional": false
+        },
+        {
+          "name": "capStyle",
+          "type": "System.Int32",
+          "doc": "Set to 0 if you don\u0027t want the prompt, 3 is triangles, 4 is quads.",
+          "optional": false
+        },
+        {
+          "name": "cone",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "The cone geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetCone_GetMesh_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowInputAngle",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_AllowInputAngle.htm"
+    },
+    {
+      "name": "ApexAngleDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_ApexAngleDegrees.htm"
+    },
+    {
+      "name": "BaseAngleDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_BaseAngleDegrees.htm"
+    },
+    {
+      "name": "Cap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether or not the output should be capped.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_Cap.htm"
+    },
+    {
+      "name": "ConeConstraint",
+      "type": "ConeConstraint",
+      "getter": true,
+      "setter": true,
+      "summary": "State of the cone/cylinder constraint option. When the cone/cylinder option is selected, the circle is being made as a base for a cone/cylinder. By default the vertical cone/cylinder option not available but is not selected. By default the \u0022Vertical\u0022 option applies to VerticalCircle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_ConeConstraint.htm"
+    },
+    {
+      "name": "DefaultSize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Default radius or diameter (based on InDiameterMode)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_DefaultSize.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_Height.htm"
+    },
+    {
+      "name": "InDiameterMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the \u0022size\u0022 value is representing a radius or diameter",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetCone_InDiameterMode.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,255 @@
+{
+  "name": "FileDwgWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options for writing a DWG file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileDwgWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileDwgWriteOptions",
+      "signature": "public FileDwgWriteOptions()",
+      "summary": "Initializes a new instance of the FileDwgWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileDwgWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToDictionary",
+      "signature": "public ArchivableDictionary ToDictionary()",
+      "summary": "Create a dictionary of these options. This dictionary can be passed to the RhinoDoc.Export function",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileDwgWriteOptions.ToDictionary\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileDwgWriteOptions_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ColorMethod",
+      "type": "FileDwgWriteOptions.ColorMethodType",
+      "getter": true,
+      "setter": true,
+      "summary": "pallette index: clrACI, RGB: clrRGB",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ColorMethod.htm"
+    },
+    {
+      "name": "CurveChordHeight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Absolute distance from pline to nurb",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveChordHeight.htm"
+    },
+    {
+      "name": "CurveMaxAngleDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Angle between pline segments in writing curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveMaxAngleDegrees.htm"
+    },
+    {
+      "name": "CurveMaxAngleRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Angle between pline segments in writing curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveMaxAngleRadians.htm"
+    },
+    {
+      "name": "CurveSegmentLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Max length for any polyline segment",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveSegmentLength.htm"
+    },
+    {
+      "name": "CurveUseChordHeight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveUseChordHeight.htm"
+    },
+    {
+      "name": "CurveUseMaxAngle",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveUseMaxAngle.htm"
+    },
+    {
+      "name": "CurveUseSegmentLength",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_CurveUseSegmentLength.htm"
+    },
+    {
+      "name": "ExportArcsAs",
+      "type": "FileDwgWriteOptions.ExportArcMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportArcsAs.htm"
+    },
+    {
+      "name": "ExportLinesAs",
+      "type": "FileDwgWriteOptions.ExportLineMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportLinesAs.htm"
+    },
+    {
+      "name": "ExportMeshesAs",
+      "type": "FileDwgWriteOptions.ExportMeshMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Rhino meshes as polyface meshes or 3dfaces",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportMeshesAs.htm"
+    },
+    {
+      "name": "ExportPolycurvesAs",
+      "type": "FileDwgWriteOptions.ExportPolycurveMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportPolycurvesAs.htm"
+    },
+    {
+      "name": "ExportPolylinesAs",
+      "type": "FileDwgWriteOptions.ExportPolylineMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportPolylinesAs.htm"
+    },
+    {
+      "name": "ExportSplinesAs",
+      "type": "FileDwgWriteOptions.ExportSplineMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportSplinesAs.htm"
+    },
+    {
+      "name": "ExportSurfacesAs",
+      "type": "FileDwgWriteOptions.ExportSurfaceMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Rhino surcaces as meshes(0) or curves(1) or acis(2)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_ExportSurfacesAs.htm"
+    },
+    {
+      "name": "Flatten",
+      "type": "FileDwgWriteOptions.FlattenMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Project to cplane or view",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_Flatten.htm"
+    },
+    {
+      "name": "FullLayerPath",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "write layernames as Parent$Child or Child",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_FullLayerPath.htm"
+    },
+    {
+      "name": "IsDefault",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_IsDefault.htm"
+    },
+    {
+      "name": "MinPointDistance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_MinPointDistance.htm"
+    },
+    {
+      "name": "NoDxfHeader",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "write an entities only dxf file ( R12 only)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_NoDxfHeader.htm"
+    },
+    {
+      "name": "PreserveArcNormals",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Users wanted to use Pedit in AutoCAD to join them into plines and that didn\u0027t work if the normals of arcs being joined are different. Default will be true and will change the behavior",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_PreserveArcNormals.htm"
+    },
+    {
+      "name": "Simplify",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "use lines and arcs where possible",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_Simplify.htm"
+    },
+    {
+      "name": "SimplifyTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_SimplifyTolerance.htm"
+    },
+    {
+      "name": "SplitPolycurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Explode polycurves before exporting",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_SplitPolycurves.htm"
+    },
+    {
+      "name": "SplitSplines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Split splines at FMKs before exporting",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_SplitSplines.htm"
+    },
+    {
+      "name": "UseLWPolylines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_UseLWPolylines.htm"
+    },
+    {
+      "name": "Version",
+      "type": "FileDwgWriteOptions.AutocadVersion",
+      "getter": true,
+      "setter": true,
+      "summary": "Version of DWG file to write",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileDwgWriteOptions_Version.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

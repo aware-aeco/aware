@@ -1,0 +1,29 @@
+{
+  "name": "VisualAnalysisMode.EdgeContinuityMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Continuity mode to report",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_VisualAnalysisMode_EdgeContinuityMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Distance",
+      "value": 0,
+      "summary": "G0 Continuity"
+    },
+    {
+      "name": "Tangency",
+      "value": 1,
+      "summary": "G1 Continuity"
+    },
+    {
+      "name": "Curvature",
+      "value": 2,
+      "summary": "G2 Continuity"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "DisplayPipelineAttributes.SurfaceIsoThicknessUse",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.SurfaceIsoThicknessUse\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_SurfaceIsoThicknessUse.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ObjectWidth",
+      "value": 0
+    },
+    {
+      "name": "SingleWidthForAllCurves",
+      "value": 1
+    },
+    {
+      "name": "PixelsUV",
+      "value": 2
+    }
+  ]
+}

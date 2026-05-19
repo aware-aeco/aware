@@ -1,0 +1,104 @@
+{
+  "name": "File3dmWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options used by File3dm.Write",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "File3dmWriteOptions",
+      "signature": "public File3dmWriteOptions()",
+      "summary": "Initializes properties to defaults.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EnableAnalysisMeshes",
+      "signature": "public void EnableAnalysisMeshes(ObjectType objectType, bool enable)",
+      "summary": "Activates saving of analysis meshes for specific types of objects. If you do not specify the state for an object type, its default is used. Currently SubD mesh saving is disabled by default, while Brep and Extrusion is enabled.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "The object type. Mostly mesh, brep, extrusion and SubD (or their flag combinations) make sense here. DO NOT specify a \u0027filter\u0027 or sub-object type.",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "If false, disables saving for this object type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmWriteOptions_EnableAnalysisMeshes.htm"
+    },
+    {
+      "name": "EnableRenderMeshes",
+      "signature": "public void EnableRenderMeshes(ObjectType objectType, bool enable)",
+      "summary": "Activates saving of render meshes for specific types of objects. If you do not specify the state for an object type, its default is used. Specifically, currently SubD mesh saving is disabled by default, while Brep and Extrusion is on.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "The object type. Mostly brep, extrusion and SubD (or their flag combinations) make sense here. DO NOT specify a \u0027filter\u0027 or sub-object type.",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "If false, disables saving for this object type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmWriteOptions_EnableRenderMeshes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SaveAnalysisMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Include analysis meshes in the file. Default is true",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmWriteOptions_SaveAnalysisMeshes.htm"
+    },
+    {
+      "name": "SaveRenderMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Include Render meshes in the file. Default is true",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmWriteOptions_SaveRenderMeshes.htm"
+    },
+    {
+      "name": "SaveUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Include custom user data in the file. Default is true",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmWriteOptions_SaveUserData.htm"
+    },
+    {
+      "name": "Version",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "File version. Default is major version number of this assembly version.Must be in range [2; current version].Alternatively, 0 is a placeholder for the last valid version.Rhino can read its current version, plus earlier file versions except 1.Use latest version when possible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmWriteOptions_Version.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

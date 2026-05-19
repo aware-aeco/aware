@@ -1,5 +1,0 @@
-# file-skp-read-options-to-dictionary
-
-Lifecycle: single
-
-Create a dictionary of these options. This dictionary can be passed to the             RhinoDoc.Import function

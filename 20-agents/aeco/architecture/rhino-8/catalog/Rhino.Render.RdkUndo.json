@@ -1,0 +1,67 @@
+{
+  "name": "RdkUndo",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "RdkUndo class, which is used to get the RdkUndoRecord",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RdkUndo.htm",
+  "constructors": [
+    {
+      "name": "RdkUndo",
+      "signature": "public RdkUndo(IntPtr pUndoRecord)",
+      "summary": "Constructor for RdkUndo",
+      "params": [
+        {
+          "name": "pUndoRecord",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pUndoRecord\u0022/\u003E documentation for \u0022M:Rhino.Render.RdkUndo.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RdkUndo__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for RdkUndo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RdkUndo_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for RdkUndo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RdkUndo_Finalize.htm"
+    },
+    {
+      "name": "NewUndoRecord",
+      "signature": "public RdkUndoRecord NewUndoRecord()",
+      "summary": "Get a new UndoRecord",
+      "params": [],
+      "returns": {
+        "type": "RdkUndoRecord",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RdkUndo.NewUndoRecord\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RdkUndo_NewUndoRecord.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

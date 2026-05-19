@@ -1,0 +1,96 @@
+{
+  "name": "MeshThicknessMeasurement",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Thickness measurement used in the mesh thickness solver.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshThicknessMeasurement.htm",
+  "constructors": [
+    {
+      "name": "MeshThicknessMeasurement",
+      "signature": "public MeshThicknessMeasurement(int meshIndex, int vertexIndex, double thickness, Point3d point, Point3d oppositePoint)",
+      "summary": "Create a new thickness measurement.",
+      "params": [
+        {
+          "name": "meshIndex",
+          "type": "System.Int32",
+          "doc": "Index of mesh within collection of meshes.",
+          "optional": false
+        },
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of mesh vertex.",
+          "optional": false
+        },
+        {
+          "name": "thickness",
+          "type": "System.Double",
+          "doc": "Thickness of mesh at vertex.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Vertex location.",
+          "optional": false
+        },
+        {
+          "name": "oppositePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Opposite location.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshThicknessMeasurement__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MeshIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of the mesh associated with this thickness measurement.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshThicknessMeasurement_MeshIndex.htm"
+    },
+    {
+      "name": "OppositePoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point opposite to the measurement point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshThicknessMeasurement_OppositePoint.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the thickness measurement.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshThicknessMeasurement_Point.htm"
+    },
+    {
+      "name": "Thickness",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the local thickness of the mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshThicknessMeasurement_Thickness.htm"
+    },
+    {
+      "name": "VertexIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of the vertex associated with this thickness measurement.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshThicknessMeasurement_VertexIndex.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

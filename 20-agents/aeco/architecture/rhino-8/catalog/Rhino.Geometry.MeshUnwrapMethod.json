@@ -1,0 +1,29 @@
+{
+  "name": "MeshUnwrapMethod",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Unwrapping method used",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshUnwrapMethod.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LSCM",
+      "value": 0,
+      "summary": "Least squares conformal map, Rhino 7 standard method"
+    },
+    {
+      "name": "ABFPP",
+      "value": 1,
+      "summary": "ABF\u002B\u002B, angle based flattening"
+    },
+    {
+      "name": "ARAP",
+      "value": 2,
+      "summary": "ARAP, as rigid as possible"
+    }
+  ]
+}

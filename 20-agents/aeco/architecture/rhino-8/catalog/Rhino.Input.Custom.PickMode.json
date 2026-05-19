@@ -1,0 +1,22 @@
+{
+  "name": "PickMode",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "enum",
+  "summary": "Picking can happen in wireframe or shaded display mode",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_PickMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Wireframe",
+      "value": 1
+    },
+    {
+      "name": "Shaded",
+      "value": 2
+    }
+  ]
+}

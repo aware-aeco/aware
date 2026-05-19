@@ -1,0 +1,14 @@
+{
+  "name": "OnLeaseChangedDelegate",
+  "namespace": "Rhino.PlugIns",
+  "kind": "delegate",
+  "summary": "Called by Rhino to signal that a lease from Rhino Accounts has changed. If LicenseLeaseChangedEventArgs.Lease is null, then the server has signaled that this product is no longer licensed. Your plug-in must change behavior to behave appropriately.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_OnLeaseChangedDelegate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void OnLeaseChangedDelegate( LicenseLeaseChangedEventArgs args, out Icon icon )"
+}

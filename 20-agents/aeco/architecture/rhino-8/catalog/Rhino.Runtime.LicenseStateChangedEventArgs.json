@@ -1,0 +1,41 @@
+{
+  "name": "LicenseStateChangedEventArgs",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Passed to LicenseStateChanged event on RhinoApp",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_LicenseStateChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "LicenseStateChangedEventArgs",
+      "signature": "public LicenseStateChangedEventArgs(bool callingRhinoCommonAllowed)",
+      "summary": "LicenseStateChangedEventArgs constructor",
+      "params": [
+        {
+          "name": "callingRhinoCommonAllowed",
+          "type": "System.Boolean",
+          "doc": "True when calling RhinoCommon will never raise Rhino.Runtime.NotLicesnedException; false otherwise.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_LicenseStateChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CallingRhinoCommonAllowed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if RhinoCommon calls will never raise Rhino.Runtime.NotLicensedException. false otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_LicenseStateChangedEventArgs_CallingRhinoCommonAllowed.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,90 @@
+{
+  "name": "InitFrameBufferEventArgs",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.InitFrameBufferEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_InitFrameBufferEventArgs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetFill(Color)",
+      "signature": "public void SetFill(Color color)",
+      "summary": "",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_InitFrameBufferEventArgs_SetFill.htm"
+    },
+    {
+      "name": "SetFill(Color, Color)",
+      "signature": "public void SetFill(Color top, Color bottom)",
+      "summary": "",
+      "params": [
+        {
+          "name": "top",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022top\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottom\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_InitFrameBufferEventArgs_SetFill_1.htm"
+    },
+    {
+      "name": "SetFill(Color, Color, Color, Color)",
+      "signature": "public void SetFill(Color topLeft, Color bottomLeft, Color topRight, Color bottomRight)",
+      "summary": "",
+      "params": [
+        {
+          "name": "topLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022topLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottomLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottomLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "topRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022topRight\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottomRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottomRight\u0022/\u003E documentation for \u0022M:Rhino.Display.InitFrameBufferEventArgs.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_InitFrameBufferEventArgs_SetFill_2.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

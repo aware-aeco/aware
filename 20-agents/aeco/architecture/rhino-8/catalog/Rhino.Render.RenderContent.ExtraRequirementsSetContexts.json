@@ -1,0 +1,29 @@
+{
+  "name": "RenderContent.ExtraRequirementsSetContexts",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderContent.ExtraRequirementsSetContexts\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContent_ExtraRequirementsSetContexts.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UI",
+      "value": 0,
+      "summary": "Setting extra requirement as a result of user activity."
+    },
+    {
+      "name": "Drop",
+      "value": 1,
+      "summary": "Setting extra requirement as a result of drag and drop."
+    },
+    {
+      "name": "Program",
+      "value": 2,
+      "summary": "Setting extra requirement as a result of other (non-user) program activity."
+    }
+  ]
+}

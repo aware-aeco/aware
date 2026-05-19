@@ -1,0 +1,154 @@
+{
+  "name": "StringWrapper",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Represents a wrapper to an unmanaged OpenNurbs string. Wraps a C\u002B\u002B ON_wString*.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_InteropWrappers_StringWrapper.htm",
+  "constructors": [
+    {
+      "name": "StringWrapper()",
+      "signature": "public StringWrapper()",
+      "summary": "Initializes a new empty unmanaged string (ON_wString*).",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper__ctor.htm"
+    },
+    {
+      "name": "StringWrapper(String)",
+      "signature": "public StringWrapper(string s)",
+      "summary": "Initializes a new unmanaged string with an initial value. The string s can be null.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "The initial value, or null.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper_Finalize.htm"
+    },
+    {
+      "name": "GetStringFromPointer",
+      "signature": "public static string GetStringFromPointer(IntPtr pConstON_wString)",
+      "summary": "Get string from an ON_wString*",
+      "params": [
+        {
+          "name": "pConstON_wString",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pConstON_wString\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringWrapper.GetStringFromPointer(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringWrapper.GetStringFromPointer(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper_GetStringFromPointer.htm"
+    },
+    {
+      "name": "SetString",
+      "signature": "public void SetString(string s)",
+      "summary": "Set contents of this string.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "The new string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper_SetString.htm"
+    },
+    {
+      "name": "SetStringOnPointer",
+      "signature": "public static void SetStringOnPointer(IntPtr pON_wString, string s)",
+      "summary": "Set contents of an ON_wString*",
+      "params": [
+        {
+          "name": "pON_wString",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pON_wString\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringWrapper.SetStringOnPointer(System.IntPtr,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022s\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.StringWrapper.SetStringOnPointer(System.IntPtr,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper_SetStringOnPointer.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the string contents of this wrapper.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A managed string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_StringWrapper_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConstPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the constant pointer (constant ON_wString*).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_InteropWrappers_StringWrapper_ConstPointer.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the non-constant pointer (ON_wString*).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_InteropWrappers_StringWrapper_NonConstPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

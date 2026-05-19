@@ -1,0 +1,30 @@
+{
+  "name": "FileStpWriteOptions.StepSchema",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Step schema.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileStpWriteOptions_StepSchema.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SF_203",
+      "value": 0
+    },
+    {
+      "name": "SF_214",
+      "value": 1
+    },
+    {
+      "name": "SF_214_CC2",
+      "value": 2
+    },
+    {
+      "name": "SF_242",
+      "value": 3
+    }
+  ]
+}

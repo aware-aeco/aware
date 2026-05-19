@@ -1,0 +1,172 @@
+{
+  "name": "Skin",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Represents a customized environment that changes the appearance of Rhino. Skin DLLs must contain a single class that derives from the Skin class.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_Skin.htm",
+  "constructors": [
+    {
+      "name": "Skin",
+      "signature": "protected Skin()",
+      "summary": "Initializes a new instance of the Skin class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "HideSplash",
+      "signature": "protected virtual void HideSplash()",
+      "summary": "Is called when the splash screen should be hidden.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_HideSplash.htm"
+    },
+    {
+      "name": "OnBeginLoadAtStartPlugIns",
+      "signature": "protected virtual void OnBeginLoadAtStartPlugIns(int expectedCount)",
+      "summary": "Is called when the first plug-in that loads at start-up is going to be loaded.",
+      "params": [
+        {
+          "name": "expectedCount",
+          "type": "System.Int32",
+          "doc": "The complete amount of plug-ins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnBeginLoadAtStartPlugIns.htm"
+    },
+    {
+      "name": "OnBeginLoadPlugIn",
+      "signature": "protected virtual void OnBeginLoadPlugIn(string description)",
+      "summary": "Is called when a specific plug-in is going to be loaded.",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The plug-in description.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnBeginLoadPlugIn.htm"
+    },
+    {
+      "name": "OnBuiltInCommandsRegistered",
+      "signature": "protected virtual void OnBuiltInCommandsRegistered()",
+      "summary": "Is called when built-in commands are registered.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnBuiltInCommandsRegistered.htm"
+    },
+    {
+      "name": "OnEndLoadAtStartPlugIns",
+      "signature": "protected virtual void OnEndLoadAtStartPlugIns()",
+      "summary": "Is called after all of the load at start plug-ins have been loaded.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnEndLoadAtStartPlugIns.htm"
+    },
+    {
+      "name": "OnEndLoadPlugIn",
+      "signature": "protected virtual void OnEndLoadPlugIn()",
+      "summary": "Is called after each plug-in has been loaded.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnEndLoadPlugIn.htm"
+    },
+    {
+      "name": "OnLicenseCheckCompleted",
+      "signature": "protected virtual void OnLicenseCheckCompleted()",
+      "summary": "Is called when the license check is completed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnLicenseCheckCompleted.htm"
+    },
+    {
+      "name": "OnMainFrameWindowCreated",
+      "signature": "protected virtual void OnMainFrameWindowCreated()",
+      "summary": "Is called when the main frame window is created.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_OnMainFrameWindowCreated.htm"
+    },
+    {
+      "name": "ShowHelp",
+      "signature": "protected virtual void ShowHelp()",
+      "summary": "Called when the \u0022help\u0022 splash screen should be shown. Default implementation just calls ShowSplash()",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_ShowHelp.htm"
+    },
+    {
+      "name": "ShowSplash",
+      "signature": "protected virtual void ShowSplash()",
+      "summary": "Is called when the splash screen should be shown.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_Skin_ShowSplash.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveSkin",
+      "type": "Skin",
+      "getter": true,
+      "setter": false,
+      "summary": "Any time Rhino is running there is at most one skin being used (and possibly no skin). If a RhinoCommon based Skin class is being used, use ActiveSkin to get at the instance of this Skin class. May return null if no Skin is being used or if the skin is not a RhinoCommon based skin.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_Skin_ActiveSkin.htm"
+    },
+    {
+      "name": "ApplicationName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "If you want to provide a custom name for your skin.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_Skin_ApplicationName.htm"
+    },
+    {
+      "name": "MainRhinoIcon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "If you want to provide a custom icon for your skin.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_Skin_MainRhinoIcon.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets access to the skin persistent settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_Skin_Settings.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

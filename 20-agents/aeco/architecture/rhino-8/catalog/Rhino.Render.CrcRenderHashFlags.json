@@ -1,0 +1,49 @@
+{
+  "name": "CrcRenderHashFlags",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.CrcRenderHashFlags\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CrcRenderHashFlags.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "Normal render CRC; nothing is excluded."
+    },
+    {
+      "name": "ExcludeLinearWorkflow",
+      "value": 1,
+      "summary": "Linear Workflow color and texture changes are not included."
+    },
+    {
+      "name": "ExcludeLocalMapping",
+      "value": 2,
+      "summary": "Local mapping is excluded (only used by Textures)."
+    },
+    {
+      "name": "ExcludeUnits",
+      "value": 4,
+      "summary": "Units are excluded (only used by Textures)."
+    },
+    {
+      "name": "Reserved2",
+      "value": 8,
+      "summary": "Reserved for future use"
+    },
+    {
+      "name": "ForSimulation",
+      "value": 1,
+      "summary": "Use this flag when simulating"
+    },
+    {
+      "name": "ExcludeDocumentEffects",
+      "value": 13,
+      "summary": "Use this flag when you want to calculate the CRC independantly of any effect the document has on the content."
+    }
+  ]
+}

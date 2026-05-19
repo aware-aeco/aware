@@ -1,0 +1,24 @@
+{
+  "name": "IRhRdkPreviewSceneServer_eRotationType",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "c# version of IRhRdkPreviewSceneServer eRotationType enum",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_IRhRdkPreviewSceneServer_eRotationType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Camera",
+      "value": 0,
+      "summary": "Camera"
+    },
+    {
+      "name": "Object",
+      "value": 1,
+      "summary": "Object"
+    }
+  ]
+}

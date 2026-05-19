@@ -1,0 +1,14 @@
+{
+  "name": "HostUtils.ExceptionReportDelegate",
+  "namespace": "Rhino.Runtime",
+  "kind": "delegate",
+  "summary": "Represents a reference to a method that will be called when an exception occurs.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_HostUtils_ExceptionReportDelegate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void ExceptionReportDelegate( string source, Exception ex )"
+}

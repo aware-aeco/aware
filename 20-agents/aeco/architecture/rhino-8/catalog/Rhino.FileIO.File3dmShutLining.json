@@ -1,0 +1,298 @@
+{
+  "name": "File3dmShutLining",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents the shut-lining attached to file3dm object attributes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmShutLining.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddCurve",
+      "signature": "public Guid AddCurve()",
+      "summary": "Adds a new curve to the shut-lining. The curve will have an id of Guid.Empty. After adding a curve, you should set the id to that of a curve in the model that will be used to calculate the shut-lining.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.AddCurve\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_AddCurve.htm"
+    },
+    {
+      "name": "CurveEnabled",
+      "signature": "public bool CurveEnabled(Guid curve_id)",
+      "summary": "Return whether shut-line is created for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveEnabled(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveEnabled(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_CurveEnabled.htm"
+    },
+    {
+      "name": "CurveIsBump",
+      "signature": "public bool CurveIsBump(Guid curve_id)",
+      "summary": "Returns whether to create a bump instead of a dent for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveIsBump(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveIsBump(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_CurveIsBump.htm"
+    },
+    {
+      "name": "CurveProfile",
+      "signature": "public int CurveProfile(Guid curve_id)",
+      "summary": "Returns the profile of the shut-line for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveProfile(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveProfile(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_CurveProfile.htm"
+    },
+    {
+      "name": "CurvePull",
+      "signature": "public bool CurvePull(Guid curve_id)",
+      "summary": "Returns whether the given curve is pulled to the surface before creating the shut-line.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurvePull(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurvePull(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_CurvePull.htm"
+    },
+    {
+      "name": "CurveRadius",
+      "signature": "public double CurveRadius(Guid curve_id)",
+      "summary": "Returns the radius of the pipe used to create the shut-line for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveRadius(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.CurveRadius(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_CurveRadius.htm"
+    },
+    {
+      "name": "DeleteAllCurves",
+      "signature": "public void DeleteAllCurves()",
+      "summary": "Deletes all the curves from the shut-lining.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_DeleteAllCurves.htm"
+    },
+    {
+      "name": "GetCurves",
+      "signature": "public Guid[] GetCurves()",
+      "summary": "Gets all the curves on the shut-lining. Each curve is identified by a Guid. If there are no curves present, the array will be empty.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.GetCurves\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_GetCurves.htm"
+    },
+    {
+      "name": "SetCurveEnabled",
+      "signature": "public void SetCurveEnabled(Guid curve_id, bool enabled)",
+      "summary": "Sets whether shut-line is created for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveEnabled(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enabled\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveEnabled(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_SetCurveEnabled.htm"
+    },
+    {
+      "name": "SetCurveIsBump",
+      "signature": "public void SetCurveIsBump(Guid curve_id, bool b)",
+      "summary": "Sets whether to create a bump instead of a dent for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveIsBump(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveIsBump(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_SetCurveIsBump.htm"
+    },
+    {
+      "name": "SetCurveProfile",
+      "signature": "public void SetCurveProfile(Guid curve_id, int profile)",
+      "summary": "Sets the profile of the shut-line for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveProfile(System.Guid,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022profile\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveProfile(System.Guid,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_SetCurveProfile.htm"
+    },
+    {
+      "name": "SetCurvePull",
+      "signature": "public void SetCurvePull(Guid curve_id, bool pull)",
+      "summary": "Sets whether the given curve is pulled to the surface before creating the shut-line.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurvePull(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pull",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022pull\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurvePull(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_SetCurvePull.htm"
+    },
+    {
+      "name": "SetCurveRadius",
+      "signature": "public void SetCurveRadius(Guid curve_id, double radius)",
+      "summary": "Sets the radius of the pipe used to create the shut-line for the given curve.",
+      "params": [
+        {
+          "name": "curve_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022curve_id\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveRadius(System.Guid,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022radius\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmShutLining.SetCurveRadius(System.Guid,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmShutLining_SetCurveRadius.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AutoUpdate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether the shut-lining automatically updates or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmShutLining_AutoUpdate.htm"
+    },
+    {
+      "name": "Faceted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether the shut-lining is faceted or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmShutLining_Faceted.htm"
+    },
+    {
+      "name": "ForceUpdate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether updating is forced or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmShutLining_ForceUpdate.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether shut-lining is enabled or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmShutLining_On.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

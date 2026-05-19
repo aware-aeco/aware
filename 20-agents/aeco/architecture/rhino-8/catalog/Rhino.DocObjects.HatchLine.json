@@ -1,0 +1,193 @@
+{
+  "name": "HatchLine",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Hatch lines are used by hatch pattern to specify the dashes and offset patterns of the lines.",
+  "remarks": "Each line has the following information: Angle is the direction of the line counter-clockwise from the x-axis. The first line origin is at the base point. Each line repetition is offset from the previous line. Offset.X is parallel to the line and Offset.Y is perpendicular to the line. The base and offset values are rotated by the line\u0027s angle to produce a location in the hatch pattern\u0027s coordinate system. There can be gaps and dashes specified for drawing the line. If there are no dashes, the line is solid. Negative length dashes are gaps. Positive length dashes are drawn as line segments.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_HatchLine.htm",
+  "constructors": [
+    {
+      "name": "HatchLine()",
+      "signature": "public HatchLine()",
+      "summary": "Construts a new hatch line.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine__ctor.htm"
+    },
+    {
+      "name": "HatchLine(HatchLine)",
+      "signature": "public HatchLine(HatchLine hatchLine)",
+      "summary": "Construts a new hatch line.",
+      "params": [
+        {
+          "name": "hatchLine",
+          "type": "Rhino.DocObjects.HatchLine",
+          "doc": "The hatch line to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendDash",
+      "signature": "public void AppendDash(double dash)",
+      "summary": "Add a dash to the pattern.",
+      "params": [
+        {
+          "name": "dash",
+          "type": "System.Double",
+          "doc": "Length to append, \u003C 0 for a gap.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine_AppendDash.htm"
+    },
+    {
+      "name": "DashAt",
+      "signature": "public double DashAt(int dashIndex)",
+      "summary": "Get the dash length at the specified index.",
+      "params": [
+        {
+          "name": "dashIndex",
+          "type": "System.Int32",
+          "doc": "Index of the dash to get.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The length of the dash. or gap if negative."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine_DashAt.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively releases the unmanaged object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged object.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively releases the unmanaged object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine_Finalize.htm"
+    },
+    {
+      "name": "SetDashes",
+      "signature": "public void SetDashes(IEnumerable\u003Cdouble\u003E dashes)",
+      "summary": "Sets a new dash array.",
+      "params": [
+        {
+          "name": "dashes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "The dash enumeration.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_HatchLine_SetDashes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the angle, in radians, of the hatch line. The angle is measured counter-clockwise from the x-axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_Angle.htm"
+    },
+    {
+      "name": "BasePoint",
+      "type": "Point2d",
+      "getter": true,
+      "setter": true,
+      "summary": "Get and sets this line\u0027s 2d base point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_BasePoint.htm"
+    },
+    {
+      "name": "DashCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of dashes \u002B gaps in this line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_DashCount.htm"
+    },
+    {
+      "name": "GetDashes",
+      "type": "IEnumerable\u003CDouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets all of the dashes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_GetDashes.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Verifies a hatch line is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_IsValid.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "Get and sets this line\u0027s 2d offset for line repetitions. Offset.X is shift parallel to line. Offset.Y is spacing perpendicular to line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_Offset.htm"
+    },
+    {
+      "name": "PatternLength",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the total length of a pattern repeat.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_HatchLine_PatternLength.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,604 @@
+{
+  "name": "GroupTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "Group tables store the list of groups in a Rhino document.",
+  "base": "RhinoDocCommonTable\u003CGroup\u003E",
+  "interfaces": [
+    "ICollection\u003CGroup\u003E",
+    "IEnumerable\u003CGroup\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_GroupTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add()",
+      "signature": "public int Add()",
+      "summary": "Adds a new empty group to the group table.",
+      "remarks": "In some cases, calling Add() can cause the group indices to become invalid.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of new group. -1 group not added because a group with that name already exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Add.htm"
+    },
+    {
+      "name": "Add(IEnumerable\u003CGuid\u003E)",
+      "signature": "public int Add(IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Adds a new group to the group table with a set of objects.",
+      "remarks": "In some cases, calling Add() can cause the group indices to become invalid.",
+      "params": [
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "An array, a list or any enumerable set of object IDs.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of new group. -1 group not added because a group with that name already exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Add_1.htm"
+    },
+    {
+      "name": "Add(String)",
+      "signature": "public int Add(string groupName)",
+      "summary": "Adds a new empty group to the group table.",
+      "remarks": "In some cases, calling Add() can cause the group indices to become invalid.",
+      "params": [
+        {
+          "name": "groupName",
+          "type": "System.String",
+          "doc": "name of new group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of new group. -1 group not added because a group with that name already exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Add_2.htm"
+    },
+    {
+      "name": "Add(String, IEnumerable\u003CGuid\u003E)",
+      "signature": "public int Add(string groupName, IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Adds a new group to the group table with a set of objects.",
+      "remarks": "In some cases, calling Add() can cause the group indices to become invalid.",
+      "params": [
+        {
+          "name": "groupName",
+          "type": "System.String",
+          "doc": "Name of new group.",
+          "optional": false
+        },
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "An array, a list or any enumerable set of object IDs.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of new group. -1 group not added because a group with that name already exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Add_3.htm"
+    },
+    {
+      "name": "AddToGroup(Int32, IEnumerable\u003CGuid\u003E)",
+      "signature": "public bool AddToGroup(int groupIndex, IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Adds a list of objects to an existing group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The group index value.",
+          "optional": false
+        },
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "An array, a list or any enumerable set of IDs to objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if at least an operation was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_AddToGroup.htm"
+    },
+    {
+      "name": "AddToGroup(Int32, Guid)",
+      "signature": "public bool AddToGroup(int groupIndex, Guid objectId)",
+      "summary": "Adds an object to an existing group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The group index value.",
+          "optional": false
+        },
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "An ID of an object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_AddToGroup_1.htm"
+    },
+    {
+      "name": "ChangeGroupName",
+      "signature": "public bool ChangeGroupName(int groupIndex, string newName)",
+      "summary": "Changes the name of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new group name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_ChangeGroupName.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Marks all items as deleted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_Clear.htm"
+    },
+    {
+      "name": "Delete(Group)",
+      "signature": "public override bool Delete(Group item)",
+      "summary": "(Overrides CommonComponentTable\u003CT\u003E.Delete(T).)",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.Group",
+          "doc": "[Missing \u003Cparam name=\u0022item\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.GroupTable.Delete(Rhino.DocObjects.Group)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.GroupTable.Delete(Rhino.DocObjects.Group)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Delete.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public bool Delete(int groupIndex)",
+      "summary": "Deletes a group from this table. Deleted groups are kept in the runtime group table so that undo will work with groups. Call IsDeleted() to determine if a group is deleted.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "An group index to be deleted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Delete_1.htm"
+    },
+    {
+      "name": "FindId",
+      "signature": "public virtual T FindId(Guid id)",
+      "summary": "Uses the guid to find a model component. Deleted objects cannot be found by id. The guid is the value that is stored in the .Id property. In a single document, no two active objects have the same guid. If an object is replaced with a new object, then the guid persists. For example, if the _Move command moves an object, then the moved object inherits its guid from the starting object. If the Copy command copies an object, then the copy gets a new guid. This guid persists through file saving/opening operations. This function will not find grip objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of model component to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Reference to the rhino object with the objectId or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "FindIndex",
+      "signature": "public Group FindIndex(int index)",
+      "summary": "Retrieves a Group object based on Index. This search type of search is discouraged. We are moving towards using only IDs for all tables.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Group",
+        "doc": "A Group object, or null if none was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_FindIndex.htm"
+    },
+    {
+      "name": "FindName",
+      "signature": "public Group FindName(string name)",
+      "summary": "Finds a group given its name. Returns the instance, rather than the index.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the group to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Group",
+        "doc": "An group, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_FindName.htm"
+    },
+    {
+      "name": "FindNameHash",
+      "signature": "public Group FindNameHash(NameHash nameHash)",
+      "summary": "Finds a group given its name hash.",
+      "params": [
+        {
+          "name": "nameHash",
+          "type": "Rhino.FileIO.NameHash",
+          "doc": "The name hash of the group to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Group",
+        "doc": "An group, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_FindNameHash.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public virtual IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "Returns the enumerator that yields all items.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CT\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.CommonComponentTable\u00601.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_GetEnumerator.htm"
+    },
+    {
+      "name": "GroupMembers",
+      "signature": "public RhinoObject[] GroupMembers(int groupIndex)",
+      "summary": "Gets an array of all of the objects in a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group in this table.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "An array with all the objects in the specified group."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_GroupMembers.htm"
+    },
+    {
+      "name": "GroupName",
+      "signature": "public string GroupName(int groupIndex)",
+      "summary": "Returns the name of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The group name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_GroupName.htm"
+    },
+    {
+      "name": "GroupNames",
+      "signature": "public string[] GroupNames(bool ignoreDeletedGroups)",
+      "summary": "Returns an array of all group names.",
+      "params": [
+        {
+          "name": "ignoreDeletedGroups",
+          "type": "System.Boolean",
+          "doc": "Ignore any groups that were deleted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array if group names if successful, null if there are no groups."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_GroupNames.htm"
+    },
+    {
+      "name": "GroupObjectCount",
+      "signature": "public int GroupObjectCount(int groupIndex)",
+      "summary": "Returns the number of objects that are members of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of objects that are members of the group."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_GroupObjectCount.htm"
+    },
+    {
+      "name": "Hide",
+      "signature": "public int Hide(int groupIndex)",
+      "summary": "Hides all objects that are members of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of objects that were hidden."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Hide.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "signature": "public bool IsDeleted(int groupIndex)",
+      "summary": "Verifies a group is deleted.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the group is deleted, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_IsDeleted.htm"
+    },
+    {
+      "name": "Lock",
+      "signature": "public int Lock(int groupIndex)",
+      "summary": "Locks all objects that are members of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of objects that were locked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Lock.htm"
+    },
+    {
+      "name": "RemapObjects(IEnumerable\u003CRhinoObject\u003E)",
+      "signature": "public int RemapObjects(IEnumerable\u003CRhinoObject\u003E rhinoObjects)",
+      "summary": "Remaps an enumeration of Rhino objects to new groups.",
+      "remarks": "In some situations, a bunch of Rhino objects are copied, new groups need to be created. This method handles the details.",
+      "params": [
+        {
+          "name": "rhinoObjects",
+          "type": "System.Collections.Generic.IEnumerable\u003CRhinoObject\u003E",
+          "doc": "The enumeration of Rhino objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of Rhino objects that were modified."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_RemapObjects.htm"
+    },
+    {
+      "name": "RemapObjects(IEnumerable\u003CRhinoObject\u003E, Dictionary\u003CInt32, Int32\u003E)",
+      "signature": "public int RemapObjects(IEnumerable\u003CRhinoObject\u003E rhinoObjects, out Dictionary\u003Cint, int\u003E indexMap)",
+      "summary": "Remaps an enumeration of Rhino objects to new groups.",
+      "remarks": "In some situations, a bunch of Rhino objects are copied, new groups need to be created. This method handles the details.",
+      "params": [
+        {
+          "name": "rhinoObjects",
+          "type": "System.Collections.Generic.IEnumerable\u003CRhinoObject\u003E",
+          "doc": "The enumeration of Rhino objects.",
+          "optional": false
+        },
+        {
+          "name": "indexMap",
+          "type": "System.Collections.Generic.Dictionary\u003CInt32,Int32\u003E",
+          "doc": "A map from old group indices to new group indices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of Rhino objects that were modified."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_RemapObjects_1.htm"
+    },
+    {
+      "name": "Show",
+      "signature": "public int Show(int groupIndex)",
+      "summary": "Shows, or unhides, all objects that are members of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of objects that were shown."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Show.htm"
+    },
+    {
+      "name": "Undelete",
+      "signature": "public bool Undelete(int groupIndex)",
+      "summary": "Undeletes a previously deleted group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Undelete.htm"
+    },
+    {
+      "name": "Unlock",
+      "signature": "public int Unlock(int groupIndex)",
+      "summary": "Unlocks all objects that are members of a group.",
+      "params": [
+        {
+          "name": "groupIndex",
+          "type": "System.Int32",
+          "doc": "The index of the group.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of objects that were unlocked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_GroupTable_Unlock.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides CommonComponentTable\u003CT\u003E.ComponentType.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_GroupTable_ComponentType.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the count of all items, including deleted ones.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_CommonComponentTable_1_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_RhinoDocCommonTable_1_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Group",
+      "getter": true,
+      "setter": false,
+      "summary": "Conceptually, the group table is an array of groups. The operator[] can be used to get individual groups. A group is either active or deleted and this state is reported by Group.IsDeleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_GroupTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

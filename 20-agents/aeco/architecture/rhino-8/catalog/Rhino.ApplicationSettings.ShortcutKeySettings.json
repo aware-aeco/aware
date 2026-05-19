@@ -1,0 +1,181 @@
+{
+  "name": "ShortcutKeySettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to control keyboard shortcut keys",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_ShortcutKeySettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDefaults",
+      "signature": "public static KeyboardShortcut[] GetDefaults()",
+      "summary": "Get all the default shortcuts registered with Rhino",
+      "params": [],
+      "returns": {
+        "type": "KeyboardShortcut[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetDefaults\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_GetDefaults.htm"
+    },
+    {
+      "name": "GetLabel",
+      "signature": "public static string GetLabel(ShortcutKey key)",
+      "summary": "Get the macro label associated with a given keyboard shortcut",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.ApplicationSettings.ShortcutKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetLabel(Rhino.ApplicationSettings.ShortcutKey)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetLabel(Rhino.ApplicationSettings.ShortcutKey)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_GetLabel.htm"
+    },
+    {
+      "name": "GetMacro",
+      "signature": "public static string GetMacro(ShortcutKey key)",
+      "summary": "Get macro associated with a given keyboard shortcut",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.ApplicationSettings.ShortcutKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetMacro(Rhino.ApplicationSettings.ShortcutKey)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetMacro(Rhino.ApplicationSettings.ShortcutKey)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_GetMacro.htm"
+    },
+    {
+      "name": "GetShortcuts",
+      "signature": "public static KeyboardShortcut[] GetShortcuts()",
+      "summary": "Get all shortcuts registered with Rhino",
+      "params": [],
+      "returns": {
+        "type": "KeyboardShortcut[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.GetShortcuts\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_GetShortcuts.htm"
+    },
+    {
+      "name": "IsAcceptableKeyCombo",
+      "signature": "public static bool IsAcceptableKeyCombo(KeyboardKey key, ModifierKey modifier)",
+      "summary": "Is a key plus modifier combination one that can be used with Rhino",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.UI.KeyboardKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.IsAcceptableKeyCombo(Rhino.UI.KeyboardKey,Rhino.UI.ModifierKey)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Rhino.UI.ModifierKey",
+          "doc": "[Missing \u003Cparam name=\u0022modifier\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.IsAcceptableKeyCombo(Rhino.UI.KeyboardKey,Rhino.UI.ModifierKey)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.IsAcceptableKeyCombo(Rhino.UI.KeyboardKey,Rhino.UI.ModifierKey)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_IsAcceptableKeyCombo.htm"
+    },
+    {
+      "name": "SetMacro(ShortcutKey, String)",
+      "signature": "public static void SetMacro(ShortcutKey key, string macro)",
+      "summary": "Set macro associated with a keyboard shortcut",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.ApplicationSettings.ShortcutKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.ApplicationSettings.ShortcutKey,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "macro",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022macro\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.ApplicationSettings.ShortcutKey,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_SetMacro.htm"
+    },
+    {
+      "name": "SetMacro(KeyboardKey, ModifierKey, String)",
+      "signature": "public static void SetMacro(KeyboardKey key, ModifierKey modifier, string macro)",
+      "summary": "Set a macro for a given key and modifier combination",
+      "params": [
+        {
+          "name": "key",
+          "type": "Rhino.UI.KeyboardKey",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.UI.KeyboardKey,Rhino.UI.ModifierKey,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Rhino.UI.ModifierKey",
+          "doc": "[Missing \u003Cparam name=\u0022modifier\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.UI.KeyboardKey,Rhino.UI.ModifierKey,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "macro",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022macro\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.SetMacro(Rhino.UI.KeyboardKey,Rhino.UI.ModifierKey,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_SetMacro_1.htm"
+    },
+    {
+      "name": "Update",
+      "signature": "public static void Update(IEnumerable\u003CKeyboardShortcut\u003E shortcuts, bool replaceAll)",
+      "summary": "Add or modify shortcuts with a list or KeyboardShortcut elements",
+      "params": [
+        {
+          "name": "shortcuts",
+          "type": "System.Collections.Generic.IEnumerable\u003CKeyboardShortcut\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022shortcuts\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.Update(System.Collections.Generic.IEnumerable{Rhino.ApplicationSettings.KeyboardShortcut},System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "replaceAll",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022replaceAll\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.ShortcutKeySettings.Update(System.Collections.Generic.IEnumerable{Rhino.ApplicationSettings.KeyboardShortcut},System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ShortcutKeySettings_Update.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

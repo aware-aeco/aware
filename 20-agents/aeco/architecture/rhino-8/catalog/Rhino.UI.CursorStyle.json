@@ -1,0 +1,48 @@
+{
+  "name": "CursorStyle",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Standard mouse cursors in Rhino",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_CursorStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0
+    },
+    {
+      "name": "Wait",
+      "value": 1,
+      "summary": "Wait"
+    },
+    {
+      "name": "CrossHair",
+      "value": 2
+    },
+    {
+      "name": "Hand",
+      "value": 3
+    },
+    {
+      "name": "Rotate",
+      "value": 4
+    },
+    {
+      "name": "Magnify",
+      "value": 5
+    },
+    {
+      "name": "ArrowCopy",
+      "value": 6,
+      "summary": "arrow with \u002B"
+    },
+    {
+      "name": "CrosshairCopy",
+      "value": 7
+    }
+  ]
+}

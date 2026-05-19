@@ -1,0 +1,83 @@
+{
+  "name": "RdkEdit",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.RdkEdit\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DataSources_RdkEdit.htm",
+  "constructors": [
+    {
+      "name": "RdkEdit",
+      "signature": "public RdkEdit(IntPtr pRdkEdit)",
+      "summary": "Initializes a new instance of the RdkEdit class",
+      "params": [
+        {
+          "name": "pRdkEdit",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRdkEdit\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RdkEdit.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkEdit__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RdkEdit",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkEdit_Dispose.htm"
+    },
+    {
+      "name": "Execute",
+      "signature": "public bool Execute(RenderContentCollection collection)",
+      "summary": "",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "[Missing \u003Cparam name=\u0022collection\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.RdkEdit.Execute(Rhino.Render.RenderContentCollection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.RdkEdit.Execute(Rhino.Render.RenderContentCollection)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkEdit_Execute.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_RdkEdit_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_DataSources_RdkEdit_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

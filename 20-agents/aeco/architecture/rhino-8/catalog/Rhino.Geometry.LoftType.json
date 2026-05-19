@@ -1,0 +1,44 @@
+{
+  "name": "LoftType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Specifies enumerated constants for all supported loft types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_LoftType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "Uses chord-length parameterization in the loft direction."
+    },
+    {
+      "name": "Loose",
+      "value": 1,
+      "summary": "The surface is allowed to move away from the original curves to make a smoother surface. The surface control points are created at the same locations as the control points of the loft input curves."
+    },
+    {
+      "name": "Tight",
+      "value": 2,
+      "summary": "The surface sticks closely to the original curves. Uses square root of chord-length parameterization in the loft direction."
+    },
+    {
+      "name": "Straight",
+      "value": 3,
+      "summary": "The sections between the curves are straight. This is also known as a ruled surface."
+    },
+    {
+      "name": "Developable",
+      "value": 4,
+      "summary": "Obsolete. Obsolete, do not use."
+    },
+    {
+      "name": "Uniform",
+      "value": 5,
+      "summary": "Constructs a uniform loft. The object knot vectors will be uniform."
+    }
+  ]
+}

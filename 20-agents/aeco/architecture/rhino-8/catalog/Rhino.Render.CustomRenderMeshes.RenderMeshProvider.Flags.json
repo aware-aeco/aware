@@ -1,0 +1,54 @@
+{
+  "name": "RenderMeshProvider.Flags",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "enum",
+  "summary": "Flags to be passed into and returned from RenderMeshes and HasCustomRenderMeshes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_RenderMeshProvider_Flags.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No flags set."
+    },
+    {
+      "name": "Canceled",
+      "value": 1,
+      "summary": "If this flag is set when returned, then RenderMeshes was canceled."
+    },
+    {
+      "name": "DisableCaching",
+      "value": 2,
+      "summary": "Pass in this flag to bypass any primitive caching that the RenderMeshProviders might do."
+    },
+    {
+      "name": "Recursive",
+      "value": 4,
+      "summary": "Pass in this flag to get the render meshes for entire blocks. Only has an effect if the ObjectId is a block reference, and if it will not produce CRMs of its own."
+    },
+    {
+      "name": "IsDocumentObject",
+      "value": 8,
+      "summary": "Pass in this flag to indicate that the object id is a document resident object"
+    },
+    {
+      "name": "AlwaysCopyDocumentContent",
+      "value": 16,
+      "summary": "Pass in this flag to ensure that materials, environments and textures that refer to document objects are always copied. This makes the RenderMeshes object safe to be stored outside of the lifetime of those objects - in caches, or for use in threaded situtations."
+    },
+    {
+      "name": "ReturnNullForStandardMaterial",
+      "value": 32,
+      "summary": "Pass in this flag to request that null is returned when the material on a mesh should be the standard material used - in otherwords, not customized by this RenderMeshes object. Note that this will require document access to resolve - do not use in threaded situations."
+    },
+    {
+      "name": "Incomplete",
+      "value": 64,
+      "summary": "This flag is returned when an asynchronous operation (like Displacement) has not yet completed."
+    }
+  ]
+}

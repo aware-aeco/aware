@@ -1,0 +1,14 @@
+{
+  "name": "Dialogs.OnColorChangedEvent",
+  "namespace": "Rhino.UI",
+  "kind": "delegate",
+  "summary": "May be optionally passed to ShowColorDialog and will get called when the color value changes in the color dialog.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Dialogs_OnColorChangedEvent.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void OnColorChangedEvent( Color4f color )"
+}

@@ -1,0 +1,44 @@
+{
+  "name": "DimensionStyle.TextFit",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Text display position inside or outside extension lines",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DimensionStyle_TextFit.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Auto",
+      "value": 0,
+      "summary": "Auto - Display inside when space permits"
+    },
+    {
+      "name": "TextInside",
+      "value": 1,
+      "summary": "Force text inside extensions"
+    },
+    {
+      "name": "TextRight",
+      "value": 2,
+      "summary": "Force text outside to the right of extensions"
+    },
+    {
+      "name": "TextLeft",
+      "value": 3,
+      "summary": "Force text outside to the left of extensions"
+    },
+    {
+      "name": "TextHintRight",
+      "value": 4,
+      "summary": "Move text outside to the right of extensions when it won\u0027t fit inside"
+    },
+    {
+      "name": "TextHintLeft",
+      "value": 5,
+      "summary": "Move text outside to the left of extensions when it won\u0027t fit inside"
+    }
+  ]
+}

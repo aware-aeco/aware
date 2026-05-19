@@ -1,0 +1,159 @@
+{
+  "name": "FileReference",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Manages a reference to an existing or non-existing file, using either or both absolute or relative paths. Once constructed, this class is immutable.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileReference.htm",
+  "constructors": [
+    {
+      "name": "FileReference",
+      "signature": "public FileReference(string fullPath, string relativePath, ContentHash hash, FileReferenceStatus status)",
+      "summary": "Constructs a new instance of the FileReference class, given a fullPath, a relativePath a content hash and a status value.",
+      "params": [
+        {
+          "name": "fullPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022fullPath\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileReference.#ctor(System.String,System.String,Rhino.FileIO.ContentHash,Rhino.FileIO.FileReferenceStatus)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "relativePath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022relativePath\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileReference.#ctor(System.String,System.String,Rhino.FileIO.ContentHash,Rhino.FileIO.FileReferenceStatus)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "hash",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "[Missing \u003Cparam name=\u0022hash\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileReference.#ctor(System.String,System.String,Rhino.FileIO.ContentHash,Rhino.FileIO.FileReferenceStatus)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "Rhino.FileIO.FileReferenceStatus",
+          "doc": "[Missing \u003Cparam name=\u0022status\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileReference.#ctor(System.String,System.String,Rhino.FileIO.ContentHash,Rhino.FileIO.FileReferenceStatus)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReference__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFromFullAndRelativePaths",
+      "signature": "public static FileReference CreateFromFullAndRelativePaths(string fullPath, string relativePath)",
+      "summary": "Returns a new file reference. This returns a new instance even if the path does not exist.",
+      "params": [
+        {
+          "name": "fullPath",
+          "type": "System.String",
+          "doc": "A full path. This parameter cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "relativePath",
+          "type": "System.String",
+          "doc": "A relative path. This parameter can be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FileReference",
+        "doc": "A file reference to the specified paths."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReference_CreateFromFullAndRelativePaths.htm"
+    },
+    {
+      "name": "CreateFromFullPath",
+      "signature": "public static FileReference CreateFromFullPath(string fullPath)",
+      "summary": "Returns a new file reference. This returns a new instance even if the path does not exist.",
+      "params": [
+        {
+          "name": "fullPath",
+          "type": "System.String",
+          "doc": "A full path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "FileReference",
+        "doc": "A file reference to the specified path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReference_CreateFromFullPath.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Reclaims unmanaged resources used by this object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReference_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileReference_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ContentHash",
+      "type": "ContentHash",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the content hash.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReference_ContentHash.htm"
+    },
+    {
+      "name": "FullPath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the absolute path of this file reference.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReference_FullPath.htm"
+    },
+    {
+      "name": "FullPathStatus",
+      "type": "FileReferenceStatus",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file reference status.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReference_FullPathStatus.htm"
+    },
+    {
+      "name": "IsSet",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an indication of the fact that the reference is actually set to a non-null value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReference_IsSet.htm"
+    },
+    {
+      "name": "RelativePath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the relative path of this file reference.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileReference_RelativePath.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

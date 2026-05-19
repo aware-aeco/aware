@@ -1,0 +1,123 @@
+{
+  "name": "LightArray",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.LightArray\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_LightArray.htm",
+  "constructors": [
+    {
+      "name": "LightArray()",
+      "signature": "public LightArray()",
+      "summary": "Initializes a new instance of the LightArray class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray__ctor.htm"
+    },
+    {
+      "name": "LightArray(IntPtr)",
+      "signature": "public LightArray(IntPtr pLightArray)",
+      "summary": "Initializes a new instance of the LightArray class",
+      "params": [
+        {
+          "name": "pLightArray",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pLightArray\u0022/\u003E documentation for \u0022M:Rhino.Render.LightArray.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Append",
+      "signature": "public void Append(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightArray.Append(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray_Append.htm"
+    },
+    {
+      "name": "Count",
+      "signature": "public int Count()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightArray.Count\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray_Count.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the LightArray",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray_Dispose.htm"
+    },
+    {
+      "name": "ElementAt",
+      "signature": "public Light ElementAt(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Render.LightArray.ElementAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Light",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightArray.ElementAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray_ElementAt.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LightArray_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LightArray_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

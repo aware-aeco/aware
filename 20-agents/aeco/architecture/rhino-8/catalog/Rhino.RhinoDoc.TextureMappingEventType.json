@@ -1,0 +1,34 @@
+{
+  "name": "RhinoDoc.TextureMappingEventType",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.RhinoDoc.TextureMappingEventType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoDoc_TextureMappingEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0,
+      "summary": "Adding texture mapping to a document"
+    },
+    {
+      "name": "Deleted",
+      "value": 1,
+      "summary": "A texture mapping was deleted from a document"
+    },
+    {
+      "name": "Undeleted",
+      "value": 2,
+      "summary": "A texture mapping was undeleted in a document"
+    },
+    {
+      "name": "Modified",
+      "value": 3,
+      "summary": "A texture mapping was modified in a document"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "RhinoAfterTransformObjectsEventArgs",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "EventArgs passed to RhinoDoc.AfterTransform.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_RhinoAfterTransformObjectsEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "TransformEventId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "The transformation event id.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_RhinoAfterTransformObjectsEventArgs_TransformEventId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

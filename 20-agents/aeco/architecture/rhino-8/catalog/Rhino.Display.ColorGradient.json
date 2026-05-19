@@ -1,0 +1,101 @@
+{
+  "name": "ColorGradient",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.ColorGradient\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ColorGradient.htm",
+  "constructors": [
+    {
+      "name": "ColorGradient",
+      "signature": "public ColorGradient()",
+      "summary": "Initializes a new instance of the ColorGradient class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorGradient__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "public ColorGradient Duplicate()",
+      "summary": "Create a duplicate of this color gradient.",
+      "params": [],
+      "returns": {
+        "type": "ColorGradient",
+        "doc": "An exact duplicate of this color gradient."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorGradient_Duplicate.htm"
+    },
+    {
+      "name": "GetColorStops",
+      "signature": "public ColorStop[] GetColorStops()",
+      "summary": "Get sorted list of colors / positions that a gradient is defined over",
+      "params": [],
+      "returns": {
+        "type": "ColorStop[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorGradient.GetColorStops\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorGradient_GetColorStops.htm"
+    },
+    {
+      "name": "SetColorStops",
+      "signature": "public void SetColorStops(IEnumerable\u003CColorStop\u003E stops)",
+      "summary": "Set color stops for the gradient",
+      "params": [
+        {
+          "name": "stops",
+          "type": "System.Collections.Generic.IEnumerable\u003CColorStop\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022stops\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorGradient.SetColorStops(System.Collections.Generic.IEnumerable{Rhino.Display.ColorStop})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorGradient_SetColorStops.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "End point of gradient",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorGradient_EndPoint.htm"
+    },
+    {
+      "name": "GradientType",
+      "type": "GradientType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gradient fill type associated with this hatch",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorGradient_GradientType.htm"
+    },
+    {
+      "name": "Repeat",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Repeat factor for gradient. Factors greater than 1 define a reflected repeat factor while values less than -1 define a wrapped repeat factor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorGradient_Repeat.htm"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Start point of gradient",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorGradient_StartPoint.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

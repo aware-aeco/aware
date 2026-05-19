@@ -1,0 +1,39 @@
+{
+  "name": "ActiveSpace",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines the current working space.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ActiveSpace.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "There is no working space."
+    },
+    {
+      "name": "ModelSpace",
+      "value": 1,
+      "summary": "3d modeling or \u0022world\u0022 space."
+    },
+    {
+      "name": "PageSpace",
+      "value": 2,
+      "summary": "page/layout/paper/printing space."
+    },
+    {
+      "name": "UVEditorSpace",
+      "value": 3,
+      "summary": "UV Editor space."
+    },
+    {
+      "name": "BlockEditorSpace",
+      "value": 4,
+      "summary": "Block Editor space."
+    }
+  ]
+}

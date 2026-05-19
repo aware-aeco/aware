@@ -1,0 +1,31 @@
+{
+  "name": "CorruptGeometryException",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Thrown when Rhino finds a brep or mesh that will cause a crash if used for calculations.",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_CorruptGeometryException.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CommonObject",
+      "type": "CommonObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Corrupt geometry .NET class",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CorruptGeometryException_CommonObject.htm"
+    },
+    {
+      "name": "Pointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "pointer to base geometry (ON_Object*)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CorruptGeometryException_Pointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

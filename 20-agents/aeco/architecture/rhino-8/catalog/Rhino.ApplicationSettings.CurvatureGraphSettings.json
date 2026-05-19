@@ -1,0 +1,132 @@
+{
+  "name": "CurvatureGraphSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to modify curvature graph commands.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_CurvatureGraphSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static CurvatureGraphSettingsState GetCurrentState()",
+      "summary": "Gets the current settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "CurvatureGraphSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureGraphSettings.GetCurrentState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_CurvatureGraphSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static CurvatureGraphSettingsState GetDefaultState()",
+      "summary": "Gets the factory settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "CurvatureGraphSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureGraphSettings.GetDefaultState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_CurvatureGraphSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Commits the default settings as the current settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_CurvatureGraphSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(CurvatureGraphSettingsState state)",
+      "summary": "Sets all settings to a particular defined joined state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.CurvatureGraphSettingsState",
+          "doc": "The particular state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_CurvatureGraphSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurveHairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the curve hair color;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_CurveHairColor.htm"
+    },
+    {
+      "name": "HairDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hair density;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_HairDensity.htm"
+    },
+    {
+      "name": "HairScale",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hair scale;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_HairScale.htm"
+    },
+    {
+      "name": "SampleDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sampling density;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_SampleDensity.htm"
+    },
+    {
+      "name": "SrfUHair",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface U hairs are on;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_SrfUHair.htm"
+    },
+    {
+      "name": "SrfVHair",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface V hairs are on;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_SrfVHair.htm"
+    },
+    {
+      "name": "SurfaceUHairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface U hair color;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_SurfaceUHairColor.htm"
+    },
+    {
+      "name": "SurfaceVHairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the surface V hair color;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_CurvatureGraphSettings_SurfaceVHairColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

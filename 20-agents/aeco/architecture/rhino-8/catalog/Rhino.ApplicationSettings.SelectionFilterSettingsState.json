@@ -1,0 +1,46 @@
+{
+  "name": "SelectionFilterSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of SelectionFilterSettings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_SelectionFilterSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disables the global object selection filter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_SelectionFilterSettingsState_Enabled.htm"
+    },
+    {
+      "name": "GlobalGeometryFilter",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": true,
+      "summary": "The global geometry type filter controls which types of geometry will be filtered. Note, the filter can be a bitwise combination of multiple object types.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_SelectionFilterSettingsState_GlobalGeometryFilter.htm"
+    },
+    {
+      "name": "OneShotGeometryFilter",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": true,
+      "summary": "The one-shot geometry type filter controls which types of geometry will be filtered for one selection. Note, the filter can be a bitwise combination of multiple object types.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_SelectionFilterSettingsState_OneShotGeometryFilter.htm"
+    },
+    {
+      "name": "SubObjectSelect",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disabled sub-object selection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_SelectionFilterSettingsState_SubObjectSelect.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

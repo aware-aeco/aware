@@ -1,0 +1,780 @@
+{
+  "name": "AppearanceSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Provides static methods and properties to deal with the appearance of the application.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_AppearanceSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DefaultPaintColor(PaintColor)",
+      "signature": "public static Color DefaultPaintColor(PaintColor whichColor)",
+      "summary": "Get a default paint color for Rhino. The current paint color may be different than the default",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.PaintColor",
+          "doc": "The color to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.DefaultPaintColor(Rhino.ApplicationSettings.PaintColor)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_DefaultPaintColor.htm"
+    },
+    {
+      "name": "DefaultPaintColor(PaintColor, Boolean)",
+      "signature": "public static Color DefaultPaintColor(PaintColor whichColor, bool darkMode)",
+      "summary": "Get a default paint color for Rhino. The current paint color may be different than the default",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.PaintColor",
+          "doc": "The color to retrieve",
+          "optional": false
+        },
+        {
+          "name": "darkMode",
+          "type": "System.Boolean",
+          "doc": "If true gets the default dark mode color otherwise return the default light mode color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.DefaultPaintColor(Rhino.ApplicationSettings.PaintColor,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_DefaultPaintColor_1.htm"
+    },
+    {
+      "name": "DefaultWidgetColor",
+      "signature": "public static Color DefaultWidgetColor(WidgetColor whichColor)",
+      "summary": "Get a default widget color for Rhino. The current widget color may be different than the default",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.WidgetColor",
+          "doc": "The color to retrieve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_DefaultWidgetColor.htm"
+    },
+    {
+      "name": "GetCurrentState",
+      "signature": "public static AppearanceSettingsState GetCurrentState()",
+      "summary": "Gets the current settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "AppearanceSettingsState",
+        "doc": "An instance of a class that represents all the settings as they appear in the Rhino _Options dialog, joined in a single class."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState()",
+      "signature": "public static AppearanceSettingsState GetDefaultState()",
+      "summary": "Gets the factory settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "AppearanceSettingsState",
+        "doc": "An instance of a class that represents all the default settings joined together."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "GetDefaultState(Boolean)",
+      "signature": "public static AppearanceSettingsState GetDefaultState(bool darkMode)",
+      "summary": "Gets the factory settings of the application.",
+      "params": [
+        {
+          "name": "darkMode",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022darkMode\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.GetDefaultState(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AppearanceSettingsState",
+        "doc": "An instance of a class that represents all the default settings joined together."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_GetDefaultState_1.htm"
+    },
+    {
+      "name": "GetPaintColor(PaintColor)",
+      "signature": "public static Color GetPaintColor(PaintColor whichColor)",
+      "summary": "Gets the color that is currently associated with a paint color.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.PaintColor",
+          "doc": "A color association.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_GetPaintColor.htm"
+    },
+    {
+      "name": "GetPaintColor(PaintColor, Boolean)",
+      "signature": "public static Color GetPaintColor(PaintColor whichColor, bool compute)",
+      "summary": "Gat a paint color. This overload provides a compute option for cases where colors are computed when they are \u0022unset\u0022 colors.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.PaintColor",
+          "doc": "[Missing \u003Cparam name=\u0022whichColor\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.GetPaintColor(Rhino.ApplicationSettings.PaintColor,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "compute",
+          "type": "System.Boolean",
+          "doc": "if true, a color is computed in some cases",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.GetPaintColor(Rhino.ApplicationSettings.PaintColor,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_GetPaintColor_1.htm"
+    },
+    {
+      "name": "GetWidgetColor",
+      "signature": "public static Color GetWidgetColor(WidgetColor whichColor)",
+      "summary": "Gets the .Net library color that is currently associated with a widget color.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.WidgetColor",
+          "doc": "A color association.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_GetWidgetColor.htm"
+    },
+    {
+      "name": "InitialMainWindowPosition",
+      "signature": "public static bool InitialMainWindowPosition(out Rectangle bounds)",
+      "summary": "Location where the Main Rhino window attempts to show when the application is first started.",
+      "params": [
+        {
+          "name": "bounds",
+          "type": "System.Drawing.Rectangle",
+          "doc": "The rectangle in which the main window attempts to shows is assigned to this out parameter during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "false if the information could not be retrieved."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_InitialMainWindowPosition.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Commits the default settings as the current settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "SetPaintColor(PaintColor, Color)",
+      "signature": "public static void SetPaintColor(PaintColor whichColor, Color c)",
+      "summary": "Sets the logical paint color association to a specific .Net library color, without forced UI update.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.PaintColor",
+          "doc": "A logical color association.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Drawing.Color",
+          "doc": "A .Net library color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_SetPaintColor.htm"
+    },
+    {
+      "name": "SetPaintColor(PaintColor, Color, Boolean)",
+      "signature": "public static void SetPaintColor(PaintColor whichColor, Color c, bool forceUiUpdate)",
+      "summary": "Sets the logical paint color association to a specific .Net library color.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.PaintColor",
+          "doc": "A logical color association.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Drawing.Color",
+          "doc": "A .Net library color.",
+          "optional": false
+        },
+        {
+          "name": "forceUiUpdate",
+          "type": "System.Boolean",
+          "doc": "true if the UI should be forced to update.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_SetPaintColor_1.htm"
+    },
+    {
+      "name": "SetToDarkMode",
+      "signature": "public static bool SetToDarkMode()",
+      "summary": "Set UI to the default dark mode color scheme",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on sucess"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_SetToDarkMode.htm"
+    },
+    {
+      "name": "SetToLightMode",
+      "signature": "public static bool SetToLightMode()",
+      "summary": "Set UI to the default light mode color scheme",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on sucess"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_SetToLightMode.htm"
+    },
+    {
+      "name": "SetWidgetColor(WidgetColor, Color)",
+      "signature": "public static void SetWidgetColor(WidgetColor whichColor, Color c)",
+      "summary": "Sets the logical widget color association to a specific .Net library color, without forced UI update.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.WidgetColor",
+          "doc": "A logical color association.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Drawing.Color",
+          "doc": "A .Net library color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_SetWidgetColor.htm"
+    },
+    {
+      "name": "SetWidgetColor(WidgetColor, Color, Boolean)",
+      "signature": "public static void SetWidgetColor(WidgetColor whichColor, Color c, bool forceUiUpdate)",
+      "summary": "Sets the logical widget color association to a specific .Net library color.",
+      "params": [
+        {
+          "name": "whichColor",
+          "type": "Rhino.ApplicationSettings.WidgetColor",
+          "doc": "A logical color association.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Drawing.Color",
+          "doc": "A .Net library color.",
+          "optional": false
+        },
+        {
+          "name": "forceUiUpdate",
+          "type": "System.Boolean",
+          "doc": "true if the UI should be forced to update.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_SetWidgetColor_1.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(AppearanceSettingsState state)",
+      "summary": "Sets all settings to a particular defined joined state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.AppearanceSettingsState",
+          "doc": "A joined settings object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_UpdateFromState.htm"
+    },
+    {
+      "name": "UsingDefaultDarkModeColors",
+      "signature": "public static bool UsingDefaultDarkModeColors()",
+      "summary": "Determine if Rhino is running with default dark mode color settings",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.UsingDefaultDarkModeColors\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_UsingDefaultDarkModeColors.htm"
+    },
+    {
+      "name": "UsingDefaultLightModeColors",
+      "signature": "public static bool UsingDefaultLightModeColors()",
+      "summary": "Determine if Rhino is running with default light mode color settings",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.AppearanceSettings.UsingDefaultLightModeColors\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_AppearanceSettings_UsingDefaultLightModeColors.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommandPromptBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the command prompt background.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CommandPromptBackgroundColor.htm"
+    },
+    {
+      "name": "CommandPromptFontSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Size of font used in command prompt (in points)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CommandPromptFontSize.htm"
+    },
+    {
+      "name": "CommandPromptHypertextColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the command prompt hypertext.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CommandPromptHypertextColor.htm"
+    },
+    {
+      "name": "CommandPromptPosition",
+      "type": "CommandPromptPosition",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the command prompt position.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CommandPromptPosition.htm"
+    },
+    {
+      "name": "CommandPromptTextColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the command prompt text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CommandPromptTextColor.htm"
+    },
+    {
+      "name": "CrosshairColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the crosshair icon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CrosshairColor.htm"
+    },
+    {
+      "name": "CurrentLayerBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color used by the layer manager dialog as the background color for the current layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_CurrentLayerBackgroundColor.htm"
+    },
+    {
+      "name": "DefaultFontFaceName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets the default font face name used in Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_DefaultFontFaceName.htm"
+    },
+    {
+      "name": "DefaultLayerColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the default layer color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_DefaultLayerColor.htm"
+    },
+    {
+      "name": "DefaultObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the default color for new objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_DefaultObjectColor.htm"
+    },
+    {
+      "name": "DirectionArrowIconHeadSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "length of direction arrowhead icon in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_DirectionArrowIconHeadSize.htm"
+    },
+    {
+      "name": "DirectionArrowIconShaftSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "length of direction arrow shaft icon in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_DirectionArrowIconShaftSize.htm"
+    },
+    {
+      "name": "EchoCommandsToHistoryWindow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if command names are written to the history window.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_EchoCommandsToHistoryWindow.htm"
+    },
+    {
+      "name": "EchoPromptsToHistoryWindow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if prompt messages are written to the history window.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_EchoPromptsToHistoryWindow.htm"
+    },
+    {
+      "name": "EditCandidateColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of objects that are eligible to be edited.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_EditCandidateColor.htm"
+    },
+    {
+      "name": "FeedbackColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the feedback color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_FeedbackColor.htm"
+    },
+    {
+      "name": "FrameBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the background color of the frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_FrameBackgroundColor.htm"
+    },
+    {
+      "name": "GridThickLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the thick line of the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_GridThickLineColor.htm"
+    },
+    {
+      "name": "GridThinLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the thin line of the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_GridThinLineColor.htm"
+    },
+    {
+      "name": "GridXAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the X axis of the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_GridXAxisLineColor.htm"
+    },
+    {
+      "name": "GridYAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the Y axis of the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_GridYAxisLineColor.htm"
+    },
+    {
+      "name": "GridZAxisLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the Z axis of the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_GridZAxisLineColor.htm"
+    },
+    {
+      "name": "LanguageIdentifier",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the language identifier.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_LanguageIdentifier.htm"
+    },
+    {
+      "name": "LockedObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "color used to draw locked objects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_LockedObjectColor.htm"
+    },
+    {
+      "name": "MenuVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if the File menu is visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_MenuVisible.htm"
+    },
+    {
+      "name": "PageviewPaperColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the paper background. A rectangle is drawn into the background of page views to represent the printed area. The alpha portion of the color is used to draw the paper blended into the background",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_PageviewPaperColor.htm"
+    },
+    {
+      "name": "PreviousLanguageIdentifier",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the previous language identifier.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_PreviousLanguageIdentifier.htm"
+    },
+    {
+      "name": "SelectedObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The color used to draw selected objects. The default is yellow, but this can be customized by the user.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_SelectedObjectColor.htm"
+    },
+    {
+      "name": "SelectionWindowCrossingFillColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used to fill selection crossing window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_SelectionWindowCrossingFillColor.htm"
+    },
+    {
+      "name": "SelectionWindowCrossingStrokeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used to draw stroke for selection crossing window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_SelectionWindowCrossingStrokeColor.htm"
+    },
+    {
+      "name": "SelectionWindowFillColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used to fill selection window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_SelectionWindowFillColor.htm"
+    },
+    {
+      "name": "SelectionWindowStrokeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used to draw stroke for selection window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_SelectionWindowStrokeColor.htm"
+    },
+    {
+      "name": "ShowCrosshairs",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if cross hairs are visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowCrosshairs.htm"
+    },
+    {
+      "name": "ShowFullPathInTitleBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if the full path of the document is shown in the Rhino title bar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowFullPathInTitleBar.htm"
+    },
+    {
+      "name": "ShowLayoutDropShadow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display the drop shadow of layouts",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowLayoutDropShadow.htm"
+    },
+    {
+      "name": "ShowOsnapBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides the object snap user interface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowOsnapBar.htm"
+    },
+    {
+      "name": "ShowSelectionFilterBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides the selection filter user interface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowSelectionFilterBar.htm"
+    },
+    {
+      "name": "ShowSideBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides the side bar user interface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowSideBar.htm"
+    },
+    {
+      "name": "ShowStatusBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides the status bar user interface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowStatusBar.htm"
+    },
+    {
+      "name": "ShowTitleBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides title bar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowTitleBar.htm"
+    },
+    {
+      "name": "ShowViewportTitles",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shows or hides viewport titles.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ShowViewportTitles.htm"
+    },
+    {
+      "name": "TrackingColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tracking color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_TrackingColor.htm"
+    },
+    {
+      "name": "UsePaintColors",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets a value indicating if logical paint colors should be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_UsePaintColors.htm"
+    },
+    {
+      "name": "ViewportBackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the viewport background color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ViewportBackgroundColor.htm"
+    },
+    {
+      "name": "ViewportTabsVisibleAtStart",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Display viewport tabs at start",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_ViewportTabsVisibleAtStart.htm"
+    },
+    {
+      "name": "WorldCoordIconXAxisColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the world coordinate X axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_WorldCoordIconXAxisColor.htm"
+    },
+    {
+      "name": "WorldCoordIconYAxisColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the world coordinate Y axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_WorldCoordIconYAxisColor.htm"
+    },
+    {
+      "name": "WorldCoordIconZAxisColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the world coordinate Z axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_AppearanceSettings_WorldCoordIconZAxisColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

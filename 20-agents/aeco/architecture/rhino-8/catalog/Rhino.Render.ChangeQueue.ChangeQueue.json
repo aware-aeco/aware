@@ -1,0 +1,1007 @@
+{
+  "name": "ChangeQueue",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "Base class for ChangeQueue. Generally used by render plugins to build interactive updating of scenes that are being rendered.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_ChangeQueue.htm",
+  "constructors": [
+    {
+      "name": "ChangeQueue(Guid, CreatePreviewEventArgs)",
+      "signature": "protected ChangeQueue(Guid pluginId, CreatePreviewEventArgs createPreviewEventArgs)",
+      "summary": "Construct a new ChangeQueue using the given CreatePreviewEventArgs. The preview scene for these args will be used to populate the world.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "Id of plugin instantiating ChangeQueue",
+          "optional": false
+        },
+        {
+          "name": "createPreviewEventArgs",
+          "type": "Rhino.Render.CreatePreviewEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022createPreviewEventArgs\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.#ctor(System.Guid,Rhino.Render.CreatePreviewEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue__ctor.htm"
+    },
+    {
+      "name": "ChangeQueue(Guid, UInt32, ViewInfo, Boolean)",
+      "signature": "[ObsoleteAttribute] protected ChangeQueue(Guid pluginId, uint docRuntimeSerialNumber, ViewInfo viewinfo, bool bRespectDisplayPipelineAttributes)",
+      "summary": "Construct a new ChangeQueue from the given document",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "Id of plugin instantiating ChangeQueue",
+          "optional": false
+        },
+        {
+          "name": "docRuntimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022docRuntimeSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.#ctor(System.Guid,System.UInt32,Rhino.DocObjects.ViewInfo,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewinfo",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022viewinfo\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.#ctor(System.Guid,System.UInt32,Rhino.DocObjects.ViewInfo,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bRespectDisplayPipelineAttributes",
+          "type": "System.Boolean",
+          "doc": "Determines whether the display pipeline attributes for this viewport should be taken into account when supplying data. If you are using this queue to populate a scene for the \u0022Render\u0022 command, set this to false. If you are using it to draw a realtime preview, you will probably want to set it to true.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue__ctor_2.htm"
+    },
+    {
+      "name": "ChangeQueue(Guid, UInt32, ViewInfo, DisplayPipelineAttributes, Boolean, Boolean)",
+      "signature": "protected ChangeQueue(Guid pluginId, uint docRuntimeSerialNumber, ViewInfo viewinfo, DisplayPipelineAttributes attributes, bool bRespectDisplayPipelineAttributes, bool bNotifyChanges)",
+      "summary": "Construct a new ChangeQueue from the given document, using given display pipeline attributes.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "Id of plugin instantiating ChangeQueue",
+          "optional": false
+        },
+        {
+          "name": "docRuntimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022docRuntimeSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.#ctor(System.Guid,System.UInt32,Rhino.DocObjects.ViewInfo,Rhino.Display.DisplayPipelineAttributes,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewinfo",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022viewinfo\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.#ctor(System.Guid,System.UInt32,Rhino.DocObjects.ViewInfo,Rhino.Display.DisplayPipelineAttributes,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "Display pipeline attributes to use.",
+          "optional": false
+        },
+        {
+          "name": "bRespectDisplayPipelineAttributes",
+          "type": "System.Boolean",
+          "doc": "Determines whether the display pipeline attributes for this viewport should be taken into account when supplying data. If you are using this queue to populate a scene for the \u0022Render\u0022 command, set this to false. If you are using it to draw a realtime preview, you will probably want to set it to true.",
+          "optional": false
+        },
+        {
+          "name": "bNotifyChanges",
+          "type": "System.Boolean",
+          "doc": "Determines whether you want to receive updates when the model changes. If you are rendering for a view capture, print or something similar, you will probably want to set this to false.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyClippingPlaneChanges",
+      "signature": "protected virtual void ApplyClippingPlaneChanges(Guid[] deleted, List\u003CClippingPlane\u003E addedOrModified)",
+      "summary": "Override this when you want to handle clippingplane changes",
+      "params": [
+        {
+          "name": "deleted",
+          "type": "System.Guid[]",
+          "doc": "[Missing \u003Cparam name=\u0022deleted\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyClippingPlaneChanges(System.Guid[],System.Collections.Generic.List{Rhino.Render.ChangeQueue.ClippingPlane})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "addedOrModified",
+          "type": "System.Collections.Generic.List\u003CClippingPlane\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022addedOrModified\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyClippingPlaneChanges(System.Guid[],System.Collections.Generic.List{Rhino.Render.ChangeQueue.ClippingPlane})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyClippingPlaneChanges.htm"
+    },
+    {
+      "name": "ApplyDisplayPipelineAttributesChanges",
+      "signature": "protected virtual void ApplyDisplayPipelineAttributesChanges(DisplayPipelineAttributes displayPipelineAttributes)",
+      "summary": "Override if you need to react to display attribute changes. This function is needed to be able to react to different sample settings for i.e. capture preview rendering.",
+      "params": [
+        {
+          "name": "displayPipelineAttributes",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "The changed DisplayPipelineAttributes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyDisplayPipelineAttributesChanges.htm"
+    },
+    {
+      "name": "ApplyDynamicClippingPlaneChanges",
+      "signature": "protected virtual void ApplyDynamicClippingPlaneChanges(List\u003CClippingPlane\u003E changed)",
+      "summary": "Override this when you want to handle dynamicclippingplane changes",
+      "params": [
+        {
+          "name": "changed",
+          "type": "System.Collections.Generic.List\u003CClippingPlane\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022changed\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyDynamicClippingPlaneChanges(System.Collections.Generic.List{Rhino.Render.ChangeQueue.ClippingPlane})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyDynamicClippingPlaneChanges.htm"
+    },
+    {
+      "name": "ApplyDynamicLightChanges",
+      "signature": "protected virtual void ApplyDynamicLightChanges(List\u003CLight\u003E dynamicLightChanges)",
+      "summary": "Handle dynamic light changes",
+      "params": [
+        {
+          "name": "dynamicLightChanges",
+          "type": "System.Collections.Generic.List\u003CLight\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022dynamicLightChanges\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyDynamicLightChanges(System.Collections.Generic.List{Rhino.Geometry.Light})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyDynamicLightChanges.htm"
+    },
+    {
+      "name": "ApplyDynamicObjectTransforms",
+      "signature": "protected virtual void ApplyDynamicObjectTransforms(List\u003CDynamicObjectTransform\u003E dynamicObjectTransforms)",
+      "summary": "Handle dynamic object transforms",
+      "params": [
+        {
+          "name": "dynamicObjectTransforms",
+          "type": "System.Collections.Generic.List\u003CDynamicObjectTransform\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022dynamicObjectTransforms\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyDynamicObjectTransforms(System.Collections.Generic.List{Rhino.Render.ChangeQueue.DynamicObjectTransform})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyDynamicObjectTransforms.htm"
+    },
+    {
+      "name": "ApplyEnvironmentChanges",
+      "signature": "protected virtual void ApplyEnvironmentChanges(RenderEnvironment.Usage usage)",
+      "summary": "Override this when you want to handle environment changes",
+      "params": [
+        {
+          "name": "usage",
+          "type": "Rhino.Render.RenderEnvironment.Usage",
+          "doc": "[Missing \u003Cparam name=\u0022usage\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyEnvironmentChanges(Rhino.Render.RenderEnvironment.Usage)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyEnvironmentChanges.htm"
+    },
+    {
+      "name": "ApplyGroundPlaneChanges",
+      "signature": "protected virtual void ApplyGroundPlaneChanges(GroundPlane gp)",
+      "summary": "Override this when you want to handle groundplane changes",
+      "params": [
+        {
+          "name": "gp",
+          "type": "Rhino.Render.ChangeQueue.GroundPlane",
+          "doc": "[Missing \u003Cparam name=\u0022gp\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyGroundPlaneChanges(Rhino.Render.ChangeQueue.GroundPlane)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyGroundPlaneChanges.htm"
+    },
+    {
+      "name": "ApplyLightChanges",
+      "signature": "protected virtual void ApplyLightChanges(List\u003CLight\u003E lightChanges)",
+      "summary": "Override this when you want to handle light changes",
+      "params": [
+        {
+          "name": "lightChanges",
+          "type": "System.Collections.Generic.List\u003CLight\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022lightChanges\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyLightChanges(System.Collections.Generic.List{Rhino.Render.ChangeQueue.Light})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyLightChanges.htm"
+    },
+    {
+      "name": "ApplyLinearWorkflowChanges",
+      "signature": "protected virtual void ApplyLinearWorkflowChanges(LinearWorkflow lw)",
+      "summary": "Override this when you want to handle linear workflow changes",
+      "params": [
+        {
+          "name": "lw",
+          "type": "Rhino.Render.LinearWorkflow",
+          "doc": "[Missing \u003Cparam name=\u0022lw\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyLinearWorkflowChanges(Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyLinearWorkflowChanges.htm"
+    },
+    {
+      "name": "ApplyMaterialChanges",
+      "signature": "protected virtual void ApplyMaterialChanges(List\u003CMaterial\u003E mats)",
+      "summary": "Override when you want to handle material changes",
+      "params": [
+        {
+          "name": "mats",
+          "type": "System.Collections.Generic.List\u003CMaterial\u003E",
+          "doc": "List of ChangeQueue::Material that have changed",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyMaterialChanges.htm"
+    },
+    {
+      "name": "ApplyMeshChanges",
+      "signature": "protected virtual void ApplyMeshChanges(Guid[] deleted, List\u003CMesh\u003E added)",
+      "summary": "Override this when you want to handle mesh changes.",
+      "params": [
+        {
+          "name": "deleted",
+          "type": "System.Guid[]",
+          "doc": "List of Guids to meshes that have been deleted",
+          "optional": false
+        },
+        {
+          "name": "added",
+          "type": "System.Collections.Generic.List\u003CMesh\u003E",
+          "doc": "List of ChangeQueueMeshes that have been added or changed",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyMeshChanges.htm"
+    },
+    {
+      "name": "ApplyMeshInstanceChanges",
+      "signature": "protected virtual void ApplyMeshInstanceChanges(List\u003Cuint\u003E deleted, List\u003CMeshInstance\u003E addedOrChanged)",
+      "summary": "Override this when you want to handle mesh instance changes (block instances and first-time added new meshes)",
+      "params": [
+        {
+          "name": "deleted",
+          "type": "System.Collections.Generic.List\u003CUInt32\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022deleted\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyMeshInstanceChanges(System.Collections.Generic.List{System.UInt32},System.Collections.Generic.List{Rhino.Render.ChangeQueue.MeshInstance})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "addedOrChanged",
+          "type": "System.Collections.Generic.List\u003CMeshInstance\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022addedOrChanged\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyMeshInstanceChanges(System.Collections.Generic.List{System.UInt32},System.Collections.Generic.List{Rhino.Render.ChangeQueue.MeshInstance})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyMeshInstanceChanges.htm"
+    },
+    {
+      "name": "ApplyRenderSettingsChanges(DisplayRenderSettings)",
+      "signature": "protected virtual void ApplyRenderSettingsChanges(DisplayRenderSettings settings)",
+      "summary": "Override this when you want to handle render setting changes. These are for the viewport settings.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "Rhino.Render.ChangeQueue.DisplayRenderSettings",
+          "doc": "[Missing \u003Cparam name=\u0022settings\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyRenderSettingsChanges(Rhino.Render.ChangeQueue.DisplayRenderSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyRenderSettingsChanges.htm"
+    },
+    {
+      "name": "ApplyRenderSettingsChanges(RenderSettings)",
+      "signature": "protected virtual void ApplyRenderSettingsChanges(RenderSettings rs)",
+      "summary": "Override this when you need to handle background changes (through RenderSettings)",
+      "params": [
+        {
+          "name": "rs",
+          "type": "Rhino.Render.RenderSettings",
+          "doc": "[Missing \u003Cparam name=\u0022rs\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplyRenderSettingsChanges(Rhino.Render.RenderSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyRenderSettingsChanges_1.htm"
+    },
+    {
+      "name": "ApplySkylightChanges",
+      "signature": "protected virtual void ApplySkylightChanges(Skylight skylight)",
+      "summary": "Override this when you want to handle skylight changes",
+      "params": [
+        {
+          "name": "skylight",
+          "type": "Rhino.Render.ChangeQueue.Skylight",
+          "doc": "[Missing \u003Cparam name=\u0022skylight\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplySkylightChanges(Rhino.Render.ChangeQueue.Skylight)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplySkylightChanges.htm"
+    },
+    {
+      "name": "ApplySunChanges",
+      "signature": "protected virtual void ApplySunChanges(Light sun)",
+      "summary": "Override this when you want to handle sun changes",
+      "params": [
+        {
+          "name": "sun",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022sun\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ApplySunChanges(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplySunChanges.htm"
+    },
+    {
+      "name": "ApplyViewChange",
+      "signature": "protected virtual void ApplyViewChange(ViewInfo viewInfo)",
+      "summary": "Override ApplyViewChange when you want to receive changes to the view/camera",
+      "params": [
+        {
+          "name": "viewInfo",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "The ViewInfo with the changes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ApplyViewChange.htm"
+    },
+    {
+      "name": "AreViewsEqual",
+      "signature": "public virtual bool AreViewsEqual(ViewInfo aView, ViewInfo bView)",
+      "summary": "Compare to ViewInfo instances and decide whether they are equal or not. If you need to change the way the comparison is done you can override this function and implement your custom comparison.",
+      "params": [
+        {
+          "name": "aView",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "First ViewInfo to compare",
+          "optional": false
+        },
+        {
+          "name": "bView",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "Second ViewInfo to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the views are considered equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_AreViewsEqual.htm"
+    },
+    {
+      "name": "BakeFor",
+      "signature": "protected virtual ChangeQueue.BakingFunctions BakeFor()",
+      "summary": "Override this if you need to control baking behavior for textures. By default bake everything.",
+      "params": [],
+      "returns": {
+        "type": "ChangeQueue.BakingFunctions",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.BakeFor\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_BakeFor.htm"
+    },
+    {
+      "name": "BakingSize",
+      "signature": "protected virtual int BakingSize(RhinoObject ro, RenderMaterial material, TextureType type)",
+      "summary": "Override this if you need to control the size of the baked bitmaps for textures. By default the value returned is 2048.",
+      "params": [
+        {
+          "name": "ro",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022ro\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.BakingSize(Rhino.DocObjects.RhinoObject,Rhino.Render.RenderMaterial,Rhino.DocObjects.TextureType)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Rhino.Render.RenderMaterial",
+          "doc": "[Missing \u003Cparam name=\u0022material\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.BakingSize(Rhino.DocObjects.RhinoObject,Rhino.Render.RenderMaterial,Rhino.DocObjects.TextureType)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Rhino.DocObjects.TextureType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.BakingSize(Rhino.DocObjects.RhinoObject,Rhino.Render.RenderMaterial,Rhino.DocObjects.TextureType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.BakingSize(Rhino.DocObjects.RhinoObject,Rhino.Render.RenderMaterial,Rhino.DocObjects.TextureType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_BakingSize.htm"
+    },
+    {
+      "name": "ContentRenderHash",
+      "signature": "protected virtual uint ContentRenderHash(RenderContent content, CrcRenderHashFlags flags, string excludeParameterNames, LinearWorkflow lw)",
+      "summary": "Override this if you need to modify the way render hashes are calcuated in the change queue. This will alter the way materials are grouped.",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022content\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ContentRenderHash(Rhino.Render.RenderContent,Rhino.Render.CrcRenderHashFlags,System.String,Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Rhino.Render.CrcRenderHashFlags",
+          "doc": "[Missing \u003Cparam name=\u0022flags\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ContentRenderHash(Rhino.Render.RenderContent,Rhino.Render.CrcRenderHashFlags,System.String,Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "excludeParameterNames",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022excludeParameterNames\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ContentRenderHash(Rhino.Render.RenderContent,Rhino.Render.CrcRenderHashFlags,System.String,Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "lw",
+          "type": "Rhino.Render.LinearWorkflow",
+          "doc": "[Missing \u003Cparam name=\u0022lw\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ContentRenderHash(Rhino.Render.RenderContent,Rhino.Render.CrcRenderHashFlags,System.String,Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ContentRenderHash(Rhino.Render.RenderContent,Rhino.Render.CrcRenderHashFlags,System.String,Rhino.Render.LinearWorkflow)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ContentRenderHash.htm"
+    },
+    {
+      "name": "ConvertCameraBasedLightToWorld",
+      "signature": "public static void ConvertCameraBasedLightToWorld(ChangeQueue changequeue, Light light, ViewInfo vp)",
+      "summary": "Convert given (camera-based) light to a world-based light (in-place)",
+      "params": [
+        {
+          "name": "changequeue",
+          "type": "Rhino.Render.ChangeQueue.ChangeQueue",
+          "doc": "[Missing \u003Cparam name=\u0022changequeue\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ConvertCameraBasedLightToWorld(Rhino.Render.ChangeQueue.ChangeQueue,Rhino.Render.ChangeQueue.Light,Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "light",
+          "type": "Rhino.Render.ChangeQueue.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ConvertCameraBasedLightToWorld(Rhino.Render.ChangeQueue.ChangeQueue,Rhino.Render.ChangeQueue.Light,Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ConvertCameraBasedLightToWorld(Rhino.Render.ChangeQueue.ChangeQueue,Rhino.Render.ChangeQueue.Light,Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ConvertCameraBasedLightToWorld.htm"
+    },
+    {
+      "name": "CrcFromGuid",
+      "signature": "public static uint CrcFromGuid(Guid guid)",
+      "summary": "Helper function to get a CRC from a Guid.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022guid\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.CrcFromGuid(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.CrcFromGuid(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_CrcFromGuid.htm"
+    },
+    {
+      "name": "CreateWorld()",
+      "signature": "public void CreateWorld()",
+      "summary": "Calls CreateWorld with true passed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_CreateWorld.htm"
+    },
+    {
+      "name": "CreateWorld(Boolean)",
+      "signature": "public void CreateWorld(bool bFlushWhenReady)",
+      "summary": "Signal the queue to do the initialisation of the queue, seeding it with the content currently available.",
+      "params": [
+        {
+          "name": "bFlushWhenReady",
+          "type": "System.Boolean",
+          "doc": "Set to true CreateWorld should automatically flush at the end. Note that the Flush called when true is passed doesn\u0027t apply changes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_CreateWorld_1.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Dispose our ChangeQueue",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Dispose our ChangeQueue. Disposes unmanaged memory.",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_Dispose_1.htm"
+    },
+    {
+      "name": "EnvironmentForid",
+      "signature": "public RenderEnvironment EnvironmentForid(uint crc)",
+      "summary": "Get RenderEnvironment for given RenderHash. Can return null.",
+      "params": [
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022crc\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.EnvironmentForid(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderEnvironment",
+        "doc": "RenderEnvironment if render hash gives a match, null otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_EnvironmentForid.htm"
+    },
+    {
+      "name": "EnvironmentFromOriginalInstanceId",
+      "signature": "public RenderEnvironment EnvironmentFromOriginalInstanceId(Guid id)",
+      "summary": "Get the RenderEnvironment from the ChangeQueue content cache from the original instance id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The original instance id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderEnvironment",
+        "doc": "RenderEnvironment"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_EnvironmentFromOriginalInstanceId.htm"
+    },
+    {
+      "name": "EnvironmentIdForUsage",
+      "signature": "public uint EnvironmentIdForUsage(RenderEnvironment.Usage usage)",
+      "summary": "Get RenderEnvironment RenderHash for given usage.",
+      "params": [
+        {
+          "name": "usage",
+          "type": "Rhino.Render.RenderEnvironment.Usage",
+          "doc": "[Missing \u003Cparam name=\u0022usage\u0022/\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.EnvironmentIdForUsage(Rhino.Render.RenderEnvironment.Usage)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.EnvironmentIdForUsage(Rhino.Render.RenderEnvironment.Usage)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_EnvironmentIdForUsage.htm"
+    },
+    {
+      "name": "Flush",
+      "signature": "public void Flush()",
+      "summary": "Tell the ChangeQueue to flush all collected events. This can trigger a host of Apply* calls. The following is the order in which those calls get made if there are changes for that specific data type: ApplyViewChange ApplyLinearWorkflowChanges ApplyDynamicObjectTransforms ApplyDynamicLightChanges ApplyRenderSettingsChanges ApplyEnvironmentChanges (background) ApplyEnvironmentChanges (refl) ApplyEnvironmentChanges (sky) ApplySkylightChanges ApplySunChanges ApplyLightChanges ApplyMaterialChanges ApplyMeshChanges ApplyMeshInstanceChanges ApplyGroundPlaneChanges ApplyClippingPlaneChanges",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_Flush.htm"
+    },
+    {
+      "name": "GetQueueGroundPlane",
+      "signature": "public GroundPlane GetQueueGroundPlane()",
+      "summary": "Get groundplane known to the queue at the time of the Flush",
+      "params": [],
+      "returns": {
+        "type": "GroundPlane",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.GetQueueGroundPlane\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_GetQueueGroundPlane.htm"
+    },
+    {
+      "name": "GetQueueRenderSettings",
+      "signature": "public RenderSettings GetQueueRenderSettings()",
+      "summary": "Get render settings known to the queue at the time of the Flush",
+      "params": [],
+      "returns": {
+        "type": "RenderSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.GetQueueRenderSettings\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_GetQueueRenderSettings.htm"
+    },
+    {
+      "name": "GetQueueSceneBoundingBox",
+      "signature": "public BoundingBox GetQueueSceneBoundingBox()",
+      "summary": "Get the scene bounding box",
+      "params": [],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "Scene bounding box"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_GetQueueSceneBoundingBox.htm"
+    },
+    {
+      "name": "GetQueueSkylight",
+      "signature": "public Skylight GetQueueSkylight()",
+      "summary": "Get skylight known to the queue at the time of the Flush",
+      "params": [],
+      "returns": {
+        "type": "Skylight",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.GetQueueSkylight\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_GetQueueSkylight.htm"
+    },
+    {
+      "name": "GetQueueSun",
+      "signature": "public Light GetQueueSun()",
+      "summary": "Get sun known to the queue at the time of the Flush",
+      "params": [],
+      "returns": {
+        "type": "Light",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.GetQueueSun\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_GetQueueSun.htm"
+    },
+    {
+      "name": "GetQueueView",
+      "signature": "public ViewInfo GetQueueView()",
+      "summary": "Get view known to the queue at the time of the Flush",
+      "params": [],
+      "returns": {
+        "type": "ViewInfo",
+        "doc": "ViewInfo"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_GetQueueView.htm"
+    },
+    {
+      "name": "MaterialFromId",
+      "signature": "public RenderMaterial MaterialFromId(uint crc)",
+      "summary": "Get the RenderMaterial from the ChangeQueue material cache based on RenderHash",
+      "params": [
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "The RenderHash",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "RenderMaterial"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_MaterialFromId.htm"
+    },
+    {
+      "name": "MaterialFromOriginalInstanceId",
+      "signature": "public RenderMaterial MaterialFromOriginalInstanceId(Guid id)",
+      "summary": "Get the RenderMaterial from the ChangeQueue material cache from the original instance id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The original instance id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderMaterial",
+        "doc": "RenderMaterial"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_MaterialFromOriginalInstanceId.htm"
+    },
+    {
+      "name": "NotifyBeginUpdates",
+      "signature": "protected virtual void NotifyBeginUpdates()",
+      "summary": "Override this when you want to be notified of begin of changes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_NotifyBeginUpdates.htm"
+    },
+    {
+      "name": "NotifyDynamicUpdatesAreAvailable",
+      "signature": "protected virtual void NotifyDynamicUpdatesAreAvailable()",
+      "summary": "Override this when you want to be notified dynamic updates are available",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_NotifyDynamicUpdatesAreAvailable.htm"
+    },
+    {
+      "name": "NotifyEndUpdates",
+      "signature": "protected virtual void NotifyEndUpdates()",
+      "summary": "Override this when you want to be notified when change notifications have ended.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_NotifyEndUpdates.htm"
+    },
+    {
+      "name": "OneShot",
+      "signature": "public void OneShot()",
+      "summary": "Call Flush() once, after that automatically dispose the queue.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_OneShot.htm"
+    },
+    {
+      "name": "OriginalInstanceIdsFromEnvironmentId",
+      "signature": "public Guid[] OriginalInstanceIdsFromEnvironmentId(uint crc)",
+      "summary": "Return the collection of original document instance ids assocaited with the Environment id.",
+      "params": [
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "The Environment id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.OriginalInstanceIdsFromEnvironmentId(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_OriginalInstanceIdsFromEnvironmentId.htm"
+    },
+    {
+      "name": "OriginalInstanceIdsFromMaterialId",
+      "signature": "public Guid[] OriginalInstanceIdsFromMaterialId(uint crc)",
+      "summary": "Return the collection of original document instance ids assocaited with the material id.",
+      "params": [
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "The material id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.OriginalInstanceIdsFromMaterialId(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_OriginalInstanceIdsFromMaterialId.htm"
+    },
+    {
+      "name": "OriginalInstanceIdsFromTextureId",
+      "signature": "public Guid[] OriginalInstanceIdsFromTextureId(uint crc)",
+      "summary": "Return the collection of original document instance ids assocaited with the Texture id.",
+      "params": [
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "The Texture id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.OriginalInstanceIdsFromTextureId(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_OriginalInstanceIdsFromTextureId.htm"
+    },
+    {
+      "name": "ProvideOriginalObject",
+      "signature": "protected virtual bool ProvideOriginalObject()",
+      "summary": "Override ProvideOriginalObject and return true if you want original objects supplied with ChangeQueue.Mesh. This will then also allow access to the Attributes.UserData of the original object from which the Mesh was generated.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ChangeQueue.ChangeQueue.ProvideOriginalObject\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_ProvideOriginalObject.htm"
+    },
+    {
+      "name": "TextureForId",
+      "signature": "public RenderTexture TextureForId(uint crc)",
+      "summary": "Get RenderTexture for given RenderHash. Can return null.",
+      "params": [
+        {
+          "name": "crc",
+          "type": "System.UInt32",
+          "doc": "render hash of the content to search for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderTexture",
+        "doc": "RenderTexture if found for render hash, null otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_TextureForId.htm"
+    },
+    {
+      "name": "TextureFromOriginalInstanceId",
+      "signature": "public RenderTexture TextureFromOriginalInstanceId(Guid id)",
+      "summary": "Get the RenderTexture from the ChangeQueue content cache from the original instance id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The original instance id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderTexture",
+        "doc": "RenderTexture"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ChangeQueue_ChangeQueue_TextureFromOriginalInstanceId.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayPipelineAttributes",
+      "type": "DisplayPipelineAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the DisplayPipelineAttributes if available, null otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ChangeQueue_DisplayPipelineAttributes.htm"
+    },
+    {
+      "name": "IsPreview",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if this ChangeQueue is created for preview rendering. No view was set for preview rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ChangeQueue_IsPreview.htm"
+    },
+    {
+      "name": "ViewId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Return view ID for a RhinoDoc based ChangeQueue. Returns Guid.Empty if no view was associated with the changequeue, i.e. preview rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ChangeQueue_ViewId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

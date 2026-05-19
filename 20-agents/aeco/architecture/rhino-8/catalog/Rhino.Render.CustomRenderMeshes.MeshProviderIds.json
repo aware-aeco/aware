@@ -1,0 +1,54 @@
+{
+  "name": "MeshProviderIds",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "class",
+  "summary": "Built in primitive provider ids.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_MeshProviderIds.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurvePiping",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_MeshProviderIds_CurvePiping.htm"
+    },
+    {
+      "name": "Displacement",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_MeshProviderIds_Displacement.htm"
+    },
+    {
+      "name": "EdgeSoftening",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_MeshProviderIds_EdgeSoftening.htm"
+    },
+    {
+      "name": "Shutlining",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_MeshProviderIds_Shutlining.htm"
+    },
+    {
+      "name": "Thickening",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_MeshProviderIds_Thickening.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Font.FontWeight",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Weight enum values Avoid casting these values to int. Use ON_Font::WindowsLogfontWeightFromWeight() or ON_Font::AppleWeightOfFontFromWeight() or add another converter.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Font_FontWeight.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not set."
+    },
+    {
+      "name": "Thin",
+      "value": 1,
+      "summary": "IsLight = true"
+    },
+    {
+      "name": "Ultralight",
+      "value": 2,
+      "summary": "IsLight = true"
+    },
+    {
+      "name": "Light",
+      "value": 3,
+      "summary": "IsLight = true"
+    },
+    {
+      "name": "Normal",
+      "value": 4,
+      "summary": "Default font weight. IsNormalWeight = true Also called Regular."
+    },
+    {
+      "name": "Medium",
+      "value": 5,
+      "summary": "IsNormalWeight = true"
+    },
+    {
+      "name": "Semibold",
+      "value": 6,
+      "summary": "IsBold = true"
+    },
+    {
+      "name": "Bold",
+      "value": 7,
+      "summary": "IsBold = true"
+    },
+    {
+      "name": "Ultrabold",
+      "value": 8,
+      "summary": "IsBold = true"
+    },
+    {
+      "name": "Heavy",
+      "value": 9,
+      "summary": "IsBold = true Also called Black"
+    }
+  ]
+}

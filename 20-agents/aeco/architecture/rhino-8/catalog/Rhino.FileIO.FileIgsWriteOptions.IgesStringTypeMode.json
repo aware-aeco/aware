@@ -1,0 +1,22 @@
+{
+  "name": "FileIgsWriteOptions.IgesStringTypeMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileIgsWriteOptions.IgesStringTypeMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions_IgesStringTypeMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unicode",
+      "value": 0
+    },
+    {
+      "name": "BIG5",
+      "value": 1
+    }
+  ]
+}

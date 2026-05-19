@@ -1,0 +1,407 @@
+{
+  "name": "ObjectPropertiesPage",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Base class used to add object property user interface panels",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ObjectPropertiesPage.htm",
+  "constructors": [
+    {
+      "name": "ObjectPropertiesPage",
+      "signature": "protected ObjectPropertiesPage()",
+      "summary": "Initializes a new instance of the ObjectPropertiesPage class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AnySelectedObject\u003CT\u003E()",
+      "signature": "public bool AnySelectedObject\u003CT\u003E() where T : RhinoObject",
+      "summary": "Return true if any of the selected objects match the given type",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.AnySelectedObject\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_AnySelectedObject__1.htm"
+    },
+    {
+      "name": "AnySelectedObject\u003CT\u003E(Boolean)",
+      "signature": "public bool AnySelectedObject\u003CT\u003E(bool allMustMatch) where T : RhinoObject",
+      "summary": "Return true if any of the selected objects match the given type",
+      "params": [
+        {
+          "name": "allMustMatch",
+          "type": "System.Boolean",
+          "doc": "If true then every selected object must match the object type otherwise; only a single object has to be of the specified type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.AnySelectedObject\u0060\u00601(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_AnySelectedObject__1_1.htm"
+    },
+    {
+      "name": "GetSelectedObjects(ObjectType)",
+      "signature": "public RhinoObject[] GetSelectedObjects(ObjectType filter)",
+      "summary": "Get selected objects that match a given filter",
+      "params": [
+        {
+          "name": "filter",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "[Missing \u003Cparam name=\u0022filter\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.GetSelectedObjects(Rhino.DocObjects.ObjectType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.GetSelectedObjects(Rhino.DocObjects.ObjectType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_GetSelectedObjects.htm"
+    },
+    {
+      "name": "GetSelectedObjects\u003CT\u003E()",
+      "signature": "public T[] GetSelectedObjects\u003CT\u003E() where T : RhinoObject",
+      "summary": "Get selected objects of a given type",
+      "params": [],
+      "returns": {
+        "type": "T[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.GetSelectedObjects\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_GetSelectedObjects__1.htm"
+    },
+    {
+      "name": "InitializeControls",
+      "signature": "[ObsoleteAttribute(\u0022InitializeControls is obsolete, override UpdatePage instead\u0022)] public virtual void InitializeControls(RhinoObject rhObj)",
+      "summary": "Called on the active page after the selected objects list has changed to notify the page to initialize its content to reflect the new object list.",
+      "params": [
+        {
+          "name": "rhObj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022rhObj\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.InitializeControls(Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_InitializeControls.htm"
+    },
+    {
+      "name": "ModifyPage",
+      "signature": "public void ModifyPage(Action\u003CObjectPropertiesPageEventArgs\u003E callbackAction)",
+      "summary": "Call this method when the page is ready to modify the selected objects list. Rhino will suspend UpdatePageNotfictaion, call the passed action then restore UpdatePageNotfictaion.",
+      "params": [
+        {
+          "name": "callbackAction",
+          "type": "System.Action\u003CObjectPropertiesPageEventArgs\u003E",
+          "doc": "Called when it is safe to modify objects.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_ModifyPage.htm"
+    },
+    {
+      "name": "OnActivate",
+      "signature": "public virtual bool OnActivate(bool active)",
+      "summary": "Called when this page is activated/deactivated.",
+      "params": [
+        {
+          "name": "active",
+          "type": "System.Boolean",
+          "doc": "If true then this page is on top otherwise it is about to be hidden.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true then the page is hidden and the requested page is not activated otherwise will not allow you to change the current page. Default returns true. The return value is currently ignored."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_OnActivate.htm"
+    },
+    {
+      "name": "OnCreateParent",
+      "signature": "public virtual void OnCreateParent(IntPtr hwndParent)",
+      "summary": "Called when the parent container is initially created.",
+      "params": [
+        {
+          "name": "hwndParent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022hwndParent\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.OnCreateParent(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_OnCreateParent.htm"
+    },
+    {
+      "name": "OnHelp",
+      "signature": "public virtual void OnHelp()",
+      "summary": "Called when the F1 key or help button is pressed, override to display plug-in specific help for this page.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_OnHelp.htm"
+    },
+    {
+      "name": "OnSizeParent",
+      "signature": "public virtual void OnSizeParent(int width, int height)",
+      "summary": "Called when the parent containers client rectangle size has changed and the PageControl has been resized.",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.OnSizeParent(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.OnSizeParent(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_OnSizeParent.htm"
+    },
+    {
+      "name": "PageIcon",
+      "signature": "public virtual Icon PageIcon(Size sizeInPixels)",
+      "summary": "Icon to display in the object properties tab control. Will not get called if PageIconEmbeddedResourceString is overridden and provides a string for a successfully loaded icon resource.",
+      "params": [
+        {
+          "name": "sizeInPixels",
+          "type": "System.Drawing.Size",
+          "doc": "The requested icon size in pixels, DPI scaling has been applied. The default value is 24 X DPI scale.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Icon",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.PageIcon(System.Drawing.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_PageIcon.htm"
+    },
+    {
+      "name": "RunScript(ObjectPropertiesPageEventArgs)",
+      "signature": "public virtual Result RunScript(ObjectPropertiesPageEventArgs e)",
+      "summary": "This method is called when scripting the Rhino Properties command and choosing this page.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.ObjectPropertiesPageEventArgs",
+          "doc": "Provides access to the selected object list and document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.RunScript(Rhino.UI.ObjectPropertiesPageEventArgs)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_RunScript_1.htm"
+    },
+    {
+      "name": "RunScript(RhinoDoc, RhinoObject[])",
+      "signature": "[ObsoleteAttribute(\u0022RunScript(RhinoDoc doc, RhinoObject[] objectList) is obsolete, override RunScript(ObjectPropertiesPageEventArgs e) instead\u0022)] public virtual Result RunScript(RhinoDoc doc, RhinoObject[] objectList)",
+      "summary": "This method is called when scripting the Rhino Properties command and choosing this page.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Active RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "objectList",
+          "type": "Rhino.DocObjects.RhinoObject[]",
+          "doc": "List of objects selected by the Properties command.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.RunScript(Rhino.RhinoDoc,Rhino.DocObjects.RhinoObject[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_RunScript.htm"
+    },
+    {
+      "name": "ShouldDisplay(ObjectPropertiesPageEventArgs)",
+      "signature": "public virtual bool ShouldDisplay(ObjectPropertiesPageEventArgs e)",
+      "summary": "Called when the selected objects list changes, return true if the object list contains one or more object the page can modify.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.ObjectPropertiesPageEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.ShouldDisplay(Rhino.UI.ObjectPropertiesPageEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.ShouldDisplay(Rhino.UI.ObjectPropertiesPageEventArgs)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_ShouldDisplay_1.htm"
+    },
+    {
+      "name": "ShouldDisplay(RhinoObject)",
+      "signature": "[ObsoleteAttribute(\u0022ShouldDisplay(RhinoObject rhObj) is obsolete, override ShouldDisplay(ObjectPropertiesPageEventArgs e) instead\u0022)] public virtual bool ShouldDisplay(RhinoObject rhObj)",
+      "summary": "Called when the selected objects list changes, return true if the object list contains one or more object the page can modify.",
+      "params": [
+        {
+          "name": "rhObj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022rhObj\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.ShouldDisplay(Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.ShouldDisplay(Rhino.DocObjects.RhinoObject)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_ShouldDisplay.htm"
+    },
+    {
+      "name": "UpdatePage",
+      "signature": "public virtual void UpdatePage(ObjectPropertiesPageEventArgs e)",
+      "summary": "Called on the active page after the selected objects list has changed to notify the page to initialize its content to reflect the new object list.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.ObjectPropertiesPageEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPage.UpdatePage(Rhino.UI.ObjectPropertiesPageEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ObjectPropertiesPage_UpdatePage.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllObjectsMustBeSupported",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns false which only requires a single item of SupportedTypes to be selected. Override if you wish to change the above behavior.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_AllObjectsMustBeSupported.htm"
+    },
+    {
+      "name": "EnglishPageTitle",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "English string used to describe this page",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_EnglishPageTitle.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Icon",
+      "getter": true,
+      "setter": false,
+      "summary": "(OBSOLETE - Override PageIcon instead) Icon to display in the object properties tab control",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_Icon.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The page navigation control adds buttons in the order the pages are processed, override this method and return a sort index to move the button to the beginning of the list. By default this returns -1 which puts the button at the end of the list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_Index.htm"
+    },
+    {
+      "name": "LocalPageTitle",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Localized page description string, returns the EnglishPageTitle by default.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_LocalPageTitle.htm"
+    },
+    {
+      "name": "PageControl",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "The control that represents this page. Rhino Windows supports classes that implement the IWin32Windows interface, are derived from System.Windows.FrameworkElement or Eto.Forms.Control. Mac Rhino supports controls that are derived from NSview or Eto.Forms.Control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_PageControl.htm"
+    },
+    {
+      "name": "PageIconEmbeddedResourceString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Resource string for a embedded icon resource in the assembly containing the page instance. If this returns a valid resource and Rhino can load the icon the loaded icon will get used directly otherwise; the PageIcon method will get called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_PageIconEmbeddedResourceString.htm"
+    },
+    {
+      "name": "PageType",
+      "type": "PropertyPageType",
+      "getter": true,
+      "setter": false,
+      "summary": "Override this and return the page you want to replace a specific object properties page.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_PageType.htm"
+    },
+    {
+      "name": "SelectedObjects",
+      "type": "RhinoObject[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Return a list of Rhino objects to be processed by this object properties page",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_SelectedObjects.htm"
+    },
+    {
+      "name": "SupportedTypes",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Override to specify which objects this page supports",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_SupportedTypes.htm"
+    },
+    {
+      "name": "SupportsSubObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If your object properties page supports sub-object selection, you should override this method and return true. This is ignored for view pages. The default implementation returns false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ObjectPropertiesPage_SupportsSubObjects.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

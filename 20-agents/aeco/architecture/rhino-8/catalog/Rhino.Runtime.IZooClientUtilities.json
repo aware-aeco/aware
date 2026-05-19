@@ -1,0 +1,569 @@
+{
+  "name": "IZooClientUtilities",
+  "namespace": "Rhino.Runtime",
+  "kind": "interface",
+  "summary": "Interface implemented in ZooClient and added to Rhino via dependency injection",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_IZooClientUtilities.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AskUserForLicense",
+      "signature": "bool AskUserForLicense(Object verify, ZooClientParameters parameters)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.AskUserForLicense(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Runtime.ZooClientParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.AskUserForLicense(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.AskUserForLicense(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_AskUserForLicense.htm"
+    },
+    {
+      "name": "CheckInLicense",
+      "signature": "bool CheckInLicense(Object verify, Guid productId)",
+      "summary": "Checks in a checked out license to the owning Zoo.",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.CheckInLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.CheckInLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.CheckInLicense(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_CheckInLicense.htm"
+    },
+    {
+      "name": "CheckOutLicense",
+      "signature": "bool CheckOutLicense(Object verify, Guid productId)",
+      "summary": "Checks out a loaned out license from the owning Zoo.",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.CheckOutLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.CheckOutLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.CheckOutLicense(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_CheckOutLicense.htm"
+    },
+    {
+      "name": "ConvertLicense",
+      "signature": "bool ConvertLicense(Object verify, Guid productId)",
+      "summary": "Converts a standalone license to a network license.",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ConvertLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ConvertLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ConvertLicense(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_ConvertLicense.htm"
+    },
+    {
+      "name": "DeleteLicense",
+      "signature": "bool DeleteLicense(Object verify, Guid productId)",
+      "summary": "31-Mar-2015 Dale Fugier, http://mcneel.myjetbrains.com/youtrack/issue/MR-1725 Deletes a license along with its license file.",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.DeleteLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.DeleteLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.DeleteLicense(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_DeleteLicense.htm"
+    },
+    {
+      "name": "Echo",
+      "signature": "string Echo(Object verify, string message)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.Echo(System.Object,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.Echo(System.Object,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.Echo(System.Object,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_Echo.htm"
+    },
+    {
+      "name": "GetCurrentTime",
+      "signature": "DateTime GetCurrentTime()",
+      "summary": "Gets the current time, trying to access an NTP server before using local time.",
+      "params": [],
+      "returns": {
+        "type": "DateTime",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetCurrentTime\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_GetCurrentTime.htm"
+    },
+    {
+      "name": "GetLicense",
+      "signature": "bool GetLicense(Object verify, ZooClientParameters parameters)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicense(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Runtime.ZooClientParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicense(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicense(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_GetLicense.htm"
+    },
+    {
+      "name": "GetLicenseStatus",
+      "signature": "LicenseStatus[] GetLicenseStatus(Object verify)",
+      "summary": "Returns the current status of every license for ui purposes",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicenseStatus(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LicenseStatus[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicenseStatus(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_GetLicenseStatus.htm"
+    },
+    {
+      "name": "GetLicenseType",
+      "signature": "int GetLicenseType(Object verify, Guid productId)",
+      "summary": "Returns the type of a specified product license",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicenseType(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicenseType(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetLicenseType(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_GetLicenseType.htm"
+    },
+    {
+      "name": "GetOneLicenseStatus",
+      "signature": "LicenseStatus GetOneLicenseStatus(Object verify, Guid productId)",
+      "summary": "Returns the current status of a license for ui purposes",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetOneLicenseStatus(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetOneLicenseStatus(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LicenseStatus",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetOneLicenseStatus(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_GetOneLicenseStatus.htm"
+    },
+    {
+      "name": "GetRegisteredOwnerInfo",
+      "signature": "bool GetRegisteredOwnerInfo(Object verify, Guid productId, ref string registeredOwner, ref string registeredOrganization)",
+      "summary": "Returns the registered owner and organization of a license 4-Sept-2014 Dale Fugier, http://mcneel.myjetbrains.com/youtrack/issue/RH-28623",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetRegisteredOwnerInfo(System.Object,System.Guid,System.String@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetRegisteredOwnerInfo(System.Object,System.Guid,System.String@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "registeredOwner",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022registeredOwner\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetRegisteredOwnerInfo(System.Object,System.Guid,System.String@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "registeredOrganization",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022registeredOrganization\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetRegisteredOwnerInfo(System.Object,System.Guid,System.String@,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.GetRegisteredOwnerInfo(System.Object,System.Guid,System.String@,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_GetRegisteredOwnerInfo.htm"
+    },
+    {
+      "name": "Initialize",
+      "signature": "bool Initialize(Object verify)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.Initialize(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.Initialize(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_Initialize.htm"
+    },
+    {
+      "name": "IsCheckOutEnabled",
+      "signature": "bool IsCheckOutEnabled(Object verify)",
+      "summary": "Returns whether or not license checkout is enabled",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.IsCheckOutEnabled(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.IsCheckOutEnabled(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_IsCheckOutEnabled.htm"
+    },
+    {
+      "name": "LicenseOptionsHandler",
+      "signature": "bool LicenseOptionsHandler(Object verify, ZooClientParameters parameters)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.LicenseOptionsHandler(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "Rhino.Runtime.ZooClientParameters",
+          "doc": "[Missing \u003Cparam name=\u0022parameters\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.LicenseOptionsHandler(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.LicenseOptionsHandler(System.Object,Rhino.Runtime.ZooClientParameters)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_LicenseOptionsHandler.htm"
+    },
+    {
+      "name": "LoginToCloudZoo",
+      "signature": "bool LoginToCloudZoo()",
+      "summary": "Logs the user in to the cloud zoo. This logs out the current user and voids any existing leases.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.LoginToCloudZoo\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_LoginToCloudZoo.htm"
+    },
+    {
+      "name": "LogoutOfCloudZoo",
+      "signature": "bool LogoutOfCloudZoo()",
+      "summary": "Logs the user out of the cloud zoo. This logs out the current user and voids any existing leases.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.LogoutOfCloudZoo\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_LogoutOfCloudZoo.htm"
+    },
+    {
+      "name": "ReturnLicense(Object, Guid)",
+      "signature": "bool ReturnLicense(Object verify, Guid productId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_ReturnLicense.htm"
+    },
+    {
+      "name": "ReturnLicense(Object, String, Guid)",
+      "signature": "bool ReturnLicense(Object verify, string productPath, Guid productId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.String,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productPath\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.String,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.String,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ReturnLicense(System.Object,System.String,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_ReturnLicense_1.htm"
+    },
+    {
+      "name": "ShowBuyLicenseUi",
+      "signature": "void ShowBuyLicenseUi(Object verify, Guid productId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowBuyLicenseUi(System.Object,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowBuyLicenseUi(System.Object,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_ShowBuyLicenseUi.htm"
+    },
+    {
+      "name": "ShowLicenseValidationUi",
+      "signature": "bool ShowLicenseValidationUi(Object verify, string cdkey)",
+      "summary": "Shows user interface to validate and register a license. Returns true if the license is successfully validated; false otherwise",
+      "params": [
+        {
+          "name": "verify",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022verify\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowLicenseValidationUi(System.Object,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cdkey",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022cdkey\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowLicenseValidationUi(System.Object,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowLicenseValidationUi(System.Object,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_ShowLicenseValidationUi.htm"
+    },
+    {
+      "name": "ShowRhinoExpiredMessage",
+      "signature": "bool ShowRhinoExpiredMessage(Mode mode, ref int result)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Runtime.Mode",
+          "doc": "[Missing \u003Cparam name=\u0022mode\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowRhinoExpiredMessage(Rhino.Runtime.Mode,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022result\u0022/\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowRhinoExpiredMessage(Rhino.Runtime.Mode,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.IZooClientUtilities.ShowRhinoExpiredMessage(Rhino.Runtime.Mode,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_IZooClientUtilities_ShowRhinoExpiredMessage.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LoggedInUserAvatar",
+      "type": "Image",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the logged in user\u0027s avatar picture. Returns a default avatar if the user does not have an avatar or if the avatar could not be fetched.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_IZooClientUtilities_LoggedInUserAvatar.htm"
+    },
+    {
+      "name": "LoggedInUserName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the logged in user, or null if the user is not logged in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_IZooClientUtilities_LoggedInUserName.htm"
+    },
+    {
+      "name": "UserIsLoggedIn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the user is logged in; else returns false. A logged in user does not guarantee that the auth tokens managed by the CloudZooManager instance are valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_IZooClientUtilities_UserIsLoggedIn.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

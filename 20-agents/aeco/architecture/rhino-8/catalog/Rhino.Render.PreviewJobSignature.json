@@ -1,0 +1,148 @@
+{
+  "name": "PreviewJobSignature",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Preview Job Signature is a specific identifier for a specific rendered preview",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PreviewJobSignature.htm",
+  "constructors": [
+    {
+      "name": "PreviewJobSignature()",
+      "signature": "public PreviewJobSignature()",
+      "summary": "Preview Job Signature constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature__ctor.htm"
+    },
+    {
+      "name": "PreviewJobSignature(IntPtr)",
+      "signature": "public PreviewJobSignature(IntPtr intPtr)",
+      "summary": "Preview Job Signature constructor",
+      "params": [
+        {
+          "name": "intPtr",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022intPtr\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature__ctor_2.htm"
+    },
+    {
+      "name": "PreviewJobSignature(Int32, Int32, UInt32)",
+      "signature": "public PreviewJobSignature(int width, int height, uint sig)",
+      "summary": "Preview Job Signature constructor",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.#ctor(System.Int32,System.Int32,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.#ctor(System.Int32,System.Int32,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "sig",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022sig\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.#ctor(System.Int32,System.Int32,System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Compare",
+      "signature": "public bool Compare(PreviewJobSignature pjs)",
+      "summary": "Compare two Preview Job Signatures. True if they are the same, otherwise false.",
+      "params": [
+        {
+          "name": "pjs",
+          "type": "Rhino.Render.PreviewJobSignature",
+          "doc": "[Missing \u003Cparam name=\u0022pjs\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.Compare(Rhino.Render.PreviewJobSignature)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.Compare(Rhino.Render.PreviewJobSignature)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature_Compare.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Preview Job Signature destructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature_Finalize.htm"
+    },
+    {
+      "name": "ImageHeight",
+      "signature": "public int ImageHeight()",
+      "summary": "The Height of the rendered preview image",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.ImageHeight\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature_ImageHeight.htm"
+    },
+    {
+      "name": "ImageWidth",
+      "signature": "public int ImageWidth()",
+      "summary": "The Width of the rendered preview image",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewJobSignature.ImageWidth\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewJobSignature_ImageWidth.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "UnManaged pointer of the PreviewJobsingature",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PreviewJobSignature_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

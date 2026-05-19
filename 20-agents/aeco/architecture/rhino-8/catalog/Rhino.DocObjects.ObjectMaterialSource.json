@@ -1,0 +1,29 @@
+{
+  "name": "ObjectMaterialSource",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the source of material of single objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ObjectMaterialSource.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MaterialFromLayer",
+      "value": 0,
+      "summary": "use material assigned to layer."
+    },
+    {
+      "name": "MaterialFromObject",
+      "value": 1,
+      "summary": "use material assigned to object."
+    },
+    {
+      "name": "MaterialFromParent",
+      "value": 3,
+      "summary": "for objects with parents, like definition geometry in instance references and faces in polysurfaces, this value indicates the material definition should come from the parent. If the object does not have an obvious \u0022parent\u0022, then treat it the same as material_from_layer."
+    }
+  ]
+}

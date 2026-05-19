@@ -1,0 +1,176 @@
+{
+  "name": "RenderWindow.ChannelGPU",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderWindow.ChannelGPU\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderWindow_ChannelGPU.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public RenderWindow.ChannelGPU Clone()",
+      "summary": "Return a clone of the channel.",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow.ChannelGPU",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.Clone\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Clone.htm"
+    },
+    {
+      "name": "Close",
+      "signature": "public void Close()",
+      "summary": "Close the channel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Close.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(RenderWindow.Channel channel)",
+      "summary": "Copy the channel to a \u0027CPU\u0027 channel.",
+      "params": [
+        {
+          "name": "channel",
+          "type": "Rhino.Render.RenderWindow.Channel",
+          "doc": "The channel to copy to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_CopyTo.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose of the channel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Finalize.htm"
+    },
+    {
+      "name": "Height",
+      "signature": "public int Height()",
+      "summary": "Return the channel height.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.Height\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Height.htm"
+    },
+    {
+      "name": "Id",
+      "signature": "public Guid Id()",
+      "summary": "Return the channel id.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.Id\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Id.htm"
+    },
+    {
+      "name": "PixelSize",
+      "signature": "public uint PixelSize()",
+      "summary": "Return the size of one pixel\u0027s data in the channel.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.PixelSize\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_PixelSize.htm"
+    },
+    {
+      "name": "TextureHandle",
+      "signature": "[ObsoleteAttribute(\u0022This method has been deprecated. Please use TextureHandleOpenGL or TextureHandleMetal instead.\u0022)] public uint TextureHandle()",
+      "summary": "Return the channel\u0027s texture handle.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.TextureHandle\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_TextureHandle.htm"
+    },
+    {
+      "name": "TextureHandleMetal",
+      "signature": "public IntPtr TextureHandleMetal()",
+      "summary": "Return the channel\u0027s Metal texture handle (id\u003CMTLTexture\u003E) as an IntPtr. If there isn\u0027t one, IntPtr.Zero will be returned. The ChannelGPU.DisplayTechnology property will indicate which type of texture is stored in the channel. The IntPtr can be turned back into an Objective-C id\u003CMTLTexture\u003E using id\u003CMTLTexture\u003E texture = CFBridgingRelease(ptr);",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.TextureHandleMetal\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_TextureHandleMetal.htm"
+    },
+    {
+      "name": "TextureHandleOpenGL",
+      "signature": "public uint TextureHandleOpenGL()",
+      "summary": "Return the channel\u0027s OpenGL texture handle. If there isn\u0027t one, a value of 0 will be returned. The ChannelGPU.DisplayTechnology property will indicate which type of texture is stored in the channel.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.TextureHandleOpenGL\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_TextureHandleOpenGL.htm"
+    },
+    {
+      "name": "Width",
+      "signature": "public int Width()",
+      "summary": "Return the channel width.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderWindow.ChannelGPU.Width\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderWindow_ChannelGPU_Width.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayTechnology",
+      "type": "DisplayTechnology",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the type of API used for this channel\u0027s texture handle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderWindow_ChannelGPU_DisplayTechnology.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

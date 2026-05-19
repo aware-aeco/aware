@@ -1,0 +1,49 @@
+{
+  "name": "ViewTypeFilter",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Filter for view types to list",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ViewTypeFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No views"
+    },
+    {
+      "name": "Model",
+      "value": 1,
+      "summary": "Standard Rhino model views"
+    },
+    {
+      "name": "Page",
+      "value": 2,
+      "summary": "Page views"
+    },
+    {
+      "name": "ModelStyleViews",
+      "value": 268435453,
+      "summary": "All view styles except Page."
+    },
+    {
+      "name": "UVEditor",
+      "value": 4,
+      "summary": "UV Editor views"
+    },
+    {
+      "name": "BlockEditor",
+      "value": 8,
+      "summary": "Block Editor views"
+    },
+    {
+      "name": "All",
+      "value": 268435455,
+      "summary": "All views"
+    }
+  ]
+}

@@ -1,0 +1,948 @@
+{
+  "name": "BinaryArchiveReader",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents an entity that is capable of reading a binary archive and instantiating strongly-typed objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_BinaryArchiveReader.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AtEnd",
+      "signature": "public bool AtEnd()",
+      "summary": "true if at end of a file",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.AtEnd\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_AtEnd.htm"
+    },
+    {
+      "name": "BeginRead3dmChunk(UInt32, Int64)",
+      "signature": "public bool BeginRead3dmChunk(out uint typeCode, out long value)",
+      "summary": "Begins reading a chunk that must be in the archive at this location.",
+      "params": [
+        {
+          "name": "typeCode",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022typeCode\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.BeginRead3dmChunk(System.UInt32@,System.Int64@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int64",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.BeginRead3dmChunk(System.UInt32@,System.Int64@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.BeginRead3dmChunk(System.UInt32@,System.Int64@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_BeginRead3dmChunk_1.htm"
+    },
+    {
+      "name": "BeginRead3dmChunk(UInt32, Int32, Int32)",
+      "signature": "public bool BeginRead3dmChunk(uint expectedTypeCode, out int majorVersion, out int minorVersion)",
+      "summary": "Begins reading a chunk that must be in the archive at this location.",
+      "params": [
+        {
+          "name": "expectedTypeCode",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022expectedTypeCode\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.BeginRead3dmChunk(System.UInt32,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "majorVersion",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022majorVersion\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.BeginRead3dmChunk(System.UInt32,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "minorVersion",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022minorVersion\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.BeginRead3dmChunk(System.UInt32,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if beginning of the chunk was read. In this case you must call EndRead3dmChunk(), even if something goes wrong while you attempt to read the interior of the chunk. False if the chunk did not exist at the current location in the file."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_BeginRead3dmChunk.htm"
+    },
+    {
+      "name": "Dump3dmChunk",
+      "signature": "public uint Dump3dmChunk(TextLog log)",
+      "summary": "Function for studying contents of a file. The primary use is as an aid to help dig through files that have been damaged (bad disks, transmission errors, etc.) If an error is found, a line that begins with the word \u0022ERROR\u0022 is printed.",
+      "params": [
+        {
+          "name": "log",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "log where information is printed to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "0 if something went wrong, otherwise the typecode of the chunk that was just studied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_Dump3dmChunk.htm"
+    },
+    {
+      "name": "EnableCRCCalculation",
+      "signature": "public bool EnableCRCCalculation(bool enable)",
+      "summary": "Expert user function to control CRC calculation while reading and writing. Typically this is used when seeking around and reading/writing information in non-serial order.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.EnableCRCCalculation(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Current state of CRC calculation. Use the returned value to restore the CRC calculation setting after you are finished doing your fancy pants expert IO."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_EnableCRCCalculation.htm"
+    },
+    {
+      "name": "EndRead3dmChunk",
+      "signature": "public bool EndRead3dmChunk(bool suppressPartiallyReadChunkWarning)",
+      "summary": "Calling this will skip rest of stuff in chunk if it was only partially read.",
+      "params": [
+        {
+          "name": "suppressPartiallyReadChunkWarning",
+          "type": "System.Boolean",
+          "doc": "Generally, a call to ON_WARNING is made when a chunk is partially read. If suppressPartiallyReadChunkWarning is true, then no warning is issued for partially read chunks.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.EndRead3dmChunk(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_EndRead3dmChunk.htm"
+    },
+    {
+      "name": "Read3dmChunkVersion",
+      "signature": "public void Read3dmChunkVersion(out int major, out int minor)",
+      "summary": "A chunk version is a single byte that encodes a major.minor version number. Useful when creating I/O code for 3dm chunks that may change in the future. Increment the minor version number if new information is added to the end of the chunk. Increment the major version if the format of the chunk changes in some other way.",
+      "params": [
+        {
+          "name": "major",
+          "type": "System.Int32",
+          "doc": "0 to 15.",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "System.Int32",
+          "doc": "0 to 16.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_Read3dmChunkVersion.htm"
+    },
+    {
+      "name": "Read3dmStartSection",
+      "signature": "public bool Read3dmStartSection(out int version, out string comment)",
+      "summary": "",
+      "params": [
+        {
+          "name": "version",
+          "type": "System.Int32",
+          "doc": ".3dm file version (2, 3, 4, 5 or 50)",
+          "optional": false
+        },
+        {
+          "name": "comment",
+          "type": "System.String",
+          "doc": "String with application name, et cetera. This information is primarily used when debugging files that contain problems. McNeel and Associates stores application name, application version, compile date, and the OS in use when file was written.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_Read3dmStartSection.htm"
+    },
+    {
+      "name": "ReadBool",
+      "signature": "public bool ReadBool()",
+      "summary": "Reads a Boolean from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadBool.htm"
+    },
+    {
+      "name": "ReadBoolArray",
+      "signature": "public bool[] ReadBoolArray()",
+      "summary": "Reads an array of Boolean from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Boolean[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadBoolArray.htm"
+    },
+    {
+      "name": "ReadBoundingBox",
+      "signature": "public BoundingBox ReadBoundingBox()",
+      "summary": "Reads a BoundingBox from the archive.",
+      "params": [],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadBoundingBox.htm"
+    },
+    {
+      "name": "ReadByte",
+      "signature": "public byte ReadByte()",
+      "summary": "Reads a Byte from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Byte",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadByte.htm"
+    },
+    {
+      "name": "ReadByteArray",
+      "signature": "public byte[] ReadByteArray()",
+      "summary": "Reads an array of Byte from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadByteArray.htm"
+    },
+    {
+      "name": "ReadColor",
+      "signature": "public Color ReadColor()",
+      "summary": "Reads a Color from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Color",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadColor.htm"
+    },
+    {
+      "name": "ReadCompressedBuffer",
+      "signature": "public byte[] ReadCompressedBuffer()",
+      "summary": "Reads an array of compressed Byte information from the archive and uncompresses it. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadCompressedBuffer.htm"
+    },
+    {
+      "name": "ReadDictionary",
+      "signature": "public ArchivableDictionary ReadDictionary()",
+      "summary": "Reads a complete ArchivableDictionary from the archive.",
+      "params": [],
+      "returns": {
+        "type": "ArchivableDictionary",
+        "doc": "The newly instantiated object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadDictionary.htm"
+    },
+    {
+      "name": "ReadDouble",
+      "signature": "public double ReadDouble()",
+      "summary": "Reads a Double from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadDouble.htm"
+    },
+    {
+      "name": "ReadDoubleArray",
+      "signature": "public double[] ReadDoubleArray()",
+      "summary": "Reads an array of Double from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Double[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadDoubleArray.htm"
+    },
+    {
+      "name": "ReadFont",
+      "signature": "public Font ReadFont()",
+      "summary": "Reads a Font from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Font",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadFont.htm"
+    },
+    {
+      "name": "ReadGeometry",
+      "signature": "public GeometryBase ReadGeometry()",
+      "summary": "Reads a GeometryBase-derived object from the archive. The GeometryBase class is abstract.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadGeometry.htm"
+    },
+    {
+      "name": "ReadGeometryArray",
+      "signature": "public GeometryBase[] ReadGeometryArray()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.ReadGeometryArray\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadGeometryArray.htm"
+    },
+    {
+      "name": "ReadGuid",
+      "signature": "public Guid ReadGuid()",
+      "summary": "Reads a Guid from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadGuid.htm"
+    },
+    {
+      "name": "ReadGuidArray",
+      "signature": "public Guid[] ReadGuidArray()",
+      "summary": "Reads an array of Guid from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadGuidArray.htm"
+    },
+    {
+      "name": "ReadInt",
+      "signature": "public int ReadInt()",
+      "summary": "Reads a Int32 from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadInt.htm"
+    },
+    {
+      "name": "ReadInt64",
+      "signature": "public long ReadInt64()",
+      "summary": "Reads a Int64 from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Int64",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadInt64.htm"
+    },
+    {
+      "name": "ReadIntArray",
+      "signature": "public int[] ReadIntArray()",
+      "summary": "Reads an array of Int32 from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadIntArray.htm"
+    },
+    {
+      "name": "ReadInterval",
+      "signature": "public Interval ReadInterval()",
+      "summary": "Reads a Interval from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Interval",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadInterval.htm"
+    },
+    {
+      "name": "ReadLine",
+      "signature": "public Line ReadLine()",
+      "summary": "Reads a Line from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Line",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadLine.htm"
+    },
+    {
+      "name": "ReadMeshingParameters",
+      "signature": "public MeshingParameters ReadMeshingParameters()",
+      "summary": "Reads a MeshingParameters from the archive.",
+      "params": [],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadMeshingParameters.htm"
+    },
+    {
+      "name": "ReadObjRef",
+      "signature": "public ObjRef ReadObjRef()",
+      "summary": "Reads a ObjRef from the archive",
+      "params": [],
+      "returns": {
+        "type": "ObjRef",
+        "doc": "the element that was read"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadObjRef.htm"
+    },
+    {
+      "name": "ReadObjRefArray",
+      "signature": "public ObjRef[] ReadObjRefArray()",
+      "summary": "Reads an array of Double from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "ObjRef[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadObjRefArray.htm"
+    },
+    {
+      "name": "ReadPlane",
+      "signature": "public Plane ReadPlane()",
+      "summary": "Reads a Plane from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Plane",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPlane.htm"
+    },
+    {
+      "name": "ReadPoint",
+      "signature": "public Point ReadPoint()",
+      "summary": "Reads a Point from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Point",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPoint.htm"
+    },
+    {
+      "name": "ReadPoint2d",
+      "signature": "public Point2d ReadPoint2d()",
+      "summary": "Reads a Point2d from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Point2d",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPoint2d.htm"
+    },
+    {
+      "name": "ReadPoint3d",
+      "signature": "public Point3d ReadPoint3d()",
+      "summary": "Reads a Point3d from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPoint3d.htm"
+    },
+    {
+      "name": "ReadPoint3f",
+      "signature": "public Point3f ReadPoint3f()",
+      "summary": "Reads a Point3f from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Point3f",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPoint3f.htm"
+    },
+    {
+      "name": "ReadPoint4d",
+      "signature": "public Point4d ReadPoint4d()",
+      "summary": "Reads a Point4d from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Point4d",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPoint4d.htm"
+    },
+    {
+      "name": "ReadPointF",
+      "signature": "public PointF ReadPointF()",
+      "summary": "Reads a PointF from the archive.",
+      "params": [],
+      "returns": {
+        "type": "PointF",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadPointF.htm"
+    },
+    {
+      "name": "ReadRay3d",
+      "signature": "public Ray3d ReadRay3d()",
+      "summary": "Reads a Ray3d from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Ray3d",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadRay3d.htm"
+    },
+    {
+      "name": "ReadRectangle",
+      "signature": "public Rectangle ReadRectangle()",
+      "summary": "Reads a Rectangle from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadRectangle.htm"
+    },
+    {
+      "name": "ReadRectangleF",
+      "signature": "public RectangleF ReadRectangleF()",
+      "summary": "Reads a RectangleF from the archive.",
+      "params": [],
+      "returns": {
+        "type": "RectangleF",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadRectangleF.htm"
+    },
+    {
+      "name": "ReadRenderSettings",
+      "signature": "public RenderSettings ReadRenderSettings()",
+      "summary": "Reads a RenderSettings-derived object from the archive.",
+      "params": [],
+      "returns": {
+        "type": "RenderSettings",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadRenderSettings.htm"
+    },
+    {
+      "name": "ReadSByte",
+      "signature": "public sbyte ReadSByte()",
+      "summary": "Reads a SByte from the archive.",
+      "params": [],
+      "returns": {
+        "type": "SByte",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadSByte.htm"
+    },
+    {
+      "name": "ReadSByteArray",
+      "signature": "public sbyte[] ReadSByteArray()",
+      "summary": "Reads an array of SByte from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "SByte[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadSByteArray.htm"
+    },
+    {
+      "name": "ReadShort",
+      "signature": "public short ReadShort()",
+      "summary": "Reads a Int16 from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Int16",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadShort.htm"
+    },
+    {
+      "name": "ReadShortArray",
+      "signature": "public short[] ReadShortArray()",
+      "summary": "Reads an array of Int16 from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Int16[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadShortArray.htm"
+    },
+    {
+      "name": "ReadSingle",
+      "signature": "public float ReadSingle()",
+      "summary": "Reads a Single from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Single",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadSingle.htm"
+    },
+    {
+      "name": "ReadSingleArray",
+      "signature": "public float[] ReadSingleArray()",
+      "summary": "Reads an array of Single from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "Single[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadSingleArray.htm"
+    },
+    {
+      "name": "ReadSize",
+      "signature": "public Size ReadSize()",
+      "summary": "Reads a Size from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Size",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadSize.htm"
+    },
+    {
+      "name": "ReadSizeF",
+      "signature": "public SizeF ReadSizeF()",
+      "summary": "Reads a SizeF from the archive.",
+      "params": [],
+      "returns": {
+        "type": "SizeF",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadSizeF.htm"
+    },
+    {
+      "name": "ReadString",
+      "signature": "public string ReadString()",
+      "summary": "Reads a String from the archive.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadString.htm"
+    },
+    {
+      "name": "ReadStringArray",
+      "signature": "public string[] ReadStringArray()",
+      "summary": "Reads an array of String from the archive. An array is returned even if the input was another enumerable type.",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "The array that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadStringArray.htm"
+    },
+    {
+      "name": "ReadTransform",
+      "signature": "public Transform ReadTransform()",
+      "summary": "Reads a Transform from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadTransform.htm"
+    },
+    {
+      "name": "ReadUInt",
+      "signature": "public uint ReadUInt()",
+      "summary": "Reads a UInt32 from the archive.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadUInt.htm"
+    },
+    {
+      "name": "ReadUShort",
+      "signature": "public ushort ReadUShort()",
+      "summary": "Reads a UInt16 from the archive.",
+      "params": [],
+      "returns": {
+        "type": "UInt16",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadUShort.htm"
+    },
+    {
+      "name": "ReadUtf8String",
+      "signature": "public string ReadUtf8String()",
+      "summary": "Reads a String from the archive.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The value that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadUtf8String.htm"
+    },
+    {
+      "name": "ReadVector2d",
+      "signature": "public Vector2d ReadVector2d()",
+      "summary": "Reads a Vector2d from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadVector2d.htm"
+    },
+    {
+      "name": "ReadVector3d",
+      "signature": "public Vector3d ReadVector3d()",
+      "summary": "Reads a Vector3d from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadVector3d.htm"
+    },
+    {
+      "name": "ReadVector3f",
+      "signature": "public Vector3f ReadVector3f()",
+      "summary": "Reads a Vector3f from the archive.",
+      "params": [],
+      "returns": {
+        "type": "Vector3f",
+        "doc": "The element that was read."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_ReadVector3f.htm"
+    },
+    {
+      "name": "SeekFromCurrentPosition(Int64)",
+      "signature": "public bool SeekFromCurrentPosition(long byteOffset)",
+      "summary": "seek from current position ( like fseek( ,SEEK_CUR) )",
+      "params": [
+        {
+          "name": "byteOffset",
+          "type": "System.Int64",
+          "doc": "[Missing \u003Cparam name=\u0022byteOffset\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.SeekFromCurrentPosition(System.Int64)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.SeekFromCurrentPosition(System.Int64)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_SeekFromCurrentPosition.htm"
+    },
+    {
+      "name": "SeekFromCurrentPosition(UInt64, Boolean)",
+      "signature": "public bool SeekFromCurrentPosition(ulong byteOffset, bool forward)",
+      "summary": "seek from current position ( like fseek( ,SEEK_CUR) )",
+      "params": [
+        {
+          "name": "byteOffset",
+          "type": "System.UInt64",
+          "doc": "[Missing \u003Cparam name=\u0022byteOffset\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.SeekFromCurrentPosition(System.UInt64,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "forward",
+          "type": "System.Boolean",
+          "doc": "seek forward of backward in the archive",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.SeekFromCurrentPosition(System.UInt64,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_SeekFromCurrentPosition_1.htm"
+    },
+    {
+      "name": "SeekFromStart",
+      "signature": "public bool SeekFromStart(ulong byteOffset)",
+      "summary": "seek from start position ( like fseek( ,SEEK_SET) )",
+      "params": [
+        {
+          "name": "byteOffset",
+          "type": "System.UInt64",
+          "doc": "[Missing \u003Cparam name=\u0022byteOffset\u0022/\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.SeekFromStart(System.UInt64)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.BinaryArchiveReader.SeekFromStart(System.UInt64)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_BinaryArchiveReader_SeekFromStart.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Archive3dmVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "If a 3dm archive is being read or written, then this is the version of the 3dm archive format (1, 2, 3, 4 or 5). 0 a 3dm archive is not being read/written 1 a version 1 3dm archive is being read/written 2 a version 2 3dm archive is being read/written 3 a version 3 3dm archive is being read/written 4 a version 4 3dm archive is being read/written 5 an old version 5 3dm archive is being read 50 a version 5 3dm archive is being read/written.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_BinaryArchiveReader_Archive3dmVersion.htm"
+    },
+    {
+      "name": "CurrentPosition",
+      "type": "UInt64",
+      "getter": true,
+      "setter": false,
+      "summary": "current offset (in bytes) into archive ( like ftell() )",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_BinaryArchiveReader_CurrentPosition.htm"
+    },
+    {
+      "name": "ReadErrorOccured",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether en error occurred during reading.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_BinaryArchiveReader_ReadErrorOccured.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

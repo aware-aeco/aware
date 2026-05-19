@@ -1,0 +1,29 @@
+{
+  "name": "CurveExtensionStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for styles to use during curve extension, such as \u0022Line\u0022, \u0022Arc\u0022 or \u0022Smooth\u0022.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_CurveExtensionStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Line",
+      "value": 0,
+      "summary": "Curve ends will be propagated linearly according to tangents."
+    },
+    {
+      "name": "Arc",
+      "value": 1,
+      "summary": "Curve ends will be propagated arc-wise according to curvature."
+    },
+    {
+      "name": "Smooth",
+      "value": 2,
+      "summary": "Curve ends will be propagated smoothly according to curvature."
+    }
+  ]
+}

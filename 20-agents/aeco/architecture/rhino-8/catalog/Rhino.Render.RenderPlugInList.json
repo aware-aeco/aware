@@ -1,0 +1,25 @@
+{
+  "name": "RenderPlugInList",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderPlugInList\u0022]",
+  "base": "List\u003CRenderPlugInInfo\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderPlugInList.htm",
+  "constructors": [
+    {
+      "name": "RenderPlugInList",
+      "signature": "public RenderPlugInList()",
+      "summary": "Initializes a new instance of the RenderPlugInList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPlugInList__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

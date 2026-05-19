@@ -1,0 +1,57 @@
+{
+  "name": "FileGltf",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for writing glTF file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileGltf.htm",
+  "constructors": [
+    {
+      "name": "FileGltf",
+      "signature": "public FileGltf()",
+      "summary": "Initializes a new instance of the FileGltf class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileGltf__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Write",
+      "signature": "public static bool Write(string filename, RhinoDoc doc, FileGltfWriteOptions options)",
+      "summary": "Write a glTF file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "path to write a file to",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to get geometry from",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FileGltfWriteOptions",
+          "doc": "options used for generating the glTF file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileGltf_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,44 @@
+{
+  "name": "ModifierKey",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Keyboard keys typically used in combination with other keys",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ModifierKey.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No key"
+    },
+    {
+      "name": "Control",
+      "value": 1,
+      "summary": "Ctrl key on Windows"
+    },
+    {
+      "name": "MacCommand",
+      "value": 1,
+      "summary": "Command key on Mac. This is treated the same as Control key on Windows"
+    },
+    {
+      "name": "Shift",
+      "value": 2,
+      "summary": "Shift key"
+    },
+    {
+      "name": "Alt",
+      "value": 4,
+      "summary": "Alt key"
+    },
+    {
+      "name": "MacControl",
+      "value": 8,
+      "summary": "Control key on Mac"
+    }
+  ]
+}

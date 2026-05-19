@@ -1,0 +1,90 @@
+{
+  "name": "TexturedValue\u003CT\u003E",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Generic class to help holding on to related values. This can be used to get data from textured content fields with the HandleTexturedValue function.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_TexturedValue_1.htm",
+  "constructors": [
+    {
+      "name": "TexturedValue\u003CT\u003E",
+      "signature": "public TexturedValue(string name, T value, bool on, float amount)",
+      "summary": "Initializes a new instance of the TexturedValue\u003CT\u003E class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedValue\u00601.#ctor(System.String,\u00600,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedValue\u00601.#ctor(System.String,\u00600,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022on\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedValue\u00601.#ctor(System.String,\u00600,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022amount\u0022/\u003E documentation for \u0022M:Rhino.Render.TexturedValue\u00601.#ctor(System.String,\u00600,System.Boolean,System.Single)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TexturedValue_1__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Amount",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_TexturedValue_1_Amount.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_TexturedValue_1_Name.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_TexturedValue_1_On.htm"
+    },
+    {
+      "name": "Texture",
+      "type": "RenderTexture",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_TexturedValue_1_Texture.htm"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Render_TexturedValue_1_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

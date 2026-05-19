@@ -1,0 +1,29 @@
+{
+  "name": "LoopFormula",
+  "namespace": "Rhino.Geometry.MeshRefinements",
+  "kind": "enum",
+  "summary": "Enumerates the alternative Loop implementations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshRefinements_LoopFormula.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Loop",
+      "value": 0,
+      "summary": "The original Loop formula."
+    },
+    {
+      "name": "Warren",
+      "value": 1,
+      "summary": "Warren\u0027s improved formula."
+    },
+    {
+      "name": "WarrenWeimer",
+      "value": 2,
+      "summary": "The formula as explained by Weimer, improving over Warren\u0027s."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "name": "RenderWindowClonedEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderWindowClonedEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderWindowClonedEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "NewRenderWindow",
+      "type": "RenderWindow",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderWindowClonedEventArgs_NewRenderWindow.htm"
+    },
+    {
+      "name": "NewSessionId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderWindowClonedEventArgs_NewSessionId.htm"
+    },
+    {
+      "name": "OldRenderWindow",
+      "type": "RenderWindow",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderWindowClonedEventArgs_OldRenderWindow.htm"
+    },
+    {
+      "name": "OldSessionId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderWindowClonedEventArgs_OldSessionId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

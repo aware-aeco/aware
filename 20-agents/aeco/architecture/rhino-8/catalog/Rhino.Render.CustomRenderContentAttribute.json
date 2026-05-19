@@ -1,0 +1,200 @@
+{
+  "name": "CustomRenderContentAttribute",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Attributes for RenderContent",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderContentAttribute.htm",
+  "constructors": [
+    {
+      "name": "CustomRenderContentAttribute(String, Boolean, String, Boolean, Boolean, Boolean)",
+      "signature": "public CustomRenderContentAttribute(string renderEngineGuid = \u0022\u0022, bool imageBased = false, string category = \u0022General\u0022, bool is_elevated = false, bool is_built_in = false, bool is_private = false)",
+      "summary": "Initializes a new instance of the CustomRenderContentAttribute class",
+      "params": [
+        {
+          "name": "renderEngineGuid",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022renderEngineGuid\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "imageBased",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022imageBased\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "category",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022category\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "is_elevated",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_elevated\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "is_built_in",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_built_in\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "is_private",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_private\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderContentAttribute__ctor.htm"
+    },
+    {
+      "name": "CustomRenderContentAttribute(String, Boolean, String, Boolean, Boolean, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public CustomRenderContentAttribute(string renderEngineGuid, bool imageBased, string category, bool is_elevated, bool is_built_in, bool is_private, bool is_linear, bool is_hdrcapable, bool is_normalmap)",
+      "summary": "Initializes a new instance of the CustomRenderContentAttribute class",
+      "params": [
+        {
+          "name": "renderEngineGuid",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022renderEngineGuid\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "imageBased",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022imageBased\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "category",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022category\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "is_elevated",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_elevated\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "is_built_in",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_built_in\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "is_private",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_private\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "is_linear",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_linear\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "is_hdrcapable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_hdrcapable\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "is_normalmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022is_normalmap\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderContentAttribute.#ctor(System.String,System.Boolean,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderContentAttribute__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_Category.htm"
+    },
+    {
+      "name": "ImageBased",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_ImageBased.htm"
+    },
+    {
+      "name": "IsBuiltIn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_IsBuiltIn.htm"
+    },
+    {
+      "name": "IsElevated",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_IsElevated.htm"
+    },
+    {
+      "name": "IsHdrCapable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_IsHdrCapable.htm"
+    },
+    {
+      "name": "IsLinear",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_IsLinear.htm"
+    },
+    {
+      "name": "IsNormalMap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_IsNormalMap.htm"
+    },
+    {
+      "name": "IsPrivate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_IsPrivate.htm"
+    },
+    {
+      "name": "RenderEngineId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderContentAttribute_RenderEngineId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

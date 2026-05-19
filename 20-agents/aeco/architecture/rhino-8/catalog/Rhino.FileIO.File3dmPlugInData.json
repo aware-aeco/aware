@@ -1,0 +1,22 @@
+{
+  "name": "File3dmPlugInData",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents custom plug-in data, in the 3dm file, written by a plug-in.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmPlugInData.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the id of the plug-in that is associated with this custom data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmPlugInData_PlugInId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

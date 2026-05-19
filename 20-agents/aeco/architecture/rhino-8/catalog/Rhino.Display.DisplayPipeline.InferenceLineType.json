@@ -1,0 +1,29 @@
+{
+  "name": "DisplayPipeline.InferenceLineType",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipeline.InferenceLineType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipeline_InferenceLineType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Chord",
+      "value": 0,
+      "summary": "A chord from P to Q"
+    },
+    {
+      "name": "Ray",
+      "value": 1,
+      "summary": "A ray from P through Q"
+    },
+    {
+      "name": "InfiniteLine",
+      "value": 2,
+      "summary": "An infinite line through P and Q"
+    }
+  ]
+}

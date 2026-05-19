@@ -1,0 +1,118 @@
+{
+  "name": "FileObjReadOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options used when reading an obj file.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileObjReadOptions.htm",
+  "constructors": [
+    {
+      "name": "FileObjReadOptions",
+      "signature": "public FileObjReadOptions(FileReadOptions readOptions)",
+      "summary": "Initializes a new instance of the FileObjReadOptions class",
+      "params": [
+        {
+          "name": "readOptions",
+          "type": "Rhino.FileIO.FileReadOptions",
+          "doc": "[Missing \u003Cparam name=\u0022readOptions\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObjReadOptions.#ctor(Rhino.FileIO.FileReadOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileObjReadOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTransform",
+      "signature": "public Transform GetTransform()",
+      "summary": "Calculates the YToZ transform.",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileObjReadOptions.GetTransform\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FileObjReadOptions_GetTransform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayColorFromObjMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether textures are read from the .mtl file, if it exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_DisplayColorFromObjMaterial.htm"
+    },
+    {
+      "name": "IgnoreTextures",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether textures are read from the .mtl file, if it exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_IgnoreTextures.htm"
+    },
+    {
+      "name": "MapYtoZ",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to transform OBJ\u0027s Y axis to Rhino\u0027s Z axis",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_MapYtoZ.htm"
+    },
+    {
+      "name": "MorphTargetOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "TODO",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_MorphTargetOnly.htm"
+    },
+    {
+      "name": "ReverseGroupOrder",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines how groups/layers are nested when reading an obj file. Left to Right (default = false) or Right to Left (true)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_ReverseGroupOrder.htm"
+    },
+    {
+      "name": "Split32BitTextures",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_Split32BitTextures.htm"
+    },
+    {
+      "name": "UseObjGroupsAs",
+      "type": "FileObjReadOptions.UseObjGsAs",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_UseObjGroupsAs.htm"
+    },
+    {
+      "name": "UseObjObjectsAs",
+      "type": "FileObjReadOptions.UseObjOsAs",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FileObjReadOptions_UseObjObjectsAs.htm"
+    },
+    {
+      "name": "ReadOptions",
+      "type": "FileReadOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino\u0027s FileReadOptions passed into ReadFile",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_FileObjReadOptions_ReadOptions.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

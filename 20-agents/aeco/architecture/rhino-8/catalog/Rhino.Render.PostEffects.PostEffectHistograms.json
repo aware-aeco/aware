@@ -1,0 +1,50 @@
+{
+  "name": "PostEffectHistograms",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectHistograms\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_PostEffectHistograms.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "BeforeEarlyEffects",
+      "value": 1
+    },
+    {
+      "name": "BeforeToneMapping",
+      "value": 2
+    },
+    {
+      "name": "AfterToneMapping",
+      "value": 4
+    },
+    {
+      "name": "AfterLateEffects",
+      "value": 8
+    },
+    {
+      "name": "All",
+      "value": 15
+    },
+    {
+      "name": "ToneMappingDisplay",
+      "value": 6
+    },
+    {
+      "name": "AfterEarlyEffects",
+      "value": 2
+    },
+    {
+      "name": "BeforeLateEffects",
+      "value": 4
+    }
+  ]
+}

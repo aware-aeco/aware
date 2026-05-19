@@ -1,0 +1,252 @@
+{
+  "name": "TransformObjectList",
+  "namespace": "Rhino.Collections",
+  "kind": "class",
+  "summary": "A collection of Rhino object, grip objects, and the Rhino objects that owns the grips. Used by the TransformCommand and GetTransform classes.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Collections_TransformObjectList.htm",
+  "constructors": [
+    {
+      "name": "TransformObjectList",
+      "signature": "public TransformObjectList()",
+      "summary": "Initializes a new instance of the TransformObjectList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(ObjRef)",
+      "signature": "public void Add(ObjRef objref)",
+      "summary": "Add an ObjRef to this list. Use this to add polyedges so the references are properly counted",
+      "params": [
+        {
+          "name": "objref",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "[Missing \u003Cparam name=\u0022objref\u0022/\u003E documentation for \u0022M:Rhino.Collections.TransformObjectList.Add(Rhino.DocObjects.ObjRef)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_Add.htm"
+    },
+    {
+      "name": "Add(RhinoObject)",
+      "signature": "public void Add(RhinoObject rhinoObject)",
+      "summary": "Add a RhinoObject to this list",
+      "params": [
+        {
+          "name": "rhinoObject",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022rhinoObject\u0022/\u003E documentation for \u0022M:Rhino.Collections.TransformObjectList.Add(Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_Add_1.htm"
+    },
+    {
+      "name": "AddObjects",
+      "signature": "public int AddObjects(GetObject go, bool allowGrips)",
+      "summary": "Add objects to list with a GetObject",
+      "params": [
+        {
+          "name": "go",
+          "type": "Rhino.Input.Custom.GetObject",
+          "doc": "Setup the GetObject, i.e. prompt, geometry filter, allow pre/post select before passing it as an argument.",
+          "optional": false
+        },
+        {
+          "name": "allowGrips",
+          "type": "System.Boolean",
+          "doc": "Specifically allow grips to be selected. if true, grips must also be included in geometry filter of the GetObject in order to be selected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of objects selected."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_AddObjects.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Remove all elements from this list",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_Clear.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the TransformObjectList",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the TransformObjectList and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_Finalize.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox(bool regularObjects, bool grips)",
+      "summary": "Gets the bounding box of all of the objects that this list contains.",
+      "params": [
+        {
+          "name": "regularObjects",
+          "type": "System.Boolean",
+          "doc": "true if any object except grips should be included; otherwise false.",
+          "optional": false
+        },
+        {
+          "name": "grips",
+          "type": "System.Boolean",
+          "doc": "true if grips should be included; otherwise false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "Unset BoundingBox if this list is empty."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_GetBoundingBox.htm"
+    },
+    {
+      "name": "GripArray",
+      "signature": "public GripObject[] GripArray()",
+      "summary": "Gets access to the internal GripObject array of the TransformObjectList object.",
+      "params": [],
+      "returns": {
+        "type": "GripObject[]",
+        "doc": "An array of grip objects, or an empty array if there were no grip objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_GripArray.htm"
+    },
+    {
+      "name": "GripOwnerArray",
+      "signature": "public RhinoObject[] GripOwnerArray()",
+      "summary": "Gets access to the internal GripOwner array of the TransformObjectList object.",
+      "params": [],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "A n array of Rhino objects that are the owners of the grip objects the collection, or an empty array if there were no Rhino objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_GripOwnerArray.htm"
+    },
+    {
+      "name": "ObjectArray",
+      "signature": "public RhinoObject[] ObjectArray()",
+      "summary": "Gets access to the internal RhinoObject array of the TransformObjectList object.",
+      "params": [],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "An array of Rhino objects, or an empty array if there were no Rhino objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_ObjectArray.htm"
+    },
+    {
+      "name": "UpdateDisplayFeedbackTransform",
+      "signature": "public bool UpdateDisplayFeedbackTransform(Transform xform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022xform\u0022/\u003E documentation for \u0022M:Rhino.Collections.TransformObjectList.UpdateDisplayFeedbackTransform(Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Collections.TransformObjectList.UpdateDisplayFeedbackTransform(Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Collections_TransformObjectList_UpdateDisplayFeedbackTransform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of elements in this list",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_TransformObjectList_Count.htm"
+    },
+    {
+      "name": "DisplayFeedbackEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_TransformObjectList_DisplayFeedbackEnabled.htm"
+    },
+    {
+      "name": "GripCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of elements in grip list",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_TransformObjectList_GripCount.htm"
+    },
+    {
+      "name": "GripOwnerCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of elements in grip owner list",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Collections_TransformObjectList_GripOwnerCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

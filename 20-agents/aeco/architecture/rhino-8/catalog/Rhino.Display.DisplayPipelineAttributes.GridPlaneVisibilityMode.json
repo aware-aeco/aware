@@ -1,0 +1,24 @@
+{
+  "name": "DisplayPipelineAttributes.GridPlaneVisibilityMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.GridPlaneVisibilityMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_GridPlaneVisibilityMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ShowOnlyIfGridVisible",
+      "value": 0,
+      "summary": "Show only when grid is on"
+    },
+    {
+      "name": "AlwaysShow",
+      "value": 1,
+      "summary": "Show always"
+    }
+  ]
+}

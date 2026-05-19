@@ -1,0 +1,112 @@
+{
+  "name": "RhDisplayPoint",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "struct",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.InteropWrappers.RhDisplayPoint\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_InteropWrappers_RhDisplayPoint.htm",
+  "constructors": [
+    {
+      "name": "RhDisplayPoint",
+      "signature": "public RhDisplayPoint(Point3d location)",
+      "summary": "Initializes a new instance of the RhDisplayPoint class",
+      "params": [
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022location\u0022/\u003E documentation for \u0022M:Rhino.Runtime.InteropWrappers.RhDisplayPoint.#ctor(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_InteropWrappers_RhDisplayPoint__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "m__padding1",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m__padding1.htm"
+    },
+    {
+      "name": "m__padding2",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m__padding2.htm"
+    },
+    {
+      "name": "m_diameterPixels",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_diameterPixels.htm"
+    },
+    {
+      "name": "m_fillColor",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_fillColor.htm"
+    },
+    {
+      "name": "m_innerDiameterPixels",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_innerDiameterPixels.htm"
+    },
+    {
+      "name": "m_rotationRadians",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_rotationRadians.htm"
+    },
+    {
+      "name": "m_strokeColor",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_strokeColor.htm"
+    },
+    {
+      "name": "m_strokeWidthPixels",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_strokeWidthPixels.htm"
+    },
+    {
+      "name": "m_style",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_style.htm"
+    },
+    {
+      "name": "m_vertex",
+      "type": "Point3f",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_InteropWrappers_RhDisplayPoint_m_vertex.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

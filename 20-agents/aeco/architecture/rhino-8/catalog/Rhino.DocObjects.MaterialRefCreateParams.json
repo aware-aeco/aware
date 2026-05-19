@@ -1,0 +1,73 @@
+{
+  "name": "MaterialRefCreateParams",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Options passed to MaterialRefs.Create",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_MaterialRefCreateParams.htm",
+  "constructors": [
+    {
+      "name": "MaterialRefCreateParams",
+      "signature": "public MaterialRefCreateParams()",
+      "summary": "Initializes a new instance of the MaterialRefCreateParams class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_MaterialRefCreateParams__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BackFaceMaterialId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The Id of the Material used to render the back of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_MaterialRefCreateParams_BackFaceMaterialId.htm"
+    },
+    {
+      "name": "BackFaceMaterialIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the material used to render the back of an object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_MaterialRefCreateParams_BackFaceMaterialIndex.htm"
+    },
+    {
+      "name": "FrontFaceMaterialId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The Id of the Material used to render the front of an object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_MaterialRefCreateParams_FrontFaceMaterialId.htm"
+    },
+    {
+      "name": "FrontFaceMaterialIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the material used to render the front of an object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_MaterialRefCreateParams_FrontFaceMaterialIndex.htm"
+    },
+    {
+      "name": "MaterialSource",
+      "type": "ObjectMaterialSource",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the simple material should come from the object or from it\u0027s layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_MaterialRefCreateParams_MaterialSource.htm"
+    },
+    {
+      "name": "PlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Identifies a rendering plug-in",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_MaterialRefCreateParams_PlugInId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "FileIgsWriteOptions.MeshesMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileIgsWriteOptions.MeshesMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions_MeshesMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MeshNone",
+      "value": 0
+    },
+    {
+      "name": "Mesh10612",
+      "value": 12
+    },
+    {
+      "name": "Mesh10613",
+      "value": 13
+    }
+  ]
+}

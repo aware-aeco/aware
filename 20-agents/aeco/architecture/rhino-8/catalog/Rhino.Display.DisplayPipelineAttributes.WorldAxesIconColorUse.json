@@ -1,0 +1,29 @@
+{
+  "name": "DisplayPipelineAttributes.WorldAxesIconColorUse",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.WorldAxesIconColorUse\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_WorldAxesIconColorUse.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UseApplicationSettings",
+      "value": 0,
+      "summary": "Use default setting"
+    },
+    {
+      "name": "SameAsGridAxesColors",
+      "value": 1,
+      "summary": "Set colors for grid axes in Appearance: Colors Options"
+    },
+    {
+      "name": "Custom",
+      "value": 2,
+      "summary": "Use specified custom colors"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "SubDDisplayParameters.Density",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Density enumeration",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDDisplayParameters_Density.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UnsetDensity",
+      "value": 0,
+      "summary": "Indicates the SubD display mesh density has not be set."
+    },
+    {
+      "name": "MinimumUserInterfaceDensity",
+      "value": 1,
+      "summary": "The minimum SubD display density that can be se in Rhino user interface is ExtraCoarseDensity (1)."
+    },
+    {
+      "name": "MaximumUserInterfaceDensity",
+      "value": 5,
+      "summary": "The maximum SubD display density that can be se in Rhino user interface is ExtraFineDensity (5)."
+    },
+    {
+      "name": "MinimumAdaptiveDensity",
+      "value": 1,
+      "summary": "SubD display density values \u003C= MinimumAdaptiveDensity will never be adaptively reduced. SubD display density values \u003E MinimumAdaptiveDensity may be adaptively reduced to a value \u003E= MinimumAdaptiveDensity."
+    },
+    {
+      "name": "MinimumDensity",
+      "value": 0,
+      "summary": "Each SubD quad will generate 1 display mesh quads in a 1x1 grid. This density can only be used with SubDs where every face is a quad. User interface code never returns this density."
+    },
+    {
+      "name": "ExtraCoarseDensity",
+      "value": 1,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 4 display mesh quads in a 2x2 grid and each SubD N-gon will generate N display mesh quads. Adaptive reductions do not apply to this density. This is the minimum SubD display density."
+    },
+    {
+      "name": "CoarseDensity",
+      "value": 2,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 16 display mesh quads in a 4x4 grid and each SubD N-gon will generate N*4 display mesh quads. Adaptive reductions do not apply to this density."
+    },
+    {
+      "name": "MediumDensity",
+      "value": 3,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 64 display mesh quads in an 8x8 grid and each SubD N-gon will generate N*8 display mesh quads. When a SubD has more than 8000 faces, adaptive MediumDensity is reduced to CoarseDensity."
+    },
+    {
+      "name": "FineDensity",
+      "value": 4,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 256 display mesh quads in a 16x16 grid and each SubD N-gon will generate N*16 display mesh quads. When a SubD has more than 2000 faces, adaptive FineDensity is reduced to adaptive MediumDensity."
+    },
+    {
+      "name": "DefaultDensity",
+      "value": 4,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 256 display mesh quads in a 16x16 grid and each SubD N-gon will generate N*16 display mesh quads. When a SubD has more than 2000 faces, adaptive DefaultDensity is reduced to adaptive MediumDensity. This is the default value for creating mesh approximations of SubD surface. When treadted as an adaptive setting, it produces acceptable results for most SubDs."
+    },
+    {
+      "name": "ExtraFineDensity",
+      "value": 5,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 1024 display mesh quads in a 32x32 grid and each SubD N-gon will generate N*32 display mesh quads. When a SubD has more than 500 faces, adaptive ExtraFineDensity is reduced to adaptive FineDensity."
+    },
+    {
+      "name": "MaximumDensity",
+      "value": 6,
+      "summary": "When interpreted as an absolute SubD display density, each SubD quad will generate 4096 display mesh quads in a 64x64 grid and each SubD N-gon will generate N*64 display mesh quads. SubDDisplayParameters.AdaptiveDensity() determines if the subd display density is treated adaptively or absolutely. This value creates ridiculously dense display meshes and should generally be avoided. No Rhino user interface will create this value."
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "name": "DisplayPointAttributes",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPointAttributes\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPointAttributes.htm",
+  "constructors": [
+    {
+      "name": "DisplayPointAttributes()",
+      "signature": "public DisplayPointAttributes()",
+      "summary": "Initializes a new instance of the DisplayPointAttributes class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPointAttributes__ctor.htm"
+    },
+    {
+      "name": "DisplayPointAttributes(DisplayPointAttributes)",
+      "signature": "public DisplayPointAttributes(DisplayPointAttributes attributes)",
+      "summary": "Initializes a new instance of the DisplayPointAttributes class",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Rhino.Display.DisplayPointAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022attributes\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPointAttributes.#ctor(Rhino.Display.DisplayPointAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPointAttributes__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Diameter",
+      "type": "Nullable\u003CSingle\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_Diameter.htm"
+    },
+    {
+      "name": "FillColor",
+      "type": "Nullable\u003CColor\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_FillColor.htm"
+    },
+    {
+      "name": "PointStyle",
+      "type": "Nullable\u003CPointStyle\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_PointStyle.htm"
+    },
+    {
+      "name": "RotationRadians",
+      "type": "Nullable\u003CSingle\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_RotationRadians.htm"
+    },
+    {
+      "name": "SecondarySize",
+      "type": "Nullable\u003CSingle\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_SecondarySize.htm"
+    },
+    {
+      "name": "StrokeColor",
+      "type": "Nullable\u003CColor\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_StrokeColor.htm"
+    },
+    {
+      "name": "StrokeWidth",
+      "type": "Nullable\u003CSingle\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPointAttributes_StrokeWidth.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

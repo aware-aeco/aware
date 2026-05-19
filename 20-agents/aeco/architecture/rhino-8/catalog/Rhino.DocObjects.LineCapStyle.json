@@ -1,0 +1,29 @@
+{
+  "name": "LineCapStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Shape to be used at the ends of open curves",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_LineCapStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Round",
+      "value": 0,
+      "summary": "Ends are extended by a half circle with diameter equal to the curve width"
+    },
+    {
+      "name": "Flat",
+      "value": 1,
+      "summary": "Also known as butt. Ends are flat and do not extend"
+    },
+    {
+      "name": "Square",
+      "value": 2,
+      "summary": "Ends are flat and extended by half of the curve width"
+    }
+  ]
+}

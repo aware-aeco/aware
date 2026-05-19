@@ -1,0 +1,83 @@
+{
+  "name": "RhinoAccountsAuthTokenMismatchException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Exception thrown when the currently logged in user is different from the newly logged in user.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsAuthTokenMismatchException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsAuthTokenMismatchException(Exception)",
+      "signature": "public RhinoAccountsAuthTokenMismatchException(Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsAuthTokenMismatchException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsAuthTokenMismatchException(String, Exception)",
+      "signature": "public RhinoAccountsAuthTokenMismatchException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsAuthTokenMismatchException__ctor_1.htm"
+    },
+    {
+      "name": "RhinoAccountsAuthTokenMismatchException(String, String, Exception)",
+      "signature": "public RhinoAccountsAuthTokenMismatchException(string currentUsername, string newUsername, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "currentUsername",
+          "type": "System.String",
+          "doc": "The name of the currently logged in user.",
+          "optional": false
+        },
+        {
+          "name": "newUsername",
+          "type": "System.String",
+          "doc": "The name of the newly logged in user.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsAuthTokenMismatchException__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

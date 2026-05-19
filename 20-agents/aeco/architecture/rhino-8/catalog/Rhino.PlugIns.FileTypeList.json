@@ -1,0 +1,263 @@
+{
+  "name": "FileTypeList",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.PlugIns.FileTypeList\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_FileTypeList.htm",
+  "constructors": [
+    {
+      "name": "FileTypeList()",
+      "signature": "public FileTypeList()",
+      "summary": "Initializes a new instance of the FileTypeList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList__ctor.htm"
+    },
+    {
+      "name": "FileTypeList(String, String)",
+      "signature": "public FileTypeList(string description, string extension)",
+      "summary": "Initializes a new instance of the FileTypeList class",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList__ctor_1.htm"
+    },
+    {
+      "name": "FileTypeList(String, String, Boolean)",
+      "signature": "public FileTypeList(string description, string extension, bool showOptionsButtonInFileDialog)",
+      "summary": "Initializes a new instance of the FileTypeList class",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.#ctor(System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.#ctor(System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "showOptionsButtonInFileDialog",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022showOptionsButtonInFileDialog\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.#ctor(System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddFileType(String, IEnumerable\u003CString\u003E)",
+      "signature": "public int AddFileType(string description, IEnumerable\u003Cstring\u003E extensions)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extensions",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022extensions\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList_AddFileType.htm"
+    },
+    {
+      "name": "AddFileType(String, String)",
+      "signature": "public int AddFileType(string description, string extension)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList_AddFileType_2.htm"
+    },
+    {
+      "name": "AddFileType(String, IEnumerable\u003CString\u003E, Boolean)",
+      "signature": "public int AddFileType(string description, IEnumerable\u003Cstring\u003E extensions, bool showOptionsButtonInFileDialog)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extensions",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022extensions\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "showOptionsButtonInFileDialog",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022showOptionsButtonInFileDialog\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.Collections.Generic.IEnumerable{System.String},System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList_AddFileType_1.htm"
+    },
+    {
+      "name": "AddFileType(String, String, Boolean)",
+      "signature": "public int AddFileType(string description, string extension, bool showOptionsButtonInFileDialog)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "showOptionsButtonInFileDialog",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022showOptionsButtonInFileDialog\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList_AddFileType_3.htm"
+    },
+    {
+      "name": "AddFileType(String, String, String)",
+      "signature": "public int AddFileType(string description, string extension1, string extension2)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension1",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension1\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension2",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension2\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList_AddFileType_4.htm"
+    },
+    {
+      "name": "AddFileType(String, String, String, Boolean)",
+      "signature": "public int AddFileType(string description, string extension1, string extension2, bool showOptionsButtonInFileDialog)",
+      "summary": "",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension1",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension1\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "extension2",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension2\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "showOptionsButtonInFileDialog",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022showOptionsButtonInFileDialog\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.FileTypeList.AddFileType(System.String,System.String,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_FileTypeList_AddFileType_5.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

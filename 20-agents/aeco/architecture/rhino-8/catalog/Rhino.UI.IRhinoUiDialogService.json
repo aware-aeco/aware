@@ -1,0 +1,553 @@
+{
+  "name": "IRhinoUiDialogService",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "Used by Rhino.UI.Dialogs to access generic Eto dialogs from Rhino Common",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_IRhinoUiDialogService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DetectColorScheme",
+      "signature": "void DetectColorScheme(out bool defaultLightMode, out bool defaultDarkMode)",
+      "summary": "",
+      "params": [
+        {
+          "name": "defaultLightMode",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022defaultLightMode\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.DetectColorScheme(System.Boolean@,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultDarkMode",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022defaultDarkMode\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.DetectColorScheme(System.Boolean@,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_DetectColorScheme.htm"
+    },
+    {
+      "name": "IconFromResourceId",
+      "signature": "Icon IconFromResourceId(Assembly iconAssembly, string iconResourceId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "iconAssembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022iconAssembly\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.IconFromResourceId(System.Reflection.Assembly,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "iconResourceId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022iconResourceId\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.IconFromResourceId(System.Reflection.Assembly,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Icon",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.IconFromResourceId(System.Reflection.Assembly,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_IconFromResourceId.htm"
+    },
+    {
+      "name": "SetToDefaultColorScheme",
+      "signature": "bool SetToDefaultColorScheme(bool dark)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dark",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022dark\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.SetToDefaultColorScheme(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.SetToDefaultColorScheme(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_SetToDefaultColorScheme.htm"
+    },
+    {
+      "name": "ShowCheckListBox",
+      "signature": "bool[] ShowCheckListBox(string title, string message, IList items, IList\u003Cbool\u003E checkState)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowCheckListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.Boolean})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowCheckListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.Boolean})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowCheckListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.Boolean})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "checkState",
+          "type": "System.Collections.Generic.IList\u003CBoolean\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022checkState\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowCheckListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.Boolean})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowCheckListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.Boolean})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowCheckListBox.htm"
+    },
+    {
+      "name": "ShowComboListBox",
+      "signature": "Object ShowComboListBox(string title, string message, IList items)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowComboListBox(System.String,System.String,System.Collections.IList)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowComboListBox(System.String,System.String,System.Collections.IList)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowComboListBox(System.String,System.String,System.Collections.IList)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowComboListBox(System.String,System.String,System.Collections.IList)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowComboListBox.htm"
+    },
+    {
+      "name": "ShowEditBox",
+      "signature": "bool ShowEditBox(string title, string message, string defaultText, bool multiline, out string text)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowEditBox(System.String,System.String,System.String,System.Boolean,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowEditBox(System.String,System.String,System.String,System.Boolean,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultText",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022defaultText\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowEditBox(System.String,System.String,System.String,System.Boolean,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "multiline",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022multiline\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowEditBox(System.String,System.String,System.String,System.Boolean,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022text\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowEditBox(System.String,System.String,System.String,System.Boolean,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowEditBox(System.String,System.String,System.String,System.Boolean,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowEditBox.htm"
+    },
+    {
+      "name": "ShowLineTypes(String, String, RhinoDoc)",
+      "signature": "Object ShowLineTypes(string title, string message, RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowLineTypes.htm"
+    },
+    {
+      "name": "ShowLineTypes(String, String, RhinoDoc, Guid)",
+      "signature": "Guid ShowLineTypes(string title, string message, RhinoDoc doc, Guid selectedLinetypeId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "selectedLinetypeId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022selectedLinetypeId\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowLineTypes(System.String,System.String,Rhino.RhinoDoc,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowLineTypes_1.htm"
+    },
+    {
+      "name": "ShowListBox",
+      "signature": "Object ShowListBox(string title, string message, IList items, Object selectedItem)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowListBox(System.String,System.String,System.Collections.IList,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowListBox(System.String,System.String,System.Collections.IList,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowListBox(System.String,System.String,System.Collections.IList,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "selectedItem",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022selectedItem\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowListBox(System.String,System.String,System.Collections.IList,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowListBox(System.String,System.String,System.Collections.IList,System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowListBox.htm"
+    },
+    {
+      "name": "ShowMultiListBox",
+      "signature": "string[] ShowMultiListBox(IList\u003Cstring\u003E items, string message, string title, IList\u003Cstring\u003E defaults)",
+      "summary": "",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowMultiListBox(System.Collections.Generic.IList{System.String},System.String,System.String,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowMultiListBox(System.Collections.Generic.IList{System.String},System.String,System.String,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowMultiListBox(System.Collections.Generic.IList{System.String},System.String,System.String,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaults",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022defaults\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowMultiListBox(System.Collections.Generic.IList{System.String},System.String,System.String,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowMultiListBox(System.Collections.Generic.IList{System.String},System.String,System.String,System.Collections.Generic.IList{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowMultiListBox.htm"
+    },
+    {
+      "name": "ShowNumberBox",
+      "signature": "bool ShowNumberBox(string title, string message, ref double number, double minimum, double maximum)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowNumberBox(System.String,System.String,System.Double@,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowNumberBox(System.String,System.String,System.Double@,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022number\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowNumberBox(System.String,System.String,System.Double@,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "minimum",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022minimum\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowNumberBox(System.String,System.String,System.Double@,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "maximum",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022maximum\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowNumberBox(System.String,System.String,System.Double@,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowNumberBox(System.String,System.String,System.Double@,System.Double,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowNumberBox.htm"
+    },
+    {
+      "name": "ShowPopupMenu",
+      "signature": "int ShowPopupMenu(string[] arrItems, int[] arrModes, int? screenPointX, int? screenPointY)",
+      "summary": "",
+      "params": [
+        {
+          "name": "arrItems",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022arrItems\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPopupMenu(System.String[],System.Int32[],System.Nullable{System.Int32},System.Nullable{System.Int32})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arrModes",
+          "type": "System.Int32[]",
+          "doc": "[Missing \u003Cparam name=\u0022arrModes\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPopupMenu(System.String[],System.Int32[],System.Nullable{System.Int32},System.Nullable{System.Int32})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "screenPointX",
+          "type": "System.Nullable\u003CInt32\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022screenPointX\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPopupMenu(System.String[],System.Int32[],System.Nullable{System.Int32},System.Nullable{System.Int32})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "screenPointY",
+          "type": "System.Nullable\u003CInt32\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022screenPointY\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPopupMenu(System.String[],System.Int32[],System.Nullable{System.Int32},System.Nullable{System.Int32})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPopupMenu(System.String[],System.Int32[],System.Nullable{System.Int32},System.Nullable{System.Int32})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowPopupMenu.htm"
+    },
+    {
+      "name": "ShowPrintWidths(String, String)",
+      "signature": "double ShowPrintWidths(string title, string message)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowPrintWidths.htm"
+    },
+    {
+      "name": "ShowPrintWidths(String, String, Double)",
+      "signature": "double ShowPrintWidths(string title, string message, double selectedWidth)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "selectedWidth",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022selectedWidth\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPrintWidths(System.String,System.String,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowPrintWidths_1.htm"
+    },
+    {
+      "name": "ShowPropertyListBox(String, String, List\u003CKeyValuePair\u003CString, String\u003E\u003E)",
+      "signature": "string[] ShowPropertyListBox(string title, string message, List\u003CKeyValuePair\u003Cstring, string\u003E\u003E items)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.List\u003CKeyValuePair\u003CString,String\u003E\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowPropertyListBox.htm"
+    },
+    {
+      "name": "ShowPropertyListBox(String, String, IList, IList\u003CString\u003E)",
+      "signature": "string[] ShowPropertyListBox(string title, string message, IList items, IList\u003Cstring\u003E values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.IList",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IRhinoUiDialogService.ShowPropertyListBox(System.String,System.String,System.Collections.IList,System.Collections.Generic.IList{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IRhinoUiDialogService_ShowPropertyListBox_1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

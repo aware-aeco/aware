@@ -1,0 +1,540 @@
+{
+  "name": "PickContext",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Utility for determining if objects are picked",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_PickContext.htm",
+  "constructors": [
+    {
+      "name": "PickContext",
+      "signature": "public PickContext()",
+      "summary": "Initializes a new instance of the PickContext class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PickContext",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the PickContext and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_Finalize.htm"
+    },
+    {
+      "name": "PickFrustumTest(BoundingBox, Boolean)",
+      "signature": "public bool PickFrustumTest(BoundingBox box, out bool boxCompletelyInFrustum)",
+      "summary": "Fast test to check if a bounding box intersects a pick frustum.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "[Missing \u003Cparam name=\u0022box\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.BoundingBox,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "boxCompletelyInFrustum",
+          "type": "System.Boolean",
+          "doc": "Set to true if the box is completely contained in the pick frustum. When doing a window or crossing pick, you can immediately return a hit if the object\u0027s bounding box is completely inside of the pick frustum.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "False if bounding box is invalid or box does not intersect the pick frustum"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_1.htm"
+    },
+    {
+      "name": "PickFrustumTest(Point3d, Double, Double)",
+      "signature": "public bool PickFrustumTest(Point3d point, out double depth, out double distance)",
+      "summary": "Utility for picking 3d point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Point3d,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "depth returned here for point picks. LARGER values are NEARER to the camera. SMALLER values are FARTHER from the camera.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "planar distance returned here for point picks. SMALLER values are CLOSER to the pick point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if there is a hit"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_6.htm"
+    },
+    {
+      "name": "PickFrustumTest(BezierCurve, Double, Double, Double)",
+      "signature": "public bool PickFrustumTest(BezierCurve bezier, out double t, out double depth, out double distance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "bezier",
+          "type": "Rhino.Geometry.BezierCurve",
+          "doc": "[Missing \u003Cparam name=\u0022bezier\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.BezierCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.BezierCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022depth\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.BezierCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022distance\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.BezierCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.BezierCurve,System.Double@,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest.htm"
+    },
+    {
+      "name": "PickFrustumTest(Line, Double, Double, Double)",
+      "signature": "public bool PickFrustumTest(Line line, out double t, out double depth, out double distance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "[Missing \u003Cparam name=\u0022line\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Line,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Line,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022depth\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Line,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022distance\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Line,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Line,System.Double@,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_2.htm"
+    },
+    {
+      "name": "PickFrustumTest(NurbsCurve, Double, Double, Double)",
+      "signature": "public bool PickFrustumTest(NurbsCurve curve, out double t, out double depth, out double distance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022curve\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.NurbsCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.NurbsCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022depth\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.NurbsCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022distance\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.NurbsCurve,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.NurbsCurve,System.Double@,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_5.htm"
+    },
+    {
+      "name": "PickFrustumTest(Point3d[], Int32, Double, Double)",
+      "signature": "public bool PickFrustumTest(Point3d[] points, out int pointIndex, out double depth, out double distance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Point3d[],System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pointIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022pointIndex\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Point3d[],System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022depth\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Point3d[],System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022distance\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Point3d[],System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Point3d[],System.Int32@,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_7.htm"
+    },
+    {
+      "name": "PickFrustumTest(PointCloud, Int32, Double, Double)",
+      "signature": "public bool PickFrustumTest(PointCloud cloud, out int pointIndex, out double depth, out double distance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "[Missing \u003Cparam name=\u0022cloud\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.PointCloud,System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pointIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022pointIndex\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.PointCloud,System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022depth\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.PointCloud,System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022distance\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.PointCloud,System.Int32@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.PointCloud,System.Int32@,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_8.htm"
+    },
+    {
+      "name": "PickFrustumTest(Mesh, PickContext.MeshPickStyle, Point3d, Double, Double, PickContext.MeshHitFlag, Int32)",
+      "signature": "public bool PickFrustumTest(Mesh mesh, PickContext.MeshPickStyle pickStyle, out Point3d hitPoint, out double depth, out double distance, out PickContext.MeshHitFlag hitFlag, out int hitIndex)",
+      "summary": "Utility for picking meshes",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "mesh to test",
+          "optional": false
+        },
+        {
+          "name": "pickStyle",
+          "type": "Rhino.Input.Custom.PickContext.MeshPickStyle",
+          "doc": "mode used for pick test",
+          "optional": false
+        },
+        {
+          "name": "hitPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "location returned here for point picks",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "depth returned here for point picks LARGER values are NEARER to the camera. SMALLER values are FARTHER from the camera.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "planar distance returned here for point picks. SMALLER values are CLOSER to the pick point",
+          "optional": false
+        },
+        {
+          "name": "hitFlag",
+          "type": "Rhino.Input.Custom.PickContext.MeshHitFlag",
+          "doc": "For point picks, How to interpret the hitIndex (vertex hit, edge hit, or face hit)",
+          "optional": false
+        },
+        {
+          "name": "hitIndex",
+          "type": "System.Int32",
+          "doc": "index of vertex/edge/face that was hit. Use hitFlag to determine what this index corresponds to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Mesh,Rhino.Input.Custom.PickContext.MeshPickStyle,Rhino.Geometry.Point3d@,System.Double@,System.Double@,Rhino.Input.Custom.PickContext.MeshHitFlag@,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_4.htm"
+    },
+    {
+      "name": "PickFrustumTest(Mesh, PickContext.MeshPickStyle, Point3d, Point2d, Point2d, Double, Double, PickContext.MeshHitFlag, Int32)",
+      "signature": "public bool PickFrustumTest(Mesh mesh, PickContext.MeshPickStyle pickStyle, out Point3d hitPoint, out Point2d hitSurfaceUV, out Point2d hitTextureCoordinate, out double depth, out double distance, out PickContext.MeshHitFlag hitFlag, out int hitIndex)",
+      "summary": "Utility for picking meshes",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "mesh to test",
+          "optional": false
+        },
+        {
+          "name": "pickStyle",
+          "type": "Rhino.Input.Custom.PickContext.MeshPickStyle",
+          "doc": "mode used for pick test",
+          "optional": false
+        },
+        {
+          "name": "hitPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "location returned here for point picks",
+          "optional": false
+        },
+        {
+          "name": "hitSurfaceUV",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "If the mesh has surface parameters, set to the surface parameters of the hit point",
+          "optional": false
+        },
+        {
+          "name": "hitTextureCoordinate",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "If the mesh has texture coordinates, set to the texture coordinate of the hit point. Note that the texture coordinates can be set in many different ways and this information is useless unless you know how the texture coordinates are set on this particular mesh.",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "System.Double",
+          "doc": "depth returned here for point picks LARGER values are NEARER to the camera. SMALLER values are FARTHER from the camera.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "planar distance returned here for point picks. SMALLER values are CLOSER to the pick point",
+          "optional": false
+        },
+        {
+          "name": "hitFlag",
+          "type": "Rhino.Input.Custom.PickContext.MeshHitFlag",
+          "doc": "For point picks, How to interpret the hitIndex (vertex hit, edge hit, or face hit)",
+          "optional": false
+        },
+        {
+          "name": "hitIndex",
+          "type": "System.Int32",
+          "doc": "index of vertex/edge/face that was hit. Use hitFlag to determine what this index corresponds to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickFrustumTest(Rhino.Geometry.Mesh,Rhino.Input.Custom.PickContext.MeshPickStyle,Rhino.Geometry.Point3d@,Rhino.Geometry.Point2d@,Rhino.Geometry.Point2d@,System.Double@,System.Double@,Rhino.Input.Custom.PickContext.MeshHitFlag@,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickFrustumTest_3.htm"
+    },
+    {
+      "name": "PickMeshTopologyVertices",
+      "signature": "public int[] PickMeshTopologyVertices(Mesh mesh)",
+      "summary": "Utility for picking mesh vertices",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "[Missing \u003Cparam name=\u0022mesh\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.PickMeshTopologyVertices(Rhino.Geometry.Mesh)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "indices of mesh topology vertices that were picked"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_PickMeshTopologyVertices.htm"
+    },
+    {
+      "name": "SetPickTransform",
+      "signature": "public void SetPickTransform(Transform transform)",
+      "summary": "",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022transform\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.PickContext.SetPickTransform(Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_SetPickTransform.htm"
+    },
+    {
+      "name": "UpdateClippingPlanes",
+      "signature": "public void UpdateClippingPlanes()",
+      "summary": "Updates the clipping plane information in pick region. The SetClippingPlanes and View fields must be called before calling UpdateClippingPlanes().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_PickContext_UpdateClippingPlanes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GetObjectUsed",
+      "type": "GetObject",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_GetObjectUsed.htm"
+    },
+    {
+      "name": "PickGroupsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if GroupObjects should be added to the pick list",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_PickGroupsEnabled.htm"
+    },
+    {
+      "name": "PickLine",
+      "type": "Line",
+      "getter": true,
+      "setter": true,
+      "summary": "pick chord starts on near clipping plane and ends on far clipping plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_PickLine.htm"
+    },
+    {
+      "name": "PickMode",
+      "type": "PickMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_PickMode.htm"
+    },
+    {
+      "name": "PickStyle",
+      "type": "PickStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_PickStyle.htm"
+    },
+    {
+      "name": "SubObjectSelectionEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the user had activated sub-object selection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_SubObjectSelectionEnabled.htm"
+    },
+    {
+      "name": "View",
+      "type": "RhinoView",
+      "getter": true,
+      "setter": true,
+      "summary": "This view can be a model view or a page view. When view is a page view, then you need to distinguish between the viewports MainViewport() and ActiveViewport(). When m_view is a model view, both MainViewport() and ActiveViewport() return the world view\u0027s viewport.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_PickContext_View.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

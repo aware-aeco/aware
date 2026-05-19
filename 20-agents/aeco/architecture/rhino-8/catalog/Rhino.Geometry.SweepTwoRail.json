@@ -1,0 +1,578 @@
+{
+  "name": "SweepTwoRail",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Utility class for generating Breps by sweeping cross section curves over two rail curves. Note, this class has been superseded by the Rhino.Geometry.Brep.CreateFromSweep static functions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SweepTwoRail.htm",
+  "constructors": [
+    {
+      "name": "SweepTwoRail",
+      "signature": "public SweepTwoRail()",
+      "summary": "Initializes a new instance of the SweepTwoRail class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PerformSweep(Curve, Curve, Curve)",
+      "signature": "public Brep[] PerformSweep(Curve rail1, Curve rail2, Curve crossSection)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Shape curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweep.htm"
+    },
+    {
+      "name": "PerformSweep(Curve, Curve, IEnumerable\u003CCurve\u003E)",
+      "signature": "public Brep[] PerformSweep(Curve rail1, Curve rail2, IEnumerable\u003CCurve\u003E crossSections)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "Shape curves.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweep_2.htm"
+    },
+    {
+      "name": "PerformSweep(Curve, Curve, Curve, Double, Double)",
+      "signature": "public Brep[] PerformSweep(Curve rail1, Curve rail2, Curve crossSection, double crossSectionParameterRail1, double crossSectionParameterRail2)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Shape curve.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameterRail1",
+          "type": "System.Double",
+          "doc": "Curve parameter on first rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameterRail2",
+          "type": "System.Double",
+          "doc": "Curve parameter on second rail curve. Unused if is true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweep_1.htm"
+    },
+    {
+      "name": "PerformSweep(Curve, Curve, IEnumerable\u003CCurve\u003E, IEnumerable\u003CDouble\u003E, IEnumerable\u003CDouble\u003E)",
+      "signature": "public Brep[] PerformSweep(Curve rail1, Curve rail2, IEnumerable\u003CCurve\u003E crossSections, IEnumerable\u003Cdouble\u003E crossSectionParameters1, IEnumerable\u003Cdouble\u003E crossSectionParameters2)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "Cross section curves.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameters1",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "Curve parameters on first rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameters2",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "Curve parameters on second rail curve. Unused if is true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweep_3.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, Curve, Curve, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail1, Curve rail2, Curve crossSection, int rebuildCount)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Shape curve.",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "Rebuild point count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRebuild_1.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, Curve, IEnumerable\u003CCurve\u003E, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail1, Curve rail2, IEnumerable\u003CCurve\u003E crossSections, int rebuildCount)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "Shape curves.",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "Rebuild point count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRebuild_3.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, Curve, Curve, Double, Double, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail1, Curve rail2, Curve crossSection, double crossSectionParameterRail1, double crossSectionParameterRail2, int rebuildCount)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Shape curve.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameterRail1",
+          "type": "System.Double",
+          "doc": "Curve parameter on first rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameterRail2",
+          "type": "System.Double",
+          "doc": "Curve parameter on second rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "Rebuild point count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRebuild.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, Curve, IEnumerable\u003CCurve\u003E, IEnumerable\u003CDouble\u003E, IEnumerable\u003CDouble\u003E, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail1, Curve rail2, IEnumerable\u003CCurve\u003E crossSections, IEnumerable\u003Cdouble\u003E crossSectionParametersRail1, IEnumerable\u003Cdouble\u003E crossSectionParametersRail2, int rebuildCount)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "Shape curves.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParametersRail1",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "Curve parameters on first rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParametersRail2",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "Curve parameters on second rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "Rebuild point count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRebuild_2.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, Curve, Curve, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail1, Curve rail2, Curve crossSection, double refitTolerance)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Shape curve.",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "Refit tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRefit.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, Curve, IEnumerable\u003CCurve\u003E, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail1, Curve rail2, IEnumerable\u003CCurve\u003E crossSections, double refitTolerance)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "Shape curves.",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "Refit tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRefit_3.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, Curve, Curve, Double, Double, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail1, Curve rail2, Curve crossSection, double crossSectionParameterRail1, double crossSectionParameterRail2, double refitTolerance)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Shape curve.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameterRail1",
+          "type": "System.Double",
+          "doc": "Curve parameter on first rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameterRail2",
+          "type": "System.Double",
+          "doc": "Curve parameter on second rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "Refit tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRefit_1.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, Curve, IEnumerable\u003CCurve\u003E, IEnumerable\u003CDouble\u003E, IEnumerable\u003CDouble\u003E, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail1, Curve rail2, IEnumerable\u003CCurve\u003E crossSections, IEnumerable\u003Cdouble\u003E crossSectionParametersRail1, IEnumerable\u003Cdouble\u003E crossSectionParametersRail2, double refitTolerance)",
+      "summary": "Sweep2 function that fits a surface through profile curves that define the surface cross-sections and two curves that defines a surface edge.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Rail to sweep shapes along.",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "Shape curves.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParametersRail1",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "Curve parameters on first rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParametersRail2",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "Curve parameters on second rail curve. Unused if is true.",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "Refit tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "Array of Brep sweep results."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SweepTwoRail_PerformSweepRefit_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the angle tolerance in radians.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SweepTwoRail_AngleToleranceRadians.htm"
+    },
+    {
+      "name": "AutoAdjust",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true to have shape curves adjusted, sorted, and matched automatically. This will produce results comparable to Rhino\u0027s Sweep2 command. Set to false to not have shape curves adjusted, sorted, and matched automatically.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SweepTwoRail_AutoAdjust.htm"
+    },
+    {
+      "name": "ClosedSweep",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If the input rails are closed, ClosedSweep determines if the swept Breps will also be closed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SweepTwoRail_ClosedSweep.htm"
+    },
+    {
+      "name": "MaintainHeight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Removes the association between the height scaling from the width scaling.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SweepTwoRail_MaintainHeight.htm"
+    },
+    {
+      "name": "SweepTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the sweeping tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SweepTwoRail_SweepTolerance.htm"
+    },
+    {
+      "name": "UseLegacySweeper",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true if you want to use the legacy, low-level sweeper found in earlier versions of Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SweepTwoRail_UseLegacySweeper.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

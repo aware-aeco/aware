@@ -1,0 +1,29 @@
+{
+  "name": "ObjectLinetypeSource",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the source of linetype of single objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ObjectLinetypeSource.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LinetypeFromLayer",
+      "value": 0,
+      "summary": "use line style assigned to layer."
+    },
+    {
+      "name": "LinetypeFromObject",
+      "value": 1,
+      "summary": "use line style assigned to object."
+    },
+    {
+      "name": "LinetypeFromParent",
+      "value": 3,
+      "summary": "for objects with parents (like objects in instance references, use parent linetype) if not parent, treat as linetype_from_layer."
+    }
+  ]
+}

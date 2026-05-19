@@ -1,0 +1,34 @@
+{
+  "name": "RenderContent.ShowContentChooserFlags",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderContent.ShowContentChooserFlags\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContent_ShowContentChooserFlags.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Deprecated"
+    },
+    {
+      "name": "HideNewTab",
+      "value": 1,
+      "summary": "Deprecated"
+    },
+    {
+      "name": "HideExistingTab",
+      "value": 2,
+      "summary": "Deprecated"
+    },
+    {
+      "name": "MultipleSelection",
+      "value": 4,
+      "summary": "Deprecated"
+    }
+  ]
+}

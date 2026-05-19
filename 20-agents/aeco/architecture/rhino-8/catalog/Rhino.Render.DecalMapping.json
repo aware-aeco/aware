@@ -1,0 +1,34 @@
+{
+  "name": "DecalMapping",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DecalMapping\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DecalMapping.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Planar",
+      "value": 0,
+      "summary": "Planar mapping. Uses projection, origin, up and across vectors (not unitized)."
+    },
+    {
+      "name": "Cylindrical",
+      "value": 1,
+      "summary": "Cylindrical mapping. Uses origin, up, across, height, radius, latitude start and stop."
+    },
+    {
+      "name": "Spherical",
+      "value": 2,
+      "summary": "Spherical mapping. Uses origin, up, across, radius, latitude/longitude start and stop."
+    },
+    {
+      "name": "UV",
+      "value": 3,
+      "summary": "UV mapping."
+    }
+  ]
+}

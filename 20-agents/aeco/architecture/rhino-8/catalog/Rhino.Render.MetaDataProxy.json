@@ -1,0 +1,73 @@
+{
+  "name": "MetaDataProxy",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "ProxyClass for MetaData",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_MetaDataProxy.htm",
+  "constructors": [
+    {
+      "name": "MetaDataProxy",
+      "signature": "public MetaDataProxy()",
+      "summary": "Constructor for MetaDataProxy",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_MetaDataProxy__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for MetaDataProxy",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_MetaDataProxy_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for MetaDataProxy",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_MetaDataProxy_Finalize.htm"
+    },
+    {
+      "name": "SetContentInstanceId",
+      "signature": "public void SetContentInstanceId(Guid uuid)",
+      "summary": "Set Content instance id for meta data",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuid\u0022/\u003E documentation for \u0022M:Rhino.Render.MetaDataProxy.SetContentInstanceId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_MetaDataProxy_SetContentInstanceId.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "MetaDataProxy c\u002B\u002B pointer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_MetaDataProxy_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

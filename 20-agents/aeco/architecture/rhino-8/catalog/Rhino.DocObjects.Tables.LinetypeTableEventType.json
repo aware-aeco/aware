@@ -1,0 +1,44 @@
+{
+  "name": "LinetypeTableEventType",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "LinetypeTable event types Since: 8.0",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_LinetypeTableEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0,
+      "summary": "A linetype was added."
+    },
+    {
+      "name": "Deleted",
+      "value": 1,
+      "summary": "A linetype was deleted."
+    },
+    {
+      "name": "Undeleted",
+      "value": 2,
+      "summary": "A linetype was undeleted."
+    },
+    {
+      "name": "Modified",
+      "value": 3,
+      "summary": "A linetype was modified."
+    },
+    {
+      "name": "Sorted",
+      "value": 4,
+      "summary": "The linetype table was sorted."
+    },
+    {
+      "name": "Current",
+      "value": 5,
+      "summary": "The current linetype has changed."
+    }
+  ]
+}

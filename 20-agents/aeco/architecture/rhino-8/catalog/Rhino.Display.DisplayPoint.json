@@ -1,0 +1,61 @@
+{
+  "name": "DisplayPoint",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "A 3d point with attributes used by the display pipeline",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPoint.htm",
+  "constructors": [
+    {
+      "name": "DisplayPoint",
+      "signature": "public DisplayPoint(Point3d location)",
+      "summary": "Initializes a new instance of the DisplayPoint class",
+      "params": [
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022location\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPoint.#ctor(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPoint__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "WithAttributes",
+      "signature": "public DisplayPoint WithAttributes(DisplayPointAttributes attributes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "Rhino.Display.DisplayPointAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022attributes\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPoint.WithAttributes(Rhino.Display.DisplayPointAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DisplayPoint",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPoint.WithAttributes(Rhino.Display.DisplayPointAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPoint_WithAttributes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPoint_Location.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

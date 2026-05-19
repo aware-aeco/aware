@@ -1,0 +1,129 @@
+{
+  "name": "LicenseStatus",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "LicenseStatus class.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_LicenseStatus.htm",
+  "constructors": [
+    {
+      "name": "LicenseStatus",
+      "signature": "public LicenseStatus()",
+      "summary": "Public constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_LicenseStatus__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BuildType",
+      "type": "LicenseBuildType",
+      "getter": true,
+      "setter": true,
+      "summary": "The build contentType of the product, where: 100 = A release build, either commercial, education, NFR, etc. 200 = A evaluation build 300 = A beta build, such as a WIP.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_BuildType.htm"
+    },
+    {
+      "name": "CheckOutExpirationDate",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The date and time the checked out license will expire. Note, this is only set if m_license_type = Standalone or CloudZoo and if \u0022limited license checkout\u0022 was enabled on the Zoo server in the case of Standalone. Note, date and time is in local time coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_CheckOutExpirationDate.htm"
+    },
+    {
+      "name": "CloudZooLeaseExpiration",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the expiration date of the lease this instance represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_CloudZooLeaseExpiration.htm"
+    },
+    {
+      "name": "CloudZooLeaseIsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if the Cloud Zoo Lease represented by this instance is actively being managed by the Cloud Zoo Manager; else returns false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_CloudZooLeaseIsValid.htm"
+    },
+    {
+      "name": "ExpirationDate",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The date and time the license will expire. This value can be null if: 1.) The license contentType is \u0022Standalone\u0022 and the license does not expire. 2.) The license contentType is \u0022Network\u0022. 3.) The license contentType is \u0022NetworkCheckedOut\u0022 and the checkout does not expire Note, date and time is in local time coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_ExpirationDate.htm"
+    },
+    {
+      "name": "LicenseTitle",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The title of the license. (e.g. \u0022Rhinoceros 6.0 Commercial\u0022)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_LicenseTitle.htm"
+    },
+    {
+      "name": "LicenseType",
+      "type": "LicenseType",
+      "getter": true,
+      "setter": true,
+      "summary": "The license contentType. (e.g. Standalone, Network, etc.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_LicenseType.htm"
+    },
+    {
+      "name": "PluginId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The ID of the plug-in that owns this license information",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_PluginId.htm"
+    },
+    {
+      "name": "ProductIcon",
+      "type": "Icon",
+      "getter": true,
+      "setter": true,
+      "summary": "The product\u0027s icon. Note, this can be null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_ProductIcon.htm"
+    },
+    {
+      "name": "ProductId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The id of the product or plug in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_ProductId.htm"
+    },
+    {
+      "name": "RegisteredOrganization",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The registered organization of the product (e.g. \u0022Robert McNeel and Associates\u0022)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_RegisteredOrganization.htm"
+    },
+    {
+      "name": "RegisteredOwner",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The registered owner of the product. (e.g. \u0022Dale Fugier\u0022)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_RegisteredOwner.htm"
+    },
+    {
+      "name": "SerialNumber",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The \u0022for display only\u0022 product license or serial number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_LicenseStatus_SerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

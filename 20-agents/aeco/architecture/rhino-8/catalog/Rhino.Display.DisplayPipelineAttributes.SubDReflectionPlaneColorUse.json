@@ -1,0 +1,26 @@
+{
+  "name": "DisplayPipelineAttributes.SubDReflectionPlaneColorUse",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "SubD replection plane color use",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_SubDReflectionPlaneColorUse.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ObjectColor",
+      "value": 0
+    },
+    {
+      "name": "CustomColor",
+      "value": 1
+    },
+    {
+      "name": "SingleColorForAll",
+      "value": 2
+    }
+  ]
+}

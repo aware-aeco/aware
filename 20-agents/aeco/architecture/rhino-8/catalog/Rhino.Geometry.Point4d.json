@@ -1,0 +1,502 @@
+{
+  "name": "Point4d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the four coordinates of a point in four-dimensional space. The W (fourth) dimension is often considered the weight of the point as seen in 3D space.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Point4d.htm",
+  "constructors": [
+    {
+      "name": "Point4d(Point3d)",
+      "signature": "public Point4d(Point3d point)",
+      "summary": "Initializes a new instance of the Point4d class from the coordinates of a point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": ".",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d__ctor.htm"
+    },
+    {
+      "name": "Point4d(Point4d)",
+      "signature": "public Point4d(Point4d point)",
+      "summary": "Initializes a new point by copying coordinates from another point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d__ctor_1.htm"
+    },
+    {
+      "name": "Point4d(Double, Double, Double, Double)",
+      "signature": "public Point4d(double x, double y, double z, double w)",
+      "summary": "Initializes a new instance of the Point4d class based on coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X (first) dimension.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y (second) dimension.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The Z (third) dimension.",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "System.Double",
+          "doc": "The W (fourth) dimension, or weight.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public static Point4d Add(Point4d point1, Point4d point2)",
+      "summary": "Sums two Point4d together. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "A new point that results from the weighted addition of point1 and point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_Add.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Point4d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Point4d.EpsilonEquals(Rhino.Geometry.Point4d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Point4d.EpsilonEquals(Rhino.Geometry.Point4d,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Point4d.EpsilonEquals(Rhino.Geometry.Point4d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified System.Object is Point4d and has same coordinates as the present point.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is Point4d and has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Point4d)",
+      "signature": "public bool Equals(Point4d point)",
+      "summary": "Determines whether the specified point has same value as the present point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The specified point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if point has the same value as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes the hash code for the present point.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique hash code, which uses all coordinates of this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_GetHashCode.htm"
+    },
+    {
+      "name": "Multiply",
+      "signature": "public static Point4d Multiply(Point4d point, double d)",
+      "summary": "Multiplies a point by a number. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "A new point that results from the coordinate-wise multiplication of point with d."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_Multiply.htm"
+    },
+    {
+      "name": "Subtract",
+      "signature": "public static Point4d Subtract(Point4d point1, Point4d point2)",
+      "summary": "Subtracts the second point from the first point. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "A new point that results from the weighted subtraction of point2 from point1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_Subtract.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Returns the fully qualified type name of this instance.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The fully qualified type name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public void Transform(Transform xform)",
+      "summary": "Transforms the present point in place. The transformation matrix acts on the left of the point. i.e., result = transformation*point",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_Transform.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static Point4d operator \u002B(Point4d point1, Point4d point2)",
+      "summary": "Sums two Point4d together.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "A new point that results from the weighted addition of point1 and point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_op_Addition.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Point4d a, Point4d b)",
+      "summary": "Determines whether two Point4d have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the coordinates of the two points are equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Point4d a, Point4d b)",
+      "summary": "Determines whether two Point4d have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two points differ in any coordinate; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_op_Inequality.htm"
+    },
+    {
+      "name": "Multiply(Point4d, Point4d)",
+      "signature": "public static double operator *(Point4d point1, Point4d point2)",
+      "summary": "Multiplies two Point4d together, returning the dot (internal) product of the two. This is not the cross product.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "A value that results from the coordinate-wise multiplication of point1 and point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Point4d, Double)",
+      "signature": "public static Point4d operator *(Point4d point, double d)",
+      "summary": "Multiplies a point by a number.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "A new point that results from the coordinate-wise multiplication of point with d."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_op_Multiply_1.htm"
+    },
+    {
+      "name": "Subtraction",
+      "signature": "public static Point4d operator -(Point4d point1, Point4d point2)",
+      "summary": "Subtracts the second point from the first point.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point4d",
+        "doc": "A new point that results from the weighted subtraction of point2 from point1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point4d_op_Subtraction.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an indication regarding the validity of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point4d_IsValid.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Point4d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of a point with all coordinates set as RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point4d_Unset.htm"
+    },
+    {
+      "name": "W",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the W (fourth) coordinate -or weight- of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point4d_W.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X (first) coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point4d_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y (second) coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point4d_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z (third) coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point4d_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,62 @@
+{
+  "name": "HiddenLineDrawingPoint",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Points generated from source objects which correspond to point and point cloud source objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_HiddenLineDrawingPoint.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ClippingPlaneIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index into HiddenLineDrawing.ClippingPlanes when SilhouetteType == SilhouetteType.SectionCut.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingPoint_ClippingPlaneIndex.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of this object in HiddenLineDrawing.Points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingPoint_Index.htm"
+    },
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the location of this object in HiddenLineDrawing coordinates.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingPoint_Location.htm"
+    },
+    {
+      "name": "PointVisibility",
+      "type": "HiddenLineDrawingPoint.Visibility",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the point\u0027s visibility",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingPoint_PointVisibility.htm"
+    },
+    {
+      "name": "SourceObject",
+      "type": "HiddenLineDrawingObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the source object that this point came from.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingPoint_SourceObject.htm"
+    },
+    {
+      "name": "SourceObjectComponentIndex",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "Component of source object part that generated this curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingPoint_SourceObjectComponentIndex.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

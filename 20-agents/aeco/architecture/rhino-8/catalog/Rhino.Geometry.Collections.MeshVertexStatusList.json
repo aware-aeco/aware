@@ -1,0 +1,167 @@
+{
+  "name": "MeshVertexStatusList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to status information relative to components of a mesh.",
+  "interfaces": [
+    "IResizableList\u003Cbool\u003E",
+    "IList\u003Cbool\u003E",
+    "ICollection\u003Cbool\u003E",
+    "IEnumerable\u003Cbool\u003E",
+    "IEnumerable",
+    "IList",
+    "ICollection",
+    "IReadOnlyList\u003Cbool\u003E",
+    "IReadOnlyCollection\u003Cbool\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_MeshVertexStatusList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(bool hidden)",
+      "summary": "Adds a new flag at the end of the list.",
+      "params": [
+        {
+          "name": "hidden",
+          "type": "System.Boolean",
+          "doc": "True if vertex is hidden.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_Add.htm"
+    },
+    {
+      "name": "AddRange",
+      "signature": "public void AddRange(IEnumerable\u003Cbool\u003E values)",
+      "summary": "Appends an array, a list or any enumerable of flags to the end of the list.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CBoolean\u003E",
+          "doc": "Hidden values to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_AddRange.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the hidden vertex list on the mesh. This results in a fully visible mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_Clear.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(bool hidden)",
+      "summary": "Determines if some vertices are hidden or some are shown.",
+      "params": [
+        {
+          "name": "hidden",
+          "type": "System.Boolean",
+          "doc": "The value to be checked. True means some vertex is hidden.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the array contains the specified value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_Contains.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(bool[] array, int arrayIndex)",
+      "summary": "Copies to an array, starting at an index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "System.Boolean[]",
+          "doc": "The array to be copied into.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The starting index in the array.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_CopyTo.htm"
+    },
+    {
+      "name": "Destroy",
+      "signature": "public void Destroy()",
+      "summary": "Releases all memory allocated to store hidden vertices. The list capacity will be 0 after this call. Vertices will be immediately considered visible.Subsequent calls can add new items.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_Destroy.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003Cbool\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all flags in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CBoolean\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexStatusList_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capacity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the total number of hidden vertex information the internal data structure can hold without resizing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexStatusList_Capacity.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of hidden vertices. For this to be a valid part of a mesh, this count should be the same as the one of mesh vertices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexStatusList_Count.htm"
+    },
+    {
+      "name": "HiddenCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating how many vertices have been set to hidden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexStatusList_HiddenCount.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the hidden value at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexStatusList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

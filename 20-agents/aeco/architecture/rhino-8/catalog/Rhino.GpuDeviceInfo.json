@@ -1,0 +1,54 @@
+{
+  "name": "GpuDeviceInfo",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Represents a GPU device providing name, vendor and memory all as strings. Currently fully implemented only on Windows.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_GpuDeviceInfo.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DriverDateAsString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The driver date as string formatted year-month-day",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_GpuDeviceInfo_DriverDateAsString.htm"
+    },
+    {
+      "name": "Memory",
+      "type": "UInt64",
+      "getter": true,
+      "setter": false,
+      "summary": "Memory of the device in bytes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_GpuDeviceInfo_Memory.htm"
+    },
+    {
+      "name": "MemoryAsString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Memory of the device as a human-readable string",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_GpuDeviceInfo_MemoryAsString.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the device",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_GpuDeviceInfo_Name.htm"
+    },
+    {
+      "name": "Vendor",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Vendor of the device",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_GpuDeviceInfo_Vendor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

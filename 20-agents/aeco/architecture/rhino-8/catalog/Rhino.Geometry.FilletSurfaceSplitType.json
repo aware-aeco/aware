@@ -1,0 +1,29 @@
+{
+  "name": "FilletSurfaceSplitType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "RhinoFilletSurfaceSplitType",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_FilletSurfaceSplitType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Nothing",
+      "value": 0,
+      "summary": "Nothing"
+    },
+    {
+      "name": "Trim",
+      "value": 1,
+      "summary": "Trim"
+    },
+    {
+      "name": "Split",
+      "value": 2,
+      "summary": "Split"
+    }
+  ]
+}

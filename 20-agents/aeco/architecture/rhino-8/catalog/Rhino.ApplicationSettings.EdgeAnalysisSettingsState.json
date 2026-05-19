@@ -1,0 +1,30 @@
+{
+  "name": "EdgeAnalysisSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of EdgeAnalysisSettings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_EdgeAnalysisSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ShowEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a color used to enhance display edges in commands like _ShowEdges and _ShowNakedEdges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_EdgeAnalysisSettingsState_ShowEdgeColor.htm"
+    },
+    {
+      "name": "ShowEdges",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value referring to the group of edges that are targeted. 0 = all.1 = naked.2 = non-manifold.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_EdgeAnalysisSettingsState_ShowEdges.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

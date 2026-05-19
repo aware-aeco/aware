@@ -1,0 +1,742 @@
+{
+  "name": "MeshVertexList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the vertices and vertex-related functionality of a mesh.",
+  "interfaces": [
+    "IResizableList\u003CPoint3f\u003E",
+    "IList\u003CPoint3f\u003E",
+    "ICollection\u003CPoint3f\u003E",
+    "IEnumerable\u003CPoint3f\u003E",
+    "IEnumerable",
+    "IReadOnlyList\u003CPoint3f\u003E",
+    "IReadOnlyCollection\u003CPoint3f\u003E",
+    "IList",
+    "ICollection"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_MeshVertexList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Point3d)",
+      "signature": "public int Add(Point3d vertex)",
+      "summary": "Adds a new vertex to the end of the Vertex list.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Location of new vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Add.htm"
+    },
+    {
+      "name": "Add(Point3f)",
+      "signature": "public int Add(Point3f vertex)",
+      "summary": "Adds a new vertex to the end of the Vertex list.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Location of new vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Add_1.htm"
+    },
+    {
+      "name": "Add(Double, Double, Double)",
+      "signature": "public int Add(double x, double y, double z)",
+      "summary": "Adds a new vertex to the end of the Vertex list.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X component of new vertex coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y component of new vertex coordinate.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z component of new vertex coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Add_2.htm"
+    },
+    {
+      "name": "Add(Single, Single, Single)",
+      "signature": "public int Add(float x, float y, float z)",
+      "summary": "Adds a new vertex to the end of the Vertex list.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "X component of new vertex coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "Y component of new vertex coordinate.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Single",
+          "doc": "Z component of new vertex coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Add_3.htm"
+    },
+    {
+      "name": "AddVertices(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public void AddVertices(IEnumerable\u003CPoint3d\u003E vertices)",
+      "summary": "Adds a series of new vertices to the end of the vertex list. This overload accepts double-precision points.",
+      "params": [
+        {
+          "name": "vertices",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of Point3d.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_AddVertices.htm"
+    },
+    {
+      "name": "AddVertices(IEnumerable\u003CPoint3f\u003E)",
+      "signature": "public void AddVertices(IEnumerable\u003CPoint3f\u003E vertices)",
+      "summary": "Adds a series of new vertices to the end of the vertex list. This overload accepts single-precision points.",
+      "params": [
+        {
+          "name": "vertices",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3f\u003E",
+          "doc": "A list, an array or any enumerable set of Point3f.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_AddVertices_1.htm"
+    },
+    {
+      "name": "Align(Double, IEnumerable\u003CBoolean\u003E)",
+      "signature": "public int Align(double distance, IEnumerable\u003Cbool\u003E whichVertices = null)",
+      "summary": "Moves mesh vertices that belong to naked edges to neighboring vertices, within the specified distance. This forces unaligned mesh vertices to the same location and is helpful to clean meshes for 3D printing.See the Copy_AlignMeshVertices Rhino command for more information.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "Distance that should not be exceed when modifying the mesh.",
+          "optional": false
+        },
+        {
+          "name": "whichVertices",
+          "type": "System.Collections.Generic.IEnumerable\u003CBoolean\u003E",
+          "doc": "If not null, defines which vertices should be considered for adjustment.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "If the operation succeeded, the number of moved vertices, or -1 on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Align_1.htm"
+    },
+    {
+      "name": "Align(IEnumerable\u003CMesh\u003E, Double, IEnumerable\u003CIEnumerable\u003CBoolean\u003E\u003E)",
+      "signature": "public static int Align(IEnumerable\u003CMesh\u003E meshes, double distance, IEnumerable\u003CIEnumerable\u003Cbool\u003E\u003E whichVertices = null)",
+      "summary": "Moves mesh vertices that belong to naked edges to neighboring vertices, within the specified distance. This forces unaligned mesh vertices to the same location and is helpful to clean meshes for 3D printing.See the Copy_AlignMeshVertices Rhino command for more information.",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "The enumerable of meshes that need to have vertices adjusted.",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "Distance that should not be exceed when modifying the mesh.",
+          "optional": false
+        },
+        {
+          "name": "whichVertices",
+          "type": "System.Collections.Generic.IEnumerable\u003CIEnumerable\u003CBoolean\u003E\u003E",
+          "doc": "If not null, defines which vertices should be considered for adjustment. If this parameter is non-null, then all items within it have to be non-null as well, defining for each mesh, which vertices to adjust.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "If the operation succeeded, the number of moved vertices, or -1 on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Align.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the Vertex list on the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Clear.htm"
+    },
+    {
+      "name": "CombineIdentical",
+      "signature": "public bool CombineIdentical(bool ignoreNormals, bool ignoreAdditional)",
+      "summary": "Merges identical vertices.",
+      "params": [
+        {
+          "name": "ignoreNormals",
+          "type": "System.Boolean",
+          "doc": "If true, vertex normals will not be taken into consideration when comparing vertices.",
+          "optional": false
+        },
+        {
+          "name": "ignoreAdditional",
+          "type": "System.Boolean",
+          "doc": "If true, texture coordinates, colors, and principal curvatures will not be taken into consideration when comparing vertices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the mesh is changed, in which case the mesh will have fewer vertices than before."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_CombineIdentical.htm"
+    },
+    {
+      "name": "CullUnused",
+      "signature": "public int CullUnused()",
+      "summary": "Removes all vertices that are currently not used by the Face list.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of unused vertices that were removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_CullUnused.htm"
+    },
+    {
+      "name": "Destroy",
+      "signature": "public void Destroy()",
+      "summary": "Releases all memory allocated to store faces. The list capacity will be 0 after this call. Subsequent calls can add new items.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Destroy.htm"
+    },
+    {
+      "name": "GetConnectedVertices",
+      "signature": "public int[] GetConnectedVertices(int vertexIndex)",
+      "summary": "Gets indices of all vertices that form \u0022edges\u0022 with a given vertex index.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "The index of a vertex to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of vertex indices that are connected with the specified vertex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_GetConnectedVertices.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CPoint3f\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all mesh vertices (points) in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CPoint3f\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_GetEnumerator.htm"
+    },
+    {
+      "name": "GetTopologicalIndenticalVertices",
+      "signature": "public int[] GetTopologicalIndenticalVertices(int vertexIndex)",
+      "summary": "Gets a list of other vertices which are \u0022topologically\u0022 identical to this vertex.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "A vertex index in the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Array of indices of vertices that are topologically the same as this vertex. The array includes vertexIndex. Returns null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_GetTopologicalIndenticalVertices.htm"
+    },
+    {
+      "name": "GetVertexFaces",
+      "signature": "public int[] GetVertexFaces(int vertexIndex)",
+      "summary": "Gets a list of all of the faces that share a given vertex.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "The index of a vertex in the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of indices of faces on success, null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_GetVertexFaces.htm"
+    },
+    {
+      "name": "Hide",
+      "signature": "public void Hide(int vertexIndex)",
+      "summary": "Hides the vertex at the given index.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of vertex to hide.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Hide.htm"
+    },
+    {
+      "name": "HideAll",
+      "signature": "public void HideAll()",
+      "summary": "Hides all vertices in the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_HideAll.htm"
+    },
+    {
+      "name": "IsHidden",
+      "signature": "public bool IsHidden(int vertexIndex)",
+      "summary": "Gets a value indicating whether or not a vertex is hidden.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of vertex to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the vertex is hidden, false if it is not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_IsHidden.htm"
+    },
+    {
+      "name": "Point3dAt",
+      "signature": "public Point3d Point3dAt(int index)",
+      "summary": "Get double precision location at a given index",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.MeshVertexList.Point3dAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.MeshVertexList.Point3dAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Point3dAt.htm"
+    },
+    {
+      "name": "Remove(IEnumerable\u003CInt32\u003E, Boolean)",
+      "signature": "public bool Remove(IEnumerable\u003Cint\u003E indices, bool shrinkFaces)",
+      "summary": "Removes the vertices at the given indices and all faces that reference those vertices.",
+      "params": [
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "Vertex indices to remove.",
+          "optional": false
+        },
+        {
+          "name": "shrinkFaces",
+          "type": "System.Boolean",
+          "doc": "If true, quads that reference the deleted vertex will be converted to triangles.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Remove.htm"
+    },
+    {
+      "name": "Remove(Int32, Boolean)",
+      "signature": "public bool Remove(int index, bool shrinkFaces)",
+      "summary": "Removes the vertex at the given index and all faces that reference that index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex to remove.",
+          "optional": false
+        },
+        {
+          "name": "shrinkFaces",
+          "type": "System.Boolean",
+          "doc": "If true, quads that reference the deleted vertex will be converted to triangles.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Remove_1.htm"
+    },
+    {
+      "name": "SetVertex(Int32, Point3d)",
+      "signature": "public bool SetVertex(int index, Point3d vertex)",
+      "summary": "Sets or adds a vertex to the Vertex List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex to set.",
+          "optional": false
+        },
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Vertex location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_SetVertex.htm"
+    },
+    {
+      "name": "SetVertex(Int32, Point3f)",
+      "signature": "public bool SetVertex(int index, Point3f vertex)",
+      "summary": "Sets or adds a vertex to the Vertex List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex to set.",
+          "optional": false
+        },
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Vertex location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_SetVertex_1.htm"
+    },
+    {
+      "name": "SetVertex(Int32, Double, Double, Double)",
+      "signature": "public bool SetVertex(int index, double x, double y, double z)",
+      "summary": "Sets or adds a vertex to the Vertex List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z component of vertex location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_SetVertex_2.htm"
+    },
+    {
+      "name": "SetVertex(Int32, Single, Single, Single)",
+      "signature": "public bool SetVertex(int index, float x, float y, float z)",
+      "summary": "Sets or adds a vertex to the Vertex List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "X component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "Y component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Single",
+          "doc": "Z component of vertex location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_SetVertex_4.htm"
+    },
+    {
+      "name": "SetVertex(Int32, Double, Double, Double, Boolean)",
+      "signature": "public bool SetVertex(int index, double x, double y, double z, bool updateNormals)",
+      "summary": "Sets or adds a vertex to the Vertex List. If [index] is less than [Count], the existing vertex at [index] will be modified.If [index] equals [Count], a new vertex is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z component of vertex location.",
+          "optional": false
+        },
+        {
+          "name": "updateNormals",
+          "type": "System.Boolean",
+          "doc": "Set to true if you\u0027d like the vertex and face normals impacted by the change updated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_SetVertex_3.htm"
+    },
+    {
+      "name": "Show",
+      "signature": "public void Show(int vertexIndex)",
+      "summary": "Shows the vertex at the given index.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "System.Int32",
+          "doc": "Index of vertex to show.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_Show.htm"
+    },
+    {
+      "name": "ShowAll",
+      "signature": "public void ShowAll()",
+      "summary": "Shows all vertices in the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_ShowAll.htm"
+    },
+    {
+      "name": "ToFloatArray",
+      "signature": "public float[] ToFloatArray()",
+      "summary": "Copies all vertices to a linear array of float in x,y,z order",
+      "params": [],
+      "returns": {
+        "type": "Single[]",
+        "doc": "The float array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_ToFloatArray.htm"
+    },
+    {
+      "name": "ToPoint3dArray",
+      "signature": "public Point3d[] ToPoint3dArray()",
+      "summary": "Copies all vertices to a new array of Point3d.",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "A new array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_ToPoint3dArray.htm"
+    },
+    {
+      "name": "ToPoint3fArray",
+      "signature": "public Point3f[] ToPoint3fArray()",
+      "summary": "Copies all vertices to a new array of Point3f.",
+      "params": [],
+      "returns": {
+        "type": "Point3f[]",
+        "doc": "A new array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshVertexList_ToPoint3fArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capacity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the total number of vertices the internal data structure can hold without resizing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexList_Capacity.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of mesh vertices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Point3f",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vertex at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexList_Item.htm"
+    },
+    {
+      "name": "UseDoublePrecisionVertices",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Set to true if the vertices should be stored in double precision",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshVertexList_UseDoublePrecisionVertices.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

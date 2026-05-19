@@ -1,0 +1,257 @@
+{
+  "name": "GumballAppearanceSettings",
+  "namespace": "Rhino.UI.Gumball",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Gumball.GumballAppearanceSettings\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Gumball_GumballAppearanceSettings.htm",
+  "constructors": [
+    {
+      "name": "GumballAppearanceSettings",
+      "signature": "public GumballAppearanceSettings()",
+      "summary": "Initializes a new instance of the GumballAppearanceSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Gumball_GumballAppearanceSettings__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ArcThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ArcThickness.htm"
+    },
+    {
+      "name": "ArrowHeadLength",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ArrowHeadLength.htm"
+    },
+    {
+      "name": "ArrowHeadWidth",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ArrowHeadWidth.htm"
+    },
+    {
+      "name": "AxisThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_AxisThickness.htm"
+    },
+    {
+      "name": "ColorMenuButton",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ColorMenuButton.htm"
+    },
+    {
+      "name": "ColorX",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Default is Red.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ColorX.htm"
+    },
+    {
+      "name": "ColorY",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Default is Green.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ColorY.htm"
+    },
+    {
+      "name": "ColorZ",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Default is Blue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ColorZ.htm"
+    },
+    {
+      "name": "FreeTranslate",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "When FreeTranslate is 1, the center translation control can be dragged in any direction and moves the object the gumball controls. When FreeTranslate is 2, the center translation control can be dragged in any direction and moves the object the gumball itself. The default value is 2.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_FreeTranslate.htm"
+    },
+    {
+      "name": "MenuDistance",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance of menu ball from center.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_MenuDistance.htm"
+    },
+    {
+      "name": "MenuEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When MenuEnabled is true, the menu \u0022button\u0022 is drawn on the gumball. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_MenuEnabled.htm"
+    },
+    {
+      "name": "MenuSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Radius of menu circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_MenuSize.htm"
+    },
+    {
+      "name": "PlanarTranslationGripCorner",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_PlanarTranslationGripCorner.htm"
+    },
+    {
+      "name": "PlanarTranslationGripSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_PlanarTranslationGripSize.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_Radius.htm"
+    },
+    {
+      "name": "RelocateEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When RelocateEnabled is true, the user can reposition the gumball by tapping the control key while dragging. Once the repostion drag is terminated by releasing the/ mouse button, ordinary editing resumes. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_RelocateEnabled.htm"
+    },
+    {
+      "name": "RotateXEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When RotateX is true, the X rotation control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_RotateXEnabled.htm"
+    },
+    {
+      "name": "RotateYEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When RotateY is true, the Y rotation control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_RotateYEnabled.htm"
+    },
+    {
+      "name": "RotateZEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When RotateZ is true, the Z rotation control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_RotateZEnabled.htm"
+    },
+    {
+      "name": "ScaleGripSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ScaleGripSize.htm"
+    },
+    {
+      "name": "ScaleXEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When ScaleXEnabled is true, the X scale control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ScaleXEnabled.htm"
+    },
+    {
+      "name": "ScaleYEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When ScaleYEnabled is true, the Y scale control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ScaleYEnabled.htm"
+    },
+    {
+      "name": "ScaleZEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When ScaleZEnabled is true, the Z scale control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_ScaleZEnabled.htm"
+    },
+    {
+      "name": "TranslateXEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "TranslateXEnabled is true, the X axis translation control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_TranslateXEnabled.htm"
+    },
+    {
+      "name": "TranslateXYEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When TranslateXY is true, the XY plane translation control is available in appropriate views. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_TranslateXYEnabled.htm"
+    },
+    {
+      "name": "TranslateYEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "TranslateYEnabled is true, the Y axis translation control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_TranslateYEnabled.htm"
+    },
+    {
+      "name": "TranslateYZEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When TranslateYZ is true, the YZ plane translation control is available in appropriate views. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_TranslateYZEnabled.htm"
+    },
+    {
+      "name": "TranslateZEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "TranslateZEnabled is true, the Z axis translation control is available. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_TranslateZEnabled.htm"
+    },
+    {
+      "name": "TranslateZXEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When TranslateZX is true, the ZX plane translation control is available in appropriate views. The default setting is true.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Gumball_GumballAppearanceSettings_TranslateZXEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Font.FontType",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "An enum that reports if the font face is available on the current device.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Font_FontType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not set."
+    },
+    {
+      "name": "ManagedFont",
+      "value": 1,
+      "summary": "In the managed font list."
+    },
+    {
+      "name": "InstalledFont",
+      "value": 2,
+      "summary": "In the installed font list."
+    }
+  ]
+}

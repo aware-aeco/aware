@@ -1,0 +1,14 @@
+{
+  "name": "RuiUpdateUi.UpdateMenuItemEventHandler",
+  "namespace": "Rhino.UI",
+  "kind": "delegate",
+  "summary": "Menu item update delegate",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_RuiUpdateUi_UpdateMenuItemEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void UpdateMenuItemEventHandler( Object sender, RuiUpdateUi cmdui )"
+}

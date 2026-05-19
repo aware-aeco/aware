@@ -1,0 +1,34 @@
+{
+  "name": "DimensionStyle.AngleDisplayFormat",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Display format for angles",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DimensionStyle_AngleDisplayFormat.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DecimalDegrees",
+      "value": 0,
+      "summary": "Decimal Degrees"
+    },
+    {
+      "name": "DegMinSec",
+      "value": 1,
+      "summary": "Degrees Minutes Seconds"
+    },
+    {
+      "name": "Radians",
+      "value": 2,
+      "summary": "Decimal Radians"
+    },
+    {
+      "name": "Grads",
+      "value": 3,
+      "summary": "Decimal Gradians"
+    }
+  ]
+}

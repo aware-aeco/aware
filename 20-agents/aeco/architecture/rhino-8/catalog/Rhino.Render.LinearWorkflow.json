@@ -1,0 +1,210 @@
+{
+  "name": "LinearWorkflow",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "This is the interface to linear workflow settings.",
+  "base": "DocumentOrFreeFloatingBase",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_LinearWorkflow.htm",
+  "constructors": [
+    {
+      "name": "LinearWorkflow()",
+      "signature": "public LinearWorkflow()",
+      "summary": "Create a utility object not associated with any document.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow__ctor.htm"
+    },
+    {
+      "name": "LinearWorkflow(LinearWorkflow)",
+      "signature": "public LinearWorkflow(LinearWorkflow src)",
+      "summary": "Create a utility object not associated with any document from another object.",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.LinearWorkflow",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.LinearWorkflow.#ctor(Rhino.Render.LinearWorkflow)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts cc)",
+      "summary": "(Inherited from DocumentOrFreeFloatingBase.)",
+      "params": [
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022cc\u0022/\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.BeginChange(Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_BeginChange.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public override void CopyFrom(FreeFloatingBase src)",
+      "summary": "Copy from another linear workflow object.",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.FreeFloatingBase",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.LinearWorkflow.CopyFrom(Rhino.Render.FreeFloatingBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow_CopyFrom.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the LinearWorkflow",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow_Dispose.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public bool EndChange()",
+      "summary": "(Inherited from DocumentOrFreeFloatingBase.)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.EndChange\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_EndChange.htm"
+    },
+    {
+      "name": "Equals",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Compare two LinearWorkflow objects. They are considered equal if their hashes match.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.LinearWorkflow.Equals(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LinearWorkflow.Equals(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow_Equals.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides FreeFloatingBase.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow_Finalize.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Get hash code for this object. It is the Hash property cast to int.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LinearWorkflow.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_LinearWorkflow_GetHashCode.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Hash",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Linear workflow hash.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_Hash.htm"
+    },
+    {
+      "name": "PostProcessFrameBuffer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow post-process frame buffer enabled state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PostProcessFrameBuffer.htm"
+    },
+    {
+      "name": "PostProcessGamma",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow post-process gamma value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PostProcessGamma.htm"
+    },
+    {
+      "name": "PostProcessGammaOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow post-process gamma enabled state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PostProcessGammaOn.htm"
+    },
+    {
+      "name": "PostProcessGammaReciprocal",
+      "type": "Single",
+      "getter": true,
+      "setter": false,
+      "summary": "Reciprocal of linear workflow post-process gamma value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PostProcessGammaReciprocal.htm"
+    },
+    {
+      "name": "PreProcessColors",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow pre-process colors enabled state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PreProcessColors.htm"
+    },
+    {
+      "name": "PreProcessGamma",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow pre-process gamma value. This is currently the same as the post-process gamma value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PreProcessGamma.htm"
+    },
+    {
+      "name": "PreProcessTextures",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear workflow pre-process textures enabled state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_LinearWorkflow_PreProcessTextures.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

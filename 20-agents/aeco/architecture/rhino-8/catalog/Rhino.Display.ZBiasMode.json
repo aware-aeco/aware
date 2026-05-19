@@ -1,0 +1,26 @@
+{
+  "name": "ZBiasMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Biasing applied to geometry to attempt to get coplanar items to draw on top of or below other geometry",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ZBiasMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Neutral",
+      "value": 0
+    },
+    {
+      "name": "TowardsCamera",
+      "value": 1
+    },
+    {
+      "name": "AwayFromCamera",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "name": "ContentFactories",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.ContentFactories\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DataSources_ContentFactories.htm",
+  "constructors": [
+    {
+      "name": "ContentFactories",
+      "signature": "public ContentFactories(IntPtr pRdkContentFactories)",
+      "summary": "Initializes a new instance of the ContentFactories class",
+      "params": [
+        {
+          "name": "pRdkContentFactories",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRdkContentFactories\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactories.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactories__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the ContentFactories",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactories_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactories_Finalize.htm"
+    },
+    {
+      "name": "FindFactory",
+      "signature": "public ContentFactory FindFactory(Guid uuid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuid\u0022/\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactories.FindFactory(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ContentFactory",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactories.FindFactory(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactories_FindFactory.htm"
+    },
+    {
+      "name": "FirstFactory",
+      "signature": "public ContentFactory FirstFactory()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ContentFactory",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactories.FirstFactory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactories_FirstFactory.htm"
+    },
+    {
+      "name": "NextFactory",
+      "signature": "public ContentFactory NextFactory()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "ContentFactory",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DataSources.ContentFactories.NextFactory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DataSources_ContentFactories_NextFactory.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_DataSources_ContentFactories_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

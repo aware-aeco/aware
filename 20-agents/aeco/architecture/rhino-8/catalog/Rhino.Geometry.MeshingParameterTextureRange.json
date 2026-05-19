@@ -1,0 +1,29 @@
+{
+  "name": "MeshingParameterTextureRange",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines how to pack render/meshes textures.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshingParameterTextureRange.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "This value is not set."
+    },
+    {
+      "name": "UnpackedUnscaledNormalized",
+      "value": 1,
+      "summary": "Each face has a normalized texture range [0,1]x[0,1]. The normalized coordinate is calculated using the entire surface domain. For meshes of trimmed surfaces when the active area is a small subset of the entire surface, there will be large regions of unused texture space in [0,1]x[0,1]. When the 3d region being meshed is far from being square-ish, there will be a substantial amount of distortion mapping [0,1]x[0,1] texture space to the 3d mesh."
+    },
+    {
+      "name": "PackedScaledNormalized",
+      "value": 2,
+      "summary": "Each face is assigned a texture range that is a sub-rectangle of [0,1]x[0,1]. The sub-rectangles are mutually disjoint and packed into [0,1]x[0,1] in a way that minimizes distortion and maximizes the coverage of [0,1]x[0,1]. When the surface or surfaces being meshed are trimmed, this option takes into account only the region of the base surface the mesh covers and uses as much of [0,1]x[0,1] as possible. (default)"
+    }
+  ]
+}

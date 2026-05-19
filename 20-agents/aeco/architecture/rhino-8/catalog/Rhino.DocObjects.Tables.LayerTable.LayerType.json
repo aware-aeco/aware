@@ -1,0 +1,29 @@
+{
+  "name": "LayerTable.LayerType",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "Layer types created by .",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_LayerTable_LayerType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NormalLayer",
+      "value": 0,
+      "summary": "Normal ordinary layer."
+    },
+    {
+      "name": "LinkedInstanceDefinitionParentLayer",
+      "value": 2,
+      "summary": "Linked instance definition \u0022filename.3dm\u0022 parent layer of the instance definition\u0027s layer tree."
+    },
+    {
+      "name": "WorkSessionParentLayer",
+      "value": 4,
+      "summary": "Worksession reference model \u0022filename.3dm\u0022 parent layer of the reference model\u0027s layer tree."
+    }
+  ]
+}

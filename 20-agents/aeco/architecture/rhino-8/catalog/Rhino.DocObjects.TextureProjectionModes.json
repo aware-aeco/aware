@@ -1,0 +1,84 @@
+{
+  "name": "TextureProjectionModes",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Enum describing how texture is projected onto geometry",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_TextureProjectionModes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "Not valid projection type"
+    },
+    {
+      "name": "MappingChannel",
+      "value": 1,
+      "summary": "Uses a texture mapping to generate texture coordinates"
+    },
+    {
+      "name": "ScreenBased",
+      "value": 2,
+      "summary": "Screen based"
+    },
+    {
+      "name": "Wcs",
+      "value": 3,
+      "summary": "World coordinate system projection"
+    },
+    {
+      "name": "WcsBox",
+      "value": 4,
+      "summary": "Box type world coordinate system projection"
+    },
+    {
+      "name": "EnvironmentMapBox",
+      "value": 5,
+      "summary": "Box type environment mapping"
+    },
+    {
+      "name": "EnvironmentMapLightProbe",
+      "value": 6,
+      "summary": "Light probe type environment mapping"
+    },
+    {
+      "name": "EnvironmentMapSpherical",
+      "value": 7,
+      "summary": "Spherical environment mapping"
+    },
+    {
+      "name": "EnvironmentMapCube",
+      "value": 8,
+      "summary": "Cube type environment mapping"
+    },
+    {
+      "name": "EnvironmentMapVCrossCube",
+      "value": 9,
+      "summary": "Vertical cross cube type environment mapping"
+    },
+    {
+      "name": "EnvironmentMapHCrossCube",
+      "value": 10,
+      "summary": "Horizontal cross type environment mapping"
+    },
+    {
+      "name": "EnvironmentMapHemispherical",
+      "value": 11,
+      "summary": "Hemispherical environment mapping"
+    },
+    {
+      "name": "EnvironmentMapEmap",
+      "value": 12,
+      "summary": "Emap type environment mapping"
+    },
+    {
+      "name": "SurfaceParameterization",
+      "value": 13,
+      "summary": "Surface parameterization"
+    }
+  ]
+}

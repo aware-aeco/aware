@@ -1,0 +1,29 @@
+{
+  "name": "LinkedInstanceDefinitionUpdateStyle",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "Linked and linked and embedded instance definition update style.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_LinkedInstanceDefinitionUpdateStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Prompt",
+      "value": 1,
+      "summary": "Ask the user if the linked and linked and embedded instance definitions should be updated."
+    },
+    {
+      "name": "AlwaysUpdate",
+      "value": 2,
+      "summary": "Always update linked and linked and embedded instance definitions."
+    },
+    {
+      "name": "NeverUpdate",
+      "value": 3,
+      "summary": "Never update linked and linked and embedded instance definitions."
+    }
+  ]
+}

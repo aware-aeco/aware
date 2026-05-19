@@ -1,0 +1,22 @@
+{
+  "name": "Shapes",
+  "namespace": "Rhino.Render.DataSources",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.DataSources.Shapes\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DataSources_Shapes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Square",
+      "value": 0
+    },
+    {
+      "name": "Wide",
+      "value": 1
+    }
+  ]
+}

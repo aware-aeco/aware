@@ -1,0 +1,176 @@
+{
+  "name": "RenderContentType",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Represents one of the render content types registered with Rhino.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContentType.htm",
+  "constructors": [
+    {
+      "name": "RenderContentType",
+      "signature": "public RenderContentType(Guid typeId)",
+      "summary": "Initializes a new instance of the RenderContentType class",
+      "params": [
+        {
+          "name": "typeId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022typeId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentType.#ctor(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the RenderContentType",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Releases the unmanaged resources used by the RenderContentType and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_Finalize.htm"
+    },
+    {
+      "name": "GetAllAvailableTypes",
+      "signature": "public static RenderContentType[] GetAllAvailableTypes()",
+      "summary": "Gets an array of all available render content types registered with Rhino.",
+      "params": [],
+      "returns": {
+        "type": "RenderContentType[]",
+        "doc": "An array with all types."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_GetAllAvailableTypes.htm"
+    },
+    {
+      "name": "NewContentFromTypeId(Guid)",
+      "signature": "public static RenderContent NewContentFromTypeId(Guid typeId)",
+      "summary": "Create a new content specified by the Guid. This function can be used to create temporary content, as it calls ::RhRdkContentFactories().NewContentFromType().",
+      "params": [
+        {
+          "name": "typeId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022typeId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentType.NewContentFromTypeId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentType.NewContentFromTypeId(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_NewContentFromTypeId.htm"
+    },
+    {
+      "name": "NewContentFromTypeId(Guid, RhinoDoc)",
+      "signature": "public static RenderContent NewContentFromTypeId(Guid typeId, RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "typeId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022typeId\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentType.NewContentFromTypeId(System.Guid,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentType.NewContentFromTypeId(System.Guid,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentType.NewContentFromTypeId(System.Guid,Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_NewContentFromTypeId_1.htm"
+    },
+    {
+      "name": "NewRenderContent",
+      "signature": "public RenderContent NewRenderContent()",
+      "summary": "Returns a new instance of the render content of this type. This content can be added to a persistant list.",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "A new render content instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentType_NewRenderContent.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the type identifier associated with this type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentType_Id.htm"
+    },
+    {
+      "name": "InternalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the internal name identifier associated with this type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentType_InternalName.htm"
+    },
+    {
+      "name": "PlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentType_PlugInId.htm"
+    },
+    {
+      "name": "RenderEngineId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentType_RenderEngineId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

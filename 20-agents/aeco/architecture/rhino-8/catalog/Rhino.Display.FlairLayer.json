@@ -1,0 +1,50 @@
+{
+  "name": "FlairLayer",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.FlairLayer\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_FlairLayer.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normals",
+      "value": 0
+    },
+    {
+      "name": "Depth",
+      "value": 1
+    },
+    {
+      "name": "Shadows",
+      "value": 2
+    },
+    {
+      "name": "Shading",
+      "value": 3
+    },
+    {
+      "name": "Material",
+      "value": 4
+    },
+    {
+      "name": "Details",
+      "value": 5
+    },
+    {
+      "name": "Background",
+      "value": 6
+    },
+    {
+      "name": "Selection",
+      "value": 7
+    },
+    {
+      "name": "Unknown",
+      "value": -1
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "name": "CustomRenderMeshProvider",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "You must call CustomRenderMeshProvider.RegisterProviders() from your plug-ins OnLoad override for each assembly containing a custom mesh provider. Only publicly exported classes derived from CustomRenderMeshProvider with a public constructor that has no parameters will get registered.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshProvider.htm",
+  "constructors": [
+    {
+      "name": "CustomRenderMeshProvider",
+      "signature": "protected CustomRenderMeshProvider()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AllObjectsChanged()",
+      "signature": "[ObsoleteAttribute(\u0022Use version that requires a document\u0022)] public static void AllObjectsChanged()",
+      "summary": "Call this method if your render meshes change.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_AllObjectsChanged.htm"
+    },
+    {
+      "name": "AllObjectsChanged(RhinoDoc)",
+      "signature": "public static void AllObjectsChanged(RhinoDoc doc)",
+      "summary": "Call this method if your render meshes change.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.AllObjectsChanged(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_AllObjectsChanged_1.htm"
+    },
+    {
+      "name": "BoundingBox(ViewportInfo, RhinoObject, Guid, Boolean)",
+      "signature": "public virtual BoundingBox BoundingBox(ViewportInfo vp, RhinoObject obj, Guid requestingPlugIn, bool preview)",
+      "summary": "Returns a bounding box for the custom render meshes for the given object.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The Rhino object of interest. This can be null in the case where document meshes (not associated with any object) are being requested.",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "UUID of the RDK plug-in requesting the meshes.",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "Type of mesh to build.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A bounding box value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_BoundingBox_1.htm"
+    },
+    {
+      "name": "BoundingBox(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes)",
+      "signature": "public BoundingBox BoundingBox(ViewportInfo vp, RhinoObject obj, RhinoDoc doc, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022attrs\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_BoundingBox.htm"
+    },
+    {
+      "name": "BuildCustomMeshes",
+      "signature": "public abstract bool BuildCustomMeshes(ViewportInfo vp, RenderPrimitiveList objMeshes, Guid requestingPlugIn, bool meshType)",
+      "summary": "Build custom render mesh(es).",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "objMeshes",
+          "type": "Rhino.Render.RenderPrimitiveList",
+          "doc": "The meshes class to populate with custom meshes.",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "UUID of the RDK plug-in requesting the meshes.",
+          "optional": false
+        },
+        {
+          "name": "meshType",
+          "type": "System.Boolean",
+          "doc": "Type of mesh to build.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_BuildCustomMeshes.htm"
+    },
+    {
+      "name": "DocumentBasedMeshesChanged",
+      "signature": "public static void DocumentBasedMeshesChanged(RhinoDoc doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.DocumentBasedMeshesChanged(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_DocumentBasedMeshesChanged.htm"
+    },
+    {
+      "name": "ObjectChanged",
+      "signature": "public static void ObjectChanged(RhinoDoc doc, RhinoObject obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.ObjectChanged(Rhino.RhinoDoc,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider.ObjectChanged(Rhino.RhinoDoc,Rhino.DocObjects.RhinoObject)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_ObjectChanged.htm"
+    },
+    {
+      "name": "RegisterProviders",
+      "signature": "public static void RegisterProviders(Assembly assembly, Guid pluginId)",
+      "summary": "Call this method once from your plug-ins OnLoad override for each assembly containing a custom mesh provider. Only publicly exported classes derived from CustomRenderMeshProvider with a public constructor that has no parameters will get registered.",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "Assembly to search for valid CustomRenderMeshProvider derived classes.",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "The plug-in that owns the custom mesh providers.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_RegisterProviders.htm"
+    },
+    {
+      "name": "WillBuildCustomMeshes",
+      "signature": "public abstract bool WillBuildCustomMeshes(ViewportInfo vp, RhinoObject obj, Guid requestingPlugIn, bool preview)",
+      "summary": "Determines if custom render meshes will be built for a particular object.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "The viewport being rendered.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The Rhino object of interest. This can be null in the case where document meshes (not associated with any object) are being requested.",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "UUID of the RDK plug-in requesting the meshes.",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "Type of mesh to build.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if custom meshes will be built."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshProvider_WillBuildCustomMeshes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurvePipingId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshProvider_CurvePipingId.htm"
+    },
+    {
+      "name": "DisplacementId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshProvider_DisplacementId.htm"
+    },
+    {
+      "name": "EdgeSofteningId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshProvider_EdgeSofteningId.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the provider for UI display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshProvider_Name.htm"
+    },
+    {
+      "name": "ShutLiningId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshProvider_ShutLiningId.htm"
+    },
+    {
+      "name": "ThickeningId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshProvider_ThickeningId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

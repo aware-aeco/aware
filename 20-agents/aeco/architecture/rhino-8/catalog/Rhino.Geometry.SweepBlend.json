@@ -1,0 +1,24 @@
+{
+  "name": "SweepBlend",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Blend types for creating swept surfaces",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SweepBlend.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Local",
+      "value": 0,
+      "summary": "The sweep stays constant at the ends and changes more rapidly in the middle."
+    },
+    {
+      "name": "Global",
+      "value": 1,
+      "summary": "The sweep is linearly blended from one end to the other, creating sweeps that taper from one cross-section curve to the other."
+    }
+  ]
+}

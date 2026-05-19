@@ -1,0 +1,34 @@
+{
+  "name": "ObjectMode",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the display and behavior of single objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ObjectMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "Object mode comes from layer."
+    },
+    {
+      "name": "Hidden",
+      "value": 1,
+      "summary": "Not visible, object cannot be selected or changed."
+    },
+    {
+      "name": "Locked",
+      "value": 2,
+      "summary": "Visible, object cannot be selected or changed."
+    },
+    {
+      "name": "InstanceDefinitionObject",
+      "value": 3,
+      "summary": "Object is part of an InstanceDefinition. The InstanceDefinition m_object_uuid[] array will contain this object attribute\u0027s id."
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "name": "PostEffectData",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "This is a wrapper around the data (\u0027on\u0027, \u0027shown\u0027, \u0027state\u0027 parameters, etc.) of a post effect.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_PostEffectData.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint current_remainder)",
+      "summary": "Get a CRC representing the state of the entire post effect.",
+      "params": [
+        {
+          "name": "current_remainder",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022current_remainder\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.DataCRC(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.DataCRC(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectData_DataCRC.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectData_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the PostEffectData and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectData_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectData_Finalize.htm"
+    },
+    {
+      "name": "GetParameter",
+      "signature": "public IConvertible GetParameter(string param_name)",
+      "summary": "Get an arbitrary parameter from this post effect by its name. If the parameter is not known to the post effect, the method will fail. Returns a variant object if successful or null on failure.",
+      "params": [
+        {
+          "name": "param_name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022param_name\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.GetParameter(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IConvertible",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.GetParameter(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectData_GetParameter.htm"
+    },
+    {
+      "name": "SetParameter",
+      "signature": "public bool SetParameter(string param_name, Object param_value)",
+      "summary": "Set an arbitrary parameter to the post effect by its name. If the parameter is not known to the post effect, the method will fail. Returns true if successful or false on failure.",
+      "params": [
+        {
+          "name": "param_name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022param_name\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.SetParameter(System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "param_value",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022param_value\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.SetParameter(System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectData.SetParameter(System.String,System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectData_SetParameter.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Collection",
+      "type": "PostEffectCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectData_Collection.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the unique id of this post effect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectData_Id.htm"
+    },
+    {
+      "name": "LocalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the localized name of this post effect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectData_LocalName.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The \u0027on\u0027 state of this post effect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectData_On.htm"
+    },
+    {
+      "name": "Shown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "The \u0027shown\u0027 state of this post effect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectData_Shown.htm"
+    },
+    {
+      "name": "Type",
+      "type": "PostEffectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the type of this post effect.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_PostEffectData_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

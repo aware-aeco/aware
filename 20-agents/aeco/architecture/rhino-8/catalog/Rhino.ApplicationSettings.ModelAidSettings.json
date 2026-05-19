@@ -1,0 +1,346 @@
+{
+  "name": "ModelAidSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to modify model aid settings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_ModelAidSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static ModelAidSettingsState GetCurrentState()",
+      "summary": "Gets the current settings.",
+      "params": [],
+      "returns": {
+        "type": "ModelAidSettingsState",
+        "doc": "A new model aid state with current settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ModelAidSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static ModelAidSettingsState GetDefaultState()",
+      "summary": "Gets the factory settings.",
+      "params": [],
+      "returns": {
+        "type": "ModelAidSettingsState",
+        "doc": "A new model aid state with factory settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ModelAidSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(ModelAidSettingsState state)",
+      "summary": "Updates from a particular setting state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.ModelAidSettingsState",
+          "doc": "The new states that will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_ModelAidSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AltPlusArrow",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true means Alt\u002Barrow is used for nudging.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_AltPlusArrow.htm"
+    },
+    {
+      "name": "AutoAlignCPlane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the cplane will automatically align to the selection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_AutoAlignCPlane.htm"
+    },
+    {
+      "name": "AutoCPlaneAlignment",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "//0 = object, 1 = world, 2 = view",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_AutoCPlaneAlignment.htm"
+    },
+    {
+      "name": "AutoGumballEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When AutoGumball is on, a gumball automatically appears when objects are pre-picked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_AutoGumballEnabled.htm"
+    },
+    {
+      "name": "ControlPolygonDisplayDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the control polygon display density.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_ControlPolygonDisplayDensity.htm"
+    },
+    {
+      "name": "CtrlNudgeKeyStep",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Ctrl-key based nudge step amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_CtrlNudgeKeyStep.htm"
+    },
+    {
+      "name": "DisplayControlPolygon",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s display control polygon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_DisplayControlPolygon.htm"
+    },
+    {
+      "name": "ExtendToApparentIntersection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s extend to apparent intersections.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_ExtendToApparentIntersection.htm"
+    },
+    {
+      "name": "ExtendTrimLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s extend trim lines.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_ExtendTrimLines.htm"
+    },
+    {
+      "name": "GridSnap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s grid snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_GridSnap.htm"
+    },
+    {
+      "name": "GumballAutoReset",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When GumballAutoReset is on the gumball resets its orientation after a drag When GumballAutoReset is off the gumball orientation is kept to where it was dragged",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_GumballAutoReset.htm"
+    },
+    {
+      "name": "GumballExtrudeMergeFaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When ExtrudeMergeFaces is true the gumball will attempt to merge faces if possible after extruding a face",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_GumballExtrudeMergeFaces.htm"
+    },
+    {
+      "name": "HighlightControlPolygon",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s highlight dialog modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_HighlightControlPolygon.htm"
+    },
+    {
+      "name": "MousePickboxRadius",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "radius of mouse pick box in pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_MousePickboxRadius.htm"
+    },
+    {
+      "name": "NudgeKeyStep",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the nudge step amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_NudgeKeyStep.htm"
+    },
+    {
+      "name": "NudgeMode",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0 = world, 1 = cplane, 2 = view, 3 = UVN, -1 = not set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_NudgeMode.htm"
+    },
+    {
+      "name": "OnlySnapToSelected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OnlySnapToSelected.htm"
+    },
+    {
+      "name": "OrientAutoCPlaneToView",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the auto cplane will rotate towards the view after aligning to the selection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OrientAutoCPlaneToView.htm"
+    },
+    {
+      "name": "Ortho",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s ortho modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_Ortho.htm"
+    },
+    {
+      "name": "OrthoAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the base orthogonal angle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OrthoAngle.htm"
+    },
+    {
+      "name": "OrthoUseZ",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether Ortho will snap to the CPlane Z axis",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OrthoUseZ.htm"
+    },
+    {
+      "name": "Osnap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disables Rhino\u0027s object snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_Osnap.htm"
+    },
+    {
+      "name": "OsnapCursorMode",
+      "type": "CursorMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the OSnap cursor mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OsnapCursorMode.htm"
+    },
+    {
+      "name": "OsnapModes",
+      "type": "OsnapModes",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets Rhino\u0027s current object snap mode. The mode is a bitwise value based on the OsnapModes enumeration.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OsnapModes.htm"
+    },
+    {
+      "name": "OsnapPickboxRadius",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disables Rhino\u0027s planar modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_OsnapPickboxRadius.htm"
+    },
+    {
+      "name": "Planar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s Planar modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_Planar.htm"
+    },
+    {
+      "name": "PointDisplay",
+      "type": "PointDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point display mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_PointDisplay.htm"
+    },
+    {
+      "name": "ProjectSnapToCPlane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s Project modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_ProjectSnapToCPlane.htm"
+    },
+    {
+      "name": "ShiftNudgeKeyStep",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Shift-key based nudge step amount.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_ShiftNudgeKeyStep.htm"
+    },
+    {
+      "name": "SnappyGumballEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When SnappyGumball is on, a dragging a gumball moves the center point. When snappy gumball is off, dragging a gumball moves the mouse down point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_SnappyGumballEnabled.htm"
+    },
+    {
+      "name": "SnapToFiltered",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_SnapToFiltered.htm"
+    },
+    {
+      "name": "SnapToLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the locked state of the snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_SnapToLocked.htm"
+    },
+    {
+      "name": "SnapToOccluded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_SnapToOccluded.htm"
+    },
+    {
+      "name": "StickyAutoCPlane",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or set whether the auto cplane will stay even after deselection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_StickyAutoCPlane.htm"
+    },
+    {
+      "name": "UniversalConstructionPlaneMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the locked state of the snap modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_UniversalConstructionPlaneMode.htm"
+    },
+    {
+      "name": "UseHorizontalDialog",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the enabled state of Rhino\u0027s use horizontal dialog modeling aid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ModelAidSettings_UseHorizontalDialog.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

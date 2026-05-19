@@ -1,0 +1,79 @@
+{
+  "name": "RenderContentFieldChangedEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "EventArgs for the RenderContentFieldChanged event",
+  "base": "RenderContentChangedEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContentFieldChangedEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ChangeContext",
+      "type": "RenderContent.ChangeContexts",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContentChangedEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentChangedEventArgs_ChangeContext.htm"
+    },
+    {
+      "name": "Content",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContentEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentEventArgs_Content.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContentEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentEventArgs_Document.htm"
+    },
+    {
+      "name": "EnvironmentUsage",
+      "type": "RenderEnvironment.Usage",
+      "getter": true,
+      "setter": false,
+      "summary": "Meaningful for CurrentEnvironmentChanged event. Will be one of Background, ReflectionAndRefraction or Skylighting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentEventArgs_EnvironmentUsage.htm"
+    },
+    {
+      "name": "EnvironmentUsageEx",
+      "type": "RenderSettings.EnvironmentUsage",
+      "getter": true,
+      "setter": false,
+      "summary": "Meaningful for CurrentEnvironmentChanged event. Will be one of Background, Reflection or Skylighting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentEventArgs_EnvironmentUsageEx.htm"
+    },
+    {
+      "name": "FieldName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentFieldChangedEventArgs_FieldName.htm"
+    },
+    {
+      "name": "OldContent",
+      "type": "RenderContent",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from RenderContentChangedEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentChangedEventArgs_OldContent.htm"
+    },
+    {
+      "name": "Reason",
+      "type": "RenderContentChangeReason",
+      "getter": true,
+      "setter": false,
+      "summary": "Not when used in CurrentEnvironmentChanged (defaults to None).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentEventArgs_Reason.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

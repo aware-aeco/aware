@@ -1,0 +1,36 @@
+{
+  "name": "RenderContentManager",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "RenderContentManager\u0027s RestoreRenderContents method unpacks the default render contents from the from the application and places them in the User\u0027s folder. Only available on Mac at the moment.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContentManager.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RestoreRenderContent",
+      "signature": "public static bool RestoreRenderContent()",
+      "summary": "Unpacks the default render contents from the from the application and places them in the User\u0027s folder. This will restore the default versions if the version of Rhino that is running is newer than the contents of the last Rhino that wrote the version.txt file. If the version.txt file is not present, it will automatically restore the default contents. This does not overwrite files that the user has changed.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentManager.RestoreRenderContent\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentManager_RestoreRenderContent.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "UserRenderContentPath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the path to: Windows: C:\\Users\\user\\AppData\\Roaming\\McNeel\\Rhinoceros\\6.0\\Localization\\en-US\\Render Content macOS: ~/Library/Application Support/McNeel/Rhinoceros/6.0/Render Content If a CustomLibraryPath is set, this is returned",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentManager_UserRenderContentPath.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "GumballScaleMode",
+  "namespace": "Rhino.UI.Gumball",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Gumball.GumballScaleMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Gumball_GumballScaleMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Independent",
+      "value": 0
+    },
+    {
+      "name": "XY",
+      "value": 1
+    },
+    {
+      "name": "YZ",
+      "value": 2
+    },
+    {
+      "name": "ZX",
+      "value": 3
+    },
+    {
+      "name": "XYZ",
+      "value": 4
+    }
+  ]
+}

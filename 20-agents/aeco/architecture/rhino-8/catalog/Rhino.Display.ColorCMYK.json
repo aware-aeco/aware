@@ -1,0 +1,319 @@
+{
+  "name": "ColorCMYK",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Represents a CMYK (Cyan, Magenta, Yellow, Key) color with double precision floating point channels. CMYK colors are used primarily in printing environments as they provide a good simulation of physical ink.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ColorCMYK.htm",
+  "constructors": [
+    {
+      "name": "ColorCMYK(Color)",
+      "signature": "public ColorCMYK(Color rgb)",
+      "summary": "Initializes a new instance of ColorCMYK that is equivalent to an ARGB color.",
+      "remarks": "Exact conversions between color spaces are often not possible.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "System.Drawing.Color",
+          "doc": "ARGB color to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK__ctor_3.htm"
+    },
+    {
+      "name": "ColorCMYK(Double, Double, Double)",
+      "signature": "public ColorCMYK(double cyan, double magenta, double yellow)",
+      "summary": "Initializes a new instance of ColorCMYK with custom channel values. The cyan, magenta and yellow values will be adjusted based on their combined darkness.",
+      "params": [
+        {
+          "name": "cyan",
+          "type": "System.Double",
+          "doc": "Cyan channel hint.",
+          "optional": false
+        },
+        {
+          "name": "magenta",
+          "type": "System.Double",
+          "doc": "Magenta channel hint.",
+          "optional": false
+        },
+        {
+          "name": "yellow",
+          "type": "System.Double",
+          "doc": "Yellow channel hint.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK__ctor.htm"
+    },
+    {
+      "name": "ColorCMYK(Double, Double, Double, Double)",
+      "signature": "public ColorCMYK(double cyan, double magenta, double yellow, double key)",
+      "summary": "Initializes a new instance of ColorCMYK with custom channel values.",
+      "params": [
+        {
+          "name": "cyan",
+          "type": "System.Double",
+          "doc": "Cyan channel value. Cyan channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "magenta",
+          "type": "System.Double",
+          "doc": "Magenta channel value. Magenta channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "yellow",
+          "type": "System.Double",
+          "doc": "Yellow channel value. Yellow channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.Double",
+          "doc": "Key channel value. Key channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK__ctor_1.htm"
+    },
+    {
+      "name": "ColorCMYK(Double, Double, Double, Double, Double)",
+      "signature": "public ColorCMYK(double alpha, double cyan, double magenta, double yellow, double key)",
+      "summary": "Initializes a new instance of ColorCMYK with custom channel values.",
+      "params": [
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "Alpha channel value. Alpha channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "cyan",
+          "type": "System.Double",
+          "doc": "Cyan channel value. Cyan channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "magenta",
+          "type": "System.Double",
+          "doc": "Magenta channel value. Magenta channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "yellow",
+          "type": "System.Double",
+          "doc": "Yellow channel value. Yellow channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.Double",
+          "doc": "Key channel value. Key channels are limited to the 0.0 and 1.0 range.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFromHSL",
+      "signature": "public static ColorCMYK CreateFromHSL(ColorHSL hsl)",
+      "summary": "Constructs the nearest CMYK equivalent of an HSL color.",
+      "params": [
+        {
+          "name": "hsl",
+          "type": "Rhino.Display.ColorHSL",
+          "doc": "Target color in HSL space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorCMYK",
+        "doc": "The CMYK equivalent of the HSL color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_CreateFromHSL.htm"
+    },
+    {
+      "name": "CreateFromHSV",
+      "signature": "public static ColorCMYK CreateFromHSV(ColorHSV hsv)",
+      "summary": "Constructs the nearest CMYK equivalent of an HSV color.",
+      "params": [
+        {
+          "name": "hsv",
+          "type": "Rhino.Display.ColorHSV",
+          "doc": "Target color in HSV space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorCMYK",
+        "doc": "The CMYK equivalent of the HSV color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_CreateFromHSV.htm"
+    },
+    {
+      "name": "CreateFromLAB",
+      "signature": "public static ColorCMYK CreateFromLAB(ColorLAB lab)",
+      "summary": "Constructs the nearest CMYK equivalent of a LAB color.",
+      "params": [
+        {
+          "name": "lab",
+          "type": "Rhino.Display.ColorLAB",
+          "doc": "Target color in LAB space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorCMYK",
+        "doc": "The CMYK equivalent of the LAB color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_CreateFromLAB.htm"
+    },
+    {
+      "name": "CreateFromLCH",
+      "signature": "public static ColorCMYK CreateFromLCH(ColorLCH lch)",
+      "summary": "Constructs the nearest CMYK equivalent of a LCH color.",
+      "params": [
+        {
+          "name": "lch",
+          "type": "Rhino.Display.ColorLCH",
+          "doc": "Target color in LCH space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorCMYK",
+        "doc": "The CMYK equivalent of the LCH color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_CreateFromLCH.htm"
+    },
+    {
+      "name": "CreateFromRGBA",
+      "signature": "public static ColorCMYK CreateFromRGBA(ColorRGBA rgba)",
+      "summary": "Create the nearest CMYK equivalent of a RGBA color.",
+      "params": [
+        {
+          "name": "rgba",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "Target color in RGBA space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorCMYK",
+        "doc": "The CMYK equivalent of the RGBA color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_CreateFromRGBA.htm"
+    },
+    {
+      "name": "CreateFromXYZ",
+      "signature": "public static ColorCMYK CreateFromXYZ(ColorXYZ xyz)",
+      "summary": "Constructs the nearest CMYK equivalent of an XYZ color.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Rhino.Display.ColorXYZ",
+          "doc": "Target color in XYZ space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorCMYK",
+        "doc": "The CMYK equivalent of the XYZ color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_CreateFromXYZ.htm"
+    },
+    {
+      "name": "Implicit(ColorCMYK to Color)",
+      "signature": "public static implicit operator Color (ColorCMYK cmyk)",
+      "summary": "Implicitly converts a CMYK color into a .Net library color.",
+      "params": [
+        {
+          "name": "cmyk",
+          "type": "Rhino.Display.ColorCMYK",
+          "doc": "A CMYK color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "A ARGB .Net library color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorCMYK_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Alpha channel value. Alpha channels are limited to the 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorCMYK_A.htm"
+    },
+    {
+      "name": "C",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Cyan channel value. Cyan channels are limited to the 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorCMYK_C.htm"
+    },
+    {
+      "name": "K",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Key channel value. Key channels are limited to the 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorCMYK_K.htm"
+    },
+    {
+      "name": "M",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Magenta channel value. Magenta channels are limited to the 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorCMYK_M.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Yellow channel value. Yellow channels are limited to the 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorCMYK_Y.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

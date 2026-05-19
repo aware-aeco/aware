@@ -1,0 +1,78 @@
+{
+  "name": "FilePly",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support for ply file format",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FilePly.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "public static bool Read(string path, RhinoDoc doc, FilePlyReadOptions options)",
+      "summary": "Read a PLY file into a RhinoDoc",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "path to read a file from",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "document to import geometry into",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FilePlyReadOptions",
+          "doc": "options used for importing the PLY file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FilePly_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public static WriteFileResult Write(string filename, RhinoDoc doc, FilePlyWriteOptions options)",
+      "summary": "Write a ply file based on the contents of a RhinoDoc",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePly.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FilePlyWriteOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePly.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FilePlyWriteOptions)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.FilePlyWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePly.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FilePlyWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "WriteFileResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FilePly.Write(System.String,Rhino.RhinoDoc,Rhino.FileIO.FilePlyWriteOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FilePly_Write.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

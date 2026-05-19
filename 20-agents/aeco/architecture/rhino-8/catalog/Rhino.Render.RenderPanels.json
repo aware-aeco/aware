@@ -1,0 +1,205 @@
+{
+  "name": "RenderPanels",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "This class is used to extend the standard Render user interface",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderPanels.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FromRenderSessionId",
+      "signature": "public static Object FromRenderSessionId(PlugIn plugIn, Type panelType, Guid renderSessionId)",
+      "summary": "Get the instance of a render panel associated with a specific render session, this is useful when it is necessary to update a control from a RenderPipeline",
+      "params": [
+        {
+          "name": "plugIn",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The plug-in that registered the custom user interface",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "The type of panel to return",
+          "optional": false
+        },
+        {
+          "name": "renderSessionId",
+          "type": "System.Guid",
+          "doc": "The RenderSessionId of a specific render session.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Returns the custom panel object if found; otherwise null is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPanels_FromRenderSessionId.htm"
+    },
+    {
+      "name": "RegisterPanel(PlugIn, RenderPanelType, Type, String, Boolean, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Use RegisterPanel(PlugIn plugin, RenderPanelType renderPanelType, Type panelType, Guid renderEngineId, string caption, bool alwaysShow, bool initialShow)\u0022)] public void RegisterPanel(PlugIn plugin, RenderPanelType renderPanelType, Type panelType, string caption, bool alwaysShow, bool initialShow)",
+      "summary": "Register custom render user interface with Rhino. This should only be done in RegisterRenderPanels(RenderPanels). Panels registered after RegisterRenderPanels(RenderPanels) is called will be ignored.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The plug-in providing the custom user interface",
+          "optional": false
+        },
+        {
+          "name": "renderPanelType",
+          "type": "Rhino.Render.RenderPanelType",
+          "doc": "See RenderPanelType for supported user interface types.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "The type of object to be created and added to the render container.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "The caption for the custom user interface.",
+          "optional": false
+        },
+        {
+          "name": "alwaysShow",
+          "type": "System.Boolean",
+          "doc": "If true the custom user interface will always be visible, if false then it may be hidden or shown as requested by the user.",
+          "optional": false
+        },
+        {
+          "name": "initialShow",
+          "type": "System.Boolean",
+          "doc": "Initial visibility state of the custom user interface control.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPanels_RegisterPanel_2.htm"
+    },
+    {
+      "name": "RegisterPanel(PlugIn, RenderPanelType, Type, Guid, String, Boolean, Boolean)",
+      "signature": "public void RegisterPanel(PlugIn plugin, RenderPanelType renderPanelType, Type panelType, Guid renderEngineId, string caption, bool alwaysShow, bool initialShow)",
+      "summary": "Register custom render user interface with Rhino. This should only be done in RegisterRenderPanels(RenderPanels). Panels registered after RegisterRenderPanels(RenderPanels) is called will be ignored.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The plug-in providing the custom user interface",
+          "optional": false
+        },
+        {
+          "name": "renderPanelType",
+          "type": "Rhino.Render.RenderPanelType",
+          "doc": "See RenderPanelType for supported user interface types.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "The type of object to be created and added to the render container.",
+          "optional": false
+        },
+        {
+          "name": "renderEngineId",
+          "type": "System.Guid",
+          "doc": "The render engine id allowing the UI to be shown.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "The caption for the custom user interface.",
+          "optional": false
+        },
+        {
+          "name": "alwaysShow",
+          "type": "System.Boolean",
+          "doc": "If true the custom user interface will always be visible, if false then it may be hidden or shown as requested by the renderer.",
+          "optional": false
+        },
+        {
+          "name": "initialShow",
+          "type": "System.Boolean",
+          "doc": "Initial visibility state of the custom user interface control.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPanels_RegisterPanel.htm"
+    },
+    {
+      "name": "RegisterPanel(PlugIn, RenderPanelType, Type, Guid, String, Boolean, Boolean, RenderPanels.ExtraSidePanePosition)",
+      "signature": "public void RegisterPanel(PlugIn plugin, RenderPanelType renderPanelType, Type panelType, Guid renderEngineId, string caption, bool alwaysShow, bool initialShow, RenderPanels.ExtraSidePanePosition pos)",
+      "summary": "Register custom render user interface with Rhino. This should only be done in RegisterRenderPanels(RenderPanels). Panels registered after RegisterRenderPanels(RenderPanels) is called will be ignored.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "The plug-in providing the custom user interface",
+          "optional": false
+        },
+        {
+          "name": "renderPanelType",
+          "type": "Rhino.Render.RenderPanelType",
+          "doc": "See RenderPanelType for supported user interface types.",
+          "optional": false
+        },
+        {
+          "name": "panelType",
+          "type": "System.Type",
+          "doc": "The type of object to be created and added to the render container.",
+          "optional": false
+        },
+        {
+          "name": "renderEngineId",
+          "type": "System.Guid",
+          "doc": "The render engine id allowing the UI to be shown.",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "System.String",
+          "doc": "The caption for the custom user interface.",
+          "optional": false
+        },
+        {
+          "name": "alwaysShow",
+          "type": "System.Boolean",
+          "doc": "If true the custom user interface will always be visible, if false then it may be hidden or shown as requested by the renderer.",
+          "optional": false
+        },
+        {
+          "name": "initialShow",
+          "type": "System.Boolean",
+          "doc": "Initial visibility state of the custom user interface control.",
+          "optional": false
+        },
+        {
+          "name": "pos",
+          "type": "Rhino.Render.RenderPanels.ExtraSidePanePosition",
+          "doc": "The position to dock the extra side pane at.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderPanels_RegisterPanel_1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

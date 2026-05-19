@@ -1,0 +1,73 @@
+{
+  "name": "ShrinkWrapParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Parameters for ShrinkWrap method",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_ShrinkWrapParameters.htm",
+  "constructors": [
+    {
+      "name": "ShrinkWrapParameters",
+      "signature": "public ShrinkWrapParameters()",
+      "summary": "Initializes a new instance of the ShrinkWrapParameters class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ShrinkWrapParameters__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FillHolesInInputObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Any input meshes will have \u0022Fill Holes\u0022 applied to them before volume creation This value is ignored when input objects are Point Clouds",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShrinkWrapParameters_FillHolesInInputObjects.htm"
+    },
+    {
+      "name": "InflateVerticesAndPoints",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Inflate mesh vertices, points and point clouds Mesh vertices will be inflated as though the mesh were a point cloud",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShrinkWrapParameters_InflateVerticesAndPoints.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance to offset outward or inward",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShrinkWrapParameters_Offset.htm"
+    },
+    {
+      "name": "PolygonOptimization",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0 - 100 the percentage of optimization desired. Polygons will be reduced in areas of lower curvature Lower values result in better feature preservation at the cost of more polygons",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShrinkWrapParameters_PolygonOptimization.htm"
+    },
+    {
+      "name": "SmoothingIterations",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Number of times to apply smoothing",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShrinkWrapParameters_SmoothingIterations.htm"
+    },
+    {
+      "name": "TargetEdgeLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The desired target edge length in document units Smaller values equal more mesh resolution at the expense of larger mesh sizes",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShrinkWrapParameters_TargetEdgeLength.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

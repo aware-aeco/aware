@@ -1,0 +1,593 @@
+{
+  "name": "MeshNgonList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the ngons and ngon-related functionality of a Mesh. See also the Ngons property for Ngon functionality details.",
+  "interfaces": [
+    "IResizableList\u003CMeshNgon\u003E",
+    "IList\u003CMeshNgon\u003E",
+    "ICollection\u003CMeshNgon\u003E",
+    "IEnumerable\u003CMeshNgon\u003E",
+    "IEnumerable",
+    "IList",
+    "ICollection",
+    "IReadOnlyList\u003CMeshNgon\u003E",
+    "IReadOnlyCollection\u003CMeshNgon\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_MeshNgonList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddNgon",
+      "signature": "public int AddNgon(MeshNgon ngon)",
+      "summary": "Appends a new ngon to the end of the mesh ngon list.",
+      "params": [
+        {
+          "name": "ngon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "Ngon to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added ngon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_AddNgon.htm"
+    },
+    {
+      "name": "AddNgons",
+      "signature": "public int[] AddNgons(IEnumerable\u003CMeshNgon\u003E ngons)",
+      "summary": "Appends a list of ngons to the end of the mesh ngon list.",
+      "params": [
+        {
+          "name": "ngons",
+          "type": "System.Collections.Generic.IEnumerable\u003CMeshNgon\u003E",
+          "doc": "Ngons to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of the newly created ngons"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_AddNgons.htm"
+    },
+    {
+      "name": "AddPlanarNgons(Double)",
+      "signature": "public int AddPlanarNgons(double planarTolerance)",
+      "summary": "Add an ngon for each group of connected coplanar faces.",
+      "params": [
+        {
+          "name": "planarTolerance",
+          "type": "System.Double",
+          "doc": "3d distance tolerance for coplanar test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of ngons added to the mesh."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_AddPlanarNgons.htm"
+    },
+    {
+      "name": "AddPlanarNgons(Double, Int32, Int32, Boolean)",
+      "signature": "public int AddPlanarNgons(double planarTolerance, int minimumNgonVertexCount, int minimumNgonFaceCount, bool allowHoles)",
+      "summary": "Add an ngon for each group of connected coplanar faces.",
+      "params": [
+        {
+          "name": "planarTolerance",
+          "type": "System.Double",
+          "doc": "3d distance tolerance for coplanar test.",
+          "optional": false
+        },
+        {
+          "name": "minimumNgonVertexCount",
+          "type": "System.Int32",
+          "doc": "Minimum number of vertices for an ngon.",
+          "optional": false
+        },
+        {
+          "name": "minimumNgonFaceCount",
+          "type": "System.Int32",
+          "doc": "Minimum number of faces for an ngon.",
+          "optional": false
+        },
+        {
+          "name": "allowHoles",
+          "type": "System.Boolean",
+          "doc": "Determines whether the ngon can have inner boundaries.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of ngons added to the mesh."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_AddPlanarNgons_1.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the Ngon list on the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_Clear.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CMeshNgon\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all ngons in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CMeshNgon\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetEnumerator.htm"
+    },
+    {
+      "name": "GetNgon",
+      "signature": "public MeshNgon GetNgon(int index)",
+      "summary": "Returns the mesh ngon at the given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of ngon to get. Must be larger than or equal to zero and smaller than the Ngon Count of the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshNgon",
+        "doc": "The mesh ngon at the given index. This ngon can be MeshNgon.Empty."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgon.htm"
+    },
+    {
+      "name": "GetNgonBoundary",
+      "signature": "public int[] GetNgonBoundary(IEnumerable\u003Cint\u003E ngonFaceIndexList)",
+      "summary": "Get a list of vertices that form the boundary of a face set. This is often use to get ngon boundaries.",
+      "params": [
+        {
+          "name": "ngonFaceIndexList",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "List of mesh face indices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "List of mesh vertex indices that form the boundary of the face set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonBoundary.htm"
+    },
+    {
+      "name": "GetNgonBoundingBox(Int32)",
+      "signature": "public BoundingBox GetNgonBoundingBox(int index)",
+      "summary": "Gets the bounding box of an ngon.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "A ngon index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A new bounding box, or Empty on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonBoundingBox_1.htm"
+    },
+    {
+      "name": "GetNgonBoundingBox(MeshNgon)",
+      "signature": "public BoundingBox GetNgonBoundingBox(MeshNgon ngon)",
+      "summary": "Gets the bounding box of an ngon.",
+      "params": [
+        {
+          "name": "ngon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "An ngon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A new bounding box, or Empty on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonBoundingBox.htm"
+    },
+    {
+      "name": "GetNgonCenter(Int32)",
+      "signature": "public Point3d GetNgonCenter(int index)",
+      "summary": "Gets the center point of an ngon. This the average of the corner points.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "A ngon index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The center point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonCenter_1.htm"
+    },
+    {
+      "name": "GetNgonCenter(MeshNgon)",
+      "signature": "public Point3d GetNgonCenter(MeshNgon ngon)",
+      "summary": "Gets the center point of an ngon. This the average of the corner points.",
+      "params": [
+        {
+          "name": "ngon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "An ngon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The center point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonCenter.htm"
+    },
+    {
+      "name": "GetNgonEdgeCount",
+      "signature": "public int GetNgonEdgeCount(int index)",
+      "summary": "Gets the complete edge count of an ngon.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Ngon index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Complete edge count or zero on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonEdgeCount.htm"
+    },
+    {
+      "name": "GetNgonOuterEdgeCount",
+      "signature": "public int GetNgonOuterEdgeCount(int index)",
+      "summary": "Gets the outer edge count of an ngon.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Ngon index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Outer edge count or zero on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_GetNgonOuterEdgeCount.htm"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int index, MeshNgon ngon)",
+      "summary": "Inserts a mesh ngon at a defined index in this list.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "An ngon index.",
+          "optional": false
+        },
+        {
+          "name": "ngon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "An ngon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If index is negative or \u003E= Count."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_Insert.htm"
+    },
+    {
+      "name": "IsValid(Int32)",
+      "signature": "public uint IsValid(int index)",
+      "summary": "Tests an ngon to see if the vertex and face references are valid and pass partial boundary validity checks.",
+      "remarks": "If the return value is \u003E MeshNgon.BoundaryVertexCount, then the ngon has either inner boundaries or duplicate vertices.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the ngon to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "0 if the ngon is not valid, otherwise the number of boundary edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_IsValid.htm"
+    },
+    {
+      "name": "IsValid(Int32, TextLog)",
+      "signature": "public uint IsValid(int index, TextLog textLog)",
+      "summary": "Tests an ngon to see if the vertex and face references are valid and pass partial boundary validity checks.",
+      "remarks": "If the return value is \u003E MeshNgon.BoundaryVertexCount, then the ngon has either inner boundaries or duplicate vertices.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the ngon to test.",
+          "optional": false
+        },
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log for collecting information about problems.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "0 if the ngon is not valid, otherwise the number of boundary edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_IsValid_1.htm"
+    },
+    {
+      "name": "NgonBoundaryVertexList",
+      "signature": "public Point3d[] NgonBoundaryVertexList(MeshNgon ngon, bool bAppendStartPoint)",
+      "summary": "Get an ngon\u0027s boundary points.",
+      "params": [
+        {
+          "name": "ngon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "ngon.",
+          "optional": false
+        },
+        {
+          "name": "bAppendStartPoint",
+          "type": "System.Boolean",
+          "doc": "If true, the first point in the list is also appended to the end of the list to create a closed polyline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "A list of ngon boundary points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_NgonBoundaryVertexList.htm"
+    },
+    {
+      "name": "NgonHasHoles",
+      "signature": "public bool NgonHasHoles(int index)",
+      "summary": "Determines whether a ngon has holes.",
+      "remarks": "A slit, for example, will give an edge count that differs from outer edge count despite the lack of true \u0022holes\u0022 i.e. interior edges that are not shared by more than one face of the ngon in question.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Ngon index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true for holes (or malformed ngon, see remarks), false for no holes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_NgonHasHoles.htm"
+    },
+    {
+      "name": "NgonIndexFromFaceIndex",
+      "signature": "public int NgonIndexFromFaceIndex(int meshFaceIndex)",
+      "summary": "Returns the index of a mesh ngon the face belongs to.",
+      "params": [
+        {
+          "name": "meshFaceIndex",
+          "type": "System.Int32",
+          "doc": "Index of a mesh face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the mesh ngon the face belongs to or -1 if the face does not belong to an ngon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_NgonIndexFromFaceIndex.htm"
+    },
+    {
+      "name": "Orientation",
+      "signature": "public int Orientation(int index, bool permitHoles)",
+      "summary": "Determine if the ngon\u0027s boundary orientation matches that of the set of faces it is made from.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Ngon index.",
+          "optional": false
+        },
+        {
+          "name": "permitHoles",
+          "type": "System.Boolean",
+          "doc": "true if the ngon is permitted to have interior holes, false otherwise.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "1: The ngon does not have holes, the ngon\u0027s faces are compatibly oriented, and the ngon\u0027s outer boundary orientation matches the faces\u0027 orientation. -1: The ngon does not have holes, the ngon\u0027s faces are compatibly oriented, and the ngon\u0027s outer boundary orientation is opposite the faces\u0027 orientation. 0: Otherwise.The ngon may be invalid, have holes, the ngon\u0027s faces may not be compatibly oriented, the ngons edges may not have a consistent orientation with respect to the faces, or some other issue."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_Orientation.htm"
+    },
+    {
+      "name": "RemoveAllNgons",
+      "signature": "public int RemoveAllNgons()",
+      "summary": "Removes all ngons from the mesh.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number deleted ngons."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_RemoveAllNgons.htm"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "public void RemoveAt(int index)",
+      "summary": "Removes an ngon from the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the ngon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_RemoveAt.htm"
+    },
+    {
+      "name": "RemoveNgons",
+      "signature": "public int RemoveNgons(IEnumerable\u003Cint\u003E indices)",
+      "summary": "Remove one or more ngons from the mesh.",
+      "params": [
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "An array of ngon indices.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of deleted ngons."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_RemoveNgons.htm"
+    },
+    {
+      "name": "ReverseOuterBoundary",
+      "signature": "public void ReverseOuterBoundary(int index)",
+      "summary": "Reverse the order of the m_vi[] array for an ngon",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_ReverseOuterBoundary.htm"
+    },
+    {
+      "name": "SetNgon",
+      "signature": "public void SetNgon(int index, MeshNgon ngon)",
+      "summary": "Set an ngon in this list.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "An ngon index.",
+          "optional": false
+        },
+        {
+          "name": "ngon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "An ngon.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If index is negative or \u003E= Count."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_MeshNgonList_SetNgon.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of mesh ngons.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshNgonList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "MeshNgon",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the mesh ngon at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshNgonList_Item.htm"
+    },
+    {
+      "name": "UnsignedCount",
+      "type": "UInt32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of mesh ngons.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_MeshNgonList_UnsignedCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

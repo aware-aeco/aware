@@ -1,0 +1,39 @@
+{
+  "name": "BrepFace.ShrinkDisableSide",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines bitwise mask flags indicating what side of a surface to not shrink.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_BrepFace_ShrinkDisableSide.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ShrinkAllSides",
+      "value": 0,
+      "summary": "Shrink on all four sides."
+    },
+    {
+      "name": "DoNotShrinkWestSide",
+      "value": 1,
+      "summary": "Do not shrink on the west side of domain."
+    },
+    {
+      "name": "DoNotShrinkSouthSide",
+      "value": 2,
+      "summary": "Do not shrink on the south side of domain."
+    },
+    {
+      "name": "DoNotShrinkEastSide",
+      "value": 4,
+      "summary": "Do not shrink on the east side of domain."
+    },
+    {
+      "name": "DoNotShrinkNorthSide",
+      "value": 8,
+      "summary": "Do not shrink on the north side of domain."
+    }
+  ]
+}

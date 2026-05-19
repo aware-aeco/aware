@@ -1,0 +1,145 @@
+{
+  "name": "AsyncRenderContext",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "\\ingroup rhino_render Inherit from AsyncRenderContext to be able to create asynchronous render engine implementations through RhinoCommon.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_AsyncRenderContext.htm",
+  "constructors": [
+    {
+      "name": "AsyncRenderContext",
+      "signature": "protected AsyncRenderContext()",
+      "summary": "Initializes a new instance of the AsyncRenderContext class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeleteThis",
+      "signature": "protected virtual void DeleteThis()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_DeleteThis.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the AsyncRenderContext",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Releases the unmanaged resources used by the AsyncRenderContext and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_Finalize.htm"
+    },
+    {
+      "name": "JoinRenderThread",
+      "signature": "public void JoinRenderThread()",
+      "summary": "Join the render thread, then set to null;",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_JoinRenderThread.htm"
+    },
+    {
+      "name": "StartRenderThread",
+      "signature": "public bool StartRenderThread(ThreadStart threadStart, string threadName)",
+      "summary": "Start a new render thread with given function.",
+      "params": [
+        {
+          "name": "threadStart",
+          "type": "System.Threading.ThreadStart",
+          "doc": "Function to start in render thread",
+          "optional": false
+        },
+        {
+          "name": "threadName",
+          "type": "System.String",
+          "doc": "Name for the thread",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.AsyncRenderContext.StartRenderThread(System.Threading.ThreadStart,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_StartRenderThread.htm"
+    },
+    {
+      "name": "StopRendering",
+      "signature": "public virtual void StopRendering()",
+      "summary": "Override StopRendering if you need to do additional tasks besides having Cancel set to true. Note: you should always base.StopRendering() in your overriding implementation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_AsyncRenderContext_StopRendering.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Cancel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If set to true rendering should be stopped. Is set to true only by StopRendering().",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_AsyncRenderContext_Cancel.htm"
+    },
+    {
+      "name": "RenderThread",
+      "type": "Thread",
+      "getter": true,
+      "setter": false,
+      "summary": "Holder for render thread, that gets set through StartRenderThread()",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_AsyncRenderContext_RenderThread.htm"
+    },
+    {
+      "name": "RenderWindow",
+      "type": "RenderWindow",
+      "getter": true,
+      "setter": true,
+      "summary": "Handle to the RenderWindow for the instance of this class. This is a convenience property for implementors to use.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_AsyncRenderContext_RenderWindow.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

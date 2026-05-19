@@ -1,0 +1,1321 @@
+{
+  "name": "SurfaceFilletBase",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "New interactive FilletSrf",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SurfaceFilletBase.htm",
+  "constructors": [
+    {
+      "name": "SurfaceFilletBase(BrepFace, Curve, BrepFace, Point2d, Double)",
+      "signature": "protected SurfaceFilletBase(BrepFace RailFace, Curve Rail3d, BrepFace Face, Point2d uv, double tolerance)",
+      "summary": "Initializes a new instance of the SurfaceFilletBase class",
+      "params": [
+        {
+          "name": "RailFace",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022RailFace\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Curve,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "Rail3d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022Rail3d\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Curve,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "Face",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022Face\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Curve,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "uv",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022uv\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Curve,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022tolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Curve,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "NullReferenceException",
+          "when": ""
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase__ctor.htm"
+    },
+    {
+      "name": "SurfaceFilletBase(BrepFace, Point2d, BrepFace, Point2d, Double, Double)",
+      "signature": "protected SurfaceFilletBase(BrepFace FaceA, Point2d uvA, BrepFace FaceB, Point2d uvB, double radius, double tolerance)",
+      "summary": "Initializes a new instance of the SurfaceFilletBase class",
+      "params": [
+        {
+          "name": "FaceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022FaceA\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022uvA\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "FaceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022FaceB\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022uvB\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022radius\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022tolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase__ctor_2.htm"
+    },
+    {
+      "name": "SurfaceFilletBase(BrepFace, Point2d, Curve, Double, Double, Double)",
+      "signature": "protected SurfaceFilletBase(BrepFace face, Point2d uv, Curve rail3d, double u, double radius, double tolerance)",
+      "summary": "Initializes a new instance of the SurfaceFilletBase class",
+      "params": [
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022face\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.Curve,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "uv",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022uv\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.Curve,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rail3d",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail3d\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.Curve,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022u\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.Curve,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022radius\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.Curve,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022tolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.Curve,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "NullReferenceException",
+          "when": ""
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase__ctor_3.htm"
+    },
+    {
+      "name": "SurfaceFilletBase(BrepFace, Point2d, BrepFace, Point2d, Double, Boolean, Double)",
+      "signature": "protected SurfaceFilletBase(BrepFace FaceA, Point2d uvA, BrepFace FaceB, Point2d uvB, double radius, bool allowExtend, double tolerance)",
+      "summary": "Initializes a new instance of the SurfaceFilletBase class",
+      "params": [
+        {
+          "name": "FaceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022FaceA\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022uvA\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "FaceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "[Missing \u003Cparam name=\u0022FaceB\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "[Missing \u003Cparam name=\u0022uvB\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022radius\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "allowExtend",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022allowExtend\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022tolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.#ctor(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Boolean,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ChangeFilletRadius",
+      "signature": "protected bool ChangeFilletRadius(double radius)",
+      "summary": "This will clear out the existing rails and fillet surfaces, and redo the offset intersections, etc.",
+      "params": [
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The new radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_ChangeFilletRadius.htm"
+    },
+    {
+      "name": "CreateG2ChordalQuinticFilletSrf",
+      "signature": "public static bool CreateG2ChordalQuinticFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a surface fillet using G2 chordal Quintic arc approximations as sections",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateG2ChordalQuinticFilletSrf.htm"
+    },
+    {
+      "name": "CreateNonRationalCubicArcsFilletSrf",
+      "signature": "public static bool CreateNonRationalCubicArcsFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a surface fillet using Non-rational Cubic arc approximations as sections",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateNonRationalCubicArcsFilletSrf.htm"
+    },
+    {
+      "name": "CreateNonRationalCubicFilletSrf",
+      "signature": "public static bool CreateNonRationalCubicFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, double TanSlider, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a fillet using non-rational Cubic sections with a tangent slider",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "TanSlider",
+          "type": "System.Double",
+          "doc": "A number between -0.95 and 0.95 indicating how far to push the tangent control points toward or away from the theoretical quadratic middle control point",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.CreateNonRationalCubicFilletSrf(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double,System.Collections.Generic.List{Rhino.Geometry.Brep},System.Collections.Generic.List{Rhino.Geometry.Brep},System.Int32,System.Double,System.Boolean,System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Brep})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateNonRationalCubicFilletSrf.htm"
+    },
+    {
+      "name": "CreateNonRationalQuarticArcsFilletSrf",
+      "signature": "public static bool CreateNonRationalQuarticArcsFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a surface fillet using Non-rational Quartic arc approximations as sections",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateNonRationalQuarticArcsFilletSrf.htm"
+    },
+    {
+      "name": "CreateNonRationalQuarticFilletSrf",
+      "signature": "public static bool CreateNonRationalQuarticFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, double TanSlider, double InnerSlider, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a fillet using non-rational Quartic sections with a tangent and inner slider",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "TanSlider",
+          "type": "System.Double",
+          "doc": "A number between -0.95 and 0.95 indicating how far to push the tangent control points toward or away from the theoretical quadratic middle control point",
+          "optional": false
+        },
+        {
+          "name": "InnerSlider",
+          "type": "System.Double",
+          "doc": "A number between -0.95 and 0.95 indicating how far to push the inner control point toward or away from the theoretical quadratic middle control point",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.CreateNonRationalQuarticFilletSrf(Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,Rhino.Geometry.BrepFace,Rhino.Geometry.Point2d,System.Double,System.Double,System.Collections.Generic.List{Rhino.Geometry.Brep},System.Collections.Generic.List{Rhino.Geometry.Brep},System.Int32,System.Double,System.Double,System.Boolean,System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Brep})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateNonRationalQuarticFilletSrf.htm"
+    },
+    {
+      "name": "CreateNonRationalQuinticArcsFilletSrf",
+      "signature": "public static bool CreateNonRationalQuinticArcsFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a surface fillet using Non-rational Quintic arc approximations as sections",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateNonRationalQuinticArcsFilletSrf.htm"
+    },
+    {
+      "name": "CreateNonRationalQuinticFilletSrf",
+      "signature": "public static bool CreateNonRationalQuinticFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, double TanSlider, double InnerSlider, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a fillet using non-rational Quintic sections with a tangent and inner slider",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "TanSlider",
+          "type": "System.Double",
+          "doc": "A number between -0.95 and 0.95 indicating how far to push the tangent control points toward or away from the theoretical quadratic middle control point",
+          "optional": false
+        },
+        {
+          "name": "InnerSlider",
+          "type": "System.Double",
+          "doc": "A number between -0.95 and 0.95 indicating how far to push the inner control points toward or away from the theoretical quadratic middle control point",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateNonRationalQuinticFilletSrf.htm"
+    },
+    {
+      "name": "CreateRationalArcsFilletSrf",
+      "signature": "public static bool CreateRationalArcsFilletSrf(BrepFace faceA, Point2d uvA, BrepFace faceB, Point2d uvB, double radius, double tolerance, List\u003CBrep\u003E trimmedBrepsA, List\u003CBrep\u003E trimmedBrepsB, int rail_degree, bool bTrim, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "Creates a standard surface fillet using rational arc sections",
+      "params": [
+        {
+          "name": "faceA",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the first face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvA",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceA close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "faceB",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "the second face to use constructing the fillet",
+          "optional": false
+        },
+        {
+          "name": "uvB",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The parametric u,v selection point on FaceB close to the edge to fillet",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The radius of the fillet",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use in fitting a solution",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsA",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, returns the remains of FaceA trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "trimmedBrepsB",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "if bTrim = true, the remains of FaceB trimmed to the fillet",
+          "optional": false
+        },
+        {
+          "name": "rail_degree",
+          "type": "System.Int32",
+          "doc": "the degree of the rail curve",
+          "optional": false
+        },
+        {
+          "name": "bTrim",
+          "type": "System.Boolean",
+          "doc": "if True, trim the faces and retuen those results in resultsA and resultsB",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "if True and if one input surface is longer than the other, the fillet surface is extended to the input surface edges",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the resulting fillet surfaces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_CreateRationalArcsFilletSrf.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_Finalize.htm"
+    },
+    {
+      "name": "G2ChordalQuintic",
+      "signature": "public bool G2ChordalQuintic(int railDegree, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_G2ChordalQuintic.htm"
+    },
+    {
+      "name": "IsInitialized",
+      "signature": "public bool IsInitialized()",
+      "summary": "Check to see if the fillet is properly initialized. If it is not, then the selected curves, surfaces, and/or radius must be adjusted in some way before creating the fillet",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.IsInitialized\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_IsInitialized.htm"
+    },
+    {
+      "name": "NonRationalCubic",
+      "signature": "public bool NonRationalCubic(int railDegree, double TanSlider, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "TanSlider",
+          "type": "System.Double",
+          "doc": "A number from -1 to 1 indicating how far towards the theoretical rational midpoint to adjust the tangent control points.",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_NonRationalCubic.htm"
+    },
+    {
+      "name": "NonRationalCubicArcs",
+      "signature": "public bool NonRationalCubicArcs(int railDegree, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_NonRationalCubicArcs.htm"
+    },
+    {
+      "name": "NonRationalQuartic",
+      "signature": "public bool NonRationalQuartic(int railDegree, double TanSlider, double InnerSlider, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "TanSlider",
+          "type": "System.Double",
+          "doc": "A number from -1 to 1 indicating how far towards the theoretical rational midpoint to adjust the tangent control points.",
+          "optional": false
+        },
+        {
+          "name": "InnerSlider",
+          "type": "System.Double",
+          "doc": "A number from -1 to 1 indicating how far towards the theoretical rational midpoint to adjust the inner control points.",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_NonRationalQuartic.htm"
+    },
+    {
+      "name": "NonRationalQuarticArcs",
+      "signature": "public bool NonRationalQuarticArcs(int railDegree, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_NonRationalQuarticArcs.htm"
+    },
+    {
+      "name": "NonRationalQuintic",
+      "signature": "public bool NonRationalQuintic(int railDegree, double TanSlider, double InnerSlider, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "TanSlider",
+          "type": "System.Double",
+          "doc": "A number from -1 to 1 indicating how far towards the theoretical rational midpoint to adjust the tangent control points.",
+          "optional": false
+        },
+        {
+          "name": "InnerSlider",
+          "type": "System.Double",
+          "doc": "A number from -1 to 1 indicating how far towards the theoretical rational midpoint to adjust the inner control points.",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_NonRationalQuintic.htm"
+    },
+    {
+      "name": "NonRationalQuinticArcs",
+      "signature": "public bool NonRationalQuinticArcs(int railDegree, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_NonRationalQuinticArcs.htm"
+    },
+    {
+      "name": "RationalArcs",
+      "signature": "public bool RationalArcs(int railDegree, bool bExtend, List\u003CBrep\u003E Fillets)",
+      "summary": "make fillet surfaces and hack them up to active pieces. Adjusts cross sections",
+      "params": [
+        {
+          "name": "railDegree",
+          "type": "System.Int32",
+          "doc": "The degree of the rail",
+          "optional": false
+        },
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "If true, when one input surface is longer than the other, the fillet surface is extended to the input surface edges.",
+          "optional": false
+        },
+        {
+          "name": "Fillets",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "the fillet8s that were created",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_RationalArcs.htm"
+    },
+    {
+      "name": "TrimBreps",
+      "signature": "public bool TrimBreps(bool bExtend, List\u003CBrep\u003E TrimmedBreps0, List\u003CBrep\u003E TrimmedBreps1)",
+      "summary": "If the two input breps are the same, TrimmedBreps[1] will be empty. The constructor idoes everything necessary for this to be called. Calles to the various fillet creation members will not change the result.",
+      "params": [
+        {
+          "name": "bExtend",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bExtend\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.TrimBreps(System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Brep},System.Collections.Generic.List{Rhino.Geometry.Brep})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "TrimmedBreps0",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022TrimmedBreps0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.TrimBreps(System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Brep},System.Collections.Generic.List{Rhino.Geometry.Brep})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "TrimmedBreps1",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022TrimmedBreps1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.TrimBreps(System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Brep},System.Collections.Generic.List{Rhino.Geometry.Brep})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SurfaceFilletBase.TrimBreps(System.Boolean,System.Collections.Generic.List{Rhino.Geometry.Brep},System.Collections.Generic.List{Rhino.Geometry.Brep})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SurfaceFilletBase_TrimBreps.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

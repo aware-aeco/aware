@@ -1,0 +1,34 @@
+{
+  "name": "ImageFile",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Support functions for image files",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_ImageFile.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SupportsAlphaChannel",
+      "signature": "public static bool SupportsAlphaChannel(string filename)",
+      "summary": "Returns true if file at given path is an image file and that file format supports an alpha channel",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.FileIO.ImageFile.SupportsAlphaChannel(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.ImageFile.SupportsAlphaChannel(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ImageFile_SupportsAlphaChannel.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

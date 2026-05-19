@@ -1,0 +1,147 @@
+{
+  "name": "ICollapsibleSection2",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ICollapsibleSection2\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_ICollapsibleSection2.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EnableHeaderButton",
+      "signature": "bool EnableHeaderButton(int index, bool bEnable)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.EnableHeaderButton(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bEnable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bEnable\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.EnableHeaderButton(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.EnableHeaderButton(System.Int32,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_EnableHeaderButton.htm"
+    },
+    {
+      "name": "NewHeaderButtonHandler",
+      "signature": "IHeaderButtonHandler NewHeaderButtonHandler()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IHeaderButtonHandler",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.NewHeaderButtonHandler\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_NewHeaderButtonHandler.htm"
+    },
+    {
+      "name": "OnAttachedToHolder",
+      "signature": "void OnAttachedToHolder(ICollapsibleSectionHolder2 holder)",
+      "summary": "",
+      "params": [
+        {
+          "name": "holder",
+          "type": "Rhino.UI.Controls.ICollapsibleSectionHolder2",
+          "doc": "[Missing \u003Cparam name=\u0022holder\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.OnAttachedToHolder(Rhino.UI.Controls.ICollapsibleSectionHolder2)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_OnAttachedToHolder.htm"
+    },
+    {
+      "name": "OnAttachingToHolder",
+      "signature": "void OnAttachingToHolder(ICollapsibleSectionHolder2 holder)",
+      "summary": "",
+      "params": [
+        {
+          "name": "holder",
+          "type": "Rhino.UI.Controls.ICollapsibleSectionHolder2",
+          "doc": "[Missing \u003Cparam name=\u0022holder\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.OnAttachingToHolder(Rhino.UI.Controls.ICollapsibleSectionHolder2)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_OnAttachingToHolder.htm"
+    },
+    {
+      "name": "OnDetachedFromHolder",
+      "signature": "void OnDetachedFromHolder(ICollapsibleSectionHolder2 holder)",
+      "summary": "",
+      "params": [
+        {
+          "name": "holder",
+          "type": "Rhino.UI.Controls.ICollapsibleSectionHolder2",
+          "doc": "[Missing \u003Cparam name=\u0022holder\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.OnDetachedFromHolder(Rhino.UI.Controls.ICollapsibleSectionHolder2)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_OnDetachedFromHolder.htm"
+    },
+    {
+      "name": "OnDetachingFromHolder",
+      "signature": "void OnDetachingFromHolder(ICollapsibleSectionHolder2 holder)",
+      "summary": "",
+      "params": [
+        {
+          "name": "holder",
+          "type": "Rhino.UI.Controls.ICollapsibleSectionHolder2",
+          "doc": "[Missing \u003Cparam name=\u0022holder\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.OnDetachingFromHolder(Rhino.UI.Controls.ICollapsibleSectionHolder2)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_OnDetachingFromHolder.htm"
+    },
+    {
+      "name": "ShowHeaderButton",
+      "signature": "bool ShowHeaderButton(int index, bool bShow)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.ShowHeaderButton(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bShow",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bShow\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.ShowHeaderButton(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ICollapsibleSection2.ShowHeaderButton(System.Int32,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_ICollapsibleSection2_ShowHeaderButton.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

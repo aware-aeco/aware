@@ -1,0 +1,88 @@
+{
+  "name": "PostEffectState",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectState\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_PostEffectState.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectState",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectState_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectState_Finalize.htm"
+    },
+    {
+      "name": "SetValue\u003CT\u003E",
+      "signature": "public bool SetValue\u003CT\u003E(string name, T vValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectState.SetValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "vValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022vValue\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectState.SetValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectState.SetValue\u0060\u00601(System.String,\u0060\u00600)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectState_SetValue__1.htm"
+    },
+    {
+      "name": "TryGetValue\u003CT\u003E",
+      "signature": "public bool TryGetValue\u003CT\u003E(string name, out T vValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectState.TryGetValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "vValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022vValue\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectState.TryGetValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectState.TryGetValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectState_TryGetValue__1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

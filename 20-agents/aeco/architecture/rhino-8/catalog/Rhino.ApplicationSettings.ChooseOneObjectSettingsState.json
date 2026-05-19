@@ -1,0 +1,134 @@
+{
+  "name": "ChooseOneObjectSettingsState",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Represents a snapshot of ChooseOneObjectSettings.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_ChooseOneObjectSettingsState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AutomaticResize",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "AutomaticResize",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_AutomaticResize.htm"
+    },
+    {
+      "name": "DynamicHighlight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "DynamicHighlight",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_DynamicHighlight.htm"
+    },
+    {
+      "name": "FollowCursor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "FollowCursor",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_FollowCursor.htm"
+    },
+    {
+      "name": "HighlightColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "HighlightColor",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_HighlightColor.htm"
+    },
+    {
+      "name": "MaxAutoResizeItems",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "MaxAutoResizeItems",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_MaxAutoResizeItems.htm"
+    },
+    {
+      "name": "ShowAllOption",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowAllOption",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowAllOption.htm"
+    },
+    {
+      "name": "ShowObjectColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowObjectColor",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowObjectColor.htm"
+    },
+    {
+      "name": "ShowObjectLayer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowObjectLayer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowObjectLayer.htm"
+    },
+    {
+      "name": "ShowObjectName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowObjectName",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowObjectName.htm"
+    },
+    {
+      "name": "ShowObjectType",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowObjectType",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowObjectType.htm"
+    },
+    {
+      "name": "ShowObjectTypeDetails",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowObjectTypeDetails",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowObjectTypeDetails.htm"
+    },
+    {
+      "name": "ShowTitlebarAndBorder",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "ShowTitlebarAndBorder",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_ShowTitlebarAndBorder.htm"
+    },
+    {
+      "name": "UseCustomColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "UseCustomColor",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_UseCustomColor.htm"
+    },
+    {
+      "name": "XOffset",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "XOffset",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_XOffset.htm"
+    },
+    {
+      "name": "YOffset",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "YOffset",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_ChooseOneObjectSettingsState_YOffset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,89 @@
+{
+  "name": "QuadRemeshParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Parameters for QuadRemesh method",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_QuadRemeshParameters.htm",
+  "constructors": [
+    {
+      "name": "QuadRemeshParameters",
+      "signature": "public QuadRemeshParameters()",
+      "summary": "Initializes a new instance of the QuadRemeshParameters class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_QuadRemeshParameters__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AdaptiveQuadCount",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Respect the original Target Quad Count value as much as possible. True returns more quads than TargetQuadCount depending on amount of high-curvature areas. Note: this value is ignored when TargetEdgeLength \u003E 0",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_AdaptiveQuadCount.htm"
+    },
+    {
+      "name": "AdaptiveSize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Larger values results in for quad sizes that adjust to match input curvature. Smaller values results in more uniform quad sizes at the risk of less feature preservation. Range [0 - 100] Note: this value is ignored when TargetEdgeLength \u003E 0",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_AdaptiveSize.htm"
+    },
+    {
+      "name": "DetectHardEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When enabled the hard edges in models will be retained.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_DetectHardEdges.htm"
+    },
+    {
+      "name": "GuideCurveInfluence",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0 = Approximate 1 = Interpolate Edge Ring 2 = Interpolate Edge Loop This value is ignored if Guide Curves are not supplied",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_GuideCurveInfluence.htm"
+    },
+    {
+      "name": "PreserveMeshArrayEdgesMode",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0=off, 1=On(Smart), 2=On(Strict) : Mesh array\u0027s created from Breps will have their brep face edge boundaries retained. Smart - Small or insignificant input faces are ignored. Strict - All input faces are factored in re-meshed result.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_PreserveMeshArrayEdgesMode.htm"
+    },
+    {
+      "name": "SymmetryAxis",
+      "type": "QuadRemeshSymmetryAxis",
+      "getter": true,
+      "setter": true,
+      "summary": "Symmetry axis to use for symmetric re-meshing",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_SymmetryAxis.htm"
+    },
+    {
+      "name": "TargetEdgeLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "When TargetEdgeLength is greater than 0 TargetQuadCount will be re-computed with the target goal of an approximated edge length based on the area of the input mesh e.g TargetQuadCount = Input mesh Area * sqr(TargetEdgeLength) AdaptiveSize as well as AdaptiveQuadCount will also be ignored;",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_TargetEdgeLength.htm"
+    },
+    {
+      "name": "TargetQuadCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The number of quads to try to achieve in the final re-meshed object Note: This value is overridden if TargetEdgeLength \u003E 0",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_QuadRemeshParameters_TargetQuadCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

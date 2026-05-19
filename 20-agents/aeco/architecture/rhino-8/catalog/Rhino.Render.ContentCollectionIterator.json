@@ -1,0 +1,99 @@
+{
+  "name": "ContentCollectionIterator",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "An iterator for the RenderContentCollection",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ContentCollectionIterator.htm",
+  "constructors": [
+    {
+      "name": "ContentCollectionIterator",
+      "signature": "public ContentCollectionIterator(IntPtr pCollection)",
+      "summary": "Initializes a new instance of the ContentCollectionIterator class",
+      "params": [
+        {
+          "name": "pCollection",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pCollection\u0022/\u003E documentation for \u0022M:Rhino.Render.ContentCollectionIterator.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ContentCollectionIterator__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeleteThis",
+      "signature": "public void DeleteThis()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ContentCollectionIterator_DeleteThis.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the ContentCollectionIterator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ContentCollectionIterator_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ContentCollectionIterator_Finalize.htm"
+    },
+    {
+      "name": "First",
+      "signature": "public RenderContent First()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ContentCollectionIterator.First\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ContentCollectionIterator_First.htm"
+    },
+    {
+      "name": "Next",
+      "signature": "public RenderContent Next()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.ContentCollectionIterator.Next\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_ContentCollectionIterator_Next.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ContentCollectionIterator_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

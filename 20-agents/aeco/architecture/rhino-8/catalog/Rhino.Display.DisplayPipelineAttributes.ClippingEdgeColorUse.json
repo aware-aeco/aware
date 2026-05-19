@@ -1,0 +1,29 @@
+{
+  "name": "DisplayPipelineAttributes.ClippingEdgeColorUse",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.ClippingEdgeColorUse\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_ClippingEdgeColorUse.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PlaneColor",
+      "value": 0,
+      "summary": "Uses the clipping plane\u0027s color (object or layer)."
+    },
+    {
+      "name": "SolidColor",
+      "value": 1,
+      "summary": "Solid color"
+    },
+    {
+      "name": "ObjectColor",
+      "value": 2,
+      "summary": "Uses the object\u0027s color (object or layer)."
+    }
+  ]
+}

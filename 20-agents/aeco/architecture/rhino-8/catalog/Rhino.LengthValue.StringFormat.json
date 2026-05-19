@@ -1,0 +1,44 @@
+{
+  "name": "LengthValue.StringFormat",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "Formatting to apply when creating a length value from a double.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_LengthValue_StringFormat.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ExactDecimal",
+      "value": 0,
+      "summary": "Use exact decimal string."
+    },
+    {
+      "name": "ExactProperFraction",
+      "value": 1,
+      "summary": "If possible, use exact integer-fraction format (1.125 becomes 1-1/8)."
+    },
+    {
+      "name": "ExactImproperFraction",
+      "value": 2,
+      "summary": "If possible, use exact fraction format (1.125 becomes 9/8)."
+    },
+    {
+      "name": "CleanDecimal",
+      "value": 3,
+      "summary": "The value may be adjusted slightly to improve clarity (1.124999... becomes 1.125)."
+    },
+    {
+      "name": "CleanProperFraction",
+      "value": 4,
+      "summary": "The value may be adjusted slightly to improve clarity (1.124999... becomes 1-1/8)."
+    },
+    {
+      "name": "CleanImproperFraction",
+      "value": 5,
+      "summary": "The value may be adjusted slightly to improve clarity (1.124999... becomes 9/8)."
+    }
+  ]
+}

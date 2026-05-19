@@ -1,0 +1,24 @@
+{
+  "name": "PointDisplayMode",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values for world coordinates and CPlane point display modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_PointDisplayMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WorldPoint",
+      "value": 0,
+      "summary": "Points are displayed in world coordinates."
+    },
+    {
+      "name": "CplanePoint",
+      "value": 1,
+      "summary": "Points are displayed in CPlane coordinates."
+    }
+  ]
+}

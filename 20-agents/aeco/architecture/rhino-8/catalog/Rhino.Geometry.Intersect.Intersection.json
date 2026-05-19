@@ -1,0 +1,2265 @@
+{
+  "name": "Intersection",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "class",
+  "summary": "Provides static methods for the computation of intersections, projections, sections and similar.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Intersect_Intersection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ArcArc",
+      "signature": "public static ArcArcIntersection ArcArc(Arc arcA, Arc arcB, out Point3d intersectionPoint1, out Point3d intersectionPoint2)",
+      "summary": "Intersects two arcs using exact calculations.",
+      "params": [
+        {
+          "name": "arcA",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "First arc to intersect.",
+          "optional": false
+        },
+        {
+          "name": "arcB",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "Second arc to intersect.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First intersection point.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second intersection point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ArcArcIntersection",
+        "doc": "The intersection type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_ArcArc.htm"
+    },
+    {
+      "name": "BrepBrep(Brep, Brep, Double, Curve[], Point3d[])",
+      "signature": "public static bool BrepBrep(Brep brepA, Brep brepB, double tolerance, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects two Breps.",
+      "params": [
+        {
+          "name": "brepA",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "First Brep for intersection.",
+          "optional": false
+        },
+        {
+          "name": "brepB",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Second Brep for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was success, false otherwise. Check the output arrays to determine how the input intersects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_BrepBrep.htm"
+    },
+    {
+      "name": "BrepBrep(Brep, Brep, Double, Boolean, Curve[], Point3d[])",
+      "signature": "public static bool BrepBrep(Brep brepA, Brep brepB, double tolerance, bool joinCurves, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects two Breps.",
+      "params": [
+        {
+          "name": "brepA",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "First Brep for intersection.",
+          "optional": false
+        },
+        {
+          "name": "brepB",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Second Brep for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance.",
+          "optional": false
+        },
+        {
+          "name": "joinCurves",
+          "type": "System.Boolean",
+          "doc": "If true, join the resulting curves where possible.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was success, false otherwise. Check the output arrays to determine how the input intersects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_BrepBrep_1.htm"
+    },
+    {
+      "name": "BrepPlane(Brep, Plane, Double, Curve[], Point3d[])",
+      "signature": "public static bool BrepPlane(Brep brep, Plane plane, double tolerance, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects a Brep with an (infinite) plane.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep to intersect.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect with.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for intersections.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_BrepPlane.htm"
+    },
+    {
+      "name": "BrepPlane(Brep, Plane, Double, Boolean, Curve[], Point3d[])",
+      "signature": "public static bool BrepPlane(Brep brep, Plane plane, double tolerance, bool joinCurves, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects a Brep with an (infinite) plane.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep to intersect.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect with.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use for intersections.",
+          "optional": false
+        },
+        {
+          "name": "joinCurves",
+          "type": "System.Boolean",
+          "doc": "If true, join the resulting curves where possible.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_BrepPlane_1.htm"
+    },
+    {
+      "name": "BrepSurface(Brep, Surface, Double, Curve[], Point3d[])",
+      "signature": "public static bool BrepSurface(Brep brep, Surface surface, double tolerance, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects a Brep and a Surface.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A brep to be intersected.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A surface to be intersected.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves array argument. This out reference is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points array argument. This out reference is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was success, false otherwise. Check the output arrays to determine how the input intersects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_BrepSurface.htm"
+    },
+    {
+      "name": "BrepSurface(Brep, Surface, Double, Boolean, Curve[], Point3d[])",
+      "signature": "public static bool BrepSurface(Brep brep, Surface surface, double tolerance, bool joinCurves, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects a Brep and a Surface.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A brep to be intersected.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A surface to be intersected.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value.",
+          "optional": false
+        },
+        {
+          "name": "joinCurves",
+          "type": "System.Boolean",
+          "doc": "If true, join the resulting curves where possible.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves array argument. This out reference is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points array argument. This out reference is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation was success, false otherwise. Check the output arrays to determine how the input intersects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_BrepSurface_1.htm"
+    },
+    {
+      "name": "CircleCircle",
+      "signature": "public static CircleCircleIntersection CircleCircle(Circle circleA, Circle circleB, out Point3d intersectionPoint1, out Point3d intersectionPoint2)",
+      "summary": "Intersects two circles using exact calculations.",
+      "params": [
+        {
+          "name": "circleA",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "First circle to intersect.",
+          "optional": false
+        },
+        {
+          "name": "circleB",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Second circle to intersect.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First intersection point.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second intersection point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CircleCircleIntersection",
+        "doc": "The intersection type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CircleCircle.htm"
+    },
+    {
+      "name": "CurveBrep(Curve, Brep, Double, Curve[], Point3d[])",
+      "signature": "public static bool CurveBrep(Curve curve, Brep brep, double tolerance, out Curve[] overlapCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects a curve with a Brep. This function returns the 3D points of intersection and 3D overlap curves. If an error occurs while processing overlap curves, this function will return false, but it will still provide partial results.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Fitting and near miss tolerance.",
+          "optional": false
+        },
+        {
+          "name": "overlapCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The overlap curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveBrep.htm"
+    },
+    {
+      "name": "CurveBrep(Curve, Brep, Double, Double, Double[])",
+      "signature": "public static bool CurveBrep(Curve curve, Brep brep, double tolerance, double angleTolerance, out double[] t)",
+      "summary": "Intersect a curve with a Brep. This function returns the intersection parameters on the curve.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve.",
+          "optional": false
+        },
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Absolute tolerance for intersections.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "Angle tolerance in radians.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double[]",
+          "doc": "Curve parameters at intersections.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveBrep_2.htm"
+    },
+    {
+      "name": "CurveBrep(Curve, Brep, Double, Curve[], Point3d[], Double[])",
+      "signature": "public static bool CurveBrep(Curve curve, Brep brep, double tolerance, out Curve[] overlapCurves, out Point3d[] intersectionPoints, out double[] curveParameters)",
+      "summary": "Intersects a curve with a Brep. This function returns the 3D points of intersection, curve parameters at the intersection locations, and 3D overlap curves. If an error occurs while processing overlap curves, this function will return false, but it will still provide partial results.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Fitting and near miss tolerance.",
+          "optional": false
+        },
+        {
+          "name": "overlapCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The overlap curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "curveParameters",
+          "type": "System.Double[]",
+          "doc": "The intersection curve parameters will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveBrep_1.htm"
+    },
+    {
+      "name": "CurveBrepFace",
+      "signature": "public static bool CurveBrepFace(Curve curve, BrepFace face, double tolerance, out Curve[] overlapCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects a curve with a Brep face.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A curve.",
+          "optional": false
+        },
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "A brep face.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Fitting and near miss tolerance.",
+          "optional": false
+        },
+        {
+          "name": "overlapCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "A overlap curves array argument. This out reference is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "A points array argument. This out reference is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveBrepFace.htm"
+    },
+    {
+      "name": "CurveCurve",
+      "signature": "public static CurveIntersections CurveCurve(Curve curveA, Curve curveB, double tolerance, double overlapTolerance)",
+      "summary": "Finds the intersections between two curves.",
+      "params": [
+        {
+          "name": "curveA",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "First curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "curveB",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Second curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curves approach each other to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveCurve.htm"
+    },
+    {
+      "name": "CurveCurveValidate",
+      "signature": "public static CurveIntersections CurveCurveValidate(Curve curveA, Curve curveB, double tolerance, double overlapTolerance, out int[] invalidIndices, out TextLog textLog)",
+      "summary": "Finds the intersections between two curves.",
+      "params": [
+        {
+          "name": "curveA",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "First curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "curveB",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Second curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curves approach each other to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        },
+        {
+          "name": "invalidIndices",
+          "type": "System.Int32[]",
+          "doc": "The indices in the resulting CurveIntersections collection that are invalid.",
+          "optional": false
+        },
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log that contains tails about the invalid intersection events.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveCurveValidate.htm"
+    },
+    {
+      "name": "CurveLine",
+      "signature": "public static CurveIntersections CurveLine(Curve curve, Line line, double tolerance, double overlapTolerance)",
+      "summary": "Intersects a curve and an infinite line.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Infinite line to intersect.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curves approach each other to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveLine.htm"
+    },
+    {
+      "name": "CurvePlane",
+      "signature": "public static CurveIntersections CurvePlane(Curve curve, Plane plane, double tolerance)",
+      "summary": "Intersects a curve with an (infinite) plane.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve to intersect.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect with.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use during intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A list of intersection events or null if no intersections were recorded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurvePlane.htm"
+    },
+    {
+      "name": "CurveSelf",
+      "signature": "public static CurveIntersections CurveSelf(Curve curve, double tolerance)",
+      "summary": "Finds the places where a curve intersects itself.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for self-intersections.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curve approaches itself to within tolerance, an intersection is assumed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveSelf.htm"
+    },
+    {
+      "name": "CurveSurface(Curve, Surface, Double, Double)",
+      "signature": "public static CurveIntersections CurveSurface(Curve curve, Surface surface, double tolerance, double overlapTolerance)",
+      "summary": "Intersects a curve and a surface.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curve approaches the surface to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveSurface_1.htm"
+    },
+    {
+      "name": "CurveSurface(Curve, Interval, Surface, Double, Double)",
+      "signature": "public static CurveIntersections CurveSurface(Curve curve, Interval curveDomain, Surface surface, double tolerance, double overlapTolerance)",
+      "summary": "Intersects a sub-curve and a surface.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "curveDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Domain of sub-curve to take into consideration for Intersections.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curve approaches the surface to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveSurface.htm"
+    },
+    {
+      "name": "CurveSurfaceValidate(Curve, Surface, Double, Double, Int32[], TextLog)",
+      "signature": "public static CurveIntersections CurveSurfaceValidate(Curve curve, Surface surface, double tolerance, double overlapTolerance, out int[] invalidIndices, out TextLog textLog)",
+      "summary": "Intersects a curve and a surface.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curve approaches the surface to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        },
+        {
+          "name": "invalidIndices",
+          "type": "System.Int32[]",
+          "doc": "The indices in the resulting CurveIntersections collection that are invalid.",
+          "optional": false
+        },
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log that contains tails about the invalid intersection events.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveSurfaceValidate_1.htm"
+    },
+    {
+      "name": "CurveSurfaceValidate(Curve, Interval, Surface, Double, Double, Int32[], TextLog)",
+      "signature": "public static CurveIntersections CurveSurfaceValidate(Curve curve, Interval curveDomain, Surface surface, double tolerance, double overlapTolerance, out int[] invalidIndices, out TextLog textLog)",
+      "summary": "Intersects a sub-curve and a surface.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve for intersection.",
+          "optional": false
+        },
+        {
+          "name": "curveDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Domain of sub-curve to take into consideration for Intersections.",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance. If the curve approaches the surface to within tolerance, an intersection is assumed.",
+          "optional": false
+        },
+        {
+          "name": "overlapTolerance",
+          "type": "System.Double",
+          "doc": "The tolerance with which the curves are tested.",
+          "optional": false
+        },
+        {
+          "name": "invalidIndices",
+          "type": "System.Int32[]",
+          "doc": "The indices in the resulting CurveIntersections collection that are invalid.",
+          "optional": false
+        },
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log that contains tails about the invalid intersection events.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CurveIntersections",
+        "doc": "A collection of intersection events."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_CurveSurfaceValidate.htm"
+    },
+    {
+      "name": "LineBox(Line, BoundingBox, Double, Interval)",
+      "signature": "public static bool LineBox(Line line, BoundingBox box, double tolerance, out Interval lineParameters)",
+      "summary": "Intersects an infinite line and an axis aligned bounding box.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "BoundingBox to intersect.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "If tolerance \u003E 0.0, then the intersection is performed against a box that has each side moved out by tolerance.",
+          "optional": false
+        },
+        {
+          "name": "lineParameters",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The chord from line.PointAt(lineParameters.T0) to line.PointAt(lineParameters.T1) is the intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the line intersects the box, false if no intersection occurs."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineBox.htm"
+    },
+    {
+      "name": "LineBox(Line, Box, Double, Interval)",
+      "signature": "public static bool LineBox(Line line, Box box, double tolerance, out Interval lineParameters)",
+      "summary": "Intersects an infinite line with a box volume.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Box to intersect.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "If tolerance \u003E 0.0, then the intersection is performed against a box that has each side moved out by tolerance.",
+          "optional": false
+        },
+        {
+          "name": "lineParameters",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The chord from line.PointAt(lineParameters.T0) to line.PointAt(lineParameters.T1) is the intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the line intersects the box, false if no intersection occurs."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineBox_1.htm"
+    },
+    {
+      "name": "LineCircle",
+      "signature": "public static LineCircleIntersection LineCircle(Line line, Circle circle, out double t1, out Point3d point1, out double t2, out Point3d point2)",
+      "summary": "Intersects a line with a circle using exact calculations.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Circle for intersection.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Parameter on line for first intersection.",
+          "optional": false
+        },
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on circle closest to first intersection.",
+          "optional": false
+        },
+        {
+          "name": "t2",
+          "type": "System.Double",
+          "doc": "Parameter on line for second intersection.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on circle closest to second intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineCircleIntersection",
+        "doc": "If Single is returned, only t1 and point1 will have valid values. If Multiple is returned, t2 and point2 will also be filled out."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineCircle.htm"
+    },
+    {
+      "name": "LineCylinder",
+      "signature": "public static LineCylinderIntersection LineCylinder(Line line, Cylinder cylinder, out Point3d intersectionPoint1, out Point3d intersectionPoint2)",
+      "summary": "Intersects a line with a cylinder using exact calculations.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "Cylinder for intersection.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First intersection point.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second intersection point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineCylinderIntersection",
+        "doc": "If None is returned, the first point is the point on the line closest to the cylinder and the second point is the point on the cylinder closest to the line. If Single is returned, the first point is the point on the line and the second point is the same point on the cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineCylinder.htm"
+    },
+    {
+      "name": "LineLine(Line, Line, Double, Double)",
+      "signature": "public static bool LineLine(Line lineA, Line lineB, out double a, out double b)",
+      "summary": "Find the unique closest-points pair between two infinite lines, if it exists.",
+      "params": [
+        {
+          "name": "lineA",
+          "type": "Rhino.Geometry.Line",
+          "doc": "First line.",
+          "optional": false
+        },
+        {
+          "name": "lineB",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Second line.",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "Parameter on lineA that is closest to lineB.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "Parameter on lineB that is closest to lineA. The shortest distance between the lines is the chord from lineA.PointAt(a) to lineB.PointAt(b)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if points are found and false if the lines are numerically parallel. Numerically parallel means the 2x2 matrix: \u002BAoA -AoB-AoB \u002BBoB is numerically singular, where A = (lineA.To - lineA.From) and B = (lineB.To-lineB.From)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineLine.htm"
+    },
+    {
+      "name": "LineLine(Line, Line, Double, Double, Double, Boolean)",
+      "signature": "public static bool LineLine(Line lineA, Line lineB, out double a, out double b, double tolerance, bool finiteSegments)",
+      "summary": "Intersects two lines.",
+      "remarks": "If the lines are exactly parallel, meaning the system of equations used to find a and b has no numerical solution, then false is returned. If the lines are nearly parallel, which is often numerically true even if you think the lines look exactly parallel, then the closest points are found and true is returned. So, if you care about weeding out \u0022parallel\u0022 lines, then you need to do something like the following:",
+      "params": [
+        {
+          "name": "lineA",
+          "type": "Rhino.Geometry.Line",
+          "doc": "First line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "lineB",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Second line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "Parameter on lineA that is closest to LineB. The shortest distance between the lines is the chord from lineA.PointAt(a) to lineB.PointAt(b)",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "Parameter on lineB that is closest to LineA. The shortest distance between the lines is the chord from lineA.PointAt(a) to lineB.PointAt(b)",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "If tolerance \u003E 0.0, then an intersection is reported only if the distance between the points is \u003C= tolerance. If tolerance \u003C= 0.0, then the closest point between the lines is reported.",
+          "optional": false
+        },
+        {
+          "name": "finiteSegments",
+          "type": "System.Boolean",
+          "doc": "If true, the input lines are treated as finite segments. If false, the input lines are treated as infinite lines.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a closest point can be calculated and the result passes the tolerance parameter test; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineLine_1.htm"
+    },
+    {
+      "name": "LinePlane",
+      "signature": "public static bool LinePlane(Line line, Plane plane, out double lineParameter)",
+      "summary": "Intersects a line and a plane. This function only returns true if the intersection result is a single point (i.e. if the line is coincident with the plane then no intersection is assumed).",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect.",
+          "optional": false
+        },
+        {
+          "name": "lineParameter",
+          "type": "System.Double",
+          "doc": "Parameter on line where intersection occurs. If the parameter is not within the {0, 1} Interval then the finite segment does not intersect the plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LinePlane.htm"
+    },
+    {
+      "name": "LineSphere",
+      "signature": "public static LineSphereIntersection LineSphere(Line line, Sphere sphere, out Point3d intersectionPoint1, out Point3d intersectionPoint2)",
+      "summary": "Intersects a line with a sphere using exact calculations.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line for intersection.",
+          "optional": false
+        },
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "Sphere for intersection.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First intersection point.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second intersection point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LineSphereIntersection",
+        "doc": "If None is returned, the first point is the point on the line closest to the sphere and the second point is the point on the sphere closest to the line. If Single is returned, the first point is the point on the line and the second point is the same point on the sphere."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_LineSphere.htm"
+    },
+    {
+      "name": "MeshLine(Mesh, Line)",
+      "signature": "public static Point3d[] MeshLine(Mesh mesh, Line line)",
+      "summary": "Finds the intersections of a mesh and a line.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "The line to intersect with the mesh",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points: one for each face that was passed by the faceIds out reference. Empty if no items are found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshLine.htm"
+    },
+    {
+      "name": "MeshLine(Mesh, Line, Int32[])",
+      "signature": "public static Point3d[] MeshLine(Mesh mesh, Line line, out int[] faceIds)",
+      "summary": "Finds the intersections of a mesh and a line. The points are not necessarily sorted.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "The line to intersect with the mesh",
+          "optional": false
+        },
+        {
+          "name": "faceIds",
+          "type": "System.Int32[]",
+          "doc": "The indices of the intersecting faces. This out reference is assigned during the call. Empty if nothing is found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points: one for each face that was passed by the faceIds out reference. Empty if no items are found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshLine_1.htm"
+    },
+    {
+      "name": "MeshLineSorted",
+      "signature": "public static Point3d[] MeshLineSorted(Mesh mesh, Line line, out int[] faceIds)",
+      "summary": "Finds the intersections of a mesh and a line. Points are sorted along the line.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "The line to intersect with the mesh",
+          "optional": false
+        },
+        {
+          "name": "faceIds",
+          "type": "System.Int32[]",
+          "doc": "The indices of the intersecting faces. This out reference is assigned during the call. Empty if nothing is found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points: one for each face that was passed by the faceIds out reference. Empty if no items are found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshLineSorted.htm"
+    },
+    {
+      "name": "MeshMesh",
+      "signature": "public static bool MeshMesh(IEnumerable\u003CMesh\u003E meshes, double tolerance, out Polyline[] intersections, bool overlapsPolylines, out Polyline[] overlapsPolylinesResult, bool overlapsMesh, out Mesh overlapsMeshResult, TextLog textLog, CancellationToken cancel, IProgress\u003Cdouble\u003E progress)",
+      "summary": "Intersects meshes. Overlaps and perforations are provided in the output list.",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "The mesh input list. This cannot be null. Null entries are tolerated.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value. If negative, the positive value will be used. WARNING! Good tolerance values are in the magnitude of 10^-7, or RhinoMath.SqrtEpsilon*10.",
+          "optional": false
+        },
+        {
+          "name": "intersections",
+          "type": "Rhino.Geometry.Polyline[]",
+          "doc": "Returns the intersections.",
+          "optional": false
+        },
+        {
+          "name": "overlapsPolylines",
+          "type": "System.Boolean",
+          "doc": "If true, overlaps are computed and returned.",
+          "optional": false
+        },
+        {
+          "name": "overlapsPolylinesResult",
+          "type": "Rhino.Geometry.Polyline[]",
+          "doc": "If requested, overlaps are returned here.",
+          "optional": false
+        },
+        {
+          "name": "overlapsMesh",
+          "type": "System.Boolean",
+          "doc": "If true, an overlaps mesh is computed and returned.",
+          "optional": false
+        },
+        {
+          "name": "overlapsMeshResult",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "If requested, overlaps are returned here.",
+          "optional": false
+        },
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log, or null.",
+          "optional": false
+        },
+        {
+          "name": "cancel",
+          "type": "System.Threading.CancellationToken",
+          "doc": "A cancellation token to stop the computation at a given point.",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "System.IProgress\u003CDouble\u003E",
+          "doc": "A progress reporter to inform the user about progress, or null. The reported value is indicative.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if the operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshMesh.htm"
+    },
+    {
+      "name": "MeshMeshAccurate",
+      "signature": "public static Polyline[] MeshMeshAccurate(Mesh meshA, Mesh meshB, double tolerance)",
+      "summary": "Intersects two meshes. Overlaps and near misses are handled. This is an old method kept for compatibility.",
+      "params": [
+        {
+          "name": "meshA",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "First mesh for intersection.",
+          "optional": false
+        },
+        {
+          "name": "meshB",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Second mesh for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value. If negative, the positive value will be used. WARNING! Good tolerance values are in the magnitude of 10^-7, or RhinoMath.SqrtEpsilon*10.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "An array of intersection and overlaps polylines."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshMeshAccurate.htm"
+    },
+    {
+      "name": "MeshMeshFast",
+      "signature": "public static Line[] MeshMeshFast(Mesh meshA, Mesh meshB)",
+      "summary": "This is an old overload kept for compatibility. Overlaps and near misses are ignored.",
+      "params": [
+        {
+          "name": "meshA",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "First mesh for intersection.",
+          "optional": false
+        },
+        {
+          "name": "meshB",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Second mesh for intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line[]",
+        "doc": "An array of intersection line segments, or null if no intersections were found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshMeshFast.htm"
+    },
+    {
+      "name": "MeshMeshPredicate",
+      "signature": "public static bool MeshMeshPredicate(IEnumerable\u003CMesh\u003E meshes, double tolerance, out int[] pairs, TextLog textLog)",
+      "summary": "Determines if meshes intersect or overlap.",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "The mesh input list. This cannot be null. Null entries are tolerated.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value. If negative, the positive value will be used. WARNING! Good tolerance values are in the magnitude of 10^-7, or RhinoMath.SqrtEpsilon*10.",
+          "optional": false
+        },
+        {
+          "name": "pairs",
+          "type": "System.Int32[]",
+          "doc": "An array containing pairs of meshes that intersect.",
+          "optional": false
+        },
+        {
+          "name": "textLog",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "A text log, or null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True, if meshes intersect or overlap, otherwise false. False is also returned on error, but textLog will start with Error: and contain the error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshMeshPredicate.htm"
+    },
+    {
+      "name": "MeshPlane(Mesh, Plane)",
+      "signature": "public static Polyline[] MeshPlane(Mesh mesh, Plane plane)",
+      "summary": "Intersects a mesh with an infinite plane.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "An array of polylines describing the intersection loops, or null if no intersections could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshPlane_2.htm"
+    },
+    {
+      "name": "MeshPlane(Mesh, IEnumerable\u003CPlane\u003E)",
+      "signature": "public static Polyline[] MeshPlane(Mesh mesh, IEnumerable\u003CPlane\u003E planes)",
+      "summary": "Intersects a mesh with a collection of infinite planes.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "planes",
+          "type": "System.Collections.Generic.IEnumerable\u003CPlane\u003E",
+          "doc": "Planes to intersect with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "An array of polylines describing the intersection loops, or null if no intersections could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshPlane_3.htm"
+    },
+    {
+      "name": "MeshPlane(Mesh, MeshIntersectionCache, Plane, Double)",
+      "signature": "public static Polyline[] MeshPlane(Mesh mesh, MeshIntersectionCache cache, Plane plane, double tolerance)",
+      "summary": "Intersects a mesh with an infinite plane.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "cache",
+          "type": "Rhino.Geometry.Intersect.MeshIntersectionCache",
+          "doc": "Intersection cache for mesh.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect with.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "An array of polylines describing the intersection loops, or null if no intersections could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshPlane.htm"
+    },
+    {
+      "name": "MeshPlane(Mesh, MeshIntersectionCache, IEnumerable\u003CPlane\u003E, Double)",
+      "signature": "public static Polyline[] MeshPlane(Mesh mesh, MeshIntersectionCache cache, IEnumerable\u003CPlane\u003E planes, double tolerance)",
+      "summary": "Intersects a mesh with a collection of infinite planes.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "cache",
+          "type": "Rhino.Geometry.Intersect.MeshIntersectionCache",
+          "doc": "Intersection cache for the mesh.",
+          "optional": false
+        },
+        {
+          "name": "planes",
+          "type": "System.Collections.Generic.IEnumerable\u003CPlane\u003E",
+          "doc": "Planes to intersect with.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline[]",
+        "doc": "An array of polylines describing the intersection loops, or null if no intersections could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshPlane_1.htm"
+    },
+    {
+      "name": "MeshPolyline",
+      "signature": "public static Point3d[] MeshPolyline(Mesh mesh, PolylineCurve curve, out int[] faceIds)",
+      "summary": "Finds the intersection of a mesh and a polyline. Starting from version 7, points are always sorted along the polyline.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.PolylineCurve",
+          "doc": "A polyline curves to intersect.",
+          "optional": false
+        },
+        {
+          "name": "faceIds",
+          "type": "System.Int32[]",
+          "doc": "The indices of the intersecting faces. This out reference is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points: one for each face that was passed by the faceIds out reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshPolyline.htm"
+    },
+    {
+      "name": "MeshPolylineSorted",
+      "signature": "public static Point3d[] MeshPolylineSorted(Mesh mesh, PolylineCurve curve, out int[] faceIds)",
+      "summary": "Finds the intersection of a mesh and a polyline. Points are guaranteed to be sorted along the polyline.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.PolylineCurve",
+          "doc": "A polyline curves to intersect.",
+          "optional": false
+        },
+        {
+          "name": "faceIds",
+          "type": "System.Int32[]",
+          "doc": "The indices of the intersecting faces. This out reference is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points: one for each face that was passed by the faceIds out reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshPolylineSorted.htm"
+    },
+    {
+      "name": "MeshRay(Mesh, Ray3d)",
+      "signature": "public static double MeshRay(Mesh mesh, Ray3d ray)",
+      "summary": "Finds the first intersection of a ray with a mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "ray",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "A ray to be casted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "\u003E= 0.0 parameter along ray if successful. \u003C 0.0 if no intersection found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshRay.htm"
+    },
+    {
+      "name": "MeshRay(Mesh, Ray3d, Int32[])",
+      "signature": "public static double MeshRay(Mesh mesh, Ray3d ray, out int[] meshFaceIndices)",
+      "summary": "Finds the first intersection of a ray with a mesh.",
+      "remarks": "The ray may intersect more than one face in cases where the ray hits the edge between two faces or the vertex corner shared by multiple faces, or more than one face is coplanar or happens to be intersecting at the same location as the ray.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to intersect.",
+          "optional": false
+        },
+        {
+          "name": "ray",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "A ray to be casted.",
+          "optional": false
+        },
+        {
+          "name": "meshFaceIndices",
+          "type": "System.Int32[]",
+          "doc": "faces on mesh that ray intersects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "\u003E= 0.0 parameter along ray if successful. \u003C 0.0 if no intersection found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_MeshRay_1.htm"
+    },
+    {
+      "name": "PlaneBoundingBox",
+      "signature": "public static bool PlaneBoundingBox(Plane plane, BoundingBox boundingBox, out Polyline polyline)",
+      "summary": "Intersects a plane and a bounding box.",
+      "remarks": "Intersects the four bounding box infinite lines in the direction of the max coordinate with the plane. Point and single line intersections are ignored.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane.",
+          "optional": false
+        },
+        {
+          "name": "boundingBox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "The bounding box.",
+          "optional": false
+        },
+        {
+          "name": "polyline",
+          "type": "Rhino.Geometry.Polyline",
+          "doc": "The output polyline if successful.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_PlaneBoundingBox.htm"
+    },
+    {
+      "name": "PlaneCircle",
+      "signature": "public static PlaneCircleIntersection PlaneCircle(Plane plane, Circle circle, out double firstCircleParameter, out double secondCircleParameter)",
+      "summary": "Intersects a plane with a circle using exact calculations.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect.",
+          "optional": false
+        },
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Circe to intersect.",
+          "optional": false
+        },
+        {
+          "name": "firstCircleParameter",
+          "type": "System.Double",
+          "doc": "First intersection parameter on circle if successful or RhinoMath.UnsetValue if not.",
+          "optional": false
+        },
+        {
+          "name": "secondCircleParameter",
+          "type": "System.Double",
+          "doc": "Second intersection parameter on circle if successful or RhinoMath.UnsetValue if not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PlaneCircleIntersection",
+        "doc": "The type of intersection that occurred."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_PlaneCircle.htm"
+    },
+    {
+      "name": "PlanePlane",
+      "signature": "public static bool PlanePlane(Plane planeA, Plane planeB, out Line intersectionLine)",
+      "summary": "Intersects two planes and return the intersection line. If the planes are parallel or coincident, no intersection is assumed.",
+      "params": [
+        {
+          "name": "planeA",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "First plane for intersection.",
+          "optional": false
+        },
+        {
+          "name": "planeB",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Second plane for intersection.",
+          "optional": false
+        },
+        {
+          "name": "intersectionLine",
+          "type": "Rhino.Geometry.Line",
+          "doc": "If this function returns true, the intersectionLine parameter will return the line where the planes intersect.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_PlanePlane.htm"
+    },
+    {
+      "name": "PlanePlanePlane",
+      "signature": "public static bool PlanePlanePlane(Plane planeA, Plane planeB, Plane planeC, out Point3d intersectionPoint)",
+      "summary": "Intersects three planes to find the single point they all share.",
+      "params": [
+        {
+          "name": "planeA",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "First plane for intersection.",
+          "optional": false
+        },
+        {
+          "name": "planeB",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Second plane for intersection.",
+          "optional": false
+        },
+        {
+          "name": "planeC",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Third plane for intersection.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point where all three planes converge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure. If at least two out of the three planes are parallel or coincident, failure is assumed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_PlanePlanePlane.htm"
+    },
+    {
+      "name": "PlaneSphere",
+      "signature": "public static PlaneSphereIntersection PlaneSphere(Plane plane, Sphere sphere, out Circle intersectionCircle)",
+      "summary": "Intersects a plane with a sphere using exact calculations.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to intersect.",
+          "optional": false
+        },
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "Sphere to intersect.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCircle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Intersection result.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PlaneSphereIntersection",
+        "doc": "If None is returned, the intersectionCircle has a radius of zero and the center point is the point on the plane closest to the sphere."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_PlaneSphere.htm"
+    },
+    {
+      "name": "ProjectPointsToBreps",
+      "signature": "public static Point3d[] ProjectPointsToBreps(IEnumerable\u003CBrep\u003E breps, IEnumerable\u003CPoint3d\u003E points, Vector3d direction, double tolerance)",
+      "summary": "Projects points onto breps.",
+      "params": [
+        {
+          "name": "breps",
+          "type": "System.Collections.Generic.IEnumerable\u003CBrep\u003E",
+          "doc": "The breps projection targets.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "The points to project.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The direction to project.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The tolerance used for intersections.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Array of projected points, or null in case of any error or invalid input."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_ProjectPointsToBreps.htm"
+    },
+    {
+      "name": "ProjectPointsToBrepsEx",
+      "signature": "public static Point3d[] ProjectPointsToBrepsEx(IEnumerable\u003CBrep\u003E breps, IEnumerable\u003CPoint3d\u003E points, Vector3d direction, double tolerance, out int[] indices)",
+      "summary": "Projects points onto breps.",
+      "params": [
+        {
+          "name": "breps",
+          "type": "System.Collections.Generic.IEnumerable\u003CBrep\u003E",
+          "doc": "The breps projection targets.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "The points to project.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The direction to project.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The tolerance used for intersections.",
+          "optional": false
+        },
+        {
+          "name": "indices",
+          "type": "System.Int32[]",
+          "doc": "Return points[i] is a projection of points[indices[i]]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Array of projected points, or null in case of any error or invalid input."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_ProjectPointsToBrepsEx.htm"
+    },
+    {
+      "name": "ProjectPointsToMeshes",
+      "signature": "public static Point3d[] ProjectPointsToMeshes(IEnumerable\u003CMesh\u003E meshes, IEnumerable\u003CPoint3d\u003E points, Vector3d direction, double tolerance)",
+      "summary": "Projects points onto meshes.",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "the meshes to project on to.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "the points to project.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "the direction to project.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Projection tolerances used for culling close points and for line-mesh intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Array of projected points, or null in case of any error or invalid input."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_ProjectPointsToMeshes.htm"
+    },
+    {
+      "name": "ProjectPointsToMeshesEx",
+      "signature": "public static Point3d[] ProjectPointsToMeshesEx(IEnumerable\u003CMesh\u003E meshes, IEnumerable\u003CPoint3d\u003E points, Vector3d direction, double tolerance, out int[] indices)",
+      "summary": "Projects points onto meshes.",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "the meshes to project on to.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "the points to project.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "the direction to project.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Projection tolerances used for culling close points and for line-mesh intersection.",
+          "optional": false
+        },
+        {
+          "name": "indices",
+          "type": "System.Int32[]",
+          "doc": "Return points[i] is a projection of points[indices[i]]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Array of projected points, or null in case of any error or invalid input."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_ProjectPointsToMeshesEx.htm"
+    },
+    {
+      "name": "RayShoot(IEnumerable\u003CGeometryBase\u003E, Ray3d, Int32)",
+      "signature": "public static RayShootEvent[] RayShoot(IEnumerable\u003CGeometryBase\u003E geometry, Ray3d ray, int maxReflections)",
+      "summary": "Computes point intersections that occur when shooting a ray to a collection of surfaces and Breps.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "The collection of surfaces and Breps to intersect. Trims are ignored on Breps.",
+          "optional": false
+        },
+        {
+          "name": "ray",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "\u003EA ray used in intersection.",
+          "optional": false
+        },
+        {
+          "name": "maxReflections",
+          "type": "System.Int32",
+          "doc": "The maximum number of reflections. This value should be any value between 1 and 1000, inclusive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RayShootEvent[]",
+        "doc": "An array of RayShootEvent structs if successful, or an empty array on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "geometry is null."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "maxReflections is strictly outside the [1-1000] range."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_RayShoot_1.htm"
+    },
+    {
+      "name": "RayShoot(Ray3d, IEnumerable\u003CGeometryBase\u003E, Int32)",
+      "signature": "public static Point3d[] RayShoot(Ray3d ray, IEnumerable\u003CGeometryBase\u003E geometry, int maxReflections)",
+      "summary": "Computes point intersections that occur when shooting a ray to a collection of surfaces and Breps.",
+      "params": [
+        {
+          "name": "ray",
+          "type": "Rhino.Geometry.Ray3d",
+          "doc": "A ray used in intersection.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "Only Surface and Brep objects are currently supported. Trims are ignored on Breps.",
+          "optional": false
+        },
+        {
+          "name": "maxReflections",
+          "type": "System.Int32",
+          "doc": "The maximum number of reflections. This value should be any value between 1 and 1000, inclusive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points: one for each surface or Brep face that was hit, or an empty array on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "geometry is null."
+        },
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "maxReflections is strictly outside the [1-1000] range."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_RayShoot.htm"
+    },
+    {
+      "name": "SphereSphere",
+      "signature": "public static SphereSphereIntersection SphereSphere(Sphere sphereA, Sphere sphereB, out Circle intersectionCircle)",
+      "summary": "Intersects two spheres using exact calculations.",
+      "params": [
+        {
+          "name": "sphereA",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "First sphere to intersect.",
+          "optional": false
+        },
+        {
+          "name": "sphereB",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "Second sphere to intersect.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCircle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "If intersection is a point, then that point will be the center, radius 0.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SphereSphereIntersection",
+        "doc": "The intersection type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_SphereSphere.htm"
+    },
+    {
+      "name": "SurfaceSurface",
+      "signature": "public static bool SurfaceSurface(Surface surfaceA, Surface surfaceB, double tolerance, out Curve[] intersectionCurves, out Point3d[] intersectionPoints)",
+      "summary": "Intersects two Surfaces.",
+      "params": [
+        {
+          "name": "surfaceA",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "First Surface for intersection.",
+          "optional": false
+        },
+        {
+          "name": "surfaceB",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Second Surface for intersection.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Intersection tolerance.",
+          "optional": false
+        },
+        {
+          "name": "intersectionCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "The intersection curves will be returned here.",
+          "optional": false
+        },
+        {
+          "name": "intersectionPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The intersection points will be returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Intersect_Intersection_SurfaceSurface.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MeshIntersectionsTolerancesCoefficient",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Offers a requested adjustment coefficient for mesh-mesh intersections tolerances. The value can be used to multiply the document absolute tolerance.This is only a UI value; it is up to developer to honor (or not) this request, depending on application needs.",
+      "remarks": "Generally, document tolerances are around 0.001 for objects sized about 100 units. However, good mesh triangles for these objects are often a few orders of magnitude smaller than these values. This coefficient is provided to scale absolute document tolerances to values more suitable for good mesh intersections.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_Intersection_MeshIntersectionsTolerancesCoefficient.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

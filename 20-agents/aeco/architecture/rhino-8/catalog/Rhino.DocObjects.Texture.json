@@ -1,0 +1,543 @@
+{
+  "name": "Texture",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Represents a texture that is mapped on objects.",
+  "remarks": "After the get or the set method complete, you own the copy you received or passed in, and can Dispose() of it.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Texture.htm",
+  "constructors": [
+    {
+      "name": "Texture()",
+      "signature": "public Texture()",
+      "summary": "Initializes a new texture.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Texture__ctor.htm"
+    },
+    {
+      "name": "Texture(SerializationInfo, StreamingContext)",
+      "signature": "protected Texture(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor for internal use.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "Serialization data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "Serialization stream.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Texture__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Dispose_1.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "GetAlphaBlendValues",
+      "signature": "public void GetAlphaBlendValues(out double constant, out double a0, out double a1, out double a2, out double a3)",
+      "summary": "If the TextureCombineMode is Blend, then the blending function for alpha is determined by new alpha = constant \u002B a0*(current alpha) \u002B a1*(texture alpha) \u002B a2*min(current alpha,texture alpha) \u002B a3*max(current alpha,texture alpha)",
+      "params": [
+        {
+          "name": "constant",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022constant\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.GetAlphaBlendValues(System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a0",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a0\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.GetAlphaBlendValues(System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a1",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a1\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.GetAlphaBlendValues(System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a2",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a2\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.GetAlphaBlendValues(System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a3",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a3\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.GetAlphaBlendValues(System.Double@,System.Double@,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Texture_GetAlphaBlendValues.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected virtual void NonConstOperation()",
+      "summary": "For derived classes implementers. Defines the necessary implementation to free the instance from being constant.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_NonConstOperation.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected virtual void OnSwitchToNonConst()",
+      "summary": "Is called when a non-constant operation first occurs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "SetAlphaBlendValues",
+      "signature": "public void SetAlphaBlendValues(double constant, double a0, double a1, double a2, double a3)",
+      "summary": "If the TextureCombineMode is Blend, then the blending function for alpha is determined by new alpha = constant \u002B a0*(current alpha) \u002B a1*(texture alpha) \u002B a2*min(current alpha,texture alpha) \u002B a3*max(current alpha,texture alpha)",
+      "params": [
+        {
+          "name": "constant",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022constant\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetAlphaBlendValues(System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a0",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a0\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetAlphaBlendValues(System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a1",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a1\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetAlphaBlendValues(System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a2",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a2\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetAlphaBlendValues(System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a3",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a3\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetAlphaBlendValues(System.Double,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Texture_SetAlphaBlendValues.htm"
+    },
+    {
+      "name": "SetRGBBlendValues",
+      "signature": "public void SetRGBBlendValues(Color color, double a0, double a1, double a2, double a3)",
+      "summary": "If the TextureCombineMode is Blend, then the blending function for RGB is determined by new rgb = colorcolor \u002B a0[0]*(current RGB) \u002B a1[1]*(texture RGB) \u002B a2[2]*min(current RGB,texture RGB) \u002B a3[3]*max(current RGB,texture RGB)",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetRGBBlendValues(System.Drawing.Color,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a0",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a0\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetRGBBlendValues(System.Drawing.Color,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a1",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a1\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetRGBBlendValues(System.Drawing.Color,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a2",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a2\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetRGBBlendValues(System.Drawing.Color,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "a3",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a3\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Texture.SetRGBBlendValues(System.Drawing.Color,System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Texture_SetRGBBlendValues.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ApplyUvwTransform",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true then the UVW transform is applied to the texture otherwise the UVW transform is ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_ApplyUvwTransform.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If the texture is enabled then it will be visible in the rendered display otherwise it will not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_Enabled.htm"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a file name that is used by this texture. NOTE: We are moving away from string-based FileName, and suggest the usage of the new FileReference class.Also, this filename may well not be a path that makes sense on a user\u0027s computer because it was a path initially set on a different user\u0027s computer. If you want to get a workable path for this user, use the BitmapTable.Find function using this property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_FileName.htm"
+    },
+    {
+      "name": "FileReference",
+      "type": "FileReference",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a copy of the file reference that is used by this texture. RemarksAfter the get or the set method complete, you own the copy you received or passed in, and can Dispose() of it.",
+      "remarks": "After the get or the set method complete, you own the copy you received or passed in, and can Dispose() of it.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_FileReference.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the globally unique identifier of this texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_Id.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "MagFilter",
+      "type": "TextureFilter",
+      "getter": true,
+      "setter": true,
+      "summary": "The MagFilter setting controls how the color of the image pixel is calculated when the image pixel corresponds to a fraction of a texture bitmap pixel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_MagFilter.htm"
+    },
+    {
+      "name": "MappingChannelId",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_MappingChannelId.htm"
+    },
+    {
+      "name": "MinFilter",
+      "type": "TextureFilter",
+      "getter": true,
+      "setter": true,
+      "summary": "The MinFilter setting controls how the color of the image pixel is calculated when the image pixel corresponds to multiple texture bitmap pixels.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_MinFilter.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "Helper for access to the offset value encoded in UvwTransform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_Offset.htm"
+    },
+    {
+      "name": "ProjectionMode",
+      "type": "TextureProjectionModes",
+      "getter": true,
+      "setter": true,
+      "summary": "How texture is projected onto geometry",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_ProjectionMode.htm"
+    },
+    {
+      "name": "Repeat",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "Helper for access to the repeat value encoded in UvwTransform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_Repeat.htm"
+    },
+    {
+      "name": "Rotation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Helper for access to the rotation value encoded in UvwTransform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_Rotation.htm"
+    },
+    {
+      "name": "TextureCombineMode",
+      "type": "TextureCombineMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines how this texture is combined with others in a material\u0027s texture list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_TextureCombineMode.htm"
+    },
+    {
+      "name": "TextureType",
+      "type": "TextureType",
+      "getter": true,
+      "setter": true,
+      "summary": "Controls how the pixels in the bitmap are interpreted",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_TextureType.htm"
+    },
+    {
+      "name": "TreatAsLinear",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If false, the texture color values should be correctly by the linear workflow pre-process gamma value (in the document) if linear workflow is on. Otherwise, if the values is true, the values should be used raw from the texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_TreatAsLinear.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use shareable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UvwTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "Transform to be applied to each instance of this texture if ApplyUvw is true",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_UvwTransform.htm"
+    },
+    {
+      "name": "WcsBoxProjected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is true if this texture uses world coordinate system (WCS) box projection for texture mapping. Notice: If this texture is used by an object that has an object coordinate system (OCS) frame defined on a mapping channel then that OCS frame is used instead of the WCS.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_WcsBoxProjected.htm"
+    },
+    {
+      "name": "WcsProjected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is true if this texture uses world coordinate system (WCS) projection for texture mapping. Notice: If this texture is used by an object that has an object coordinate system (OCS) frame defined on a mapping channel then that OCS frame is used instead of the WCS.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_WcsProjected.htm"
+    },
+    {
+      "name": "WrapU",
+      "type": "TextureUvwWrapping",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture wrapping mode in the U direction",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_WrapU.htm"
+    },
+    {
+      "name": "WrapV",
+      "type": "TextureUvwWrapping",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture wrapping mode in the V direction",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_WrapV.htm"
+    },
+    {
+      "name": "WrapW",
+      "type": "TextureUvwWrapping",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture wrapping mode in the W direction",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Texture_WrapW.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

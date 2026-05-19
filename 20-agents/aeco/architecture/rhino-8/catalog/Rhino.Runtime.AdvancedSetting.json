@@ -1,0 +1,164 @@
+{
+  "name": "AdvancedSetting",
+  "namespace": "Rhino.Runtime",
+  "kind": "enum",
+  "summary": "Advanced setting Id",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_AdvancedSetting.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UseNewDraftAngleAnalysisUi",
+      "value": 0,
+      "summary": "UseNewDraftAngleAnalysisUi bool Value, defaults to true"
+    },
+    {
+      "name": "UseCompressionWhenSaving",
+      "value": 1,
+      "summary": "Use compressed buffers when saving 3dm files (default is true)."
+    },
+    {
+      "name": "TestAdvancedString",
+      "value": 2,
+      "summary": "String value, defaults to \u0022test string\u0022"
+    },
+    {
+      "name": "TestAdvancedInt",
+      "value": 3,
+      "summary": "Integer value, defaults 123"
+    },
+    {
+      "name": "PdfOptionalContentGroups",
+      "value": 4,
+      "summary": "How optional content should be included when exporting PDF files"
+    },
+    {
+      "name": "LeaveFloatingPanelsHiddenOnMac",
+      "value": 5,
+      "summary": "Bool value used on Mac to satisfy a user request to hide floating stuff when a command starts and leave it hidden when the command ends. This is false by default. https://mcneel.myjetbrains.com/youtrack/issue/RH-57945"
+    },
+    {
+      "name": "DisableFileWatchers",
+      "value": 6,
+      "summary": "Disable file watchers, using to diagnose Mac Rhino mystery crashes https://mcneel.myjetbrains.com/youtrack/issue/RH-52805"
+    },
+    {
+      "name": "EnableCheckForUpdates",
+      "value": 7,
+      "summary": "Auto check for update, enabled by default on Mac, does not show up in Windows https://mcneel.myjetbrains.com/youtrack/issue/RH-60427"
+    },
+    {
+      "name": "LeftJustifyNumericText",
+      "value": 8,
+      "summary": "Mainly an issue on Windows; there are different numeric controls scattered across the product and no consistent text alignment. This is an attempt to provide a way to control the preferred alignment style."
+    },
+    {
+      "name": "EnableWindowsGestures",
+      "value": 9,
+      "summary": "https://mcneel.myjetbrains.com/youtrack/issue/RH-62173 Disable gestures for Windows views for a customer who was complaining when upgrading."
+    },
+    {
+      "name": "MakeInteriorNgonVertexesSelectable",
+      "value": 10,
+      "summary": "Set this to false if you only want boundary vertexes selectable when you run PointsOn. https://mcneel.myjetbrains.com/youtrack/issue/RH-62140"
+    },
+    {
+      "name": "MacDisplayOldVersionAutosaveWarning",
+      "value": 11,
+      "summary": "Set this to true if you want to be warned about autosave for old file versions on Mac. https://mcneel.myjetbrains.com/youtrack/issue/RH-62359"
+    },
+    {
+      "name": "UseNewMissingFontUI",
+      "value": 12,
+      "summary": "Set this to true if you want to be use the new missing font mapping UI. https://mcneel.myjetbrains.com/youtrack/issue/RH-62642"
+    },
+    {
+      "name": "ExportDocumentUserText",
+      "value": 13,
+      "summary": "Set to true to write document user text on Export and Copy/Paste. Set to false to not write document user text (default). https://mcneel.myjetbrains.com/youtrack/issue/RH-63589"
+    },
+    {
+      "name": "CommandsToIgnoreWhenAutoHidingToolPalettes",
+      "value": 14,
+      "summary": "String list of command names to ignore when closing tool-palette on begin command. https://mcneel.myjetbrains.com/youtrack/issue/RH-65131"
+    },
+    {
+      "name": "DisplayNonOriginModelBasepointWarning",
+      "value": 15,
+      "summary": "Set this to true if you want to be warned about ModelBasepoints that are not set to the origin on open/import. https://mcneel.myjetbrains.com/youtrack/issue/RH-67520"
+    },
+    {
+      "name": "UseEntireWidthForTopBand",
+      "value": 16,
+      "summary": "Use the entire client width for top and bottom dock sites https://mcneel.myjetbrains.com/youtrack/issue/RH-67783"
+    },
+    {
+      "name": "UseMFCMenuBar",
+      "value": 17,
+      "summary": "Experimenting with using a CMFCMenuBar to host main frame menu with a CMFCVisualManager derived class for styling the menu. https://mcneel.myjetbrains.com/youtrack/issue/RH-70314"
+    },
+    {
+      "name": "IgnoreRUIPlatform",
+      "value": 18,
+      "summary": "Will ignore the platforms attribute in RUI files when set. Requires restarting Rhino to take affect. https://mcneel.myjetbrains.com/youtrack/issue/RH-70777"
+    },
+    {
+      "name": "EnableMcNeelOnlyFeatures",
+      "value": 19,
+      "summary": "Enable McNeel only features for a particular user"
+    },
+    {
+      "name": "UseRhinoColorsForModalDialogs",
+      "value": 20,
+      "summary": "Enable to use Eto Appearance page only"
+    },
+    {
+      "name": "AcadExportSelectUnexportableObjects",
+      "value": 21,
+      "summary": "Set to true to select objects that could not be exported to DWG, either becuase the object was invalid or the exporter failed for whatever reason. https://mcneel.myjetbrains.com/youtrack/issue/RH-77693"
+    },
+    {
+      "name": "AcadExportSortLayers",
+      "value": 22,
+      "summary": "Temporary advanced settings for 8.x so no UI is required. Will be removed in 9.x when proper UI us added. https://mcneel.myjetbrains.com/youtrack/issue/RH-78977 https://mcneel.myjetbrains.com/youtrack/issue/RH-28804 https://mcneel.myjetbrains.com/youtrack/issue/RH-48103"
+    },
+    {
+      "name": "AcadExportWriteEmptyLayers",
+      "value": 23,
+      "summary": "ditto"
+    },
+    {
+      "name": "DisableModelAndPageUnitsDifferDialog",
+      "value": 24,
+      "summary": "Advanced settings to re-enable the units helper dialogs. see https://mcneel.myjetbrains.com/youtrack/issue/RH-81439"
+    },
+    {
+      "name": "DisablePageUnitsNotInchesOrMMDialog",
+      "value": 25,
+      "summary": "ditto"
+    },
+    {
+      "name": "UseLegacyCurveJoiner",
+      "value": 26,
+      "summary": "6-May-2024 Dale Fugier, https://mcneel.myjetbrains.com/youtrack/issue/RH-81815"
+    },
+    {
+      "name": "UseLegacyBrepCapper",
+      "value": 27,
+      "summary": "13-Jun-2024 Dale Fugier, https://mcneel.myjetbrains.com/youtrack/issue/RH-82566"
+    },
+    {
+      "name": "HideFloatingWindowsOnDeactivate",
+      "value": 28,
+      "summary": "19-Sep-2024 Dale Fugier, https://mcneel.myjetbrains.com/youtrack/issue/RH-83845"
+    },
+    {
+      "name": "RecordAnimationTargetFolder",
+      "value": 29,
+      "summary": "14-Oct-2024 Nathan Letwory, https://mcneel.myjetbrains.com/youtrack/issue/RH-79386"
+    }
+  ]
+}

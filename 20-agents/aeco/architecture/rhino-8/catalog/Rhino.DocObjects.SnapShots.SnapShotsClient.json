@@ -1,0 +1,830 @@
+{
+  "name": "SnapShotsClient",
+  "namespace": "Rhino.DocObjects.SnapShots",
+  "kind": "class",
+  "summary": "This is the abstract interface class for all Snapshot clients.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_SnapShots_SnapShotsClient.htm",
+  "constructors": [
+    {
+      "name": "SnapShotsClient",
+      "signature": "public SnapShotsClient()",
+      "summary": "SnapShotsClient constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AnimateDocument",
+      "signature": "public abstract bool AnimateDocument(RhinoDoc doc, double dPos, BinaryArchiveReader archive_start, BinaryArchiveReader archive_stop)",
+      "summary": "Called for each frame. Starting at 0.0.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "dPos",
+          "type": "System.Double",
+          "doc": "dPos is the current frame. Starting at 0.0.",
+          "optional": false
+        },
+        {
+          "name": "archive_start",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_start is a archive to the data of the starting position.",
+          "optional": false
+        },
+        {
+          "name": "archive_stop",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_stop is a archive to the data of the ending position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_AnimateDocument.htm"
+    },
+    {
+      "name": "AnimateObject",
+      "signature": "public abstract bool AnimateObject(RhinoDoc doc, RhinoObject doc_object, ref Transform transform, double dPos, BinaryArchiveReader archive_start, BinaryArchiveReader archive_stop)",
+      "summary": "Called for each frame. Starting at 0.0.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_obj is the current object.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "transform is a transformation matrix. The matrix is set to identity the first time an object is associated with a snapshot. After that the matrix is updated when the object is transformed(scale, rotate etc.).",
+          "optional": false
+        },
+        {
+          "name": "dPos",
+          "type": "System.Double",
+          "doc": "dPos is the current frame. Starting at 0.0.",
+          "optional": false
+        },
+        {
+          "name": "archive_start",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_start is a archive to the data of the starting position.",
+          "optional": false
+        },
+        {
+          "name": "archive_stop",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_stop is a archive to the data of the ending position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.AnimateObject(Rhino.RhinoDoc,Rhino.DocObjects.RhinoObject,Rhino.Geometry.Transform@,System.Double,Rhino.FileIO.BinaryArchiveReader,Rhino.FileIO.BinaryArchiveReader)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_AnimateObject.htm"
+    },
+    {
+      "name": "AnimationStart",
+      "signature": "public abstract void AnimationStart(RhinoDoc doc, int iFrames)",
+      "summary": "Called once at the start of an animation.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "iFrames",
+          "type": "System.Int32",
+          "doc": "iFrames is the number of frames to be animated.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_AnimationStart.htm"
+    },
+    {
+      "name": "AnimationStop",
+      "signature": "public abstract bool AnimationStop(RhinoDoc doc)",
+      "summary": "Called once at the end of an animation.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.AnimationStop(Rhino.RhinoDoc)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_AnimationStop.htm"
+    },
+    {
+      "name": "ApplicationCategory",
+      "signature": "public static string ApplicationCategory()",
+      "summary": "Predefined application category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.ApplicationCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ApplicationCategory.htm"
+    },
+    {
+      "name": "Category",
+      "signature": "public abstract string Category()",
+      "summary": "The category of this client. Usually one of the above predefined categories like e.g object, rendering or application category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.Category\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_Category.htm"
+    },
+    {
+      "name": "ClientId",
+      "signature": "public abstract Guid ClientId()",
+      "summary": "The unique id of this client.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "The unique id of this client."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ClientId.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "SnapShotsClient Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_Dispose.htm"
+    },
+    {
+      "name": "DocumentCategory",
+      "signature": "public static string DocumentCategory()",
+      "summary": "Predefined document category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.DocumentCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_DocumentCategory.htm"
+    },
+    {
+      "name": "ExtendBoundingBoxForDocumentAnimation",
+      "signature": "public abstract void ExtendBoundingBoxForDocumentAnimation(RhinoDoc doc, BinaryArchiveReader archive_start, BinaryArchiveReader archive_stop, ref BoundingBox bbox)",
+      "summary": "Called once at the start of an animation. This can be used to extend the scene bounding box to avoid clipping.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "archive_start",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_start is a archive to the data of the starting position.",
+          "optional": false
+        },
+        {
+          "name": "archive_stop",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_stop is a archive to the data of the ending position.",
+          "optional": false
+        },
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "bbox is the current scene bounding box.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ExtendBoundingBoxForDocumentAnimation.htm"
+    },
+    {
+      "name": "ExtendBoundingBoxForObjectAnimation",
+      "signature": "public abstract void ExtendBoundingBoxForObjectAnimation(RhinoDoc doc, RhinoObject doc_object, ref Transform transform, BinaryArchiveReader archive_start, BinaryArchiveReader archive_stop, ref BoundingBox bbox)",
+      "summary": "Called once at the start of an animation. This can be used to extend the scene bounding box to avoid clipping.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_obj is the current object.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "transform is a transformation matrix. The matrix is set to identity the first time an object is associated with a snapshot. After that the matrix is updated when the object is transformed(scale, rotate etc.).",
+          "optional": false
+        },
+        {
+          "name": "archive_start",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_start is a archive to the data of the starting position.",
+          "optional": false
+        },
+        {
+          "name": "archive_stop",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_stop is a archive to the data of the ending position.",
+          "optional": false
+        },
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "bbox is the current scene bounding box.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ExtendBoundingBoxForObjectAnimation.htm"
+    },
+    {
+      "name": "IsCurrentModelStateInAnySnapshot(RhinoDoc, BinaryArchiveReader, SimpleArrayBinaryArchiveReader, TextLog)",
+      "signature": "public abstract bool IsCurrentModelStateInAnySnapshot(RhinoDoc doc, BinaryArchiveReader archive, SimpleArrayBinaryArchiveReader archive_array, TextLog text_log = null)",
+      "summary": "Called before restoring a snapshot. Warns the user if the current model state is not already saved.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive is the current state of the model.",
+          "optional": false
+        },
+        {
+          "name": "archive_array",
+          "type": "Rhino.Runtime.InteropWrappers.SimpleArrayBinaryArchiveReader",
+          "doc": "archive_array is a list of client data.",
+          "optional": false
+        },
+        {
+          "name": "text_log",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "text_log is used to list the missing items that cannot be found in the current model.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "return true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_IsCurrentModelStateInAnySnapshot_1.htm"
+    },
+    {
+      "name": "IsCurrentModelStateInAnySnapshot(RhinoDoc, RhinoObject, BinaryArchiveReader, SimpleArrayBinaryArchiveReader, TextLog)",
+      "signature": "public abstract bool IsCurrentModelStateInAnySnapshot(RhinoDoc doc, RhinoObject doc_object, BinaryArchiveReader archive, SimpleArrayBinaryArchiveReader archive_array, TextLog text_log = null)",
+      "summary": "Called before restoring a snapshot. Warns the user if the current model state is not already saved.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_object is the current object.",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive is the current state of the model.",
+          "optional": false
+        },
+        {
+          "name": "archive_array",
+          "type": "Rhino.Runtime.InteropWrappers.SimpleArrayBinaryArchiveReader",
+          "doc": "archive_array is a list of client data.",
+          "optional": false
+        },
+        {
+          "name": "text_log",
+          "type": "Rhino.FileIO.TextLog",
+          "doc": "text_log is used to list the missing items that cannot be found in the current model.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "return true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_IsCurrentModelStateInAnySnapshot.htm"
+    },
+    {
+      "name": "LayersCategory",
+      "signature": "public static string LayersCategory()",
+      "summary": "Predefined layers category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.LayersCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_LayersCategory.htm"
+    },
+    {
+      "name": "LightsCategory",
+      "signature": "public static string LightsCategory()",
+      "summary": "Predefined lights category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.LightsCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_LightsCategory.htm"
+    },
+    {
+      "name": "Name",
+      "signature": "public abstract string Name()",
+      "summary": "The client\u0027s name.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The client\u0027s name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_Name.htm"
+    },
+    {
+      "name": "ObjectsCategory",
+      "signature": "public static string ObjectsCategory()",
+      "summary": "Predefined objects category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.ObjectsCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ObjectsCategory.htm"
+    },
+    {
+      "name": "ObjectTransformNotification",
+      "signature": "public abstract bool ObjectTransformNotification(RhinoDoc doc, RhinoObject doc_object, ref Transform transform, BinaryArchiveReader archive)",
+      "summary": "Called for every object that is associated with a snapshot and gets transformed in Rhino. This is getting called for each stored snapshot and gives the client the possibility to update the stored data.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_obj is the current object.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "transform is a transformation matrix. The matrix is set to identity the first time an object is associated with a snapshot. After that the matrix is updated when the object is transformed(scale, rotate etc.).",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive is a archive which can be used to update the stored data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ObjectTransformNotification.htm"
+    },
+    {
+      "name": "PlugInId",
+      "signature": "public abstract Guid PlugInId()",
+      "summary": "The plug-in id that registers this client.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "The plug-in id that registers this client."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_PlugInId.htm"
+    },
+    {
+      "name": "PrepareForDocumentAnimation",
+      "signature": "public abstract bool PrepareForDocumentAnimation(RhinoDoc doc, BinaryArchiveReader archive_start, BinaryArchiveReader archive_stop)",
+      "summary": "Called once at the start of an animation.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "archive_start",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_start is a archive to the data of the starting position.",
+          "optional": false
+        },
+        {
+          "name": "archive_stop",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_stop is a archive to the data of the ending position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_PrepareForDocumentAnimation.htm"
+    },
+    {
+      "name": "PrepareForObjectAnimation",
+      "signature": "public abstract bool PrepareForObjectAnimation(RhinoDoc doc, RhinoObject doc_object, ref Transform transform, BinaryArchiveReader archive_start, BinaryArchiveReader archive_stop)",
+      "summary": "Called once at the start of an animation.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_obj is the current object.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "transform is a transformation matrix. The matrix is set to identity the first time an object is associated with a snapshot. After that the matrix is updated when the object is transformed(scale, rotate etc.).",
+          "optional": false
+        },
+        {
+          "name": "archive_start",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_start is a archive to the data of the starting position.",
+          "optional": false
+        },
+        {
+          "name": "archive_stop",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive_stop is a archive to the data of the ending position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_PrepareForObjectAnimation.htm"
+    },
+    {
+      "name": "RegisterSnapShotClient",
+      "signature": "public static bool RegisterSnapShotClient(SnapShotsClient client)",
+      "summary": "Function used to register snapshots client",
+      "params": [
+        {
+          "name": "client",
+          "type": "Rhino.DocObjects.SnapShots.SnapShotsClient",
+          "doc": "[Missing \u003Cparam name=\u0022client\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.RegisterSnapShotClient(Rhino.DocObjects.SnapShots.SnapShotsClient)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.RegisterSnapShotClient(Rhino.DocObjects.SnapShots.SnapShotsClient)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_RegisterSnapShotClient.htm"
+    },
+    {
+      "name": "RenderingCategory",
+      "signature": "public static string RenderingCategory()",
+      "summary": "Predefined rendering category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.RenderingCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_RenderingCategory.htm"
+    },
+    {
+      "name": "RestoreDocument",
+      "signature": "public abstract bool RestoreDocument(RhinoDoc doc, BinaryArchiveReader archive)",
+      "summary": "Called when the user restores a snapshot and SupportDocument() returns true.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive is the archive to read the data from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_RestoreDocument.htm"
+    },
+    {
+      "name": "RestoreObject",
+      "signature": "public abstract bool RestoreObject(RhinoDoc doc, RhinoObject doc_object, ref Transform transform, BinaryArchiveReader archive)",
+      "summary": "Called when the user restores a snapshot and SupportsObjects() and SupportsObject(Rhino.DocObjects.RhinoObject doc_object) returns true.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_obj is the current object.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "transform is a transformation matrix. The matrix is set to identity the first time an object is associated with a snapshot. After that the matrix is updated when the object is transformed(scale, rotate etc.).",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "archive is the archive to read the data from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_RestoreObject.htm"
+    },
+    {
+      "name": "SaveDocument",
+      "signature": "public abstract bool SaveDocument(RhinoDoc doc, BinaryArchiveWriter archive)",
+      "summary": "Called when the user saves a snapshot and SupportDocument() returns true.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveWriter",
+          "doc": "archive is the archive to write the data to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SaveDocument.htm"
+    },
+    {
+      "name": "SaveObject",
+      "signature": "public abstract bool SaveObject(RhinoDoc doc, RhinoObject doc_object, ref Transform transform, BinaryArchiveWriter archive)",
+      "summary": "Called when the user saves a snapshot and SupportsObjects() and SupportsObject(Rhino.DocObjects.RhinoObject doc_object) returns true.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "doc is the current document.",
+          "optional": false
+        },
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_obj is the current object.",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "transform is a transformation matrix. The matrix is set to identity the first time an object is associated with a snapshot. After that the matrix is updated when the object is transformed(scale, rotate etc.).",
+          "optional": false
+        },
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveWriter",
+          "doc": "archive is the archive to write the data to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SaveObject.htm"
+    },
+    {
+      "name": "SnapshotRestored",
+      "signature": "public abstract void SnapshotRestored(RhinoDoc doc)",
+      "summary": "Called after all clients restored their data.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.SnapshotRestored(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SnapshotRestored.htm"
+    },
+    {
+      "name": "SupportsAnimation",
+      "signature": "public abstract bool SupportsAnimation()",
+      "summary": "Returns true if the client allows animation.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the client allows animation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SupportsAnimation.htm"
+    },
+    {
+      "name": "SupportsDocument",
+      "signature": "public abstract bool SupportsDocument()",
+      "summary": "Defines if the client supports document user data or not",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the client saves/restores document user data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SupportsDocument.htm"
+    },
+    {
+      "name": "SupportsObject",
+      "signature": "public abstract bool SupportsObject(RhinoObject doc_object)",
+      "summary": "Returns true if the client saves/restores object user data for the given object.",
+      "params": [
+        {
+          "name": "doc_object",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "doc_object is the given object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the client saves/restores object user data for the given object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SupportsObject.htm"
+    },
+    {
+      "name": "SupportsObjects",
+      "signature": "public abstract bool SupportsObjects()",
+      "summary": "Returns true if the client saves/restores object user data.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the client saves/restores object user data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_SupportsObjects.htm"
+    },
+    {
+      "name": "ViewsCategory",
+      "signature": "public static string ViewsCategory()",
+      "summary": "Predefined views category",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.SnapShots.SnapShotsClient.ViewsCategory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_SnapShots_SnapShotsClient_ViewsCategory.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_SnapShots_SnapShotsClient_CppPointer.htm"
+    },
+    {
+      "name": "SerialNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_SnapShots_SnapShotsClient_SerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

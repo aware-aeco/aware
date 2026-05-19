@@ -1,0 +1,54 @@
+{
+  "name": "FileSatWriteOptions.SatTypes",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Sat export types. Flavors of sat file that are suitable for a particular application or version of acis sat.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileSatWriteOptions_SatTypes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0
+    },
+    {
+      "name": "ACIS15",
+      "value": 1
+    },
+    {
+      "name": "ACIS20",
+      "value": 2
+    },
+    {
+      "name": "ACIS30",
+      "value": 3
+    },
+    {
+      "name": "ACIS40",
+      "value": 4
+    },
+    {
+      "name": "AutoCAD",
+      "value": 5
+    },
+    {
+      "name": "MechanicalDesktop",
+      "value": 6
+    },
+    {
+      "name": "Inventor",
+      "value": 7
+    },
+    {
+      "name": "SolidWorks",
+      "value": 8
+    },
+    {
+      "name": "SolidEdge",
+      "value": 9
+    }
+  ]
+}

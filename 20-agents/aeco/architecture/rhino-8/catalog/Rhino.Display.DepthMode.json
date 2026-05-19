@@ -1,0 +1,26 @@
+{
+  "name": "DepthMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DepthMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DepthMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Neutral",
+      "value": 0
+    },
+    {
+      "name": "AlwaysInFront",
+      "value": 1
+    },
+    {
+      "name": "AlwaysInBack",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "SubDSurfaceInterpolator.MaximumCounts",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Stores maximum count values for the solver to work in reasonable time.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDSurfaceInterpolator_MaximumCounts.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MaximumRecommendedInterpolatedVertexCount",
+      "value": 1000,
+      "summary": "Interpolation requires building a solver. If the number of interpolated vertices is greater than MaximumInterpolatedVertexCount, the solver construction time can be too long for some users\u0027 comfort. Given sufficient time, memory, and CPU resources, the code will work with any value"
+    }
+  ]
+}

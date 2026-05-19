@@ -1,0 +1,52 @@
+{
+  "name": "PersistentSettingsSavedEventArgs",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Event argument passed to the SettingsSaved event.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PersistentSettingsSavedEventArgs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CommandSettings",
+      "signature": "public PersistentSettings CommandSettings(string englishCommandName)",
+      "summary": "The new command settings",
+      "params": [
+        {
+          "name": "englishCommandName",
+          "type": "System.String",
+          "doc": "English command to find settings for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PersistentSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettingsSavedEventArgs.CommandSettings(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettingsSavedEventArgs_CommandSettings.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PlugInSettings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "The old PlugIn settings",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettingsSavedEventArgs_PlugInSettings.htm"
+    },
+    {
+      "name": "SavedByThisRhino",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Will be true if this instance of Rhino is writing the settings file or false if a different instance of Rhino has modified the settings file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettingsSavedEventArgs_SavedByThisRhino.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

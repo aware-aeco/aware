@@ -1,0 +1,34 @@
+{
+  "name": "CurveEnd",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines the extremes of a curve through a flagged enumeration.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_CurveEnd.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Not the start nor the end."
+    },
+    {
+      "name": "Start",
+      "value": 1,
+      "summary": "The frontal part of the curve."
+    },
+    {
+      "name": "End",
+      "value": 2,
+      "summary": "The tail part of the curve."
+    },
+    {
+      "name": "Both",
+      "value": 3,
+      "summary": "Both the start and the end of the curve."
+    }
+  ]
+}

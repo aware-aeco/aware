@@ -1,0 +1,50 @@
+{
+  "name": "PlugInType",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "Rhino plug-in type enumeration.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_PlugInType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Render",
+      "value": 1
+    },
+    {
+      "name": "FileImport",
+      "value": 2
+    },
+    {
+      "name": "FileExport",
+      "value": 4
+    },
+    {
+      "name": "Digitizer",
+      "value": 8
+    },
+    {
+      "name": "Utility",
+      "value": 16
+    },
+    {
+      "name": "DisplayPipeline",
+      "value": 32
+    },
+    {
+      "name": "DisplayEngine",
+      "value": 64
+    },
+    {
+      "name": "Any",
+      "value": 127
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "name": "IPanelsService",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "For internal use, the IPanels service is implemented in RhinoWindows or RhinoMac as appropriate and handles the communication with core Rhino",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_IPanelsService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateDockBar",
+      "signature": "bool CreateDockBar(Object options)",
+      "summary": "",
+      "params": [
+        {
+          "name": "options",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.CreateDockBar(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.CreateDockBar(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_CreateDockBar.htm"
+    },
+    {
+      "name": "DestroyNativeWindow",
+      "signature": "void DestroyNativeWindow(Object host, Object nativeObject, bool disposeOfNativeObject)",
+      "summary": "",
+      "params": [
+        {
+          "name": "host",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022host\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DestroyNativeWindow(System.Object,System.Object,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "nativeObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022nativeObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DestroyNativeWindow(System.Object,System.Object,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "disposeOfNativeObject",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022disposeOfNativeObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DestroyNativeWindow(System.Object,System.Object,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_DestroyNativeWindow.htm"
+    },
+    {
+      "name": "DockBarIdInUse",
+      "signature": "bool DockBarIdInUse(Guid barId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DockBarIdInUse(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DockBarIdInUse(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_DockBarIdInUse.htm"
+    },
+    {
+      "name": "DockBarIsVisible",
+      "signature": "bool DockBarIsVisible(Guid barId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DockBarIsVisible(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.DockBarIsVisible(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_DockBarIsVisible.htm"
+    },
+    {
+      "name": "FactoryResetSettings",
+      "signature": "void FactoryResetSettings()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_FactoryResetSettings.htm"
+    },
+    {
+      "name": "Float",
+      "signature": "bool Float(Guid barId, Point point)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.Float(System.Guid,System.Drawing.Point)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.Float(System.Guid,System.Drawing.Point)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.Float(System.Guid,System.Drawing.Point)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_Float.htm"
+    },
+    {
+      "name": "ResizeFloating",
+      "signature": "bool ResizeFloating(Guid barId, Size size)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ResizeFloating(System.Guid,System.Drawing.Size)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ResizeFloating(System.Guid,System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ResizeFloating(System.Guid,System.Drawing.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_ResizeFloating.htm"
+    },
+    {
+      "name": "SetF1Hook",
+      "signature": "void SetF1Hook(Object nativeObject, EventHandler hook)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nativeObject",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022nativeObject\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SetF1Hook(System.Object,System.EventHandler)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "hook",
+          "type": "System.EventHandler",
+          "doc": "[Missing \u003Cparam name=\u0022hook\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SetF1Hook(System.Object,System.EventHandler)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_SetF1Hook.htm"
+    },
+    {
+      "name": "ShowDockBar",
+      "signature": "bool ShowDockBar(Guid barId, bool show)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ShowDockBar(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "show",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022show\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ShowDockBar(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ShowDockBar(System.Guid,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_ShowDockBar.htm"
+    },
+    {
+      "name": "StartDraggingDockBar",
+      "signature": "bool StartDraggingDockBar(Guid barId, Point mouseDownPoint, Point screenStartPoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.StartDraggingDockBar(System.Guid,System.Drawing.Point,System.Drawing.Point)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "mouseDownPoint",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022mouseDownPoint\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.StartDraggingDockBar(System.Guid,System.Drawing.Point,System.Drawing.Point)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "screenStartPoint",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022screenStartPoint\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.StartDraggingDockBar(System.Guid,System.Drawing.Point,System.Drawing.Point)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.StartDraggingDockBar(System.Guid,System.Drawing.Point,System.Drawing.Point)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_StartDraggingDockBar.htm"
+    },
+    {
+      "name": "SupportedType",
+      "signature": "bool SupportedType(Type type, out string exceptionMessage)",
+      "summary": "",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SupportedType(System.Type,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "exceptionMessage",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022exceptionMessage\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SupportedType(System.Type,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.SupportedType(System.Type,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_SupportedType.htm"
+    },
+    {
+      "name": "ToggleDocking",
+      "signature": "bool ToggleDocking(Guid barId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "barId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022barId\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ToggleDocking(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.ToggleDocking(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_ToggleDocking.htm"
+    },
+    {
+      "name": "UnhookDeleteAndDestroyDockBar",
+      "signature": "bool UnhookDeleteAndDestroyDockBar(Guid id)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanelsService.UnhookDeleteAndDestroyDockBar(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IPanelsService.UnhookDeleteAndDestroyDockBar(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_IPanelsService_UnhookDeleteAndDestroyDockBar.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

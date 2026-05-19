@@ -1,0 +1,65 @@
+{
+  "name": "RenderMeshProviderProgress",
+  "namespace": "Rhino.Render.CustomRenderMeshes",
+  "kind": "class",
+  "summary": "Expresses the progress of a custom render mesh provider.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress.htm",
+  "constructors": [
+    {
+      "name": "RenderMeshProviderProgress",
+      "signature": "public RenderMeshProviderProgress()",
+      "summary": "Initializes a new instance of the RenderMeshProviderProgress class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Amount",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The amount of progress towards the target",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress_Amount.htm"
+    },
+    {
+      "name": "IsComplete",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if complete, otherwise false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress_IsComplete.htm"
+    },
+    {
+      "name": "ProviderId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The Id of the RenderMeshProvider that this report came from.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress_ProviderId.htm"
+    },
+    {
+      "name": "Target",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Target progress",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress_Target.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Return a textural progress report",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_CustomRenderMeshes_RenderMeshProviderProgress_Text.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

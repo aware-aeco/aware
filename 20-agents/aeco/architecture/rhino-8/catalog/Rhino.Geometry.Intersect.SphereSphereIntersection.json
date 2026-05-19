@@ -1,0 +1,34 @@
+{
+  "name": "SphereSphereIntersection",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "enum",
+  "summary": "Represents all possible cases of a Sphere|Sphere intersection event.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Intersect_SphereSphereIntersection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Spheres do not intersect."
+    },
+    {
+      "name": "Point",
+      "value": 1,
+      "summary": "Spheres touch at a single point."
+    },
+    {
+      "name": "Circle",
+      "value": 2,
+      "summary": "Spheres intersect at a circle."
+    },
+    {
+      "name": "Overlap",
+      "value": 3,
+      "summary": "Spheres are identical."
+    }
+  ]
+}

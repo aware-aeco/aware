@@ -1,0 +1,31 @@
+{
+  "name": "RhinoDoc.UserStringChangedArgs",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "This event is raised when document user text strings are changed",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoDoc_UserStringChangedArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document containing the user string",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_UserStringChangedArgs_Document.htm"
+    },
+    {
+      "name": "Key",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Key for the string being changed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_UserStringChangedArgs_Key.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

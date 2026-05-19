@@ -1,0 +1,26 @@
+{
+  "name": "FileIgsWriteOptions.EolMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileIgsWriteOptions.EolMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions_EolMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Crlf",
+      "value": 1
+    },
+    {
+      "name": "Cr",
+      "value": 2
+    },
+    {
+      "name": "Lf",
+      "value": 3
+    }
+  ]
+}

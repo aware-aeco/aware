@@ -1,0 +1,22 @@
+{
+  "name": "NotificationCenter",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "class",
+  "summary": "The NotificationCenter holds all Notification objects that are displayed in the Notifications panel by Rhino. The NotificationCenter is not thread-safe and should only be used in the UI thread.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_Notifications_NotificationCenter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Notifications",
+      "type": "TrulyObservableOrderedSet\u003CNotification\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A set containing all the Notification instances. Any Notification added will be displayed in the Notifications panel. Any Notification removed will be removed from the Notifications panel, and, if shown modally or queued to be shown modally, will be closed or dequeued from the modal queue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_Runtime_Notifications_NotificationCenter_Notifications.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

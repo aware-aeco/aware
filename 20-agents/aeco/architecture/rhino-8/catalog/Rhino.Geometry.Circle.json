@@ -1,0 +1,791 @@
+{
+  "name": "Circle",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents a circle in 3D. The values used are a radius and an orthonormal frame of the plane containing the circle, with origin at the center.The circle is parameterized by radians from 0 to 2 Pi given byt -\u003E center \u002B cos(t)*radius*xaxis \u002B sin(t)*radius*yaxiswhere center, xaxis and yaxis define the orthonormal frame of the circle plane.",
+  "remarks": "\u003EAn IsValid circle has positive radius and an IsValid plane defining the frame.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Circle.htm",
+  "constructors": [
+    {
+      "name": "Circle(Arc)",
+      "signature": "public Circle(Arc arc)",
+      "summary": "Initializes a circle from an arc.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "Arc that defines the plane and radius.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor.htm"
+    },
+    {
+      "name": "Circle(Double)",
+      "signature": "public Circle(double radius)",
+      "summary": "Initializes a circle with center (0,0,0) in the world XY plane.",
+      "params": [
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of circle, should be a positive number.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor_6.htm"
+    },
+    {
+      "name": "Circle(Plane, Double)",
+      "signature": "public Circle(Plane plane, double radius)",
+      "summary": "Initializes a circle on a plane with a given radius.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane of circle. Plane origin defines the center of the circle.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of circle (should be a positive value).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor_2.htm"
+    },
+    {
+      "name": "Circle(Point3d, Double)",
+      "signature": "public Circle(Point3d center, double radius)",
+      "summary": "Initializes a circle parallel to the world XY plane with given center and radius.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center of circle.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of circle (should be a positive value).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor_5.htm"
+    },
+    {
+      "name": "Circle(Plane, Point3d, Double)",
+      "signature": "public Circle(Plane plane, Point3d center, double radius)",
+      "summary": "Initializes a circle parallel to a given plane with given center and radius.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane for circle.",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center point override.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of circle (should be a positive value).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor_1.htm"
+    },
+    {
+      "name": "Circle(Point3d, Point3d, Point3d)",
+      "signature": "public Circle(Point3d point1, Point3d point2, Point3d point3)",
+      "summary": "Initializes a circle through three 3d points.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The start/end of the circle is at point1.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second point on the circle.",
+          "optional": false
+        },
+        {
+          "name": "point3",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Third point on the circle.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor_3.htm"
+    },
+    {
+      "name": "Circle(Point3d, Vector3d, Point3d)",
+      "signature": "public Circle(Point3d startPoint, Vector3d tangentAtP, Point3d pointOnCircle)",
+      "summary": "Initializes a circle from two 3d points and a tangent at the first point. The start/end of the circle is at point \u0022startPoint\u0022.",
+      "remarks": "May create an Invalid circle",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start point of circle.",
+          "optional": false
+        },
+        {
+          "name": "tangentAtP",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Tangent vector at start.",
+          "optional": false
+        },
+        {
+          "name": "pointOnCircle",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point coincident with desired circle.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestParameter",
+      "signature": "public bool ClosestParameter(Point3d testPoint, out double t)",
+      "summary": "Gets the parameter on the circle which is closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project onto the circle.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter on circle closes to testPoint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_ClosestParameter.htm"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d testPoint)",
+      "summary": "Gets the point on the circle which is closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project onto the circle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the circle that is closest to testPoint or Point3d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_ClosestPoint.htm"
+    },
+    {
+      "name": "DerivativeAt",
+      "signature": "public Vector3d DerivativeAt(int derivative, double t)",
+      "summary": "Determines the value of the Nth derivative at a parameter.",
+      "params": [
+        {
+          "name": "derivative",
+          "type": "System.Int32",
+          "doc": "Which order of derivative is wanted.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter to evaluate derivative. Valid values are 0, 1, 2 and 3.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The derivative of the circle at the given parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_DerivativeAt.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Circle other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Circle.EpsilonEquals(Rhino.Geometry.Circle,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Circle.EpsilonEquals(Rhino.Geometry.Circle,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Circle.EpsilonEquals(Rhino.Geometry.Circle,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_EpsilonEquals.htm"
+    },
+    {
+      "name": "IsInPlane",
+      "signature": "public bool IsInPlane(Plane plane, double tolerance)",
+      "summary": "Evaluates whether or not this circle is co-planar with a given plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the circle plane is co-planar with the given plane within tolerance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_IsInPlane.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Circles use trigonometric parameterization: t -\u003E center \u002B cos(t)*radius*xaxis \u002B sin(t)*radius*yaxis.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter of point to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the circle at the given parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_PointAt.htm"
+    },
+    {
+      "name": "Reverse",
+      "signature": "public void Reverse()",
+      "summary": "Reverse the orientation of the circle. Changes the domain from [a,b] to [-b,-a].",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Reverse.htm"
+    },
+    {
+      "name": "Rotate(Double, Vector3d)",
+      "signature": "public bool Rotate(double angle, Vector3d axis)",
+      "summary": "Rotates the circle through a given angle.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle (in radians) of the rotation.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Rotation axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Rotate.htm"
+    },
+    {
+      "name": "Rotate(Double, Vector3d, Point3d)",
+      "signature": "public bool Rotate(double angle, Vector3d axis, Point3d point)",
+      "summary": "Rotates the circle through a given angle.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle (in radians) of the rotation.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Rotation axis.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Rotation anchor point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Rotate_1.htm"
+    },
+    {
+      "name": "Rotate(Double, Double, Vector3d)",
+      "signature": "public bool Rotate(double sinAngle, double cosAngle, Vector3d axis)",
+      "summary": "Rotates the circle around an axis that starts at the base plane origin.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "The value returned by Math.Sin(angle) to compose the rotation.",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "The value returned by Math.Cos(angle) to compose the rotation.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A rotation axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Rotate_2.htm"
+    },
+    {
+      "name": "Rotate(Double, Double, Vector3d, Point3d)",
+      "signature": "public bool Rotate(double sinAngle, double cosAngle, Vector3d axis, Point3d point)",
+      "summary": "Rotates the circle around an axis that starts at the provided point.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "The value returned by Math.Sin(angle) to compose the rotation.",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "The value returned by Math.Cos(angle) to compose the rotation.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A rotation direction.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A rotation base point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Rotate_3.htm"
+    },
+    {
+      "name": "TangentAt",
+      "signature": "public Vector3d TangentAt(double t)",
+      "summary": "Circles use trigonometric parameterization: t -\u003E center \u002B cos(t)*radius*xaxis \u002B sin(t)*radius*yaxis.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter of tangent to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The tangent at the circle at the given parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_TangentAt.htm"
+    },
+    {
+      "name": "ToNurbsCurve()",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Constructs a nurbs curve representation of this circle. This amounts to the same as calling NurbsCurve.CreateFromCircle().",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A nurbs curve representation of this circle or null if no such representation could be made."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_ToNurbsCurve.htm"
+    },
+    {
+      "name": "ToNurbsCurve(Int32, Int32)",
+      "signature": "public NurbsCurve ToNurbsCurve(int degree, int cvCount)",
+      "summary": "Create a uniform non-rational cubic NURBS approximation of a circle.",
+      "params": [
+        {
+          "name": "degree",
+          "type": "System.Int32",
+          "doc": "\u003E=1",
+          "optional": false
+        },
+        {
+          "name": "cvCount",
+          "type": "System.Int32",
+          "doc": "cv count \u003E=5",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "NURBS curve approximation of a circle on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_ToNurbsCurve_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms this circle using an transformation matrix.",
+      "remarks": "Circles may not be transformed accurately if the transformation defines a non-euclidean transformation.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Transform.htm"
+    },
+    {
+      "name": "Translate",
+      "signature": "public bool Translate(Vector3d delta)",
+      "summary": "Moves the circle.",
+      "params": [
+        {
+          "name": "delta",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_Translate.htm"
+    },
+    {
+      "name": "TryFitCircleToPoints",
+      "signature": "public static bool TryFitCircleToPoints(IEnumerable\u003CPoint3d\u003E points, out Circle circle)",
+      "summary": "Attempt to fit a circle through a set of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "The points through which to fit.",
+          "optional": false
+        },
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "The resulting circle on success.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_TryFitCircleToPoints.htm"
+    },
+    {
+      "name": "TryFitCircleTT",
+      "signature": "public static Circle TryFitCircleTT(Curve c1, Curve c2, double t1, double t2)",
+      "summary": "Try to fit a circle to two curves using tangent relationships.",
+      "params": [
+        {
+          "name": "c1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "First curve to touch.",
+          "optional": false
+        },
+        {
+          "name": "c2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Second curve to touch.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Parameter on first curve close to desired solution.",
+          "optional": false
+        },
+        {
+          "name": "t2",
+          "type": "System.Double",
+          "doc": "Parameter on second curve closet to desired solution.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "Valid circle on success, Circle.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_TryFitCircleTT.htm"
+    },
+    {
+      "name": "TryFitCircleTTT",
+      "signature": "public static Circle TryFitCircleTTT(Curve c1, Curve c2, Curve c3, double t1, double t2, double t3)",
+      "summary": "Try to fit a circle to three curves using tangent relationships.",
+      "params": [
+        {
+          "name": "c1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "First curve to touch.",
+          "optional": false
+        },
+        {
+          "name": "c2",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Second curve to touch.",
+          "optional": false
+        },
+        {
+          "name": "c3",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Third curve to touch.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Parameter on first curve close to desired solution.",
+          "optional": false
+        },
+        {
+          "name": "t2",
+          "type": "System.Double",
+          "doc": "Parameter on second curve closet to desired solution.",
+          "optional": false
+        },
+        {
+          "name": "t3",
+          "type": "System.Double",
+          "doc": "Parameter on third curve close to desired solution.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "Valid circle on success, Circle.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_TryFitCircleTTT.htm"
+    },
+    {
+      "name": "TrySmallestEnclosingCircle",
+      "signature": "public static bool TrySmallestEnclosingCircle(IEnumerable\u003CPoint2d\u003E points, double tolerance, out Circle circle, out int[] indicesOnCircle)",
+      "summary": "Attempt to create the smallest circle enclosing a set of planar points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "The points to enclose.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The tolerance to use",
+          "optional": false
+        },
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "The resulting circle on success.",
+          "optional": false
+        },
+        {
+          "name": "indicesOnCircle",
+          "type": "System.Int32[]",
+          "doc": "If possible, indices of two or three points that define the circle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Circle_TrySmallestEnclosingCircle.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the circle\u0027s 3d axis aligned bounding box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_BoundingBox.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the center point of this circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Center.htm"
+    },
+    {
+      "name": "Circumference",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the circumference of this circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Circumference.htm"
+    },
+    {
+      "name": "Diameter",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the diameter (radius * 2.0) of this circle. Diameters should be positive values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Diameter.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "A valid circle has radius larger than 0.0 and a base plane which is must also be valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_IsValid.htm"
+    },
+    {
+      "name": "Normal",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the normal vector for this circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Normal.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the plane of the circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Plane.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of this circle. Radii should be positive values.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Radius.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Circle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a circle with Unset components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Circle_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

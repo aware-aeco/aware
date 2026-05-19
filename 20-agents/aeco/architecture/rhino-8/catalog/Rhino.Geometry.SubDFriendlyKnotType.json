@@ -1,0 +1,39 @@
+{
+  "name": "SubDFriendlyKnotType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubD::SubDFriendlyKnotType identifies the types of subd friendly NURBS knot vectors. SubD friendly NURBS curves and surfacaes are always cubic and nonrational. Any time there is a multiple knot, the 2nd derivative is zero at the corresponding parameter. SubD friendly NURBS curves are either periodic or have zero 2nd derivative at the ends.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDFriendlyKnotType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid type. Used to indicate the type has not been set and to encourage developers to explicitly specify a type."
+    },
+    {
+      "name": "UnclampedUniform",
+      "value": 1,
+      "summary": "NURBS knot vector is an unclamped uniform cubic knot vector. Every knot interval has the same length. Every knot has multiplicity 1."
+    },
+    {
+      "name": "ClampedUniform",
+      "value": 2,
+      "summary": "NURBS knot vector is a clamped uniform cubic knot vector. Every interior knot interval has the same length. End knots have multiplicity 3 and interior knots have multiplicity 1."
+    },
+    {
+      "name": "ClampedPiecewiseUniform",
+      "value": 4,
+      "summary": "NURBS knot vector is a clamped piecewise uniform cubic knot vector. All nonzero knot intervals have the same length. End knots have multiplicity 3 and interior knots have multiplicity 1 or 3. Interior knots with multiplicity 3 correspond to interior SubD creases."
+    },
+    {
+      "name": "Unfriendly",
+      "value": 127,
+      "summary": "NURBS knot vector is not subd friendly."
+    }
+  ]
+}

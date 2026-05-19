@@ -1,0 +1,55 @@
+{
+  "name": "LayerTableEventArgs",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.LayerTableEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_LayerTableEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LayerTableEventArgs_Document.htm"
+    },
+    {
+      "name": "EventType",
+      "type": "LayerTableEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LayerTableEventArgs_EventType.htm"
+    },
+    {
+      "name": "LayerIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LayerTableEventArgs_LayerIndex.htm"
+    },
+    {
+      "name": "NewState",
+      "type": "Layer",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LayerTableEventArgs_NewState.htm"
+    },
+    {
+      "name": "OldState",
+      "type": "Layer",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LayerTableEventArgs_OldState.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

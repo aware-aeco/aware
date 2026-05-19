@@ -1,0 +1,174 @@
+{
+  "name": "SubDEdge",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Single edge of a SubD",
+  "base": "SubDComponent",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDEdge.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex ComponentIndex()",
+      "summary": "Gets the component index of this edge.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex",
+        "doc": "The component index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDEdge_ComponentIndex.htm"
+    },
+    {
+      "name": "FaceAt",
+      "signature": "public SubDFace FaceAt(int index)",
+      "summary": "Retrieve a SubDFace from this edge.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDEdge.FaceAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDEdge.FaceAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDEdge_FaceAt.htm"
+    },
+    {
+      "name": "ToNurbsCurve",
+      "signature": "public NurbsCurve ToNurbsCurve(bool clampEnds)",
+      "summary": "Get a cubic, uniform, non-rational, NURBS curve that is on the edge\u0027s limit curve.",
+      "remarks": "If some edges in your SubD are not able to be converted to NURBS, you might need to run UpdateSurfaceMeshCache(Boolean).",
+      "params": [
+        {
+          "name": "clampEnds",
+          "type": "System.Boolean",
+          "doc": "If true, the end knots are clamped. Otherwise the end knots are(-2,-1,0,...., k1, k1\u002B1, k1\u002B2).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "The Nurbs form of this edge."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SubDEdge_ToNurbsCurve.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlNetLine",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Line representing the control net end points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDEdge_ControlNetLine.htm"
+    },
+    {
+      "name": "FaceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of faces for this edge.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDEdge_FaceCount.htm"
+    },
+    {
+      "name": "Id",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique id within the parent SubD for this item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_Id.htm"
+    },
+    {
+      "name": "IsDamaged",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is damaged.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_IsDamaged.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_IsDeleted.htm"
+    },
+    {
+      "name": "IsHidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is hidden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_IsHidden.htm"
+    },
+    {
+      "name": "IsHighlighted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is highlighted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_IsHighlighted.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_IsLocked.htm"
+    },
+    {
+      "name": "IsSelected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_IsSelected.htm"
+    },
+    {
+      "name": "ParentSubD",
+      "type": "SubD",
+      "getter": true,
+      "setter": false,
+      "summary": "SubD that this component belongs to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDComponent_ParentSubD.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "SubDEdgeTag",
+      "getter": true,
+      "setter": true,
+      "summary": "identifies the type of subdivision edge.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDEdge_Tag.htm"
+    },
+    {
+      "name": "VertexFrom",
+      "type": "SubDVertex",
+      "getter": true,
+      "setter": false,
+      "summary": "Start vertex for this edge.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDEdge_VertexFrom.htm"
+    },
+    {
+      "name": "VertexTo",
+      "type": "SubDVertex",
+      "getter": true,
+      "setter": false,
+      "summary": "End vertex for this edge.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SubDEdge_VertexTo.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

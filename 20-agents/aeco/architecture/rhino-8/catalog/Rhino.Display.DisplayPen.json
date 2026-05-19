@@ -1,0 +1,228 @@
+{
+  "name": "DisplayPen",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "Pen used to define stroke applied to several DisplayPipeline draw functions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPen.htm",
+  "constructors": [
+    {
+      "name": "DisplayPen",
+      "signature": "public DisplayPen()",
+      "summary": "Initializes a new instance of the DisplayPen class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Duplicate",
+      "signature": "public DisplayPen Duplicate()",
+      "summary": "Create a duplicate of this display pen.",
+      "params": [],
+      "returns": {
+        "type": "DisplayPen",
+        "doc": "An exact duplicate of this display pen."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen_Duplicate.htm"
+    },
+    {
+      "name": "FromLinetype",
+      "signature": "public static DisplayPen FromLinetype(Linetype linetype, Color color, double patternScale)",
+      "summary": "Create a display pen that matches a linetype definition",
+      "params": [
+        {
+          "name": "linetype",
+          "type": "Rhino.DocObjects.Linetype",
+          "doc": "[Missing \u003Cparam name=\u0022linetype\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPen.FromLinetype(Rhino.DocObjects.Linetype,System.Drawing.Color,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPen.FromLinetype(Rhino.DocObjects.Linetype,System.Drawing.Color,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "patternScale",
+          "type": "System.Double",
+          "doc": "scale to be applied to linetype dash pattern. Typically this is 1",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DisplayPen",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPen.FromLinetype(Rhino.DocObjects.Linetype,System.Drawing.Color,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen_FromLinetype.htm"
+    },
+    {
+      "name": "PatternAsArray",
+      "signature": "public float[] PatternAsArray()",
+      "summary": "Get the pattern for this pen as an array of dash,gap,dash,gap... values",
+      "params": [],
+      "returns": {
+        "type": "Single[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPen.PatternAsArray\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen_PatternAsArray.htm"
+    },
+    {
+      "name": "SetPattern",
+      "signature": "public void SetPattern(IEnumerable\u003Cfloat\u003E dashesAndGaps)",
+      "summary": "Set pattern to apply for a stroke.",
+      "params": [
+        {
+          "name": "dashesAndGaps",
+          "type": "System.Collections.Generic.IEnumerable\u003CSingle\u003E",
+          "doc": "Lengths of dashes and gaps for a pattern. Dash is always assumed the first item. There is a limit to 8 dashes and gaps total",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "thrown when dashes and gaps have more than 8 items"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen_SetPattern.htm"
+    },
+    {
+      "name": "SetTaper",
+      "signature": "public void SetTaper(float startThickness, float endThickness, Point2f taperPoint)",
+      "summary": "Positions and thickness at those positions along a curve that define a taper.",
+      "params": [
+        {
+          "name": "startThickness",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022startThickness\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPen.SetTaper(System.Single,System.Single,Rhino.Geometry.Point2f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "endThickness",
+          "type": "System.Single",
+          "doc": "[Missing \u003Cparam name=\u0022endThickness\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPen.SetTaper(System.Single,System.Single,Rhino.Geometry.Point2f)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "taperPoint",
+          "type": "Rhino.Geometry.Point2f",
+          "doc": "[Missing \u003Cparam name=\u0022taperPoint\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPen.SetTaper(System.Single,System.Single,Rhino.Geometry.Point2f)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen_SetTaper.htm"
+    },
+    {
+      "name": "TaperAsArray",
+      "signature": "public Point2f[] TaperAsArray()",
+      "summary": "Collection of positions and thicknesses at those positions to define a taper Rhino currently only supports either no taper or a single taper. An array is used here in case Rhino supports multiple taper values in the future.",
+      "params": [],
+      "returns": {
+        "type": "Point2f[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPen.TaperAsArray\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPen_TaperAsArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CapStyle",
+      "type": "LineCapStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "How caps are drawn at the ends of open curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_CapStyle.htm"
+    },
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color applied to stroke",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_Color.htm"
+    },
+    {
+      "name": "HaloColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Halos are blended colors drawn around a curve for purposes like selection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_HaloColor.htm"
+    },
+    {
+      "name": "HaloThickness",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Halos are blended colors drawn around a curve for purposes like selection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_HaloThickness.htm"
+    },
+    {
+      "name": "JoinStyle",
+      "type": "LineJoinStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "How corners of curves are joined",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_JoinStyle.htm"
+    },
+    {
+      "name": "PatternBySegment",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Restart patterns at corners in a curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_PatternBySegment.htm"
+    },
+    {
+      "name": "PatternLengthInWorldUnits",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, lengths in pattern definition are interpreted to be in world units. If false, screen pixel distances are used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_PatternLengthInWorldUnits.htm"
+    },
+    {
+      "name": "PatternOffset",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset to apply to pattern. If RhinoMath.UnsetSingle, then pattern is centered to keep even dash lengths at ends",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_PatternOffset.htm"
+    },
+    {
+      "name": "Thickness",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness for stroke",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_Thickness.htm"
+    },
+    {
+      "name": "ThicknessSpace",
+      "type": "CoordinateSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "Coordinate system for the pen\u0027s thickness",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DisplayPen_ThicknessSpace.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

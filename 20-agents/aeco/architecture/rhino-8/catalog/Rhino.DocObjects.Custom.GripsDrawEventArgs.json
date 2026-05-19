@@ -1,0 +1,219 @@
+{
+  "name": "GripsDrawEventArgs",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Custom.GripsDrawEventArgs\u0022]",
+  "base": "DrawEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Custom_GripsDrawEventArgs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DrawControlPolygonLine(Line, GripStatus, GripStatus)",
+      "signature": "public void DrawControlPolygonLine(Line line, GripStatus startStatus, GripStatus endStatus)",
+      "summary": "Draws the lines in a control polygons. This is an helper function.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line between two grips.",
+          "optional": false
+        },
+        {
+          "name": "startStatus",
+          "type": "Rhino.DocObjects.Custom.GripStatus",
+          "doc": "Grip status at start of line.",
+          "optional": false
+        },
+        {
+          "name": "endStatus",
+          "type": "Rhino.DocObjects.Custom.GripStatus",
+          "doc": "Grip status at end of line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_GripsDrawEventArgs_DrawControlPolygonLine.htm"
+    },
+    {
+      "name": "DrawControlPolygonLine(Line, Int32, Int32)",
+      "signature": "public void DrawControlPolygonLine(Line line, int startStatus, int endStatus)",
+      "summary": "Draws the lines in a control polygons. This is an helper function.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Line between two grips.",
+          "optional": false
+        },
+        {
+          "name": "startStatus",
+          "type": "System.Int32",
+          "doc": "Index of Grip status at start of line.",
+          "optional": false
+        },
+        {
+          "name": "endStatus",
+          "type": "System.Int32",
+          "doc": "Index if Grip status at end of line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_GripsDrawEventArgs_DrawControlPolygonLine_1.htm"
+    },
+    {
+      "name": "DrawControlPolygonLine(Point3d, Point3d, Int32, Int32)",
+      "signature": "public void DrawControlPolygonLine(Point3d start, Point3d end, int startStatus, int endStatus)",
+      "summary": "Draws the lines in a control polygons. This is an helper function.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point start.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point end.",
+          "optional": false
+        },
+        {
+          "name": "startStatus",
+          "type": "System.Int32",
+          "doc": "Index of Grip status at start of line defined by start and end.",
+          "optional": false
+        },
+        {
+          "name": "endStatus",
+          "type": "System.Int32",
+          "doc": "Index if Grip status at end of line defined by start and end.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_GripsDrawEventArgs_DrawControlPolygonLine_2.htm"
+    },
+    {
+      "name": "GripStatus",
+      "signature": "public GripStatus GripStatus(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.GripsDrawEventArgs.GripStatus(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GripStatus",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Custom.GripsDrawEventArgs.GripStatus(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_GripsDrawEventArgs_GripStatus.htm"
+    },
+    {
+      "name": "RestoreViewportSettings",
+      "signature": "public void RestoreViewportSettings()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_GripsDrawEventArgs_RestoreViewportSettings.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlPolygonStyle",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "What kind of line is used to display things like control polygons. 0 = no control polygon, 1 = solid control polygon, 2 = dotted control polygon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_ControlPolygonStyle.htm"
+    },
+    {
+      "name": "Display",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DrawEventArgs_Display.htm"
+    },
+    {
+      "name": "DrawDynamicStuff",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true, then draw stuff that does not move when grips are dragged, like the control polygon of the \u0022original\u0022 curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_DrawDynamicStuff.htm"
+    },
+    {
+      "name": "DrawStaticStuff",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true, then draw stuff that moves when grips are dragged, like the curve being bent by a dragged control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_DrawStaticStuff.htm"
+    },
+    {
+      "name": "GripColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_GripColor.htm"
+    },
+    {
+      "name": "GripStatusCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_GripStatusCount.htm"
+    },
+    {
+      "name": "LockedGripColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_LockedGripColor.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DrawEventArgs_RhinoDoc.htm"
+    },
+    {
+      "name": "SelectedGripColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_GripsDrawEventArgs_SelectedGripColor.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_DrawEventArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

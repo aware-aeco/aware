@@ -1,0 +1,26 @@
+{
+  "name": "ConeConstraint",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.ConeConstraint\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_ConeConstraint.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Vertical",
+      "value": 1
+    },
+    {
+      "name": "AroundCurve",
+      "value": 2
+    }
+  ]
+}

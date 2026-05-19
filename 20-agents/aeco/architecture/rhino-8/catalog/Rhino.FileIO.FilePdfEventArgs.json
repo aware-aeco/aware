@@ -1,0 +1,23 @@
+{
+  "name": "FilePdfEventArgs",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Used for events that are fired while constructing/saving a PDF",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FilePdfEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Pdf",
+      "type": "FilePdf",
+      "getter": true,
+      "setter": false,
+      "summary": "The document that is about to be written",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePdfEventArgs_Pdf.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

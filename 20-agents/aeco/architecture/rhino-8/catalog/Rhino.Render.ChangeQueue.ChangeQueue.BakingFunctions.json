@@ -1,0 +1,54 @@
+{
+  "name": "ChangeQueue.BakingFunctions",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "enum",
+  "summary": "Enumeration of functions for baking to conduct.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_ChangeQueue_BakingFunctions.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No baking"
+    },
+    {
+      "name": "Decals",
+      "value": 1,
+      "summary": "Bake decals"
+    },
+    {
+      "name": "ProceduralTextures",
+      "value": 2,
+      "summary": "Bake procedural textures"
+    },
+    {
+      "name": "CustomObjectMappings",
+      "value": 4,
+      "summary": "Bake custom object mappings"
+    },
+    {
+      "name": "WcsBasedMappings",
+      "value": 8,
+      "summary": "Bake WCS-based mappings"
+    },
+    {
+      "name": "MultipleMappingChannels",
+      "value": 16,
+      "summary": "Bake multiple mapping channels"
+    },
+    {
+      "name": "NoRepeatTextures",
+      "value": 32,
+      "summary": "Bake no-repeat textures"
+    },
+    {
+      "name": "All",
+      "value": "4294967295",
+      "summary": "Bake everything"
+    }
+  ]
+}

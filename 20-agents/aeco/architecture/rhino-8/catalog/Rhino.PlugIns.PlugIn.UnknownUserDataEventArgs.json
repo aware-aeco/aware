@@ -1,0 +1,31 @@
+{
+  "name": "PlugIn.UnknownUserDataEventArgs",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "Event argument passed to the UnknownUserData event.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_PlugIn_UnknownUserDataEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_UnknownUserDataEventArgs_Document.htm"
+    },
+    {
+      "name": "PlugInId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PlugIns_PlugIn_UnknownUserDataEventArgs_PlugInId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,29 @@
+{
+  "name": "IRhRdkThumbnailList_Modes",
+  "namespace": "Rhino.UI.Controls.ThumbnailUI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList_Modes\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_Modes.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Grid",
+      "value": 0,
+      "summary": "Big thumbnails like Explorer icon mode (default)."
+    },
+    {
+      "name": "List",
+      "value": 1,
+      "summary": "Small thumbnails and info on right like Explorer report mode."
+    },
+    {
+      "name": "Tree",
+      "value": 2,
+      "summary": "Tree view mode."
+    }
+  ]
+}

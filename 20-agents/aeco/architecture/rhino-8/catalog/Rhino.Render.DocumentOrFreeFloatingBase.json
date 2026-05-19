@@ -1,0 +1,72 @@
+{
+  "name": "DocumentOrFreeFloatingBase",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Base class for Rhino.Render objects that are owned by the document, or can be delivered separately from other functions. In general, you cannot create these objects yourself.",
+  "base": "FreeFloatingBase",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_DocumentOrFreeFloatingBase.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts cc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022cc\u0022/\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.BeginChange(Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_BeginChange.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public abstract void CopyFrom(FreeFloatingBase src)",
+      "summary": "Copy from another object",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.FreeFloatingBase",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.FreeFloatingBase.CopyFrom(Rhino.Render.FreeFloatingBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_FreeFloatingBase_CopyFrom.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public bool EndChange()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.EndChange\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_EndChange.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Handle destruction of the un-managed CPP object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_FreeFloatingBase_Finalize.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

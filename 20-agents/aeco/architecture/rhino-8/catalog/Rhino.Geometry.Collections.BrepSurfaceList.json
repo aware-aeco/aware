@@ -1,0 +1,47 @@
+{
+  "name": "BrepSurfaceList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the underlying surfaces in a Brep object.",
+  "interfaces": [
+    "IEnumerable\u003CSurface\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_BrepSurfaceList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CSurface\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that visits all surfaces.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CSurface\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepSurfaceList_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of surfaces in a brep.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_BrepSurfaceList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Surface",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Surface at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_BrepSurfaceList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

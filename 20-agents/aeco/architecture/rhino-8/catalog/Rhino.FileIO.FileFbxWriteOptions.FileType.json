@@ -1,0 +1,30 @@
+{
+  "name": "FileFbxWriteOptions.FileType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileFbxWriteOptions.FileType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileFbxWriteOptions_FileType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Binary7",
+      "value": 0
+    },
+    {
+      "name": "Ascii7",
+      "value": 1
+    },
+    {
+      "name": "Binary6",
+      "value": 2
+    },
+    {
+      "name": "Ascii6",
+      "value": 3
+    }
+  ]
+}

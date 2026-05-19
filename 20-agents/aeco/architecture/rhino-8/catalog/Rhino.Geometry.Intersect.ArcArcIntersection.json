@@ -1,0 +1,34 @@
+{
+  "name": "ArcArcIntersection",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "enum",
+  "summary": "Represents all possible cases of a Arc|Arc intersection event.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Intersect_ArcArcIntersection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Arcs do not intersect."
+    },
+    {
+      "name": "Single",
+      "value": 1,
+      "summary": "Arcs touch at a one point."
+    },
+    {
+      "name": "Multiple",
+      "value": 2,
+      "summary": "Arcs intersect at two points."
+    },
+    {
+      "name": "Overlap",
+      "value": 3,
+      "summary": "Arcs are cocircular and overlap."
+    }
+  ]
+}

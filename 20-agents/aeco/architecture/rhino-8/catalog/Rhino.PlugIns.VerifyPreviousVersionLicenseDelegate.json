@@ -1,0 +1,14 @@
+{
+  "name": "VerifyPreviousVersionLicenseDelegate",
+  "namespace": "Rhino.PlugIns",
+  "kind": "delegate",
+  "summary": "Called by GetLicense/AskUserForLicense to verify that a previous version license.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_VerifyPreviousVersionLicenseDelegate.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate bool VerifyPreviousVersionLicenseDelegate( string license, string previousVersionLicense, out string errorMessage )"
+}

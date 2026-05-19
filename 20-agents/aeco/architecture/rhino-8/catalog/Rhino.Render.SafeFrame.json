@@ -1,0 +1,236 @@
+{
+  "name": "SafeFrame",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Safe frame",
+  "base": "DocumentOrFreeFloatingBase",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_SafeFrame.htm",
+  "constructors": [
+    {
+      "name": "SafeFrame()",
+      "signature": "public SafeFrame()",
+      "summary": "Create a utility object not associated with any document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SafeFrame__ctor.htm"
+    },
+    {
+      "name": "SafeFrame(RhinoDoc)",
+      "signature": "public SafeFrame(RhinoDoc doc)",
+      "summary": "Create the SafeFrame object which is associated with the document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.SafeFrame.#ctor(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SafeFrame__ctor_2.htm"
+    },
+    {
+      "name": "SafeFrame(SafeFrame)",
+      "signature": "public SafeFrame(SafeFrame sf)",
+      "summary": "Create a utility object not associated with any document from another object",
+      "params": [
+        {
+          "name": "sf",
+          "type": "Rhino.Render.SafeFrame",
+          "doc": "[Missing \u003Cparam name=\u0022sf\u0022/\u003E documentation for \u0022M:Rhino.Render.SafeFrame.#ctor(Rhino.Render.SafeFrame)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SafeFrame__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts cc)",
+      "summary": "(Inherited from DocumentOrFreeFloatingBase.)",
+      "params": [
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022cc\u0022/\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.BeginChange(Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_BeginChange.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public override void CopyFrom(FreeFloatingBase src)",
+      "summary": "(Overrides FreeFloatingBase.CopyFrom(FreeFloatingBase).)",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.FreeFloatingBase",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.SafeFrame.CopyFrom(Rhino.Render.FreeFloatingBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SafeFrame_CopyFrom.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the SafeFrame",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SafeFrame_Dispose.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public bool EndChange()",
+      "summary": "(Inherited from DocumentOrFreeFloatingBase.)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.DocumentOrFreeFloatingBase.EndChange\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_DocumentOrFreeFloatingBase_EndChange.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides FreeFloatingBase.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SafeFrame_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActionFrameLinked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Action Frame Linked, On = Use the same scale for X and Y. Off = use different scales for X and Y.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_ActionFrameLinked.htm"
+    },
+    {
+      "name": "ActionFrameOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn on the user specified action area, which shown with blue frames.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_ActionFrameOn.htm"
+    },
+    {
+      "name": "ActionFrameXScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Action Frame X-scale. This value should be in the range 0..1 but it is not clamped. It is displayed in the UI in the range 0..100.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_ActionFrameXScale.htm"
+    },
+    {
+      "name": "ActionFrameYScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Action Frame Y-scale. This value should be in the range 0..1 but it is not clamped. It is displayed in the UI in the range 0..100.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_ActionFrameYScale.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether the safe-frame is enabled.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_Enabled.htm"
+    },
+    {
+      "name": "FieldsOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show the 4 by 3 field grid in the safe-frame.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_FieldsOn.htm"
+    },
+    {
+      "name": "LiveFrameOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Turn on the live area, which shows the size of the rendered view as a yellow frame in the viewport.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_LiveFrameOn.htm"
+    },
+    {
+      "name": "PerspectiveOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show the safe-frame only in perspective views.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_PerspectiveOnly.htm"
+    },
+    {
+      "name": "TitleFrameLinked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Title Frame Linked, On = Use the same scale for X and Y. Off = use different scales for X and Y.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_TitleFrameLinked.htm"
+    },
+    {
+      "name": "TitleFrameOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show a user specified title area frame in orange.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_TitleFrameOn.htm"
+    },
+    {
+      "name": "TitleFrameXScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Title Frame X-scale. This value should be in the range 0..1 but it is not clamped. It is displayed in the UI in the range 0..100.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_TitleFrameXScale.htm"
+    },
+    {
+      "name": "TitleFrameYScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Title Frame Y-scale. This value should be in the range 0..1 but it is not clamped. It is displayed in the UI in the range 0..100.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SafeFrame_TitleFrameYScale.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CRenderPropertyChangedEvent\u003E",
+      "signature": "public static event EventHandler\u003CRenderPropertyChangedEvent\u003E Changed",
+      "summary": "This event is raised when a SafeFrame property value is changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Render_SafeFrame_Changed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

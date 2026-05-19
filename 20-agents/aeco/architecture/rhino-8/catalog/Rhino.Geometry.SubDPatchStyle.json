@@ -1,0 +1,44 @@
+{
+  "name": "SubDPatchStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "SubD::PatchStyle identifies the style of patch used to fill holes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDPatchStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid style. This encourages developers to thoughtfully select a patch style and can be used to indicate a UI control is not initialized."
+    },
+    {
+      "name": "Automatic",
+      "value": 1,
+      "summary": "Automatically choose a patch style that will generally create a good looking result. If a hole boundary is not convex, it is triangulated. Otherwise: If a hole has 3 edges, a single triangle face is used. If a hole has 4 edges, a single quad face is used. If a hole has 5 or more edges and an odd number of edges, a triangle fan is used. If a hole has 6 or more edges and an even number of edges, a quad fan is used."
+    },
+    {
+      "name": "SingleFace",
+      "value": 2,
+      "summary": "A single face is used under all conditions."
+    },
+    {
+      "name": "TriangleFan",
+      "value": 3,
+      "summary": "A triangle fan used under all conditions. The center of the fan is the average of the hole boundary vertex control net points."
+    },
+    {
+      "name": "QuadOrTriangleFan",
+      "value": 4,
+      "summary": "If the hole boundary has an even number of edges, a quad fan is used. Otherwise a triangle fan is used. The center of the fan is the average of the hole boundary vertex control net points."
+    },
+    {
+      "name": "Triangulated",
+      "value": 5,
+      "summary": "The hole boundary is triangluated. Typically this style is selected when a boundary not convex and the other styles produce faces with overlapping regions."
+    }
+  ]
+}

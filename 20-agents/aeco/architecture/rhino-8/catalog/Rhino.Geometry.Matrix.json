@@ -1,0 +1,540 @@
+{
+  "name": "Matrix",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents an arbitrarily sized matrix of double-precision floating point numbers. If you are working with a 4x4 matrix, then you may want to use the Transform class instead.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Matrix.htm",
+  "constructors": [
+    {
+      "name": "Matrix(Transform)",
+      "signature": "public Matrix(Transform xform)",
+      "summary": "Initializes a new instance of the matrix based on a 4x4 matrix Transform.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A 4x4 matrix to copy from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix__ctor.htm"
+    },
+    {
+      "name": "Matrix(Int32, Int32)",
+      "signature": "public Matrix(int rowCount, int columnCount)",
+      "summary": "Initializes a new instance of the matrix.",
+      "params": [
+        {
+          "name": "rowCount",
+          "type": "System.Int32",
+          "doc": "A positive integer, or 0, for the number of rows.",
+          "optional": false
+        },
+        {
+          "name": "columnCount",
+          "type": "System.Int32",
+          "doc": "A positive integer, or 0, for the number of columns.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If either rowCount, or columnCount or both are negative."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BackSolve",
+      "signature": "public double[] BackSolve(double zeroTolerance, double[] b)",
+      "summary": "Solves M*x=b where M is upper triangular with a unit diagonal and b is a column of values.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "(\u003E=0.0) used to test for \u0022zero\u0022 values in b in under determined systems of equations.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double[]",
+          "doc": "The values in B[RowCount],...,B[B.Length-1] are tested to make sure they are within \u0022zeroTolerance\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double[]",
+        "doc": "Array of length ColumnCount on success. null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_BackSolve.htm"
+    },
+    {
+      "name": "BackSolvePoints",
+      "signature": "public Point3d[] BackSolvePoints(double zeroTolerance, Point3d[] b)",
+      "summary": "Solves M*x=b where M is upper triangular with a unit diagonal and b is a column of 3d points.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "(\u003E=0.0) used to test for \u0022zero\u0022 values in b in under determined systems of equations.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "The values in B[RowCount],...,B[B.Length-1] are tested to make sure they are \u0022zero\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "Array of length ColumnCount on success. null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_BackSolvePoints.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Dispose_1.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public Matrix Duplicate()",
+      "summary": "Create a duplicate of this matrix.",
+      "params": [],
+      "returns": {
+        "type": "Matrix",
+        "doc": "An exact duplicate of this matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Duplicate.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Finalize.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets the hash code for this matrix. The hash code will change when the matrix changes so you cannot change matrices while they are stored in hash tables.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "Hash code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_GetHashCode.htm"
+    },
+    {
+      "name": "Invert",
+      "signature": "public bool Invert(double zeroTolerance)",
+      "summary": "Modifies this matrix to become its own inverse. Matrix might be non-invertible (singular) and the return value will be false.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "The admitted tolerance for 0.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Invert.htm"
+    },
+    {
+      "name": "RowReduce(Double, Point3d[], Double)",
+      "signature": "public int RowReduce(double zeroTolerance, Point3d[] b, out double pivot)",
+      "summary": "Row reduces a matrix as the first step in solving M*X=b where b is a column of 3d points.",
+      "remarks": "The matrix itself is row reduced so that the result is an upper triangular matrix with 1\u0027s on the diagonal.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "(\u003E=0.0) zero tolerance for pivot test. If the absolute value of a pivot is \u003C= zero_tolerance, then the pivot is assumed to be zero.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "An array of RowCount 3d points that is row reduced with the matrix.",
+          "optional": false
+        },
+        {
+          "name": "pivot",
+          "type": "System.Double",
+          "doc": "The value of the smallest pivot is returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Rank of the matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_RowReduce.htm"
+    },
+    {
+      "name": "RowReduce(Double, Double, Double)",
+      "signature": "public int RowReduce(double zeroTolerance, out double determinant, out double pivot)",
+      "summary": "Row reduces a matrix to calculate rank and determinant.",
+      "remarks": "The matrix itself is row reduced so that the result is an upper triangular matrix with 1\u0027s on the diagonal.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "(\u003E=0.0) zero tolerance for pivot test. If a the absolute value of a pivot is \u003C= zeroTolerance, then the pivot is assumed to be zero.",
+          "optional": false
+        },
+        {
+          "name": "determinant",
+          "type": "System.Double",
+          "doc": "value of determinant is returned here.",
+          "optional": false
+        },
+        {
+          "name": "pivot",
+          "type": "System.Double",
+          "doc": "value of the smallest pivot is returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Rank of the matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_RowReduce_1.htm"
+    },
+    {
+      "name": "RowReduce(Double, Double[], Double)",
+      "signature": "public int RowReduce(double zeroTolerance, double[] b, out double pivot)",
+      "summary": "Row reduces a matrix as the first step in solving M*X=b where b is a column of values.",
+      "remarks": "The matrix itself is row reduced so that the result is an upper triangular matrix with 1\u0027s on the diagonal.",
+      "params": [
+        {
+          "name": "zeroTolerance",
+          "type": "System.Double",
+          "doc": "(\u003E=0.0) zero tolerance for pivot test. If the absolute value of a pivot is \u003C= zero_tolerance, then the pivot is assumed to be zero.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double[]",
+          "doc": "an array of RowCount values that is row reduced with the matrix.",
+          "optional": false
+        },
+        {
+          "name": "pivot",
+          "type": "System.Double",
+          "doc": "the value of the smallest pivot is returned here.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Rank of the matrix."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_RowReduce_2.htm"
+    },
+    {
+      "name": "Scale",
+      "signature": "public void Scale(double s)",
+      "summary": "Modifies the current matrix by multiplying its values by a number.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.Double",
+          "doc": "A scale factor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Scale.htm"
+    },
+    {
+      "name": "SetDiagonal",
+      "signature": "public void SetDiagonal(double d)",
+      "summary": "Sets diagonal value and zeros off all non-diagonal values.",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "The new diagonal value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_SetDiagonal.htm"
+    },
+    {
+      "name": "SwapColumns",
+      "signature": "public bool SwapColumns(int columnA, int columnB)",
+      "summary": "Exchanges two columns.",
+      "params": [
+        {
+          "name": "columnA",
+          "type": "System.Int32",
+          "doc": "A first column.",
+          "optional": false
+        },
+        {
+          "name": "columnB",
+          "type": "System.Int32",
+          "doc": "Another column.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_SwapColumns.htm"
+    },
+    {
+      "name": "SwapRows",
+      "signature": "public bool SwapRows(int rowA, int rowB)",
+      "summary": "Exchanges two rows.",
+      "params": [
+        {
+          "name": "rowA",
+          "type": "System.Int32",
+          "doc": "A first row.",
+          "optional": false
+        },
+        {
+          "name": "rowB",
+          "type": "System.Int32",
+          "doc": "Another row.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_SwapRows.htm"
+    },
+    {
+      "name": "Transpose",
+      "signature": "public bool Transpose()",
+      "summary": "Modifies this matrix to be its transpose. This is like swapping rows with columns.http://en.wikipedia.org/wiki/Transpose",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Transpose.htm"
+    },
+    {
+      "name": "Zero",
+      "signature": "public void Zero()",
+      "summary": "Sets all values inside the matrix to zero.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_Zero.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static Matrix operator \u002B(Matrix a, Matrix b)",
+      "summary": "Adds two matrices and returns a new sum matrix.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Matrix",
+          "doc": "A first matrix to use in calculation.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Matrix",
+          "doc": "Another matrix to use in calculation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The sum matrix."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "When the two matrices are not the same size."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_op_Addition.htm"
+    },
+    {
+      "name": "Multiply",
+      "signature": "public static Matrix operator *(Matrix a, Matrix b)",
+      "summary": "Multiplies two matrices and returns a new product matrix.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Matrix",
+          "doc": "A first matrix to use in calculation.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Matrix",
+          "doc": "Another matrix to use in calculation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix",
+        "doc": "The product matrix."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "When a.ColumnCount != b.RowCount."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Matrix_op_Multiply.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ColumnCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of columns.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_ColumnCount.htm"
+    },
+    {
+      "name": "IsColumnOrthogonal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the matrix is column orthogonal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_IsColumnOrthogonal.htm"
+    },
+    {
+      "name": "IsColumnOrthoNormal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the matrix is column orthonormal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_IsColumnOrthoNormal.htm"
+    },
+    {
+      "name": "IsRowOrthogonal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the matrix is row orthogonal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_IsRowOrthogonal.htm"
+    },
+    {
+      "name": "IsRowOrthoNormal",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the matrix is row orthonormal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_IsRowOrthoNormal.htm"
+    },
+    {
+      "name": "IsSquare",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this matrix has the same number of rows and columns. 0x0 matrices are not considered square.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_IsSquare.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this matrix is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_IsValid.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the matrix value at the given row and column indices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_Item.htm"
+    },
+    {
+      "name": "RowCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of rows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Matrix_RowCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

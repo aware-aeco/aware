@@ -1,0 +1,385 @@
+{
+  "name": "HatchPatternTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "All of the hatch pattern definitions contained in a rhino document.",
+  "base": "RhinoDocCommonTable\u003CHatchPattern\u003E",
+  "interfaces": [
+    "ICollection\u003CHatchPattern\u003E",
+    "IEnumerable\u003CHatchPattern\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_HatchPatternTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public int Add(HatchPattern pattern)",
+      "summary": "Adds a new hatch pattern with specified definition to the table.",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "definition of new hatch pattern. The information in pattern is copied. If pattern.Name is empty the a unique name of the form \u0022HatchPattern 01\u0022 will be automatically created.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of new hatch pattern -1 not added because a hatch pattern with that name already exists or some other problem occurred."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Marks all items as deleted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_Clear.htm"
+    },
+    {
+      "name": "Delete(HatchPattern)",
+      "signature": "public override bool Delete(HatchPattern item)",
+      "summary": "Deletes a hatch pattern from the table.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "The hatch pattern to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Delete.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public bool Delete(int hatchPatternIndex)",
+      "summary": "Deletes a hatch pattern from the table.",
+      "params": [
+        {
+          "name": "hatchPatternIndex",
+          "type": "System.Int32",
+          "doc": "The index of the hatch pattern to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Delete_2.htm"
+    },
+    {
+      "name": "Delete(HatchPattern, Boolean)",
+      "signature": "public bool Delete(HatchPattern item, bool quiet)",
+      "summary": "Deletes a hatch pattern from the table.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "The hatch pattern to delete.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, no warning message box appears if hatch pattern cannot be deleted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Delete_1.htm"
+    },
+    {
+      "name": "Delete(Int32, Boolean)",
+      "signature": "public bool Delete(int hatchPatternIndex, bool quiet)",
+      "summary": "Deletes a hatch pattern from the table.",
+      "params": [
+        {
+          "name": "hatchPatternIndex",
+          "type": "System.Int32",
+          "doc": "The index of the hatch pattern to delete.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, no warning message box appears if hatch pattern cannot be deleted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Delete_3.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "[ObsoleteAttribute(\u0022ignoreDeleted is now ignored. Items are removed permanently now. Use FindName.\u0022)] public int Find(string name, bool ignoreDeleted)",
+      "summary": "Finds the hatch pattern with a given name. Search ignores case.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the hatch pattern to be found.",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeleted",
+          "type": "System.Boolean",
+          "doc": "true means don\u0027t search deleted hatch patterns.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index of the hatch pattern with the given name. -1 if no hatch pattern found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Find.htm"
+    },
+    {
+      "name": "FindId",
+      "signature": "public virtual T FindId(Guid id)",
+      "summary": "Uses the guid to find a model component. Deleted objects cannot be found by id. The guid is the value that is stored in the .Id property. In a single document, no two active objects have the same guid. If an object is replaced with a new object, then the guid persists. For example, if the _Move command moves an object, then the moved object inherits its guid from the starting object. If the Copy command copies an object, then the copy gets a new guid. This guid persists through file saving/opening operations. This function will not find grip objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of model component to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Reference to the rhino object with the objectId or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "FindIndex",
+      "signature": "public HatchPattern FindIndex(int index)",
+      "summary": "Retrieves a HatchPattern object based on Index. This search type of search is discouraged. We are moving towards using only IDs for all tables.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HatchPattern",
+        "doc": "A HatchPattern object, or null if none was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_FindIndex.htm"
+    },
+    {
+      "name": "FindName",
+      "signature": "public HatchPattern FindName(string name)",
+      "summary": "Finds the hatch pattern with a given name. Search ignores case.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the hatch pattern to be found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HatchPattern",
+        "doc": "Hatch pattern with the given name. Null if no hatch pattern found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_FindName.htm"
+    },
+    {
+      "name": "FindNameHash",
+      "signature": "public HatchPattern FindNameHash(NameHash nameHash)",
+      "summary": "Finds a HatchPattern given its name hash.",
+      "params": [
+        {
+          "name": "nameHash",
+          "type": "Rhino.FileIO.NameHash",
+          "doc": "The name hash of the HatchPattern to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HatchPattern",
+        "doc": "An Linetype, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_FindNameHash.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public virtual IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "Returns the enumerator that yields all items.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CT\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.CommonComponentTable\u00601.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_GetEnumerator.htm"
+    },
+    {
+      "name": "Modify",
+      "signature": "public bool Modify(HatchPattern hatchPattern, int hatchPatternIndex, bool quiet)",
+      "summary": "Modify hatch pattern settings.",
+      "params": [
+        {
+          "name": "hatchPattern",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "Definition of new hatch pattern. The information in the hatch pattern is copied.",
+          "optional": false
+        },
+        {
+          "name": "hatchPatternIndex",
+          "type": "System.Int32",
+          "doc": "Zero based index of the hatch pattern to modify.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "If true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, or false if hatchPatternIndex is out of range."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Modify.htm"
+    },
+    {
+      "name": "Rename(HatchPattern, String)",
+      "signature": "public bool Rename(HatchPattern item, string hatchPatternName)",
+      "summary": "Renames a hatch pattern in the table.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.HatchPattern",
+          "doc": "The hatch pattern to rename",
+          "optional": false
+        },
+        {
+          "name": "hatchPatternName",
+          "type": "System.String",
+          "doc": "The new hatch pattern name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Rename.htm"
+    },
+    {
+      "name": "Rename(Int32, String)",
+      "signature": "public bool Rename(int hatchPatternIndex, string hatchPatternName)",
+      "summary": "Renames a hatch pattern in the table.",
+      "params": [
+        {
+          "name": "hatchPatternIndex",
+          "type": "System.Int32",
+          "doc": "The index of the hatch pattern to rename.",
+          "optional": false
+        },
+        {
+          "name": "hatchPatternName",
+          "type": "System.String",
+          "doc": "The new hatch pattern name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_HatchPatternTable_Rename_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides CommonComponentTable\u003CT\u003E.ComponentType.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_HatchPatternTable_ComponentType.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the count of all items, including deleted ones.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_CommonComponentTable_1_Count.htm"
+    },
+    {
+      "name": "CurrentHatchPatternIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "At all times, there is a \u0022current\u0022 hatch pattern. Unless otherwise specified, new objects are assigned to the current hatch pattern. The current hatch pattern is never locked, hidden, or deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_HatchPatternTable_CurrentHatchPatternIndex.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_RhinoDocCommonTable_1_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "HatchPattern",
+      "getter": true,
+      "setter": false,
+      "summary": "Conceptually, the hatch pattern table is an array of hatch patterns. The operator[] can be used to get individual hatch patterns. A hatch pattern is either active or deleted and this state is reported by HatchPattern.IsDeleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_HatchPatternTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

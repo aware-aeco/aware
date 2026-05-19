@@ -1,0 +1,129 @@
+{
+  "name": "ShutLiningCurveInfo",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Contains shutlining curve information. This is used in WithShutLining(Boolean, Double, IEnumerable\u003CShutLiningCurveInfo\u003E).",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_ShutLiningCurveInfo.htm",
+  "constructors": [
+    {
+      "name": "ShutLiningCurveInfo",
+      "signature": "public ShutLiningCurveInfo(Curve curve, double radius, int profile, bool pull, bool isBump, IEnumerable\u003CInterval\u003E curveIntervals = null, bool enabled = true)",
+      "summary": "Creates a new instance of the ShutLining curve information class.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The profile curve.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "The profile radius.",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "System.Int32",
+          "doc": "The profile type.",
+          "optional": false
+        },
+        {
+          "name": "pull",
+          "type": "System.Boolean",
+          "doc": "True if the curve should be pulled.",
+          "optional": false
+        },
+        {
+          "name": "isBump",
+          "type": "System.Boolean",
+          "doc": "True if profile constitutes a bump. See Rhino\u0027s Help for more information.",
+          "optional": false
+        },
+        {
+          "name": "curveIntervals",
+          "type": "System.Collections.Generic.IEnumerable\u003CInterval\u003E",
+          "doc": "The parts of the curve to use as profiles.",
+          "optional": true
+        },
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "If true, this curve is active.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "If curve is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ShutLiningCurveInfo__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Curve",
+      "type": "Curve",
+      "getter": true,
+      "setter": false,
+      "summary": "The profile curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_Curve.htm"
+    },
+    {
+      "name": "CurveIntervals",
+      "type": "ReadOnlyCollection\u003CInterval\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The parts of the curve to use as profiles.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_CurveIntervals.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true, this curve is active.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_Enabled.htm"
+    },
+    {
+      "name": "IsBump",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if profile constitutes a bump. See Rhino\u0027s Help for more information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_IsBump.htm"
+    },
+    {
+      "name": "Profile",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "\u003EThe profile type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_Profile.htm"
+    },
+    {
+      "name": "Pull",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if the curve should be pulled.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_Pull.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "The profile radius.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ShutLiningCurveInfo_Radius.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

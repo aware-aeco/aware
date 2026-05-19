@@ -1,0 +1,56 @@
+{
+  "name": "NeverRepeatList",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties relating to the list of commands that are never repeated.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_NeverRepeatList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CommandNames",
+      "signature": "public static string[] CommandNames()",
+      "summary": "The list of commands to not repeat.",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.NeverRepeatList.CommandNames\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_NeverRepeatList_CommandNames.htm"
+    },
+    {
+      "name": "SetList",
+      "signature": "public static int SetList(string[] commandNames)",
+      "summary": "Puts the command name tokens in m_dont_repeat_list.",
+      "params": [
+        {
+          "name": "commandNames",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022commandNames\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.NeverRepeatList.SetList(System.String[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of items added to m_dont_repeat_list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_NeverRepeatList_SetList.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "UseNeverRepeatList",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Only use the list if somebody modifies it via CRhinoAppSettings::SetDontRepeatCommands(). Return value of true means CRhinoCommand don\u0027t repeat flags will be ignored and the m_dont_repeat_list will be used instead. false means the individual CRhinoCommands will determine if they are repeatable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_NeverRepeatList_UseNeverRepeatList.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

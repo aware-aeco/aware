@@ -1,0 +1,97 @@
+{
+  "name": "PostEffectExecutionControl",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectExecutionControl\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_PostEffectExecutionControl.htm",
+  "constructors": [
+    {
+      "name": "PostEffectExecutionControl",
+      "signature": "public PostEffectExecutionControl()",
+      "summary": "Initializes a new instance of the PostEffectExecutionControl class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectExecutionControl__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Detach",
+      "signature": "public IntPtr Detach()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectExecutionControl.Detach\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectExecutionControl_Detach.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectExecutionControl",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectExecutionControl_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "public virtual void Dispose(bool bDisposing)",
+      "summary": "Releases the unmanaged resources used by the PostEffectExecutionControl and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "bDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectExecutionControl_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectExecutionControl_Finalize.htm"
+    },
+    {
+      "name": "ReadyToExecutePostEffect",
+      "signature": "public abstract bool ReadyToExecutePostEffect(Guid pep_id)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pep_id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pep_id\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectExecutionControl.ReadyToExecutePostEffect(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectExecutionControl.ReadyToExecutePostEffect(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_PostEffectExecutionControl_ReadyToExecutePostEffect.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

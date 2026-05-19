@@ -1,0 +1,38 @@
+{
+  "name": "MeshInterference",
+  "namespace": "Rhino.Geometry.Intersect",
+  "kind": "struct",
+  "summary": "Represents an element which is part of a clash or intersection between two meshes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Intersect_MeshInterference.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HitPoints",
+      "type": "Point3d[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Array of hit points where the objects of IndexA and IndexB interfere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_MeshInterference_HitPoints.htm"
+    },
+    {
+      "name": "IndexA",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the first clashing, or interfering object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_MeshInterference_IndexA.htm"
+    },
+    {
+      "name": "IndexB",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "The index of the second clashing, or interfering object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Intersect_MeshInterference_IndexB.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

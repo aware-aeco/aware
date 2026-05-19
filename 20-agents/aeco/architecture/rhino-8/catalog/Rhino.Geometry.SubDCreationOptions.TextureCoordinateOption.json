@@ -1,0 +1,44 @@
+{
+  "name": "SubDCreationOptions.TextureCoordinateOption",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Specifies how texture coordinate information is transferred from the mesh to the SubD.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubDCreationOptions_TextureCoordinateOption.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "The option is not set."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No texture coordianate information is transferred from the mesh."
+    },
+    {
+      "name": "Automatic",
+      "value": 2,
+      "summary": "If the mesh has a mapping, then TextureCoordinatesOption::CopyMapping is used. Otherwise if the mesh has texture coordinates, then TextureCoordinatesOption::CopyCoordinates is used. Otherwise TextureCoordinatesOption::Packed is used."
+    },
+    {
+      "name": "Packed",
+      "value": 3,
+      "summary": "No texture coordianate information is transferred from the mesh. The SubD faces are packed."
+    },
+    {
+      "name": "CopyMapping",
+      "value": 4,
+      "summary": "Texture coordinates mapping information is copied from the mesh. Generally this is the best choice because common mappings, like planar, will appear as most people expect on the SubD."
+    },
+    {
+      "name": "CopyCoordinates",
+      "value": 5,
+      "summary": "If a mesh has custom texture coordinates, the custom texture coordinates are transferred to the SubD. This requires more memory resources, slows subdivision evaluation, often produces unattractive results on n-gons, and distorts the texture when comes from a common mapping technique, like planar. This option may be useful when the mesh contains only triangles and quads and the custom texture coordinates are of high quality."
+    }
+  ]
+}

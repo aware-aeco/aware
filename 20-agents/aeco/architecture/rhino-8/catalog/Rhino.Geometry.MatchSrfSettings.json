@@ -1,0 +1,162 @@
+{
+  "name": "MatchSrfSettings",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Settings for matching a surface edge to other edge(s)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MatchSrfSettings.htm",
+  "constructors": [
+    {
+      "name": "MatchSrfSettings",
+      "signature": "public MatchSrfSettings(Continuity match, Continuity otherEnd)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "match",
+          "type": "Rhino.Geometry.Continuity",
+          "doc": "[Missing \u003Cparam name=\u0022match\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MatchSrfSettings.#ctor(Rhino.Geometry.Continuity,Rhino.Geometry.Continuity)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "otherEnd",
+          "type": "Rhino.Geometry.Continuity",
+          "doc": "[Missing \u003Cparam name=\u0022otherEnd\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MatchSrfSettings.#ctor(Rhino.Geometry.Continuity,Rhino.Geometry.Continuity)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MatchSrfSettings__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EnableRefinement",
+      "signature": "public void EnableRefinement(bool enabled, double positionalTolerance = 0.001, double angleToleranceRadians = 0.0174532925199433, double curvatureTolerance = 0.05)",
+      "summary": "Enable refinement of the surface being edited",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "System.Boolean",
+          "doc": "Switch refinement on or off",
+          "optional": false
+        },
+        {
+          "name": "positionalTolerance",
+          "type": "System.Double",
+          "doc": "absolute distance",
+          "optional": true
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "angle between surface normals",
+          "optional": true
+        },
+        {
+          "name": "curvatureTolerance",
+          "type": "System.Double",
+          "doc": "percentage difference in radius of curvature",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MatchSrfSettings_EnableRefinement.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Average",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, change both surfaces",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_Average.htm"
+    },
+    {
+      "name": "Continuity",
+      "type": "Continuity",
+      "getter": true,
+      "setter": false,
+      "summary": "Match the shape of the edge being edited to the target edge C0_continuous: edge position only G1_continuous: edge position and tangency G2_continuous: edge position, tangency and curvature",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_Continuity.htm"
+    },
+    {
+      "name": "MatchClosestPoints",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Match the edge to the closest points on the target edge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_MatchClosestPoints.htm"
+    },
+    {
+      "name": "OtherEnd",
+      "type": "Continuity",
+      "getter": true,
+      "setter": false,
+      "summary": "Maintain the shape of the edge opposite the one being edited None: opposite edge is free to change C0_continuous: opposite edge position only G1_continuous: opposite edge position and tangency G2_continuous: opposite edge position, tangency and curvature",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_OtherEnd.htm"
+    },
+    {
+      "name": "PreserveIso",
+      "type": "PreserveIsoCurveMethod",
+      "getter": true,
+      "setter": true,
+      "summary": "The way the surface iso-lines align with the target",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_PreserveIso.htm"
+    },
+    {
+      "name": "RefineAngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Angle between surface normals during refinement",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_RefineAngleToleranceRadians.htm"
+    },
+    {
+      "name": "RefineCurvatureTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Percentage radius of curvature difference during refinement",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_RefineCurvatureTolerance.htm"
+    },
+    {
+      "name": "RefineMatch",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Add control point rows to the surface if necessary",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_RefineMatch.htm"
+    },
+    {
+      "name": "RefinePositionalTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Absolute distance tolerance for refinement",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_RefinePositionalTolerance.htm"
+    },
+    {
+      "name": "ReverseAverageTargetDirection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Reverse the direction of the target for the averaged edge.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_ReverseAverageTargetDirection.htm"
+    },
+    {
+      "name": "ReverseMatchDirection",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Reverse the direction of the edge to match.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MatchSrfSettings_ReverseMatchDirection.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

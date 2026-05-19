@@ -1,0 +1,46 @@
+{
+  "name": "ToolbarGroup",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Represents a toolbar group in a Rhino toolbar, or .RUI, file.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ToolbarGroup.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the id of the toolbar group.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarGroup_Id.htm"
+    },
+    {
+      "name": "IsDocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the toolbar group is docked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarGroup_IsDocked.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the toolbar group.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarGroup_Name.htm"
+    },
+    {
+      "name": "Visible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets a toolbar group\u0027s visibility.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ToolbarGroup_Visible.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

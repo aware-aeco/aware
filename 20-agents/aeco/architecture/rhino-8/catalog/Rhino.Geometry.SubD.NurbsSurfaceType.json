@@ -1,0 +1,39 @@
+{
+  "name": "SubD.NurbsSurfaceType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubD::NurbsSurfaceType specifies what type of NURBS surfaces are returned by ON_SubD.GetSurfaceNurbsFragments()",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SubD_NurbsSurfaceType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid type. Used to indicate the type has not been set and to encourage developers to explicitly specify a type. When in doubt, specify NurbsSurfaceType::Large."
+    },
+    {
+      "name": "Large",
+      "value": 1,
+      "summary": "Onee NURBS surface will be generated for each SubD quad. N NURBS surfaces will be generated for each SubD N-gon (N = 3, 5 or more). ON_Brepface may cover multiple Near extraordinary vertices, the surfaces may have lots of knots."
+    },
+    {
+      "name": "Medium",
+      "value": 2,
+      "summary": "NURBS surfaces will be as large as possible without the addition of extra knots. Near extraordinary vertices, the surfaces may have lots of knots. This option is preferred when a user wants larger NURBS surfaces but not at the cost of additional NURBS control points."
+    },
+    {
+      "name": "Small",
+      "value": 3,
+      "summary": "NURBS surfaces will not be merged and will have clamped knots."
+    },
+    {
+      "name": "Unprocessed",
+      "value": 4,
+      "summary": "NURBS surfaces will not be merged and will have unclamped uniform knots. This is useful as a starting point for customized merging and modifying continuity at extraordinary vertices."
+    }
+  ]
+}

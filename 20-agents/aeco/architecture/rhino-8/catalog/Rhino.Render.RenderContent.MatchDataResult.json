@@ -1,0 +1,29 @@
+{
+  "name": "RenderContent.MatchDataResult",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Return values for MatchData function",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContent_MatchDataResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "None"
+    },
+    {
+      "name": "Some",
+      "value": 1,
+      "summary": "Some"
+    },
+    {
+      "name": "All",
+      "value": 2,
+      "summary": "All"
+    }
+  ]
+}

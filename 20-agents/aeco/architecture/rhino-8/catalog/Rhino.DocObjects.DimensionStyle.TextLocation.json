@@ -1,0 +1,29 @@
+{
+  "name": "DimensionStyle.TextLocation",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The location of text in linear, angular, radial, and ordinate dimensions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DimensionStyle_TextLocation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AboveDimLine",
+      "value": 0,
+      "summary": "Text is above dimension line."
+    },
+    {
+      "name": "InDimLine",
+      "value": 1,
+      "summary": "Text is centered in dimension line."
+    },
+    {
+      "name": "BelowDimLine",
+      "value": 2,
+      "summary": "Text is below dimension line."
+    }
+  ]
+}

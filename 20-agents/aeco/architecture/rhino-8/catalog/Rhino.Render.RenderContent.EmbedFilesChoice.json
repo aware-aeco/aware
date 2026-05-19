@@ -1,0 +1,29 @@
+{
+  "name": "RenderContent.EmbedFilesChoice",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Used by SaveToFile",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContent_EmbedFilesChoice.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NeverEmbed",
+      "value": 0,
+      "summary": "Never embed support files in the content file"
+    },
+    {
+      "name": "AlwaysEmbed",
+      "value": 1,
+      "summary": "Always embed support files in the content file"
+    },
+    {
+      "name": "AskUser",
+      "value": 2,
+      "summary": "Show a UI"
+    }
+  ]
+}

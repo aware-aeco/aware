@@ -1,0 +1,2534 @@
+{
+  "name": "GetPoint",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Used to interactively get a point.",
+  "base": "GetBaseClass",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_GetPoint.htm",
+  "constructors": [
+    {
+      "name": "GetPoint",
+      "signature": "public GetPoint()",
+      "summary": "Create a new GetPoint.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AcceptColor",
+      "signature": "public void AcceptColor(bool enable)",
+      "summary": "If you want to allow the user to be able to type in a color r,g,b or name during GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptColor(true) before calling GetPoint()/GetObject(). If the user chooses to type in a color, then the result code GetResult.Color is returned and you can use RhinoGet.Color() to get the value of the color. If the get accepts points, then the user will not be able to type in r,g,b colors but will be able to type color names.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type a color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptColor.htm"
+    },
+    {
+      "name": "AcceptCustomMessage",
+      "signature": "public void AcceptCustomMessage(bool enable)",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AcceptCustomMessage(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptCustomMessage.htm"
+    },
+    {
+      "name": "AcceptEnterWhenDone",
+      "signature": "public void AcceptEnterWhenDone(bool enable)",
+      "summary": "There are instances of RhinoGet that prompt with \u0022Press Enter when Done.\u0022 yet do not call AcceptNothing(). On the Mac, these instances need an additional call to AcceptEnterWhenDone() so the GetPointOptions dialog can correctly enable the Done button.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022enable\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AcceptEnterWhenDone(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptEnterWhenDone.htm"
+    },
+    {
+      "name": "AcceptNothing",
+      "signature": "public void AcceptNothing(bool enable)",
+      "summary": "If you want to allow the user to be able to press enter in order to skip selecting a something in GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptNothing( true ) beforehand.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to press enter in order to skip selecting.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptNothing.htm"
+    },
+    {
+      "name": "AcceptNumber",
+      "signature": "public void AcceptNumber(bool enable, bool acceptZero)",
+      "summary": "If you want to allow the user to be able to type in a number during GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptNumber() beforehand. If the user chooses to type in a number, then the result code GetResult.Number is returned and you can use RhinoGet.Number() to get the value of the number. If you are using GetPoint and you want \u00220\u0022 to return (0,0,0) instead of the number zero, then set acceptZero = false.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type a number.",
+          "optional": false
+        },
+        {
+          "name": "acceptZero",
+          "type": "System.Boolean",
+          "doc": "If you are using GetPoint and you want \u00220\u0022 to return (0,0,0) instead of the number zero, then set acceptZero = false.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptNumber.htm"
+    },
+    {
+      "name": "AcceptPoint",
+      "signature": "public void AcceptPoint(bool enable)",
+      "summary": "If you want to allow the user to be able to type in a point then call AcceptPoint(true) before calling GetPoint()/GetObject(). If the user chooses to type in a number, then the result code GetResult.Point is returned and you can use RhinoGet.Point() to get the value of the point.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type in a point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptPoint.htm"
+    },
+    {
+      "name": "AcceptString",
+      "signature": "public void AcceptString(bool enable)",
+      "summary": "If you want to allow the user to be able to type in a string during GetPoint.Get(), GetObject::GetObjects(), etc., then call AcceptString(true) before calling GetPoint()/GetObject(). If the user chooses to type in a string, then the result code GetResult.String is returned and you can use RhinoGet.String() to get the value of the string.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to type a string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptString.htm"
+    },
+    {
+      "name": "AcceptUndo",
+      "signature": "public void AcceptUndo(bool enable)",
+      "summary": "If you want to allow the user to have an \u0027undo\u0027 option in GetPoint.Get(), GetObject.GetObjects(), etc., then call AcceptUndo(true) beforehand.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "true if user is able to choose the \u0027Undo\u0027 option.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AcceptUndo.htm"
+    },
+    {
+      "name": "AddConstructionPoint",
+      "signature": "public int AddConstructionPoint(Point3d point)",
+      "summary": "Adds a point to the list of construction points.",
+      "remarks": "Construction points are like snap points except that they get snapped to even when point osnap is off. Typically, there are only a few construction points while there can be many snap points. For example, when polylines are drawn the start point is a construction point and the other points are snap points.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Total number of construction points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_AddConstructionPoint.htm"
+    },
+    {
+      "name": "AddConstructionPoints",
+      "signature": "public int AddConstructionPoints(Point3d[] points)",
+      "summary": "Adds points to the list of construction points.",
+      "remarks": "Construction points are like snap points except that they get snapped to even when point osnap is off. Typically, there are only a few construction points while there can be many snap points. For example, when polylines are drawn the start point is a construction point and the other points are snap points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "An array of points to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Total number of construction points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_AddConstructionPoints.htm"
+    },
+    {
+      "name": "AddOption(LocalizeStringPair)",
+      "signature": "public int AddOption(LocalizeStringPair optionName)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOption.htm"
+    },
+    {
+      "name": "AddOption(String)",
+      "signature": "public int AddOption(string englishOption)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "englishOption",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_3.htm"
+    },
+    {
+      "name": "AddOption(LocalizeStringPair, LocalizeStringPair)",
+      "signature": "public int AddOption(LocalizeStringPair optionName, LocalizeStringPair optionValue)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "optionValue",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "The localized value visualized after an equality sign.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_1.htm"
+    },
+    {
+      "name": "AddOption(String, String)",
+      "signature": "public int AddOption(string englishOption, string englishOptionValue)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "englishOption",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "englishOptionValue",
+          "type": "System.String",
+          "doc": "The option value in English, visualized after an equality sign.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_4.htm"
+    },
+    {
+      "name": "AddOption(LocalizeStringPair, LocalizeStringPair, Boolean)",
+      "signature": "public int AddOption(LocalizeStringPair optionName, LocalizeStringPair optionValue, bool hiddenOption)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "optionValue",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "The localized value visualized after an equality sign.",
+          "optional": false
+        },
+        {
+          "name": "hiddenOption",
+          "type": "System.Boolean",
+          "doc": "If true, the option is not displayed on the command line and the full option name must be typed in order to activate the option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_2.htm"
+    },
+    {
+      "name": "AddOption(String, String, Boolean)",
+      "signature": "public int AddOption(string englishOption, string englishOptionValue, bool hiddenOption)",
+      "summary": "Adds a command line option.",
+      "params": [
+        {
+          "name": "englishOption",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes).",
+          "optional": false
+        },
+        {
+          "name": "englishOptionValue",
+          "type": "System.String",
+          "doc": "The option value in English, visualized after an equality sign.",
+          "optional": false
+        },
+        {
+          "name": "hiddenOption",
+          "type": "System.Boolean",
+          "doc": "If true, the option is not displayed on the command line and the full option name must be typed in order to activate the option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOption_5.htm"
+    },
+    {
+      "name": "AddOptionColor(LocalizeStringPair, OptionColor)",
+      "signature": "public int AddOptionColor(LocalizeStringPair optionName, ref OptionColor colorValue)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "option description",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor.htm"
+    },
+    {
+      "name": "AddOptionColor(String, OptionColor)",
+      "signature": "public int AddOptionColor(string englishName, ref OptionColor colorValue)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "option description",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor_2.htm"
+    },
+    {
+      "name": "AddOptionColor(LocalizeStringPair, OptionColor, String)",
+      "signature": "public int AddOptionColor(LocalizeStringPair optionName, ref OptionColor colorValue, string prompt)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "option description.",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor_1.htm"
+    },
+    {
+      "name": "AddOptionColor(String, OptionColor, String)",
+      "signature": "public int AddOptionColor(string englishName, ref OptionColor colorValue, string prompt)",
+      "summary": "Add a command line option to get colors and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "option description",
+          "optional": false
+        },
+        {
+          "name": "colorValue",
+          "type": "Rhino.Input.Custom.OptionColor",
+          "doc": "The current color value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The command prompt will show this during picking.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionColor_3.htm"
+    },
+    {
+      "name": "AddOptionDouble(LocalizeStringPair, OptionDouble)",
+      "signature": "public int AddOptionDouble(LocalizeStringPair optionName, ref OptionDouble numberValue)",
+      "summary": "Adds a command line option to get numbers and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "The current number value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble.htm"
+    },
+    {
+      "name": "AddOptionDouble(String, OptionDouble)",
+      "signature": "public int AddOptionDouble(string englishName, ref OptionDouble numberValue)",
+      "summary": "Adds a command line option to get numbers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "The current number value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble_2.htm"
+    },
+    {
+      "name": "AddOptionDouble(LocalizeStringPair, OptionDouble, String)",
+      "signature": "public int AddOptionDouble(LocalizeStringPair optionName, ref OptionDouble numberValue, string prompt)",
+      "summary": "Adds a command line option to get numbers and automatically saves the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "The current number value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble_1.htm"
+    },
+    {
+      "name": "AddOptionDouble(String, OptionDouble, String)",
+      "signature": "public int AddOptionDouble(string englishName, ref OptionDouble numberValue, string prompt)",
+      "summary": "Adds a command line option to get numbers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "numberValue",
+          "type": "Rhino.Input.Custom.OptionDouble",
+          "doc": "Current value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionDouble_3.htm"
+    },
+    {
+      "name": "AddOptionEnumList\u003CT\u003E(String, T)",
+      "signature": "public int AddOptionEnumList\u003CT\u003E(string englishOptionName, T defaultValue) where T : struct, new(), IConvertible",
+      "summary": "Adds a choice of enumerated values as list option",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "The name of the option",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "T",
+          "doc": "The default value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if defaultValue provided is not an enumerated type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionEnumList__1.htm"
+    },
+    {
+      "name": "AddOptionEnumList\u003CT\u003E(String, T, T[])",
+      "signature": "public int AddOptionEnumList\u003CT\u003E(string englishOptionName, T defaultValue, T[] include) where T : struct, new(), IConvertible",
+      "summary": "Adds a choice of enumerated values as list option. Allows to include only some enumerated values.",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "The name of the option",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "T",
+          "doc": "The default value",
+          "optional": false
+        },
+        {
+          "name": "include",
+          "type": "T[]",
+          "doc": "An array of enumerated values to use. This argument can also be null; in this case, the whole enumerated is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Option index"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if defaultValue provided is not an enumerated type."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionEnumList__1_1.htm"
+    },
+    {
+      "name": "AddOptionEnumSelectionList\u003CT\u003E",
+      "signature": "public int AddOptionEnumSelectionList\u003CT\u003E(string englishOptionName, IEnumerable\u003CT\u003E enumSelection, int listCurrentIndex) where T : struct, new(), IConvertible",
+      "summary": "Adds a list of enumerated values as option list. Use enumSelection[go.Option.CurrentListOptionIndex] to retrieve selection.",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022englishOptionName\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "enumSelection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022enumSelection\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "listCurrentIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022listCurrentIndex\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.AddOptionEnumSelectionList\u0060\u00601(System.String,System.Collections.Generic.IEnumerable{\u0060\u00600},System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionEnumSelectionList__1.htm"
+    },
+    {
+      "name": "AddOptionInteger(LocalizeStringPair, OptionInteger)",
+      "signature": "public int AddOptionInteger(LocalizeStringPair optionName, ref OptionInteger intValue)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger.htm"
+    },
+    {
+      "name": "AddOptionInteger(String, OptionInteger)",
+      "signature": "public int AddOptionInteger(string englishName, ref OptionInteger intValue)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger_2.htm"
+    },
+    {
+      "name": "AddOptionInteger(LocalizeStringPair, OptionInteger, String)",
+      "signature": "public int AddOptionInteger(LocalizeStringPair optionName, ref OptionInteger intValue, string prompt)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger_1.htm"
+    },
+    {
+      "name": "AddOptionInteger(String, OptionInteger, String)",
+      "signature": "public int AddOptionInteger(string englishName, ref OptionInteger intValue, string prompt)",
+      "summary": "Adds a command line option to get integers and automatically save the value.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "intValue",
+          "type": "Rhino.Input.Custom.OptionInteger",
+          "doc": "The current integer value.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "option prompt shown if the user selects this option. If null or empty, then the option name is used as the get number prompt.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionInteger_3.htm"
+    },
+    {
+      "name": "AddOptionList(LocalizeStringPair, IEnumerable\u003CLocalizeStringPair\u003E, Int32)",
+      "signature": "public int AddOptionList(LocalizeStringPair optionName, IEnumerable\u003CLocalizeStringPair\u003E listValues, int listCurrentIndex)",
+      "summary": "Adds a command line list option.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "listValues",
+          "type": "System.Collections.Generic.IEnumerable\u003CLocalizeStringPair\u003E",
+          "doc": "The string values.",
+          "optional": false
+        },
+        {
+          "name": "listCurrentIndex",
+          "type": "System.Int32",
+          "doc": "Zero based index of current option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionList.htm"
+    },
+    {
+      "name": "AddOptionList(String, IEnumerable\u003CString\u003E, Int32)",
+      "signature": "public int AddOptionList(string englishOptionName, IEnumerable\u003Cstring\u003E listValues, int listCurrentIndex)",
+      "summary": "Adds a command line list option.",
+      "params": [
+        {
+          "name": "englishOptionName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "listValues",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The string values.",
+          "optional": false
+        },
+        {
+          "name": "listCurrentIndex",
+          "type": "System.Int32",
+          "doc": "Zero based index of current option.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionList_1.htm"
+    },
+    {
+      "name": "AddOptionToggle(LocalizeStringPair, OptionToggle)",
+      "signature": "public int AddOptionToggle(LocalizeStringPair optionName, ref OptionToggle toggleValue)",
+      "summary": "Adds a command line option to toggle a setting.",
+      "params": [
+        {
+          "name": "optionName",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "toggleValue",
+          "type": "Rhino.Input.Custom.OptionToggle",
+          "doc": "The current toggle value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionToggle.htm"
+    },
+    {
+      "name": "AddOptionToggle(String, OptionToggle)",
+      "signature": "public int AddOptionToggle(string englishName, ref OptionToggle toggleValue)",
+      "summary": "Adds a command line option to toggle a setting.",
+      "params": [
+        {
+          "name": "englishName",
+          "type": "System.String",
+          "doc": "Must only consist of letters and numbers (no characters list periods, spaces, or dashes)",
+          "optional": false
+        },
+        {
+          "name": "toggleValue",
+          "type": "Rhino.Input.Custom.OptionToggle",
+          "doc": "The current toggle value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "option index value (\u003E0) or 0 if option cannot be added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_AddOptionToggle_1.htm"
+    },
+    {
+      "name": "AddSnapPoint",
+      "signature": "public int AddSnapPoint(Point3d point)",
+      "summary": "Adds a point to the list of osnap points.",
+      "remarks": "When point osnap is enabled, GetPoint will snap to points in the Rhino model. If you want the user to be able to snap to additional points, then use GetPoint::AddSnapPoints to specify the locations of these additional points.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Total number of snap points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_AddSnapPoint.htm"
+    },
+    {
+      "name": "AddSnapPoints",
+      "signature": "public int AddSnapPoints(Point3d[] points)",
+      "summary": "Adds points to the list of osnap points.",
+      "remarks": "When point osnap is enabled, GetPoint will snap to points in the Rhino model. If you want the user to be able to snap to additional points, then use GetPoint::AddSnapPoints to specify the locations of these additional points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "An array of points to snap onto.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Total number of snap points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_AddSnapPoints.htm"
+    },
+    {
+      "name": "ClearCommandOptions",
+      "signature": "public void ClearCommandOptions()",
+      "summary": "Clear all command options.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_ClearCommandOptions.htm"
+    },
+    {
+      "name": "ClearConstraints",
+      "signature": "public void ClearConstraints()",
+      "summary": "Removes any explicit constraints added by calls to GetPoint::Constraint() and enable the built-in constraint options.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ClearConstraints.htm"
+    },
+    {
+      "name": "ClearConstructionPoints",
+      "signature": "public void ClearConstructionPoints()",
+      "summary": "Remove all construction points.",
+      "remarks": "Construction points are like snap points except that they get snapped to even when point osnap is off. Typically, there are only a few construction points while there can be many snap points. For example, when polylines are drawn the start point is a construction point and the other points are snap points.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ClearConstructionPoints.htm"
+    },
+    {
+      "name": "ClearDefault",
+      "signature": "public void ClearDefault()",
+      "summary": "Clears any defaults set using SetDefaultPoint, SetDefaultNumber, SetDefaultString, or SetCommandPromptDefault.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_ClearDefault.htm"
+    },
+    {
+      "name": "ClearSnapPoints",
+      "signature": "public void ClearSnapPoints()",
+      "summary": "Remove all snap points.",
+      "remarks": "When point osnap is enabled, GetPoint will snap to points in the Rhino model. If you want the user to be able to snap to additional points, then use GetPoint::AddSnapPoints to specify the locations of these additional points.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ClearSnapPoints.htm"
+    },
+    {
+      "name": "Color",
+      "signature": "public Color Color()",
+      "summary": "Gets a color if Get*() returns GetResult.Color.",
+      "params": [],
+      "returns": {
+        "type": "Color",
+        "doc": "The color chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Color.htm"
+    },
+    {
+      "name": "CommandResult",
+      "signature": "public Result CommandResult()",
+      "summary": "Helper method for getting command result value from getter results.",
+      "params": [],
+      "returns": {
+        "type": "Result",
+        "doc": "The converted command result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_CommandResult.htm"
+    },
+    {
+      "name": "Constrain(Arc)",
+      "signature": "public bool Constrain(Arc arc)",
+      "summary": "Constrains the picked point to lie on an arc.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "An arc to use as constraint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain.htm"
+    },
+    {
+      "name": "Constrain(Circle)",
+      "signature": "public bool Constrain(Circle circle)",
+      "summary": "Constrains the picked point to lie on a circle.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "A circle to use as constraint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_2.htm"
+    },
+    {
+      "name": "Constrain(Cylinder)",
+      "signature": "public bool Constrain(Cylinder cylinder)",
+      "summary": "Constrains the picked point to lie on a cylinder.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "A cylinder to use as constraint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_4.htm"
+    },
+    {
+      "name": "Constrain(Line)",
+      "signature": "public bool Constrain(Line line)",
+      "summary": "Constrains the picked point to lie on a line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line to use as constraint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_5.htm"
+    },
+    {
+      "name": "Constrain(Sphere)",
+      "signature": "public bool Constrain(Sphere sphere)",
+      "summary": "Constrains the picked point to lie on a sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "A sphere to use as constraint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_9.htm"
+    },
+    {
+      "name": "Constrain(Curve, Boolean)",
+      "signature": "public bool Constrain(Curve curve, bool allowPickingPointOffObject)",
+      "summary": "Constrains the picked point to lie on a curve.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A curve to use as constraint.",
+          "optional": false
+        },
+        {
+          "name": "allowPickingPointOffObject",
+          "type": "System.Boolean",
+          "doc": "defines whether the point pick is allowed to happen off object. When false, a \u0022no no\u0022 cursor is shown when the cursor is not on the object. When true, a normal point picking cursor is used and the marker is visible also when the cursor is not on the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_3.htm"
+    },
+    {
+      "name": "Constrain(Mesh, Boolean)",
+      "signature": "public bool Constrain(Mesh mesh, bool allowPickingPointOffObject)",
+      "summary": "Constrains the picked point to lie on a mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A mesh to use as constraint.",
+          "optional": false
+        },
+        {
+          "name": "allowPickingPointOffObject",
+          "type": "System.Boolean",
+          "doc": "defines whether the point pick is allowed to happen off object. When false, a \u0022no no\u0022 cursor is shown when the cursor is not on the object. When true, a normal point picking cursor is used and the marker is visible also when the cursor is not on the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_6.htm"
+    },
+    {
+      "name": "Constrain(Plane, Boolean)",
+      "signature": "public bool Constrain(Plane plane, bool allowElevator)",
+      "summary": "constrain the picked point to lie on a plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane to use as constraint.",
+          "optional": false
+        },
+        {
+          "name": "allowElevator",
+          "type": "System.Boolean",
+          "doc": "true if elevator mode should be allowed at user request.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_7.htm"
+    },
+    {
+      "name": "Constrain(Point3d, Point3d)",
+      "signature": "public bool Constrain(Point3d from, Point3d to)",
+      "summary": "Constrains the picked point to lie on a line.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The start point of constraint.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The end point of constraint.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_8.htm"
+    },
+    {
+      "name": "Constrain(Surface, Boolean)",
+      "signature": "public bool Constrain(Surface surface, bool allowPickingPointOffObject)",
+      "summary": "Constrains the picked point to lie on a surface.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A surface to use as constraint.",
+          "optional": false
+        },
+        {
+          "name": "allowPickingPointOffObject",
+          "type": "System.Boolean",
+          "doc": "defines whether the point pick is allowed to happen off object. When false, a \u0022no no\u0022 cursor is shown when the cursor is not on the object. When true, a normal point picking cursor is used and the marker is visible also when the cursor is not on the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_10.htm"
+    },
+    {
+      "name": "Constrain(Brep, Int32, Int32, Boolean)",
+      "signature": "public bool Constrain(Brep brep, int wireDensity, int faceIndex, bool allowPickingPointOffObject)",
+      "summary": "Constrains the picked point to lie on a brep.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A brep to use as constraint.",
+          "optional": false
+        },
+        {
+          "name": "wireDensity",
+          "type": "System.Int32",
+          "doc": "When wire_density\u003C0, isocurve intersection snapping is turned off, when wire_density\u003E=0, the value defines the isocurve density used for isocurve intersection snapping.",
+          "optional": false
+        },
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "When face_index \u003C0, constrain to whole brep. When face_index \u003E=0, constrain to individual face.",
+          "optional": false
+        },
+        {
+          "name": "allowPickingPointOffObject",
+          "type": "System.Boolean",
+          "doc": "defines whether the point pick is allowed to happen off object. When false, a \u0022no no\u0022 cursor is shown when the cursor is not on the object. When true, a normal point picking cursor is used and the marker is visible also when the cursor is not on the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if constraint could be applied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Constrain_1.htm"
+    },
+    {
+      "name": "ConstrainDistanceFromBasePoint",
+      "signature": "public void ConstrainDistanceFromBasePoint(double distance)",
+      "summary": "Sets distance constraint from base point.",
+      "remarks": "If the base point is set and the distance from base point constraint is \u003E 0, then the picked point is constrained to be this distance from the base point.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "pass UnsetValue to clear this constraint. Pass 0.0 to disable the ability to set this constraint by typing a number during GetPoint.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ConstrainDistanceFromBasePoint.htm"
+    },
+    {
+      "name": "ConstrainToConstructionPlane",
+      "signature": "public bool ConstrainToConstructionPlane(bool throughBasePoint)",
+      "summary": "If enabled, the picked point is constrained to be on the active construction plane. If the base point is set, then the point is constrained to be on the plane that contains the base point and is parallel to the active construction plane. By default this constraint is enabled.",
+      "params": [
+        {
+          "name": "throughBasePoint",
+          "type": "System.Boolean",
+          "doc": "true if the base point should be used as compulsory level reference.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If true and the base point is set, then the point is constrained to be on the plane parallel to the construction plane that passes through the base point, even when planar mode is off. If throughBasePoint is false, then the base point shift only happens if planar mode is on."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ConstrainToConstructionPlane.htm"
+    },
+    {
+      "name": "ConstrainToTargetPlane",
+      "signature": "public void ConstrainToTargetPlane()",
+      "summary": "Constrains point to lie on a plane that is parallel to the viewing plane and passes through the view\u0027s target point.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ConstrainToTargetPlane.htm"
+    },
+    {
+      "name": "ConstrainToVirtualCPlaneIntersection",
+      "signature": "public bool ConstrainToVirtualCPlaneIntersection(Plane plane)",
+      "summary": "If enabled, the picked point is constrained to be on the intersection of the plane and the virtual CPlane going through the plane origin. If the planes are parallel, the constraint works just like planar constraint.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane used for the plane - virtual CPlane intersection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_ConstrainToVirtualCPlaneIntersection.htm"
+    },
+    {
+      "name": "CustomMessage",
+      "signature": "public Object CustomMessage()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.CustomMessage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_CustomMessage.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Dispose_1.htm"
+    },
+    {
+      "name": "DrawLineFromPoint",
+      "signature": "public void DrawLineFromPoint(Point3d startPoint, bool showDistanceInStatusBar)",
+      "summary": "Use DrawLineFromPoint() if you want a dynamic line drawn from a point to the point being picked.",
+      "remarks": "Calling DrawLineFromPoint automatically enables drawing the line. Use EnableDrawLineFromPoint() to toggle the line drawing state.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The line is drawn from startPoint to the point being picked. If the base point has not been set, then it is set to startPoint.",
+          "optional": false
+        },
+        {
+          "name": "showDistanceInStatusBar",
+          "type": "System.Boolean",
+          "doc": "if true, the distance from the basePoint to the point begin picked is shown in the status bar.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_DrawLineFromPoint.htm"
+    },
+    {
+      "name": "EnableCurveSnapArrow",
+      "signature": "public void EnableCurveSnapArrow(bool drawDirectionArrowAtSnapPoint, bool reverseArrow)",
+      "summary": "Controls display of the curve snap arrow icon.",
+      "remarks": "The tangent bar is drawn by GetPoint::DynamicDraw. If you override GetPoint::DynamicDraw, then you must call the base class function.",
+      "params": [
+        {
+          "name": "drawDirectionArrowAtSnapPoint",
+          "type": "System.Boolean",
+          "doc": "true to draw arrow icon whenever GetPoint snaps to a curve.",
+          "optional": false
+        },
+        {
+          "name": "reverseArrow",
+          "type": "System.Boolean",
+          "doc": "true if arrow icon direction should be the reverse of the first derivative direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableCurveSnapArrow.htm"
+    },
+    {
+      "name": "EnableCurveSnapPerpBar",
+      "signature": "public void EnableCurveSnapPerpBar(bool drawPerpBarAtSnapPoint, bool drawEndPoints)",
+      "summary": "Controls display of the curve snap perpendicular bar icon.",
+      "params": [
+        {
+          "name": "drawPerpBarAtSnapPoint",
+          "type": "System.Boolean",
+          "doc": "true to draw a tangent bar icon whenever GetPoint snaps to a curve.",
+          "optional": false
+        },
+        {
+          "name": "drawEndPoints",
+          "type": "System.Boolean",
+          "doc": "true to draw points at the end of the tangent bar.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableCurveSnapPerpBar.htm"
+    },
+    {
+      "name": "EnableCurveSnapTangentBar",
+      "signature": "public void EnableCurveSnapTangentBar(bool drawTangentBarAtSnapPoint, bool drawEndPoints)",
+      "summary": "Controls display of the curve snap tangent bar icon.",
+      "remarks": "The tangent bar is drawn by GetPoint::DynamicDraw. If you override GetPoint::DynamicDraw, then you must call the base class function.",
+      "params": [
+        {
+          "name": "drawTangentBarAtSnapPoint",
+          "type": "System.Boolean",
+          "doc": "true to draw a tangent bar icon whenever GetPoint snaps to a curve.",
+          "optional": false
+        },
+        {
+          "name": "drawEndPoints",
+          "type": "System.Boolean",
+          "doc": "true to draw points at the end of the tangent bar.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableCurveSnapTangentBar.htm"
+    },
+    {
+      "name": "EnableDrawLineFromPoint",
+      "signature": "public void EnableDrawLineFromPoint(bool enable)",
+      "summary": "Controls drawing of dynamic a line from the start point.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "if true, a dynamic line is drawn from the DrawLineFromPoint startPoint to the point being picked.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableDrawLineFromPoint.htm"
+    },
+    {
+      "name": "EnableNoRedrawOnExit",
+      "signature": "public void EnableNoRedrawOnExit(bool noRedraw)",
+      "summary": "The default functionality of the GetPoint operation is to perform a redraw on exit. Calling this function with true turns off automatic redraw at the end of GetPoint. May be needed in some commands for flicker free feedback. When set to true, the caller is responsible for cleaning up the screen after GetPoint.",
+      "params": [
+        {
+          "name": "noRedraw",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022noRedraw\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.EnableNoRedrawOnExit(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableNoRedrawOnExit.htm"
+    },
+    {
+      "name": "EnableObjectSnapCursors",
+      "signature": "public void EnableObjectSnapCursors(bool enable)",
+      "summary": "Enables or disables object snap cursors. By default, object snap cursors are enabled.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "If true then object snap cursors (plus sign with \u0022near\u0022, \u0022end\u0022, etc.) are used when the point snaps to a object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableObjectSnapCursors.htm"
+    },
+    {
+      "name": "EnableSnapToCurves",
+      "signature": "public void EnableSnapToCurves(bool enable)",
+      "summary": "If you want GetPoint() to try to snap to curves when the mouse is near a curve (like the center point in the Circle command when the AroundCurve option is on), then enable the snap to curves option.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "Whether points should be enabled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_EnableSnapToCurves.htm"
+    },
+    {
+      "name": "EnableTransparentCommands",
+      "signature": "public void EnableTransparentCommands(bool enable)",
+      "summary": "Control the availability of transparent commands during the get.",
+      "remarks": "Some Rhino commands are \u0022transparent\u0022 and can be run inside of other commands. Examples of transparent commands include the view manipulation commands like ZoomExtents, Top, etc., and the selection commands like SelAll, SelPoint, etc. By default transparent commands can be run during any get. If you want to disable this feature, then call EnableTransparentCommands(false) before calling GetString, GetPoint, GetObject, etc.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "If true, then transparent commands can be run during the get. If false, then transparent commands cannot be run during the get.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_EnableTransparentCommands.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Finalize.htm"
+    },
+    {
+      "name": "Get()",
+      "signature": "public GetResult Get()",
+      "summary": "After setting up options and so on, call GetPoint::Get to get a 3d point. The point is retrieved when the mouse goes down.",
+      "params": [],
+      "returns": {
+        "type": "GetResult",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.Get\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Get.htm"
+    },
+    {
+      "name": "Get(Boolean)",
+      "signature": "public GetResult Get(bool onMouseUp)",
+      "summary": "After setting up options and so on, call this method to get a 3d point.",
+      "params": [
+        {
+          "name": "onMouseUp",
+          "type": "System.Boolean",
+          "doc": "If false, the point is returned when the left mouse button goes down. If true, the point is returned when the left mouse button goes up.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GetResult",
+        "doc": "Point if the user chose a point; other enumeration value otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Get_1.htm"
+    },
+    {
+      "name": "Get(Boolean, Boolean)",
+      "signature": "public GetResult Get(bool onMouseUp, bool get2DPoint)",
+      "summary": "After setting up options and so on, call this method to get a 2d or 3d point.",
+      "params": [
+        {
+          "name": "onMouseUp",
+          "type": "System.Boolean",
+          "doc": "If false, the point is returned when the left mouse button goes down. If true, the point is returned when the left mouse button goes up.",
+          "optional": false
+        },
+        {
+          "name": "get2DPoint",
+          "type": "System.Boolean",
+          "doc": "If true then get a 2d point otherwise get a 2d point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GetResult",
+        "doc": "Point if the user chose a 3d point; Point2d if the user chose a 2d point; other enumeration value otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_Get_2.htm"
+    },
+    {
+      "name": "GetConstructionPoints",
+      "signature": "public Point3d[] GetConstructionPoints()",
+      "summary": "Gets current construction points.",
+      "remarks": "Construction points are like snap points except that they get snapped to even when point osnap is off. Typically, there are only a few construction points while there can be many snap points. For example, when polylines are drawn the start point is a construction point and the other points are snap points.",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_GetConstructionPoints.htm"
+    },
+    {
+      "name": "GetPlanarConstraint",
+      "signature": "public bool GetPlanarConstraint(ref RhinoViewport vp, out Plane plane)",
+      "summary": "",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.GetPlanarConstraint(Rhino.Display.RhinoViewport@,Rhino.Geometry.Plane@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022plane\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.GetPlanarConstraint(Rhino.Display.RhinoViewport@,Rhino.Geometry.Plane@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.GetPlanarConstraint(Rhino.Display.RhinoViewport@,Rhino.Geometry.Plane@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_GetPlanarConstraint.htm"
+    },
+    {
+      "name": "GetSelectedEnumValue\u003CT\u003E",
+      "signature": "public T GetSelectedEnumValue\u003CT\u003E() where T : struct, new(), IConvertible",
+      "summary": "Returns the selected enumerated value. Use this in combination with AddOptionEnumList\u003CT\u003E(String, T). This must be called directly after having called a Get method, and having obtained a Option value.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.GetSelectedEnumValue\u0060\u00601\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if type T is not an enumerated type."
+        },
+        {
+          "type": "IndexOutOfRangeException",
+          "when": "If 0 \u003E= CurrentListOptionIndex or CurrentListOptionIndex \u003E N where N is the number of enumerated values."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_GetSelectedEnumValue__1.htm"
+    },
+    {
+      "name": "GetSelectedEnumValueFromSelectionList\u003CT\u003E",
+      "signature": "public T GetSelectedEnumValueFromSelectionList\u003CT\u003E(IEnumerable\u003CT\u003E selectionList) where T : struct, new(), IConvertible",
+      "summary": "Returns the selected enumerated value by looking at the list of values from which to select. Use this in combination with AddOptionEnumSelectionList\u003CT\u003E(String, IEnumerable\u003CT\u003E, Int32)",
+      "params": [
+        {
+          "name": "selectionList",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.GetSelectedEnumValueFromSelectionList\u0060\u00601(System.Collections.Generic.IEnumerable{\u0060\u00600})\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Gets thrown if type T is not an enumerated type."
+        },
+        {
+          "type": "IndexOutOfRangeException",
+          "when": "If 0 \u003E= CurrentListOptionIndex or CurrentListOptionIndex \u003E N where N is the number of enumerated values."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_GetSelectedEnumValueFromSelectionList__1.htm"
+    },
+    {
+      "name": "GetSnapPoints",
+      "signature": "public Point3d[] GetSnapPoints()",
+      "summary": "Gets current snap points.",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_GetSnapPoints.htm"
+    },
+    {
+      "name": "GotDefault",
+      "signature": "public bool GotDefault()",
+      "summary": "Returns true if user pressed Enter to accept a default point, number, or string set using SetDefaultPoint, SetDefaultNumber, or SetDefaultString.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the result if the default point, number or string set. Otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_GotDefault.htm"
+    },
+    {
+      "name": "InterruptMouseMove",
+      "signature": "public bool InterruptMouseMove()",
+      "summary": "If you have lengthy computations in OnMouseMove() and/or DymanicDraw() overrides, then periodically call InterruptMouseMove() to see if you should interrupt your work because the mouse has moved again.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if you should interrupt your work; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_InterruptMouseMove.htm"
+    },
+    {
+      "name": "Line2d",
+      "signature": "public Point[] Line2d()",
+      "summary": "Returns two points defining the location in the view window of the 2d line selected in GetPoint::Get2dLine(). (0,0) = upper left corner of window.",
+      "params": [],
+      "returns": {
+        "type": "Point[]",
+        "doc": "An array with two 2D points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Line2d.htm"
+    },
+    {
+      "name": "Number",
+      "signature": "public double Number()",
+      "summary": "Gets a number if GetPoint.Get(), GetObject.GetObjects(), etc., returns GetResult.Number.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "The number chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Number.htm"
+    },
+    {
+      "name": "NumberPreview",
+      "signature": "public bool NumberPreview(out double number)",
+      "summary": "If the user is typing a number, but hasn\u0027t pressed Enter, true is returned, along with the number the user typed.",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "The number typed by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_NumberPreview.htm"
+    },
+    {
+      "name": "OnDynamicDraw",
+      "signature": "protected virtual void OnDynamicDraw(GetPointDrawEventArgs e)",
+      "summary": "Default calls the DynamicDraw event.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Input.Custom.GetPointDrawEventArgs",
+          "doc": "Current argument for the event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_OnDynamicDraw.htm"
+    },
+    {
+      "name": "OnMouseDown",
+      "signature": "protected virtual void OnMouseDown(GetPointMouseEventArgs e)",
+      "summary": "Default calls the MouseDown event.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Input.Custom.GetPointMouseEventArgs",
+          "doc": "Current argument for the event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_OnMouseDown.htm"
+    },
+    {
+      "name": "OnMouseMove",
+      "signature": "protected virtual void OnMouseMove(GetPointMouseEventArgs e)",
+      "summary": "Calls the MouseMove event and can/should be called by overriding implementation.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Input.Custom.GetPointMouseEventArgs",
+          "doc": "Current argument for the event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_OnMouseMove.htm"
+    },
+    {
+      "name": "OnPostDrawObjects",
+      "signature": "protected virtual void OnPostDrawObjects(DrawEventArgs e)",
+      "summary": "In the \u0022rare\u0022 case that you need to draw some depth buffered geometry during a GetPoint operation, override the OnPostDrawObjects function. NOTE!! Overriding this function comes with a significant performance penalty because the scene needs to be fully regenerated every frame where the standard DynamicDraw event draws temporary decorations (geometry) on top of a static scene.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.Display.DrawEventArgs",
+          "doc": "Current argument for the event.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_OnPostDrawObjects.htm"
+    },
+    {
+      "name": "Option",
+      "signature": "public CommandLineOption Option()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": {
+        "type": "CommandLineOption",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.Option\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Option.htm"
+    },
+    {
+      "name": "OptionIndex",
+      "signature": "public int OptionIndex()",
+      "summary": "(Inherited from GetBaseClass.)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetBaseClass.OptionIndex\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_OptionIndex.htm"
+    },
+    {
+      "name": "PermitConstraintOptions",
+      "signature": "public void PermitConstraintOptions(bool permit)",
+      "summary": "Control the availability of the built-in linear, planar, curve, and surface constraint options like \u0022Along\u0022, \u0022AlongPerp\u0022, \u0022AlongTan\u0022, \u0022AlongParallel\u0022, \u0022Between\u0022, \u0022OnCrv\u0022, \u0022OnSrf\u0022, \u0022.x\u0022, \u0022.y\u0022, \u0022.z\u0022, \u0022.xy\u0022, etc.",
+      "remarks": "By default, these built-in constraint options are available unless an explicit constraint is added by calling one of the GetPoint::Constrain functions. Calling GetPoint::ClearConstraints automatically enables the built-in constraint options. The built-in constraint options are never visible on the command line and the user must type the complete option name to activate these options.",
+      "params": [
+        {
+          "name": "permit",
+          "type": "System.Boolean",
+          "doc": "if true, then the built-in constraint options are automatically available in GetPoint.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PermitConstraintOptions.htm"
+    },
+    {
+      "name": "PermitElevatorMode",
+      "signature": "public void PermitElevatorMode(int permitMode)",
+      "summary": "Permits the use of the control key to define a line constraint.",
+      "params": [
+        {
+          "name": "permitMode",
+          "type": "System.Int32",
+          "doc": "0: no elevator modes are permitted 1: fixed plane elevator mode (like the Line command) 2: cplane elevator mode (like object dragging)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PermitElevatorMode.htm"
+    },
+    {
+      "name": "PermitFromOption",
+      "signature": "public void PermitFromOption(bool permit)",
+      "summary": "Control the availability of the built-in \u0022From\u0022 option. By default, the \u0022From\u0022 option is enabled.",
+      "remarks": "The GetPoint \u0022From\u0022 option is never visible on the command line and the user must type the complete option name to activate the \u0022From\u0022 option. When the GetPoint \u0022From\u0022 snap is enabled, the user set/change the base point during GetPoint by typing \u0022From\u0022 and picking a point. A related option is the built-in distance from base point constraint that is can be set before GetPoint is called by passing a value to GetPoint::ConstrainDistanceFromBasePoint or during GetPoint by entering a number.",
+      "params": [
+        {
+          "name": "permit",
+          "type": "System.Boolean",
+          "doc": "if true, then the \u0022From\u0022 option is automatically available in GetPoint.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PermitFromOption.htm"
+    },
+    {
+      "name": "PermitObjectSnap",
+      "signature": "public void PermitObjectSnap(bool permit)",
+      "summary": "By default, object snaps like \u0022end\u0022, \u0022near\u0022, etc. are controlled by the user. If you want to disable this ability, then call PermitObjectSnap(false).",
+      "params": [
+        {
+          "name": "permit",
+          "type": "System.Boolean",
+          "doc": "true to permit snapping to objects.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PermitObjectSnap.htm"
+    },
+    {
+      "name": "PermitOrthoSnap",
+      "signature": "public void PermitOrthoSnap(bool permit)",
+      "summary": "Controls availability of ortho snap. Default is true.",
+      "params": [
+        {
+          "name": "permit",
+          "type": "System.Boolean",
+          "doc": "if true, then GetPoint pays attention to the Rhino \u0022ortho snap\u0022 and \u0022planar snap\u0022 settings reported by ModelAidSettings.Ortho and ModelAidSettings.Planar.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PermitOrthoSnap.htm"
+    },
+    {
+      "name": "PermitTabMode",
+      "signature": "public void PermitTabMode(bool permit)",
+      "summary": "Permits the use of the tab key to define a line constraint.",
+      "remarks": "By default, use of the tab key is supported.",
+      "params": [
+        {
+          "name": "permit",
+          "type": "System.Boolean",
+          "doc": "If true, then the built-in tab key mode is available.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PermitTabMode.htm"
+    },
+    {
+      "name": "PickRectangle",
+      "signature": "public Rectangle PickRectangle()",
+      "summary": "If the get was a GetObjects() and the mouse was used to select the objects, then the returned rectangle has left \u003C right and top \u003C bottom. This rectangle is the Windows GDI screen coordinates of the picking rectangle. RhinoViewport.GetPickXform( pick_rect, pick_xform ) will calculate the picking transformation that was used. In all other cases, left=right=top=bottom=0;",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The picking rectangle; or 0 in the specified cases."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_PickRectangle.htm"
+    },
+    {
+      "name": "Point",
+      "signature": "public Point3d Point()",
+      "summary": "Gets a point if Get*() returns GetResult.Point.",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Point.htm"
+    },
+    {
+      "name": "Point2d",
+      "signature": "public Point Point2d()",
+      "summary": "Returns location in view of point in selected in GetPoint::Get() or GetPoint::Get2dPoint(). (0,0) = upper left corner of window.",
+      "params": [],
+      "returns": {
+        "type": "Point",
+        "doc": "The location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Point2d.htm"
+    },
+    {
+      "name": "PointOnBrep",
+      "signature": "public BrepFace PointOnBrep(out double u, out double v)",
+      "summary": "Use to determine if point was on a Brep face. If the point was on a Brep face, then the (u,v) are the face parameters for the point.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "If the point was on a Brep face, then the u parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "If the point was on a Brep face, then the v parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepFace",
+        "doc": "The Brep face or null if the point was not on a Brep face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PointOnBrep.htm"
+    },
+    {
+      "name": "PointOnCurve",
+      "signature": "public Curve PointOnCurve(out double t)",
+      "summary": "Use to determine is point was on a curve.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "If the point was on a curve, then the t is the curve parameter for the point. The point returned by Point() is the same as curve.PointAt(t).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "A curve at a specified parameter value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PointOnCurve.htm"
+    },
+    {
+      "name": "PointOnObject",
+      "signature": "public ObjRef PointOnObject()",
+      "summary": "Call this function to see if the point was on an object. If the point was on an object an ObjRef is returned; otherwise null is returned.",
+      "params": [],
+      "returns": {
+        "type": "ObjRef",
+        "doc": "A point object reference."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PointOnObject.htm"
+    },
+    {
+      "name": "PointOnSurface",
+      "signature": "public Surface PointOnSurface(out double u, out double v)",
+      "summary": "Use to determine if point was on a surface. If the point was on a surface, then the (u,v) are the surface parameters for the point. The point returned by Point() is the same as surface.PointAt(u,v).",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "If the point was on a surface, then the u parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "If the point was on a surface, then the v parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "The surface or null if the point was not on a surface."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_PointOnSurface.htm"
+    },
+    {
+      "name": "Rectangle2d",
+      "signature": "public Rectangle Rectangle2d()",
+      "summary": "Returns the location in the view of the 2d rectangle selected in GetPoint::Get2dRectangle(). rect.left \u003C rect.right and rect.top \u003C rect.bottom (0,0) = upper left corner of window.",
+      "params": [],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "The rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Rectangle2d.htm"
+    },
+    {
+      "name": "Result",
+      "signature": "public GetResult Result()",
+      "summary": "Returns result of the Get*() call.",
+      "params": [],
+      "returns": {
+        "type": "GetResult",
+        "doc": "The result of the last Get*() call."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Result.htm"
+    },
+    {
+      "name": "SetBasePoint",
+      "signature": "public void SetBasePoint(Point3d basePoint, bool showDistanceInStatusBar)",
+      "summary": "Sets a base point used by ortho snap, from snap, planar snap, etc.",
+      "params": [
+        {
+          "name": "basePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The new base point.",
+          "optional": false
+        },
+        {
+          "name": "showDistanceInStatusBar",
+          "type": "System.Boolean",
+          "doc": "If true, then the distance from base_point to the current point will be in the status bar distance pane.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_SetBasePoint.htm"
+    },
+    {
+      "name": "SetCommandPrompt",
+      "signature": "public void SetCommandPrompt(string prompt)",
+      "summary": "Sets prompt message that appears in the command prompt window.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "command prompt message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetCommandPrompt.htm"
+    },
+    {
+      "name": "SetCommandPromptDefault",
+      "signature": "public void SetCommandPromptDefault(string defaultValue)",
+      "summary": "Sets message that describes what default value will be used if the user presses enter. This description appears in angle brackets \u003C\u003E in the command prompt window. You do not need to provide a default value description unless you explicitly enable AcceptNothing.",
+      "remarks": "If you have a simple default point, number, or string, it is easier to use SetDefaultPoint, SetDefaultNumber, or SetDefaultString. SetCommandPromptDefault and AcceptNothing can be used for providing more advanced UI behavior.",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "description of default value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetCommandPromptDefault.htm"
+    },
+    {
+      "name": "SetCursor",
+      "signature": "public void SetCursor(CursorStyle cursor)",
+      "summary": "Sets cursor that will be used when Get() is called and snap is not happening.",
+      "params": [
+        {
+          "name": "cursor",
+          "type": "Rhino.UI.CursorStyle",
+          "doc": "[Missing \u003Cparam name=\u0022cursor\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.SetCursor(Rhino.UI.CursorStyle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_SetCursor.htm"
+    },
+    {
+      "name": "SetDefaultColor",
+      "signature": "public void SetDefaultColor(Color defaultColor)",
+      "summary": "Sets a color as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultColor will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default color, GetResult.Color is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultColor will clear any previous calls to SetDefaultString or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultColor",
+          "type": "System.Drawing.Color",
+          "doc": "value for default color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultColor.htm"
+    },
+    {
+      "name": "SetDefaultInteger",
+      "signature": "public void SetDefaultInteger(int defaultValue)",
+      "summary": "Sets a number as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultInteger will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default integer, GetResult.Number is returned and CRhinoGet.GotDefault() will return true. Calling SetDefaultNumber will clear any previous calls to SetDefaultString or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "value for default number.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultInteger.htm"
+    },
+    {
+      "name": "SetDefaultNumber",
+      "signature": "public void SetDefaultNumber(double defaultNumber)",
+      "summary": "Sets a number as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultNumber will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default number, GetResult.Number is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultNumber will clear any previous calls to SetDefaultString or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultNumber",
+          "type": "System.Double",
+          "doc": "value for default number.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultNumber.htm"
+    },
+    {
+      "name": "SetDefaultPoint",
+      "signature": "public void SetDefaultPoint(Point3d point)",
+      "summary": "Sets a point as default value that will be returned if the user presses the ENTER key during the get.",
+      "remarks": "Calling SetDefaultPoint will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses enter to accept the default point, GetResult.Point is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultPoint will clear any previous calls to SetDefaultString or SetDefaultNumber.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "value for default point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultPoint.htm"
+    },
+    {
+      "name": "SetDefaultString",
+      "signature": "public void SetDefaultString(string defaultValue)",
+      "summary": "Sets a string as default value that will be returned if the user presses ENTER key during the get.",
+      "remarks": "Calling SetDefaultString will automatically handle setting the command prompt default and reacting to the user pressing ENTER. If the user presses ENTER to accept the default string, GetResult.String is returned and RhinoGet.GotDefault() will return true. Calling SetDefaultString will clear any previous calls to SetDefaultNumber or SetDefaultPoint.",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "value for default string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetDefaultString.htm"
+    },
+    {
+      "name": "SetOptionVaries",
+      "signature": "public void SetOptionVaries(int optionIndex, bool varies)",
+      "summary": "Sets a command line option value to print \u0022Varies\u0022 instead of the regular value.",
+      "params": [
+        {
+          "name": "optionIndex",
+          "type": "System.Int32",
+          "doc": "The option index.",
+          "optional": false
+        },
+        {
+          "name": "varies",
+          "type": "System.Boolean",
+          "doc": "True to print \u0022Varies\u0022, false to print the option\u0027s current value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetOptionVaries.htm"
+    },
+    {
+      "name": "SetWaitDuration",
+      "signature": "public void SetWaitDuration(int milliseconds)",
+      "summary": "Sets the wait duration (in milliseconds) of the getter. If the duration passes without the user making a decision, the GetResult.Timeout code is returned.",
+      "params": [
+        {
+          "name": "milliseconds",
+          "type": "System.Int32",
+          "doc": "Number of milliseconds to wait.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_SetWaitDuration.htm"
+    },
+    {
+      "name": "StringResult",
+      "signature": "public string StringResult()",
+      "summary": "Gets a string if GetPoint.Get(), GetObject.GetObjects(), etc., returns GetResult.String.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_StringResult.htm"
+    },
+    {
+      "name": "TryGetBasePoint",
+      "signature": "public bool TryGetBasePoint(out Point3d basePoint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "basePoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022basePoint\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.TryGetBasePoint(Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetPoint.TryGetBasePoint(Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetPoint_TryGetBasePoint.htm"
+    },
+    {
+      "name": "Vector",
+      "signature": "public Vector3d Vector()",
+      "summary": "Gets a direction if Get*() returns GetResult.Point (Set by some digitizers, but in general it\u0027s (0,0,0).",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The vector chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_Vector.htm"
+    },
+    {
+      "name": "View",
+      "signature": "public RhinoView View()",
+      "summary": "Gets a view the user clicked in during GetPoint.Get(), GetObject.GetObjects(), etc.",
+      "params": [],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "The view chosen by the user."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_GetBaseClass_View.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DynamicDrawColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used by CRhinoGetPoint::DynamicDraw to draw the current point and the line from the base point to the current point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetPoint_DynamicDrawColor.htm"
+    },
+    {
+      "name": "FullFrameRedrawDuringGet",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "In the \u0022RARE\u0022 case that you need to draw some depth buffered geometry during a Get() operation, setting this value to true will force entire frames to be redrawn while the user moves the mouse. This allows DisplayPipeline events to be triggered as well as OnPostDrawObjects NOTE!! Setting this value to true comes with a significant performance penalty because the scene needs to be fully regenerated every frame where the standard DynamicDraw event draws temporary decorations (geometry) on top of a static scene.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetPoint_FullFrameRedrawDuringGet.htm"
+    },
+    {
+      "name": "OsnapEventType",
+      "type": "OsnapModes",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of object snap used to obtain the point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetPoint_OsnapEventType.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an arbitrary object that can be attached to this GetPoint instance. Useful for passing some/ information that you may need in a DynamicDraw event since you can get at this Tag from the GetPointDrawEventArgs.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_GetPoint_Tag.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "DynamicDraw",
+      "delegate": "System.EventHandler\u003CGetPointDrawEventArgs\u003E",
+      "signature": "public event EventHandler\u003CGetPointDrawEventArgs\u003E DynamicDraw",
+      "summary": "Event to use if you want to dynamically draw things as the mouse/digitizer moves. Every time the mouse moves, DynamicDraw will be called once per viewport. The calls to DynamicDraw happen AFTER the call to MouseMove. If you are drawing anything that takes a long time, periodically call InterruptMouseMove() to see if you should stop.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Input_Custom_GetPoint_DynamicDraw.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MouseDown",
+      "delegate": "System.EventHandler\u003CGetPointMouseEventArgs\u003E",
+      "signature": "public event EventHandler\u003CGetPointMouseEventArgs\u003E MouseDown",
+      "summary": "Called during Get2dRectangle, Get2dLine, and GetPoint(..,true) when the mouse down event for the initial point occurs. This function is not called during ordinary point getting because the mouse down event terminates an ordinary point get and returns a GetResult.Point result.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Input_Custom_GetPoint_MouseDown.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MouseMove",
+      "delegate": "System.EventHandler\u003CGetPointMouseEventArgs\u003E",
+      "signature": "public event EventHandler\u003CGetPointMouseEventArgs\u003E MouseMove",
+      "summary": "Called every time the mouse moves. MouseMove is called once per mouse move and is called BEFORE any calls to OnDynamicDraw. If you are doing anything that takes a long time, periodically call InterruptMouseMove() to see if you should stop. If the view is such that the 2d screen point can\u0027t be mapped to a 3d point, the \u0027point\u0027 argument will be Unset.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Input_Custom_GetPoint_MouseMove.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PostDrawObjects",
+      "delegate": "System.EventHandler\u003CDrawEventArgs\u003E",
+      "signature": "public event EventHandler\u003CDrawEventArgs\u003E PostDrawObjects",
+      "summary": "Same as the DisplayPipeline.PostDrawObjects, but only works during the operation of the Get() function. NOTE: You must set FullFrameRedrawDuringGet to true in order for this event to be called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Input_Custom_GetPoint_PostDrawObjects.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

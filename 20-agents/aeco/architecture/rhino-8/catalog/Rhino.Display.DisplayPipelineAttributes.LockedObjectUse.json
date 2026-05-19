@@ -1,0 +1,29 @@
+{
+  "name": "DisplayPipelineAttributes.LockedObjectUse",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.LockedObjectUse\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPipelineAttributes_LockedObjectUse.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UseObjectAttributes",
+      "value": 0,
+      "summary": "Uses the object\u0027s specified attributes."
+    },
+    {
+      "name": "SpecifyColor",
+      "value": 1,
+      "summary": "Use specified lock color"
+    },
+    {
+      "name": "UseAppSettings",
+      "value": 2,
+      "summary": "Use settings specified in Appearance: Colors Options."
+    }
+  ]
+}

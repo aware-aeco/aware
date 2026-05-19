@@ -1,0 +1,29 @@
+{
+  "name": "Panels.FloatPanelMode",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Used by the FloatPanel method to determine if the floating panel should be shown or hidden.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Panels_FloatPanelMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Show",
+      "value": 0,
+      "summary": "Show the floating panel"
+    },
+    {
+      "name": "Hide",
+      "value": 1,
+      "summary": "Hide the floating panel"
+    },
+    {
+      "name": "Toggle",
+      "value": 2,
+      "summary": "Toggle the visibility state"
+    }
+  ]
+}

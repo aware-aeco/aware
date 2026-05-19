@@ -1,0 +1,247 @@
+{
+  "name": "CollapsibleSectionImpl",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.CollapsibleSectionImpl\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_Controls_CollapsibleSectionImpl.htm",
+  "constructors": [
+    {
+      "name": "CollapsibleSectionImpl",
+      "signature": "public CollapsibleSectionImpl(ICollapsibleSection section)",
+      "summary": "Initializes a new instance of the CollapsibleSectionImpl class",
+      "params": [
+        {
+          "name": "section",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022section\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.#ctor(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__InternalSetParent",
+      "signature": "public void __InternalSetParent(IntPtr parent)",
+      "summary": "",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022parent\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.__InternalSetParent(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl___InternalSetParent.htm"
+    },
+    {
+      "name": "CreateHostedSection",
+      "signature": "public static void CreateHostedSection(ICollapsibleSection section)",
+      "summary": "",
+      "params": [
+        {
+          "name": "section",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022section\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.CreateHostedSection(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_CreateHostedSection.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the CollapsibleSectionImpl",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_Finalize.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "public static ICollapsibleSection Find(IntPtr cpp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cpp",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022cpp\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.Find(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICollapsibleSection",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.Find(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_Find.htm"
+    },
+    {
+      "name": "GetSibling",
+      "signature": "public static ICollapsibleSection GetSibling(ICollapsibleSection section, Guid siblingSectionId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "section",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022section\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.GetSibling(Rhino.UI.Controls.ICollapsibleSection,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "siblingSectionId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022siblingSectionId\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.GetSibling(Rhino.UI.Controls.ICollapsibleSection,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICollapsibleSection",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.GetSibling(Rhino.UI.Controls.ICollapsibleSection,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_GetSibling.htm"
+    },
+    {
+      "name": "GetSiblings",
+      "signature": "public static ICollapsibleSection[] GetSiblings(ICollapsibleSection section)",
+      "summary": "",
+      "params": [
+        {
+          "name": "section",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022section\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.GetSiblings(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICollapsibleSection[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.GetSiblings(Rhino.UI.Controls.ICollapsibleSection)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_GetSiblings.htm"
+    },
+    {
+      "name": "IsSameObject",
+      "signature": "public bool IsSameObject(IntPtr cpp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cpp",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022cpp\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.IsSameObject(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.IsSameObject(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_IsSameObject.htm"
+    },
+    {
+      "name": "NewNativeWrapper",
+      "signature": "public static ICollapsibleSection NewNativeWrapper(IntPtr cpp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "cpp",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022cpp\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.NewNativeWrapper(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ICollapsibleSection",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.NewNativeWrapper(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_NewNativeWrapper.htm"
+    },
+    {
+      "name": "ReplaceClient",
+      "signature": "public void ReplaceClient(ICollapsibleSection client)",
+      "summary": "",
+      "params": [
+        {
+          "name": "client",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022client\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.CollapsibleSectionImpl.ReplaceClient(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_Controls_CollapsibleSectionImpl_ReplaceClient.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_CollapsibleSectionImpl_CppPointer.htm"
+    },
+    {
+      "name": "ViewModel",
+      "type": "IRdkViewModel",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_Controls_CollapsibleSectionImpl_ViewModel.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "DataChanged",
+      "delegate": "System.EventHandler\u003CEventArgs\u003E",
+      "signature": "public event EventHandler\u003CEventArgs\u003E DataChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_UI_Controls_CollapsibleSectionImpl_DataChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ViewModelActivated",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler ViewModelActivated",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_UI_Controls_CollapsibleSectionImpl_ViewModelActivated.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

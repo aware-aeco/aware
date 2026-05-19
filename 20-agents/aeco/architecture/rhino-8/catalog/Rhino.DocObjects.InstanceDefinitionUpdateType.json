@@ -1,0 +1,34 @@
+{
+  "name": "InstanceDefinitionUpdateType",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The possible relationships between the instance definition geometry and the archive containing the original definition.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_InstanceDefinitionUpdateType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Static",
+      "value": 0,
+      "summary": "The Rhino user interface uses the term \u0022Embedded\u0022 for Static update types. This instance definition is never updated. If m_source_archive is set, it records the origin of the instance definition geometry, but m_source_archive is never used to update the instance definition."
+    },
+    {
+      "name": "Embedded",
+      "value": 1,
+      "summary": "Obsolete. This instance definition geometry was imported from another archive and is embedded. If the source archive changes, the user is asked if they want to update the instance definition."
+    },
+    {
+      "name": "LinkedAndEmbedded",
+      "value": 2,
+      "summary": "This instance definition geometry was imported from another archive and is embedded. If the source archive changes, the instance definition is automatically updated. If the soruce archive is not available, the instance definition is still valid."
+    },
+    {
+      "name": "Linked",
+      "value": 3,
+      "summary": "This instance definition geometry was imported from another archive and is not embedded. If the source archive changes, the instance definition is automatically updated. If the source archive is not available, the instance definition is not valid."
+    }
+  ]
+}

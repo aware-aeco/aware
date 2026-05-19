@@ -1,0 +1,415 @@
+{
+  "name": "ViewTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.ViewTable\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CRhinoView\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_ViewTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public RhinoView Add(string title, DefinedViewportProjection projection, Rectangle position, bool floating)",
+      "summary": "Constructs a new Rhino view and, at the same time, adds it to the list.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The title of the new Rhino view.",
+          "optional": false
+        },
+        {
+          "name": "projection",
+          "type": "Rhino.Display.DefinedViewportProjection",
+          "doc": "A basic projection type.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Drawing.Rectangle",
+          "doc": "A position.",
+          "optional": false
+        },
+        {
+          "name": "floating",
+          "type": "System.Boolean",
+          "doc": "true if the view floats; false if it is docked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "The newly constructed Rhino view; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_Add.htm"
+    },
+    {
+      "name": "AddPageView(String)",
+      "signature": "public RhinoPageView AddPageView(string title)",
+      "summary": "Constructs a new page view with a given title and, at the same time, adds it to the list.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "If null or empty, a name will be generated as \u0022Page #\u0022 where # is the largest page number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoPageView",
+        "doc": "The newly created page view on success; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_AddPageView.htm"
+    },
+    {
+      "name": "AddPageView(String, Double, Double)",
+      "signature": "public RhinoPageView AddPageView(string title, double pageWidth, double pageHeight)",
+      "summary": "Constructs a new page view with a given title and size and, at the same time, adds it to the list.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "If null or empty, a name will be generated as \u0022Page #\u0022 where # is the largest page number.",
+          "optional": false
+        },
+        {
+          "name": "pageWidth",
+          "type": "System.Double",
+          "doc": "The page total width.",
+          "optional": false
+        },
+        {
+          "name": "pageHeight",
+          "type": "System.Double",
+          "doc": "The page total height.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoPageView",
+        "doc": "The newly created page view on success; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_AddPageView_1.htm"
+    },
+    {
+      "name": "DefaultViewLayout",
+      "signature": "public void DefaultViewLayout()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_DefaultViewLayout.htm"
+    },
+    {
+      "name": "EnableCameraIcon",
+      "signature": "public void EnableCameraIcon(RhinoView view)",
+      "summary": "Use to turn camera icon on and off",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "If null, any camera icon is turned off. If not null, the camera icon for that view is turned on.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_EnableCameraIcon.htm"
+    },
+    {
+      "name": "EnableRedraw",
+      "signature": "public void EnableRedraw(bool enable, bool redrawDocument, bool redrawLayers)",
+      "summary": "Enables or disables screen redrawing.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "System.Boolean",
+          "doc": "Enable redrawing.",
+          "optional": false
+        },
+        {
+          "name": "redrawDocument",
+          "type": "System.Boolean",
+          "doc": "If enabling, set to true to have the document redrawn.",
+          "optional": false
+        },
+        {
+          "name": "redrawLayers",
+          "type": "System.Boolean",
+          "doc": "If enabling, set to true to have the layer user interface redrawn.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_EnableRedraw.htm"
+    },
+    {
+      "name": "Find(Guid)",
+      "signature": "public RhinoView Find(Guid mainViewportId)",
+      "summary": "Finds a view in this document with a given main viewport Id.",
+      "params": [
+        {
+          "name": "mainViewportId",
+          "type": "System.Guid",
+          "doc": "The ID of the main viewport looked for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "View on success. null if the view could not be found in this document."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_Find.htm"
+    },
+    {
+      "name": "Find(String, Boolean)",
+      "signature": "public RhinoView Find(string mainViewportName, bool compareCase)",
+      "summary": "Finds a view in this document with a main viewport that has a given name. Note that there may be multiple views in this document that have the same name. This function only returns the first view found. If you want to find all the views with a given name, use the GetViewList function and iterate through the views.",
+      "params": [
+        {
+          "name": "mainViewportName",
+          "type": "System.String",
+          "doc": "The name of the main viewport.",
+          "optional": false
+        },
+        {
+          "name": "compareCase",
+          "type": "System.Boolean",
+          "doc": "true if capitalization influences comparison; otherwise, false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "A Rhino view on success; null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_Find_1.htm"
+    },
+    {
+      "name": "FlashObjects",
+      "signature": "public void FlashObjects(IEnumerable\u003CRhinoObject\u003E list, bool useSelectionColor)",
+      "summary": "Cause objects selection state to change momentarily so the object appears to flash on the screen.",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IEnumerable\u003CRhinoObject\u003E",
+          "doc": "An array, a list or any enumerable set of Rhino objects.",
+          "optional": false
+        },
+        {
+          "name": "useSelectionColor",
+          "type": "System.Boolean",
+          "doc": "If true, flash between object color and selection color. If false, flash between visible and invisible.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_FlashObjects.htm"
+    },
+    {
+      "name": "FourViewLayout",
+      "signature": "public void FourViewLayout(bool useMatchingViews)",
+      "summary": "",
+      "params": [
+        {
+          "name": "useMatchingViews",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022useMatchingViews\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.ViewTable.FourViewLayout(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_FourViewLayout.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CRhinoView\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CRhinoView\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.ViewTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_GetEnumerator.htm"
+    },
+    {
+      "name": "GetPageViews",
+      "signature": "public RhinoPageView[] GetPageViews()",
+      "summary": "Gets all page views in the document.",
+      "params": [],
+      "returns": {
+        "type": "RhinoPageView[]",
+        "doc": "An array with all page views. The return value can be an empty array but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_GetPageViews.htm"
+    },
+    {
+      "name": "GetStandardRhinoViews",
+      "signature": "public RhinoView[] GetStandardRhinoViews()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "RhinoView[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.ViewTable.GetStandardRhinoViews\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_GetStandardRhinoViews.htm"
+    },
+    {
+      "name": "GetViewList(ViewTypeFilter)",
+      "signature": "public RhinoView[] GetViewList(ViewTypeFilter filter)",
+      "summary": "Gets an array of all the views.",
+      "params": [
+        {
+          "name": "filter",
+          "type": "Rhino.Display.ViewTypeFilter",
+          "doc": "View types to include",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoView[]",
+        "doc": "An array of Rhino views. This array can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_GetViewList.htm"
+    },
+    {
+      "name": "GetViewList(Boolean, Boolean)",
+      "signature": "[ObsoleteAttribute] public RhinoView[] GetViewList(bool includeStandardViews, bool includePageViews)",
+      "summary": "Gets an array of all the views.",
+      "params": [
+        {
+          "name": "includeStandardViews",
+          "type": "System.Boolean",
+          "doc": "true if \u0022Right\u0022, \u0022Perspective\u0022, etc., view should be included; false otherwise.",
+          "optional": false
+        },
+        {
+          "name": "includePageViews",
+          "type": "System.Boolean",
+          "doc": "true if page-related views should be included; false otherwise.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoView[]",
+        "doc": "A array of Rhino views. This array can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_GetViewList_1.htm"
+    },
+    {
+      "name": "IsCameraIconVisible",
+      "signature": "public bool IsCameraIconVisible(RhinoView view)",
+      "summary": "Determine if a camera icon is being shown",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "if null, then all views are tested. If not null, then just view is tested.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.ViewTable.IsCameraIconVisible(Rhino.Display.RhinoView)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_IsCameraIconVisible.htm"
+    },
+    {
+      "name": "Redraw",
+      "signature": "public void Redraw()",
+      "summary": "Redraws all views.",
+      "remarks": "If you change something in the document -- like adding objects, deleting objects, modifying layer or object display attributes, etc., then you need to call Redraw to redraw all the views. If you change something in a particular view like the projection, construction plane, background bitmap, etc., then you need to call CRhinoView::Redraw to redraw that particular view.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_Redraw.htm"
+    },
+    {
+      "name": "ThreeViewLayout",
+      "signature": "public void ThreeViewLayout(bool useMatchingViews)",
+      "summary": "",
+      "params": [
+        {
+          "name": "useMatchingViews",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022useMatchingViews\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.ViewTable.ThreeViewLayout(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_ViewTable_ThreeViewLayout.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveView",
+      "type": "RhinoView",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or Sets the active view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_ViewTable_ActiveView.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this object table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_ViewTable_Document.htm"
+    },
+    {
+      "name": "ModelSpaceIsActive",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_ViewTable_ModelSpaceIsActive.htm"
+    },
+    {
+      "name": "RedrawEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets (enable or disables) screen redrawing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_ViewTable_RedrawEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "CurveOffsetCornerStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for all implemented corner styles in curve offsets.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_CurveOffsetCornerStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "The default value."
+    },
+    {
+      "name": "Sharp",
+      "value": 1,
+      "summary": "Offsets and extends curves with a straight line until they intersect."
+    },
+    {
+      "name": "Round",
+      "value": 2,
+      "summary": "Offsets and fillets curves with an arc of radius equal to the offset distance."
+    },
+    {
+      "name": "Smooth",
+      "value": 3,
+      "summary": "Offsets and connects curves with a smooth (G1 continuity) curve."
+    },
+    {
+      "name": "Chamfer",
+      "value": 4,
+      "summary": "Offsets and connects curves with a straight line between their endpoints."
+    }
+  ]
+}

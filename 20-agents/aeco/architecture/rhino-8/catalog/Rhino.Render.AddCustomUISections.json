@@ -1,0 +1,23 @@
+{
+  "name": "AddCustomUISections",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "This class contains the event to add custom ui sections when the content ui is created.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_AddCustomUISections.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "OnAddCustomUISections",
+      "delegate": "System.EventHandler\u003CAddCustomUISectionsEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CAddCustomUISectionsEventArgs\u003E OnAddCustomUISections",
+      "summary": "This event is raised when a OnAddCustomUISections Event is triggered in rdk.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_Render_AddCustomUISections_OnAddCustomUISections.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

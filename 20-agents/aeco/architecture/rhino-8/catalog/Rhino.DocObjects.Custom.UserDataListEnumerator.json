@@ -1,0 +1,78 @@
+{
+  "name": "UserDataListEnumerator",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "Enumerator for UserDataList",
+  "interfaces": [
+    "IEnumerator\u003CUserData\u003E",
+    "IDisposable",
+    "IEnumerator"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Custom_UserDataListEnumerator.htm",
+  "constructors": [
+    {
+      "name": "UserDataListEnumerator",
+      "signature": "public UserDataListEnumerator(UserDataList udl)",
+      "summary": "Create new UserDataListEnumerator",
+      "params": [
+        {
+          "name": "udl",
+          "type": "Rhino.DocObjects.Custom.UserDataList",
+          "doc": "UserDataList to enumerate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserDataListEnumerator__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Implement Dispose(). NOP.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserDataListEnumerator_Dispose.htm"
+    },
+    {
+      "name": "MoveNext",
+      "signature": "public bool MoveNext()",
+      "summary": "Advance enumerator to next UserData item.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if there is a next item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserDataListEnumerator_MoveNext.htm"
+    },
+    {
+      "name": "Reset",
+      "signature": "public void Reset()",
+      "summary": "Reset the enumerator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Custom_UserDataListEnumerator_Reset.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Current",
+      "type": "UserData",
+      "getter": true,
+      "setter": false,
+      "summary": "Get current UserData on the enumerator.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Custom_UserDataListEnumerator_Current.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

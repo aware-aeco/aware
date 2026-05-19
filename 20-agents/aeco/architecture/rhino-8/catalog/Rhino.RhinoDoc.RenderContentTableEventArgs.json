@@ -1,0 +1,31 @@
+{
+  "name": "RhinoDoc.RenderContentTableEventArgs",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Passed to the RenderMaterialsTableEvent, RenderEnvironmentTableEvent and the RenderTextureTableEvent events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoDoc_RenderContentTableEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document the table belongs to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderContentTableEventArgs_Document.htm"
+    },
+    {
+      "name": "EventType",
+      "type": "RhinoDoc.RenderContentTableEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "Event type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoDoc_RenderContentTableEventArgs_EventType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "FileXamlWriteOptions.AnimationMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileXamlWriteOptions.AnimationMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileXamlWriteOptions_AnimationMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "X",
+      "value": 0
+    },
+    {
+      "name": "Y",
+      "value": 1
+    },
+    {
+      "name": "Z",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "ShaderLanguage",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Graphics Shader Language https://en.wikipedia.org/wiki/OpenGL_Shading_Language#Versions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ShaderLanguage.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GLSL_ES100",
+      "value": 1,
+      "summary": "Used for OpenGL ES 2.0 and WebGL 1.0"
+    },
+    {
+      "name": "GLSL_ES300",
+      "value": 2,
+      "summary": "Used for OpenGL ES 3.0 and WebGL 2.0"
+    },
+    {
+      "name": "GLSL_ES310",
+      "value": 3
+    },
+    {
+      "name": "GLSL_120",
+      "value": 4,
+      "summary": "Used for OpenGL 2.1"
+    },
+    {
+      "name": "GLSL_130",
+      "value": 5,
+      "summary": "Used for OpenGL 3.0"
+    },
+    {
+      "name": "GLSL_140",
+      "value": 6,
+      "summary": "Used for OpenGL 3.1"
+    },
+    {
+      "name": "GLSL_150",
+      "value": 7,
+      "summary": "Used for OpenGL 3.2"
+    },
+    {
+      "name": "GLSL_330",
+      "value": 8,
+      "summary": "Used for OpenGL 3.3"
+    },
+    {
+      "name": "GLSL_400",
+      "value": 9,
+      "summary": "Used for OpenGL 4.0"
+    },
+    {
+      "name": "GLSL_410",
+      "value": 10,
+      "summary": "Used for OpenGL 4.1"
+    },
+    {
+      "name": "GLSL_420",
+      "value": 11,
+      "summary": "Used for OpenGL 4.2"
+    },
+    {
+      "name": "GLSL_430",
+      "value": 12,
+      "summary": "Used for OpenGL 4.3"
+    },
+    {
+      "name": "GLSL_440",
+      "value": 13,
+      "summary": "Used for OpenGL 4.4"
+    },
+    {
+      "name": "Metal",
+      "value": 14,
+      "summary": "Metal for Apple"
+    }
+  ]
+}

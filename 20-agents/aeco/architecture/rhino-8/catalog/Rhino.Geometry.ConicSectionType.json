@@ -1,0 +1,39 @@
+{
+  "name": "ConicSectionType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for types of conic sections.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_ConicSectionType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0,
+      "summary": "The curve shape is unknown."
+    },
+    {
+      "name": "Circle",
+      "value": 1,
+      "summary": "The curve has the shape of a circle."
+    },
+    {
+      "name": "Ellipse",
+      "value": 2,
+      "summary": "The curve has the shape of an ellipse."
+    },
+    {
+      "name": "Hyperbola",
+      "value": 3,
+      "summary": "The curve has the shape of a hyperbola."
+    },
+    {
+      "name": "Parabola",
+      "value": 4,
+      "summary": "The curve has the shape of a parabola."
+    }
+  ]
+}

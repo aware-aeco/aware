@@ -1,0 +1,97 @@
+{
+  "name": "FilePlyWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FilePlyWriteOptions\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FilePlyWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FilePlyWriteOptions",
+      "signature": "public FilePlyWriteOptions(FileWriteOptions writeOptions)",
+      "summary": "Initializes a new instance of the FilePlyWriteOptions class",
+      "params": [
+        {
+          "name": "writeOptions",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022writeOptions\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FilePlyWriteOptions.#ctor(Rhino.FileIO.FileWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_FilePlyWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ExportASCII",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to export as Ascii.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_ExportASCII.htm"
+    },
+    {
+      "name": "ExportColors",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to export vertex colors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_ExportColors.htm"
+    },
+    {
+      "name": "ExportDoubles",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether vertexes are exported as doubles or floats.",
+      "remarks": "only has impact for binary export, floats are always exported to ascii.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_ExportDoubles.htm"
+    },
+    {
+      "name": "ExportMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to export a material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_ExportMaterial.htm"
+    },
+    {
+      "name": "ExportNormals",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to export vertex normals.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_ExportNormals.htm"
+    },
+    {
+      "name": "MeshingParameters",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_MeshingParameters.htm"
+    },
+    {
+      "name": "UseSimpleDialog",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to use the simple or detailed meshing dialog.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_FilePlyWriteOptions_UseSimpleDialog.htm"
+    },
+    {
+      "name": "WriteOptions",
+      "type": "FileWriteOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/F_Rhino_FileIO_FilePlyWriteOptions_WriteOptions.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

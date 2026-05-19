@@ -1,0 +1,142 @@
+{
+  "name": "SimulatedEnvironment",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.SimulatedEnvironment\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_SimulatedEnvironment.htm",
+  "constructors": [
+    {
+      "name": "SimulatedEnvironment",
+      "signature": "public SimulatedEnvironment()",
+      "summary": "Initializes a new instance of the SimulatedEnvironment class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedEnvironment.ConstPointer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the SimulatedEnvironment",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the SimulatedEnvironment and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment_Finalize.htm"
+    },
+    {
+      "name": "ProjectionFromString",
+      "signature": "public static SimulatedEnvironment.BackgroundProjections ProjectionFromString(string projection)",
+      "summary": "",
+      "params": [
+        {
+          "name": "projection",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022projection\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedEnvironment.ProjectionFromString(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SimulatedEnvironment.BackgroundProjections",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedEnvironment.ProjectionFromString(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment_ProjectionFromString.htm"
+    },
+    {
+      "name": "StringFromProjection",
+      "signature": "public static string StringFromProjection(SimulatedEnvironment.BackgroundProjections projection)",
+      "summary": "",
+      "params": [
+        {
+          "name": "projection",
+          "type": "Rhino.Render.SimulatedEnvironment.BackgroundProjections",
+          "doc": "[Missing \u003Cparam name=\u0022projection\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedEnvironment.StringFromProjection(Rhino.Render.SimulatedEnvironment.BackgroundProjections)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedEnvironment.StringFromProjection(Rhino.Render.SimulatedEnvironment.BackgroundProjections)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_SimulatedEnvironment_StringFromProjection.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SimulatedEnvironment_BackgroundColor.htm"
+    },
+    {
+      "name": "BackgroundImage",
+      "type": "SimulatedTexture",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SimulatedEnvironment_BackgroundImage.htm"
+    },
+    {
+      "name": "BackgroundProjection",
+      "type": "SimulatedEnvironment.BackgroundProjections",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_SimulatedEnvironment_BackgroundProjection.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

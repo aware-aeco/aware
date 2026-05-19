@@ -1,0 +1,41 @@
+{
+  "name": "RealtimeDisplayMode.InitFramebufferEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RealtimeDisplayMode.InitFramebufferEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RealtimeDisplayMode_InitFramebufferEventArgs.htm",
+  "constructors": [
+    {
+      "name": "RealtimeDisplayMode.InitFramebufferEventArgs",
+      "signature": "public InitFramebufferEventArgs(DisplayPipeline dp)",
+      "summary": "Initializes a new instance of the RealtimeDisplayMode.InitFramebufferEventArgs class",
+      "params": [
+        {
+          "name": "dp",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "[Missing \u003Cparam name=\u0022dp\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.InitFramebufferEventArgs.#ctor(Rhino.Display.DisplayPipeline)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RealtimeDisplayMode_InitFramebufferEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Pipeline",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RealtimeDisplayMode_InitFramebufferEventArgs_Pipeline.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

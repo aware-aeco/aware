@@ -1,0 +1,130 @@
+{
+  "name": "SpaceMorph",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a spacial, Euclidean morph.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_SpaceMorph.htm",
+  "constructors": [
+    {
+      "name": "SpaceMorph",
+      "signature": "protected SpaceMorph()",
+      "summary": "Initializes a new instance of the SpaceMorph class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SpaceMorph__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsMorphable",
+      "signature": "public static bool IsMorphable(GeometryBase geometry)",
+      "summary": "true if the geometry can be morphed by calling SpaceMorph.Morph(geometry)",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "[Missing \u003Cparam name=\u0022geometry\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SpaceMorph.IsMorphable(Rhino.Geometry.GeometryBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SpaceMorph.IsMorphable(Rhino.Geometry.GeometryBase)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SpaceMorph_IsMorphable.htm"
+    },
+    {
+      "name": "Morph(GeometryBase)",
+      "signature": "public bool Morph(GeometryBase geometry)",
+      "summary": "Apply the space morph to geometry.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry to morph.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SpaceMorph_Morph.htm"
+    },
+    {
+      "name": "Morph(Plane)",
+      "signature": "public bool Morph(ref Plane plane)",
+      "summary": "Apply the space morph to a plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane to morph.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SpaceMorph_Morph_1.htm"
+    },
+    {
+      "name": "MorphPoint",
+      "signature": "public abstract Point3d MorphPoint(Point3d point)",
+      "summary": "Morphs an Euclidean point. This method is abstract.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point that will be morphed by this function.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Resulting morphed point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_SpaceMorph_MorphPoint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PreserveStructure",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if the morph should be done in a way that preserves the structure of the geometry. In particular, for NURBS objects, true means that only the control points are moved. The PreserveStructure value does not affect the way meshes and points are morphed. The default is false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SpaceMorph_PreserveStructure.htm"
+    },
+    {
+      "name": "QuickPreview",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "true if the morph should be done as quickly as possible because the result is being used for some type of dynamic preview. If QuickPreview is true, the tolerance may be ignored. The QuickPreview value does not affect the way meshes and points are morphed. The default is false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SpaceMorph_QuickPreview.htm"
+    },
+    {
+      "name": "Tolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The desired accuracy of the morph. This value is primarily used for deforming surfaces and breps. The default is 0.0 and any value \u003C= 0.0 is ignored by morphing functions. The Tolerance value does not affect the way meshes and points are morphed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_SpaceMorph_Tolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

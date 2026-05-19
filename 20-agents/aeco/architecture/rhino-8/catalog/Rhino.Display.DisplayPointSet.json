@@ -1,0 +1,56 @@
+{
+  "name": "DisplayPointSet",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPointSet\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DisplayPointSet.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create",
+      "signature": "public static DisplayPointSet Create(IEnumerable\u003CDisplayPoint\u003E points)",
+      "summary": "",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CDisplayPoint\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022points\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPointSet.Create(System.Collections.Generic.IEnumerable{Rhino.Display.DisplayPoint})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DisplayPointSet",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.DisplayPointSet.Create(System.Collections.Generic.IEnumerable{Rhino.Display.DisplayPoint})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPointSet_Create.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the DisplayPointSet",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPointSet_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_DisplayPointSet_Finalize.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

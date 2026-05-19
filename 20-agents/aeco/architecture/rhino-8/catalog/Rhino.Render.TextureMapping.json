@@ -1,0 +1,1035 @@
+{
+  "name": "TextureMapping",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Represents a texture mapping.",
+  "base": "ModelComponent",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_TextureMapping.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClearId",
+      "signature": "public void ClearId()",
+      "summary": "Resets the HasId property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the ID is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearId.htm"
+    },
+    {
+      "name": "ClearIndex",
+      "signature": "public void ClearIndex()",
+      "summary": "Resets the HasIndex property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the index is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearIndex.htm"
+    },
+    {
+      "name": "ClearName",
+      "signature": "public void ClearName()",
+      "summary": "Resets the HasName property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the name is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ClearName.htm"
+    },
+    {
+      "name": "CreateBoxMapping",
+      "signature": "public static TextureMapping CreateBoxMapping(Plane plane, Interval dx, Interval dy, Interval dz, bool capped)",
+      "summary": "Create a box projection texture mapping.",
+      "remarks": "When m_texture_space = divided, the box is mapped to texture space as follows: If the box is not capped, then each side maps to 1/4 of the texture map. v=1\u002B---------\u002B---------\u002B---------\u002B---------\u002B | x=dx[1] | y=dy[1] | x=dx[0] | y=dy[0] | | Front | Right | Back | Left | | --y-\u003E | \u003C-x-- | \u003C-y-- | --x-\u003E | v=0\u002B---------\u002B---------\u002B---------\u002B---------\u002B 0/4 \u003C=u\u003C= 1/4 \u003C=u\u003C= 2/4 \u003C=u\u003C= 3/4 \u003C=u\u003C= 4/4 If the box is capped, then each side and cap gets 1/6 of the texture map. v=1\u002B---------\u002B---------\u002B---------\u002B---------\u002B---------\u002B---------\u002B | x=dx[1] | y=dy[1] | x=dx[0] | y=dy[0] | z=dx[1] | z=dz[0] | | Front | Right | Back | Left | Top | Bottom | | --y-\u003E | \u003Cx-- | \u003C-y-- | --x-\u003E | --x-\u003E | --x-\u003E | v=0\u002B---------\u002B---------\u002B---------\u002B---------\u002B---------\u002B---------\u002B 0/6 \u003C=u\u003C= 1/6 \u003C=u\u003C= 2/6 \u003C=u\u003C= 3/6 \u003C=u\u003C= 4/6 \u003C=u\u003C= 5/6 \u003C=u\u003C= 6/6",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The sides of the box the box are parallel to the plane\u0027s coordinate planes. The dx, dy, dz intervals determine the location of the sides.",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Determines the location of the front and back planes. The vector plane.xaxis is perpendicular to these planes and they pass through plane.PointAt(dx[0],0,0) and plane.PointAt(dx[1],0,0), respectively.",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Determines the location of the left and right planes. The vector plane.yaxis is perpendicular to these planes and they pass through plane.PointAt(0,dy[0],0) and plane.PointAt(0,dy[1],0), respectively.",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Determines the location of the top and bottom planes. The vector plane.zaxis is perpendicular to these planes and they pass through plane.PointAt(0,0,dz[0]) and plane.PointAt(0,0,dz[1]), respectively.",
+          "optional": false
+        },
+        {
+          "name": "capped",
+          "type": "System.Boolean",
+          "doc": "If true, the box is treated as a finite capped box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance if input is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreateBoxMapping.htm"
+    },
+    {
+      "name": "CreateCustomMeshMapping",
+      "signature": "public static TextureMapping CreateCustomMeshMapping(Mesh mesh)",
+      "summary": "Create custom mesh mapping",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh with texture coordinates",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreateCustomMeshMapping.htm"
+    },
+    {
+      "name": "CreateCylinderMapping",
+      "signature": "public static TextureMapping CreateCylinderMapping(Cylinder cylinder, bool capped)",
+      "summary": "Create a cylindrical projection texture mapping.",
+      "remarks": "When the cylinder is capped and m_texture_space = divided, the cylinder is mapped to texture space as follows: The side is mapped to 0 \u003C= \u0022u\u0022 \u003C= 2/3. The bottom is mapped to 2/3 \u003C= \u0022u\u0022 \u003C= 5/6. The top is mapped to 5/6 \u003C= \u0022u\u0022 \u003C= 5/6. This is the same convention box mapping uses.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "cylinder in world space used to define a cylindrical coordinate system. The angular parameter maps (0,2pi) to texture \u0022u\u0022 (0,1), The height parameter maps (height[0],height[1]) to texture \u0022v\u0022 (0,1), and the radial parameter maps (0,r) to texture \u0022w\u0022 (0,1).",
+          "optional": false
+        },
+        {
+          "name": "capped",
+          "type": "System.Boolean",
+          "doc": "If true, the cylinder is treated as a finite capped cylinder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance if input is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreateCylinderMapping.htm"
+    },
+    {
+      "name": "CreateOcsMapping",
+      "signature": "public static TextureMapping CreateOcsMapping(Plane plane)",
+      "summary": "Create a Ocs texture mapping. Note that OCS mappings must be placed on mapping channel ON_ObjectRenderingAttributes::OCSMappingChannelId() otherwise they will not work.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane to use for mapping.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.TextureMapping.CreateOcsMapping(Rhino.Geometry.Plane)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreateOcsMapping.htm"
+    },
+    {
+      "name": "CreatePlaneMapping(Plane, Interval, Interval, Interval)",
+      "signature": "public static TextureMapping CreatePlaneMapping(Plane plane, Interval dx, Interval dy, Interval dz)",
+      "summary": "Create a planar UV projection texture mapping",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane to use for mapping.",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "portion of the plane\u0027s x axis that is mapped to [0,1] (can be a decreasing interval)",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "portion of the plane\u0027s y axis that is mapped to [0,1] (can be a decreasing interval)",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "portion of the plane\u0027s z axis that is mapped to [0,1] (can be a decreasing interval)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance if input is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreatePlaneMapping.htm"
+    },
+    {
+      "name": "CreatePlaneMapping(Plane, Interval, Interval, Interval, Boolean)",
+      "signature": "public static TextureMapping CreatePlaneMapping(Plane plane, Interval dx, Interval dy, Interval dz, bool capped)",
+      "summary": "Create a planar projection texture mapping",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane to use for mapping.",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "portion of the plane\u0027s x axis that is mapped to [0,1] (can be a decreasing interval)",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "portion of the plane\u0027s y axis that is mapped to [0,1] (can be a decreasing interval)",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "portion of the plane\u0027s z axis that is mapped to [0,1] (can be a decreasing interval)",
+          "optional": false
+        },
+        {
+          "name": "capped",
+          "type": "System.Boolean",
+          "doc": "set to true if planar UVW is meant, false for planar UV",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance if input is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreatePlaneMapping_1.htm"
+    },
+    {
+      "name": "CreateSphereMapping",
+      "signature": "public static TextureMapping CreateSphereMapping(Sphere sphere)",
+      "summary": "Create a spherical projection texture mapping.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "sphere in world space used to define a spherical coordinate system. The longitude parameter maps (0,2pi) to texture \u0022u\u0022 (0,1). The latitude parameter maps (-pi/2,\u002Bpi/2) to texture \u0022v\u0022 (0,1). The radial parameter maps (0,r) to texture \u0022w\u0022 (0,1).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance if input is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreateSphereMapping.htm"
+    },
+    {
+      "name": "CreateSurfaceParameterMapping",
+      "signature": "public static TextureMapping CreateSurfaceParameterMapping()",
+      "summary": "Create a mapping that will convert surface parameters into normalized(0,1)x(0,1) texture coordinates.",
+      "params": [],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "TextureMapping instance or null if failed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_CreateSurfaceParameterMapping.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Increments the Cyclic Redundancy Check value by this instance.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The updated remainder value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_DataCRC.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Evaluate(Point3d, Vector3d, Point3d)",
+      "signature": "public int Evaluate(Point3d p, Vector3d n, out Point3d t)",
+      "summary": "Evaluate the mapping to get a texture coordinate",
+      "params": [
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Vertex location",
+          "optional": false
+        },
+        {
+          "name": "n",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "If the mapping projection is ray_projection, then this is the vertex unit normal. Otherwise n is ignored.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Texture coordinate (u,v,w)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Nonzero if evaluation is successful. When the mapping is a box or capped cylinder mapping, the value indicates which side was evaluated. Cylinder mapping: 1 = cylinder wall, 2 = bottom cap, 3 = top cap Box mapping: 1 = front, 2 = right, 3 = back, 4 = left, 5 = bottom, 6 = top"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_Evaluate.htm"
+    },
+    {
+      "name": "Evaluate(Point3d, Vector3d, Point3d, Transform, Transform)",
+      "signature": "public int Evaluate(Point3d p, Vector3d n, out Point3d t, Transform pXform, Transform nXform)",
+      "summary": "Evaluate the mapping to get a texture coordinate",
+      "params": [
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Vertex location",
+          "optional": false
+        },
+        {
+          "name": "n",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "If the mapping projection is ray_projection, then this is the vertex unit normal. Otherwise n is ignored.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Texture coordinate (u,v,w)",
+          "optional": false
+        },
+        {
+          "name": "pXform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to be applied to P before performing the mapping calculation.",
+          "optional": false
+        },
+        {
+          "name": "nXform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to be applied to N before performing the mapping calculation. One way to calculate nXxform is to use the call pXform::GetVectorTransform(nXform).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Nonzero if evaluation is successful. When the mapping is a box or capped cylinder mapping, the value indicates which side was evaluated. Cylinder mapping: 1 = cylinder wall, 2 = bottom cap, 3 = top cap Box mapping: 1 = front, 2 = right, 3 = back, 4 = left, 5 = bottom, 6 = top"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_Evaluate_1.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LockId",
+      "signature": "public void LockId()",
+      "summary": "Locks the component Id property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockId.htm"
+    },
+    {
+      "name": "LockIndex",
+      "signature": "public void LockIndex()",
+      "summary": "Locks the component Index property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockIndex.htm"
+    },
+    {
+      "name": "LockName",
+      "signature": "public void LockName()",
+      "summary": "Locks the component Name property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_LockName.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the name of the model component type, and then its name and index.",
+      "remarks": "This is provided as a visual aid. Do not rely on this for serialization.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ModelComponent.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ModelComponent_ToString.htm"
+    },
+    {
+      "name": "TryGetMappingBox(Plane, Interval, Interval, Interval)",
+      "signature": "public bool TryGetMappingBox(out Plane plane, out Interval dx, out Interval dy, out Interval dz)",
+      "summary": "Get a box projection from the texture mapping.",
+      "remarks": "Generally, GetMappingBox will not return the same parameters passed to SetBoxMapping. However, the location of the box will be the same.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The center of the box is at plane.origin and the sides of the box are parallel to the plane\u0027s coordinate planes.",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The \u0022front\u0022 and \u0022back\u0022 sides of the box are in spanned by the vectors plane.yaxis and plane.zaxis. The back plane contains the point plane.PointAt(dx[0],0,0) and the front plane contains the point plane.PointAt(dx[1],0,0).",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The \u0022left\u0022 and \u0022right\u0022 sides of the box are in spanned by the vectors plane.zaxis and plane.xaxis. The left plane contains the point plane.PointAt(0,dx[0],0) and the back plane contains the point plane.PointAt(0,dy[1],0).",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The \u0022top\u0022 and \u0022bottom\u0022 sides of the box are in spanned by the vectors plane.xaxis and plane.yaxis. The bottom plane contains the point plane.PointAt(0,0,dz[0]) and the top plane contains the point plane.PointAt(0,0,dz[1]).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a valid box is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingBox.htm"
+    },
+    {
+      "name": "TryGetMappingBox(Plane, Interval, Interval, Interval, Boolean)",
+      "signature": "public bool TryGetMappingBox(out Plane plane, out Interval dx, out Interval dy, out Interval dz, out bool capped)",
+      "summary": "Get a box projection from the texture mapping, including capped information",
+      "remarks": "Generally, GetMappingBox will not return the same parameters passed to SetBoxMapping. However, the location of the box will be the same.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The center of the box is at plane.origin and the sides of the box are parallel to the plane\u0027s coordinate planes.",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The \u0022front\u0022 and \u0022back\u0022 sides of the box are in spanned by the vectors plane.yaxis and plane.zaxis. The back plane contains the point plane.PointAt(dx[0],0,0) and the front plane contains the point plane.PointAt(dx[1],0,0).",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The \u0022left\u0022 and \u0022right\u0022 sides of the box are in spanned by the vectors plane.zaxis and plane.xaxis. The left plane contains the point plane.PointAt(0,dx[0],0) and the back plane contains the point plane.PointAt(0,dy[1],0).",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The \u0022top\u0022 and \u0022bottom\u0022 sides of the box are in spanned by the vectors plane.xaxis and plane.yaxis. The bottom plane contains the point plane.PointAt(0,0,dz[0]) and the top plane contains the point plane.PointAt(0,0,dz[1]).",
+          "optional": false
+        },
+        {
+          "name": "capped",
+          "type": "System.Boolean",
+          "doc": "true if box mapping is capped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a valid box is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingBox_1.htm"
+    },
+    {
+      "name": "TryGetMappingCylinder(Cylinder)",
+      "signature": "public bool TryGetMappingCylinder(out Cylinder cylinder)",
+      "summary": "Get a cylindrical projection parameters from this texture mapping.",
+      "remarks": "Generally, GetMappingCylinder will not return the same parameters passed to SetCylinderMapping. However, the location of the cylinder will be the same. If this mapping is not cylindrical, the cylinder will approximate the actual mapping primitive.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "[Missing \u003Cparam name=\u0022cylinder\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureMapping.TryGetMappingCylinder(Rhino.Geometry.Cylinder@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a valid cylinder is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingCylinder.htm"
+    },
+    {
+      "name": "TryGetMappingCylinder(Cylinder, Boolean)",
+      "signature": "public bool TryGetMappingCylinder(out Cylinder cylinder, out bool capped)",
+      "summary": "Get a cylindrical projection parameters from this texture mapping.",
+      "remarks": "Generally, GetMappingCylinder will not return the same parameters passed to SetCylinderMapping. However, the location of the cylinder will be the same. If this mapping is not cylindrical, the cylinder will approximate the actual mapping primitive.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "[Missing \u003Cparam name=\u0022cylinder\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureMapping.TryGetMappingCylinder(Rhino.Geometry.Cylinder@,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capped",
+          "type": "System.Boolean",
+          "doc": "will be true if capped",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a valid cylinder is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingCylinder_1.htm"
+    },
+    {
+      "name": "TryGetMappingMesh",
+      "signature": "public bool TryGetMappingMesh(out Mesh mesh)",
+      "summary": "Get custom mapping mesh from this texture mapping.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "[Missing \u003Cparam name=\u0022mesh\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureMapping.TryGetMappingMesh(Rhino.Geometry.Mesh@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if custom mapping mesh was returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingMesh.htm"
+    },
+    {
+      "name": "TryGetMappingPlane(Plane, Interval, Interval, Interval)",
+      "signature": "public bool TryGetMappingPlane(out Plane plane, out Interval dx, out Interval dy, out Interval dz)",
+      "summary": "Get plane mapping parameters from this texture mapping.",
+      "remarks": "NOTE WELL: Generally, GetMappingPlane will not return the same parameters passed to SetPlaneMapping. However, the location of the plane will be the same.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022plane\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureMapping.TryGetMappingPlane(Rhino.Geometry.Plane@,Rhino.Geometry.Interval@,Rhino.Geometry.Interval@,Rhino.Geometry.Interval@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Portion of the plane\u0027s x axis that is mapped to [0,1]",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Portion of the plane\u0027s y axis that is mapped to [0,1]",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Portion of the plane\u0027s z axis that is mapped to [0,1]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if valid plane mapping parameters were returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingPlane.htm"
+    },
+    {
+      "name": "TryGetMappingPlane(Plane, Interval, Interval, Interval, Boolean)",
+      "signature": "public bool TryGetMappingPlane(out Plane plane, out Interval dx, out Interval dy, out Interval dz, out bool capped)",
+      "summary": "Get plane mapping parameters from this texture mapping, including capping information",
+      "remarks": "NOTE WELL: Generally, GetMappingPlane will not return the same parameters passed to SetPlaneMapping. However, the location of the plane will be the same.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022plane\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureMapping.TryGetMappingPlane(Rhino.Geometry.Plane@,Rhino.Geometry.Interval@,Rhino.Geometry.Interval@,Rhino.Geometry.Interval@,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dx",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Portion of the plane\u0027s x axis that is mapped to [0,1]",
+          "optional": false
+        },
+        {
+          "name": "dy",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Portion of the plane\u0027s y axis that is mapped to [0,1]",
+          "optional": false
+        },
+        {
+          "name": "dz",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Portion of the plane\u0027s z axis that is mapped to [0,1]",
+          "optional": false
+        },
+        {
+          "name": "capped",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022capped\u0022/\u003E documentation for \u0022M:Rhino.Render.TextureMapping.TryGetMappingPlane(Rhino.Geometry.Plane@,Rhino.Geometry.Interval@,Rhino.Geometry.Interval@,Rhino.Geometry.Interval@,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if valid plane mapping parameters were returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingPlane_1.htm"
+    },
+    {
+      "name": "TryGetMappingSphere",
+      "signature": "public bool TryGetMappingSphere(out Sphere sphere)",
+      "summary": "Get a spherical projection parameters from this texture mapping.",
+      "remarks": "Generally, GetMappingShere will not return the same parameters passed to SetSphereMapping. However, the location of the sphere will be the same. If this mapping is not cylindrical, the cylinder will approximate the actual mapping primitive.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "///",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if a valid sphere is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_TextureMapping_TryGetMappingSphere.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capped",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "// The m_bCapped applies to planar, cylinder and box mappings. If m_bCapped is false, the cylinder or box is \u0022infinite\u0022, if m_bCapped is true, they are finite. In planar mappings, m_bCapped=false means \u0022the Z texture coordinate will always be 0.0\u0022 this is now the default behaviour in Rhino 5.0 - it\u0027s what users expect apparently.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_Capped.htm"
+    },
+    {
+      "name": "ComponentStatus",
+      "type": "ComponentStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component status of the model component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ComponentStatus.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns TextureMapping.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_ComponentType.htm"
+    },
+    {
+      "name": "DeletedName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of a component that is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_DeletedName.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "HasId",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasId.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an Index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has a Name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_HasName.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The unique Id for this texture mapping object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_Id.htm"
+    },
+    {
+      "name": "IdIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component ID is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IdIsLocked.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model component index attribute.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_Index.htm"
+    },
+    {
+      "name": "IndexIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Index is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IndexIsLocked.htm"
+    },
+    {
+      "name": "InstanceDefinitionModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model as part of the information required for a linked instance definition, this value identifies the linked instance definition reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_InstanceDefinitionModelSerialNumber.htm"
+    },
+    {
+      "name": "IsComponentStatusLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The component status itself can be locked. This returns an indication.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsComponentStatusLocked.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if the component is deleted. Deleted components are kept by the document for undo purposes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsDeleted.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsReference",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicting whether this component is a referenced component. Referenced components are part of referenced documents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsReference.htm"
+    },
+    {
+      "name": "IsSystemComponent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this model component is a system constant. An incomplete list of system constant model components is below:ON_ModelComponent::Unset ON_InstanceDefinition::Empty ON_Linetype::UnsetON_Linetype::ContinuousON_Linetype::ByLayerON_Linetype::ByParent ON_Layer::UnsetON_Layer::Default ON_TextStyle::UnsetON_TextStyle::DefaultON_TextStyle::ByLayerON_TextStyle::ByParent ON_DimStyle::UnsetON_DimStyle::DefaultON_DimStyle::DefaultInchDecimalON_DimStyle::DefaultInchFractionalON_DimStyle::DefaultFootInchArchitectureON_DimStyle::DefaultMillimeterSmallON_DimStyle::DefaultMillimeterLargeON_DimStyle::DefaultMillimeterArchitecture",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_IsSystemComponent.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "MappingType",
+      "type": "TextureMappingType",
+      "getter": true,
+      "setter": false,
+      "summary": "Texture mapping type associated with this Mapping object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_MappingType.htm"
+    },
+    {
+      "name": "ModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "A value identifying the model that manages this component.",
+      "remarks": "If the component is being managed by a model, this value identifies the model. In Rhino, this value is the document runtime serial number. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ModelSerialNumber.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_Name.htm"
+    },
+    {
+      "name": "NameIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Name is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_NameIsLocked.htm"
+    },
+    {
+      "name": "NormalTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "For primitive based mappings, these transformations are used to map the world coordinate (x,y,z) point P and surface normal N before it is projected to the normalized mapping primitive. The surface normal transformation, m_Nxyz, is always calculated from m_Pxyz. It is a runtime setting that is not saved in 3dm files. If m_type is srfp_mapping, then m_Pxyz and m_Nxyz are ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_NormalTransform.htm"
+    },
+    {
+      "name": "PrimativeTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "For primitive based mappings, these transformations are used to map the world coordinate (x,y,z) point P and surface normal N before it is projected to the normalized mapping primitive. The surface normal transformation, m_Nxyz, is always calculated from m_Pxyz. It is a runtime setting that is not saved in 3dm files. If m_type is srfp_mapping, then m_Pxyz and m_Nxyz are ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_PrimativeTransform.htm"
+    },
+    {
+      "name": "PrimitiveTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "For primitive based mappings, these transformations are used to map the world coordinate (x,y,z) point P and surface normal N before it is projected to the normalized mapping primitive. The surface normal transformation, m_Nxyz, is always calculated from m_Pxyz. It is a runtime setting that is not saved in 3dm files. If m_type is srfp_mapping, then m_Pxyz and m_Nxyz are ignored.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_PrimitiveTransform.htm"
+    },
+    {
+      "name": "Projection",
+      "type": "Projection",
+      "getter": true,
+      "setter": true,
+      "summary": "See Projection",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_Projection.htm"
+    },
+    {
+      "name": "ReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model for reference, this value identifies the reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ModelComponent_ReferenceModelSerialNumber.htm"
+    },
+    {
+      "name": "TextureSpace",
+      "type": "TextureSpace",
+      "getter": true,
+      "setter": true,
+      "summary": "See TextureSpace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_TextureSpace.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use shareable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UvwTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "Transform applied to mapping coordinate (u,v,w) to convert it into a texture coordinate.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_TextureMapping_UvwTransform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

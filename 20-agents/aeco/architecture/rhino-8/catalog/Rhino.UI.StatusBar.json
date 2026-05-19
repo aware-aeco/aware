@@ -1,0 +1,341 @@
+{
+  "name": "StatusBar",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Contains static methods to control the application status bar.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_StatusBar.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClearMessagePane",
+      "signature": "public static void ClearMessagePane()",
+      "summary": "Removes the message from the message pane.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_ClearMessagePane.htm"
+    },
+    {
+      "name": "HideProgressMeter()",
+      "signature": "public static void HideProgressMeter()",
+      "summary": "Ends, or hides, Rhino\u0027s status bar progress meter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_HideProgressMeter.htm"
+    },
+    {
+      "name": "HideProgressMeter(UInt32)",
+      "signature": "public static void HideProgressMeter(uint docSerialNumber)",
+      "summary": "Ends, or hides, Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "docSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The document runtime serial number.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_HideProgressMeter_1.htm"
+    },
+    {
+      "name": "SetDistancePane",
+      "signature": "public static void SetDistancePane(double distance)",
+      "summary": "Sets the distance pane to a distance value.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The distance value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_SetDistancePane.htm"
+    },
+    {
+      "name": "SetMessagePane",
+      "signature": "public static void SetMessagePane(string message)",
+      "summary": "Sets the message pane to a message.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_SetMessagePane.htm"
+    },
+    {
+      "name": "SetNumberPane",
+      "signature": "public static void SetNumberPane(double number)",
+      "summary": "Sets the number pane to a number value",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022number\u0022/\u003E documentation for \u0022M:Rhino.UI.StatusBar.SetNumberPane(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_SetNumberPane.htm"
+    },
+    {
+      "name": "SetPointPane",
+      "signature": "public static void SetPointPane(Point3d point)",
+      "summary": "Sets the point pane to a point value.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_SetPointPane.htm"
+    },
+    {
+      "name": "ShowProgressMeter(Int32, Int32, String, Boolean, Boolean)",
+      "signature": "public static int ShowProgressMeter(int lowerLimit, int upperLimit, string label, bool embedLabel, bool showPercentComplete)",
+      "summary": "Starts, or shows, Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "lowerLimit",
+          "type": "System.Int32",
+          "doc": "The lower limit of the progress meter\u0027s range.",
+          "optional": false
+        },
+        {
+          "name": "upperLimit",
+          "type": "System.Int32",
+          "doc": "The upper limit of the progress meter\u0027s range.",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The short description of the progress (e.g. \u0022Calculating\u0022, \u0022Meshing\u0022, etc)",
+          "optional": false
+        },
+        {
+          "name": "embedLabel",
+          "type": "System.Boolean",
+          "doc": "If true, then the label will be embedded in the progress meter. If false, then the label will appear to the left of the progress meter.",
+          "optional": false
+        },
+        {
+          "name": "showPercentComplete",
+          "type": "System.Boolean",
+          "doc": "If true, then the percent complete will appear in the progress meter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "1 - The progress meter was created successfully. 0 - The progress meter was not created. -1 - The progress meter was not created because some other process has already created it."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_ShowProgressMeter.htm"
+    },
+    {
+      "name": "ShowProgressMeter(UInt32, Int32, Int32, String, Boolean, Boolean)",
+      "signature": "public static int ShowProgressMeter(uint docSerialNumber, int lowerLimit, int upperLimit, string label, bool embedLabel, bool showPercentComplete)",
+      "summary": "Starts, or shows, Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "docSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The document runtime serial number.",
+          "optional": false
+        },
+        {
+          "name": "lowerLimit",
+          "type": "System.Int32",
+          "doc": "The lower limit of the progress meter\u0027s range.",
+          "optional": false
+        },
+        {
+          "name": "upperLimit",
+          "type": "System.Int32",
+          "doc": "The upper limit of the progress meter\u0027s range.",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The short description of the progress (e.g. \u0022Calculating\u0022, \u0022Meshing\u0022, etc)",
+          "optional": false
+        },
+        {
+          "name": "embedLabel",
+          "type": "System.Boolean",
+          "doc": "If true, then the label will be embedded in the progress meter. If false, then the label will appear to the left of the progress meter.",
+          "optional": false
+        },
+        {
+          "name": "showPercentComplete",
+          "type": "System.Boolean",
+          "doc": "If true, then the percent complete will appear in the progress meter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "1 - The progress meter was created successfully. 0 - The progress meter was not created. -1 - The progress meter was not created because some other process has already created it."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_ShowProgressMeter_1.htm"
+    },
+    {
+      "name": "UpdateProgressMeter(Int32, Boolean)",
+      "signature": "public static int UpdateProgressMeter(int position, bool absolute)",
+      "summary": "Sets the current position of Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "position",
+          "type": "System.Int32",
+          "doc": "The new value. This can be stated in absolute terms, or relative compared to the current position. The interval bounds are specified when you first show the bar.",
+          "optional": false
+        },
+        {
+          "name": "absolute",
+          "type": "System.Boolean",
+          "doc": "If true, then the progress meter is moved to position. If false, then the progress meter is moved position from the current position (relative).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The previous position if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_UpdateProgressMeter.htm"
+    },
+    {
+      "name": "UpdateProgressMeter(String, Int32, Boolean)",
+      "signature": "public static int UpdateProgressMeter(string label, int position, bool absolute)",
+      "summary": "Sets the label and current position of Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The short description of the progress (e.g. \u0022Calculating\u0022, \u0022Meshing\u0022, etc)",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Int32",
+          "doc": "The new value. This can be stated in absolute terms, or relative compared to the current position. The interval bounds are specified when you first show the bar. Note, if value is , only the label is updated.",
+          "optional": false
+        },
+        {
+          "name": "absolute",
+          "type": "System.Boolean",
+          "doc": "If true, then the progress meter is moved to position. If false, then the progress meter is moved position from the current position (relative).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The previous position if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_UpdateProgressMeter_1.htm"
+    },
+    {
+      "name": "UpdateProgressMeter(UInt32, Int32, Boolean)",
+      "signature": "public static int UpdateProgressMeter(uint docSerialNumber, int position, bool absolute)",
+      "summary": "Sets the current position of Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "docSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The document runtime serial number.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Int32",
+          "doc": "The new value. This can be stated in absolute terms, or relative compared to the current position. The interval bounds are specified when you first show the bar.",
+          "optional": false
+        },
+        {
+          "name": "absolute",
+          "type": "System.Boolean",
+          "doc": "If true, then the progress meter is moved to position. If false, then the progress meter is moved position from the current position (relative).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The previous position if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_UpdateProgressMeter_2.htm"
+    },
+    {
+      "name": "UpdateProgressMeter(UInt32, String, Int32, Boolean)",
+      "signature": "public static int UpdateProgressMeter(uint docSerialNumber, string label, int position, bool absolute)",
+      "summary": "Sets the label and current position of Rhino\u0027s status bar progress meter.",
+      "params": [
+        {
+          "name": "docSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The document runtime serial number.",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "System.String",
+          "doc": "The short description of the progress (e.g. \u0022Calculating\u0022, \u0022Meshing\u0022, etc)",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "System.Int32",
+          "doc": "The new value. This can be stated in absolute terms, or relative compared to the current position. The interval bounds are specified when you first show the bar. Note, if value is , only the label is updated.",
+          "optional": false
+        },
+        {
+          "name": "absolute",
+          "type": "System.Boolean",
+          "doc": "If true, then the progress meter is moved to position. If false, then the progress meter is moved position from the current position (relative).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The previous position if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_StatusBar_UpdateProgressMeter_3.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

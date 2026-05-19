@@ -1,0 +1,54 @@
+{
+  "name": "RhinoAccountsInvalidStateException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Occurs when the state returned by the Rhino Accounts server is not the same as the one sent to the server. It usually indicates the request has been tampered with.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsInvalidStateException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsInvalidStateException(Exception)",
+      "signature": "public RhinoAccountsInvalidStateException(Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsInvalidStateException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsInvalidStateException(String, Exception)",
+      "signature": "public RhinoAccountsInvalidStateException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsInvalidStateException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

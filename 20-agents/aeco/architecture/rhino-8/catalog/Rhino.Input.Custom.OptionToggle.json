@@ -1,0 +1,129 @@
+{
+  "name": "OptionToggle",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.OptionToggle\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_OptionToggle.htm",
+  "constructors": [
+    {
+      "name": "OptionToggle(Boolean, LocalizeStringPair, LocalizeStringPair)",
+      "signature": "public OptionToggle(bool initialValue, LocalizeStringPair offValue, LocalizeStringPair onValue)",
+      "summary": "Initializes a new instance of the OptionToggle class",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022initialValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionToggle.#ctor(System.Boolean,Rhino.UI.LocalizeStringPair,Rhino.UI.LocalizeStringPair)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "offValue",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "[Missing \u003Cparam name=\u0022offValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionToggle.#ctor(System.Boolean,Rhino.UI.LocalizeStringPair,Rhino.UI.LocalizeStringPair)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onValue",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "[Missing \u003Cparam name=\u0022onValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionToggle.#ctor(System.Boolean,Rhino.UI.LocalizeStringPair,Rhino.UI.LocalizeStringPair)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionToggle__ctor.htm"
+    },
+    {
+      "name": "OptionToggle(Boolean, String, String)",
+      "signature": "public OptionToggle(bool initialValue, string offValue, string onValue)",
+      "summary": "Initializes a new instance of the OptionToggle class",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022initialValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionToggle.#ctor(System.Boolean,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "offValue",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022offValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionToggle.#ctor(System.Boolean,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onValue",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022onValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionToggle.#ctor(System.Boolean,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionToggle__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the OptionToggle",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionToggle_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the OptionToggle and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionToggle_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Input_Custom_OptionToggle_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentValue",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_OptionToggle_CurrentValue.htm"
+    },
+    {
+      "name": "InitialValue",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Input_Custom_OptionToggle_InitialValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

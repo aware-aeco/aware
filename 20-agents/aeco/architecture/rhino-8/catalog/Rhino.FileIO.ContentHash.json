@@ -1,0 +1,207 @@
+{
+  "name": "ContentHash",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Contains information that is useful to uniquely identify an object. RemarksThis object is immutable.",
+  "remarks": "This object is immutable.",
+  "interfaces": [
+    "ICloneable",
+    "IEquatable\u003CContentHash\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_ContentHash.htm",
+  "constructors": [
+    {
+      "name": "ContentHash",
+      "signature": "protected ContentHash(ContentHash other)",
+      "summary": "Constructs a copy of a content hash.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "The other content hash to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public ContentHash Clone()",
+      "summary": "Creates a copy of this content hash. Because content hash is immutable, this can be used as a deep copy.",
+      "params": [],
+      "returns": {
+        "type": "ContentHash",
+        "doc": "A different instance of the same content hash."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_Clone.htm"
+    },
+    {
+      "name": "CreateFromFile",
+      "signature": "public static ContentHash CreateFromFile(string path)",
+      "summary": "Creates a new ContentHash, representing the content of a file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "A path. This can be null and can refer to a non-existing path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ContentHash",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.ContentHash.CreateFromFile(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_CreateFromFile.htm"
+    },
+    {
+      "name": "Equals(ContentHash)",
+      "signature": "public bool Equals(ContentHash other)",
+      "summary": "Determines if another content hash has the same value.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "The other content hash to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the two hashes are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_Equals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines if another object is a content hash with same value.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The other content hash to compare.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the two hashes are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_Equals_1.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets an hash code for this content hash. Two equal content hashes have equal hash code. The other way around might not be true.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "An hash code value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_GetHashCode.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(ContentHash left, ContentHash right)",
+      "summary": "Determines if two ContentHash instances are equal by value.",
+      "params": [
+        {
+          "name": "left",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "The first hash.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "The second hash.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if they are equal by value, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(ContentHash left, ContentHash right)",
+      "summary": "Determines if two ContentHash instances are different by value.",
+      "params": [
+        {
+          "name": "left",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "The first hash.",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.FileIO.ContentHash",
+          "doc": "The second hash.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if they are different by value, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_ContentHash_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ByteCount",
+      "type": "UInt64",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the length of the content, in bytes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_ContentHash_ByteCount.htm"
+    },
+    {
+      "name": "HashTime",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the hash time, rounded to seconds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_ContentHash_HashTime.htm"
+    },
+    {
+      "name": "Sha1ContentHash",
+      "type": "Byte[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 20-bytes long SHA1 hash of the content.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_ContentHash_Sha1ContentHash.htm"
+    },
+    {
+      "name": "Sha1NameHash",
+      "type": "Byte[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 20-bytes long SHA1 hash of the name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_ContentHash_Sha1NameHash.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,73 @@
+{
+  "name": "RhinoDocUndoRecord",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "This helper class manages calls to RhinoDoc.BeginUndoRecord and RhinoDoc.UndoRecord. Use this if you are modifying a document from some modeless user interface. Do not use this if you are just writing Rhino commands. ALWAYS call Dispose on this class. It is best if the class is placed in a using block so Dispose will be called for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoDocUndoRecord.htm",
+  "constructors": [
+    {
+      "name": "RhinoDocUndoRecord(RhinoDoc, String)",
+      "signature": "public RhinoDocUndoRecord(RhinoDoc doc, string description)",
+      "summary": "Begin a RhinoDoc undo record.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The active document.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "A description of the record.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoDocUndoRecord__ctor.htm"
+    },
+    {
+      "name": "RhinoDocUndoRecord(UInt32, String)",
+      "signature": "public RhinoDocUndoRecord(uint docRuntimeSerialNumber, string description)",
+      "summary": "Begin a RhinoDoc undo record.",
+      "params": [
+        {
+          "name": "docRuntimeSerialNumber",
+          "type": "System.UInt32",
+          "doc": "The active document\u0027s runtime serial number.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "A description of the record.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoDocUndoRecord__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "IDisposable implementaton",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoDocUndoRecord_Dispose.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

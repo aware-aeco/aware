@@ -1,0 +1,69 @@
+{
+  "name": "BlendMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Defines enumerated constants for display blend modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_BlendMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Zero",
+      "value": 0,
+      "summary": "Blends using 0."
+    },
+    {
+      "name": "One",
+      "value": 1,
+      "summary": "Blends using 1."
+    },
+    {
+      "name": "SourceColor",
+      "value": 768,
+      "summary": "Blends using source color."
+    },
+    {
+      "name": "OneMinusSourceColor",
+      "value": 769,
+      "summary": "Blends using 1-source color."
+    },
+    {
+      "name": "SourceAlpha",
+      "value": 770,
+      "summary": "Blends using the source alpha channel."
+    },
+    {
+      "name": "OneMinusSourceAlpha",
+      "value": 771,
+      "summary": "Blends using 1-the source alpha channel."
+    },
+    {
+      "name": "DestinationAlpha",
+      "value": 772,
+      "summary": "Blends using the destination alpha channel."
+    },
+    {
+      "name": "OneMinusDestinationAlpha",
+      "value": 773,
+      "summary": "Blends using 1-the destination alpha channel."
+    },
+    {
+      "name": "DestinationColor",
+      "value": 774,
+      "summary": "Blends using the destination color."
+    },
+    {
+      "name": "OneMinusDestinationColor",
+      "value": 775,
+      "summary": "Blends using 1-the destination color."
+    },
+    {
+      "name": "SourceAlphaSaturate",
+      "value": 776,
+      "summary": "Blends using the source alpha saturation."
+    }
+  ]
+}

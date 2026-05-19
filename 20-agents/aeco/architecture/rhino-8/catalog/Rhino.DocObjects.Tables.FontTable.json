@@ -1,0 +1,134 @@
+{
+  "name": "FontTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "Font tables store the list of fonts in a Rhino document. RemarksThe FontTable is now just a wrapper around the DimStyles table.",
+  "remarks": "The FontTable is now just a wrapper around the DimStyles table.",
+  "interfaces": [
+    "IEnumerable\u003CFont\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_FontTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindOrCreate(String, Boolean, Boolean)",
+      "signature": "public int FindOrCreate(string face, bool bold, bool italic)",
+      "summary": "Get a DimensionStyle with the specified characteristics the settings other than face, bold and italic are copied from the current style",
+      "params": [
+        {
+          "name": "face",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022face\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bold\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022italic\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_FontTable_FindOrCreate.htm"
+    },
+    {
+      "name": "FindOrCreate(String, Boolean, Boolean, DimensionStyle)",
+      "signature": "public int FindOrCreate(string face, bool bold, bool italic, DimensionStyle template_style)",
+      "summary": "Get a DimensionStyle with the specified characteristics",
+      "params": [
+        {
+          "name": "face",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022face\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean,Rhino.DocObjects.DimensionStyle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bold\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean,Rhino.DocObjects.DimensionStyle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022italic\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean,Rhino.DocObjects.DimensionStyle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "template_style",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "the settings other than face, bold and italic are copied from the template_style",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.FindOrCreate(System.String,System.Boolean,System.Boolean,Rhino.DocObjects.DimensionStyle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_FontTable_FindOrCreate_1.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CFont\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CFont\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.FontTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_FontTable_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of fonts in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_FontTable_Count.htm"
+    },
+    {
+      "name": "CurrentIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "At all times, there is a \u0022current\u0022 font. Unless otherwise specified, new dimension objects are assigned to the current font. The current font is never deleted. Returns: Zero based font index of the current font.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_FontTable_CurrentIndex.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_FontTable_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the font at a position.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_FontTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,111 @@
+{
+  "name": "CustomPostEffectAttribute",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.CustomPostEffectAttribute\u0022]",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PostEffects_CustomPostEffectAttribute.htm",
+  "constructors": [
+    {
+      "name": "CustomPostEffectAttribute",
+      "signature": "public CustomPostEffectAttribute(PostEffectType postEffectType, string name, PostEffectStyles styles = PostEffectStyles.ExecuteForProductionRendering|PostEffectStyles.ExecuteForRealtimeRendering|PostEffectStyles.DefaultOn, PostEffectExecuteWhileRenderingOptions executeWhileRenderingOption = PostEffectExecuteWhileRenderingOptions.Always, bool canDisplayHelp = false, int executeWhileRenderingDelay = 0)",
+      "summary": "Initializes a new instance of the CustomPostEffectAttribute class",
+      "params": [
+        {
+          "name": "postEffectType",
+          "type": "Rhino.Render.PostEffects.PostEffectType",
+          "doc": "[Missing \u003Cparam name=\u0022postEffectType\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.CustomPostEffectAttribute.#ctor(Rhino.Render.PostEffects.PostEffectType,System.String,Rhino.Render.PostEffects.PostEffectStyles,Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions,System.Boolean,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.CustomPostEffectAttribute.#ctor(Rhino.Render.PostEffects.PostEffectType,System.String,Rhino.Render.PostEffects.PostEffectStyles,Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions,System.Boolean,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "styles",
+          "type": "Rhino.Render.PostEffects.PostEffectStyles",
+          "doc": "[Missing \u003Cparam name=\u0022styles\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.CustomPostEffectAttribute.#ctor(Rhino.Render.PostEffects.PostEffectType,System.String,Rhino.Render.PostEffects.PostEffectStyles,Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions,System.Boolean,System.Int32)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "executeWhileRenderingOption",
+          "type": "Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions",
+          "doc": "[Missing \u003Cparam name=\u0022executeWhileRenderingOption\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.CustomPostEffectAttribute.#ctor(Rhino.Render.PostEffects.PostEffectType,System.String,Rhino.Render.PostEffects.PostEffectStyles,Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions,System.Boolean,System.Int32)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "canDisplayHelp",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022canDisplayHelp\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.CustomPostEffectAttribute.#ctor(Rhino.Render.PostEffects.PostEffectType,System.String,Rhino.Render.PostEffects.PostEffectStyles,Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions,System.Boolean,System.Int32)\u0022]",
+          "optional": true
+        },
+        {
+          "name": "executeWhileRenderingDelay",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022executeWhileRenderingDelay\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.CustomPostEffectAttribute.#ctor(Rhino.Render.PostEffects.PostEffectType,System.String,Rhino.Render.PostEffects.PostEffectStyles,Rhino.Render.PostEffects.PostEffectExecuteWhileRenderingOptions,System.Boolean,System.Int32)\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PostEffects_CustomPostEffectAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CanDisplayHelp",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_CustomPostEffectAttribute_CanDisplayHelp.htm"
+    },
+    {
+      "name": "ExecuteWhileRenderingDelay",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_CustomPostEffectAttribute_ExecuteWhileRenderingDelay.htm"
+    },
+    {
+      "name": "ExecuteWhileRenderingOption",
+      "type": "PostEffectExecuteWhileRenderingOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_CustomPostEffectAttribute_ExecuteWhileRenderingOption.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_CustomPostEffectAttribute_Name.htm"
+    },
+    {
+      "name": "PostEffectType",
+      "type": "PostEffectType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_CustomPostEffectAttribute_PostEffectType.htm"
+    },
+    {
+      "name": "Styles",
+      "type": "PostEffectStyles",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PostEffects_CustomPostEffectAttribute_Styles.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

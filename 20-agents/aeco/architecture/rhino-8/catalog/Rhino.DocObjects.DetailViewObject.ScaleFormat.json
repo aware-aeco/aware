@@ -1,0 +1,44 @@
+{
+  "name": "DetailViewObject.ScaleFormat",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Detail view object scale formats.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_DetailViewObject_ScaleFormat.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No formatting"
+    },
+    {
+      "name": "PageLengthToOne",
+      "value": 1,
+      "summary": "#:1"
+    },
+    {
+      "name": "OneToModelLength",
+      "value": 2,
+      "summary": "1:#"
+    },
+    {
+      "name": "OneInchToModelLengthFeet",
+      "value": 3,
+      "summary": "1\u0022 = #\u0027"
+    },
+    {
+      "name": "ModelLengthInchToOneFoot",
+      "value": 4,
+      "summary": "#\u0022 = 1\u0027"
+    },
+    {
+      "name": "ModelLengthInchToOneFootInch",
+      "value": 5,
+      "summary": "#\u0027 = 1\u0027-0\u0022"
+    }
+  ]
+}

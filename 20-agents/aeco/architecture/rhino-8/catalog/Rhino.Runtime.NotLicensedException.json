@@ -1,0 +1,65 @@
+{
+  "name": "NotLicensedException",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Exception thrown when calling functions in RhinoCommon and the application is executing without a license",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Runtime_NotLicensedException.htm",
+  "constructors": [
+    {
+      "name": "NotLicensedException()",
+      "signature": "public NotLicensedException()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_NotLicensedException__ctor.htm"
+    },
+    {
+      "name": "NotLicensedException(String)",
+      "signature": "public NotLicensedException(string message)",
+      "summary": "Create a new instance with a custom message",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NotLicensedException.#ctor(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_NotLicensedException__ctor_1.htm"
+    },
+    {
+      "name": "NotLicensedException(String, Exception)",
+      "signature": "public NotLicensedException(string message, Exception inner)",
+      "summary": "Create a new instance with a custom message and an inner exception",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NotLicensedException.#ctor(System.String,System.Exception)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "inner",
+          "type": "System.Exception",
+          "doc": "[Missing \u003Cparam name=\u0022inner\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NotLicensedException.#ctor(System.String,System.Exception)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Runtime_NotLicensedException__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,68 @@
+{
+  "name": "File3dmRenderEnvironments",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.File3dmRenderEnvironments\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CFile3dmRenderEnvironment\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmRenderEnvironments.htm",
+  "constructors": [
+    {
+      "name": "File3dmRenderEnvironments",
+      "signature": "public File3dmRenderEnvironments(File3dm f)",
+      "summary": "Initializes a new instance of the File3dmRenderEnvironments class",
+      "params": [
+        {
+          "name": "f",
+          "type": "Rhino.FileIO.File3dm",
+          "doc": "[Missing \u003Cparam name=\u0022f\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderEnvironments.#ctor(Rhino.FileIO.File3dm)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmRenderEnvironments__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Find",
+      "signature": "public File3dmRenderEnvironment Find(Guid g)",
+      "summary": "Finds an environment by its id, if possible. Returns null on failure.",
+      "params": [
+        {
+          "name": "g",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022g\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderEnvironments.Find(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dmRenderEnvironment",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderEnvironments.Find(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmRenderEnvironments_Find.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CFile3dmRenderEnvironment\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CFile3dmRenderEnvironment\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmRenderEnvironments.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmRenderEnvironments_GetEnumerator.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

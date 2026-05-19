@@ -1,0 +1,625 @@
+{
+  "name": "ObjRef",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Represents a reference to a Rhino object.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ObjRef.htm",
+  "constructors": [
+    {
+      "name": "ObjRef(Guid)",
+      "signature": "[ObsoleteAttribute(\u0022Use version that takes a document.\u0022)] public ObjRef(Guid id)",
+      "summary": "Initializes a new object reference from a globally unique identifier (Guid).",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The ID.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor_5.htm"
+    },
+    {
+      "name": "ObjRef(ObjRef)",
+      "signature": "public ObjRef(ObjRef other)",
+      "summary": "Copy constructor",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.#ctor(Rhino.DocObjects.ObjRef)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor.htm"
+    },
+    {
+      "name": "ObjRef(RhinoObject)",
+      "signature": "public ObjRef(RhinoObject rhinoObject)",
+      "summary": "Initializes a new object reference from a Rhino object.",
+      "params": [
+        {
+          "name": "rhinoObject",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The Rhino object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor_1.htm"
+    },
+    {
+      "name": "ObjRef(Guid, ComponentIndex)",
+      "signature": "[ObsoleteAttribute(\u0022Use version that takes a document.\u0022)] public ObjRef(Guid id, ComponentIndex ci)",
+      "summary": "Initializes a new object reference from a guid and component index. The component index is used to specify a \u0022piece\u0022 of the geometry",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The object\u0027s Id",
+          "optional": false
+        },
+        {
+          "name": "ci",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "a portion of the object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor_6.htm"
+    },
+    {
+      "name": "ObjRef(RhinoDoc, Guid)",
+      "signature": "public ObjRef(RhinoDoc doc, Guid id)",
+      "summary": "Initializes a new object reference from a globally unique identifier (Guid).",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The ID.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor_3.htm"
+    },
+    {
+      "name": "ObjRef(RhinoObject, PickContext)",
+      "signature": "public ObjRef(RhinoObject rhinoObject, PickContext pickContext)",
+      "summary": "Initialized a new object reference from a Rhino object and pick context",
+      "params": [
+        {
+          "name": "rhinoObject",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022rhinoObject\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.#ctor(Rhino.DocObjects.RhinoObject,Rhino.Input.Custom.PickContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pickContext",
+          "type": "Rhino.Input.Custom.PickContext",
+          "doc": "[Missing \u003Cparam name=\u0022pickContext\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.#ctor(Rhino.DocObjects.RhinoObject,Rhino.Input.Custom.PickContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor_2.htm"
+    },
+    {
+      "name": "ObjRef(RhinoDoc, Guid, ComponentIndex)",
+      "signature": "public ObjRef(RhinoDoc doc, Guid id, ComponentIndex ci)",
+      "summary": "Initializes a new object reference from a guid and component index. The component index is used to specify a \u0022piece\u0022 of the geometry",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The Rhino document",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The object\u0027s Id",
+          "optional": false
+        },
+        {
+          "name": "ci",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "a portion of the object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Brep",
+      "signature": "public Brep Brep()",
+      "summary": "Gets the brep if this reference geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "Brep",
+        "doc": "A boundary representation; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Brep.htm"
+    },
+    {
+      "name": "ClippingPlaneSurface",
+      "signature": "public ClippingPlaneSurface ClippingPlaneSurface()",
+      "summary": "Gets the clipping plane surface if this reference targeted one.",
+      "params": [],
+      "returns": {
+        "type": "ClippingPlaneSurface",
+        "doc": "A clipping plane surface, or null if this reference targeted something else."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_ClippingPlaneSurface.htm"
+    },
+    {
+      "name": "Curve",
+      "signature": "public Curve Curve()",
+      "summary": "Gets the curve if this reference targeted one.",
+      "params": [],
+      "returns": {
+        "type": "Curve",
+        "doc": "A curve, or null if this reference targeted something else."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Curve.htm"
+    },
+    {
+      "name": "CurveParameter",
+      "signature": "public Curve CurveParameter(out double parameter)",
+      "summary": "If the reference geometry is a curve or edge with a selection point, then this gets the parameter of the selection point.",
+      "remarks": "If a curve was selected and CurveParameter is called and the SelectionMethod() is not 1 (point pick on object), the curve will be returned and parameter will be set to the start parameter of the picked curve. This can be misleading so it may be necessary to call SelectionMethod() first, before calling CurveParameter to get the desired information.",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "System.Double",
+          "doc": "The parameter of the selection point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "If the selection point was on a curve or edge, then the curve/edge is returned, otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_CurveParameter.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Dispose_1.htm"
+    },
+    {
+      "name": "Edge",
+      "signature": "public BrepEdge Edge()",
+      "summary": "Gets the edge if this reference geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "BrepEdge",
+        "doc": "A boundary representation edge; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Edge.htm"
+    },
+    {
+      "name": "Face",
+      "signature": "public BrepFace Face()",
+      "summary": "If the referenced geometry is a brep face, a brep with one face, or a surface, this returns the brep face.",
+      "params": [],
+      "returns": {
+        "type": "BrepFace",
+        "doc": "A boundary representation face; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Face.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Finalize.htm"
+    },
+    {
+      "name": "Geometry",
+      "signature": "public GeometryBase Geometry()",
+      "summary": "Gets the geometry linked to the object targeted by this reference.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "The geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Geometry.htm"
+    },
+    {
+      "name": "Hatch",
+      "signature": "public Hatch Hatch()",
+      "summary": "Gets the hatch if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "Hatch",
+        "doc": "A hatch; or null if the referenced object is not a hatch"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Hatch.htm"
+    },
+    {
+      "name": "InstanceDefinitionPart",
+      "signature": "public RhinoObject InstanceDefinitionPart()",
+      "summary": "If sub-object selection is enabled and a piece of an instance reference is selected, this will return the selected piece.",
+      "params": [],
+      "returns": {
+        "type": "RhinoObject",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.InstanceDefinitionPart\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_InstanceDefinitionPart.htm"
+    },
+    {
+      "name": "Light",
+      "signature": "public Light Light()",
+      "summary": "Gets the light if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "Light",
+        "doc": "A light; or null if the referenced object is not a light, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Light.htm"
+    },
+    {
+      "name": "Mesh",
+      "signature": "public Mesh Mesh()",
+      "summary": "Gets the mesh if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "Mesh",
+        "doc": "A mesh; or null if the referenced object is not a mesh, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Mesh.htm"
+    },
+    {
+      "name": "Object",
+      "signature": "public RhinoObject Object()",
+      "summary": "Returns the referenced Rhino object.",
+      "params": [],
+      "returns": {
+        "type": "RhinoObject",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.Object\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Object.htm"
+    },
+    {
+      "name": "Point",
+      "signature": "public Point Point()",
+      "summary": "Gets the point if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "Point",
+        "doc": "A point; or null if the referenced object is not a point, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Point.htm"
+    },
+    {
+      "name": "PointCloud",
+      "signature": "public PointCloud PointCloud()",
+      "summary": "Gets the point cloud if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "PointCloud",
+        "doc": "A point cloud; or null if the referenced object is not a point cloud, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_PointCloud.htm"
+    },
+    {
+      "name": "SelectionMethod",
+      "signature": "public SelectionMethod SelectionMethod()",
+      "summary": "Gets the method used to select this object.",
+      "params": [],
+      "returns": {
+        "type": "SelectionMethod",
+        "doc": "The method used to select this object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SelectionMethod.htm"
+    },
+    {
+      "name": "SelectionPoint",
+      "signature": "public Point3d SelectionPoint()",
+      "summary": "If the object was selected by picking a point on it, then SelectionPoint() returns the point where the selection occurred, otherwise it returns Point3d.Unset.",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point where the selection occurred or Point3d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SelectionPoint.htm"
+    },
+    {
+      "name": "SelectionView",
+      "signature": "public RhinoView SelectionView()",
+      "summary": "If the object was interactively selected in a particular viewport, then SelectionView() returns the view where the object was selected.",
+      "params": [],
+      "returns": {
+        "type": "RhinoView",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.SelectionView\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SelectionView.htm"
+    },
+    {
+      "name": "SelectionViewDetailSerialNumber",
+      "signature": "public uint SelectionViewDetailSerialNumber()",
+      "summary": "If the object was interactively selected in a page space detail view, then SelectionViewDetailSerialNumber() returns the CRhinoObject serial number of the detail view object. Use SelectionView() to get the page view that contains the detail view object. If SelectionViewDetailSerialNumber() returns 0, then the selection did not happen in a detail view.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.SelectionViewDetailSerialNumber\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SelectionViewDetailSerialNumber.htm"
+    },
+    {
+      "name": "SetSelectionComponent",
+      "signature": "public void SetSelectionComponent(ComponentIndex componentIndex)",
+      "summary": "When an object is selected by picking a sub-object, SetSelectionComponent may be used to identify the sub-object.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "[Missing \u003Cparam name=\u0022componentIndex\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ObjRef.SetSelectionComponent(Rhino.Geometry.ComponentIndex)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SetSelectionComponent.htm"
+    },
+    {
+      "name": "SubD",
+      "signature": "public SubD SubD()",
+      "summary": "Gets the SubD if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "SubD",
+        "doc": "A SubD; or null if the referenced object is not a SubD, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SubD.htm"
+    },
+    {
+      "name": "SubDEdge",
+      "signature": "public SubDEdge SubDEdge()",
+      "summary": "Gets the SubDEdge if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "SubDEdge",
+        "doc": "A SubDEdge; or null if the referenced object is not a SubDEdge, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SubDEdge.htm"
+    },
+    {
+      "name": "SubDFace",
+      "signature": "public SubDFace SubDFace()",
+      "summary": "Gets the SubDFace if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "SubDFace",
+        "doc": "A SubDFace; or null if the referenced object is not a SubDFace, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SubDFace.htm"
+    },
+    {
+      "name": "SubDVertex",
+      "signature": "public SubDVertex SubDVertex()",
+      "summary": "Gets the SubDVertex if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "SubDVertex",
+        "doc": "A SubDVertex; or null if the referenced object is not a SubDVertex, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SubDVertex.htm"
+    },
+    {
+      "name": "Surface",
+      "signature": "public Surface Surface()",
+      "summary": "Gets the surface if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "Surface",
+        "doc": "A surface; or null if the referenced object is not a surface, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Surface.htm"
+    },
+    {
+      "name": "SurfaceParameter",
+      "signature": "public Surface SurfaceParameter(out double u, out double v)",
+      "summary": "If the reference geometry is a surface, brep with one face, or surface edge with a selection point, then this gets the surface parameters of the selection point.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "The U value is assigned to this out parameter during the call.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "The V value is assigned to this out parameter during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Surface",
+        "doc": "If the selection point was on a surface, then the surface is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_SurfaceParameter.htm"
+    },
+    {
+      "name": "TextDot",
+      "signature": "public TextDot TextDot()",
+      "summary": "Gets the text dot if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "TextDot",
+        "doc": "A text dot; or null if the referenced object is not a text dot, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_TextDot.htm"
+    },
+    {
+      "name": "TextEntity",
+      "signature": "public TextEntity TextEntity()",
+      "summary": "Gets the text entity if the referenced geometry is one.",
+      "params": [],
+      "returns": {
+        "type": "TextEntity",
+        "doc": "A text entity; or null if the referenced object is not a text entity, or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_TextEntity.htm"
+    },
+    {
+      "name": "Trim",
+      "signature": "public BrepTrim Trim()",
+      "summary": "If the referenced geometry is an edge of a surface, this returns the associated brep trim.",
+      "params": [],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "A boundary representation trim; or null on error"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_ObjRef_Trim.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that owns this object reference.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ObjRef_Document.htm"
+    },
+    {
+      "name": "GeometryComponentIndex",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the component index of the referenced (sub) geometry. Some objects have sub-objects that are valid pieces of geometry. For example, breps have edges and faces that are valid curves and surfaces. Each sub-object has a component index that is \u003E 0. The parent geometry has a component index = -1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ObjRef_GeometryComponentIndex.htm"
+    },
+    {
+      "name": "ObjectId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the id of the referenced Rhino object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ObjRef_ObjectId.htm"
+    },
+    {
+      "name": "RuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "If \u003E 0, then this is the value of a Rhino object\u0027s serial number field. The serial number is used instead of the pointer to prevent crashes in cases when the RhinoObject is deleted but an ObjRef continues to reference the Rhino object. The value of RuntimeSerialNumber is not saved in archives because it generally changes if you save and reload an archive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_ObjRef_RuntimeSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

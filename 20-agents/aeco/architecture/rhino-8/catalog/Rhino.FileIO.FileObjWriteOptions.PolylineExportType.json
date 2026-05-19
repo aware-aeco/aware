@@ -1,0 +1,29 @@
+{
+  "name": "FileObjWriteOptions.PolylineExportType",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Determines how polylines will be written to the file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileObjWriteOptions_PolylineExportType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Bspline",
+      "value": 0,
+      "summary": "Polyline is exported as a degree 1 Bspline (this has been the historical method)"
+    },
+    {
+      "name": "Single",
+      "value": 1,
+      "summary": "Polyline is exported as a single OBJ \u0022l\u0022 object with multiple indices to \u0022v\u0022 objects"
+    },
+    {
+      "name": "Multiple",
+      "value": 2,
+      "summary": "Polyline is exported as multiple OBJ \u0022l\u0022 objects, each with 2 indices to \u0022v\u0022 objects"
+    }
+  ]
+}

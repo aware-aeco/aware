@@ -1,0 +1,57 @@
+{
+  "name": "File3dmNotes",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents the notes information stored in a 3dm file.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmNotes.htm",
+  "constructors": [
+    {
+      "name": "File3dmNotes",
+      "signature": "public File3dmNotes()",
+      "summary": "Creates empty default notes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmNotes__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsHtml",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text format. If the format is HTML, true; false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmNotes_IsHtml.htm"
+    },
+    {
+      "name": "IsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the notes visibility. If the notes are visible, true; false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmNotes_IsVisible.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text content of the notes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmNotes_Notes.htm"
+    },
+    {
+      "name": "WindowRectangle",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the position of the Notes when they were saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmNotes_WindowRectangle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

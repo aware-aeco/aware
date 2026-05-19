@@ -1,0 +1,153 @@
+{
+  "name": "RenderContentKindList",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Models a collection of kinds.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_RenderContentKindList.htm",
+  "constructors": [
+    {
+      "name": "RenderContentKindList()",
+      "signature": "public RenderContentKindList()",
+      "summary": "Construct an empty kind list",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList__ctor.htm"
+    },
+    {
+      "name": "RenderContentKindList(IntPtr)",
+      "signature": "public RenderContentKindList(IntPtr pRdkRenderContentKindList)",
+      "summary": "Construct from native pointer - internal use only.",
+      "params": [
+        {
+          "name": "pRdkRenderContentKindList",
+          "type": "System.IntPtr",
+          "doc": "C\u002B\u002B pointer to a kind list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList__ctor_2.htm"
+    },
+    {
+      "name": "RenderContentKindList(RenderContentKindList)",
+      "signature": "public RenderContentKindList(RenderContentKindList kind_list)",
+      "summary": "Construct a kind list from another.",
+      "params": [
+        {
+          "name": "kind_list",
+          "type": "Rhino.Render.RenderContentKindList",
+          "doc": "Kind list to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(RenderContentKind kind)",
+      "summary": "Add a kind to a kind list.",
+      "params": [
+        {
+          "name": "kind",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "The RenderContent kind to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList_Add.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(RenderContentKind kind)",
+      "summary": "Query whether or not the collection contains a particular kind designation.",
+      "params": [
+        {
+          "name": "kind",
+          "type": "Rhino.Render.RenderContentKind",
+          "doc": "[Missing \u003Cparam name=\u0022kind\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentKindList.Contains(Rhino.Render.RenderContentKind)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the kind is in the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList_Contains.htm"
+    },
+    {
+      "name": "Count",
+      "signature": "public int Count()",
+      "summary": "The number of kinds in the collection",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of kinds in the collection"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList_Count.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose a kind list.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Kind list finalizer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList_Finalize.htm"
+    },
+    {
+      "name": "SingleKind",
+      "signature": "public RenderContentKind SingleKind()",
+      "summary": "The single kind in the list. If the list does not contain exactly one kind, returns \u0027None\u0027.",
+      "params": [],
+      "returns": {
+        "type": "RenderContentKind",
+        "doc": "A RenderContentKind"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_RenderContentKindList_SingleKind.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_RenderContentKindList_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

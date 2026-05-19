@@ -1,0 +1,68 @@
+{
+  "name": "File3dmEmbeddedFiles",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.File3dmEmbeddedFiles\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CFile3dmEmbeddedFile\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmEmbeddedFiles.htm",
+  "constructors": [
+    {
+      "name": "File3dmEmbeddedFiles",
+      "signature": "public File3dmEmbeddedFiles(File3dm f)",
+      "summary": "Initializes a new instance of the File3dmEmbeddedFiles class",
+      "params": [
+        {
+          "name": "f",
+          "type": "Rhino.FileIO.File3dm",
+          "doc": "[Missing \u003Cparam name=\u0022f\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmEmbeddedFiles.#ctor(Rhino.FileIO.File3dm)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmEmbeddedFiles__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public bool Add(string filename)",
+      "summary": "Add a new embedded file and load it from a local file.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022filename\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmEmbeddedFiles.Add(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmEmbeddedFiles.Add(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmEmbeddedFiles_Add.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CFile3dmEmbeddedFile\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CFile3dmEmbeddedFile\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmEmbeddedFiles.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmEmbeddedFiles_GetEnumerator.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "CoordinateSystem",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for coordinate systems to use as references.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_CoordinateSystem.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "World",
+      "value": 0,
+      "summary": "The world coordinate system. This has origin (0,0,0), X unit axis is (1, 0, 0) and Y unit axis is (0, 1, 0)."
+    },
+    {
+      "name": "Camera",
+      "value": 1,
+      "summary": "The camera coordinate system."
+    },
+    {
+      "name": "Clip",
+      "value": 2,
+      "summary": "The clip coordinate system."
+    },
+    {
+      "name": "Screen",
+      "value": 3,
+      "summary": "The screen coordinate system."
+    }
+  ]
+}

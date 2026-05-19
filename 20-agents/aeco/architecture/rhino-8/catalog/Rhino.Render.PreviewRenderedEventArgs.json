@@ -1,0 +1,50 @@
+{
+  "name": "PreviewRenderedEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "PreviewRenderedEventArgs is raised when a content preview has been rendered",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PreviewRenderedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "PreviewRenderedEventArgs",
+      "signature": "public PreviewRenderedEventArgs()",
+      "summary": "Initializes a new instance of the PreviewRenderedEventArgs class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewRenderedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Bitmap",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": true,
+      "summary": "The Bitmap of the rendered preview",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PreviewRenderedEventArgs_Bitmap.htm"
+    },
+    {
+      "name": "PreviewJobSignature",
+      "type": "PreviewJobSignature",
+      "getter": true,
+      "setter": true,
+      "summary": "The Preview Job Signature associated with the rendered preview",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PreviewRenderedEventArgs_PreviewJobSignature.htm"
+    },
+    {
+      "name": "Quality",
+      "type": "Utilities.PreviewQuality",
+      "getter": true,
+      "setter": true,
+      "summary": "The Bitmap of the rendered preview",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PreviewRenderedEventArgs_Quality.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

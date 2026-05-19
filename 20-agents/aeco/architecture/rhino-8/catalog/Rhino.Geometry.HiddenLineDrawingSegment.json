@@ -1,0 +1,62 @@
+{
+  "name": "HiddenLineDrawingSegment",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "The results of HiddenLineDrawing calculation are a collection of segments. A segment is a sub-curve of a HiddenLineDrawingObjectCurve.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_HiddenLineDrawingSegment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurveGeometry",
+      "type": "Curve",
+      "getter": true,
+      "setter": false,
+      "summary": "The actual curve geometry",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingSegment_CurveGeometry.htm"
+    },
+    {
+      "name": "CurveSideFills",
+      "type": "HiddenLineDrawingSegment.SideFill[]",
+      "getter": true,
+      "setter": false,
+      "summary": "The SideFill fields are only valid for visible curves. With respect to the HiddenLineDrawing, the region to the left (or right respectively) of this curve is described by CurveSideFills[0] or CurveSideFills[1], respectively. If exactly one of these regions is empty this is a scene silhouette. If this region contains a surface it is either a surface which in 3-D is adjacent to this edge or it an surface that is further away from the camera, we call this a shadow surface. unknown is used for unset values and for projecting curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingSegment_CurveSideFills.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of this curve in HiddenLineDrawing.Curves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingSegment_Index.htm"
+    },
+    {
+      "name": "IsSceneSilhouette",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if this curve is a scene silhouette.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingSegment_IsSceneSilhouette.htm"
+    },
+    {
+      "name": "ParentCurve",
+      "type": "HiddenLineDrawingObjectCurve",
+      "getter": true,
+      "setter": false,
+      "summary": "This curve is a sub-curve of the returned HiddenLineDrawingFullCurve object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingSegment_ParentCurve.htm"
+    },
+    {
+      "name": "SegmentVisibility",
+      "type": "HiddenLineDrawingSegment.Visibility",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the segment\u0027s visibility",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_HiddenLineDrawingSegment_SegmentVisibility.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

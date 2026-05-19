@@ -1,0 +1,919 @@
+{
+  "name": "Point2d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the two coordinates of a point in two-dimensional space, using Double-precision floating point numbers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Point2d.htm",
+  "constructors": [
+    {
+      "name": "Point2d(Point2d)",
+      "signature": "public Point2d(Point2d point)",
+      "summary": "Initializes a new instance of Point2d by copying another Point2d.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The point that will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d__ctor.htm"
+    },
+    {
+      "name": "Point2d(Point3d)",
+      "signature": "public Point2d(Point3d point)",
+      "summary": "Initializes a new instance of Point3d by copying the first two coordinates of a Point3d.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point that will be used: the Z (third) coordinate is discarded.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d__ctor_1.htm"
+    },
+    {
+      "name": "Point2d(Vector2d)",
+      "signature": "public Point2d(Vector2d vector)",
+      "summary": "Initializes a new instance of Point2d by converting a vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "The vector that will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d__ctor_2.htm"
+    },
+    {
+      "name": "Point2d(Double, Double)",
+      "signature": "public Point2d(double x, double y)",
+      "summary": "Initializes a new instance of Point2d from coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X (first) coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y (second) coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(Point2d, Point2d)",
+      "signature": "public static Point2d Add(Point2d point1, Point2d point2)",
+      "summary": "Adds a point with a point. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise summed with the other point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Add.htm"
+    },
+    {
+      "name": "Add(Point2d, Vector2d)",
+      "signature": "public static Point2d Add(Point2d point, Vector2d vector)",
+      "summary": "Adds a point with a vector. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise summed with the vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Add_1.htm"
+    },
+    {
+      "name": "Add(Vector2d, Point2d)",
+      "signature": "public static Point2d Add(Vector2d vector, Point2d point)",
+      "summary": "Adds a vector with a point. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise summed with the vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Add_2.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Point2d other)",
+      "summary": "Compares this Point2d with another Point2d. Coordinates evaluation priority is first X, then Y.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The other Point2d to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this.X \u003C other.X-1: if this.X == other.X and this.Y \u003C other.Y\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_CompareTo.htm"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "public double DistanceTo(Point2d other)",
+      "summary": "Computes the distance between two points.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Another point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The length of the line between the two points, or 0 if either point is invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_DistanceTo.htm"
+    },
+    {
+      "name": "DistanceToSquared",
+      "signature": "public double DistanceToSquared(Point2d other)",
+      "summary": "Computes the square of the distance between two 2d points. This method is usually largely faster than DistanceTo().",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Other point for squared distance measurement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The squared length of the line between this and the other point; or 0 if any of the points is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_DistanceToSquared.htm"
+    },
+    {
+      "name": "Divide",
+      "signature": "public static Point2d Divide(Point2d point, double t)",
+      "summary": "Divides a Point2d by a number. (Provided for languages that do not support operator overloading. You can use the / operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Divide.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Point2d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point2d",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Point2d.EpsilonEquals(Rhino.Geometry.Point2d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified System.Object is a Point2d and has the same values as the present point.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a Point2d and has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Point2d)",
+      "signature": "public bool Equals(Point2d point)",
+      "summary": "Determines whether the specified Point2d has the same values as the present point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The specified point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if point has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes a hash number that represents the current point.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A hash code that is not unique for each point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_GetHashCode.htm"
+    },
+    {
+      "name": "Multiply(Double, Point2d)",
+      "signature": "public static Point2d Multiply(double t, Point2d point)",
+      "summary": "Multiplies a Point2d by a number. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Point2d, Double)",
+      "signature": "public static Point2d Multiply(Point2d point, double t)",
+      "summary": "Multiplies a Point2d by a number. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Multiply.htm"
+    },
+    {
+      "name": "Subtract(Point2d, Point2d)",
+      "signature": "public static Vector2d Subtract(Point2d point1, Point2d point2)",
+      "summary": "Subtracts the second point from the first point. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point (minuend).",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point (subtrahend).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is point1 coordinate-wise subtracted by point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Subtract.htm"
+    },
+    {
+      "name": "Subtract(Point2d, Vector2d)",
+      "signature": "public static Point2d Subtract(Point2d point, Vector2d vector)",
+      "summary": "Subtracts a vector from a point. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise subtracted by vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Subtract_1.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Constructs the string representation for the current point.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The point representation in the form X,Y."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public void Transform(Transform xform)",
+      "summary": "Transforms the present point in place. The transformation matrix acts on the left of the point. i.e., result = transformation*point",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_Transform.htm"
+    },
+    {
+      "name": "Addition(Point2d, Point2d)",
+      "signature": "public static Point2d operator \u002B(Point2d point1, Point2d point2)",
+      "summary": "Adds a point with a point.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise summed with the other point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Addition.htm"
+    },
+    {
+      "name": "Addition(Point2d, Vector2d)",
+      "signature": "public static Point2d operator \u002B(Point2d point, Vector2d vector)",
+      "summary": "Adds a point with a vector.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise summed with the vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Addition_1.htm"
+    },
+    {
+      "name": "Addition(Vector2d, Point2d)",
+      "signature": "public static Point2d operator \u002B(Vector2d vector, Point2d point)",
+      "summary": "Adds a vector with a point.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise summed with the vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Addition_2.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static Point2d operator /(Point2d point, double t)",
+      "summary": "Divides a Point2d by a number.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Division.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Point2d a, Point2d b)",
+      "summary": "Determines whether two Point2d have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the coordinates of the two points are exactly equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Equality.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(Point2d a, Point2d b)",
+      "summary": "Determines whether the first specified Point2d comes after (has superior sorting value than) the second point. Coordinates evaluation priority is first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(Point2d a, Point2d b)",
+      "summary": "Determines whether the first specified Point2d comes after (has superior sorting value than) the second point, or it is equal to it. Coordinates evaluation priority is first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y \u003E= b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Point2d a, Point2d b)",
+      "summary": "Determines whether two Point2d have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two points differ in any coordinate; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(Point2d a, Point2d b)",
+      "summary": "Determines whether the first specified point comes before (has inferior sorting value than) the second point. Coordinates evaluation priority is first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(Point2d a, Point2d b)",
+      "summary": "Determines whether the first specified point comes before (has inferior sorting value than) the second point, or it is equal to it. Coordinates evaluation priority is first X, then Y.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y \u003C= b.Y; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Multiply(Double, Point2d)",
+      "signature": "public static Point2d operator *(double t, Point2d point)",
+      "summary": "Multiplies a Point2d by a number.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Point2d, Double)",
+      "signature": "public static Point2d operator *(Point2d point, double t)",
+      "summary": "Multiplies a Point2d by a number.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Multiply.htm"
+    },
+    {
+      "name": "Subtraction(Point2d, Point2d)",
+      "signature": "public static Vector2d operator -(Point2d point1, Point2d point2)",
+      "summary": "Subtracts point2 from point1.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point (minuend).",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point (subtrahend).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "A new vector that is point1 coordinate-wise subtracted by point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Subtraction.htm"
+    },
+    {
+      "name": "Subtraction(Point2d, Vector2d)",
+      "signature": "public static Point2d operator -(Point2d point, Vector2d vector)",
+      "summary": "Subtracts a vector from a point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector2d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "A new point that is coordinate-wise subtracted by vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point2d_op_Subtraction_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If any coordinate of a point is UnsetValue, then the point is not valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_IsValid.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Accesses the coordinates of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_Item.htm"
+    },
+    {
+      "name": "MaximumCoordinate",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the largest valid coordinate, or RhinoMath.UnsetValue if no coordinate is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_MaximumCoordinate.htm"
+    },
+    {
+      "name": "MinimumCoordinate",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smallest (both positive and negative) valid coordinate, or RhinoMath.UnsetValue if no coordinate is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_MinimumCoordinate.htm"
+    },
+    {
+      "name": "Origin",
+      "type": "Point2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point at 0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_Origin.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Point2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point at RhinoMath.UnsetValue,RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_Unset.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X (first) coordinate of the point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y (second) coordinate of the point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point2d_Y.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

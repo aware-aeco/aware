@@ -1,0 +1,55 @@
+{
+  "name": "LinetypeTableEventArgs",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "LinetypeTable event arguments Since: 8.0",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_LinetypeTableEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "The document in which the event occurred.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LinetypeTableEventArgs_Document.htm"
+    },
+    {
+      "name": "EventType",
+      "type": "LinetypeTableEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "The event type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LinetypeTableEventArgs_EventType.htm"
+    },
+    {
+      "name": "LinetypeIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of the linetype.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LinetypeTableEventArgs_LinetypeIndex.htm"
+    },
+    {
+      "name": "NewState",
+      "type": "Linetype",
+      "getter": true,
+      "setter": false,
+      "summary": "The new state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LinetypeTableEventArgs_NewState.htm"
+    },
+    {
+      "name": "OldState",
+      "type": "Linetype",
+      "getter": true,
+      "setter": false,
+      "summary": "The old state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_LinetypeTableEventArgs_OldState.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

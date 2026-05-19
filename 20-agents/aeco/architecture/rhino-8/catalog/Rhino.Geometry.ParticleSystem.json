@@ -1,0 +1,123 @@
+{
+  "name": "ParticleSystem",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Geometry.ParticleSystem\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CParticle\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_ParticleSystem.htm",
+  "constructors": [
+    {
+      "name": "ParticleSystem",
+      "signature": "public ParticleSystem()",
+      "summary": "Initializes a new instance of the ParticleSystem class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ParticleSystem__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public virtual bool Add(Particle particle)",
+      "summary": "Adds a particle to this ParticleSystem. A Particle can only be in one system at a time. If the Particle already exists in a different system, this function will return false. You should remove the particle from the other system first before adding it.",
+      "params": [
+        {
+          "name": "particle",
+          "type": "Rhino.Geometry.Particle",
+          "doc": "A particle to be added.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this particle was added to the system or if is already in the system. false if the particle already exists in a different system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ParticleSystem_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public virtual void Clear()",
+      "summary": "Remove all Particles from this system.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ParticleSystem_Clear.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CParticle\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CParticle\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.ParticleSystem.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ParticleSystem_GetEnumerator.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public virtual void Remove(Particle particle)",
+      "summary": "Removes a single particle from this system.",
+      "params": [
+        {
+          "name": "particle",
+          "type": "Rhino.Geometry.Particle",
+          "doc": "The particle to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ParticleSystem_Remove.htm"
+    },
+    {
+      "name": "Update",
+      "signature": "public virtual void Update()",
+      "summary": "Calls Update on every particle in the system.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_ParticleSystem_Update.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ParticleSystem_BoundingBox.htm"
+    },
+    {
+      "name": "DisplaySizesInWorldUnits",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ParticleSystem_DisplaySizesInWorldUnits.htm"
+    },
+    {
+      "name": "DrawRequiresDepthSorting",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_ParticleSystem_DrawRequiresDepthSorting.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

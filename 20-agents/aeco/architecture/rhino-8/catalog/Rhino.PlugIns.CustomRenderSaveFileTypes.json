@@ -1,0 +1,43 @@
+{
+  "name": "CustomRenderSaveFileTypes",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.PlugIns.CustomRenderSaveFileTypes\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PlugIns_CustomRenderSaveFileTypes.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RegisterFileType",
+      "signature": "public void RegisterFileType(IEnumerable\u003Cstring\u003E extensions, string description, CustomRenderSaveFileTypes.SaveFileHandler saveFileHandler)",
+      "summary": "Call this method to register a custom file save type with the render output window save dialog.",
+      "params": [
+        {
+          "name": "extensions",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "List of one or more file extension associated with this custom type, for example: HDR, HDRI",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "File extension description which appears in the file save dialog file type combo box.",
+          "optional": false
+        },
+        {
+          "name": "saveFileHandler",
+          "type": "Rhino.PlugIns.CustomRenderSaveFileTypes.SaveFileHandler",
+          "doc": "[Missing \u003Cparam name=\u0022saveFileHandler\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.CustomRenderSaveFileTypes.RegisterFileType(System.Collections.Generic.IEnumerable{System.String},System.String,Rhino.PlugIns.CustomRenderSaveFileTypes.SaveFileHandler)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PlugIns_CustomRenderSaveFileTypes_RegisterFileType.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

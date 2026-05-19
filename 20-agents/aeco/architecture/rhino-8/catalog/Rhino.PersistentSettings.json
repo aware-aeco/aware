@@ -1,0 +1,4104 @@
+{
+  "name": "PersistentSettings",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "A dictionary of SettingValue items.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_PersistentSettings.htm",
+  "constructors": [
+    {
+      "name": "PersistentSettings",
+      "signature": "protected PersistentSettings(SerializationInfo info, StreamingContext context)",
+      "summary": "Initializes a new instance of the PersistentSettings class",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddChild",
+      "signature": "public PersistentSettings AddChild(string key)",
+      "summary": "Call this method to add a new child key, if the key is exists then the existing key is returned otherwise a new empty PersistentSettings child key is added and the new settings are returned.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key to add to the child dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PersistentSettings",
+        "doc": "If the key is exists then the existing key is returned otherwise a new empty PersistentSettings child key is added and the new settings are returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_AddChild.htm"
+    },
+    {
+      "name": "ClearChangedFlag",
+      "signature": "public void ClearChangedFlag()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_ClearChangedFlag.htm"
+    },
+    {
+      "name": "ContainsChangedValues",
+      "signature": "public bool ContainsChangedValues()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.ContainsChangedValues\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_ContainsChangedValues.htm"
+    },
+    {
+      "name": "ContainsModifiedValues",
+      "signature": "public bool ContainsModifiedValues(PersistentSettings allUserSettings)",
+      "summary": "",
+      "params": [
+        {
+          "name": "allUserSettings",
+          "type": "Rhino.PersistentSettings",
+          "doc": "[Missing \u003Cparam name=\u0022allUserSettings\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.ContainsModifiedValues(Rhino.PersistentSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.ContainsModifiedValues(Rhino.PersistentSettings)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_ContainsModifiedValues.htm"
+    },
+    {
+      "name": "DeleteChild",
+      "signature": "public void DeleteChild(string key)",
+      "summary": "Call this method to delete a child settings key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.DeleteChild(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_DeleteChild.htm"
+    },
+    {
+      "name": "DeleteItem",
+      "signature": "public void DeleteItem(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.DeleteItem(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_DeleteItem.htm"
+    },
+    {
+      "name": "FromPlugInId",
+      "signature": "public static PersistentSettings FromPlugInId(Guid pluginId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.FromPlugInId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PersistentSettings",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.FromPlugInId(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_FromPlugInId.htm"
+    },
+    {
+      "name": "GetBool(String)",
+      "signature": "public bool GetBool(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetBool.htm"
+    },
+    {
+      "name": "GetBool(String, Boolean)",
+      "signature": "public bool GetBool(string key, bool defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetBool_1.htm"
+    },
+    {
+      "name": "GetBool(String, Boolean, IEnumerable\u003CString\u003E)",
+      "signature": "public bool GetBool(string key, bool defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetBool(System.String,System.Boolean,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetBool_2.htm"
+    },
+    {
+      "name": "GetByte(String)",
+      "signature": "public byte GetByte(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetByte.htm"
+    },
+    {
+      "name": "GetByte(String, Byte)",
+      "signature": "public byte GetByte(string key, byte defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetByte_1.htm"
+    },
+    {
+      "name": "GetByte(String, Byte, IEnumerable\u003CString\u003E)",
+      "signature": "public byte GetByte(string key, byte defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Byte",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetByte(System.String,System.Byte,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetByte_2.htm"
+    },
+    {
+      "name": "GetChar(String)",
+      "signature": "public char GetChar(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Char",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetChar.htm"
+    },
+    {
+      "name": "GetChar(String, Char)",
+      "signature": "public char GetChar(string key, char defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Char",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetChar_1.htm"
+    },
+    {
+      "name": "GetChar(String, Char, IEnumerable\u003CString\u003E)",
+      "signature": "public char GetChar(string key, char defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Char",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetChar(System.String,System.Char,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetChar_2.htm"
+    },
+    {
+      "name": "GetChild",
+      "signature": "public PersistentSettings GetChild(string key)",
+      "summary": "Call this method to get a nested settings PersistentSettings instance, will throw a KeyNotFoundException exception if the key does not exist.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PersistentSettings",
+        "doc": "Returns persistent settings for the specified key or throws an exception if the key is invalid."
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "Thrown if the key does not exist."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetChild.htm"
+    },
+    {
+      "name": "GetColor(String)",
+      "signature": "public Color GetColor(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetColor.htm"
+    },
+    {
+      "name": "GetColor(String, Color)",
+      "signature": "public Color GetColor(string key, Color defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetColor_1.htm"
+    },
+    {
+      "name": "GetColor(String, Nullable\u003CColor\u003E)",
+      "signature": "public Color? GetColor(string key, Color? defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Nullable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Nullable\u003CColor\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetColor_3.htm"
+    },
+    {
+      "name": "GetColor(String, Color, IEnumerable\u003CString\u003E)",
+      "signature": "public Color GetColor(string key, Color defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Drawing.Color,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetColor_2.htm"
+    },
+    {
+      "name": "GetColor(String, Nullable\u003CColor\u003E, IEnumerable\u003CString\u003E)",
+      "signature": "public Color? GetColor(string key, Color? defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color},System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Nullable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color},System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color},System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Nullable\u003CColor\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetColor(System.String,System.Nullable{System.Drawing.Color},System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetColor_4.htm"
+    },
+    {
+      "name": "GetDate(String)",
+      "signature": "public DateTime GetDate(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetDate.htm"
+    },
+    {
+      "name": "GetDate(String, DateTime)",
+      "signature": "public DateTime GetDate(string key, DateTime defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetDate_1.htm"
+    },
+    {
+      "name": "GetDate(String, DateTime, IEnumerable\u003CString\u003E)",
+      "signature": "public DateTime GetDate(string key, DateTime defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DateTime",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDate(System.String,System.DateTime,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetDate_2.htm"
+    },
+    {
+      "name": "GetDouble(String)",
+      "signature": "public double GetDouble(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetDouble.htm"
+    },
+    {
+      "name": "GetDouble(String, Double)",
+      "signature": "public double GetDouble(string key, double defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetDouble_1.htm"
+    },
+    {
+      "name": "GetDouble(String, Double, IEnumerable\u003CString\u003E)",
+      "signature": "public double GetDouble(string key, double defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetDouble(System.String,System.Double,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetDouble_2.htm"
+    },
+    {
+      "name": "GetEnumValue\u003CT\u003E(T)",
+      "signature": "public T GetEnumValue\u003CT\u003E(T defaultValue) where T : struct, new(), IConvertible",
+      "summary": "Get a stored enumerated value, or return default value if not found",
+      "params": [
+        {
+          "name": "defaultValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(\u0060\u00600)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetEnumValue__1_2.htm"
+    },
+    {
+      "name": "GetEnumValue\u003CT\u003E(String)",
+      "signature": "public T GetEnumValue\u003CT\u003E(string key) where T : struct, new(), IConvertible",
+      "summary": "Get a stored enumerated value using a custom key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": ""
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetEnumValue__1.htm"
+    },
+    {
+      "name": "GetEnumValue\u003CT\u003E(String, T)",
+      "signature": "public T GetEnumValue\u003CT\u003E(string key, T defaultValue) where T : struct, new(), IConvertible",
+      "summary": "Gets a stored enumerated value using a custom key, or return default value if not found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetEnumValue__1_1.htm"
+    },
+    {
+      "name": "GetGuid(String)",
+      "signature": "public Guid GetGuid(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetGuid.htm"
+    },
+    {
+      "name": "GetGuid(String, Guid)",
+      "signature": "public Guid GetGuid(string key, Guid defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetGuid_1.htm"
+    },
+    {
+      "name": "GetGuid(String, Guid, IEnumerable\u003CString\u003E)",
+      "signature": "public Guid GetGuid(string key, Guid defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetGuid(System.String,System.Guid,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetGuid_2.htm"
+    },
+    {
+      "name": "GetInteger(String)",
+      "signature": "public int GetInteger(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetInteger.htm"
+    },
+    {
+      "name": "GetInteger(String, Int32)",
+      "signature": "public int GetInteger(string key, int defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetInteger_1.htm"
+    },
+    {
+      "name": "GetInteger(String, Int32, IEnumerable\u003CString\u003E)",
+      "signature": "public int GetInteger(string key, int defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetInteger_2.htm"
+    },
+    {
+      "name": "GetInteger(String, Int32, Int32, Boolean)",
+      "signature": "public int GetInteger(string key, int defaultValue, int bound, bool boundIsLower)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bound",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022bound\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "boundIsLower",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022boundIsLower\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetInteger_3.htm"
+    },
+    {
+      "name": "GetInteger(String, Int32, Int32, Int32)",
+      "signature": "public int GetInteger(string key, int defaultValue, int lowerBound, int upperBound)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "lowerBound",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022lowerBound\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "upperBound",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022upperBound\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetInteger(System.String,System.Int32,System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetInteger_4.htm"
+    },
+    {
+      "name": "GetPoint(String)",
+      "signature": "public Point GetPoint(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetPoint.htm"
+    },
+    {
+      "name": "GetPoint(String, Point)",
+      "signature": "public Point GetPoint(string key, Point defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetPoint_1.htm"
+    },
+    {
+      "name": "GetPoint(String, Point, IEnumerable\u003CString\u003E)",
+      "signature": "public Point GetPoint(string key, Point defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint(System.String,System.Drawing.Point,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetPoint_2.htm"
+    },
+    {
+      "name": "GetPoint3d(String)",
+      "signature": "public Point3d GetPoint3d(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetPoint3d.htm"
+    },
+    {
+      "name": "GetPoint3d(String, Point3d)",
+      "signature": "public Point3d GetPoint3d(string key, Point3d defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetPoint3d_1.htm"
+    },
+    {
+      "name": "GetPoint3d(String, Point3d, IEnumerable\u003CString\u003E)",
+      "signature": "public Point3d GetPoint3d(string key, Point3d defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetPoint3d(System.String,Rhino.Geometry.Point3d,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetPoint3d_2.htm"
+    },
+    {
+      "name": "GetRectangle(String)",
+      "signature": "public Rectangle GetRectangle(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetRectangle.htm"
+    },
+    {
+      "name": "GetRectangle(String, Rectangle)",
+      "signature": "public Rectangle GetRectangle(string key, Rectangle defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetRectangle_1.htm"
+    },
+    {
+      "name": "GetRectangle(String, Rectangle, IEnumerable\u003CString\u003E)",
+      "signature": "public Rectangle GetRectangle(string key, Rectangle defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetRectangle(System.String,System.Drawing.Rectangle,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetRectangle_2.htm"
+    },
+    {
+      "name": "GetSettingIsHiddenFromUserInterface(String)",
+      "signature": "public bool GetSettingIsHiddenFromUserInterface(string key)",
+      "summary": "Values read from all users settings files will be marked as read-only which will cause any future calls to Set... to fail.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the setting is read-only otherwise false."
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "A KeyNotFoundException exception is thrown if the key is not found in the settings dictionary."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSettingIsHiddenFromUserInterface.htm"
+    },
+    {
+      "name": "GetSettingIsHiddenFromUserInterface(String, IEnumerable\u003CString\u003E)",
+      "signature": "public bool GetSettingIsHiddenFromUserInterface(string key, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "Values read from all users settings files will be marked as read-only which will cause any future calls to Set... to fail.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSettingIsHiddenFromUserInterface(System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the setting is read-only otherwise false."
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "A KeyNotFoundException exception is thrown if the key is not found in the settings dictionary."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSettingIsHiddenFromUserInterface_1.htm"
+    },
+    {
+      "name": "GetSettingIsReadOnly",
+      "signature": "public bool GetSettingIsReadOnly(string key)",
+      "summary": "Values read from all users settings files will be marked as read-only which will cause any future calls to Set... to fail.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the setting is read-only otherwise false."
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "A KeyNotFoundException exception is thrown if the key is not found in the settings dictionary."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSettingIsReadOnly.htm"
+    },
+    {
+      "name": "GetSettingType",
+      "signature": "public Type GetSettingType(string key)",
+      "summary": "Gets the type of the last value passed to Set... or Get... for the specified setting.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Type",
+        "doc": "Type of the last value passed to Set... or Get... for the specified setting."
+      },
+      "throws": [
+        {
+          "type": "KeyNotFoundException",
+          "when": "A KeyNotFoundException exception is thrown if the key is not found in the settings dictionary."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSettingType.htm"
+    },
+    {
+      "name": "GetSize(String)",
+      "signature": "public Size GetSize(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSize.htm"
+    },
+    {
+      "name": "GetSize(String, Size)",
+      "signature": "public Size GetSize(string key, Size defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSize_1.htm"
+    },
+    {
+      "name": "GetSize(String, Size, IEnumerable\u003CString\u003E)",
+      "signature": "public Size GetSize(string key, Size defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Size",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetSize(System.String,System.Drawing.Size,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetSize_2.htm"
+    },
+    {
+      "name": "GetString(String)",
+      "signature": "public string GetString(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetString.htm"
+    },
+    {
+      "name": "GetString(String, String)",
+      "signature": "public string GetString(string key, string defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetString_1.htm"
+    },
+    {
+      "name": "GetString(String, String, IEnumerable\u003CString\u003E)",
+      "signature": "public string GetString(string key, string defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetString(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetString_2.htm"
+    },
+    {
+      "name": "GetStringDictionary(String)",
+      "signature": "public KeyValuePair\u003Cstring, string\u003E[] GetStringDictionary(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "KeyValuePair\u003CString,String\u003E[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetStringDictionary.htm"
+    },
+    {
+      "name": "GetStringDictionary(String, KeyValuePair\u003CString, String\u003E[])",
+      "signature": "public KeyValuePair\u003Cstring, string\u003E[] GetStringDictionary(string key, KeyValuePair\u003Cstring, string\u003E[] defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "KeyValuePair\u003CString,String\u003E[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetStringDictionary_1.htm"
+    },
+    {
+      "name": "GetStringDictionary(String, KeyValuePair\u003CString, String\u003E[], IEnumerable\u003CString\u003E)",
+      "signature": "public KeyValuePair\u003Cstring, string\u003E[] GetStringDictionary(string key, KeyValuePair\u003Cstring, string\u003E[] defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[],System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[],System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[],System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "KeyValuePair\u003CString,String\u003E[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[],System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetStringDictionary_2.htm"
+    },
+    {
+      "name": "GetStringList(String)",
+      "signature": "public string[] GetStringList(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetStringList.htm"
+    },
+    {
+      "name": "GetStringList(String, String[])",
+      "signature": "public string[] GetStringList(string key, string[] defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetStringList_1.htm"
+    },
+    {
+      "name": "GetStringList(String, String[], IEnumerable\u003CString\u003E)",
+      "signature": "public string[] GetStringList(string key, string[] defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[],System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[],System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[],System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetStringList(System.String,System.String[],System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetStringList_2.htm"
+    },
+    {
+      "name": "GetUnsignedInteger(String)",
+      "signature": "public uint GetUnsignedInteger(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetUnsignedInteger.htm"
+    },
+    {
+      "name": "GetUnsignedInteger(String, UInt32)",
+      "signature": "public uint GetUnsignedInteger(string key, uint defaultValue)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetUnsignedInteger_1.htm"
+    },
+    {
+      "name": "GetUnsignedInteger(String, UInt32, IEnumerable\u003CString\u003E)",
+      "signature": "public uint GetUnsignedInteger(string key, uint defaultValue, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.GetUnsignedInteger(System.String,System.UInt32,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetUnsignedInteger_2.htm"
+    },
+    {
+      "name": "GetValidator\u003CT\u003E",
+      "signature": "public EventHandler\u003CPersistentSettingsEventArgs\u003CT\u003E\u003E GetValidator\u003CT\u003E(string key)",
+      "summary": "Provides a way to find a ready-to-use validator for the PersistentSetting class for the given the key, or obtaining null.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The name of the setting key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "EventHandler\u003CPersistentSettingsEventArgs\u003CT\u003E\u003E",
+        "doc": "A valid validator, or null if no validator was found."
+      },
+      "throws": [
+        {
+          "type": "InvalidCastException",
+          "when": "If type parameter T is not the right specialization for PersistentSettingsEventArgs\u003CT\u003E."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_GetValidator__1.htm"
+    },
+    {
+      "name": "HideSettingFromUserInterface",
+      "signature": "public void HideSettingFromUserInterface(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.HideSettingFromUserInterface(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_HideSettingFromUserInterface.htm"
+    },
+    {
+      "name": "RegisterSettingsValidator\u003CT\u003E",
+      "signature": "public void RegisterSettingsValidator\u003CT\u003E(string key, EventHandler\u003CPersistentSettingsEventArgs\u003CT\u003E\u003E validator)",
+      "summary": "Sets a validator for a given key. Note to implementers: T should be one of the supported types for the PersistentSettings class and should match the type associated with the key.This method allows to use anonymous methods and lambda expressions.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key to which to bind the validator.",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "System.EventHandler\u003CPersistentSettingsEventArgs\u003CT\u003E\u003E",
+          "doc": "A validator instance of your own class.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_RegisterSettingsValidator__1.htm"
+    },
+    {
+      "name": "SetBool",
+      "signature": "public void SetBool(string key, bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetBool(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetBool(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetBool.htm"
+    },
+    {
+      "name": "SetByte",
+      "signature": "public void SetByte(string key, byte value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetByte(System.String,System.Byte)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetByte(System.String,System.Byte)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetByte.htm"
+    },
+    {
+      "name": "SetChar",
+      "signature": "public void SetChar(string key, char value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetChar(System.String,System.Char)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetChar(System.String,System.Char)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetChar.htm"
+    },
+    {
+      "name": "SetColor(String, Color)",
+      "signature": "public void SetColor(string key, Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetColor(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetColor(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetColor.htm"
+    },
+    {
+      "name": "SetColor(String, Nullable\u003CColor\u003E)",
+      "signature": "public void SetColor(string key, Color? value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetColor(System.String,System.Nullable{System.Drawing.Color})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Nullable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetColor(System.String,System.Nullable{System.Drawing.Color})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetColor_1.htm"
+    },
+    {
+      "name": "SetDate",
+      "signature": "public void SetDate(string key, DateTime value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDate(System.String,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDate(System.String,System.DateTime)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDate.htm"
+    },
+    {
+      "name": "SetDefault(String, Point3d)",
+      "signature": "public void SetDefault(string key, Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault.htm"
+    },
+    {
+      "name": "SetDefault(String, Boolean)",
+      "signature": "public void SetDefault(string key, bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_1.htm"
+    },
+    {
+      "name": "SetDefault(String, Byte)",
+      "signature": "public void SetDefault(string key, byte value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Byte)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Byte)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_2.htm"
+    },
+    {
+      "name": "SetDefault(String, Char)",
+      "signature": "public void SetDefault(string key, char value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Char)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Char)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_3.htm"
+    },
+    {
+      "name": "SetDefault(String, KeyValuePair\u003CString, String\u003E[])",
+      "signature": "public void SetDefault(string key, KeyValuePair\u003Cstring, string\u003E[] value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_4.htm"
+    },
+    {
+      "name": "SetDefault(String, DateTime)",
+      "signature": "public void SetDefault(string key, DateTime value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.DateTime)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.DateTime)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_5.htm"
+    },
+    {
+      "name": "SetDefault(String, Double)",
+      "signature": "public void SetDefault(string key, double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_6.htm"
+    },
+    {
+      "name": "SetDefault(String, Color)",
+      "signature": "public void SetDefault(string key, Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_7.htm"
+    },
+    {
+      "name": "SetDefault(String, Point)",
+      "signature": "public void SetDefault(string key, Point value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Point)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Point)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_8.htm"
+    },
+    {
+      "name": "SetDefault(String, Rectangle)",
+      "signature": "public void SetDefault(string key, Rectangle value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_9.htm"
+    },
+    {
+      "name": "SetDefault(String, Size)",
+      "signature": "public void SetDefault(string key, Size value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Size)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_10.htm"
+    },
+    {
+      "name": "SetDefault(String, Guid)",
+      "signature": "public void SetDefault(string key, Guid value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_11.htm"
+    },
+    {
+      "name": "SetDefault(String, Int32)",
+      "signature": "public void SetDefault(string key, int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_12.htm"
+    },
+    {
+      "name": "SetDefault(String, Nullable\u003CColor\u003E)",
+      "signature": "public void SetDefault(string key, Color? value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Nullable{System.Drawing.Color})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Nullable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.Nullable{System.Drawing.Color})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_13.htm"
+    },
+    {
+      "name": "SetDefault(String, String)",
+      "signature": "public void SetDefault(string key, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_14.htm"
+    },
+    {
+      "name": "SetDefault(String, String[])",
+      "signature": "public void SetDefault(string key, string[] value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.String[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDefault(System.String,System.String[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDefault_15.htm"
+    },
+    {
+      "name": "SetDouble",
+      "signature": "public void SetDouble(string key, double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDouble(System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetDouble(System.String,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetDouble.htm"
+    },
+    {
+      "name": "SetEnumValue\u003CT\u003E(T)",
+      "signature": "public void SetEnumValue\u003CT\u003E(T enumValue) where T : struct, new(), IConvertible",
+      "summary": "Set an enumerated value in the settings.",
+      "params": [
+        {
+          "name": "enumValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022enumValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetEnumValue\u0060\u00601(\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetEnumValue__1_1.htm"
+    },
+    {
+      "name": "SetEnumValue\u003CT\u003E(String, T)",
+      "signature": "public void SetEnumValue\u003CT\u003E(string key, T value) where T : struct, new(), IConvertible",
+      "summary": "Set an enumerated value in the settings using a custom key",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetEnumValue\u0060\u00601(System.String,\u0060\u00600)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetEnumValue__1.htm"
+    },
+    {
+      "name": "SetGuid",
+      "signature": "public void SetGuid(string key, Guid value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetGuid(System.String,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetGuid(System.String,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetGuid.htm"
+    },
+    {
+      "name": "SetInteger",
+      "signature": "public void SetInteger(string key, int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetInteger(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetInteger(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetInteger.htm"
+    },
+    {
+      "name": "SetPoint",
+      "signature": "public void SetPoint(string key, Point value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetPoint(System.String,System.Drawing.Point)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetPoint(System.String,System.Drawing.Point)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetPoint.htm"
+    },
+    {
+      "name": "SetPoint3d",
+      "signature": "public void SetPoint3d(string key, Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetPoint3d(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetPoint3d.htm"
+    },
+    {
+      "name": "SetRectangle",
+      "signature": "public void SetRectangle(string key, Rectangle value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetRectangle(System.String,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetRectangle(System.String,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetRectangle.htm"
+    },
+    {
+      "name": "SetSize",
+      "signature": "public void SetSize(string key, Size value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetSize(System.String,System.Drawing.Size)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetSize(System.String,System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetSize.htm"
+    },
+    {
+      "name": "SetString",
+      "signature": "public void SetString(string key, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetString(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetString(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetString.htm"
+    },
+    {
+      "name": "SetStringDictionary",
+      "signature": "public void SetStringDictionary(string key, KeyValuePair\u003Cstring, string\u003E[] value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetStringDictionary.htm"
+    },
+    {
+      "name": "SetStringList",
+      "signature": "public void SetStringList(string key, string[] value)",
+      "summary": "Including a item with the value of StringListRootKey will cause the ProgramData value to get inserted at that location in the list when calling GetStringList.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The string key.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "An array of values to set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetStringList.htm"
+    },
+    {
+      "name": "SetUnsignedInteger",
+      "signature": "public void SetUnsignedInteger(string key, uint value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetUnsignedInteger(System.String,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.SetUnsignedInteger(System.String,System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_SetUnsignedInteger.htm"
+    },
+    {
+      "name": "TryGetBool(String, Boolean)",
+      "signature": "public bool TryGetBool(string key, out bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetBool.htm"
+    },
+    {
+      "name": "TryGetBool(String, Boolean, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetBool(string key, out bool value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetBool(System.String,System.Boolean@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetBool_1.htm"
+    },
+    {
+      "name": "TryGetByte(String, Byte)",
+      "signature": "public bool TryGetByte(string key, out byte value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetByte.htm"
+    },
+    {
+      "name": "TryGetByte(String, Byte, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetByte(string key, out byte value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetByte(System.String,System.Byte@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetByte_1.htm"
+    },
+    {
+      "name": "TryGetChar(String, Char)",
+      "signature": "public bool TryGetChar(string key, out char value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetChar.htm"
+    },
+    {
+      "name": "TryGetChar(String, Char, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetChar(string key, out char value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetChar(System.String,System.Char@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetChar_1.htm"
+    },
+    {
+      "name": "TryGetChild",
+      "signature": "public bool TryGetChild(string key, out PersistentSettings value)",
+      "summary": "Call this method to get a nested settings PersistentSettings instance, will return true if the key exists and value was set otherwise; will return false and value will be set to null.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[in] Key name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.PersistentSettings",
+          "doc": "[out] Will be set the child settings if the key is valid otherwise it will be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the key exists and value was set otherwise; returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetChild.htm"
+    },
+    {
+      "name": "TryGetColor(String, Color)",
+      "signature": "public bool TryGetColor(string key, out Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetColor.htm"
+    },
+    {
+      "name": "TryGetColor(String, Nullable\u003CColor\u003E)",
+      "signature": "public bool TryGetColor(string key, out Color? value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Nullable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetColor_2.htm"
+    },
+    {
+      "name": "TryGetColor(String, Color, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetColor(string key, out Color value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Drawing.Color@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetColor_1.htm"
+    },
+    {
+      "name": "TryGetColor(String, Nullable\u003CColor\u003E, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetColor(string key, out Color? value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Nullable\u003CColor\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetColor(System.String,System.Nullable{System.Drawing.Color}@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetColor_3.htm"
+    },
+    {
+      "name": "TryGetDate(String, DateTime)",
+      "signature": "public bool TryGetDate(string key, out DateTime value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDate.htm"
+    },
+    {
+      "name": "TryGetDate(String, DateTime, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetDate(string key, out DateTime value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDate(System.String,System.DateTime@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDate_1.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Point3d)",
+      "signature": "public bool TryGetDefault(string key, out Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Boolean)",
+      "signature": "public bool TryGetDefault(string key, out bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_1.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Byte)",
+      "signature": "public bool TryGetDefault(string key, out byte value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Byte@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Byte",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Byte@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Byte@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_2.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Char)",
+      "signature": "public bool TryGetDefault(string key, out char value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Char@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Char",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Char@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Char@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_3.htm"
+    },
+    {
+      "name": "TryGetDefault(String, DateTime)",
+      "signature": "public bool TryGetDefault(string key, out DateTime value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.DateTime@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.DateTime@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.DateTime@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_4.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Double)",
+      "signature": "public bool TryGetDefault(string key, out double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_5.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Color)",
+      "signature": "public bool TryGetDefault(string key, out Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Color@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Color@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_6.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Rectangle)",
+      "signature": "public bool TryGetDefault(string key, out Rectangle value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Rectangle@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Rectangle@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Rectangle@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_7.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Size)",
+      "signature": "public bool TryGetDefault(string key, out Size value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Size@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Size@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Drawing.Size@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_8.htm"
+    },
+    {
+      "name": "TryGetDefault(String, Int32)",
+      "signature": "public bool TryGetDefault(string key, out int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_9.htm"
+    },
+    {
+      "name": "TryGetDefault(String, String)",
+      "signature": "public bool TryGetDefault(string key, out string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_10.htm"
+    },
+    {
+      "name": "TryGetDefault(String, String[])",
+      "signature": "public bool TryGetDefault(string key, out string[] value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.String[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.String[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDefault(System.String,System.String[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDefault_11.htm"
+    },
+    {
+      "name": "TryGetDouble(String, Double)",
+      "signature": "public bool TryGetDouble(string key, out double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDouble.htm"
+    },
+    {
+      "name": "TryGetDouble(String, Double, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetDouble(string key, out double value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetDouble(System.String,System.Double@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetDouble_1.htm"
+    },
+    {
+      "name": "TryGetEnumValue\u003CT\u003E",
+      "signature": "public bool TryGetEnumValue\u003CT\u003E(string key, out T enumValue) where T : struct, new(), IConvertible",
+      "summary": "Attempt to get the stored value for an enumerated setting using a custom key. Note: the enumerated value ALWAYS gets assigned! Be sure to check for success of this method to prevent erroneous use of the value.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetEnumValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "enumValue",
+          "type": "T",
+          "doc": "[Missing \u003Cparam name=\u0022enumValue\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetEnumValue\u0060\u00601(System.String,\u0060\u00600@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetEnumValue__1.htm"
+    },
+    {
+      "name": "TryGetGuid(String, Guid)",
+      "signature": "public bool TryGetGuid(string key, out Guid value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetGuid.htm"
+    },
+    {
+      "name": "TryGetGuid(String, Guid, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetGuid(string key, out Guid value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetGuid(System.String,System.Guid@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetGuid_1.htm"
+    },
+    {
+      "name": "TryGetInteger(String, Int32)",
+      "signature": "public bool TryGetInteger(string key, out int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetInteger.htm"
+    },
+    {
+      "name": "TryGetInteger(String, Int32, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetInteger(string key, out int value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetInteger(System.String,System.Int32@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetInteger_1.htm"
+    },
+    {
+      "name": "TryGetPoint(String, Point)",
+      "signature": "public bool TryGetPoint(string key, out Point value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetPoint.htm"
+    },
+    {
+      "name": "TryGetPoint(String, Point, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetPoint(string key, out Point value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Point",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint(System.String,System.Drawing.Point@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetPoint_1.htm"
+    },
+    {
+      "name": "TryGetPoint3d(String, Point3d)",
+      "signature": "public bool TryGetPoint3d(string key, out Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetPoint3d.htm"
+    },
+    {
+      "name": "TryGetPoint3d(String, Point3d, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetPoint3d(string key, out Point3d value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetPoint3d(System.String,Rhino.Geometry.Point3d@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetPoint3d_1.htm"
+    },
+    {
+      "name": "TryGetRectangle(String, Rectangle)",
+      "signature": "public bool TryGetRectangle(string key, out Rectangle value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetRectangle.htm"
+    },
+    {
+      "name": "TryGetRectangle(String, Rectangle, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetRectangle(string key, out Rectangle value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetRectangle(System.String,System.Drawing.Rectangle@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetRectangle_1.htm"
+    },
+    {
+      "name": "TryGetSettingIsHiddenFromUserInterface(String, Boolean)",
+      "signature": "public bool TryGetSettingIsHiddenFromUserInterface(string key, out bool value)",
+      "summary": "Values read from all users settings files will be marked as read-only which will cause any future calls to Set... to fail.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Value will be true if the setting is read-only otherwise false. setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSettingIsHiddenFromUserInterface(System.String,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetSettingIsHiddenFromUserInterface.htm"
+    },
+    {
+      "name": "TryGetSettingIsHiddenFromUserInterface(String, Boolean, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetSettingIsHiddenFromUserInterface(string key, out bool value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "Values read from all users settings files will be marked as read-only which will cause any future calls to Set... to fail.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Value will be true if the setting is read-only otherwise false. setting.",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSettingIsHiddenFromUserInterface(System.String,System.Boolean@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSettingIsHiddenFromUserInterface(System.String,System.Boolean@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetSettingIsHiddenFromUserInterface_1.htm"
+    },
+    {
+      "name": "TryGetSettingIsReadOnly",
+      "signature": "public bool TryGetSettingIsReadOnly(string key, out bool value)",
+      "summary": "Values read from all users settings files will be marked as read-only which will cause any future calls to Set... to fail.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "Value will be true if the setting is read-only otherwise false. setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSettingIsReadOnly(System.String,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetSettingIsReadOnly.htm"
+    },
+    {
+      "name": "TryGetSettingType",
+      "signature": "public bool TryGetSettingType(string key, out Type type)",
+      "summary": "Get the type of the last value passed to Set... or Get... for the specified setting.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "Key name for which to search.",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "Type of the last value passed to Set... or Get... for the specified setting.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSettingType(System.String,System.Type@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetSettingType.htm"
+    },
+    {
+      "name": "TryGetSize(String, Size)",
+      "signature": "public bool TryGetSize(string key, out Size value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetSize.htm"
+    },
+    {
+      "name": "TryGetSize(String, Size, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetSize(string key, out Size value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetSize(System.String,System.Drawing.Size@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetSize_1.htm"
+    },
+    {
+      "name": "TryGetString(String, String)",
+      "signature": "public bool TryGetString(string key, out string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetString.htm"
+    },
+    {
+      "name": "TryGetString(String, String, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetString(string key, out string value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetString(System.String,System.String@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetString_1.htm"
+    },
+    {
+      "name": "TryGetStringDictionary(String, KeyValuePair\u003CString, String\u003E[])",
+      "signature": "public bool TryGetStringDictionary(string key, out KeyValuePair\u003Cstring, string\u003E[] value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetStringDictionary.htm"
+    },
+    {
+      "name": "TryGetStringDictionary(String, KeyValuePair\u003CString, String\u003E[], IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetStringDictionary(string key, out KeyValuePair\u003Cstring, string\u003E[] value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringDictionary(System.String,System.Collections.Generic.KeyValuePair{System.String,System.String}[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetStringDictionary_1.htm"
+    },
+    {
+      "name": "TryGetStringList(String, String[])",
+      "signature": "public bool TryGetStringList(string key, out string[] value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetStringList.htm"
+    },
+    {
+      "name": "TryGetStringList(String, String[], IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetStringList(string key, out string[] value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetStringList(System.String,System.String[]@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetStringList_1.htm"
+    },
+    {
+      "name": "TryGetUnsignedInteger(String, UInt32)",
+      "signature": "public bool TryGetUnsignedInteger(string key, out uint value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetUnsignedInteger.htm"
+    },
+    {
+      "name": "TryGetUnsignedInteger(String, UInt32, IEnumerable\u003CString\u003E)",
+      "signature": "public bool TryGetUnsignedInteger(string key, out uint value, IEnumerable\u003Cstring\u003E legacyKeyList)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "legacyKeyList",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022legacyKeyList\u0022/\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PersistentSettings.TryGetUnsignedInteger(System.String,System.UInt32@,System.Collections.Generic.IEnumerable{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_PersistentSettings_TryGetUnsignedInteger_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ChildKeys",
+      "type": "ICollection\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a collection containing the keys in the settings dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettings_ChildKeys.htm"
+    },
+    {
+      "name": "HiddenFromUserInterface",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If false then values will appear in the EditOptions window",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettings_HiddenFromUserInterface.htm"
+    },
+    {
+      "name": "Keys",
+      "type": "ICollection\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a collection containing the keys in the settings dictionary.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettings_Keys.htm"
+    },
+    {
+      "name": "RhinoAppSettings",
+      "type": "PersistentSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettings_RhinoAppSettings.htm"
+    },
+    {
+      "name": "StringListRootKey",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Adding this string to a string list when calling SetStringList will cause the ProgramData setting to get inserted at that location in the list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_PersistentSettings_StringListRootKey.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

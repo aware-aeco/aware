@@ -1,0 +1,29 @@
+{
+  "name": "CurveEvaluationSide",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the options that defines a curve evaluation side when evaluating kinks.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_CurveEvaluationSide.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0,
+      "summary": "The default evaluation side."
+    },
+    {
+      "name": "Below",
+      "value": -1,
+      "summary": "The below evaluation side."
+    },
+    {
+      "name": "Above",
+      "value": 1,
+      "summary": "The above evaluation side."
+    }
+  ]
+}

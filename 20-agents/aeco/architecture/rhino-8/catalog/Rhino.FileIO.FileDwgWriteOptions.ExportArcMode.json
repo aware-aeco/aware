@@ -1,0 +1,38 @@
+{
+  "name": "FileDwgWriteOptions.ExportArcMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileDwgWriteOptions.ExportArcMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileDwgWriteOptions_ExportArcMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Lines",
+      "value": 0
+    },
+    {
+      "name": "Arcs",
+      "value": 1
+    },
+    {
+      "name": "Polybulges",
+      "value": 2
+    },
+    {
+      "name": "Polylines",
+      "value": 3
+    },
+    {
+      "name": "Splines",
+      "value": 4
+    },
+    {
+      "name": "ThreeDPolylines",
+      "value": 5
+    }
+  ]
+}

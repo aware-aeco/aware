@@ -1,0 +1,26 @@
+{
+  "name": "ShowMessageMode",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ShowMessageMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ShowMessageMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ApplicationModal",
+      "value": 0
+    },
+    {
+      "name": "SystemModal",
+      "value": 4096
+    },
+    {
+      "name": "TaskModal",
+      "value": 8192
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Font.FontOrigin",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Platform where font originated. This information is useful when searching for appropriate substitutes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Font_FontOrigin.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not set."
+    },
+    {
+      "name": "Unknown",
+      "value": 1,
+      "summary": "Origin unknown. Changing an ON_Font characteristic like weight or style sets the origin to unknown."
+    },
+    {
+      "name": "WindowsFont",
+      "value": 2,
+      "summary": "Set from a Windows IDWriteFont by ON_Font::SetFromDWriteFont() or a Windows LOGFONT by ON_Font::SetFromWindowsLogFont() and FaceName and WindowLogfontName match a font installed on a Windows device."
+    },
+    {
+      "name": "AppleFont",
+      "value": 3,
+      "summary": "Set from an Apple CTFont. The PostScriptName() and FamilyName() match a font installed on device running MacOS or iOS. The FaceName() matches the \u0022typeface\u0022 name shown in the MacOS FontBook app."
+    }
+  ]
+}

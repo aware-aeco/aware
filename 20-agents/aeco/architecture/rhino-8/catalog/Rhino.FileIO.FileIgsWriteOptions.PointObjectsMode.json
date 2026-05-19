@@ -1,0 +1,22 @@
+{
+  "name": "FileIgsWriteOptions.PointObjectsMode",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileIgsWriteOptions.PointObjectsMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_FileIgsWriteOptions_PointObjectsMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PoSeparate",
+      "value": 116
+    },
+    {
+      "name": "PoSets",
+      "value": 106
+    }
+  ]
+}

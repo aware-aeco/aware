@@ -1,0 +1,326 @@
+{
+  "name": "BrepTrimList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to all the Trims in a Brep object",
+  "interfaces": [
+    "IEnumerable\u003CBrepTrim\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Collections_BrepTrimList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Int32)",
+      "signature": "public BrepTrim Add(int curve2dIndex)",
+      "summary": "Add a new trim that will be part of an inner, outer, or slit loop to the brep.",
+      "remarks": "You should set the trim\u0027s Tolerance, TrimType, and IsoStatus values. In general, you should try to use the Add( edge, bRev3d, loop, c2i ) version of NewTrim. If you want to add a singular trim, use AddSingularTrim. If you want to add a curve-on-surface trim, use AddCurveOnFace. If you want to add a point-on-surface trim, use AddPointOnFace.",
+      "params": [
+        {
+          "name": "curve2dIndex",
+          "type": "System.Int32",
+          "doc": "index of 2d trimming curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "New Trim"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_Add_3.htm"
+    },
+    {
+      "name": "Add(Boolean, BrepEdge, Int32)",
+      "signature": "public BrepTrim Add(bool rev3d, BrepEdge edge, int curve2dIndex)",
+      "summary": "Add a new trim that will be part of an inner, outer, or slit loop to the brep",
+      "params": [
+        {
+          "name": "rev3d",
+          "type": "System.Boolean",
+          "doc": "true if the edge and trim have opposite directions",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "Rhino.Geometry.BrepEdge",
+          "doc": "3d edge associated with this trim",
+          "optional": false
+        },
+        {
+          "name": "curve2dIndex",
+          "type": "System.Int32",
+          "doc": "index of 2d trimming curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "new trim"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_Add_1.htm"
+    },
+    {
+      "name": "Add(Boolean, BrepLoop, Int32)",
+      "signature": "public BrepTrim Add(bool rev3d, BrepLoop loop, int curve2dIndex)",
+      "summary": "Add a new trim that will be part of an inner, outer, or slit loop to the brep",
+      "params": [
+        {
+          "name": "rev3d",
+          "type": "System.Boolean",
+          "doc": "true if the edge and trim have opposite directions",
+          "optional": false
+        },
+        {
+          "name": "loop",
+          "type": "Rhino.Geometry.BrepLoop",
+          "doc": "trim is appended to this loop",
+          "optional": false
+        },
+        {
+          "name": "curve2dIndex",
+          "type": "System.Int32",
+          "doc": "index of 2d trimming curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "new trim"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_Add_2.htm"
+    },
+    {
+      "name": "Add(BrepEdge, Boolean, BrepLoop, Int32)",
+      "signature": "public BrepTrim Add(BrepEdge edge, bool rev3d, BrepLoop loop, int curve2dIndex)",
+      "summary": "Add a new trim that will be part of an inner, outer, or slit loop to the brep.",
+      "params": [
+        {
+          "name": "edge",
+          "type": "Rhino.Geometry.BrepEdge",
+          "doc": "3d edge associated with this trim",
+          "optional": false
+        },
+        {
+          "name": "rev3d",
+          "type": "System.Boolean",
+          "doc": "true if the edge and trim have opposite directions",
+          "optional": false
+        },
+        {
+          "name": "loop",
+          "type": "Rhino.Geometry.BrepLoop",
+          "doc": "trim is appended to this loop",
+          "optional": false
+        },
+        {
+          "name": "curve2dIndex",
+          "type": "System.Int32",
+          "doc": "index of 2d trimming curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "new trim"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_Add.htm"
+    },
+    {
+      "name": "AddCurveOnFace",
+      "signature": "public BrepTrim AddCurveOnFace(BrepFace face, BrepEdge edge, bool rev3d, int curve2dIndex)",
+      "summary": "Add a new curve on face to the brep",
+      "remarks": "You should set the trim\u0027s tolerance and iso values.",
+      "params": [
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.BrepFace",
+          "doc": "face that curve lies on",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "Rhino.Geometry.BrepEdge",
+          "doc": "3d edge associated with this curve on surface",
+          "optional": false
+        },
+        {
+          "name": "rev3d",
+          "type": "System.Boolean",
+          "doc": "true if the 3d edge and the 2d parameter space curve have opposite directions.",
+          "optional": false
+        },
+        {
+          "name": "curve2dIndex",
+          "type": "System.Int32",
+          "doc": "index of 2d curve in face\u0027s parameter space",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "new trim that represents the curve on surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_AddCurveOnFace.htm"
+    },
+    {
+      "name": "AddSingularTrim",
+      "signature": "public BrepTrim AddSingularTrim(BrepVertex vertex, BrepLoop loop, IsoStatus iso, int curve2dIndex)",
+      "summary": "Add a new singular trim to the brep.",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "Rhino.Geometry.BrepVertex",
+          "doc": "vertex along collapsed surface edge",
+          "optional": false
+        },
+        {
+          "name": "loop",
+          "type": "Rhino.Geometry.BrepLoop",
+          "doc": "trim is appended to this loop",
+          "optional": false
+        },
+        {
+          "name": "iso",
+          "type": "Rhino.Geometry.IsoStatus",
+          "doc": "[Missing \u003Cparam name=\u0022iso\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepTrimList.AddSingularTrim(Rhino.Geometry.BrepVertex,Rhino.Geometry.BrepLoop,Rhino.Geometry.IsoStatus,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "curve2dIndex",
+          "type": "System.Int32",
+          "doc": "index of 2d trimming curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BrepTrim",
+        "doc": "new trim"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_AddSingularTrim.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CBrepTrim\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that visits all edges.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CBrepTrim\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_GetEnumerator.htm"
+    },
+    {
+      "name": "MatchEnds()",
+      "signature": "public bool MatchEnds()",
+      "summary": "Matches the endpoints of all trims in the Brep.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any trim\u0027s 2d curve is changed, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_MatchEnds.htm"
+    },
+    {
+      "name": "MatchEnds(BrepLoop)",
+      "signature": "public bool MatchEnds(BrepLoop loop)",
+      "summary": "Match the endpoints of all trims in a loop.",
+      "params": [
+        {
+          "name": "loop",
+          "type": "Rhino.Geometry.BrepLoop",
+          "doc": "The Brep loop.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any trim\u0027s 2d curve is changed, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_MatchEnds_1.htm"
+    },
+    {
+      "name": "MatchEnds(Int32)",
+      "signature": "public bool MatchEnds(int trimIndex)",
+      "summary": "Match the endpoints of a trim to the next and previous trim.",
+      "params": [
+        {
+          "name": "trimIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022trimIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.BrepTrimList.MatchEnds(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if any trim\u0027s 2d curve is changed, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_MatchEnds_3.htm"
+    },
+    {
+      "name": "MatchEnds(BrepTrim, BrepTrim)",
+      "signature": "public bool MatchEnds(BrepTrim trim0, BrepTrim trim1)",
+      "summary": "Match the end of a trim to the start of the next trim.",
+      "params": [
+        {
+          "name": "trim0",
+          "type": "Rhino.Geometry.BrepTrim",
+          "doc": "The Brep trim.",
+          "optional": false
+        },
+        {
+          "name": "trim1",
+          "type": "Rhino.Geometry.BrepTrim",
+          "doc": "Brep trim that comes immediately after trim0 in the same loop.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if either trim\u0027s 2d curve is changed, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Collections_BrepTrimList_MatchEnds_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of brep trims.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_BrepTrimList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "BrepTrim",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the BrepTrim at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Collections_BrepTrimList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

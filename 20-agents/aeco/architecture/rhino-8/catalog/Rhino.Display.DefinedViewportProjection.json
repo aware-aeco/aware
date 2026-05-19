@@ -1,0 +1,54 @@
+{
+  "name": "DefinedViewportProjection",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Parallel and perspective projections that are \u0022standard\u0022 in Rhino",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_DefinedViewportProjection.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Top",
+      "value": 1
+    },
+    {
+      "name": "Bottom",
+      "value": 2
+    },
+    {
+      "name": "Left",
+      "value": 3
+    },
+    {
+      "name": "Right",
+      "value": 4
+    },
+    {
+      "name": "Front",
+      "value": 5
+    },
+    {
+      "name": "Back",
+      "value": 6
+    },
+    {
+      "name": "Perspective",
+      "value": 7
+    },
+    {
+      "name": "TwoPointPerspective",
+      "value": 8
+    },
+    {
+      "name": "ParallelReflected",
+      "value": 9
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "CommandStyleAttribute",
+  "namespace": "Rhino.Commands",
+  "kind": "class",
+  "summary": "Decorates commands to provide styles.",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Commands_CommandStyleAttribute.htm",
+  "constructors": [
+    {
+      "name": "CommandStyleAttribute",
+      "signature": "public CommandStyleAttribute(Style styles)",
+      "summary": "Initializes a new command style attribute class.",
+      "params": [
+        {
+          "name": "styles",
+          "type": "Rhino.Commands.Style",
+          "doc": "Set of values combined using a bitwise OR operation to get the desired combination of command styles.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Commands_CommandStyleAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Styles",
+      "type": "Style",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the associated style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Commands_CommandStyleAttribute_Styles.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

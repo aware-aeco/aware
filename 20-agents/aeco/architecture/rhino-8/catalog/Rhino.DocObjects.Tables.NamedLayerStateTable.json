@@ -1,0 +1,229 @@
+{
+  "name": "NamedLayerStateTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "All named layer states in a Rhino document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_NamedLayerStateTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Delete",
+      "signature": "public bool Delete(string name)",
+      "summary": "Deletes an existing named layer state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the layer state.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Delete.htm"
+    },
+    {
+      "name": "FindName",
+      "signature": "public int FindName(string name)",
+      "summary": "Returns the index of an existing named layer state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the layer state.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E0 if successful, -1 if not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_FindName.htm"
+    },
+    {
+      "name": "Import",
+      "signature": "public int Import(string filename)",
+      "summary": "Imports named layer states from a 3dm file.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "The name of the file to import.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of named layers states imported."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Import.htm"
+    },
+    {
+      "name": "Rename",
+      "signature": "public bool Rename(string oldName, string newName)",
+      "summary": "Renames an existing named layer state.",
+      "params": [
+        {
+          "name": "oldName",
+          "type": "System.String",
+          "doc": "The name of the layer state.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Rename.htm"
+    },
+    {
+      "name": "Restore(String, RestoreLayerProperties)",
+      "signature": "public bool Restore(string name, RestoreLayerProperties properties)",
+      "summary": "Restores a named layer state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the layer state.",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "Rhino.DocObjects.Tables.RestoreLayerProperties",
+          "doc": "The layer properties to restore.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Restore.htm"
+    },
+    {
+      "name": "Restore(String, RestoreLayerProperties, Guid)",
+      "signature": "public bool Restore(string name, RestoreLayerProperties properties, Guid viewportId)",
+      "summary": "Restores a named layer state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the layer state.",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "Rhino.DocObjects.Tables.RestoreLayerProperties",
+          "doc": "The layer properties to restore.",
+          "optional": false
+        },
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "The id of the layout or detail viewport to restore the per-viewport layer properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedLayerStateTable.Restore(System.String,Rhino.DocObjects.Tables.RestoreLayerProperties,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Restore_1.htm"
+    },
+    {
+      "name": "Save(String)",
+      "signature": "public int Save(string name)",
+      "summary": "Saves or updates a named layer state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the layer state. If the named layer state already exists, it will be updated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added, or updated, layer state."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Save.htm"
+    },
+    {
+      "name": "Save(String, Guid)",
+      "signature": "public int Save(string name, Guid viewportId)",
+      "summary": "Saves or updates a named layer state.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the layer state. If the named layer state already exists, it will be updated.",
+          "optional": false
+        },
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "The id of the layout or detail viewport, required to save per viewport layer state properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added, or updated, layer state."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_DocObjects_Tables_NamedLayerStateTable_Save_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of named layers states in the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_NamedLayerStateTable_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_NamedLayerStateTable_Document.htm"
+    },
+    {
+      "name": "Names",
+      "type": "String[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the names of named layer states in the document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_DocObjects_Tables_NamedLayerStateTable_Names.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

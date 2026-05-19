@@ -1,0 +1,171 @@
+{
+  "name": "MeshDisplacementInfo",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Contains mesh displacement information.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_MeshDisplacementInfo.htm",
+  "constructors": [
+    {
+      "name": "MeshDisplacementInfo",
+      "signature": "public MeshDisplacementInfo(RenderTexture texture, TextureMapping mapping)",
+      "summary": "Constructs a displacement information instance with default values. Users of this class should not rely on default values to stay constant across service releases.",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.Render.RenderTexture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MeshDisplacementInfo.#ctor(Rhino.Render.RenderTexture,Rhino.Render.TextureMapping)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "mapping",
+          "type": "Rhino.Render.TextureMapping",
+          "doc": "[Missing \u003Cparam name=\u0022mapping\u0022/\u003E documentation for \u0022M:Rhino.Geometry.MeshDisplacementInfo.#ctor(Rhino.Render.RenderTexture,Rhino.Render.TextureMapping)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "If texture or mapping is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_MeshDisplacementInfo__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Black",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Value considered lowest point in the displacement.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_Black.htm"
+    },
+    {
+      "name": "BlackMove",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The amount of displacement for the black color in the texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_BlackMove.htm"
+    },
+    {
+      "name": "ChannelNumber",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Mapping channel number for the displacement mapping.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_ChannelNumber.htm"
+    },
+    {
+      "name": "FaceLimit",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Runs a mesh reduction as a post process o simplify the result of displacement to meet the specified number of faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_FaceLimit.htm"
+    },
+    {
+      "name": "FairingAmount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Straightens rough feature edges. The value specifies the number of passes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_FairingAmount.htm"
+    },
+    {
+      "name": "InstanceTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "Instance transformation of the mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_InstanceTransform.htm"
+    },
+    {
+      "name": "Mapping",
+      "type": "TextureMapping",
+      "getter": true,
+      "setter": false,
+      "summary": "The texture mapping of the mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_Mapping.htm"
+    },
+    {
+      "name": "MappingTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "Texture mapping transform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_MappingTransform.htm"
+    },
+    {
+      "name": "MemoryLimit",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how much memory can be allocated for use by the displacement mesh. Value in megabytes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_MemoryLimit.htm"
+    },
+    {
+      "name": "PostWeldAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the maximum angle between face normals of adjacent faces that will get welded together.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_PostWeldAngle.htm"
+    },
+    {
+      "name": "RefineSensitivity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how sensitive the divider for contrasts is on the displacement texture.Specify 1 to split all mesh edges on each refine step.Specify 0.99 to make even slight contrasts on the displacement texture cause edges to be split.Specifying 0.01 only splits edges where heavy contrast exists.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_RefineSensitivity.htm"
+    },
+    {
+      "name": "RefineStepCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the number of refinement passes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_RefineStepCount.htm"
+    },
+    {
+      "name": "SweepPitch",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how densely the object is initially subdivided. The lower the value, the higher the resolution of the displaced mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_SweepPitch.htm"
+    },
+    {
+      "name": "Texture",
+      "type": "RenderTexture",
+      "getter": true,
+      "setter": false,
+      "summary": "The texture used as displacement.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_Texture.htm"
+    },
+    {
+      "name": "White",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Value considered highest point of the displacement texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_White.htm"
+    },
+    {
+      "name": "WhiteMove",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The amount of displacement for the white color in the texture.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_MeshDisplacementInfo_WhiteMove.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

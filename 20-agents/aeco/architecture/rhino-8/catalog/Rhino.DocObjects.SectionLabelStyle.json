@@ -1,0 +1,29 @@
+{
+  "name": "SectionLabelStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "The source of sectioning attributes on an object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_SectionLabelStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No label"
+    },
+    {
+      "name": "TextDotFromName",
+      "value": 1,
+      "summary": "Label shown as a text dot with content from name"
+    },
+    {
+      "name": "TextFromName",
+      "value": 2,
+      "summary": "Label shown as text with content from name"
+    }
+  ]
+}

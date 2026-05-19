@@ -1,0 +1,612 @@
+{
+  "name": "Point3f",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the three coordinates of a point in three-dimensional space, using Single-precision floating point numbers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_Point3f.htm",
+  "constructors": [
+    {
+      "name": "Point3f",
+      "signature": "public Point3f(float x, float y, float z)",
+      "summary": "Initializes a new two-dimensional vector from two components.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "X component of vector.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "Y component of vector.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Single",
+          "doc": "Z component of vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Point3f other)",
+      "summary": "Compares this Point3f with another Point3f. Component evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The other Point3d to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this.X \u003C other.X-1: if this.X == other.X and this.Y \u003C other.Y-1: if this.X == other.X and this.Y == other.Y and this.Z \u003C other.Z\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_CompareTo.htm"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "public double DistanceTo(Point3f other)",
+      "summary": "Computes the distance between two points.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Other point for distance measurement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The length of the line between this and the other point; or 0 if any of the points is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_DistanceTo.htm"
+    },
+    {
+      "name": "DistanceToSquared",
+      "signature": "public double DistanceToSquared(Point3f other)",
+      "summary": "Computes the squared distance between two points.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Other point for distance measurement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The squared length of the line between this and the other point; or 0 if any of the points is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_DistanceToSquared.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Point3f other, float epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3f",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Point3f.EpsilonEquals(Rhino.Geometry.Point3f,System.Single)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified System.Object is a Point3f and has the same values as the present point.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is Point3f and has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Point3f)",
+      "signature": "public bool Equals(Point3f point)",
+      "summary": "Determines whether the specified Point3f has the same values as the present point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The specified point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if point has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes a hash code for the present point.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique integer that represents this point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_GetHashCode.htm"
+    },
+    {
+      "name": "Subtract",
+      "signature": "public static Vector3f Subtract(Point3f point1, Point3f point2)",
+      "summary": "Subtracts a point from another point. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Another point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3f",
+        "doc": "A new vector that is the difference of point minus vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_Subtract.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Constructs the string representation for the current point.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The point representation in the form X,Y,Z."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public void Transform(Transform xform)",
+      "summary": "Transforms the present point in place. The transformation matrix acts on the left of the point. i.e., result = transformation*point",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_Transform.htm"
+    },
+    {
+      "name": "Addition",
+      "signature": "public static Point3f operator \u002B(Point3f point1, Point3f point2)",
+      "summary": "Adds a point to another point.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Another point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f",
+        "doc": "A new vector that is the sum of point1 plus point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Addition.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Point3f a, Point3f b)",
+      "summary": "Determines whether two points have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the coordinates of the two points are exactly equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Equality.htm"
+    },
+    {
+      "name": "Explicit(Point3d to Point3f)",
+      "signature": "public static explicit operator Point3f (Point3d point)",
+      "summary": "Converts a double-precision point in a single-precision point. Needs explicit casting to help retain precision.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f",
+        "doc": "The resulting point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Explicit.htm"
+    },
+    {
+      "name": "Explicit(Point3f to Vector3f)",
+      "signature": "public static explicit operator Vector3f (Point3f point)",
+      "summary": "Converts a single-precision point in a single-precision vector. Needs explicit casting to help retain precision.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3f",
+        "doc": "The resulting point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Explicit_1.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(Point3f a, Point3f b)",
+      "summary": "Determines whether the first specified point comes after (has superior sorting value than) the second point. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y, or a.X == b.X and a.Y == b.Y and a.Z is larger than b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(Point3f a, Point3f b)",
+      "summary": "Determines whether the first specified point comes after (has superior sorting value than) the second point, or it is equal to it. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y, or a.X == b.X and a.Y == b.Y and a.Z \u003E= b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Point3f a, Point3f b)",
+      "summary": "Determines whether two points have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two points differ in any coordinate; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(Point3f a, Point3f b)",
+      "summary": "Determines whether the first specified point comes before (has inferior sorting value than) the second point. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y, or a.X == b.X and a.Y == b.Y and a.Z is smaller than b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(Point3f a, Point3f b)",
+      "summary": "Determines whether the first specified point comes before (has inferior sorting value than) the second point, or it is equal to it. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y, or a.X == b.X and a.Y == b.Y and a.Z \u003C= b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Multiply(Point3f, Single)",
+      "signature": "public static Point3f operator *(Point3f point, float value)",
+      "summary": "Multiplies a point by a factor.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "A value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f",
+        "doc": "A new vector that is the multiplication of point by value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Multiply.htm"
+    },
+    {
+      "name": "Multiply(Single, Point3f)",
+      "signature": "public static Point3f operator *(float value, Point3f point)",
+      "summary": "Multiplies a point by a factor.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Single",
+          "doc": "A value.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f",
+        "doc": "A new vector that is the multiplication of point by value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Multiply_1.htm"
+    },
+    {
+      "name": "Subtraction",
+      "signature": "public static Vector3f operator -(Point3f point1, Point3f point2)",
+      "summary": "Subtracts a point from another point.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "Another point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3f",
+        "doc": "A new vector that is the difference of point minus vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Geometry_Point3f_op_Subtraction.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Each coordinate of the point must pass the IsValidSingle(Single) test.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point3f_IsValid.htm"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3f",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of a point at location 0,0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point3f_Origin.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Point3f",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of a point at location RhinoMath.UnsetValue,RhinoMath.UnsetValue,RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point3f_Unset.htm"
+    },
+    {
+      "name": "X",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X (first) component of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point3f_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y (second) component of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point3f_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z (third) component of the vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Geometry_Point3f_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

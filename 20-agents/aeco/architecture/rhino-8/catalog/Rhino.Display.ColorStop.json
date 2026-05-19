@@ -1,0 +1,54 @@
+{
+  "name": "ColorStop",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Combination of a color and position. Used in defining gradient fills",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Display_ColorStop.htm",
+  "constructors": [
+    {
+      "name": "ColorStop",
+      "signature": "public ColorStop(Color color, double t)",
+      "summary": "Create color stop from a color and position",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorStop.#ctor(System.Drawing.Color,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorStop.#ctor(System.Drawing.Color,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Display_ColorStop__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorStop_Color.htm"
+    },
+    {
+      "name": "Position",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Parameter that Color is defined at",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Display_ColorStop_Position.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

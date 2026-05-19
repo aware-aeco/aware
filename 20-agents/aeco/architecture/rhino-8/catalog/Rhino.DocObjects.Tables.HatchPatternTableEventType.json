@@ -1,0 +1,44 @@
+{
+  "name": "HatchPatternTableEventType",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "enum",
+  "summary": "HatchPattern event types Since: 8.15",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_Tables_HatchPatternTableEventType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0,
+      "summary": "A hatchpattern was added."
+    },
+    {
+      "name": "Deleted",
+      "value": 1,
+      "summary": "A hatchpattern was deleted."
+    },
+    {
+      "name": "Undeleted",
+      "value": 2,
+      "summary": "A hatchpattern was undeleted."
+    },
+    {
+      "name": "Modified",
+      "value": 3,
+      "summary": "A hatchpattern was modified."
+    },
+    {
+      "name": "Sorted",
+      "value": 4,
+      "summary": "The hatchpattern table was sorted."
+    },
+    {
+      "name": "Current",
+      "value": 5,
+      "summary": "The current hatchpattern has changed."
+    }
+  ]
+}

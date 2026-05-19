@@ -1,0 +1,246 @@
+{
+  "name": "TextLog",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Used for collecting text data",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_TextLog.htm",
+  "constructors": [
+    {
+      "name": "TextLog()",
+      "signature": "public TextLog()",
+      "summary": "Creates a text log that stores all text in memory. Use ToString on this version of the TextLog to get the text that we written",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog__ctor.htm"
+    },
+    {
+      "name": "TextLog(IntPtr)",
+      "signature": "public TextLog(IntPtr ptr)",
+      "summary": "Initializes a new instance of the TextLog class",
+      "params": [
+        {
+          "name": "ptr",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022ptr\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog__ctor_1.htm"
+    },
+    {
+      "name": "TextLog(String)",
+      "signature": "public TextLog(string filename)",
+      "summary": "Creates a text log that writes all text to a file. If no filename is provided, then text is written to StdOut",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Name of file to create and write to. If null, then text output is sent to StdOut",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_Finalize.htm"
+    },
+    {
+      "name": "NewCommandLine",
+      "signature": "public static TextLog NewCommandLine()",
+      "summary": "Returns a reference to a TextLog that prints to the Rhino command line. Each new command line reference holds its own indents.",
+      "remarks": "All Print methods of this instance are guaranteed to be thread safe. Other methods are not guaranteed to be thread safe.",
+      "params": [],
+      "returns": {
+        "type": "TextLog",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.TextLog.NewCommandLine\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_NewCommandLine.htm"
+    },
+    {
+      "name": "PopIndent",
+      "signature": "public void PopIndent()",
+      "summary": "Decrease the indentation level",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_PopIndent.htm"
+    },
+    {
+      "name": "Print(String)",
+      "signature": "public void Print(string text)",
+      "summary": "Send text to the text log",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022text\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.Print(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_Print.htm"
+    },
+    {
+      "name": "Print(String, Object)",
+      "signature": "public void Print(string format, Object arg0)",
+      "summary": "Send formatted text to the text log",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.Print(System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.Print(System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_Print_1.htm"
+    },
+    {
+      "name": "Print(String, Object, Object)",
+      "signature": "public void Print(string format, Object arg0, Object arg1)",
+      "summary": "Send formatted text to the text log",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.Print(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.Print(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg1\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.Print(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_Print_2.htm"
+    },
+    {
+      "name": "PrintWrappedText",
+      "signature": "public void PrintWrappedText(string text, int lineLength)",
+      "summary": "Send text wrapped at a set line length",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022text\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.PrintWrappedText(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "lineLength",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022lineLength\u0022/\u003E documentation for \u0022M:Rhino.FileIO.TextLog.PrintWrappedText(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_PrintWrappedText.htm"
+    },
+    {
+      "name": "PushIndent",
+      "signature": "public void PushIndent()",
+      "summary": "Increase the indentation level",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_PushIndent.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "If the TextLog was constructed using the empty constructor, then the text information is stored in a runtime string. The contents of this string is retrieved using ToString for this case",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.TextLog.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_TextLog_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IndentSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0: one tab per indent. \u003E0: number of spaces per indent",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_TextLog_IndentSize.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

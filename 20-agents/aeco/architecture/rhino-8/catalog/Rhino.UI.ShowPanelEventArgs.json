@@ -1,0 +1,77 @@
+{
+  "name": "ShowPanelEventArgs",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Panels.Show event arguments",
+  "base": "PanelEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_UI_ShowPanelEventArgs.htm",
+  "constructors": [
+    {
+      "name": "ShowPanelEventArgs",
+      "signature": "public ShowPanelEventArgs(Guid panelId, uint documentSerialNumber, bool show)",
+      "summary": "Initializes a new instance of the ShowPanelEventArgs class",
+      "params": [
+        {
+          "name": "panelId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022panelId\u0022/\u003E documentation for \u0022M:Rhino.UI.ShowPanelEventArgs.#ctor(System.Guid,System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022documentSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.UI.ShowPanelEventArgs.#ctor(System.Guid,System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "show",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022show\u0022/\u003E documentation for \u0022M:Rhino.UI.ShowPanelEventArgs.#ctor(System.Guid,System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_UI_ShowPanelEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from PanelEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_PanelEventArgs_Document.htm"
+    },
+    {
+      "name": "DocumentSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from PanelEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_PanelEventArgs_DocumentSerialNumber.htm"
+    },
+    {
+      "name": "PanelId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Class Id for panel being shown or hidden",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_PanelEventArgs_PanelId.htm"
+    },
+    {
+      "name": "Show",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Will be true if showing or false if hiding",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_UI_ShowPanelEventArgs_Show.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

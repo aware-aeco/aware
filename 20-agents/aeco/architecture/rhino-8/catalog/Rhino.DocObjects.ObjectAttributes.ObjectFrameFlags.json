@@ -1,0 +1,29 @@
+{
+  "name": "ObjectAttributes.ObjectFrameFlags",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.ObjectAttributes.ObjectFrameFlags\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_ObjectAttributes_ObjectFrameFlags.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Standard",
+      "value": 0,
+      "summary": "Never returns unset plane. Will always calculate the plane even if nothing is stored."
+    },
+    {
+      "name": "IncludeScaleTransforms",
+      "value": 1,
+      "summary": "By default, the plane is orientation and rotation only. But scale transforms are stored if you need them."
+    },
+    {
+      "name": "ReturnUnset",
+      "value": 2,
+      "summary": "The object frame may be stored unset by default. If this is the case, and you want to know if it really is unset, this will tell you."
+    }
+  ]
+}

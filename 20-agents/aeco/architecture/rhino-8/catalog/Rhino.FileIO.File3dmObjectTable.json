@@ -1,0 +1,2214 @@
+{
+  "name": "File3dmObjectTable",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Represents a simple object table for a file that is open externally. This class mimics Rhino.DocObjects.Tables.ObjectTable while providing external access to the file.",
+  "base": "File3dmCommonComponentTable\u003CFile3dmObject\u003E",
+  "interfaces": [
+    "IEnumerable\u003CFile3dmObject\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_FileIO_File3dmObjectTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(File3dmObject)",
+      "signature": "public override void Add(File3dmObject item)",
+      "summary": "Duplicates the object, then adds a copy of the object to the document.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.FileIO.File3dmObject",
+          "doc": "The item to duplicate and add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_Add.htm"
+    },
+    {
+      "name": "Add(GeometryBase, ObjectAttributes)",
+      "signature": "public Guid Add(GeometryBase item, ObjectAttributes attributes)",
+      "summary": "Duplicates the object, then adds a copy of the object to the document.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "The item to duplicate and add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "The attributes to link with geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmObjectTable.Add(Rhino.Geometry.GeometryBase,Rhino.DocObjects.ObjectAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_Add_1.htm"
+    },
+    {
+      "name": "AddAngularDimension(AngularDimension)",
+      "signature": "public Guid AddAngularDimension(AngularDimension dimension)",
+      "summary": "Adds a angular dimension object to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.AngularDimension",
+          "doc": "Dimension object to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddAngularDimension.htm"
+    },
+    {
+      "name": "AddAngularDimension(AngularDimension, ObjectAttributes)",
+      "signature": "public Guid AddAngularDimension(AngularDimension dimension, ObjectAttributes attributes)",
+      "summary": "Adds a angular dimension object to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.AngularDimension",
+          "doc": "Dimension object to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to dimension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddAngularDimension_1.htm"
+    },
+    {
+      "name": "AddArc(Arc)",
+      "signature": "public Guid AddArc(Arc arc)",
+      "summary": "Adds a curve object to the document representing an arc.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "An arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddArc.htm"
+    },
+    {
+      "name": "AddArc(Arc, ObjectAttributes)",
+      "signature": "public Guid AddArc(Arc arc, ObjectAttributes attributes)",
+      "summary": "Adds a curve object to the document representing an arc.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "An arc to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "attributes to apply to arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddArc_1.htm"
+    },
+    {
+      "name": "AddBrep(Brep)",
+      "signature": "public Guid AddBrep(Brep brep)",
+      "summary": "Adds a brep object to Rhino.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A duplicate of this brep is added to Rhino.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddBrep.htm"
+    },
+    {
+      "name": "AddBrep(Brep, ObjectAttributes)",
+      "signature": "public Guid AddBrep(Brep brep, ObjectAttributes attributes)",
+      "summary": "Adds a brep object to Rhino.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A duplicate of this brep is added to Rhino.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddBrep_1.htm"
+    },
+    {
+      "name": "AddCircle(Circle)",
+      "signature": "public Guid AddCircle(Circle circle)",
+      "summary": "Adds a curve object to the document representing a circle.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "A circle to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddCircle.htm"
+    },
+    {
+      "name": "AddCircle(Circle, ObjectAttributes)",
+      "signature": "public Guid AddCircle(Circle circle, ObjectAttributes attributes)",
+      "summary": "Adds a curve object to the document representing a circle.",
+      "params": [
+        {
+          "name": "circle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "A circle to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "attributes to apply to circle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddCircle_1.htm"
+    },
+    {
+      "name": "AddClippingPlane(Plane, Double, Double, IEnumerable\u003CGuid\u003E)",
+      "signature": "public Guid AddClippingPlane(Plane plane, double uMagnitude, double vMagnitude, IEnumerable\u003CGuid\u003E clippedViewportIds)",
+      "summary": "Adds a clipping plane object to Rhino.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "uMagnitude",
+          "type": "System.Double",
+          "doc": "The size in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vMagnitude",
+          "type": "System.Double",
+          "doc": "The size in V direction.",
+          "optional": false
+        },
+        {
+          "name": "clippedViewportIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "A list, an array or any enumerable of viewport ids that the new clipping plane will clip.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddClippingPlane.htm"
+    },
+    {
+      "name": "AddClippingPlane(Plane, Double, Double, Guid)",
+      "signature": "public Guid AddClippingPlane(Plane plane, double uMagnitude, double vMagnitude, Guid clippedViewportId)",
+      "summary": "Adds a clipping plane object to Rhino.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "uMagnitude",
+          "type": "System.Double",
+          "doc": "The size in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vMagnitude",
+          "type": "System.Double",
+          "doc": "The size in V direction.",
+          "optional": false
+        },
+        {
+          "name": "clippedViewportId",
+          "type": "System.Guid",
+          "doc": "The viewport id that the new clipping plane will clip.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddClippingPlane_2.htm"
+    },
+    {
+      "name": "AddClippingPlane(Plane, Double, Double, IEnumerable\u003CGuid\u003E, ObjectAttributes)",
+      "signature": "public Guid AddClippingPlane(Plane plane, double uMagnitude, double vMagnitude, IEnumerable\u003CGuid\u003E clippedViewportIds, ObjectAttributes attributes)",
+      "summary": "Adds a clipping plane object to Rhino.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "uMagnitude",
+          "type": "System.Double",
+          "doc": "The size in U direction.",
+          "optional": false
+        },
+        {
+          "name": "vMagnitude",
+          "type": "System.Double",
+          "doc": "The size in V direction.",
+          "optional": false
+        },
+        {
+          "name": "clippedViewportIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "list of viewport ids that the new clipping plane will clip.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to point cloud.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddClippingPlane_1.htm"
+    },
+    {
+      "name": "AddCurve(Curve)",
+      "signature": "public Guid AddCurve(Curve curve)",
+      "summary": "Adds a curve object to the table.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A curve to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddCurve.htm"
+    },
+    {
+      "name": "AddCurve(Curve, ObjectAttributes)",
+      "signature": "public Guid AddCurve(Curve curve, ObjectAttributes attributes)",
+      "summary": "Adds a curve object to the table.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "A duplicate of this curve is added to Rhino.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddCurve_1.htm"
+    },
+    {
+      "name": "AddEllipse(Ellipse)",
+      "signature": "public Guid AddEllipse(Ellipse ellipse)",
+      "summary": "Adds a curve object to the document representing an ellipse.",
+      "params": [
+        {
+          "name": "ellipse",
+          "type": "Rhino.Geometry.Ellipse",
+          "doc": "An ellipse to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddEllipse.htm"
+    },
+    {
+      "name": "AddEllipse(Ellipse, ObjectAttributes)",
+      "signature": "public Guid AddEllipse(Ellipse ellipse, ObjectAttributes attributes)",
+      "summary": "Adds a curve object to the document representing an ellipse.",
+      "params": [
+        {
+          "name": "ellipse",
+          "type": "Rhino.Geometry.Ellipse",
+          "doc": "An ellipse to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "attributes to apply to ellipse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddEllipse_1.htm"
+    },
+    {
+      "name": "AddExtrusion(Extrusion)",
+      "signature": "public Guid AddExtrusion(Extrusion extrusion)",
+      "summary": "Adds an extrusion object to Rhino.",
+      "params": [
+        {
+          "name": "extrusion",
+          "type": "Rhino.Geometry.Extrusion",
+          "doc": "A duplicate of this extrusion is added to Rhino.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddExtrusion.htm"
+    },
+    {
+      "name": "AddExtrusion(Extrusion, ObjectAttributes)",
+      "signature": "public Guid AddExtrusion(Extrusion extrusion, ObjectAttributes attributes)",
+      "summary": "Adds an extrusion object to Rhino.",
+      "params": [
+        {
+          "name": "extrusion",
+          "type": "Rhino.Geometry.Extrusion",
+          "doc": "A duplicate of this extrusion is added to Rhino.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link to the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddExtrusion_1.htm"
+    },
+    {
+      "name": "AddHatch(Hatch)",
+      "signature": "public Guid AddHatch(Hatch hatch)",
+      "summary": "Adds a hatch to the document.",
+      "params": [
+        {
+          "name": "hatch",
+          "type": "Rhino.Geometry.Hatch",
+          "doc": "A hatch.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the hatch, or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddHatch.htm"
+    },
+    {
+      "name": "AddHatch(Hatch, ObjectAttributes)",
+      "signature": "public Guid AddHatch(Hatch hatch, ObjectAttributes attributes)",
+      "summary": "Adds a hatch to the document.",
+      "params": [
+        {
+          "name": "hatch",
+          "type": "Rhino.Geometry.Hatch",
+          "doc": "A hatch.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the hatch, or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddHatch_1.htm"
+    },
+    {
+      "name": "AddInstanceObject(InstanceReferenceGeometry)",
+      "signature": "public Guid AddInstanceObject(InstanceReferenceGeometry instanceReference)",
+      "summary": "Adds an instance reference geometry object to the table.",
+      "params": [
+        {
+          "name": "instanceReference",
+          "type": "Rhino.Geometry.InstanceReferenceGeometry",
+          "doc": "The instance reference geometry object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddInstanceObject.htm"
+    },
+    {
+      "name": "AddInstanceObject(InstanceReferenceGeometry, ObjectAttributes)",
+      "signature": "public Guid AddInstanceObject(InstanceReferenceGeometry instanceReference, ObjectAttributes attributes)",
+      "summary": "Adds an instance reference geometry object to the table.",
+      "params": [
+        {
+          "name": "instanceReference",
+          "type": "Rhino.Geometry.InstanceReferenceGeometry",
+          "doc": "The instance reference geometry object.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "The attributes to link with the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddInstanceObject_1.htm"
+    },
+    {
+      "name": "AddInstanceObject(Int32, Transform)",
+      "signature": "public Guid AddInstanceObject(int instanceDefinitionIndex, Transform instanceXform)",
+      "summary": "Adds an instance reference geometry object to the table.",
+      "params": [
+        {
+          "name": "instanceDefinitionIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition geometry object.",
+          "optional": false
+        },
+        {
+          "name": "instanceXform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The transformation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddInstanceObject_2.htm"
+    },
+    {
+      "name": "AddInstanceObject(Int32, Transform, ObjectAttributes)",
+      "signature": "public Guid AddInstanceObject(int instanceDefinitionIndex, Transform instanceXform, ObjectAttributes attributes)",
+      "summary": "Adds an instance reference geometry object to the table.",
+      "params": [
+        {
+          "name": "instanceDefinitionIndex",
+          "type": "System.Int32",
+          "doc": "The index of the instance definition geometry object.",
+          "optional": false
+        },
+        {
+          "name": "instanceXform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The transformation.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "The object attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddInstanceObject_3.htm"
+    },
+    {
+      "name": "AddLeader(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Guid AddLeader(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Adds an annotation leader to the document. This overload is only provided in the Rhino SDK.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of 2d points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object; or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLeader_2.htm"
+    },
+    {
+      "name": "AddLeader(Plane, IEnumerable\u003CPoint2d\u003E)",
+      "signature": "public Guid AddLeader(Plane plane, IEnumerable\u003CPoint2d\u003E points)",
+      "summary": "Adds an annotation leader to the document.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "A list, an array or any enumerable set of 2d points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object; or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLeader.htm"
+    },
+    {
+      "name": "AddLeader(String, IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Guid AddLeader(string text, IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Adds an annotation leader to the document. This overload is only provided in the Rhino SDK.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of 2d points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object; or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLeader_5.htm"
+    },
+    {
+      "name": "AddLeader(Plane, IEnumerable\u003CPoint2d\u003E, ObjectAttributes)",
+      "signature": "public Guid AddLeader(Plane plane, IEnumerable\u003CPoint2d\u003E points, ObjectAttributes attributes)",
+      "summary": "Adds an annotation leader to the document.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "A list, an array or any enumerable set of 2d points.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object; or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLeader_1.htm"
+    },
+    {
+      "name": "AddLeader(String, Plane, IEnumerable\u003CPoint2d\u003E)",
+      "signature": "public Guid AddLeader(string text, Plane plane, IEnumerable\u003CPoint2d\u003E points)",
+      "summary": "Adds an annotation leader to the document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "A list, an array or any enumerable set of 2d points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object; or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLeader_3.htm"
+    },
+    {
+      "name": "AddLeader(String, Plane, IEnumerable\u003CPoint2d\u003E, ObjectAttributes)",
+      "signature": "public Guid AddLeader(string text, Plane plane, IEnumerable\u003CPoint2d\u003E points, ObjectAttributes attributes)",
+      "summary": "Adds an annotation leader to the document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "A list, an array or any enumerable set of 2d points.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object; or Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLeader_4.htm"
+    },
+    {
+      "name": "AddLine(Line)",
+      "signature": "public Guid AddLine(Line line)",
+      "summary": "Adds a line object to Rhino.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "[Missing \u003Cparam name=\u0022line\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmObjectTable.AddLine(Rhino.Geometry.Line)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLine.htm"
+    },
+    {
+      "name": "AddLine(Line, ObjectAttributes)",
+      "signature": "public Guid AddLine(Line line, ObjectAttributes attributes)",
+      "summary": "Adds a line object to Rhino.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLine_1.htm"
+    },
+    {
+      "name": "AddLine(Point3d, Point3d)",
+      "signature": "public Guid AddLine(Point3d from, Point3d to)",
+      "summary": "Adds a line object to Rhino.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A line start point.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A line end point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier of new rhino object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLine_2.htm"
+    },
+    {
+      "name": "AddLine(Point3d, Point3d, ObjectAttributes)",
+      "signature": "public Guid AddLine(Point3d from, Point3d to, ObjectAttributes attributes)",
+      "summary": "Adds a line object to Rhino.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The start point of the line.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The end point of the line.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLine_3.htm"
+    },
+    {
+      "name": "AddLinearDimension(LinearDimension)",
+      "signature": "public Guid AddLinearDimension(LinearDimension dimension)",
+      "summary": "Adds a linear dimension to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.LinearDimension",
+          "doc": "A dimension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLinearDimension.htm"
+    },
+    {
+      "name": "AddLinearDimension(LinearDimension, ObjectAttributes)",
+      "signature": "public Guid AddLinearDimension(LinearDimension dimension, ObjectAttributes attributes)",
+      "summary": "Adds a linear dimension to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.LinearDimension",
+          "doc": "A dimension.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to dimension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddLinearDimension_1.htm"
+    },
+    {
+      "name": "AddMesh(Mesh)",
+      "signature": "public Guid AddMesh(Mesh mesh)",
+      "summary": "Adds a mesh object to Rhino.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A duplicate of this mesh is added to Rhino.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddMesh.htm"
+    },
+    {
+      "name": "AddMesh(Mesh, ObjectAttributes)",
+      "signature": "public Guid AddMesh(Mesh mesh, ObjectAttributes attributes)",
+      "summary": "Adds a mesh object to Rhino.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "A duplicate of this mesh is added to Rhino.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link to the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddMesh_1.htm"
+    },
+    {
+      "name": "AddOrdinateDimension(OrdinateDimension)",
+      "signature": "public Guid AddOrdinateDimension(OrdinateDimension dimension)",
+      "summary": "Adds an ordinate dimension object to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.OrdinateDimension",
+          "doc": "Dimension object to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddOrdinateDimension.htm"
+    },
+    {
+      "name": "AddOrdinateDimension(OrdinateDimension, ObjectAttributes)",
+      "signature": "public Guid AddOrdinateDimension(OrdinateDimension dimension, ObjectAttributes attributes)",
+      "summary": "Adds an ordinate dimension object to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.OrdinateDimension",
+          "doc": "Dimension object to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to dimension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddOrdinateDimension_1.htm"
+    },
+    {
+      "name": "AddPoint(Point3d)",
+      "signature": "public Guid AddPoint(Point3d point)",
+      "summary": "Adds a point object to the table.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A location for point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Id of new object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoint.htm"
+    },
+    {
+      "name": "AddPoint(Point3f)",
+      "signature": "public Guid AddPoint(Point3f point)",
+      "summary": "Adds a point object to the document.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "location of point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoint_2.htm"
+    },
+    {
+      "name": "AddPoint(Point3d, ObjectAttributes)",
+      "signature": "public Guid AddPoint(Point3d point, ObjectAttributes attributes)",
+      "summary": "Adds a point object to the document.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A location for point.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "attributes to apply to point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoint_1.htm"
+    },
+    {
+      "name": "AddPoint(Point3f, ObjectAttributes)",
+      "signature": "public Guid AddPoint(Point3f point, ObjectAttributes attributes)",
+      "summary": "Adds a point object to the document.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "location of point.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "attributes to apply to point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoint_3.htm"
+    },
+    {
+      "name": "AddPoint(Double, Double, Double)",
+      "signature": "public Guid AddPoint(double x, double y, double z)",
+      "summary": "Adds a point object to the table.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X component of point coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y component of point coordinate.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z component of point coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "id of new object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoint_4.htm"
+    },
+    {
+      "name": "AddPointCloud(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Guid AddPointCloud(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Adds a point cloud object to the document.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of Point3d.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPointCloud_2.htm"
+    },
+    {
+      "name": "AddPointCloud(PointCloud)",
+      "signature": "public Guid AddPointCloud(PointCloud cloud)",
+      "summary": "Adds a point cloud object to the document.",
+      "params": [
+        {
+          "name": "cloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "PointCloud to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPointCloud.htm"
+    },
+    {
+      "name": "AddPointCloud(IEnumerable\u003CPoint3d\u003E, ObjectAttributes)",
+      "signature": "public Guid AddPointCloud(IEnumerable\u003CPoint3d\u003E points, ObjectAttributes attributes)",
+      "summary": "Adds a point cloud object to the document.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of Point3d.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to point cloud.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPointCloud_3.htm"
+    },
+    {
+      "name": "AddPointCloud(PointCloud, ObjectAttributes)",
+      "signature": "public Guid AddPointCloud(PointCloud cloud, ObjectAttributes attributes)",
+      "summary": "Adds a point cloud object to the document.",
+      "params": [
+        {
+          "name": "cloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "PointCloud to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "attributes to apply to point cloud.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPointCloud_1.htm"
+    },
+    {
+      "name": "AddPoints(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Guid[] AddPoints(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Adds multiple points to the document.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "List of object ids."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoints.htm"
+    },
+    {
+      "name": "AddPoints(IEnumerable\u003CPoint3f\u003E)",
+      "signature": "public Guid[] AddPoints(IEnumerable\u003CPoint3f\u003E points)",
+      "summary": "Adds multiple points to the document.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3f\u003E",
+          "doc": "Points to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "An array of object unique identifiers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoints_2.htm"
+    },
+    {
+      "name": "AddPoints(IEnumerable\u003CPoint3d\u003E, ObjectAttributes)",
+      "signature": "public Guid[] AddPoints(IEnumerable\u003CPoint3d\u003E points, ObjectAttributes attributes)",
+      "summary": "Adds multiple points to the document.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to point objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "An array of object unique identifiers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoints_1.htm"
+    },
+    {
+      "name": "AddPoints(IEnumerable\u003CPoint3f\u003E, ObjectAttributes)",
+      "signature": "public Guid[] AddPoints(IEnumerable\u003CPoint3f\u003E points, ObjectAttributes attributes)",
+      "summary": "Adds multiple points to the document.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3f\u003E",
+          "doc": "Points to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to point objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "An array of object unique identifiers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPoints_3.htm"
+    },
+    {
+      "name": "AddPolyline(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Guid AddPolyline(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Adds a polyline object to Rhino.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of Point3d.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPolyline.htm"
+    },
+    {
+      "name": "AddPolyline(IEnumerable\u003CPoint3d\u003E, ObjectAttributes)",
+      "signature": "public Guid AddPolyline(IEnumerable\u003CPoint3d\u003E points, ObjectAttributes attributes)",
+      "summary": "Adds a polyline object to Rhino.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable set of Point3d.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddPolyline_1.htm"
+    },
+    {
+      "name": "AddRadialDimension(RadialDimension)",
+      "signature": "public Guid AddRadialDimension(RadialDimension dimension)",
+      "summary": "Adds a radial dimension object to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.RadialDimension",
+          "doc": "Dimension object to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddRadialDimension.htm"
+    },
+    {
+      "name": "AddRadialDimension(RadialDimension, ObjectAttributes)",
+      "signature": "public Guid AddRadialDimension(RadialDimension dimension, ObjectAttributes attributes)",
+      "summary": "Adds a radial dimension object to the 3dm file object table.",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "Rhino.Geometry.RadialDimension",
+          "doc": "Dimension object to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply to dimension.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddRadialDimension_1.htm"
+    },
+    {
+      "name": "AddSphere(Sphere)",
+      "signature": "public Guid AddSphere(Sphere sphere)",
+      "summary": "Adds a surface object to the document representing a sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "A sphere to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddSphere.htm"
+    },
+    {
+      "name": "AddSphere(Sphere, ObjectAttributes)",
+      "signature": "public Guid AddSphere(Sphere sphere, ObjectAttributes attributes)",
+      "summary": "Adds a surface object to the document representing a sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "A sphere to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link with the sphere.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddSphere_1.htm"
+    },
+    {
+      "name": "AddSubD(SubD)",
+      "signature": "public Guid AddSubD(SubD subd)",
+      "summary": "Adds a SubD to the document",
+      "params": [
+        {
+          "name": "subd",
+          "type": "Rhino.Geometry.SubD",
+          "doc": "the Subd to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the SubD, or Empty on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddSubD.htm"
+    },
+    {
+      "name": "AddSubD(SubD, ObjectAttributes)",
+      "signature": "public Guid AddSubD(SubD subd, ObjectAttributes attributes)",
+      "summary": "Adds a SubD to the document",
+      "params": [
+        {
+          "name": "subd",
+          "type": "Rhino.Geometry.SubD",
+          "doc": "the Subd to add",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to apply",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the SubD, or Empty on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddSubD_1.htm"
+    },
+    {
+      "name": "AddSurface(Surface)",
+      "signature": "public Guid AddSurface(Surface surface)",
+      "summary": "Adds a surface object to Rhino.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A duplicate of this surface is added to Rhino.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddSurface.htm"
+    },
+    {
+      "name": "AddSurface(Surface, ObjectAttributes)",
+      "signature": "public Guid AddSurface(Surface surface, ObjectAttributes attributes)",
+      "summary": "Adds a surface object to Rhino.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A duplicate of this surface is added to Rhino.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link to the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddSurface_1.htm"
+    },
+    {
+      "name": "AddText(Text3d)",
+      "signature": "public Guid AddText(Text3d text3d)",
+      "summary": "Adds an annotation text object to the document.",
+      "params": [
+        {
+          "name": "text3d",
+          "type": "Rhino.Display.Text3d",
+          "doc": "The text object to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the newly added object or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddText.htm"
+    },
+    {
+      "name": "AddText(Text3d, ObjectAttributes)",
+      "signature": "public Guid AddText(Text3d text3d, ObjectAttributes attributes)",
+      "summary": "Adds an annotation text object to the document.",
+      "params": [
+        {
+          "name": "text3d",
+          "type": "Rhino.Display.Text3d",
+          "doc": "The text object to add.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link to the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the newly added object or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddText_1.htm"
+    },
+    {
+      "name": "AddText(String, Plane, Double, String, Boolean, Boolean)",
+      "signature": "public Guid AddText(string text, Plane plane, double height, string fontName, bool bold, bool italic)",
+      "summary": "Adds an annotation text object to the document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text string.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane of text.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height of text.",
+          "optional": false
+        },
+        {
+          "name": "fontName",
+          "type": "System.String",
+          "doc": "Name of FontFace.",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "Bold flag.",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "Italic flag.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the newly added object or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddText_2.htm"
+    },
+    {
+      "name": "AddText(String, Plane, Double, String, Boolean, Boolean, ObjectAttributes)",
+      "signature": "public Guid AddText(string text, Plane plane, double height, string fontName, bool bold, bool italic, ObjectAttributes attributes)",
+      "summary": "Adds an annotation text object to the document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text string.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane of text.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height of text.",
+          "optional": false
+        },
+        {
+          "name": "fontName",
+          "type": "System.String",
+          "doc": "Name of FontFace.",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "Bold flag.",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "Italic flag.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Object Attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the newly added object or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddText_3.htm"
+    },
+    {
+      "name": "AddText(String, Plane, Double, String, Boolean, Boolean, TextJustification)",
+      "signature": "public Guid AddText(string text, Plane plane, double height, string fontName, bool bold, bool italic, TextJustification justification)",
+      "summary": "Adds an annotation text object to the document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text string.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane of text.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height of text.",
+          "optional": false
+        },
+        {
+          "name": "fontName",
+          "type": "System.String",
+          "doc": "Name of FontFace.",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "Bold flag.",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "Italic flag.",
+          "optional": false
+        },
+        {
+          "name": "justification",
+          "type": "Rhino.Geometry.TextJustification",
+          "doc": "The justification of the text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the newly added object or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddText_4.htm"
+    },
+    {
+      "name": "AddText(String, Plane, Double, String, Boolean, Boolean, TextJustification, ObjectAttributes)",
+      "signature": "public Guid AddText(string text, Plane plane, double height, string fontName, bool bold, bool italic, TextJustification justification, ObjectAttributes attributes)",
+      "summary": "Adds an annotation text object to the document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text string.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Plane of text.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height of text.",
+          "optional": false
+        },
+        {
+          "name": "fontName",
+          "type": "System.String",
+          "doc": "Name of FontFace.",
+          "optional": false
+        },
+        {
+          "name": "bold",
+          "type": "System.Boolean",
+          "doc": "Bold flag.",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "System.Boolean",
+          "doc": "Italic flag.",
+          "optional": false
+        },
+        {
+          "name": "justification",
+          "type": "Rhino.Geometry.TextJustification",
+          "doc": "The justification of the text.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link to the object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the newly added object or Guid.Empty on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddText_5.htm"
+    },
+    {
+      "name": "AddTextDot(TextDot)",
+      "signature": "public Guid AddTextDot(TextDot dot)",
+      "summary": "Adds a text dot object to the table.",
+      "params": [
+        {
+          "name": "dot",
+          "type": "Rhino.Geometry.TextDot",
+          "doc": "The text dot.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddTextDot.htm"
+    },
+    {
+      "name": "AddTextDot(String, Point3d)",
+      "signature": "public Guid AddTextDot(string text, Point3d location)",
+      "summary": "Adds a text dot object to the table.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddTextDot_2.htm"
+    },
+    {
+      "name": "AddTextDot(TextDot, ObjectAttributes)",
+      "signature": "public Guid AddTextDot(TextDot dot, ObjectAttributes attributes)",
+      "summary": "Adds a text dot object to the table.",
+      "params": [
+        {
+          "name": "dot",
+          "type": "Rhino.Geometry.TextDot",
+          "doc": "The text dot.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link with text dot.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddTextDot_1.htm"
+    },
+    {
+      "name": "AddTextDot(String, Point3d, ObjectAttributes)",
+      "signature": "public Guid AddTextDot(string text, Point3d location, ObjectAttributes attributes)",
+      "summary": "Adds a text dot object to the table.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The location.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "Rhino.DocObjects.ObjectAttributes",
+          "doc": "Attributes to link with curve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "A unique identifier for the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_AddTextDot_3.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Marks all items as deleted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_Clear.htm"
+    },
+    {
+      "name": "Delete(T)",
+      "signature": "public override bool Delete(T item)",
+      "summary": "Flags a component as deleted.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The item to flag.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmCommonComponentTable_1_Delete_1.htm"
+    },
+    {
+      "name": "Delete(Guid)",
+      "signature": "public bool Delete(Guid objectId)",
+      "summary": "Deletes object from document.",
+      "params": [
+        {
+          "name": "objectId",
+          "type": "System.Guid",
+          "doc": "Id of the object to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_Delete_1.htm"
+    },
+    {
+      "name": "Delete(IEnumerable\u003CGuid\u003E)",
+      "signature": "public int Delete(IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Deletes a collection of objects from the document.",
+      "params": [
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "Ids of all objects to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of successfully deleted objects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_Delete.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public virtual void Delete(int index)",
+      "summary": "Flags a component as deleted.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the item to flag.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmCommonComponentTable_1_Delete.htm"
+    },
+    {
+      "name": "Dump",
+      "signature": "public string Dump()",
+      "summary": "Prepares a text dump of object table.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the dump."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmCommonComponentTable_1_Dump.htm"
+    },
+    {
+      "name": "FindByGroup",
+      "signature": "public File3dmObject[] FindByGroup(Group group)",
+      "summary": "Finds all File3dmObject that are in a given group.",
+      "params": [
+        {
+          "name": "group",
+          "type": "Rhino.DocObjects.Group",
+          "doc": "A group instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dmObject[]",
+        "doc": "Array of objects that belong to the specified group or empty array if no objects could be found."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "If group is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_FindByGroup.htm"
+    },
+    {
+      "name": "FindByLayer(Layer)",
+      "signature": "public File3dmObject[] FindByLayer(Layer layer)",
+      "summary": "Finds all File3dmObject that are in a given layer.",
+      "params": [
+        {
+          "name": "layer",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "A layer instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dmObject[]",
+        "doc": "Array of objects that belong to the specified layer or empty array if no objects could be found."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "If layer is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_FindByLayer.htm"
+    },
+    {
+      "name": "FindByLayer(String)",
+      "signature": "public File3dmObject[] FindByLayer(string layer)",
+      "summary": "Finds all File3dmObject that are in a given layer.",
+      "params": [
+        {
+          "name": "layer",
+          "type": "System.String",
+          "doc": "Layer to search.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "File3dmObject[]",
+        "doc": "Array of objects that belong to the specified layer or empty array if no objects could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_FindByLayer_1.htm"
+    },
+    {
+      "name": "FindId",
+      "signature": "public virtual T FindId(Guid id)",
+      "summary": "Uses the guid to find a model component. Deleted objects cannot be found by id. The guid is the value that is stored in the .Id property. In a single document, no two active objects have the same guid. If an object is replaced with a new object, then the guid persists. For example, if the _Move command moves an object, then the moved object inherits its guid from the starting object. If the Copy command copies an object, then the copy gets a new guid. This guid persists through file saving/opening operations. This function will not find grip objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of model component to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Reference to the rhino object with the objectId or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_CommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public BoundingBox GetBoundingBox()",
+      "summary": "Gets the bounding box containing every object in this table.",
+      "params": [],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The computed bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public override IEnumerator\u003CFile3dmObject\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that yields all objects in this document. Like in Rhino, this includes lights. Unlike in Rhino, however, all lights are returned in the end of the list.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CFile3dmObject\u003E",
+        "doc": "An enumerator that yields all objects in a document."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_FileIO_File3dmObjectTable_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns ModelGeometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmObjectTable_ComponentType.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the total amount of items in the object table, including lights.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_FileIO_File3dmObjectTable_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

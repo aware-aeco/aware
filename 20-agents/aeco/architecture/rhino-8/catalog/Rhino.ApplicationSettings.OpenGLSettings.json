@@ -1,0 +1,87 @@
+{
+  "name": "OpenGLSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Static methods and properties to control OpenGL settings",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_OpenGLSettings.htm",
+  "constructors": [
+    {
+      "name": "OpenGLSettings",
+      "signature": "public OpenGLSettings()",
+      "summary": "Initializes a new instance of the OpenGLSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_OpenGLSettings__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static OpenGLSettingsState GetCurrentState()",
+      "summary": "Gets the current settings.",
+      "params": [],
+      "returns": {
+        "type": "OpenGLSettingsState",
+        "doc": "A new OpenGL state with current settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_OpenGLSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static OpenGLSettingsState GetDefaultState()",
+      "summary": "Gets the OpenGL factory settings.",
+      "params": [],
+      "returns": {
+        "type": "OpenGLSettingsState",
+        "doc": "A new OpenGL state with factory settings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_OpenGLSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Updates from the default setting state.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_OpenGLSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(OpenGLSettingsState state)",
+      "summary": "Updates from a particular setting state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.OpenGLSettingsState",
+          "doc": "The new state that will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_ApplicationSettings_OpenGLSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AntialiasLevel",
+      "type": "AntialiasLevel",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the anti-alias level used by OpenGL viewports",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_ApplicationSettings_OpenGLSettings_AntialiasLevel.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

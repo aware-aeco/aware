@@ -1,0 +1,30 @@
+{
+  "name": "Utilities.PreviewRenderResult",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "The preview render result",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_Utilities_PreviewRenderResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Rendering",
+      "value": 0
+    },
+    {
+      "name": "CacheOK",
+      "value": 1
+    },
+    {
+      "name": "CacheFail",
+      "value": 2
+    },
+    {
+      "name": "Nothing",
+      "value": 3
+    }
+  ]
+}

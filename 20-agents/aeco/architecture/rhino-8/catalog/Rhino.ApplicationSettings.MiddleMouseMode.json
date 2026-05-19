@@ -1,0 +1,29 @@
+{
+  "name": "MiddleMouseMode",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values to define what happens when either the middle mouse button on a three-button mouse is clicked or after pressing the wheel on a wheeled mouse.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_ApplicationSettings_MiddleMouseMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PopupMenu",
+      "value": 0,
+      "summary": "Pops up two-part menu at the cursor location. You can list your favorite commands in the top section. The bottom section is the list of most recent commands used."
+    },
+    {
+      "name": "PopupToolbar",
+      "value": 1,
+      "summary": "Choose a toolbar to pop up at the cursor location. Create a toolbar containing your favorite commands or object snaps to use as a pop-up toolbar."
+    },
+    {
+      "name": "RunMacro",
+      "value": 2,
+      "summary": "Lists a series of commands that run when you click the middle mouse button."
+    }
+  ]
+}

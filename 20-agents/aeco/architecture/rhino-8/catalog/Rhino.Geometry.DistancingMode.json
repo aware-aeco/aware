@@ -1,0 +1,39 @@
+{
+  "name": "DistancingMode",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines how offset and similar operations should work.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Geometry_DistancingMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Undefined",
+      "value": 0,
+      "summary": "Nothing is defined. This serves as null."
+    },
+    {
+      "name": "Linear",
+      "value": 1,
+      "summary": "When geometrically possible, offsets with a linear distance."
+    },
+    {
+      "name": "LinearFromEnd",
+      "value": 2,
+      "summary": "When geometrically possible and an opposite side exists, offsets with a linear distance from that side."
+    },
+    {
+      "name": "Ratio",
+      "value": 3,
+      "summary": "When geometrically possible, uses a percentage of respective neighbours to compute offsets."
+    },
+    {
+      "name": "RatioFromEnd",
+      "value": 4,
+      "summary": "When geometrically possible and an opposite side exists, uses a percentage of respective neighbours to compute offsets."
+    }
+  ]
+}

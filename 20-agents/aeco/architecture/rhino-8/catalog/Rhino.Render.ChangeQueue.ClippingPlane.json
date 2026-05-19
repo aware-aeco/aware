@@ -1,0 +1,62 @@
+{
+  "name": "ClippingPlane",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue clipping plane",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_ChangeQueue_ClippingPlane.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "ObjectAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the ClippingPlaneObject for this clipping plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ClippingPlane_Attributes.htm"
+    },
+    {
+      "name": "ClipViewports",
+      "type": "RhinoViewport[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get an array of RhinoViewports this clipping plane is supposed to clip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ClippingPlane_ClipViewports.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get Guid for this clipping plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ClippingPlane_Id.htm"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if clipping plane is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ClippingPlane_IsEnabled.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the plane that represents this clipping plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ClippingPlane_Plane.htm"
+    },
+    {
+      "name": "ViewIds",
+      "type": "List\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Get list of Viewport IDs this clipping plane is supposed to clip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_ChangeQueue_ClippingPlane_ViewIds.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

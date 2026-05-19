@@ -1,0 +1,24 @@
+{
+  "name": "TextureUvwWrapping",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines Texture UVW wrapping modes",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_DocObjects_TextureUvwWrapping.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Repeat",
+      "value": 0,
+      "summary": "Repeat the texture"
+    },
+    {
+      "name": "Clamp",
+      "value": 1,
+      "summary": "Clamp the texture"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "IRhinoDocObserver",
+  "namespace": "Rhino",
+  "kind": "interface",
+  "summary": "Implement this interface if you are a modeless interface to aid in handling multiple document implementations",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_IRhinoDocObserver.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ActiveRhinoDocChanged",
+      "signature": "void ActiveRhinoDocChanged(RhinoDocObserverArgs e)",
+      "summary": "In Windows Rhino this will mean a new document has been created or opened. In Mac Rhino this can mean the same thing as well it can indicate switching from one active open document to another.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.RhinoDocObserverArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.IRhinoDocObserver.ActiveRhinoDocChanged(Rhino.RhinoDocObserverArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_IRhinoDocObserver_ActiveRhinoDocChanged.htm"
+    },
+    {
+      "name": "RhinoDocClosed",
+      "signature": "void RhinoDocClosed(RhinoDocObserverArgs e)",
+      "summary": "When a document is closed",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.RhinoDocObserverArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.IRhinoDocObserver.RhinoDocClosed(Rhino.RhinoDocObserverArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_IRhinoDocObserver_RhinoDocClosed.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

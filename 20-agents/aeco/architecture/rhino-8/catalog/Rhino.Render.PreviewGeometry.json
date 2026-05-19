@@ -1,0 +1,83 @@
+{
+  "name": "PreviewGeometry",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "PreviewAppearance takes care of construction and destruction of PreviewGeometry",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Render_PreviewGeometry.htm",
+  "constructors": [
+    {
+      "name": "PreviewGeometry",
+      "signature": "public PreviewGeometry(IntPtr pPreviewGeometry)",
+      "summary": "Constructor for PreviewGeometry",
+      "params": [
+        {
+          "name": "pPreviewGeometry",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pPreviewGeometry\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewGeometry.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewGeometry__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ElementKind",
+      "signature": "public string ElementKind()",
+      "summary": "ElementKind",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PreviewGeometry.ElementKind\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewGeometry_ElementKind.htm"
+    },
+    {
+      "name": "SetUpPreview",
+      "signature": "public void SetUpPreview(IntPtr sceneServerPointer, IntPtr pRenderContent, bool bCopy)",
+      "summary": "SetUpPreview",
+      "params": [
+        {
+          "name": "sceneServerPointer",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022sceneServerPointer\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewGeometry.SetUpPreview(System.IntPtr,System.IntPtr,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pRenderContent",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pRenderContent\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewGeometry.SetUpPreview(System.IntPtr,System.IntPtr,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bCopy",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bCopy\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewGeometry.SetUpPreview(System.IntPtr,System.IntPtr,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_Render_PreviewGeometry_SetUpPreview.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "CppPointer for PreviewGeometry",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_Render_PreviewGeometry_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

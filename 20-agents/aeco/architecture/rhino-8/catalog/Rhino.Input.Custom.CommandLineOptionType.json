@@ -1,0 +1,38 @@
+{
+  "name": "CommandLineOptionType",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "enum",
+  "summary": "Behavior for a command line option",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_Input_Custom_CommandLineOptionType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Simple",
+      "value": 0
+    },
+    {
+      "name": "Number",
+      "value": 1
+    },
+    {
+      "name": "Toggle",
+      "value": 2
+    },
+    {
+      "name": "Color",
+      "value": 3
+    },
+    {
+      "name": "List",
+      "value": 4
+    },
+    {
+      "name": "Hidden",
+      "value": 5
+    }
+  ]
+}

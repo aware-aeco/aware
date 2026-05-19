@@ -1,0 +1,1638 @@
+{
+  "name": "RhinoApp",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": ".NET RhinoApp is parallel to C\u002B\u002B CRhinoApp.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/T_Rhino_RhinoApp.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AskUserForRhinoLicense",
+      "signature": "public static bool AskUserForRhinoLicense(bool standAlone, Object parentWindow)",
+      "summary": "Display UI asking the user to enter a license for Rhino or use one from the Zoo.",
+      "params": [
+        {
+          "name": "standAlone",
+          "type": "System.Boolean",
+          "doc": "True to ask for a stand-alone license, false to ask the user for a license from the Zoo",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Object",
+          "doc": "Parent window for the user interface dialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.AskUserForRhinoLicense(System.Boolean,System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_AskUserForRhinoLicense.htm"
+    },
+    {
+      "name": "CapturedCommandWindowStrings",
+      "signature": "public static string[] CapturedCommandWindowStrings(bool clearBuffer)",
+      "summary": "Get list of strings sent to the command window through calls to Write or WriteLine when capturing has been enabled",
+      "params": [
+        {
+          "name": "clearBuffer",
+          "type": "System.Boolean",
+          "doc": "Clear the captured buffer after this call",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "array of captured strings"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_CapturedCommandWindowStrings.htm"
+    },
+    {
+      "name": "ChangeLicenseKey",
+      "signature": "public static bool ChangeLicenseKey(Guid pluginId)",
+      "summary": "Display UI asking the user to enter a license for the product specified by licenseId.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "Guid identifying the plug-in that is requesting a change of license key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_ChangeLicenseKey.htm"
+    },
+    {
+      "name": "ClearCommandHistoryWindow",
+      "signature": "public static void ClearCommandHistoryWindow()",
+      "summary": "Clear the text in Rhino\u0027s command history window.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_ClearCommandHistoryWindow.htm"
+    },
+    {
+      "name": "ExecuteCommand",
+      "signature": "public static Result ExecuteCommand(RhinoDoc document, string commandName)",
+      "summary": "Execute a Rhino command.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Document to execute the command for",
+          "optional": false
+        },
+        {
+          "name": "commandName",
+          "type": "System.String",
+          "doc": "Name of command to run. Use command\u0027s localized name or preface with an underscore.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "Returns the result of the command."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_ExecuteCommand.htm"
+    },
+    {
+      "name": "Exit()",
+      "signature": "public static void Exit()",
+      "summary": "Exits, or closes, Rhino.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Exit.htm"
+    },
+    {
+      "name": "Exit(Boolean)",
+      "signature": "public static void Exit(bool allowCancel)",
+      "summary": "Exits, or forcefully closes Rhino. A prompt to allow saving will appear if necessary when forcefully exiting Works on Windows and MacOS true to allow the user to cancel exiting false to force exit",
+      "params": [
+        {
+          "name": "allowCancel",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022allowCancel\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Exit(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Exit_1.htm"
+    },
+    {
+      "name": "GetDataDirectory(Boolean, Boolean)",
+      "signature": "public static string GetDataDirectory(bool localUser, bool forceDirectoryCreation)",
+      "summary": "Gets the data directory.",
+      "params": [
+        {
+          "name": "localUser",
+          "type": "System.Boolean",
+          "doc": "If set to true local user.",
+          "optional": false
+        },
+        {
+          "name": "forceDirectoryCreation",
+          "type": "System.Boolean",
+          "doc": "If set to true force directory creation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The data directory."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_GetDataDirectory.htm"
+    },
+    {
+      "name": "GetDataDirectory(Boolean, Boolean, String)",
+      "signature": "public static string GetDataDirectory(bool localUser, bool forceDirectoryCreation, string subDirectory)",
+      "summary": "Gets the data directory.",
+      "params": [
+        {
+          "name": "localUser",
+          "type": "System.Boolean",
+          "doc": "If set to true local user.",
+          "optional": false
+        },
+        {
+          "name": "forceDirectoryCreation",
+          "type": "System.Boolean",
+          "doc": "If set to true force directory creation.",
+          "optional": false
+        },
+        {
+          "name": "subDirectory",
+          "type": "System.String",
+          "doc": "Sub directory, will get appended to the end of the data directory. if forceDirectoryCreation is true then this directory will get created and writable.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The data directory."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_GetDataDirectory_1.htm"
+    },
+    {
+      "name": "GetExecutableDirectory",
+      "signature": "public static DirectoryInfo GetExecutableDirectory()",
+      "summary": "directory",
+      "params": [],
+      "returns": {
+        "type": "DirectoryInfo",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.GetExecutableDirectory\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_GetExecutableDirectory.htm"
+    },
+    {
+      "name": "GetPlugInObject(Guid)",
+      "signature": "public static Object GetPlugInObject(Guid pluginId)",
+      "summary": "Gets the object that is returned by PlugIn.GetPlugInObject for a given plug-in. This function attempts to find and load a plug-in with a given Id. When a plug-in is found, it\u0027s GetPlugInObject function is called and the result is returned here. Note the plug-in must have already been installed in Rhino or the plug-in manager will not know where to look for a plug-in with a matching id.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "Guid for a given plug-in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Result of PlugIn.GetPlugInObject for a given plug-in on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_GetPlugInObject.htm"
+    },
+    {
+      "name": "GetPlugInObject(String)",
+      "signature": "public static Object GetPlugInObject(string plugin)",
+      "summary": "Gets the object that is returned by PlugIn.GetPlugInObject for a given plug-in. This function attempts to find and load a plug-in with a given name. When a plug-in is found, it\u0027s GetPlugInObject function is called and the result is returned here. Note the plug-in must have already been installed in Rhino or the plug-in manager will not know where to look for a plug-in with a matching name.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "System.String",
+          "doc": "Name of a plug-in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "Result of PlugIn.GetPlugInObject for a given plug-in on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_GetPlugInObject_1.htm"
+    },
+    {
+      "name": "InFullScreen",
+      "signature": "public static bool InFullScreen()",
+      "summary": "Verifies that Rhino is running in full screen mode.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if Rhino is running full screen, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_InFullScreen.htm"
+    },
+    {
+      "name": "InvokeAndWait",
+      "signature": "public static void InvokeAndWait(Action action)",
+      "summary": "Work-In-Progress. Testing this with our unit test framework",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "doc": "[Missing \u003Cparam name=\u0022action\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.InvokeAndWait(System.Action)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_InvokeAndWait.htm"
+    },
+    {
+      "name": "InvokeOnUiThread",
+      "signature": "public static void InvokeOnUiThread(Delegate method, params Object[] args)",
+      "summary": "Execute a function on the main UI thread.",
+      "params": [
+        {
+          "name": "method",
+          "type": "System.Delegate",
+          "doc": "function to execute",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "parameters to pass to the function",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_InvokeOnUiThread.htm"
+    },
+    {
+      "name": "IsInstallationBeta",
+      "signature": "public static bool IsInstallationBeta(Installation licenseType)",
+      "summary": "If licenseType is a beta license, returns true. A beta license grants full use of the product during the pre-release development period.",
+      "params": [
+        {
+          "name": "licenseType",
+          "type": "Rhino.ApplicationSettings.Installation",
+          "doc": "[Missing \u003Cparam name=\u0022licenseType\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.IsInstallationBeta(Rhino.ApplicationSettings.Installation)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if licenseType is a beta license. false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_IsInstallationBeta.htm"
+    },
+    {
+      "name": "IsInstallationCommercial",
+      "signature": "public static bool IsInstallationCommercial(Installation licenseType)",
+      "summary": "If licenseType is a commercial license, returns true. A commercial license grants full use of the product.",
+      "params": [
+        {
+          "name": "licenseType",
+          "type": "Rhino.ApplicationSettings.Installation",
+          "doc": "[Missing \u003Cparam name=\u0022licenseType\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.IsInstallationCommercial(Rhino.ApplicationSettings.Installation)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if licenseType is a commercial license. false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_IsInstallationCommercial.htm"
+    },
+    {
+      "name": "IsInstallationEvaluation",
+      "signature": "public static bool IsInstallationEvaluation(Installation licenseType)",
+      "summary": "If licenseType is an evaluation license, returns true. An evaluation license limits the ability of Rhino to save based on either the number of saves or a fixed period of time.",
+      "params": [
+        {
+          "name": "licenseType",
+          "type": "Rhino.ApplicationSettings.Installation",
+          "doc": "[Missing \u003Cparam name=\u0022licenseType\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.IsInstallationEvaluation(Rhino.ApplicationSettings.Installation)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if licenseType is an evaluation license. false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_IsInstallationEvaluation.htm"
+    },
+    {
+      "name": "LoginToCloudZoo",
+      "signature": "public static bool LoginToCloudZoo()",
+      "summary": "Logs in to the cloud zoo.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.LoginToCloudZoo\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_LoginToCloudZoo.htm"
+    },
+    {
+      "name": "MainWindowHandle",
+      "signature": "public static IntPtr MainWindowHandle()",
+      "summary": "Gets the HWND of the Rhino main window.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.MainWindowHandle\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_MainWindowHandle.htm"
+    },
+    {
+      "name": "OutputDebugString",
+      "signature": "public static void OutputDebugString(string str)",
+      "summary": "Print a string to the Visual Studio Output window, if a debugger is attached. Note that the developer needs to add a newline manually if the next output should come on a separate line.",
+      "params": [
+        {
+          "name": "str",
+          "type": "System.String",
+          "doc": "The string to print to the Output window.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_OutputDebugString.htm"
+    },
+    {
+      "name": "ParseTextField(String, RhinoObject, RhinoObject)",
+      "signature": "public static string ParseTextField(string formula, RhinoObject obj, RhinoObject topParentObject)",
+      "summary": "Parses a text field string.",
+      "params": [
+        {
+          "name": "formula",
+          "type": "System.String",
+          "doc": "The text formula.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The Rhino object. Value can be IntPtr.Zero.",
+          "optional": false
+        },
+        {
+          "name": "topParentObject",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The parent Rhino object. Value can be IntPtr.Zero.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The parsed text field if sucessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_ParseTextField.htm"
+    },
+    {
+      "name": "ParseTextField(String, RhinoObject, RhinoObject, InstanceObject)",
+      "signature": "public static string ParseTextField(string formula, RhinoObject obj, RhinoObject topParentObject, InstanceObject immediateParent)",
+      "summary": "Parses a text field string.",
+      "params": [
+        {
+          "name": "formula",
+          "type": "System.String",
+          "doc": "The text formula.",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The Rhino object. Value can be IntPtr.Zero.",
+          "optional": false
+        },
+        {
+          "name": "topParentObject",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The parent Rhino object. Value can be IntPtr.Zero.",
+          "optional": false
+        },
+        {
+          "name": "immediateParent",
+          "type": "Rhino.DocObjects.InstanceObject",
+          "doc": "The immediate parent instance object. Value can be IntPtr.Zero.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The parsed text field if sucessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_ParseTextField_1.htm"
+    },
+    {
+      "name": "PostCancelEvent",
+      "signature": "public static void PostCancelEvent(uint runtimeDocSerialNumber)",
+      "summary": "Post a cancel event to the command line",
+      "params": [
+        {
+          "name": "runtimeDocSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Unique serialNumber for the document to post the event to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_PostCancelEvent.htm"
+    },
+    {
+      "name": "PostEnterEvent",
+      "signature": "public static void PostEnterEvent(uint runtimeDocSerialNumber, bool bRepeatedEnter)",
+      "summary": "Post an enter event to the command line",
+      "params": [
+        {
+          "name": "runtimeDocSerialNumber",
+          "type": "System.UInt32",
+          "doc": "Unique serialNumber for the document to post the event to.",
+          "optional": false
+        },
+        {
+          "name": "bRepeatedEnter",
+          "type": "System.Boolean",
+          "doc": "if true, allow multiple enter events to be posted simultaneouslyt.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_PostEnterEvent.htm"
+    },
+    {
+      "name": "RefreshRhinoLicense",
+      "signature": "public static bool RefreshRhinoLicense()",
+      "summary": "Refresh the license used by Rhino. This allows any part of Rhino to ensure that the most current version of the license file on disk is in use.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.RefreshRhinoLicense\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RefreshRhinoLicense.htm"
+    },
+    {
+      "name": "ReleaseMouseCapture",
+      "signature": "public static bool ReleaseMouseCapture()",
+      "summary": "Releases the mouse capture.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.ReleaseMouseCapture\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_ReleaseMouseCapture.htm"
+    },
+    {
+      "name": "RunMenuScript",
+      "signature": "public static bool RunMenuScript(string script)",
+      "summary": "Run a Rhino menu item script. Will add the selected menu string to the MRU command menu.",
+      "remarks": "Rhino acts as if each character in the script string had been typed in the command prompt. When RunScript is called from a \u0022script runner\u0022 command, it completely runs the script before returning. When RunScript is called outside of a command, it returns and the script is run. This way menus and buttons can use RunScript to execute complicated functions.",
+      "params": [
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "[in] script to run.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.RunMenuScript(System.String)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ApplicationException",
+          "when": "If RunScript is being called while inside an event watcher."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunMenuScript.htm"
+    },
+    {
+      "name": "RunningInRdp",
+      "signature": "public static bool RunningInRdp()",
+      "summary": "Find out if Rhino is running in a remote session",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if Rhino is running in a RDP session, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunningInRdp.htm"
+    },
+    {
+      "name": "RunningOnVMWare",
+      "signature": "public static bool RunningOnVMWare()",
+      "summary": "Verifies that Rhino is running on VMWare",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if Rhino is running in Windows on VMWare, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunningOnVMWare.htm"
+    },
+    {
+      "name": "RunScript(String, Boolean)",
+      "signature": "public static bool RunScript(string script, bool echo)",
+      "summary": "Runs a Rhino command script.",
+      "remarks": "Rhino acts as if each character in the script string had been typed in the command prompt. When RunScript is called from a \u0022script runner\u0022 command, it completely runs the script before returning. When RunScript is called outside of a command, it returns and the script is run. This way menus and buttons can use RunScript to execute complicated functions.",
+      "params": [
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "[in] script to run.",
+          "optional": false
+        },
+        {
+          "name": "echo",
+          "type": "System.Boolean",
+          "doc": "Controls how the script is echoed in the command output window. false = silent - nothing is echoed. true = verbatim - the script is echoed literally.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.RunScript(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ApplicationException",
+          "when": "If RunScript is being called while inside an event watcher."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunScript.htm"
+    },
+    {
+      "name": "RunScript(String, String, Boolean)",
+      "signature": "public static bool RunScript(string script, string mruDisplayString, bool echo)",
+      "summary": "Runs a Rhino command script.",
+      "remarks": "Rhino acts as if each character in the script string had been typed in the command prompt. When RunScript is called from a \u0022script runner\u0022 command, it completely runs the script before returning. When RunScript is called outside of a command, it returns and the script is run. This way menus and buttons can use RunScript to execute complicated functions.",
+      "params": [
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "[in] script to run.",
+          "optional": false
+        },
+        {
+          "name": "mruDisplayString",
+          "type": "System.String",
+          "doc": "[in] String to display in the most recent command list.",
+          "optional": false
+        },
+        {
+          "name": "echo",
+          "type": "System.Boolean",
+          "doc": "Controls how the script is echoed in the command output window. false = silent - nothing is echoed. true = verbatim - the script is echoed literally.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.RunScript(System.String,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ApplicationException",
+          "when": "If RunScript is being called while inside an event watcher."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunScript_1.htm"
+    },
+    {
+      "name": "RunScript(UInt32, String, Boolean)",
+      "signature": "public static bool RunScript(uint documentSerialNumber, string script, bool echo)",
+      "summary": "Runs a Rhino command script.",
+      "remarks": "Rhino acts as if each character in the script string had been typed in the command prompt. When RunScript is called from a \u0022script runner\u0022 command, it completely runs the script before returning. When RunScript is called outside of a command, it returns and the script is run. This way menus and buttons can use RunScript to execute complicated functions.",
+      "params": [
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[in] Document serial number for the document to run the script for.",
+          "optional": false
+        },
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "[in] script to run.",
+          "optional": false
+        },
+        {
+          "name": "echo",
+          "type": "System.Boolean",
+          "doc": "[in] Controls how the script is echoed in the command output window. false = silent - nothing is echoed. true = verbatim - the script is echoed literally.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.RunScript(System.UInt32,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ApplicationException",
+          "when": "If RunScript is being called while inside an event watcher."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunScript_2.htm"
+    },
+    {
+      "name": "RunScript(UInt32, String, String, Boolean)",
+      "signature": "public static bool RunScript(uint documentSerialNumber, string script, string mruDisplayString, bool echo)",
+      "summary": "Runs a Rhino command script.",
+      "remarks": "Rhino acts as if each character in the script string had been typed in the command prompt. When RunScript is called from a \u0022script runner\u0022 command, it completely runs the script before returning. When RunScript is called outside of a command, it returns and the script is run. This way menus and buttons can use RunScript to execute complicated functions.",
+      "params": [
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[in] Document serial number for the document to run the script for.",
+          "optional": false
+        },
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "[in] script to run.",
+          "optional": false
+        },
+        {
+          "name": "mruDisplayString",
+          "type": "System.String",
+          "doc": "[in] String to display in the most recent command list.",
+          "optional": false
+        },
+        {
+          "name": "echo",
+          "type": "System.Boolean",
+          "doc": "[in] Controls how the script is echoed in the command output window. false = silent - nothing is echoed. true = verbatim - the script is echoed literally.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.RhinoApp.RunScript(System.UInt32,System.String,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ApplicationException",
+          "when": "If RunScript is being called while inside an event watcher."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_RunScript_3.htm"
+    },
+    {
+      "name": "SendKeystrokes",
+      "signature": "public static void SendKeystrokes(string characters, bool appendReturn)",
+      "summary": "Sends a string of printable characters, including spaces, to Rhino\u0027s command line.",
+      "params": [
+        {
+          "name": "characters",
+          "type": "System.String",
+          "doc": "[in] A string to characters to send to the command line. This can be null.",
+          "optional": false
+        },
+        {
+          "name": "appendReturn",
+          "type": "System.Boolean",
+          "doc": "[in] Append a return character to the end of the string.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_SendKeystrokes.htm"
+    },
+    {
+      "name": "SetCommandPrompt(String)",
+      "signature": "public static void SetCommandPrompt(string prompt)",
+      "summary": "Set Rhino command prompt.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The new prompt text.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_SetCommandPrompt.htm"
+    },
+    {
+      "name": "SetCommandPrompt(String, String)",
+      "signature": "public static void SetCommandPrompt(string prompt, string promptDefault)",
+      "summary": "Sets the command prompt in Rhino.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The new prompt text.",
+          "optional": false
+        },
+        {
+          "name": "promptDefault",
+          "type": "System.String",
+          "doc": "Text that appears in angle brackets and indicates what will happen if the user pressed ENTER.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_SetCommandPrompt_1.htm"
+    },
+    {
+      "name": "SetCommandPromptMessage",
+      "signature": "public static void SetCommandPromptMessage(string prompt)",
+      "summary": "Set the text that appears in the Rhino command prompt. In general, you should use the SetCommandPrompt functions. In rare cases, like worker thread messages, the message that appears in the prompt has non-standard formatting. In these rare cases, SetCommandPromptMessage can be used to literally specify the text that appears in the command prompt window.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "A literal text for the command prompt window.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_SetCommandPromptMessage.htm"
+    },
+    {
+      "name": "SetFocusToMainWindow()",
+      "signature": "public static void SetFocusToMainWindow()",
+      "summary": "Sets the focus to the main window. This function attempts to use the ActiveDoc on Mac to figure out which window to set focus to.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_SetFocusToMainWindow.htm"
+    },
+    {
+      "name": "SetFocusToMainWindow(RhinoDoc)",
+      "signature": "public static void SetFocusToMainWindow(RhinoDoc doc)",
+      "summary": "Sets the focus to the main windows for a given document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "the document to use for determining a \u0022main window\u0022",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_SetFocusToMainWindow_1.htm"
+    },
+    {
+      "name": "Wait",
+      "signature": "public static void Wait()",
+      "summary": "Pauses to keep Windows message pump alive so views will update and windows will repaint.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Wait.htm"
+    },
+    {
+      "name": "Write(String)",
+      "signature": "public static void Write(string message)",
+      "summary": "Print formatted text in the command window.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Write.htm"
+    },
+    {
+      "name": "Write(String, Object)",
+      "signature": "public static void Write(string format, Object arg0)",
+      "summary": "Print formatted text in the command window.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Write_1.htm"
+    },
+    {
+      "name": "Write(String, Object, Object)",
+      "signature": "public static void Write(string format, Object arg0, Object arg1)",
+      "summary": "Print formatted text in the command window.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg1\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Write_2.htm"
+    },
+    {
+      "name": "Write(String, Object, Object, Object)",
+      "signature": "public static void Write(string format, Object arg0, Object arg1, Object arg2)",
+      "summary": "Print formatted text in the command window.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg1\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg2\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.Write(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_Write_3.htm"
+    },
+    {
+      "name": "WriteLine()",
+      "signature": "public static void WriteLine()",
+      "summary": "Print a newline in the command window.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_WriteLine.htm"
+    },
+    {
+      "name": "WriteLine(String)",
+      "signature": "public static void WriteLine(string message)",
+      "summary": "Print text in the command window.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_WriteLine_1.htm"
+    },
+    {
+      "name": "WriteLine(String, Object)",
+      "signature": "public static void WriteLine(string format, Object arg0)",
+      "summary": "Print formatted text with a newline in the command window.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_WriteLine_2.htm"
+    },
+    {
+      "name": "WriteLine(String, Object, Object)",
+      "signature": "public static void WriteLine(string format, Object arg0, Object arg1)",
+      "summary": "Print formatted text with a newline in the command window.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg1\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_WriteLine_3.htm"
+    },
+    {
+      "name": "WriteLine(String, Object, Object, Object)",
+      "signature": "public static void WriteLine(string format, Object arg0, Object arg1, Object arg2)",
+      "summary": "Print formatted text with a newline in the command window.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg0",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg0\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg1\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022arg2\u0022/\u003E documentation for \u0022M:Rhino.RhinoApp.WriteLine(System.String,System.Object,System.Object,System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/M_Rhino_RhinoApp_WriteLine_4.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BuildDate",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the build date.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_BuildDate.htm"
+    },
+    {
+      "name": "CanSave",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true when Rhino is allowed to save, false otherwise Conditions where Rhino is not allowed to save are: when evaluation licenses are expired; when a Cloud Zoo lease is expired; when a license is shared by a single user on multiple computers, and the current computer is not active.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CanSave.htm"
+    },
+    {
+      "name": "CheckNewObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns true if Rhino will validate each object added to the document. This can be time consuming but is valuable for debugging.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CheckNewObject.htm"
+    },
+    {
+      "name": "CommandHistoryWindowText",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Text in Rhino\u0027s command history window.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CommandHistoryWindowText.htm"
+    },
+    {
+      "name": "CommandLineOut",
+      "type": "RhinoApp.CommandLineTextWriter",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides a TextWriter that can write to the command line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CommandLineOut.htm"
+    },
+    {
+      "name": "CommandPrompt",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Rhino command prompt.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CommandPrompt.htm"
+    },
+    {
+      "name": "CommandWindowCaptureEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable or disable capturing of the strings sent to the CommandWindow through Write and WriteLine calls",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CommandWindowCaptureEnabled.htm"
+    },
+    {
+      "name": "CurrentRhinoId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current ID of Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_CurrentRhinoId.htm"
+    },
+    {
+      "name": "DaysUntilExpiration",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns number of days until license expires. Zero when license is expired. Raises InvalidLicenseTypeException if LicenseExpires would return false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_DaysUntilExpiration.htm"
+    },
+    {
+      "name": "DefaultUiFont",
+      "type": "Font",
+      "getter": true,
+      "setter": false,
+      "summary": "Default font used to render user interface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_DefaultUiFont.htm"
+    },
+    {
+      "name": "ExeServiceRelease",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Service release version of Rhino executable (0, 1, 2, ...) The integer is the service release number of Rhino. For example, this function returns \u00220\u0022 if Rhino V4SR0 is running and returns \u00221\u0022 if Rhino V4SR1 is running.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_ExeServiceRelease.htm"
+    },
+    {
+      "name": "ExeVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Major version of Rhino executable 4, 5, ...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_ExeVersion.htm"
+    },
+    {
+      "name": "InCommand",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the nested command count.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_InCommand.htm"
+    },
+    {
+      "name": "InstallationType",
+      "type": "Installation",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the product installation type, as seen in Rhino\u0027s ABOUT dialog box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_InstallationType.htm"
+    },
+    {
+      "name": "InstallationTypeString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of installation (product edition) of the license or lease.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_InstallationTypeString.htm"
+    },
+    {
+      "name": "InvokeRequired",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if we are currently not running on the main user interface thread",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_InvokeRequired.htm"
+    },
+    {
+      "name": "IsClosing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Rhino is in the process of closing, false otherwise. This can be true even before the Closing event fires, such as when RhinoDoc.CloseDocument event is called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsClosing.htm"
+    },
+    {
+      "name": "IsCloudZooNode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if rhino is currently using the Cloud Zoo false otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsCloudZooNode.htm"
+    },
+    {
+      "name": "IsEvaluation",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Rhino is licensed as an Evaluation product false otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsEvaluation.htm"
+    },
+    {
+      "name": "IsExiting",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Rhino is in the process of exiting, false otherwise. This can be true even before the Closing event fires, such as when RhinoDoc.CloseDocument event is called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsExiting.htm"
+    },
+    {
+      "name": "IsInternetAccessAllowed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true when Rhino is allowed to access the Internet, false otherwise. Note, this does not test if Internet access is available.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsInternetAccessAllowed.htm"
+    },
+    {
+      "name": "IsLicenseValidated",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the license is validated false otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsLicenseValidated.htm"
+    },
+    {
+      "name": "IsOnMainThread",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the current thread the main thread",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsOnMainThread.htm"
+    },
+    {
+      "name": "IsParentDesktop",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Rhino\u0027s parent window is the desktop, false otherwise.",
+      "remarks": "The parent of a top-level window is the desktop window. Some applications like to re-parent Rhino\u0027s main window to a window they provide. Use this property to determine if Rhino is in such a condition. Note, this property is only valid on Windows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsParentDesktop.htm"
+    },
+    {
+      "name": "IsPreRelease",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Rhino is compiled as pre-release build (Beta, WIP) false otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsPreRelease.htm"
+    },
+    {
+      "name": "IsRunningAutomated",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is Rhino currently being executed through automation",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsRunningAutomated.htm"
+    },
+    {
+      "name": "IsRunningHeadless",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is Rhino currently being executed in headless mode",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsRunningHeadless.htm"
+    },
+    {
+      "name": "IsSafeModeEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is Rhino being executed in safe mode",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsSafeModeEnabled.htm"
+    },
+    {
+      "name": "IsSkinned",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Is Rhino currently using custom, user-interface Skin.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_IsSkinned.htm"
+    },
+    {
+      "name": "LicenseExpires",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the license will expire false otherwise",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_LicenseExpires.htm"
+    },
+    {
+      "name": "LicenseUserName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the user that owns the license or lease.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_LicenseUserName.htm"
+    },
+    {
+      "name": "LicenseUserOrganization",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the organization of the user that owns the license or lease.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_LicenseUserOrganization.htm"
+    },
+    {
+      "name": "LoggedInUserAvatar",
+      "type": "Image",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the logged in user\u0027s avatar picture. Returns a default avatar if the user does not have an avatar or if the avatar could not be fetched.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_LoggedInUserAvatar.htm"
+    },
+    {
+      "name": "LoggedInUserName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the name of the logged in user, or null if the user is not logged in.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_LoggedInUserName.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the application name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Name.htm"
+    },
+    {
+      "name": "NodeType",
+      "type": "LicenseNode",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets license the node type.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_NodeType.htm"
+    },
+    {
+      "name": "Rhino2Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of Rhino 2.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Rhino2Id.htm"
+    },
+    {
+      "name": "Rhino3Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of Rhino 3.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Rhino3Id.htm"
+    },
+    {
+      "name": "Rhino4Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of Rhino 4.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Rhino4Id.htm"
+    },
+    {
+      "name": "Rhino5Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of Rhino 5",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Rhino5Id.htm"
+    },
+    {
+      "name": "Rhino6Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of Rhino 6",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Rhino6Id.htm"
+    },
+    {
+      "name": "Rhino7Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of Rhino 7",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Rhino7Id.htm"
+    },
+    {
+      "name": "SchemeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current Registry scheme name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_SchemeName.htm"
+    },
+    {
+      "name": "SdkServiceRelease",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino SDK 9 digit SDK service release number in the form YYYYMMDDn Service release of the Rhino SDK supported by this executable. Rhino will only load plug-ins that require a service release of \u003C= this release number. For example, SR1 will load all plug-ins made with any SDK released up through and including the SR1 SDK. But, SR1 will not load a plug-in built using the SR2 SDK. If an \u0022old\u0022 Rhino tries to load a \u0022new\u0022 plug-in, the user is told that they have to get a free Rhino.exe update in order for the plug-in to load. Rhino.exe updates are available from http://www.rhino3d.com.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_SdkServiceRelease.htm"
+    },
+    {
+      "name": "SdkVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino SDK 9 digit SDK version number in the form YYYYMMDDn Rhino will only load plug-ins that were build with exactly the same version of the SDK.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_SdkVersion.htm"
+    },
+    {
+      "name": "SendWriteToConsole",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable or disable sending command window strings to the console RhinoApp.Write(...) calls would be sent to the console when this is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_SendWriteToConsole.htm"
+    },
+    {
+      "name": "SerialNumber",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the product serial number, as seen in Rhino\u0027s ABOUT dialog box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_SerialNumber.htm"
+    },
+    {
+      "name": "ToolbarFiles",
+      "type": "ToolbarFileCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of currently open toolbar files in the application",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_ToolbarFiles.htm"
+    },
+    {
+      "name": "UpdatesAndStatisticsStatus",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true when Rhino is allowed to access the Internet, false otherwise. Note, this does not test if Internet access is available.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_UpdatesAndStatisticsStatus.htm"
+    },
+    {
+      "name": "UserIsLoggedIn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the user is logged in; else returns false. A logged in user does not guarantee that the auth tokens managed by the CloudZooManager instance are valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_UserIsLoggedIn.htm"
+    },
+    {
+      "name": "ValidationGracePeriodDaysLeft",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns number of days within which validation must occur. Zero when validation grace period has expired. Raises InvalidLicenseTypeException if LicenseType is one of: EvaluationSaveLimited EvaluationTimeLimited Viewer Unknown",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_ValidationGracePeriodDaysLeft.htm"
+    },
+    {
+      "name": "Version",
+      "type": "Version",
+      "getter": true,
+      "setter": false,
+      "summary": "File version of the main Rhino process",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_Version.htm"
+    },
+    {
+      "name": "VersionControlRevision",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "McNeel version control revision identifier at the time this version of Rhino was built.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/P_Rhino_RhinoApp_VersionControlRevision.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "AppSettingsChanged",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler AppSettingsChanged",
+      "summary": "Is raised when settings are changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_AppSettingsChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Closing",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler Closing",
+      "summary": "Is raised when the application is about to close.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_Closing.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EscapeKeyPressed",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler EscapeKeyPressed",
+      "summary": "Can add or removed delegates that are raised when the escape key is clicked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_EscapeKeyPressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Idle",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler Idle",
+      "summary": "Occurs when the application finishes processing and is about to enter the idle state",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_Idle.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Initialized",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler Initialized",
+      "summary": "Is raised when the application is fully initialized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_Initialized.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "KeyboardEvent",
+      "delegate": "Rhino.RhinoApp.KeyboardHookEvent",
+      "signature": "public static event RhinoApp.KeyboardHookEvent KeyboardEvent",
+      "summary": "Can add or removed delegates that are raised by a keyboard event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_KeyboardEvent.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LicenseStateChanged",
+      "delegate": "System.EventHandler\u003CLicenseStateChangedEventArgs\u003E",
+      "signature": "public static event EventHandler\u003CLicenseStateChangedEventArgs\u003E LicenseStateChanged",
+      "summary": "Fires when the license state has changed",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_LicenseStateChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MainLoop",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler MainLoop",
+      "summary": "Gets called every loop iteration inside Rhino\u0027s main message loop.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_MainLoop.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RdkCacheImageChanged",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler RdkCacheImageChanged",
+      "summary": "Monitors when the RDK thumbnail cache images are changed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_RdkCacheImageChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RdkGlobalSettingsChanged",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler RdkGlobalSettingsChanged",
+      "summary": "Monitors when RDK global settings are modified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_RdkGlobalSettingsChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RdkNewDocument",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler RdkNewDocument",
+      "summary": "Monitors when RDK document information is rebuilt.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_RdkNewDocument.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RdkPlugInUnloading",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler RdkPlugInUnloading",
+      "summary": "Monitors when RDK client plug-ins are unloaded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_RdkPlugInUnloading.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RdkUpdateAllPreviews",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler RdkUpdateAllPreviews",
+      "summary": "Monitors when RDK thumbnails are updated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_RdkUpdateAllPreviews.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RendererChanged",
+      "delegate": "System.EventHandler",
+      "signature": "public static event EventHandler RendererChanged",
+      "summary": "Monitors when Rhino\u0027s current renderer changes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/E_Rhino_RhinoApp_RendererChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}
