@@ -1,0 +1,452 @@
+{
+  "name": "PolygonMesh",
+  "namespace": "Geom",
+  "kind": "class",
+  "summary": "Note: As of SketchUp 2022.0 the new Sketchup::EntitiesBuilder interface can be used to generate bulk geometry. It has similar performance as PolygonMesh, but with similar degree of per-entity control as Sketchup::Entities. The PolygonMesh class contains methods to create polygon mesh structures. This is useful if you need to write a custom importer/exporter in Ruby that works at the level of triangulated polygons. For example, you can determine the triangles that make up a 15-sided Sketchup::Face by using this class, or write a Sketchup::Importer that reads a data file, creates a mesh from it, and draws faces based on the mesh. You can construct a mesh manually using the methods of this class, or you can get a mesh from a face by calling the Sketchup::Face#mesh method. See Sketchup::Entities#add_faces_from_mesh for an easy way to convert a mesh back into faces.",
+  "remarks": "See Also: Guide on Generating Geometry",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "PolygonMesh(number_points)",
+      "summary": "Note: When creating a mesh with normals and/or UVQ data it\u0027s critical that the number of points estimated is equal to or higher than the final number of points added. If fewer points are estimated the normals and UVQ data might end up out of sync. Create a new empty polygon mesh. The number of points and polygons are optional and are used as a hint to decide how much space to pre-allocate to speed up adding points and polygons. As of SketchUp 2021.1 the performance of looking up and inserting points is significantly better provided the mesh was initialized with roughly the correct number of total points.",
+      "remarks": "Note: When creating a mesh with normals and/or UVQ data it\u0027s critical that the number of points estimated is equal to or higher than the final number of points added. If fewer points are estimated the normals and UVQ data might end up out of sync. Create a new empty polygon mesh. The number of points and polygons are optional and are used as a hint to decide how much space to pre-allocate to speed up adding points and polygons. As of SketchUp 2021.1 the performance of looking up and inserting points is significantly better provided the mesh was initialized with roughly the correct number of total points.",
+      "params": [
+        {
+          "name": "number_points",
+          "type": "Integer",
+          "doc": "How many points will be in the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "RangeError",
+          "when": "If number of points or polygons are negative numbers."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_point",
+      "signature": "add_point(point) =\u003E Integer",
+      "summary": "Note: In SketchUp 2021.",
+      "remarks": "Note: In SketchUp 2021.1 this method was improved to be faster. See #initialize for details. The #add_point method is used to add a point to the mesh. The returned index can be used for creating polygons.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "the index in the mesh for the point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#add_point-instance_method"
+    },
+    {
+      "name": "add_polygon",
+      "signature": "add_polygon(index, index, index, ...) =\u003E Integer | add_polygon(index_array) =\u003E Integer | add_polygon(point3d, point3d, point3d, ...) =\u003E Integer | add_polygon(point3d_array) =\u003E Integer",
+      "summary": "Note: In SketchUp 2021.",
+      "remarks": "Note: In SketchUp 2021.1 this method was improved to be faster. See #initialize for details. The #add_polygon method is used for adding a polygon to a Geom::PolygonMesh. All variations of this method require at least 3 elements to define a polygon, although more may be given.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "An index of a vertex in the mesh. Remember that mesh indices start at 1.",
+          "optional": false
+        },
+        {
+          "name": "...",
+          "type": "Integer",
+          "doc": "Additional indices (optional)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "The 1-based index of the polygon in the mesh. 0 is returned if the method failed to create a polygon."
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "When using Arrays in place of Point3d objects. Normally Arrays may be used in place of Point3d objects in most SketchUp methods. This method is an exception to that rule."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#add_polygon-instance_method"
+    },
+    {
+      "name": "count_points",
+      "signature": "count_points =\u003E Integer",
+      "summary": "The #count_points method is used to count the number of points in a mesh.",
+      "remarks": "The #count_points method is used to count the number of points in a mesh.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of points in a mesh"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#count_points-instance_method"
+    },
+    {
+      "name": "count_polygons",
+      "signature": "count_polygons =\u003E Integer",
+      "summary": "The #count_polygons count the number of polygons in the mesh.",
+      "remarks": "The #count_polygons count the number of polygons in the mesh.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of polygons in the mesh"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#count_polygons-instance_method"
+    },
+    {
+      "name": "normal_at",
+      "signature": "normal_at(index) =\u003E Geom::Vector3d?",
+      "summary": "Note: Index starts at 1.",
+      "remarks": "Note: Index starts at 1. The #normal_at method is used to determine the vertex normal at a particular index in the mesh. This only works for meshes retrieved from Sketchup::Face#mesh with the PolygonMeshNormals flag.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index in the mesh for the vertex normal to be retrieved",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#normal_at-instance_method"
+    },
+    {
+      "name": "point_at",
+      "signature": "point_at(index) =\u003E Geom::Point3d?",
+      "summary": "Note: Index starts at 1.",
+      "remarks": "Note: Index starts at 1. The #point_at method is used to retrieve the point at a specific index in the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index in the mesh for the point to be retrieved",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#point_at-instance_method"
+    },
+    {
+      "name": "point_index",
+      "signature": "point_index(point) =\u003E Integer",
+      "summary": "Note: Returns 0 if point is not found.",
+      "remarks": "Note: Returns 0 if point is not found. The #point_index method is used to retrieve the index of a point in the mesh.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "the index in the mesh for the Geom::Point3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#point_index-instance_method"
+    },
+    {
+      "name": "points",
+      "signature": "points =\u003E Array\u003CGeom::Point3d\u003E",
+      "summary": "The #points method is used to retrieve an array of points (vertices) in the mesh",
+      "remarks": "The #points method is used to retrieve an array of points (vertices) in the mesh",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CGeom::Point3d\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#points-instance_method"
+    },
+    {
+      "name": "polygon_at",
+      "signature": "polygon_at(index) =\u003E Array\u003CInteger\u003E?",
+      "summary": "Note: Index starts at 1.",
+      "remarks": "Note: Index starts at 1. Note: The returned array can contain negative values with the sign indicating a hidden edge. For example, a return value of [-1, 2, 3] indicates that the edge from 1 to 2 is hidden. The negative values should not be used as an index for #point_at, take the absolute value of the index value in the polygon array. So if you get [-1, 2,3] use 1 as the argument to #point_at. The #polygon_at method is used to retrieve an array of vertex index values for a polygon at a specific index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index of the desired polygon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CInteger\u003E, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#polygon_at-instance_method"
+    },
+    {
+      "name": "polygon_points_at",
+      "signature": "polygon_points_at(index) =\u003E Array\u003CGeom::Point3d\u003E?",
+      "summary": "Note: Index starts at 1.",
+      "remarks": "Note: Index starts at 1. The #polygon_points_at method is used to retrieve the points for a polygon that is at a specific index in the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "An index for a polygon in the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CGeom::Point3d\u003E, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#polygon_points_at-instance_method"
+    },
+    {
+      "name": "polygons",
+      "signature": "polygons =\u003E Array\u003CArray\u003CInteger\u003E\u003E",
+      "summary": "The #polygons method is used to retrieve an array of all polygons in the mesh.",
+      "remarks": "The #polygons method is used to retrieve an array of all polygons in the mesh. The returned array contains an array that can have a negative value with the sign indicating a hidden edge. For example, a return value of [-1, 2, 3] indicates that the edge from 1 to 2 is hidden.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CArray\u003CInteger\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#polygons-instance_method"
+    },
+    {
+      "name": "set_point",
+      "signature": "set_point(index, point) =\u003E Geom::PolygonMesh",
+      "summary": "Note: Index starts at 1.",
+      "remarks": "Note: Index starts at 1. The #set_point method is used to set the point at a specific index in the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index where the point will be set.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "doc": "A Point3d object to set at the index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::PolygonMesh",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#set_point-instance_method"
+    },
+    {
+      "name": "set_uv",
+      "signature": "set_uv(index, point, front) =\u003E nil",
+      "summary": "Note: If you don\u0027t specify how many points you will be adding to the mesh when you initiate it you may risk the UV data becoming out of sync.",
+      "remarks": "Note: If you don\u0027t specify how many points you will be adding to the mesh when you initiate it you may risk the UV data becoming out of sync. Note: Index starts at 1. The #set_uv method is used to define UV mapping coordinates to points in the mesh. Beware that the polygons connected to the point will share UV coordiates so UV mapping coordinates needs to be continuous across the polygon mesh. When setting the UV for a point one need to make sure to have the correct index for the point. It\u0027s therefore best to add the points using #add_point and use the index it returns for following calls to set_uv and #add_polygon. If you are not able to calculate how many points there will be in your mesh make sure to not specify an index in #set_uv higher than the number of times you have called #set_uv.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "An Integer representing the UV index.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "doc": "A Point3d object representing UV coordinates.",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "Boolean",
+          "doc": "A boolean representing the front or back.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#set_uv-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transformation) =\u003E Geom::PolygonMesh",
+      "summary": "The #transform! method is used to apply a transformation to a mesh.",
+      "remarks": "The #transform! method is used to apply a transformation to a mesh.",
+      "params": [
+        {
+          "name": "transformation",
+          "type": "Geom::Transformation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::PolygonMesh",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#transform!-instance_method"
+    },
+    {
+      "name": "uv_at",
+      "signature": "uv_at(index, front) =\u003E Geom::Point3d?",
+      "summary": "Note: Index starts at 1.",
+      "remarks": "Note: Index starts at 1. The #uv_at method is used to access a uv (texture coordinates) at a specific index. \u201CUVs\u201D is a way of referring to the u,v texture coordinates (as opposed to the X, Y, and Z axis that you construct your meshes on), which are points defining 1-by-1 positions within an image. These coordinates connect to points in your 3D model, to position an image texture onto it\u0027s surface (similar to virtual \u201Cthumb tacks\u201D) These coordinates pin an exact spot on an image that you wish to use to texture your model to a specific point on an object\u0027s surface. Between these points, your software will stretch the image smoothly. This is what is referred to as UV mapping.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index for the texture coordinate.",
+          "optional": false
+        },
+        {
+          "name": "front",
+          "type": "Boolean",
+          "doc": "Set to true to get the UV for the front size, false for the back side.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d, nil",
+        "doc": "a Point3d object where the x equals the u value and the y equals the v value. Returns nil on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#uv_at-instance_method"
+    },
+    {
+      "name": "uvs",
+      "signature": "uvs(front) =\u003E Array\u003CGeom::Point3d\u003E",
+      "summary": "The #uvs method is used to retrieve an array of uv coordinates in the mesh.",
+      "remarks": "The #uvs method is used to retrieve an array of uv coordinates in the mesh.",
+      "params": [
+        {
+          "name": "front",
+          "type": "Boolean",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CGeom::Point3d\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#uvs-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "NO_SMOOTH_OR_HIDE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#NO_SMOOTH_OR_HIDE-constant"
+    },
+    {
+      "name": "HIDE_BASED_ON_INDEX",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#HIDE_BASED_ON_INDEX-constant"
+    },
+    {
+      "name": "SOFTEN_BASED_ON_INDEX",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#SOFTEN_BASED_ON_INDEX-constant"
+    },
+    {
+      "name": "AUTO_SOFTEN",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#AUTO_SOFTEN-constant"
+    },
+    {
+      "name": "SMOOTH_SOFT_EDGES",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#SMOOTH_SOFT_EDGES-constant"
+    },
+    {
+      "name": "MESH_POINTS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#MESH_POINTS-constant"
+    },
+    {
+      "name": "MESH_UVQ_FRONT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#MESH_UVQ_FRONT-constant"
+    },
+    {
+      "name": "MESH_UVQ_BACK",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#MESH_UVQ_BACK-constant"
+    },
+    {
+      "name": "MESH_NORMALS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Geom/PolygonMesh.html#MESH_NORMALS-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,190 @@
+{
+  "name": "Notification",
+  "namespace": "UI",
+  "kind": "class",
+  "summary": "Notification objects allows you to show native notifications in the desktop. Notifications can have a message, icon and accept and/or dismiss buttons with callback blocks. Supported icon formats include: .bmp, .png, .jpg. Vector icons are supported as .svg on Windows and .pdf on Mac. Recommended icon size is 48x48 pixels. Icons larger than these sizes will be automatically downscaled to fit within the limits.",
+  "remarks": "Known Bugs: Prior to SketchUp 2026.0 oversized icons are cropped on Windows.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/UI/Notification.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Notification(sketchup_extension, message = nil, icon_name = nil, icon_tooltip = nil)",
+      "summary": "Note: In order to insert line breaks into the message you need to use \\r\\n. From SketchUp 2019 and onwards \\n also works on both Mac and Windows. Creates a new UI::Notification object.",
+      "remarks": "Note: In order to insert line breaks into the message you need to use \\r\\n. From SketchUp 2019 and onwards \\n also works on both Mac and Windows. Creates a new UI::Notification object.",
+      "params": [
+        {
+          "name": "sketchup_extension",
+          "type": "SketchupExtension",
+          "doc": "SketchupExtension instance used to identify the source of the notification.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "String",
+          "doc": "Message to display.",
+          "optional": true,
+          "default": "nil"
+        },
+        {
+          "name": "icon_name",
+          "type": "String",
+          "doc": "Path to an icon to display along with the message.",
+          "optional": true,
+          "default": "nil"
+        },
+        {
+          "name": "icon_tooltip",
+          "type": "String",
+          "doc": "Tooltip for the icon.",
+          "optional": true,
+          "default": "nil"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "on_accept",
+      "signature": "on_accept(title, block) =\u003E Boolean",
+      "summary": "Shows a button in the notification with the given title and callback block, both arguments are required.",
+      "remarks": "Shows a button in the notification with the given title and callback block, both arguments are required.",
+      "params": [
+        {
+          "name": "title",
+          "type": "String",
+          "doc": "Sets the title of the button.",
+          "optional": false
+        },
+        {
+          "name": "block",
+          "type": "Proc",
+          "doc": "Sets the action callback, this will be called when the user clicks on the accept button.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "RuntimeError",
+          "when": "When calling on_accept when the notification has already been shown."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#on_accept-instance_method"
+    },
+    {
+      "name": "on_accept_title",
+      "signature": "on_accept_title =\u003E String",
+      "summary": "Returns the accept\u0027s button title.",
+      "remarks": "Returns the accept\u0027s button title.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#on_accept_title-instance_method"
+    },
+    {
+      "name": "on_dismiss",
+      "signature": "on_dismiss(title, block) =\u003E Boolean",
+      "summary": "Shows a button in the notification with the given title and callback block.",
+      "remarks": "Shows a button in the notification with the given title and callback block. Both arguments are required. This callback is only called if you press the Dismiss button, not when the time runs out and the notification automatically disappears.",
+      "params": [
+        {
+          "name": "title",
+          "type": "String",
+          "doc": "Sets the title of the button.",
+          "optional": false
+        },
+        {
+          "name": "block",
+          "type": "Proc",
+          "doc": "Sets the action callback, this will be called when the user clicks on the dismiss button.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "RuntimeError",
+          "when": "When calling on_dismiss when the notification has already been shown."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#on_dismiss-instance_method"
+    },
+    {
+      "name": "on_dismiss_title",
+      "signature": "on_dismiss_title =\u003E String",
+      "summary": "Returns the dismiss\u0027s button title.",
+      "remarks": "Returns the dismiss\u0027s button title.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#on_dismiss_title-instance_method"
+    },
+    {
+      "name": "show",
+      "signature": "show =\u003E Boolean",
+      "summary": "Shows the notification.",
+      "remarks": "Shows the notification. If not interacted with, the notification will disappear without calling any callbacks.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#show-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "icon_name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the icon name, this is the path that will be used to get the icon from the file system path.",
+      "remarks": "Gets the icon name, this is the path that will be used to get the icon from the file system path.",
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#icon_name-instance_method"
+    },
+    {
+      "name": "icon_tooltip",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the icon Tooltip, this is the string that appear when the mouse is over the icon.",
+      "remarks": "Gets the icon Tooltip, this is the string that appear when the mouse is over the icon.",
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#icon_tooltip-instance_method"
+    },
+    {
+      "name": "message",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the message as string.",
+      "remarks": "Gets the message as string.",
+      "doc_url": "https://ruby.sketchup.com/UI/Notification.html#message-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

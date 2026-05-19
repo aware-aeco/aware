@@ -1,0 +1,235 @@
+{
+  "name": "OptionsProvider",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "An OptionsProvider class provides various kinds of options on a Model. You get an OptionsProvider from the OptionsManager. The options are given as name/value pairs. List of keys added in different SketchUp versions: UnitsOptions AreaUnit (SketchUp 2019.2) VolumeUnit (SketchUp 2019.2) AreaPrecision (SketchUp 2020.0) VolumePrecision (SketchUp 2020.0) The AreaUnit and VolumeUnit options in UnitsOptions only applies if the UnitFormat is Length::Decimal.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Object",
+      "summary": "The add_observer method is used to add an observer to the current object.",
+      "remarks": "The add_observer method is used to add an observer to the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#add_observer-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Integer",
+      "summary": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module.",
+      "remarks": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module. Prior to that the #count method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#count-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|key, value| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through all of the options.",
+      "remarks": "The #each method is used to iterate through all of the options.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#each-instance_method"
+    },
+    {
+      "name": "each_key",
+      "signature": "each_key {|key| ... } =\u003E nil",
+      "summary": "The #each_key method is used to iterate through all of the attribute keys.",
+      "remarks": "The #each_key method is used to iterate through all of the attribute keys.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#each_key-instance_method"
+    },
+    {
+      "name": "each_pair",
+      "signature": "each_pair {|key, value| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through all of the options.",
+      "remarks": "The #each method is used to iterate through all of the options.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#each_pair-instance_method"
+    },
+    {
+      "name": "each_value",
+      "signature": "each_value {|value| ... } =\u003E nil",
+      "summary": "The #each_value method is used to iterate through all of the attribute values.",
+      "remarks": "The #each_value method is used to iterate through all of the attribute values.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#each_value-instance_method"
+    },
+    {
+      "name": "has_key?",
+      "signature": "has_key?(name) =\u003E Boolean",
+      "summary": "The #has_key? method is an alias for #key?.",
+      "remarks": "The #has_key? method is an alias for #key?.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the key you are looking for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#has_key?-instance_method"
+    },
+    {
+      "name": "key?",
+      "signature": "key?(name) =\u003E Boolean",
+      "summary": "The #key? method is used to determine if the options provider has a specific key.",
+      "remarks": "The #key? method is used to determine if the options provider has a specific key.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the key you are looking for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#key?-instance_method"
+    },
+    {
+      "name": "keys",
+      "signature": "keys =\u003E Object",
+      "summary": "The #keys method is used to retrieve an array with all of the attribute keys.",
+      "remarks": "The #keys method is used to retrieve an array with all of the attribute keys.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "keys - an array of keys within the options provider if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#keys-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method is an alias of #size.",
+      "remarks": "The #length method is an alias of #size.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#length-instance_method"
+    },
+    {
+      "name": "name",
+      "signature": "name =\u003E Object",
+      "summary": "The name method is used to retrieve the name of an options provider.",
+      "remarks": "The name method is used to retrieve the name of an options provider.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "name - the name of the options provider if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#name-instance_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Object",
+      "summary": "The remove_observer method is used to remove an observer from the current object.",
+      "remarks": "The remove_observer method is used to remove an observer from the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#remove_observer-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method is used to retrieve the size (number of elements) of an options provider.",
+      "remarks": "The #size method is used to retrieve the size (number of elements) of an options provider.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#size-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "[]",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The [] method is used to get a value by name or index of the key.",
+      "remarks": "The [] method is used to get a value by name or index of the key.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/OptionsProvider.html#[]-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

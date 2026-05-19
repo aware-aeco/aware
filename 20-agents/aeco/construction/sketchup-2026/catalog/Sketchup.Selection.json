@@ -1,0 +1,395 @@
+{
+  "name": "Selection",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "A set of the currently selected drawing elements. Use the Model.selection method to get a Selection object. Note that the order of drawing elements (selection[0], selection[1] and so on) in the set is in no particular order and should not be assumed to be in the same order as the user selected the drawing elements.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Sketchup::Drawingelement?",
+      "summary": "The #[] method is used to retrieve a Drawingelement from the selection by index.",
+      "remarks": "The #[] method is used to retrieve a Drawingelement from the selection by index. Index 0 is the first Drawingelement in the selection. This method is not very efficient. If you need to look at every entity in the selection, consider using #each instead of using this method to manually grab each one.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index of the Drawingelement object to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Drawingelement, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#[]-instance_method"
+    },
+    {
+      "name": "add",
+      "signature": "add(drawing_elements) =\u003E Integer | add(*drawing_elements) =\u003E Integer",
+      "summary": "The #add method is used to add Drawingelement to the selection.",
+      "remarks": "The #add method is used to add Drawingelement to the selection. Drawingelements that are added to the Selection are visually indicated by the selection bounding box. You can pass it individual Drawingelements or an Array of Drawingelements.",
+      "params": [
+        {
+          "name": "drawing_elements",
+          "type": "Array\u003CSketchup::Drawingelement\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of Drawingelement objects added"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#add-instance_method"
+    },
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Boolean",
+      "summary": "The add_observer method is used to add an observer to the selection object.",
+      "remarks": "The add_observer method is used to add an observer to the selection object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#add_observer-instance_method"
+    },
+    {
+      "name": "at",
+      "signature": "at(index) =\u003E Sketchup::Drawingelement?",
+      "summary": "The #at method is an alias for #[].",
+      "remarks": "The #at method is an alias for #[].",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index of the Drawingelement object to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Drawingelement, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#at-instance_method"
+    },
+    {
+      "name": "clear",
+      "signature": "clear =\u003E nil",
+      "summary": "The clear method is used to clear the selection.",
+      "remarks": "The clear method is used to clear the selection.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#clear-instance_method"
+    },
+    {
+      "name": "contains?",
+      "signature": "contains?(drawing_element) =\u003E Boolean",
+      "summary": "The #contains? method is and alias of #include?.",
+      "remarks": "The #contains? method is and alias of #include?.",
+      "params": [
+        {
+          "name": "drawing_element",
+          "type": "Sketchup::Drawingelement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#contains?-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Integer",
+      "summary": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module.",
+      "remarks": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module. Prior to that the #count method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#count-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|drawing_element| ... } =\u003E nil",
+      "summary": "Note: Don\u0027t remove content from this collection while iterating over it with #each.",
+      "remarks": "Note: Don\u0027t remove content from this collection while iterating over it with #each. This would change the size of the collection and cause elemnts to be skipped as the indices change. Instead copy the current collection to an array using to_a and then use each on the array, when removing content. The #each method is used to iterate through all of the selected Drawingelements. If you want to do something with all of the selected Drawingelements, this is more efficient than using #[].",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#each-instance_method"
+    },
+    {
+      "name": "empty?",
+      "signature": "empty? =\u003E Boolean",
+      "summary": "The #empty? method is used to determine if there are drawing elements in the selection.",
+      "remarks": "The #empty? method is used to determine if there are drawing elements in the selection.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#empty?-instance_method"
+    },
+    {
+      "name": "first",
+      "signature": "first =\u003E Sketchup::Drawingelement",
+      "summary": "The #first method is used to retrieve the first selected Drawingelement Returns nil if nothing is selected.",
+      "remarks": "The #first method is used to retrieve the first selected Drawingelement Returns nil if nothing is selected. This method is useful when you know that only a single Drawingelement is selected, or you are only interested in the first selected Drawingelement.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Drawingelement",
+        "doc": "the first selected Drawingelement object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#first-instance_method"
+    },
+    {
+      "name": "include?",
+      "signature": "include?(drawing_element) =\u003E Boolean",
+      "summary": "The #include? method is used to determine if a given Drawingelement is in the selection.",
+      "remarks": "The #include? method is used to determine if a given Drawingelement is in the selection.",
+      "params": [
+        {
+          "name": "drawing_element",
+          "type": "Sketchup::Drawingelement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#include?-instance_method"
+    },
+    {
+      "name": "invert",
+      "signature": "invert =\u003E nil",
+      "summary": "The #invert method is used to invert the selection.",
+      "remarks": "The #invert method is used to invert the selection.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#invert-instance_method"
+    },
+    {
+      "name": "is_curve?",
+      "signature": "is_curve? =\u003E Boolean",
+      "summary": "The #is_curve? method is used to determine if the selection contains all edges that belong to a single curve.",
+      "remarks": "The #is_curve? method is used to determine if the selection contains all edges that belong to a single curve.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#is_curve?-instance_method"
+    },
+    {
+      "name": "is_surface?",
+      "signature": "is_surface? =\u003E Boolean",
+      "summary": "The #is_surface? method is used to determine if the selection contains only all of the faces that are part of a single curved surface.",
+      "remarks": "The #is_surface? method is used to determine if the selection contains only all of the faces that are part of a single curved surface.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#is_surface?-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method is used to retrieve the number of selected drawing elements.",
+      "remarks": "The #length method is used to retrieve the number of selected drawing elements.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#length-instance_method"
+    },
+    {
+      "name": "model",
+      "signature": "model =\u003E Sketchup::Model",
+      "summary": "The #model method retrieves the model for the selection.",
+      "remarks": "The #model method retrieves the model for the selection.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Model",
+        "doc": "the model that includes the selection if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#model-instance_method"
+    },
+    {
+      "name": "nitems",
+      "signature": "nitems =\u003E Integer",
+      "summary": "The #nitems method is an alias for #length.",
+      "remarks": "The #nitems method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#nitems-instance_method"
+    },
+    {
+      "name": "remove",
+      "signature": "remove(drawing_elements) =\u003E Integer | remove(*drawing_elements) =\u003E Integer",
+      "summary": "The #remove method is used to remove Drawingelements from the selection.",
+      "remarks": "The #remove method is used to remove Drawingelements from the selection. You can pass it individual Drawingelements or an Array of Drawingelements.",
+      "params": [
+        {
+          "name": "drawing_elements",
+          "type": "Array\u003CSketchup::Drawingelement\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of Drawingelement objects removed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#remove-instance_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Boolean",
+      "summary": "The remove_observer method is used to remove an observer from the selection object.",
+      "remarks": "The remove_observer method is used to remove an observer from the selection object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#remove_observer-instance_method"
+    },
+    {
+      "name": "shift",
+      "signature": "shift =\u003E Sketchup::Drawingelement",
+      "summary": "The #shift method is used to remove the first Drawingelement from the selection and returns it.",
+      "remarks": "The #shift method is used to remove the first Drawingelement from the selection and returns it.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Drawingelement",
+        "doc": "the first Drawingelement object in the selection set if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#shift-instance_method"
+    },
+    {
+      "name": "single_object?",
+      "signature": "single_object? =\u003E Boolean",
+      "summary": "The #single_object? method is used to determine if the selection contains a single object.",
+      "remarks": "The #single_object? method is used to determine if the selection contains a single object. It can either be a single DrawingElement or a group of DrawingElements for which is_curve? or is_surface? will return true.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#single_object?-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method is an alias for #length.",
+      "remarks": "The #size method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#size-instance_method"
+    },
+    {
+      "name": "toggle",
+      "signature": "toggle(drawings_elements) =\u003E Integer | toggle(*drawing_elements) =\u003E Integer",
+      "summary": "The #toggle method is used to change whether a Drawingelement is part of the selection.",
+      "remarks": "The #toggle method is used to change whether a Drawingelement is part of the selection. Drawingelements that are not already selected are added. Drawingelements that are already selected are removed. You can pass it individual Drawingelements or an Array of Drawingelements.",
+      "params": [
+        {
+          "name": "drawing_elements",
+          "type": "Array\u003CSketchup::Drawingelement\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "the number of Drawingelement objects changed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Selection.html#toggle-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

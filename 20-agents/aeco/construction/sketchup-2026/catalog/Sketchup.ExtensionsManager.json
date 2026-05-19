@@ -1,0 +1,106 @@
+{
+  "name": "ExtensionsManager",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The ExtensionsManager class provides a way of accessing the SketchupExtensions that have been registered via the Sketchup.register_extension method. There is only one ExtensionsManager available. You access it via the Sketchup.extensions method.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index_or_name) =\u003E SketchupExtension?",
+      "summary": "The [] method is used to get an extension by name, index or ID.",
+      "remarks": "The [] method is used to get an extension by name, index or ID.",
+      "params": [
+        {
+          "name": "index_or_name",
+          "type": "Integer, String",
+          "doc": "The index, name or ID of the SketchupExtension object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SketchupExtension, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html#[]-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Integer",
+      "summary": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module.",
+      "remarks": "Note: Since SketchUp 2014 the count method is inherited from Ruby\u0027s Enumerable mix-in module. Prior to that the #count method is an alias for #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html#count-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|extension| ... } =\u003E nil",
+      "summary": "The #each method is used to iterate through extensions.",
+      "remarks": "The #each method is used to iterate through extensions.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html#each-instance_method"
+    },
+    {
+      "name": "keys",
+      "signature": "keys =\u003E Object",
+      "summary": "The keys method is used to get a list of keys in the ExtensionsManager, which are the same as the names of the extensions.",
+      "remarks": "The keys method is used to get a list of keys in the ExtensionsManager, which are the same as the names of the extensions.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "keys - Array of string keys"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html#keys-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer",
+      "summary": "The #length method returns the number of SketchupExtension objects inside this ExtensionsManager.",
+      "remarks": "The #length method returns the number of SketchupExtension objects inside this ExtensionsManager.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html#length-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method is an alias of #length.",
+      "remarks": "The #size method is an alias of #length.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ExtensionsManager.html#size-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,573 @@
+{
+  "name": "Vector3d",
+  "namespace": "Geom",
+  "kind": "class",
+  "summary": "The Vector3d class is used to represent vectors in a 3 dimensional space. Vectors in SketchUp have a direction and a length, but not a starting point. There are numerous tutorials on 3D vectors available on the internet.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Vector3d(x, y, z)",
+      "summary": "The new method is used to create a new vector.",
+      "remarks": "The new method is used to create a new vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "linear_combination",
+      "signature": "linear_combination(weight1, vector1, weight2, vector2) =\u003E Geom::Vector3d | linear_combination(x, xaxis, y, yaxis, z, zaxis) =\u003E Geom::Vector3d",
+      "summary": "The Geom#linear_combination method is used to create a new vector as a linear combination of other vectors.",
+      "remarks": "The Geom#linear_combination method is used to create a new vector as a linear combination of other vectors. This method is generally used to get a vector at some percentage between two vectors. A linear combination is a standard term for vector math. It is defined as vector = weight1 * vector1 \u002B weight2 * vector2",
+      "params": [
+        {
+          "name": "weight1",
+          "type": "Float",
+          "doc": "weights",
+          "optional": false
+        },
+        {
+          "name": "vector1",
+          "type": "Geom::Vector3d",
+          "doc": "The first vector.",
+          "optional": false
+        },
+        {
+          "name": "weight2",
+          "type": "Float",
+          "doc": "weights",
+          "optional": false
+        },
+        {
+          "name": "vector2",
+          "type": "Geom::Vector3d",
+          "doc": "The second vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#linear_combination-class_method"
+    },
+    {
+      "name": "%",
+      "signature": "%(vector3d) =\u003E Float",
+      "summary": "The #% method is used to compute the dot product between two vectors.",
+      "remarks": "The #% method is used to compute the dot product between two vectors. This is an alias of the #dot method.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#%-instance_method"
+    },
+    {
+      "name": "*",
+      "signature": "*(vector3d) =\u003E Geom::Vector3d",
+      "summary": "The #* method is used to compute the cross product between two vectors.",
+      "remarks": "The #* method is used to compute the cross product between two vectors. The cross product, also called the vector product, is an operation on two vectors. The cross product of two vectors produces a third vector which is perpendicular to the plane in which the first two lie. This is an alias of the #cross method.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#*-instance_method"
+    },
+    {
+      "name": "\u002B",
+      "signature": "\u002B(vector3d) =\u003E Geom::Vector3d",
+      "summary": "The #\u002B method is used to add a vector to this one.",
+      "remarks": "The #\u002B method is used to add a vector to this one.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the new vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#\u002B-instance_method"
+    },
+    {
+      "name": "-",
+      "signature": "-(vector3d) =\u003E Geom::Vector3d",
+      "summary": "The #- method is used to subtract a vector from this one.",
+      "remarks": "The #- method is used to subtract a vector from this one.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the new vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#--instance_method"
+    },
+    {
+      "name": "\u003C",
+      "signature": "\u003C(vector3d) =\u003E Boolean",
+      "summary": "The #\u003C compare method is used to compare two vectors to determine if the left-hand vector is less than the right-hand vector.",
+      "remarks": "The #\u003C compare method is used to compare two vectors to determine if the left-hand vector is less than the right-hand vector.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the vector1 is closer to origin than vector2"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#\u003C-instance_method"
+    },
+    {
+      "name": "angle_between",
+      "signature": "angle_between(vector3d) =\u003E Float",
+      "summary": "The #angle_between method is used to compute the angle (in radians) between this vector and another vector.",
+      "remarks": "The #angle_between method is used to compute the angle (in radians) between this vector and another vector.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": "an angle (in radians)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#angle_between-instance_method"
+    },
+    {
+      "name": "axes",
+      "signature": "axes =\u003E Array(Geom::Vector3d, Geom::Vector3d, Geom::Vector3d)",
+      "summary": "The #axes method is used to compute an arbitrary set of axes with the given vector as the z-axis direction.",
+      "remarks": "The #axes method is used to compute an arbitrary set of axes with the given vector as the z-axis direction. Returns an Array of three vectors [xaxis, yaxis, zaxis] Vector3d objects",
+      "params": [],
+      "returns": {
+        "type": "Array(Geom::Vector3d, Geom::Vector3d, Geom::Vector3d)",
+        "doc": "an Array object containing three"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#axes-instance_method"
+    },
+    {
+      "name": "clone",
+      "signature": "clone =\u003E Geom::Vector3d",
+      "summary": "The #clone method is used to make a copy of a vector.",
+      "remarks": "The #clone method is used to make a copy of a vector.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "a Vector3d object which is the clone of vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#clone-instance_method"
+    },
+    {
+      "name": "cross",
+      "signature": "cross(vector3d) =\u003E Geom::Vector3d",
+      "summary": "The #cross method is used to compute the cross product between two vectors.",
+      "remarks": "The #cross method is used to compute the cross product between two vectors. The cross product, also called the vector product, is an operation on two vectors. The cross product of two vectors produces a third vector which is perpendicular to the plane in which the first two lie.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#cross-instance_method"
+    },
+    {
+      "name": "dot",
+      "signature": "dot(vector3d) =\u003E Float",
+      "summary": "The #dot method is used to compute the dot product between two vectors.",
+      "remarks": "The #dot method is used to compute the dot product between two vectors.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#dot-instance_method"
+    },
+    {
+      "name": "inspect",
+      "signature": "inspect =\u003E Geom::Vector3d",
+      "summary": "The #inspect method is used to inspect the contents of a vector as a friendly string.",
+      "remarks": "The #inspect method is used to inspect the contents of a vector as a friendly string.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the Vector3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#inspect-instance_method"
+    },
+    {
+      "name": "normalize",
+      "signature": "normalize =\u003E Geom::Vector3d",
+      "summary": "The #normalize method is used to return a vector that is a unit vector of another.",
+      "remarks": "The #normalize method is used to return a vector that is a unit vector of another.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "a new normalized Vector3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#normalize-instance_method"
+    },
+    {
+      "name": "normalize!",
+      "signature": "normalize! =\u003E Geom::Vector3d",
+      "summary": "The #normalize! method is used to convert a vector into a unit vector, in place.",
+      "remarks": "The #normalize! method is used to convert a vector into a unit vector, in place. Another way to do this is vector.length = 1.0",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "a normalized Vector3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#normalize!-instance_method"
+    },
+    {
+      "name": "parallel?",
+      "signature": "parallel?(vector3d) =\u003E Boolean",
+      "summary": "The #parallel? method determines if two Geom::Vector3ds are parallel within a tolerance.",
+      "remarks": "The #parallel? method determines if two Geom::Vector3ds are parallel within a tolerance. Two vectors are parallel if there exists a scalar multiple between them.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#parallel?-instance_method"
+    },
+    {
+      "name": "perpendicular?",
+      "signature": "perpendicular?(vector3d) =\u003E Boolean",
+      "summary": "The #perpendicular? method determines if two Geom::Vector3ds are perpendicular within a tolerance.",
+      "remarks": "The #perpendicular? method determines if two Geom::Vector3ds are perpendicular within a tolerance. Two vectors are considered perpendicular if their dot product is zero.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#perpendicular?-instance_method"
+    },
+    {
+      "name": "reverse",
+      "signature": "reverse =\u003E Geom::Vector3d",
+      "summary": "The #reverse method is used to return a new vector that is the reverse of this vector, while leaving the original unchanged.",
+      "remarks": "The #reverse method is used to return a new vector that is the reverse of this vector, while leaving the original unchanged.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "a reverse Vector3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#reverse-instance_method"
+    },
+    {
+      "name": "reverse!",
+      "signature": "reverse! =\u003E Geom::Vector3d",
+      "summary": "The #reverse! method is used to reverse the vector in place.",
+      "remarks": "The #reverse! method is used to reverse the vector in place.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "a reverse Vector3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#reverse!-instance_method"
+    },
+    {
+      "name": "samedirection?",
+      "signature": "samedirection?(vector3d) =\u003E Boolean",
+      "summary": "The #samedirection? method is used to determine if this vector is parallel to and in the same direction as another vector to within tolerance.",
+      "remarks": "The #samedirection? method is used to determine if this vector is parallel to and in the same direction as another vector to within tolerance.",
+      "params": [
+        {
+          "name": "vector3d",
+          "type": "Geom::Vector3d, Array(Float, Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#samedirection?-instance_method"
+    },
+    {
+      "name": "set!",
+      "signature": "set!(vector) =\u003E Geom::Vector3d | set!(x, y, z) =\u003E Geom::Vector3d | set!(array3d) =\u003E Geom::Vector3d",
+      "summary": "The #set! method is used to set the coordinates of the vector.",
+      "remarks": "The #set! method is used to set the coordinates of the vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#set!-instance_method"
+    },
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Array(Float, Float, Float)",
+      "summary": "The #to_a method retrieves the coordinates of the vector in an Array[x, y, z].",
+      "remarks": "The #to_a method retrieves the coordinates of the vector in an Array[x, y, z].",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float, Float)",
+        "doc": "the coordinates of the vector in an array"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#to_a-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method is used to format the vector as a String.",
+      "remarks": "The #to_s method is used to format the vector as a String.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a string representation of vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#to_s-instance_method"
+    },
+    {
+      "name": "transform",
+      "signature": "transform(transform) =\u003E Geom::Vector3d",
+      "summary": "The #transform method applies a Transformation to a vector, returning a new vector.",
+      "remarks": "The #transform method applies a Transformation to a vector, returning a new vector. The original vector is unchanged by this method.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation",
+          "doc": "A Transformation object to apply to the vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the newly transformed vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#transform-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transform) =\u003E Geom::Vector3d",
+      "summary": "The #transform! method applies a Transformation to a vector.",
+      "remarks": "The #transform! method applies a Transformation to a vector. The vector itself is modified.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation",
+          "doc": "A Transformation object to apply to the vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the transformed vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#transform!-instance_method"
+    },
+    {
+      "name": "unitvector?",
+      "signature": "unitvector? =\u003E Boolean",
+      "summary": "The #unitvector? method is used to see if the vector is a unit vector.",
+      "remarks": "The #unitvector? method is used to see if the vector is a unit vector. This is equivalent to vector.length == 1.0",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#unitvector?-instance_method"
+    },
+    {
+      "name": "valid?",
+      "signature": "valid? =\u003E Boolean",
+      "summary": "The #valid? method is used to verify if a vector is valid.",
+      "remarks": "The #valid? method is used to verify if a vector is valid. A vector is valid if its length is not zero.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#valid?-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Geom::Vector3d, Array(Float, Float, Float)",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method is used to determine if two vectors are equal to within tolerance.",
+      "remarks": "The #== method is used to determine if two vectors are equal to within tolerance.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#==-instance_method"
+    },
+    {
+      "name": "[]",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #[] method is used to access the coordinates of a vector as if it was an Array.",
+      "remarks": "The #[] method is used to access the coordinates of a vector as if it was an Array. The index must be 0, 1 or 2. The following are equivalent:",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#[]-instance_method"
+    },
+    {
+      "name": "length",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #length method is used to retrieve the length of the vector.",
+      "remarks": "The #length method is used to retrieve the length of the vector.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#length-instance_method"
+    },
+    {
+      "name": "x",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #x method is used to retrieve the x coordinate of the vector.",
+      "remarks": "The #x method is used to retrieve the x coordinate of the vector.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#x-instance_method"
+    },
+    {
+      "name": "y",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #y method is used to retrieve the y coordinate of the vector.",
+      "remarks": "The #y method is used to retrieve the y coordinate of the vector.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#y-instance_method"
+    },
+    {
+      "name": "z",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the #z coordinate of the vector.",
+      "remarks": "Get the #z coordinate of the vector.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector3d.html#z-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

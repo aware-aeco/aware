@@ -1,0 +1,480 @@
+{
+  "name": "Material",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Material class represents a Texture or Color that can be applied to Drawingelements. It is most often applied to Faces. You can pass any object that can be used as a material to a method that requires a material. Objects include actual Material, Color, and classes that can be converted to a color.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "\u003C=\u003E",
+      "signature": "\u003C=\u003E(material) =\u003E Integer",
+      "summary": "The #\u003C=\u003E method is used to compare two materials based on ##display_name.",
+      "remarks": "The #\u003C=\u003E method is used to compare two materials based on ##display_name.",
+      "params": [
+        {
+          "name": "material",
+          "type": "Sketchup::Material",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "0 if they are equal, 1 if material1 \u003E material2, -1 if material1 \u003C material2"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#\u003C=\u003E-instance_method"
+    },
+    {
+      "name": "ao_enabled?",
+      "signature": "ao_enabled? =\u003E Boolean PBR Metallic Roughness Workflow",
+      "summary": "Note: There is no setter for this property.",
+      "remarks": "Note: There is no setter for this property. Instead it\u0027s dictated whether a #ao_texture is set.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#ao_enabled?-instance_method"
+    },
+    {
+      "name": "colorize_deltas",
+      "signature": "colorize_deltas =\u003E Array(Float, Float, Float)",
+      "summary": "The #colorize_deltas method retrieves the HLS delta for colorized materials.",
+      "remarks": "The #colorize_deltas method retrieves the HLS delta for colorized materials.",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float, Float)",
+        "doc": "An array of floats representing the HLS delta."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#colorize_deltas-instance_method"
+    },
+    {
+      "name": "display_name",
+      "signature": "display_name =\u003E String",
+      "summary": "The #display_name method retrieves the name that is displayed within SketchUp for the material.",
+      "remarks": "The #display_name method retrieves the name that is displayed within SketchUp for the material. This should be used when presenting the name in the UI, but the returned name cannot be used as a key in Sketchup::Model#materials.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#display_name-instance_method"
+    },
+    {
+      "name": "materialType",
+      "signature": "materialType =\u003E Integer",
+      "summary": "The #materialType method retrieves the type of the material.",
+      "remarks": "The #materialType method retrieves the type of the material. Material Types: 0 = solid (MATERIAL_SOLID) 1 = textured (MATERIAL_TEXTURED) 2 = colorized textured (MATERIAL_COLORIZED_TEXTURED) The constants were added in SketchUp 2015.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "One of Sketchup::Material::MATERIAL_* values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#materialType-instance_method"
+    },
+    {
+      "name": "metalness_enabled?",
+      "signature": "metalness_enabled? =\u003E Boolean PBR Metallic Roughness Workflow",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#metalness_enabled?-instance_method"
+    },
+    {
+      "name": "normal_enabled?",
+      "signature": "normal_enabled? =\u003E Boolean PBR Metallic Roughness Workflow",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#normal_enabled?-instance_method"
+    },
+    {
+      "name": "owner_type",
+      "signature": "owner_type =\u003E Integer",
+      "summary": "The #owner_type method is used to determine what owns the material.",
+      "remarks": "The #owner_type method is used to determine what owns the material. Material Owner Types: OWNER_MANAGER OWNER_IMAGE OWNER_LAYER",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#owner_type-instance_method"
+    },
+    {
+      "name": "roughness_enabled?",
+      "signature": "roughness_enabled? =\u003E Boolean PBR Metallic Roughness Workflow",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#roughness_enabled?-instance_method"
+    },
+    {
+      "name": "save_as",
+      "signature": "save_as(filename) =\u003E Boolean",
+      "summary": "Note: You must remember to append \u201C.",
+      "remarks": "Note: You must remember to append \u201C.skm\u201D to the filename as this will not be done automatically. The #save_as method is used to write a material to a SKM file.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "the path to the SKM file to load.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#save_as-instance_method"
+    },
+    {
+      "name": "use_alpha?",
+      "signature": "use_alpha? =\u003E Boolean",
+      "summary": "Note: that this is not affected by the alpha value of the #color object.",
+      "remarks": "Note: that this is not affected by the alpha value of the #color object. Only the #alpha value will make this method return true. The #use_alpha? method tells if the material uses transparency. It uses some tolerance checking to account for floating point precision noise.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#use_alpha?-instance_method"
+    },
+    {
+      "name": "workflow",
+      "signature": "workflow =\u003E Integer PBR Metallic Roughness Workflow",
+      "summary": "Material Workflows: WORKFLOW_CLASSIC WORKFLOW_PBR_METALLIC_ROUGHNESS When the workflow returns WORKFLOW_PBR_METALLIC_ROUGHNESS the properties listed under PBR Metallic Roughness Workflow are relevant.",
+      "remarks": "Material Workflows: WORKFLOW_CLASSIC WORKFLOW_PBR_METALLIC_ROUGHNESS When the workflow returns WORKFLOW_PBR_METALLIC_ROUGHNESS the properties listed under PBR Metallic Roughness Workflow are relevant.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "One of Sketchup::Material::WORKFLOW_* values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#workflow-instance_method"
+    },
+    {
+      "name": "write_thumbnail",
+      "signature": "write_thumbnail(path, max_size) =\u003E Boolean?",
+      "summary": "The #write_thumbnail method writes a bitmap thumbnail to the given file name.",
+      "remarks": "The #write_thumbnail method writes a bitmap thumbnail to the given file name.",
+      "params": [
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "The file path for the thumbnail.",
+          "optional": false
+        },
+        {
+          "name": "max_size",
+          "type": "Integer",
+          "doc": "The maximum width or height of the generated image.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean, nil",
+        "doc": "true if successful, false if unsuccessful. nil if arguments are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#write_thumbnail-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Sketchup::Material",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method is used to test if two materials are the same.",
+      "remarks": "The #== method is used to test if two materials are the same.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#==-instance_method"
+    },
+    {
+      "name": "alpha",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #alpha method is used to get the opacity of the material.",
+      "remarks": "The #alpha method is used to get the opacity of the material. The value will be between 0.0 and 1.0. A value of 0.0 means that the material is completely transparent. A value of 1.0 means that the material is completely opaque.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#alpha-instance_method"
+    },
+    {
+      "name": "ao_enabled",
+      "type": "Object",
+      "getter": false,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#ao_enabled=-instance_method"
+    },
+    {
+      "name": "ao_strength",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns A value between 0.",
+      "remarks": "Returns A value between 0.0 and 1.0.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#ao_strength-instance_method"
+    },
+    {
+      "name": "ao_texture",
+      "type": "Sketchup::Texture",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#ao_texture-instance_method"
+    },
+    {
+      "name": "color",
+      "type": "Sketchup::Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Note: The alpha value of the Color object is not used for the material\u0027s transparency.",
+      "remarks": "Note: The alpha value of the Color object is not used for the material\u0027s transparency. This is controlled by the #alpha property in order for textured materials to also have transparency. The #color method is used to retrieve the color of the material. If it uses a colorized Texture, this will return the average color of the texture.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#color-instance_method"
+    },
+    {
+      "name": "colorize_type",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "Note: This value is only relevant when the #materialType is set to MATERIAL_COLORIZED_TEXTURED.",
+      "remarks": "Note: This value is only relevant when the #materialType is set to MATERIAL_COLORIZED_TEXTURED. The #colorize_type method retrieves the type of colorization of the material. Material Colorize Types: COLORIZE_SHIFT COLORIZE_TINT",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#colorize_type-instance_method"
+    },
+    {
+      "name": "metallic_factor",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns A value between 0.",
+      "remarks": "Returns A value between 0.0 and 1.0.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#metallic_factor-instance_method"
+    },
+    {
+      "name": "metallic_texture",
+      "type": "Sketchup::Texture",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#metallic_texture-instance_method"
+    },
+    {
+      "name": "metalness_enabled",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#metalness_enabled=-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method retrieves the name of the material.",
+      "remarks": "The #name method retrieves the name of the material. This is the unique internal name of the object which should be used for retrieving the material from the model\u0027s material list. Use #display_name to display the name in the UI.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#name-instance_method"
+    },
+    {
+      "name": "normal_enabled",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#normal_enabled=-instance_method"
+    },
+    {
+      "name": "normal_scale",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns A value larger than or equal to 0.",
+      "remarks": "Returns A value larger than or equal to 0.0.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#normal_scale-instance_method"
+    },
+    {
+      "name": "normal_style",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "Material Normal Styles: NORMAL_STYLE_OPENGL NORMAL_STYLE_DIRECTX",
+      "remarks": "Material Normal Styles: NORMAL_STYLE_OPENGL NORMAL_STYLE_DIRECTX",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#normal_style-instance_method"
+    },
+    {
+      "name": "normal_texture",
+      "type": "Sketchup::Texture",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#normal_texture-instance_method"
+    },
+    {
+      "name": "roughness_enabled",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#roughness_enabled=-instance_method"
+    },
+    {
+      "name": "roughness_factor",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns A value between 0.",
+      "remarks": "Returns A value between 0.0 and 1.0.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#roughness_factor-instance_method"
+    },
+    {
+      "name": "roughness_texture",
+      "type": "Sketchup::Texture",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#roughness_texture-instance_method"
+    },
+    {
+      "name": "texture",
+      "type": "Sketchup::Texture, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #texture method retrieves the texture of the material.",
+      "remarks": "The #texture method retrieves the texture of the material.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#texture-instance_method"
+    },
+    {
+      "name": "WORKFLOW_CLASSIC",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#WORKFLOW_CLASSIC-constant"
+    },
+    {
+      "name": "WORKFLOW_PBR_METALLIC_ROUGHNESS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#WORKFLOW_PBR_METALLIC_ROUGHNESS-constant"
+    },
+    {
+      "name": "NORMAL_STYLE_OPENGL",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#NORMAL_STYLE_OPENGL-constant"
+    },
+    {
+      "name": "NORMAL_STYLE_DIRECTX",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#NORMAL_STYLE_DIRECTX-constant"
+    },
+    {
+      "name": "MATERIAL_SOLID",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#MATERIAL_SOLID-constant"
+    },
+    {
+      "name": "MATERIAL_TEXTURED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#MATERIAL_TEXTURED-constant"
+    },
+    {
+      "name": "MATERIAL_COLORIZED_TEXTURED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#MATERIAL_COLORIZED_TEXTURED-constant"
+    },
+    {
+      "name": "COLORIZE_SHIFT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#COLORIZE_SHIFT-constant"
+    },
+    {
+      "name": "COLORIZE_TINT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#COLORIZE_TINT-constant"
+    },
+    {
+      "name": "OWNER_MANAGER",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#OWNER_MANAGER-constant"
+    },
+    {
+      "name": "OWNER_IMAGE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#OWNER_IMAGE-constant"
+    },
+    {
+      "name": "OWNER_LAYER",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Material.html#OWNER_LAYER-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

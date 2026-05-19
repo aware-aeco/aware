@@ -1,0 +1,166 @@
+{
+  "name": "Axes",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "SketchUp\u0027s drawing axes consist of three colored lines (red, green, blue), usually perpendicular to each other, displayed in the drawing area. The exception is when the user open an instance with a non-orthogonal transformation. The root model transformation is always orthogonal. The drawing axes are used by drawing tools to align the geometry it creates as well as affecting the inference engine. The plane where the red and green axes lines lie is called the ground plane. The term origin, is used to define the place where all of axes lines start or originate.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "axes",
+      "signature": "axes =\u003E Object",
+      "summary": "The axes method returns the vectors representing the directions of the axes.",
+      "remarks": "The axes method returns the vectors representing the directions of the axes.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Array - an array of three vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#axes-instance_method"
+    },
+    {
+      "name": "origin",
+      "signature": "origin =\u003E Geom::Point3d",
+      "summary": "The #origin method returns the origin of the axes.",
+      "remarks": "The #origin method returns the origin of the axes.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#origin-instance_method"
+    },
+    {
+      "name": "set",
+      "signature": "set(origin, xaxis, yaxis, zaxis) =\u003E Sketchup::Axes",
+      "summary": "The #set method allows the axes to be manipulated.",
+      "remarks": "The #set method allows the axes to be manipulated. The axes must always be orthogonal, otherwise an error is thrown.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Object",
+          "doc": "Point3d - The origin to set.",
+          "optional": false
+        },
+        {
+          "name": "xaxis",
+          "type": "Object",
+          "doc": "Vector3d - The x axis to set.",
+          "optional": false
+        },
+        {
+          "name": "yaxis",
+          "type": "Object",
+          "doc": "Vector3d - The y axis to set.",
+          "optional": false
+        },
+        {
+          "name": "zaxis",
+          "type": "Object",
+          "doc": "Vector3d - The z axis to set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Axes",
+        "doc": "the axes object being set."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#set-instance_method"
+    },
+    {
+      "name": "sketch_plane",
+      "signature": "sketch_plane =\u003E Object",
+      "summary": "The sketch_plane method returns a plane representing the ground plane of the axes.",
+      "remarks": "The sketch_plane method returns a plane representing the ground plane of the axes.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Array - of 4 numbers that give the coefficients of a plane equation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#sketch_plane-instance_method"
+    },
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Object",
+      "summary": "The axes method returns the origin and vectors representing the axes.",
+      "remarks": "The axes method returns the origin and vectors representing the axes.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Array - an array of a point and three vectors."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#to_a-instance_method"
+    },
+    {
+      "name": "transformation",
+      "signature": "transformation =\u003E Geom::Transformation",
+      "summary": "The #transformation method returns the transformation of the axes.",
+      "remarks": "The #transformation method returns the transformation of the axes. This is useful when creating tools that respect the model\u0027s drawing axes.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Transformation",
+        "doc": "the transformation for the axes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#transformation-instance_method"
+    },
+    {
+      "name": "xaxis",
+      "signature": "xaxis =\u003E Geom::Vector3d",
+      "summary": "The #xaxis method returns the x axis of the axes.",
+      "remarks": "The #xaxis method returns the x axis of the axes.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the x axis for the axes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#xaxis-instance_method"
+    },
+    {
+      "name": "yaxis",
+      "signature": "yaxis =\u003E Geom::Vector3d",
+      "summary": "The #yaxis method returns the y axis of the axes.",
+      "remarks": "The #yaxis method returns the y axis of the axes.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the y axis for the axes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#yaxis-instance_method"
+    },
+    {
+      "name": "zaxis",
+      "signature": "zaxis =\u003E Geom::Vector3d",
+      "summary": "The #zaxis method returns the z axis of the axes.",
+      "remarks": "The #zaxis method returns the z axis of the axes.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "the z axis for the axes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Axes.html#zaxis-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
