@@ -1,0 +1,49 @@
+{
+  "name": "DefaultRenderPackageFactory",
+  "namespace": "Dynamo.Visualization",
+  "kind": "class",
+  "summary": "Example implementation of IRenderPackageFactory. DefaultRenderPackageFactory produces DefaultRenderPackages.",
+  "interfaces": [
+    "Dynamo.Visualization.IRenderPackageFactory"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs",
+  "constructors": [
+    {
+      "name": "DefaultRenderPackageFactory()",
+      "signature": "void DefaultRenderPackageFactory()",
+      "summary": "DefaultRenderPackageFactory.DefaultRenderPackageFactory",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateRenderPackage",
+      "signature": "Autodesk.DesignScript.Interfaces.IRenderPackage CreateRenderPackage()",
+      "summary": "Creates DefaultRenderPackage.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.DesignScript.Interfaces.IRenderPackage",
+        "doc": "DefaultRenderPackage"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TessellationParameters",
+      "type": "Autodesk.DesignScript.Interfaces.TessellationParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets or Returns Tessellation parameters. MaxTessellationDivisions equals 32.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Visualization/DefaultRenderPackageFactory.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

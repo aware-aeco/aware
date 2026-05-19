@@ -1,0 +1,41 @@
+{
+  "name": "ISchedulerThread",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "interface",
+  "summary": "Interface provides method for DynamoSchedulerThread.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/ISchedulerThread.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Initialize(Dynamo.Scheduler.IScheduler)",
+      "signature": "void Initialize(Dynamo.Scheduler.IScheduler owningScheduler)",
+      "summary": "DynamoScheduler calls this method to initialize and start this instance of scheduler thread. This call marks the point from which it is safe to call into DynamoScheduler.",
+      "params": [
+        {
+          "name": "owningScheduler",
+          "type": "Dynamo.Scheduler.IScheduler",
+          "doc": "A reference to the DynamoScheduler object which owns this instance of scheduler thread.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/ISchedulerThread.cs"
+    },
+    {
+      "name": "Shutdown",
+      "signature": "void Shutdown()",
+      "summary": "DynamoScheduler calls this method to shutdown the scheduler thread.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/ISchedulerThread.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

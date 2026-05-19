@@ -1,0 +1,150 @@
+{
+  "name": "ProcedureTable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type ProcedureTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs",
+  "constructors": [
+    {
+      "name": "ProcedureTable(ProtoCore.DSASM.ProcedureTable)",
+      "signature": "void ProcedureTable(ProtoCore.DSASM.ProcedureTable rhs)",
+      "summary": "Create an empty procedure table.",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.DSASM.ProcedureTable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    },
+    {
+      "name": "ProcedureTable(int)",
+      "signature": "void ProcedureTable(int runtimeindex)",
+      "summary": "Create an empty procedure table.",
+      "params": [
+        {
+          "name": "runtimeindex",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Append(ProtoCore.DSASM.ProcedureNode)",
+      "signature": "int Append(ProtoCore.DSASM.ProcedureNode node)",
+      "summary": "ProcedureTable.Append",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    },
+    {
+      "name": "GetFunctionsByName(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.ProcedureNode\u003E GetFunctionsByName(string name)",
+      "summary": "Returns function with specified name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.ProcedureNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    },
+    {
+      "name": "GetFunctionsByNameAndArgumentNumber(string, int)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.ProcedureNode\u003E GetFunctionsByNameAndArgumentNumber(string name, int argumentNumber)",
+      "summary": "Returns all functions with specified name and the number of argument. It also returns function that has default arguments but the total parameter number is larger that the specified argument number.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "argumentNumber",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.ProcedureNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    },
+    {
+      "name": "GetPropertyGetterByName(string)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetPropertyGetterByName(string name)",
+      "summary": "Returns getter function for given property name. Ex: for X property of Point, this method returns get_X(Point p).",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Procedures",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.ProcedureNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All procedure nodes defined in this procedure table.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    },
+    {
+      "name": "RuntimeIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The index of this procedure table in the executable\u0027s procedure table list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ProcedureTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

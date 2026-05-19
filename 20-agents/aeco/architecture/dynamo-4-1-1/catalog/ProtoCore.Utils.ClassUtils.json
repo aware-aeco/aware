@@ -1,0 +1,72 @@
+{
+  "name": "ClassUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type ClassUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ClassUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetClassUpcastChain(ProtoCore.DSASM.ClassNode, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.List\u003Cint\u003E GetClassUpcastChain(ProtoCore.DSASM.ClassNode cn, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns the list of classes that this can be upcast to It includes the class itself",
+      "params": [
+        {
+          "name": "cn",
+          "type": "ProtoCore.DSASM.ClassNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003Cint\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ClassUtils.cs"
+    },
+    {
+      "name": "GetUpcastCountTo(ProtoCore.DSASM.ClassNode, ProtoCore.DSASM.ClassNode, ProtoCore.RuntimeCore)",
+      "signature": "int GetUpcastCountTo(ProtoCore.DSASM.ClassNode from, ProtoCore.DSASM.ClassNode to, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns the number of upcasts that need to be performed to turn a class into another class in its upcast chain",
+      "params": [
+        {
+          "name": "from",
+          "type": "ProtoCore.DSASM.ClassNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "ProtoCore.DSASM.ClassNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ClassUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

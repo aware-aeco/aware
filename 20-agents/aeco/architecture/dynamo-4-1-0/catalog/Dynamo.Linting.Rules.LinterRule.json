@@ -1,0 +1,83 @@
+{
+  "name": "LinterRule",
+  "namespace": "Dynamo.Linting.Rules",
+  "kind": "class",
+  "summary": "Base class for all linting rules",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs",
+  "constructors": [
+    {
+      "name": "LinterRule()",
+      "signature": "void LinterRule()",
+      "summary": "LinterRule.LinterRule",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CleanupRule(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void CleanupRule(Dynamo.Graph.Workspaces.WorkspaceModel muribundWorkspaceModel)",
+      "summary": "Uses the cleanup function to allow a rule to get rid of any transient data it might have stored before the workspace model is disposed",
+      "params": [
+        {
+          "name": "muribundWorkspaceModel",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CallToAction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description of how to solve issues related to this rule",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description of the rule",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    },
+    {
+      "name": "EvaluationTriggerEvents",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "List of Property names that this rule should react to changes on",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique id of this rule",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    },
+    {
+      "name": "SeverityCode",
+      "type": "Dynamo.Linting.Interfaces.SeverityCodesEnum",
+      "getter": true,
+      "setter": false,
+      "summary": "Severity code of this rule. This code will define how the rule is displayed in the UI",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Rules/LinterRule.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

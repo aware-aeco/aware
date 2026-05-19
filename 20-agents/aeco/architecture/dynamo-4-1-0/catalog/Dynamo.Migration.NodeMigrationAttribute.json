@@ -1,0 +1,40 @@
+{
+  "name": "NodeMigrationAttribute",
+  "namespace": "Dynamo.Migration",
+  "kind": "class",
+  "summary": "Marks methods on a NodeModel to be used for version migration.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs",
+  "constructors": [
+    {
+      "name": "NodeMigrationAttribute(string)",
+      "signature": "void NodeMigrationAttribute(string version)",
+      "summary": "NodeMigrationAttribute.NodeMigrationAttribute",
+      "params": [
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Version",
+      "type": "System.Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Version specifies the latest workspace version to which this migration will be applied.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

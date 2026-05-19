@@ -1,0 +1,320 @@
+{
+  "name": "PackageLoader",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageLoader",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetOwnerPackage(Dynamo.CustomNodeInfo)",
+      "signature": "Dynamo.PackageManager.Package GetOwnerPackage(Dynamo.CustomNodeInfo def)",
+      "summary": "PackageLoader.GetOwnerPackage",
+      "params": [
+        {
+          "name": "def",
+          "type": "Dynamo.CustomNodeInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "GetOwnerPackage(System.Type)",
+      "signature": "Dynamo.PackageManager.Package GetOwnerPackage(System.Type t)",
+      "summary": "PackageLoader.GetOwnerPackage",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "GetOwnerPackage(string)",
+      "signature": "Dynamo.PackageManager.Package GetOwnerPackage(string path)",
+      "summary": "PackageLoader.GetOwnerPackage",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "GetPackageFromRoot(string)",
+      "signature": "Dynamo.PackageManager.Package GetPackageFromRoot(string path)",
+      "summary": "PackageLoader.GetPackageFromRoot",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "IsUnderPackageControl(Dynamo.CustomNodeInfo)",
+      "signature": "bool IsUnderPackageControl(Dynamo.CustomNodeInfo def)",
+      "summary": "PackageLoader.IsUnderPackageControl",
+      "params": [
+        {
+          "name": "def",
+          "type": "Dynamo.CustomNodeInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "IsUnderPackageControl(System.Reflection.Assembly)",
+      "signature": "bool IsUnderPackageControl(System.Reflection.Assembly t)",
+      "summary": "PackageLoader.IsUnderPackageControl",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "IsUnderPackageControl(System.Type)",
+      "signature": "bool IsUnderPackageControl(System.Type t)",
+      "summary": "PackageLoader.IsUnderPackageControl",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "IsUnderPackageControl(string)",
+      "signature": "bool IsUnderPackageControl(string path)",
+      "summary": "PackageLoader.IsUnderPackageControl",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "LoadAll(Dynamo.PackageManager.LoadPackageParams)",
+      "signature": "void LoadAll(Dynamo.PackageManager.LoadPackageParams loadPackageParams)",
+      "summary": "Scan the PackagesDirectory for packages and attempt to load all of them. Beware! Fails silently for duplicates.",
+      "params": [
+        {
+          "name": "loadPackageParams",
+          "type": "Dynamo.PackageManager.LoadPackageParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "LoadCustomNodesAndPackages(Dynamo.PackageManager.LoadPackageParams, Dynamo.Core.CustomNodeManager)",
+      "signature": "void LoadCustomNodesAndPackages(Dynamo.PackageManager.LoadPackageParams loadPackageParams, Dynamo.Core.CustomNodeManager customNodeManager)",
+      "summary": "LoadCustomNodesAndPackages can be used to load custom nodes and packages from temporary paths that do not need to be added to preference settings. To load from temporary custom paths, initialize a local PreferenceSettings object and add the paths to its CustomPackageFolders property, then initialize a new LoadPackageParams with this preferences object and use as input to this method. To load from custom paths that need to be persisted to the preferences, initialize a LoadPackageParams from an existing preferences object.",
+      "params": [
+        {
+          "name": "loadPackageParams",
+          "type": "Dynamo.PackageManager.LoadPackageParams",
+          "doc": "LoadPackageParams initialized with local PreferenceSettings object containing custom package path.",
+          "optional": false
+        },
+        {
+          "name": "customNodeManager",
+          "type": "Dynamo.Core.CustomNodeManager",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "LoadPackages(System.Collections.Generic.IEnumerable\u003CDynamo.PackageManager.Package\u003E)",
+      "signature": "void LoadPackages(System.Collections.Generic.IEnumerable\u003CDynamo.PackageManager.Package\u003E packages)",
+      "summary": "Loads and imports all packages.",
+      "params": [
+        {
+          "name": "packages",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.PackageManager.Package\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "ScanPackageDirectory(string)",
+      "signature": "Dynamo.PackageManager.Package ScanPackageDirectory(string directory)",
+      "summary": "PackageLoader.ScanPackageDirectory",
+      "params": [
+        {
+          "name": "directory",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "ScanPackageDirectory(string, bool)",
+      "signature": "Dynamo.PackageManager.Package ScanPackageDirectory(string directory, bool checkCertificates)",
+      "summary": "PackageLoader.ScanPackageDirectory",
+      "params": [
+        {
+          "name": "directory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "checkCertificates",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LocalPackages",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.PackageManager.Package\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageLoader.LocalPackages",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    },
+    {
+      "name": "RequestedExtensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of ViewExtensions the ViewExtensionSource requested be loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "ConflictingCustomNodePackageLoaded",
+      "delegate": "System.Action\u003CDynamo.PackageManager.Package, Dynamo.PackageManager.Package\u003E",
+      "signature": "public event System.Action\u003CDynamo.PackageManager.Package, Dynamo.PackageManager.Package\u003E ConflictingCustomNodePackageLoaded",
+      "summary": "Event raised when a custom node package containing conflicting node definition with an existing package is tried to load.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PackageAdded",
+      "delegate": "System.Action\u003CDynamo.PackageManager.Package\u003E",
+      "signature": "public event System.Action\u003CDynamo.PackageManager.Package\u003E PackageAdded",
+      "summary": "This event is raised when a package is first added to the list of packages this package loader is loading. This event occurs before the package is fully loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PackageRemoved",
+      "delegate": "System.Action\u003CDynamo.PackageManager.Package\u003E",
+      "signature": "public event System.Action\u003CDynamo.PackageManager.Package\u003E PackageRemoved",
+      "summary": "This event is raised when the package is removed from the list of packages loaded by this packageLoader.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PackgeLoaded",
+      "delegate": "System.Action\u003CDynamo.PackageManager.Package\u003E",
+      "signature": "public event System.Action\u003CDynamo.PackageManager.Package\u003E PackgeLoaded",
+      "summary": "This event is raised when a package is fully loaded. It will be true that when this event is raised Packge.Loaded will be true for the package.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

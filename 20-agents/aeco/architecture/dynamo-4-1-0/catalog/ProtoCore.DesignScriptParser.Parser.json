@@ -1,0 +1,116 @@
+{
+  "name": "Parser",
+  "namespace": "ProtoCore.DesignScriptParser",
+  "kind": "class",
+  "summary": "Type Parser",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs",
+  "constructors": [
+    {
+      "name": "Parser(ProtoCore.DesignScriptParser.Scanner, ProtoCore.Core, bool)",
+      "signature": "void Parser(ProtoCore.DesignScriptParser.Scanner scanner, ProtoCore.Core coreObj, bool _builtinMethodsLoaded)",
+      "summary": "Parser.Parser",
+      "params": [
+        {
+          "name": "scanner",
+          "type": "ProtoCore.DesignScriptParser.Scanner",
+          "optional": false
+        },
+        {
+          "name": "coreObj",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "_builtinMethodsLoaded",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildImperativeIdentifier(string, ProtoCore.PrimitiveType)",
+      "signature": "ProtoCore.AST.ImperativeAST.IdentifierNode BuildImperativeIdentifier(string name, ProtoCore.PrimitiveType type)",
+      "summary": "Parser.BuildImperativeIdentifier",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.PrimitiveType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.IdentifierNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "Parse",
+      "signature": "void Parse()",
+      "summary": "Parser.Parse",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "SemErr(string)",
+      "signature": "void SemErr(string msg)",
+      "summary": "Parser.SemErr",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ImportModuleHandler",
+      "type": "ProtoFFI.ImportModuleHandler",
+      "getter": true,
+      "setter": true,
+      "summary": "Parser.ImportModuleHandler",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "commentNode",
+      "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Parser.commentNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "root",
+      "type": "ProtoCore.AST.Node",
+      "getter": true,
+      "setter": true,
+      "summary": "Parser.root",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,377 @@
+{
+  "name": "CodeBlockNodeModel",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Represents codeblock node\u0027s functionality.",
+  "base": "Dynamo.Graph.Nodes.NodeModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs",
+  "constructors": [
+    {
+      "name": "CodeBlockNodeModel()",
+      "signature": "void CodeBlockNodeModel()",
+      "summary": "This is the default constructor only used for search indexing purposes (if doesn\u0027t exist then the DynamoModel.AddNodeTypeToSearch() method is crashing due that is expecting a default constructor)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "CodeBlockNodeModel(Dynamo.Engine.LibraryServices)",
+      "signature": "void CodeBlockNodeModel(Dynamo.Engine.LibraryServices libraryServices)",
+      "summary": "Initilizes a new instance of the Dynamo.Graph.Nodes.CodeBlockNodeModel class",
+      "params": [
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "Dynamo.Engine.LibraryServices object to manage builtin libraries as well as imported libraries",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "CodeBlockNodeModel(string, System.Guid, double, double, Dynamo.Engine.LibraryServices, ProtoCore.Namespace.ElementResolver)",
+      "signature": "void CodeBlockNodeModel(string userCode, System.Guid guid, double xPos, double yPos, Dynamo.Engine.LibraryServices libraryServices, ProtoCore.Namespace.ElementResolver resolver)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.CodeBlockNodeModel class. Call this constructor only when a first pass compilation of a CBN is needed without factoring in other CBN function definitions.",
+      "params": [
+        {
+          "name": "userCode",
+          "type": "string",
+          "doc": "Code block content",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "Identifier of the code block",
+          "optional": false
+        },
+        {
+          "name": "xPos",
+          "type": "double",
+          "doc": "X coordinate of the code block",
+          "optional": false
+        },
+        {
+          "name": "yPos",
+          "type": "double",
+          "doc": "Y coordinate of the code block",
+          "optional": false
+        },
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "Dynamo.Engine.LibraryServices object to manage builtin libraries as well as imported libraries",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "Responsible for resolving a partial class name to its fully resolved name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "CodeBlockNodeModel(string, double, double, Dynamo.Engine.LibraryServices, ProtoCore.Namespace.ElementResolver)",
+      "signature": "void CodeBlockNodeModel(string code, double x, double y, Dynamo.Engine.LibraryServices libraryServices, ProtoCore.Namespace.ElementResolver resolver)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.CodeBlockNodeModel class",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "doc": "Code block content",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "X coordinate of the code block",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "Y coordinate of the code block",
+          "optional": false
+        },
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "Dynamo.Engine.LibraryServices object to manage builtin libraries as well as imported libraries",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "Responsible for resolving a partial class name to its fully resolved name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "CodeBlockNodeModel.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "GetAstIdentifierForOutputIndex(int)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierNode GetAstIdentifierForOutputIndex(int outputIndex)",
+      "summary": "Fetches the ProtoAST Identifier for a given output index.",
+      "params": [
+        {
+          "name": "outputIndex",
+          "type": "int",
+          "doc": "Index of the output port.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+        "doc": "Identifier corresponding to the given output port."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "GetRawAstIdentifierForOutputIndex(int)",
+      "signature": "ProtoCore.AST.AssociativeAST.IdentifierNode GetRawAstIdentifierForOutputIndex(int portIndex)",
+      "summary": "Fetches the raw ProtoAST Identifier for a given index.",
+      "params": [
+        {
+          "name": "portIndex",
+          "type": "int",
+          "doc": "Index of the port.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+        "doc": "Identifier corresponding to the given port"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "GetTypeHintForOutput(int)",
+      "signature": "ProtoCore.Type GetTypeHintForOutput(int index)",
+      "summary": "Returns possible type of the output at specified output port.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the port",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": "The type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "Migrate_2_0_0(Dynamo.Migration.NodeMigrationData)",
+      "signature": "Dynamo.Migration.NodeMigrationData Migrate_2_0_0(Dynamo.Migration.NodeMigrationData data)",
+      "summary": "CodeBlockNodeModel.Migrate_2_0_0",
+      "params": [
+        {
+          "name": "data",
+          "type": "Dynamo.Migration.NodeMigrationData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Migration.NodeMigrationData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "CodeBlockNodeModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "SetCodeContent(string, ProtoCore.Namespace.ElementResolver)",
+      "signature": "void SetCodeContent(string newCode, ProtoCore.Namespace.ElementResolver workspaceElementResolver)",
+      "summary": "Sets string content of CodeBlock node.",
+      "params": [
+        {
+          "name": "newCode",
+          "type": "string",
+          "doc": "New content of the code block",
+          "optional": false
+        },
+        {
+          "name": "workspaceElementResolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "Dynamo.Graph.Nodes.CodeBlockNodeModel.ElementResolver object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "SetNodeStateBasedOnConnectionAndDefaults",
+      "signature": "void SetNodeStateBasedOnConnectionAndDefaults()",
+      "summary": "If a CBN is in Error state, it will have no code but will have output ports from the last successful compilation if any. In this case it should continue to be in Error state.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "CodeBlockNodeModel.UpdateValueCore",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AstIdentifierBase",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Code block node displays the value of the left hand side variable of last statement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "Code",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns string content of CodeBlock node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "CodeStatements",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.Statement\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Code statement of CBN",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "ElementResolver",
+      "type": "ProtoCore.Namespace.ElementResolver",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns Dynamo.Graph.Nodes.CodeBlockNodeModel.ElementResolver for CodeBlock node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "IsConvertible",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "If this node is allowed to be converted to AST node in nodes to code conversion.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "IsInputNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether node is input node. Used to bind visibility of UI for user selection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "IsOutputNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether node is an output node. Used to bind visibility of UI for user selection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "NodeType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The NodeType property provides a name which maps to the server type for the node. This property should only be used for serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "ShouldFocus",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether code block should not be in focus upon undo/redo actions on node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

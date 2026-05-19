@@ -1,0 +1,115 @@
+{
+  "name": "OutputMessage",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "VM print out message",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [
+    {
+      "name": "OutputMessage(ProtoCore.OutputMessage.MessageType, string, string, int, int)",
+      "signature": "void OutputMessage(ProtoCore.OutputMessage.MessageType type, string message, string filePath, int line, int column)",
+      "summary": "OutputMessage.OutputMessage",
+      "params": [
+        {
+          "name": "type",
+          "type": "ProtoCore.OutputMessage.MessageType",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "column",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "OutputMessage(string)",
+      "signature": "void OutputMessage(string message)",
+      "summary": "OutputMessage.OutputMessage",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Column",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "OutputMessage.Column",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "Continue",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "OutputMessage.Continue",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "FilePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "OutputMessage.FilePath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "Line",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "OutputMessage.Line",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "OutputMessage.Message",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "Type",
+      "type": "ProtoCore.OutputMessage.MessageType",
+      "getter": true,
+      "setter": false,
+      "summary": "OutputMessage.Type",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

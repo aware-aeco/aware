@@ -1,0 +1,132 @@
+{
+  "name": "VariableLine",
+  "namespace": "ProtoCore.Utils",
+  "kind": "struct",
+  "summary": "Type VariableLine",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs",
+  "constructors": [
+    {
+      "name": "VariableLine(int)",
+      "signature": "void VariableLine(int line)",
+      "summary": "VariableLine.VariableLine",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "VariableLine(string, int)",
+      "signature": "void VariableLine(string variable, int line)",
+      "summary": "VariableLine.VariableLine",
+      "params": [
+        {
+          "name": "variable",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "VariableLine.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "VariableLine.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "op_Equality(ProtoCore.Utils.VariableLine, ProtoCore.Utils.VariableLine)",
+      "signature": "bool op_Equality(ProtoCore.Utils.VariableLine variableLine1, ProtoCore.Utils.VariableLine variableLine2)",
+      "summary": "VariableLine.op_Equality",
+      "params": [
+        {
+          "name": "variableLine1",
+          "type": "ProtoCore.Utils.VariableLine",
+          "optional": false
+        },
+        {
+          "name": "variableLine2",
+          "type": "ProtoCore.Utils.VariableLine",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "op_Inequality(ProtoCore.Utils.VariableLine, ProtoCore.Utils.VariableLine)",
+      "signature": "bool op_Inequality(ProtoCore.Utils.VariableLine variableLine1, ProtoCore.Utils.VariableLine variableLine2)",
+      "summary": "VariableLine.op_Inequality",
+      "params": [
+        {
+          "name": "variableLine1",
+          "type": "ProtoCore.Utils.VariableLine",
+          "optional": false
+        },
+        {
+          "name": "variableLine2",
+          "type": "ProtoCore.Utils.VariableLine",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

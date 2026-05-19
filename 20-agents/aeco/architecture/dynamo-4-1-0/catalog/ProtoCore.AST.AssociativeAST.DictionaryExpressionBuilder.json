@@ -1,0 +1,39 @@
+{
+  "name": "DictionaryExpressionBuilder",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type DictionaryExpressionBuilder",
+  "base": "ProtoCore.AST.DictionaryExpressionBuilderBase\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs",
+  "constructors": [
+    {
+      "name": "DictionaryExpressionBuilder()",
+      "signature": "void DictionaryExpressionBuilder()",
+      "summary": "DictionaryExpressionBuilder.DictionaryExpressionBuilder",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToFunctionCall",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode ToFunctionCall()",
+      "summary": "DictionaryExpressionBuilder.ToFunctionCall",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/DictionaryBuilder.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

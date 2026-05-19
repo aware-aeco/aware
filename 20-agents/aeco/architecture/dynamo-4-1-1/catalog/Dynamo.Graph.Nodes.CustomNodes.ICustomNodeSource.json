@@ -1,0 +1,46 @@
+{
+  "name": "ICustomNodeSource",
+  "namespace": "Dynamo.Graph.Nodes.CustomNodes",
+  "kind": "interface",
+  "summary": "Type ICustomNodeSource",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/ICustomNodeSource.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCustomNodeInstance(System.Guid, string, bool)",
+      "signature": "Dynamo.Graph.Nodes.CustomNodes.Function CreateCustomNodeInstance(System.Guid id, string name, bool isTestMode)",
+      "summary": "Creates a new Custom Node Instance.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Identifier referring to a custom node definition.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.CustomNodes.Function",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/ICustomNodeSource.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

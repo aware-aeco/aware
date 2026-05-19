@@ -1,0 +1,42 @@
+{
+  "name": "ReasonForExecutionSuspend",
+  "namespace": "ProtoCore",
+  "kind": "enum",
+  "summary": "Type ReasonForExecutionSuspend",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Breakpoint",
+      "value": 1
+    },
+    {
+      "name": "EndOfFile",
+      "value": 4
+    },
+    {
+      "name": "Exception",
+      "value": 2
+    },
+    {
+      "name": "NoEntryPoint",
+      "value": 5
+    },
+    {
+      "name": "PreStart",
+      "value": 0
+    },
+    {
+      "name": "VMSplit",
+      "value": 6
+    },
+    {
+      "name": "Warning",
+      "value": 3
+    }
+  ]
+}

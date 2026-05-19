@@ -1,0 +1,77 @@
+{
+  "name": "FFIMethodAttributes",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "It keeps FFI method\u0027s attributes.",
+  "base": "ProtoCore.AST.AssociativeAST.MethodAttributes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs",
+  "constructors": [
+    {
+      "name": "FFIMethodAttributes(System.Reflection.FieldInfo)",
+      "signature": "void FFIMethodAttributes(System.Reflection.FieldInfo f)",
+      "summary": "FFIMethodAttributes.FFIMethodAttributes",
+      "params": [
+        {
+          "name": "f",
+          "type": "System.Reflection.FieldInfo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "FFIMethodAttributes(System.Reflection.MethodBase, System.Collections.Generic.Dictionary\u003CSystem.Reflection.MethodInfo, System.Attribute[]\u003E)",
+      "signature": "void FFIMethodAttributes(System.Reflection.MethodBase method, System.Collections.Generic.Dictionary\u003CSystem.Reflection.MethodInfo, System.Attribute[]\u003E getterAttributes)",
+      "summary": "FFIMethodAttributes.FFIMethodAttributes",
+      "params": [
+        {
+          "name": "method",
+          "type": "System.Reflection.MethodBase",
+          "optional": false
+        },
+        {
+          "name": "getterAttributes",
+          "type": "System.Collections.Generic.Dictionary\u003CSystem.Reflection.MethodInfo, System.Attribute[]\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AllowRankReduction",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "FFIMethodAttributes.AllowRankReduction",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "Attributes",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Attribute\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "FFI method attributes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "RequireTracing",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "FFIMethodAttributes.RequireTracing",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,108 @@
+{
+  "name": "WorkspaceSaveHandler",
+  "namespace": "Dynamo.Models",
+  "kind": "delegate",
+  "summary": "Represents the method that will handle workspace save related events.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs",
+  "constructors": [
+    {
+      "name": "WorkspaceSaveHandler(object, IntPtr)",
+      "signature": "void WorkspaceSaveHandler(object object, IntPtr method)",
+      "summary": "WorkspaceSaveHandler.WorkspaceSaveHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Graph.Workspaces.WorkspaceModel, Dynamo.Graph.SaveContext, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Graph.Workspaces.WorkspaceModel workspace, Dynamo.Graph.SaveContext saveContext, System.AsyncCallback callback, object object)",
+      "summary": "WorkspaceSaveHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        },
+        {
+          "name": "saveContext",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "WorkspaceSaveHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Graph.Workspaces.WorkspaceModel, Dynamo.Graph.SaveContext)",
+      "signature": "void Invoke(Dynamo.Graph.Workspaces.WorkspaceModel workspace, Dynamo.Graph.SaveContext saveContext)",
+      "summary": "WorkspaceSaveHandler.Invoke",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        },
+        {
+          "name": "saveContext",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Graph.Workspaces.WorkspaceModel workspace, Dynamo.Graph.SaveContext saveContext)"
+}

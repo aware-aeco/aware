@@ -1,0 +1,22 @@
+{
+  "name": "IRenderPrecisionPreference",
+  "namespace": "Dynamo.Interfaces",
+  "kind": "interface",
+  "summary": "Temporary interface to avoid breaking changes. TODO: Merge with IPreferences for 3.0 (DYN-1699)",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "RenderPrecision",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicate which render precision will be used",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

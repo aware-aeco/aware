@@ -1,0 +1,26 @@
+{
+  "name": "ErrorType",
+  "namespace": "ProtoCore.BuildData",
+  "kind": "enum",
+  "summary": "Type ErrorType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MaxErrorID",
+      "value": 2
+    },
+    {
+      "name": "SemanticError",
+      "value": 1
+    },
+    {
+      "name": "SyntaxError",
+      "value": 0
+    }
+  ]
+}

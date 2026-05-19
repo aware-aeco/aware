@@ -1,0 +1,126 @@
+{
+  "name": "DataBridge",
+  "namespace": "VMDataBridge",
+  "kind": "class",
+  "summary": "Provides callback registration by GUID, allows for hooking Actions into the VM.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs",
+  "constructors": [
+    {
+      "name": "DataBridge()",
+      "signature": "void DataBridge()",
+      "summary": "DataBridge.DataBridge",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BridgeData(string, object)",
+      "signature": "void BridgeData(string id, object data)",
+      "summary": "Calls the registered callback for the given guid string with the given data. This is safe to include in standalone DS scripts, since if there are no callbacks registered then the method will do nothing.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "String identifying which registered callback to invoke.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "object",
+          "doc": "Data to be passed to the callback.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs"
+    },
+    {
+      "name": "GenerateBridgeDataAst(string, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode GenerateBridgeDataAst(string id, ProtoCore.AST.AssociativeAST.AssociativeNode input)",
+      "summary": "Produces AST that, when executed by the VM, will perform Data Bridging by calling BridgeData.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "Guid identifying which registered callback to be invoked.",
+          "optional": false
+        },
+        {
+          "name": "input",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "AST representing the data to be passed to the callback.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs"
+    },
+    {
+      "name": "RegisterCallback(string, System.Action\u003Cobject\u003E)",
+      "signature": "void RegisterCallback(string id, System.Action\u003Cobject\u003E callback)",
+      "summary": "Registers a callback for a given GUID, to be invoked by the VM on an arbitrary thread. There are no guarantees as to what thread the callback will be invoked on.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "Guid used to identify the callback.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.Action\u003Cobject\u003E",
+          "doc": "Action to be invoked with data from the VM.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs"
+    },
+    {
+      "name": "UnregisterCallback(string)",
+      "signature": "bool UnregisterCallback(string id)",
+      "summary": "Unregisters a callback for a given GUID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "Guid identifying the callback to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Instance",
+      "type": "VMDataBridge.DataBridge",
+      "getter": true,
+      "setter": false,
+      "summary": "DataBridge Singleton",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/VMDataBridge/VMDataBridge.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

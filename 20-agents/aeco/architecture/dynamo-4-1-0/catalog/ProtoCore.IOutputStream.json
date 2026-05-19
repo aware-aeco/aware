@@ -1,0 +1,30 @@
+{
+  "name": "IOutputStream",
+  "namespace": "ProtoCore",
+  "kind": "interface",
+  "summary": "Type IOutputStream",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Write(ProtoCore.OutputMessage)",
+      "signature": "void Write(ProtoCore.OutputMessage message)",
+      "summary": "IOutputStream.Write",
+      "params": [
+        {
+          "name": "message",
+          "type": "ProtoCore.OutputMessage",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

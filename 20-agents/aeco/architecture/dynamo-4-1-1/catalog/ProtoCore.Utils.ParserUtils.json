@@ -1,0 +1,210 @@
+{
+  "name": "ParserUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "These are string manipulation utility functions that focus on lexing and parsing heuristics",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateParser(string, ProtoCore.Core)",
+      "signature": "ProtoCore.DesignScriptParser.Parser CreateParser(string code, ProtoCore.Core core)",
+      "summary": "Returns a parser for the DS code.",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DesignScriptParser.Parser",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "FindExprListNodes(ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E FindExprListNodes(ProtoCore.AST.AssociativeAST.CodeBlockNode node)",
+      "summary": "ParserUtils.FindExprListNodes",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "GetAstNodes(ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E GetAstNodes(ProtoCore.AST.AssociativeAST.CodeBlockNode codeBlockNode)",
+      "summary": "ParserUtils.GetAstNodes",
+      "params": [
+        {
+          "name": "codeBlockNode",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "GetLHSatAssignment(string, int)",
+      "signature": "System.Collections.Generic.List\u003Cstring\u003E GetLHSatAssignment(string line, int equalIndex)",
+      "summary": "ParserUtils.GetLHSatAssignment",
+      "params": [
+        {
+          "name": "line",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "equalIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "Parse(string)",
+      "signature": "ProtoCore.AST.AssociativeAST.CodeBlockNode Parse(string code)",
+      "summary": "Parses designscript code and returns a ProtoAST CodeBlockNode",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "doc": "Source code to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "ParseRHSExpression(string, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode ParseRHSExpression(string expression, ProtoCore.Core core)",
+      "summary": "Parse simple RHS expression",
+      "params": [
+        {
+          "name": "expression",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "ParseWithCore(string, ProtoCore.Core)",
+      "signature": "ProtoCore.Utils.ParseResult ParseWithCore(string code, ProtoCore.Core core)",
+      "summary": "Parses desginscript code with specified core and returns a ProtoAST CodeBlockNode",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ParseResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "ParseWithDeprecatedListSyntax(string)",
+      "signature": "ProtoCore.AST.AssociativeAST.CodeBlockNode ParseWithDeprecatedListSyntax(string code)",
+      "summary": "ParserUtils.ParseWithDeprecatedListSyntax",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    },
+    {
+      "name": "TryMigrateDeprecatedListSyntax(string)",
+      "signature": "string TryMigrateDeprecatedListSyntax(string codeText)",
+      "summary": "ParserUtils.TryMigrateDeprecatedListSyntax",
+      "params": [
+        {
+          "name": "codeText",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ParserUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

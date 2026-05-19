@@ -1,0 +1,34 @@
+{
+  "name": "Disposable",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "static-class",
+  "summary": "Implements IDisposable functionality.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Disposable.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create(System.Action)",
+      "signature": "System.IDisposable Create(System.Action disposeAction)",
+      "summary": "Constructs a new disposable that calls the delegate when disposed",
+      "params": [
+        {
+          "name": "disposeAction",
+          "type": "System.Action",
+          "doc": "An action that runs when this object is disposed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": "New disposable object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Disposable.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

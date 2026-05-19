@@ -1,0 +1,48 @@
+{
+  "name": "FunctionCallBase\u003CTController, TDescriptor\u003E",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Node base class for all nodes that produce a DS function call.",
+  "base": "Dynamo.Graph.Nodes.NodeModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/FunctionCallBase.cs",
+  "constructors": [
+    {
+      "name": "FunctionCallBase(TController)",
+      "signature": "void FunctionCallBase(TController controller)",
+      "summary": "Default constructor",
+      "params": [
+        {
+          "name": "controller",
+          "type": "TController",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/FunctionCallBase.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Controller",
+      "type": "TController",
+      "getter": true,
+      "setter": false,
+      "summary": "Controller used to sync node with a function definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/FunctionCallBase.cs"
+    },
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The unique name that the node was created by",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/FunctionCallBase.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

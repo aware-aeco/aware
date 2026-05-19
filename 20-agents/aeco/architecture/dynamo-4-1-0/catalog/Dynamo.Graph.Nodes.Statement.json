@@ -1,0 +1,126 @@
+{
+  "name": "Statement",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Statements are used in CBN in order to create output ports.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateInstance(ProtoCore.AST.Node)",
+      "signature": "Dynamo.Graph.Nodes.Statement CreateInstance(ProtoCore.AST.Node parsedNode)",
+      "summary": "Creates Statement from node",
+      "params": [
+        {
+          "name": "parsedNode",
+          "type": "ProtoCore.AST.Node",
+          "doc": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.Statement",
+        "doc": "Statement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "GetDefinedVariableNames(Dynamo.Graph.Nodes.Statement)",
+      "signature": "System.Collections.Generic.List\u003Cstring\u003E GetDefinedVariableNames(Dynamo.Graph.Nodes.Statement s)",
+      "summary": "Returns the names of the variables that have been declared in the statement",
+      "params": [
+        {
+          "name": "s",
+          "type": "Dynamo.Graph.Nodes.Statement",
+          "doc": "Statement whose variable names to be queried.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "GetReferencedVariables(ProtoCore.AST.Node, System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Variable\u003E)",
+      "signature": "void GetReferencedVariables(ProtoCore.AST.Node astNode, System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Variable\u003E refVariableList)",
+      "summary": "Returns variables from AST nodes. E.g. a\u002B5. Here \u0022a\u0022 is variable.",
+      "params": [
+        {
+          "name": "astNode",
+          "type": "ProtoCore.AST.Node",
+          "doc": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "refVariableList",
+          "type": "System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Variable\u003E",
+          "doc": "list of variables",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AstNode",
+      "type": "ProtoCore.AST.Node",
+      "getter": true,
+      "setter": false,
+      "summary": "ProtoCore.AST.Node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "CurrentState",
+      "type": "Dynamo.Graph.Nodes.Statement.State",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the State of the Statement. E.g. normal, warning or error.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "CurrentType",
+      "type": "Dynamo.Graph.Nodes.Statement.StatementType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the type of the statement. E.g. expression, literal etc.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "EndLine",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the index of the EndLine. E.g. a\u002B5 \u002B6\u002B3; Endline will be 2.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "FirstDefinedVariable",
+      "type": "Dynamo.Graph.Nodes.Variable",
+      "getter": true,
+      "setter": false,
+      "summary": "Statement.FirstDefinedVariable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "StartLine",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the index of the Startline. E.g. a\u002B5 StartLine will be 1.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

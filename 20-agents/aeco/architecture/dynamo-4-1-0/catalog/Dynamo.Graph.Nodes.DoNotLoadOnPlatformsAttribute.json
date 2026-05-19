@@ -1,0 +1,41 @@
+{
+  "name": "DoNotLoadOnPlatformsAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The DoNotLoadOnPlatforms attribute allows the node implementer to define an array of contexts.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "DoNotLoadOnPlatformsAttribute(string[])",
+      "signature": "void DoNotLoadOnPlatformsAttribute(string[] values)",
+      "summary": "Creates DoNotLoadOnPlatformsAttribute with restricted contexts.",
+      "params": [
+        {
+          "name": "values",
+          "type": "string[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Values",
+      "type": "string[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Restricted contexts, i.e. contexts in which node won\u0027t be loaded. E.g. Revit 2014",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

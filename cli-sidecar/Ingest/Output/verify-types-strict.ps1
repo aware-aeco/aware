@@ -101,7 +101,24 @@ foreach ($i in $sampleIdx) {
     # the collection.
     $isJsonSource = $url -match '\.json(\?|$)' -or $url -match '/postman/' -or $url -match 'postman\.com/'
     try {
-        $r = Invoke-WebRequest -Uri $url -UseBasicParsing -UserAgent "AWARE-coverage-verify/0.30" -ErrorAction Stop
+        # Retry up to 2 times on transient HTTP errors (429 rate-limit, 5xx). github.com's blob
+        # view and search pages rate-limit anonymous requests aggressively; sleep+retry keeps the
+        # sampler from spuriously flagging types whose pages are temporarily throttled.
+        $r = $null
+        for ($attempt = 1; $attempt -le 3; $attempt++) {
+            try {
+                $r = Invoke-WebRequest -Uri $url -UseBasicParsing -UserAgent "AWARE-coverage-verify/0.30" -ErrorAction Stop
+                break
+            }
+            catch [System.Net.WebException] {
+                $code = if ($_.Exception.Response) { [int]$_.Exception.Response.StatusCode } else { 0 }
+                if ($attempt -lt 3 -and ($code -eq 429 -or ($code -ge 500 -and $code -le 599))) {
+                    Start-Sleep -Seconds (3 * $attempt)
+                    continue
+                }
+                throw
+            }
+        }
         $pageText = $r.Content
         if ($isJsonSource) {
             # JSON source (e.g. Postman v2.1 collection at bluebeam). Type names are
@@ -221,17 +238,22 @@ foreach ($i in $sampleIdx) {
                 }
             }
         } else {
-            # HTML source — two doc-site conventions in the wild:
+            # HTML source — three doc-site conventions in the wild:
             #   - Sandcastle (Tekla Structures, Rhino): "<Name> Class" / "<Name> Enumeration" — kind word trails.
             #   - DocFX (Tekla Tedds, ArchiCAD, etc.): "Class <Name>" / "Enum <Name>"  — kind word leads.
-            # We accept EITHER ordering, plus the alternate enum spelling ("Enum" vs "Enumeration") and
-            # struct spelling ("Struct" vs "Structure") that DocFX uses.
+            #   - Source code (Dynamo via github.com/.../blob/<ref>/...cs): "class <Name>" / "enum <Name>" —
+            #     kind word leads + LOWERCASE C# keyword. The page is the rendered .cs source from
+            #     GitHub blob view, NOT a generated doc page. Vendor lacks a hosted reference site so
+            #     the source files themselves are the canonical "what is this type" view.
+            # We accept ANY ordering AND any case, plus the alternate enum spelling ("Enum" vs "Enumeration")
+            # and struct spelling ("Struct" vs "Structure") that DocFX uses.
             $kindWords = switch ($t.kind) {
-                "class" { @("Class") }
-                "struct" { @("Structure", "Struct") }
-                "interface" { @("Interface") }
-                "enum" { @("Enumeration", "Enum") }
-                "delegate" { @("Delegate") }
+                "class" { @("Class", "class") }
+                "static-class" { @("Class", "class", "static class") }
+                "struct" { @("Structure", "Struct", "struct") }
+                "interface" { @("Interface", "interface") }
+                "enum" { @("Enumeration", "Enum", "enum") }
+                "delegate" { @("Delegate", "delegate") }
                 default { @() }
             }
             if (-not $pageText.Contains($bareName)) { $issues += "type-name-missing" }
@@ -247,6 +269,17 @@ foreach ($i in $sampleIdx) {
                     $kindMatched = $true
                     break
                 }
+                # Source-code declaration form: `delegate void Foo(...)`, `class<T> Foo {...}` —
+                # kind word and type name are on the same line but separated by a return type or
+                # generic param. Accept any line that has BOTH the kind word AND the bare name.
+                $lines = $pageText -split "`n"
+                foreach ($line in $lines) {
+                    if ($line.Contains($kw) -and $line.Contains($bareName)) {
+                        $kindMatched = $true
+                        break
+                    }
+                }
+                if ($kindMatched) { break }
             }
             if (-not $kindMatched) {
                 $issues += "kind-word-missing"

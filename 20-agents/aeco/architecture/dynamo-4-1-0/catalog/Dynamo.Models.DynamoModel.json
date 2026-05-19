@@ -1,0 +1,1371 @@
+{
+  "name": "DynamoModel",
+  "namespace": "Dynamo.Models",
+  "kind": "class",
+  "summary": "The core model of Dynamo.",
+  "interfaces": [
+    "Dynamo.Interfaces.IDynamoModel",
+    "System.ComponentModel.INotifyPropertyChanged",
+    "System.IDisposable",
+    "Dynamo.Models.IEngineControllerManager",
+    "Dynamo.Engine.ITraceReconciliationProcessor"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+  "constructors": [
+    {
+      "name": "DynamoModel(Dynamo.Models.DynamoModel.IStartConfiguration)",
+      "signature": "void DynamoModel(Dynamo.Models.DynamoModel.IStartConfiguration config)",
+      "summary": "Default constructor for DynamoModel",
+      "params": [
+        {
+          "name": "config",
+          "type": "Dynamo.Models.DynamoModel.IStartConfiguration",
+          "doc": "Start configuration",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddCustomNodeWorkspace(Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel)",
+      "signature": "void AddCustomNodeWorkspace(Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel workspace)",
+      "summary": "Add a new, visible Custom Node workspace to Dynamo",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel",
+          "doc": "Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "AddHomeWorkspace",
+      "signature": "void AddHomeWorkspace()",
+      "summary": "Add a new HomeWorkspace and set as current",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "AddPackagePath(string, string)",
+      "signature": "bool AddPackagePath(string path, string file)",
+      "summary": "Adds a new path to the list of custom package folders, but only if the path does not already exist in the list.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "The path to add.",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "doc": "The file to add when importing a library.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "AddToSelection(object)",
+      "signature": "void AddToSelection(object parameters)",
+      "summary": "Add an ISelectable object to the selection.",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "object",
+          "doc": "The object to add to the selection.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "AddWorkspace(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void AddWorkspace(Dynamo.Graph.Workspaces.WorkspaceModel workspace)",
+      "summary": "Adds a workspace to the dynamo model.",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ClearCurrentWorkspace",
+      "signature": "void ClearCurrentWorkspace()",
+      "summary": "Clear the workspace. Removes all nodes, notes, and connectors from the current workspace.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Copy",
+      "signature": "void Copy()",
+      "summary": "Copy selected ISelectable objects to the clipboard.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ExecuteCommand(Dynamo.Models.DynamoModel.RecordableCommand)",
+      "signature": "void ExecuteCommand(Dynamo.Models.DynamoModel.RecordableCommand command)",
+      "summary": "Executes specified command",
+      "params": [
+        {
+          "name": "command",
+          "type": "Dynamo.Models.DynamoModel.RecordableCommand",
+          "doc": "Command to execute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ForceRun",
+      "signature": "void ForceRun()",
+      "summary": "Forces an evaluation of the current workspace by resetting the DesignScript VM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "InsertFileFromPath(string, bool)",
+      "signature": "void InsertFileFromPath(string filePath, bool forceManualExecutionMode)",
+      "summary": "Inserts a Dynamo graph or Custom Node inside the current workspace from a file path",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "forceManualExecutionMode",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "InsertFileImpl(Dynamo.Models.DynamoModel.InsertFileCommand)",
+      "signature": "void InsertFileImpl(Dynamo.Models.DynamoModel.InsertFileCommand command)",
+      "summary": "DynamoModel.InsertFileImpl",
+      "params": [
+        {
+          "name": "command",
+          "type": "Dynamo.Models.DynamoModel.InsertFileCommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnCleanup",
+      "signature": "void OnCleanup()",
+      "summary": "Triggers CleaningUp event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnDeletionComplete(object, System.EventArgs)",
+      "signature": "void OnDeletionComplete(object sender, System.EventArgs e)",
+      "summary": "Triggers DeletionComplete event",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "doc": "The object which caused the event",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "doc": "The event data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnDeletionStarted(System.Collections.Generic.List\u003CDynamo.Graph.ModelBase\u003E, System.ComponentModel.CancelEventArgs)",
+      "signature": "void OnDeletionStarted(System.Collections.Generic.List\u003CDynamo.Graph.ModelBase\u003E modelsToDelete, System.ComponentModel.CancelEventArgs cancelEventArgs)",
+      "summary": "Called when Deletion started.",
+      "params": [
+        {
+          "name": "modelsToDelete",
+          "type": "System.Collections.Generic.List\u003CDynamo.Graph.ModelBase\u003E",
+          "optional": false
+        },
+        {
+          "name": "cancelEventArgs",
+          "type": "System.ComponentModel.CancelEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnEvaluationCompleted(object, Dynamo.Models.EvaluationCompletedEventArgs)",
+      "signature": "void OnEvaluationCompleted(object sender, Dynamo.Models.EvaluationCompletedEventArgs e)",
+      "summary": "Triggers EvaluationCompleted event",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "doc": "The object which caused the event",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Models.EvaluationCompletedEventArgs",
+          "doc": "The event data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnPropertyChanged(string)",
+      "signature": "void OnPropertyChanged(string propertyName)",
+      "summary": "DynamoModel.OnPropertyChanged",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRefreshCompleted(object, System.EventArgs)",
+      "signature": "void OnRefreshCompleted(object sender, System.EventArgs e)",
+      "summary": "Triggers RefreshCompleted event",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "doc": "The object which caused the event",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "doc": "The event data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRequestDispatcherBeginInvoke(System.Action)",
+      "signature": "void OnRequestDispatcherBeginInvoke(System.Action action)",
+      "summary": "Tries to invoke a given action asynchronously on Dispather",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "doc": "Action to invoke",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRequestDispatcherInvoke(System.Action)",
+      "signature": "void OnRequestDispatcherInvoke(System.Action action)",
+      "summary": "Tries to invoke a given action on Dispather",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "doc": "Action to invoke",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRequestLayoutUpdate(object, System.EventArgs)",
+      "signature": "void OnRequestLayoutUpdate(object sender, System.EventArgs e)",
+      "summary": "Called when Requests to update UI is made.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "doc": "Object which caused the event",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "doc": "The event data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRequestsCrashPrompt(Dynamo.Core.CrashErrorReportArgs)",
+      "signature": "void OnRequestsCrashPrompt(Dynamo.Core.CrashErrorReportArgs args)",
+      "summary": "Shows the crash error reporting window. This method will always try to show the Autodesk CER UI first (if the CER tool is found on disk). If the CER tool is not found, the Dynamo in-house crash prompt will be shown.",
+      "params": [
+        {
+          "name": "args",
+          "type": "Dynamo.Core.CrashErrorReportArgs",
+          "doc": "CER options",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRequestsRedraw(object, System.EventArgs)",
+      "signature": "void OnRequestsRedraw(object sender, System.EventArgs e)",
+      "summary": "DynamoModel.OnRequestsRedraw",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnRunCompleted(object, bool)",
+      "signature": "void OnRunCompleted(object sender, bool success)",
+      "summary": "Triggers RunCompleted event",
+      "params": [
+        {
+          "name": "sender",
+          "type": "object",
+          "doc": "The object which caused the event",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "doc": "Indicates if run completed successfully",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnWorkspaceAdded(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void OnWorkspaceAdded(Dynamo.Graph.Workspaces.WorkspaceModel obj)",
+      "summary": "DynamoModel.OnWorkspaceAdded",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnWorkspaceCleared(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void OnWorkspaceCleared(Dynamo.Graph.Workspaces.WorkspaceModel workspace)",
+      "summary": "Triggers WorkspaceCleared event",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "Cleared workspace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnWorkspaceClearing",
+      "signature": "void OnWorkspaceClearing()",
+      "summary": "Triggers WorkspaceClearing event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnWorkspaceClearingStarted(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void OnWorkspaceClearingStarted(Dynamo.Graph.Workspaces.WorkspaceModel workspace)",
+      "summary": "Triggers WorkspaceClearing event",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "Workspace about to be cleared",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnWorkspaceRemoveStarted(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void OnWorkspaceRemoveStarted(Dynamo.Graph.Workspaces.WorkspaceModel obj)",
+      "summary": "DynamoModel.OnWorkspaceRemoveStarted",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OnWorkspaceRemoved(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void OnWorkspaceRemoved(Dynamo.Graph.Workspaces.WorkspaceModel obj)",
+      "summary": "DynamoModel.OnWorkspaceRemoved",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenCustomNodeWorkspace(System.Guid)",
+      "signature": "bool OpenCustomNodeWorkspace(System.Guid guid)",
+      "summary": "Opens an existing custom node workspace.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "Identifier of the workspace to open",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if workspace was found and open"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenFileFromJson(string, bool)",
+      "signature": "void OpenFileFromJson(string fileContents, bool forceManualExecutionMode)",
+      "summary": "Opens a Dynamo workspace from a Json string.",
+      "params": [
+        {
+          "name": "fileContents",
+          "type": "string",
+          "doc": "Json file content",
+          "optional": false
+        },
+        {
+          "name": "forceManualExecutionMode",
+          "type": "bool",
+          "doc": "Set this to true to discard execution mode specified in the file and set manual mode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenFileFromJsonImpl(Dynamo.Models.DynamoModel.OpenFileFromJsonCommand)",
+      "signature": "void OpenFileFromJsonImpl(Dynamo.Models.DynamoModel.OpenFileFromJsonCommand command)",
+      "summary": "DynamoModel.OpenFileFromJsonImpl",
+      "params": [
+        {
+          "name": "command",
+          "type": "Dynamo.Models.DynamoModel.OpenFileFromJsonCommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenFileFromPath(string, bool)",
+      "signature": "void OpenFileFromPath(string filePath, bool forceManualExecutionMode)",
+      "summary": "Opens a Dynamo workspace from a path to a file on disk.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "Path to file",
+          "optional": false
+        },
+        {
+          "name": "forceManualExecutionMode",
+          "type": "bool",
+          "doc": "Set this to true to discard execution mode specified in the file and set manual mode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenFileImpl(Dynamo.Models.DynamoModel.OpenFileCommand)",
+      "signature": "void OpenFileImpl(Dynamo.Models.DynamoModel.OpenFileCommand command)",
+      "summary": "DynamoModel.OpenFileImpl",
+      "params": [
+        {
+          "name": "command",
+          "type": "Dynamo.Models.DynamoModel.OpenFileCommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenTemplateFromPath(string, bool)",
+      "signature": "void OpenTemplateFromPath(string filePath, bool forceManualExecutionMode)",
+      "summary": "Opens a Dynamo workspace from a path to a template on disk.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "Path to file",
+          "optional": false
+        },
+        {
+          "name": "forceManualExecutionMode",
+          "type": "bool",
+          "doc": "Set this to true to discard execution mode specified in the file and set manual mode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "OpenTemplateImpl(Dynamo.Models.DynamoModel.OpenFileCommand)",
+      "signature": "void OpenTemplateImpl(Dynamo.Models.DynamoModel.OpenFileCommand command)",
+      "summary": "DynamoModel.OpenTemplateImpl",
+      "params": [
+        {
+          "name": "command",
+          "type": "Dynamo.Models.DynamoModel.OpenFileCommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Paste",
+      "signature": "void Paste()",
+      "summary": "Paste ISelectable objects from the clipboard to the workspace so that the nodes appear in their original location with a slight offset",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Paste(Dynamo.Utilities.Point2D, bool)",
+      "signature": "void Paste(Dynamo.Utilities.Point2D targetPoint, bool useOffset)",
+      "summary": "Paste ISelectable objects from the clipboard to the workspace at specified point.",
+      "params": [
+        {
+          "name": "targetPoint",
+          "type": "Dynamo.Utilities.Point2D",
+          "doc": "Location where data will be pasted",
+          "optional": false
+        },
+        {
+          "name": "useOffset",
+          "type": "bool",
+          "doc": "Indicates whether we will use current workspace offset or paste nodes directly in this point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PostShutdownCore(bool)",
+      "signature": "void PostShutdownCore(bool shutdownHost)",
+      "summary": "DynamoModel.PostShutdownCore",
+      "params": [
+        {
+          "name": "shutdownHost",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PostTraceReconciliation(System.Collections.Generic.Dictionary\u003CSystem.Guid, System.Collections.Generic.List\u003Cstring\u003E\u003E)",
+      "signature": "void PostTraceReconciliation(System.Collections.Generic.Dictionary\u003CSystem.Guid, System.Collections.Generic.List\u003Cstring\u003E\u003E orphanedSerializables)",
+      "summary": "Deals with orphaned serializables.",
+      "params": [
+        {
+          "name": "orphanedSerializables",
+          "type": "System.Collections.Generic.Dictionary\u003CSystem.Guid, System.Collections.Generic.List\u003Cstring\u003E\u003E",
+          "doc": "Collection of orphaned serializables.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PreShutdownCore(bool)",
+      "signature": "void PreShutdownCore(bool shutdownHost)",
+      "summary": "DynamoModel.PreShutdownCore",
+      "params": [
+        {
+          "name": "shutdownHost",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "RemoveWorkspace(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void RemoveWorkspace(Dynamo.Graph.Workspaces.WorkspaceModel workspace)",
+      "summary": "Remove a workspace from the dynamo model.",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "Workspace to remove",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ResetEngine(bool)",
+      "signature": "void ResetEngine(bool markNodesAsDirty)",
+      "summary": "Call this method to reset the virtual machine, avoiding a race condition by using a thread join inside the vm executive.",
+      "params": [
+        {
+          "name": "markNodesAsDirty",
+          "type": "bool",
+          "doc": "Set this parameter to true to force reset of the execution substrate. Note that setting this parameter to true will have a negative performance impact.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ResetEngineInternal",
+      "signature": "void ResetEngineInternal()",
+      "summary": "DynamoModel.ResetEngineInternal",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "SaveBackupFiles(object)",
+      "signature": "void SaveBackupFiles(object state)",
+      "summary": "Backup all the files",
+      "params": [
+        {
+          "name": "state",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "SetUICulture(string)",
+      "signature": "void SetUICulture(string locale)",
+      "summary": "Set UI culture based on preferences",
+      "params": [
+        {
+          "name": "locale",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ShutDown(bool)",
+      "signature": "void ShutDown(bool shutdownHost)",
+      "summary": "External components call this method to shutdown DynamoModel. This method marks \u0027ShutdownRequested\u0027 property to \u0027true\u0027. This method is used rather than a public virtual method to ensure that the value of ShutdownRequested is set to true.",
+      "params": [
+        {
+          "name": "shutdownHost",
+          "type": "bool",
+          "doc": "Set this parameter to true to shutdown the host application.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ShutDownCore(bool)",
+      "signature": "void ShutDownCore(bool shutdownHost)",
+      "summary": "DynamoModel.ShutDownCore",
+      "params": [
+        {
+          "name": "shutdownHost",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Start",
+      "signature": "Dynamo.Models.DynamoModel Start()",
+      "summary": "Start DynamoModel with all default configuration options",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": "The instance of Dynamo.Models.DynamoModel"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Start(Dynamo.Models.DynamoModel.IStartConfiguration)",
+      "signature": "Dynamo.Models.DynamoModel Start(Dynamo.Models.DynamoModel.IStartConfiguration configuration)",
+      "summary": "Start DynamoModel with custom configuration. Defaults will be assigned not provided.",
+      "params": [
+        {
+          "name": "configuration",
+          "type": "Dynamo.Models.DynamoModel.IStartConfiguration",
+          "doc": "Start configuration",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Models.DynamoModel",
+        "doc": "The instance of Dynamo.Models.DynamoModel"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AuthenticationManager",
+      "type": "Dynamo.Core.AuthenticationManager",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns authentication manager object for oxygen authentication.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "CERLocation",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The Autodesk CrashReport tool location on disk (directory that contains the \u0022cer.dll\u0022)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "CLIMode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "CLIMode indicates if we are running in DynamoCLI or DynamoWPFCLI mode. Note that in CLI mode Scheduler is synchronous.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ClipBoard",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Graph.ModelBase\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The copy/paste clipboard.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ConnectorType",
+      "type": "Dynamo.Graph.Connectors.ConnectorType",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how connectors are displayed in Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "CurrentWorkspace",
+      "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+      "getter": true,
+      "setter": true,
+      "summary": "The active workspace in Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "EnableMigrationLogging",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting this flag enables creation of an XML in following format that records node mapping information - which old node has been converted to which to new node(s)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "EngineController",
+      "type": "Dynamo.Engine.EngineController",
+      "getter": true,
+      "setter": true,
+      "summary": "DesignScript VM EngineController, used for this instance of Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ExtensionManager",
+      "type": "Dynamo.Extensions.IExtensionManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Manages all extensions for Dynamo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "HostAnalyticsInfo",
+      "type": "Dynamo.Models.HostAnalyticsInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "Host analytics info",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "HostVersion",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Current Version of the Host (i.e. DynamoRevit/DynamoStudio)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsCrashing",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether or not Dynamo is in a crash-state.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsHeadless",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Flag to indicate that there is no UI on this process, and things like the node index process, update manager and the analytics collection should be disabled.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsShowingConnectorTooltip",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Flag specifying the current state of whether or not to show tooltips in the graph. In addition to this toggle, tooltip is only available when connectors are set to \u0027bezier\u0027 mode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsShowingConnectors",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies whether connectors are displayed in Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsTestMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Testing flag is used to defer calls to run in the idle thread with the assumption that the entire test will be wrapped in an idle thread call.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "LinterManager",
+      "type": "Dynamo.Linting.LinterManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Manages the active linter",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PathManager",
+      "type": "Dynamo.Interfaces.IPathManager",
+      "getter": true,
+      "setter": false,
+      "summary": "The path manager that configures path information required for Dynamo to function properly. See IPathManager interface for more details.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "PreferenceSettings",
+      "type": "Dynamo.Configuration.PreferenceSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Preference settings for this instance of Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Scheduler",
+      "type": "Dynamo.Scheduler.DynamoScheduler",
+      "getter": true,
+      "setter": false,
+      "summary": "The Dynamo Scheduler, handles scheduling of asynchronous tasks on different threads.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ShutdownRequested",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Flag specifying whether a shutdown of Dynamo was requested.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "State",
+      "type": "Dynamo.Models.DynamoModel.DynamoModelState",
+      "getter": true,
+      "setter": false,
+      "summary": "The modelState tels us if the RevitDynamoModel was started and if has the the Dynamo UI attached to it or not",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "TraceReconciliationProcessor",
+      "type": "Dynamo.Engine.ITraceReconciliationProcessor",
+      "getter": true,
+      "setter": true,
+      "summary": "An object which implements the ITraceReconciliationProcessor interface, and is used for handlling the results of a trace reconciliation.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "This version of Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Workspaces",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns collection of visible workspaces in Dynamo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "CleaningUp",
+      "delegate": "System.Action",
+      "signature": "public event System.Action CleaningUp",
+      "summary": "An event triggered when the workspace is being cleaned.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DeletionComplete",
+      "delegate": "System.EventHandler",
+      "signature": "public event System.EventHandler DeletionComplete",
+      "summary": "Occurs after items of workspace are removed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DeletionStarted",
+      "delegate": "System.Action",
+      "signature": "public event System.Action DeletionStarted",
+      "summary": "Occurs before items of workspace are removed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DynamoReady",
+      "delegate": "System.Action\u003CDynamo.Extensions.ReadyParams\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.ReadyParams\u003E DynamoReady",
+      "summary": "This event is raised when Dynamo is ready for user interaction.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EvaluationCompleted",
+      "delegate": "System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E EvaluationCompleted",
+      "summary": "An event triggered when a single graph evaluation completes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PropertyChanged",
+      "delegate": "System.ComponentModel.PropertyChangedEventHandler",
+      "signature": "public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged",
+      "summary": "Occurs when a property of DynamoModel is changed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RefreshCompleted",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.HomeWorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.HomeWorkspaceModel\u003E RefreshCompleted",
+      "summary": "An event triggered when all tasks in scheduler are completed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestCancelActiveStateForNode",
+      "delegate": "Dynamo.Models.NodeHandler",
+      "signature": "public event Dynamo.Models.NodeHandler RequestCancelActiveStateForNode",
+      "summary": "Called when current state of a node is canelled.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestDispatcherBeginInvoke",
+      "delegate": "Dynamo.Models.ActionHandler",
+      "signature": "public event Dynamo.Models.ActionHandler RequestDispatcherBeginInvoke",
+      "summary": "Occurs when an action needs to be invoked asynchronously on a Dispather",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestDispatcherInvoke",
+      "delegate": "Dynamo.Models.ActionHandler",
+      "signature": "public event Dynamo.Models.ActionHandler RequestDispatcherInvoke",
+      "summary": "Occurs when an action needs to be invoked on a Dispather",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestLayoutUpdate",
+      "delegate": "System.EventHandler",
+      "signature": "public event System.EventHandler RequestLayoutUpdate",
+      "summary": "Occurs when changes in data may affect UI and UI needs to be refreshed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestNodeSelect",
+      "delegate": "Dynamo.Models.NodeEventHandler",
+      "signature": "public event Dynamo.Models.NodeEventHandler RequestNodeSelect",
+      "summary": "An event which requests that a node be selected",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestWorkspaceBackUpSave",
+      "delegate": "System.Action\u003Cstring, bool\u003E",
+      "signature": "public event System.Action\u003Cstring, bool\u003E RequestWorkspaceBackUpSave",
+      "summary": "Occurs when a workspace is scheduled to be saved to a backup file.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestsCrashPrompt",
+      "delegate": "Dynamo.Models.DynamoModel.CrashPromptHandler",
+      "signature": "public event Dynamo.Models.DynamoModel.CrashPromptHandler RequestsCrashPrompt",
+      "summary": "DynamoModel.RequestsCrashPrompt",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestsRedraw",
+      "delegate": "System.EventHandler",
+      "signature": "public event System.EventHandler RequestsRedraw",
+      "summary": "DynamoModel.RequestsRedraw",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RunCompleted",
+      "delegate": "Dynamo.Models.DynamoModel.RunCompletedHandler",
+      "signature": "public event Dynamo.Models.DynamoModel.RunCompletedHandler RunCompleted",
+      "summary": "Occurs when running is completed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ShutdownCompleted",
+      "delegate": "Dynamo.Models.DynamoModelHandler",
+      "signature": "public event Dynamo.Models.DynamoModelHandler ShutdownCompleted",
+      "summary": "This event is raised after DynamoModel has been shut down. At this point the DynamoModel is no longer valid and access to it should be avoided.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ShutdownStarted",
+      "delegate": "Dynamo.Models.DynamoModelHandler",
+      "signature": "public event Dynamo.Models.DynamoModelHandler ShutdownStarted",
+      "summary": "This event is raised right before the shutdown of DynamoModel started. When this event is raised, the shutdown is guaranteed to take place (i.e. user has had a chance to save the work and decided to proceed with shutting down Dynamo). Handlers of this event can still safely access the DynamoModel, the WorkspaceModel (along with its contents), and the DynamoScheduler.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceAdded",
+      "summary": "Called when a workspace is added.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceCleared",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceCleared",
+      "summary": "Occurs after current workspace is cleared",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceClearing",
+      "delegate": "System.Action",
+      "signature": "public event System.Action WorkspaceClearing",
+      "summary": "Occurs before current workspace is cleared",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceClearingStarted",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceClearingStarted",
+      "summary": "Occurs before current workspace is cleared",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceHidden",
+      "delegate": "Dynamo.Models.WorkspaceHandler",
+      "signature": "public event Dynamo.Models.WorkspaceHandler WorkspaceHidden",
+      "summary": "Event called when a workspace is hidden",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceOpened",
+      "delegate": "Dynamo.Models.WorkspaceHandler",
+      "signature": "public event Dynamo.Models.WorkspaceHandler WorkspaceOpened",
+      "summary": "Occurs when a workspaces is opened",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceOpening",
+      "delegate": "System.Action\u003Cobject\u003E",
+      "signature": "public event System.Action\u003Cobject\u003E WorkspaceOpening",
+      "summary": "Event that is fired during the opening of the workspace. Use the XmlDocument object provided to conduct additional workspace opening operations.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceRemoveStarted",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceRemoveStarted",
+      "summary": "Occurs before a workspace is removed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceRemoved",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceRemoved",
+      "summary": "Occurs after a workspace is removed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceSaved",
+      "delegate": "Dynamo.Models.WorkspaceHandler",
+      "signature": "public event Dynamo.Models.WorkspaceHandler WorkspaceSaved",
+      "summary": "Occurs when a workspace is saved to a file.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceSaving",
+      "delegate": "Dynamo.Models.WorkspaceSaveHandler",
+      "signature": "public event Dynamo.Models.WorkspaceSaveHandler WorkspaceSaving",
+      "summary": "Occurs when a workspace is about to be saved to a file.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/DynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

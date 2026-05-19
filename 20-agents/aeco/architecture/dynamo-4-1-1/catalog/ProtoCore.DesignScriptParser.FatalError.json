@@ -1,0 +1,31 @@
+{
+  "name": "FatalError",
+  "namespace": "ProtoCore.DesignScriptParser",
+  "kind": "class",
+  "summary": "Type FatalError",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Parser.cs",
+  "constructors": [
+    {
+      "name": "FatalError(string)",
+      "signature": "void FatalError(string m)",
+      "summary": "FatalError.FatalError",
+      "params": [
+        {
+          "name": "m",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Parser.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

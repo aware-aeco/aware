@@ -1,0 +1,45 @@
+{
+  "name": "MirrorObject",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "An abstract MirrorObject that represents a generic DesignScript object that can reflected Reflection on this object can be done at compiletime or runtime",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [
+    {
+      "name": "MirrorObject()",
+      "signature": "void MirrorObject()",
+      "summary": "MirrorObject.MirrorObject",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "MirrorObject(ProtoCore.RuntimeCore, ProtoCore.Core)",
+      "signature": "void MirrorObject(ProtoCore.RuntimeCore runtimeCore, ProtoCore.Core staticCore)",
+      "summary": "MirrorObject.MirrorObject",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "staticCore",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

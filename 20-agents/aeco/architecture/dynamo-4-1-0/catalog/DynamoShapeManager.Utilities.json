@@ -1,0 +1,153 @@
+{
+  "name": "Utilities",
+  "namespace": "DynamoShapeManager",
+  "kind": "static-class",
+  "summary": "Type Utilities",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoShapeManager/Utilities.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetGeometryFactoryPath2(string, System.Version)",
+      "signature": "string GetGeometryFactoryPath2(string rootFolder, System.Version version)",
+      "summary": "This method will return the path to the GeometryFactory assembly location for a requested version of the geometry library. This method is tolerant to the requested version in that it will attempt to locate an exact or lower version of the GeometryFactory assembly.",
+      "params": [
+        {
+          "name": "rootFolder",
+          "type": "string",
+          "doc": "Full path of the directory that contains LibG_xxx_y_z folder, where \u0027xxx y z\u0027 represents the library version of asm. In a typical setup this would be the same directory that contains Dynamo core modules. This must represent a valid directory - it cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "System.Version",
+          "doc": "Version number of the targeted geometry library. If the resulting assembly does not exist, this method will look for a lower version match. This parameter cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "The full path to GeometryFactoryAssembly assembly."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoShapeManager/Utilities.cs"
+    },
+    {
+      "name": "GetInstalledAsmVersion2(System.Collections.Generic.IEnumerable\u003CSystem.Version\u003E, ref string, string, System.Func\u003Cstring, System.Collections.IEnumerable\u003E)",
+      "signature": "System.Version GetInstalledAsmVersion2(System.Collections.Generic.IEnumerable\u003CSystem.Version\u003E versions, ref string location, string rootFolder, System.Func\u003Cstring, System.Collections.IEnumerable\u003E getASMInstallsFunc)",
+      "summary": "Call this method to determine the version of ASM that is installed on the user machine. The method scans through a list of known Autodesk product folders for ASM binaries with the targeted version.",
+      "params": [
+        {
+          "name": "versions",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Version\u003E",
+          "doc": "A IEnumerable of version numbers to check for in order of preference. This argument cannot be null or empty.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "ref string",
+          "doc": "The full path of the directory in which targeted ASM binaries are found. This argument cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "rootFolder",
+          "type": "string",
+          "doc": "This method makes use of DynamoInstallDetective to determine the installation location of various Autodesk products. This argument is not optional and must represent the full path to the folder which contains DynamoInstallDetective.dll. An exception is thrown if the assembly cannot be located.",
+          "optional": false
+        },
+        {
+          "name": "getASMInstallsFunc",
+          "type": "System.Func\u003Cstring, System.Collections.IEnumerable\u003E",
+          "doc": "A delegate which can be used to replace the default ASM install lookup method. This is primarily used for testing. The delegate should return an IEnumerable of Tuples - these represent versions of ASM which are located on the user\u0027s machine.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Version",
+        "doc": "Returns System.Version of ASM if any installed ASM is found, or null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoShapeManager/Utilities.cs"
+    },
+    {
+      "name": "GetLibGPreloaderLocation(System.Version, string)",
+      "signature": "string GetLibGPreloaderLocation(System.Version version, string rootFolder)",
+      "summary": "Get the corresponding libG preloader location for the target ASM loading version. If there is exact match preloader version to the target ASM version, use it, otherwise use the closest below.",
+      "params": [
+        {
+          "name": "version",
+          "type": "System.Version",
+          "doc": "The target loading version of ASM.",
+          "optional": false
+        },
+        {
+          "name": "rootFolder",
+          "type": "string",
+          "doc": "Full path of the directory that contains LibG_major_minor_build folder. In a typical setup this would be the same directory that contains Dynamo core modules. This must represent a valid directory.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoShapeManager/Utilities.cs"
+    },
+    {
+      "name": "GetVersionFromPath(string, string)",
+      "signature": "System.Version GetVersionFromPath(string asmPath, string searchPattern)",
+      "summary": "Extracts version of ASM dlls from a path by scanning for ASM dlls in the path. Throws if ASM binaries cannot be found in the path.",
+      "params": [
+        {
+          "name": "asmPath",
+          "type": "string",
+          "doc": "path to directory containing asm dlls",
+          "optional": false
+        },
+        {
+          "name": "searchPattern",
+          "type": "string",
+          "doc": "optional - to be used for testing - default is the ASM search pattern.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Version",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoShapeManager/Utilities.cs"
+    },
+    {
+      "name": "PreloadAsmFromPath(string, string)",
+      "signature": "void PreloadAsmFromPath(string preloaderLocation, string asmLocation)",
+      "summary": "Call this method to preload ASM binaries from a specific location. This method does not have a return value, any failures in loading ASM binaries will result in an exception being thrown.",
+      "params": [
+        {
+          "name": "preloaderLocation",
+          "type": "string",
+          "doc": "Full path of the folder that contains PreloaderAssembly assembly. This argument must represent a valid path to the loader.",
+          "optional": false
+        },
+        {
+          "name": "asmLocation",
+          "type": "string",
+          "doc": "Full path of the folder that contains ASM binaries to load. This argument cannot be null or empty.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoShapeManager/Utilities.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

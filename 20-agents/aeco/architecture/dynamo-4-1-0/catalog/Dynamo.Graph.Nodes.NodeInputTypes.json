@@ -1,0 +1,48 @@
+{
+  "name": "NodeInputTypes",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Possible graph input types.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeInputData.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "booleanInput",
+      "value": 1
+    },
+    {
+      "name": "colorInput",
+      "value": 3
+    },
+    {
+      "name": "dateInput",
+      "value": 4
+    },
+    {
+      "name": "dropdownSelection",
+      "value": 7,
+      "summary": "Should not be used when setting NodeInputData.Type, use selection instead, can be used with Type2."
+    },
+    {
+      "name": "hostSelection",
+      "value": 6,
+      "summary": "Should not be used when setting NodeInputData.Type, use selection instead, can be used with Type2."
+    },
+    {
+      "name": "numberInput",
+      "value": 0
+    },
+    {
+      "name": "selectionInput",
+      "value": 5
+    },
+    {
+      "name": "stringInput",
+      "value": 2
+    }
+  ]
+}

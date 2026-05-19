@@ -1,0 +1,71 @@
+{
+  "name": "SelectInRegionCommand",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type SelectInRegionCommand",
+  "base": "Dynamo.Models.DynamoModel.RecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "SelectInRegionCommand(Dynamo.Utilities.Rect2D, bool)",
+      "signature": "void SelectInRegionCommand(Dynamo.Utilities.Rect2D region, bool isCrossSelection)",
+      "summary": "",
+      "params": [
+        {
+          "name": "region",
+          "type": "Dynamo.Utilities.Rect2D",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isCrossSelection",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "SelectInRegionCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "SelectInRegionCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

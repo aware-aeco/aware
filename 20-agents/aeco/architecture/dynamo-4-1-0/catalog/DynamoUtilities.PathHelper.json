@@ -1,0 +1,421 @@
+{
+  "name": "PathHelper",
+  "namespace": "DynamoUtilities",
+  "kind": "class",
+  "summary": "Type PathHelper",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs",
+  "constructors": [
+    {
+      "name": "PathHelper()",
+      "signature": "void PathHelper()",
+      "summary": "PathHelper.PathHelper",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateFolderIfNotExist(string)",
+      "signature": "System.Exception CreateFolderIfNotExist(string folderPath)",
+      "summary": "PathHelper.CreateFolderIfNotExist",
+      "params": [
+        {
+          "name": "folderPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Exception",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "ExtractAndSaveEmbeddedFont(string, string, string, System.Reflection.Assembly)",
+      "signature": "void ExtractAndSaveEmbeddedFont(string resourcePath, string outputPath, string outputFileName, System.Reflection.Assembly assembly)",
+      "summary": "This function will extract the embedded font file and save it to a specified directory",
+      "params": [
+        {
+          "name": "resourcePath",
+          "type": "string",
+          "doc": "The location of the font resource",
+          "optional": false
+        },
+        {
+          "name": "outputPath",
+          "type": "string",
+          "doc": "The temporary path to save the resource to",
+          "optional": false
+        },
+        {
+          "name": "outputFileName",
+          "type": "string",
+          "doc": "The name of the temporary resource file",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the resource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "FileInfoAtPath(string, ref bool, ref string)",
+      "signature": "void FileInfoAtPath(string path, ref bool fileExists, ref string size)",
+      "summary": "Checks if the file exists at the specified path and computes size.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "File path",
+          "optional": false
+        },
+        {
+          "name": "fileExists",
+          "type": "ref bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "ref string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "GetDateModified(string)",
+      "signature": "string GetDateModified(string filePath)",
+      "summary": "Utility method to get the last time a file has been modified",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "GetFileSize(string)",
+      "signature": "string GetFileSize(string path)",
+      "summary": "Computes the file size from the path.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "File path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "GetScreenCaptureNameFromPath(string, bool)",
+      "signature": "string GetScreenCaptureNameFromPath(string filePath, bool isTimeStampIncluded)",
+      "summary": "This is a utility method for generating a default name to the snapshot image.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "File path",
+          "optional": false
+        },
+        {
+          "name": "isTimeStampIncluded",
+          "type": "bool",
+          "doc": "Is timestamp included in file path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns a default name(along with the timestamp) for the workspace image"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "GetServiceBackendAddress(object, string)",
+      "signature": "string GetServiceBackendAddress(object o, string serviceKey)",
+      "summary": "Returns the path configured for the requested service to retrieve URL resources as defined inside the config file",
+      "params": [
+        {
+          "name": "o",
+          "type": "object",
+          "doc": "The \u0022this\u0022 object from where the function is being called from.",
+          "optional": false
+        },
+        {
+          "name": "serviceKey",
+          "type": "string",
+          "doc": "Service or feature for which the address is being requested. It should match the key specified in the config file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Path that will be used to fetch resources"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "HasWritePermissionOnDir(string)",
+      "signature": "bool HasWritePermissionOnDir(string folderPath)",
+      "summary": "Returns whether current user has write access to the folder path.",
+      "params": [
+        {
+          "name": "folderPath",
+          "type": "string",
+          "doc": "Folder path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "IsFileNameInValid(string)",
+      "signature": "bool IsFileNameInValid(string fileName)",
+      "summary": "PathHelper.IsFileNameInValid",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "IsReadOnlyPath(string)",
+      "signature": "bool IsReadOnlyPath(string filePath)",
+      "summary": "Check if user has readonly privilege to the folder path.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "File path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "IsValidPath(string)",
+      "signature": "bool IsValidPath(string filePath)",
+      "summary": "Checks if the file path string is valid and file exist.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "File path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "LoadEmbeddedResourceAsString(string, System.Reflection.Assembly)",
+      "signature": "string LoadEmbeddedResourceAsString(string resourcePath, System.Reflection.Assembly assembly)",
+      "summary": "Loads embedded resources such as HTML and JS files and returns the content as a string.",
+      "params": [
+        {
+          "name": "resourcePath",
+          "type": "string",
+          "doc": "The resource path to return.",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the resource.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "The embedded resource as a string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "getServiceConfigValues(object, string)",
+      "signature": "string getServiceConfigValues(object o, string serviceKey)",
+      "summary": "Returns the path configured for the requested service to retrieve resources value as defined inside the config file",
+      "params": [
+        {
+          "name": "o",
+          "type": "object",
+          "doc": "The \u0022this\u0022 object from where the function is being called from.",
+          "optional": false
+        },
+        {
+          "name": "serviceKey",
+          "type": "string",
+          "doc": "Service or feature for which the resource is being requested. It should match the key specified in the config file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Value related to the key in the config file"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "isFileContentsValidJson(string, ref System.Exception)",
+      "signature": "bool isFileContentsValidJson(string fileContents, ref System.Exception ex)",
+      "summary": "This is a utility method for checking if a given string represents a valid Json document.",
+      "params": [
+        {
+          "name": "fileContents",
+          "type": "string",
+          "doc": "string contents of target json file",
+          "optional": false
+        },
+        {
+          "name": "ex",
+          "type": "ref System.Exception",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if fileContents is Json, false if file is not Json, exception as out param"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "isValidJson(string, ref string, ref System.Exception)",
+      "signature": "bool isValidJson(string path, ref string fileContents, ref System.Exception ex)",
+      "summary": "This is a utility method for checking if given path contains valid Json document.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "path to the target json file",
+          "optional": false
+        },
+        {
+          "name": "fileContents",
+          "type": "ref string",
+          "doc": "string contents of target json file",
+          "optional": false
+        },
+        {
+          "name": "ex",
+          "type": "ref System.Exception",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if file is Json, false if file is not Json, exception as out param"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    },
+    {
+      "name": "isValidXML(string, ref System.Xml.XmlDocument, ref System.Exception)",
+      "signature": "bool isValidXML(string path, ref System.Xml.XmlDocument xmlDoc, ref System.Exception ex)",
+      "summary": "This is a utility method for checking if given path contains valid XML document.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "path to the target xml file",
+          "optional": false
+        },
+        {
+          "name": "xmlDoc",
+          "type": "ref System.Xml.XmlDocument",
+          "doc": "System.Xml.XmlDocument representation of target xml file",
+          "optional": false
+        },
+        {
+          "name": "ex",
+          "type": "ref System.Exception",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if file is Json, false if file is not Json, exception as out param"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/PathHelper.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

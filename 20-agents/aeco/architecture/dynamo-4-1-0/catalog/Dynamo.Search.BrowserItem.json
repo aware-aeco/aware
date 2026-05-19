@@ -1,0 +1,95 @@
+{
+  "name": "BrowserItem",
+  "namespace": "Dynamo.Search",
+  "kind": "class",
+  "summary": "Base class for all browser items in search area.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs",
+  "constructors": [
+    {
+      "name": "BrowserItem()",
+      "signature": "void BrowserItem()",
+      "summary": "BrowserItem.BrowserItem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnExecuted",
+      "signature": "void OnExecuted()",
+      "summary": "BrowserItem.OnExecuted",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Height",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the element in search",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "IsExpanded",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the element expanded in the browser",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "IsSelected",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the item is selected or not",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "Items",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Search.BrowserItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns items inside of the browser item",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A name (title) field for the BrowserItem",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    },
+    {
+      "name": "Visibility",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the item is visible or not",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "Executed",
+      "delegate": "Dynamo.Search.BrowserItem.BrowserItemHandler",
+      "signature": "public event Dynamo.Search.BrowserItem.BrowserItemHandler Executed",
+      "summary": "Occurs when corresponding node is created",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/BrowserItem.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

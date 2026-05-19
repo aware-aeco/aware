@@ -1,0 +1,412 @@
+{
+  "name": "DSArray",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type DSArray",
+  "base": "ProtoCore.DSASM.HeapElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs",
+  "constructors": [
+    {
+      "name": "DSArray(ProtoCore.DSASM.StackValue[], ProtoCore.DSASM.Heap)",
+      "signature": "void DSArray(ProtoCore.DSASM.StackValue[] values, ProtoCore.DSASM.Heap heap)",
+      "summary": "Create an array and populate with input values",
+      "params": [
+        {
+          "name": "values",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "DSArray(int, ProtoCore.DSASM.Heap)",
+      "signature": "void DSArray(int size, ProtoCore.DSASM.Heap heap)",
+      "summary": "Create an array with pre-allocated size.",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareFromDifferentCore(ProtoCore.DSASM.DSArray, ProtoCore.DSASM.DSArray, ProtoCore.RuntimeCore, ProtoCore.RuntimeCore, ProtoCore.Runtime.Context)",
+      "signature": "bool CompareFromDifferentCore(ProtoCore.DSASM.DSArray array1, ProtoCore.DSASM.DSArray array2, ProtoCore.RuntimeCore rtCore1, ProtoCore.RuntimeCore rtCore2, ProtoCore.Runtime.Context context)",
+      "summary": "DSArray.CompareFromDifferentCore",
+      "params": [
+        {
+          "name": "array1",
+          "type": "ProtoCore.DSASM.DSArray",
+          "optional": false
+        },
+        {
+          "name": "array2",
+          "type": "ProtoCore.DSASM.DSArray",
+          "optional": false
+        },
+        {
+          "name": "rtCore1",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "rtCore2",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "ContainsKey(ProtoCore.DSASM.StackValue)",
+      "signature": "bool ContainsKey(ProtoCore.DSASM.StackValue key)",
+      "summary": "Returns true if array contain key or not.",
+      "params": [
+        {
+          "name": "key",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "CopyArray(ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue CopyArray(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Copy an array and coerce its elements/values to target type",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "CopyArray(ProtoCore.Type, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue CopyArray(ProtoCore.Type type, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Copy an array and coerce its elements/values to target type",
+      "params": [
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "GetValueFromIndex(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueFromIndex(ProtoCore.DSASM.StackValue index, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "= array[index]. Note this function doesn\u0027t support the replication of array indexing.",
+      "params": [
+        {
+          "name": "index",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "GetValueFromIndex(int, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueFromIndex(int index, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "= array[index]",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "GetValueFromIndices(ProtoCore.DSASM.StackValue[], ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueFromIndices(ProtoCore.DSASM.StackValue[] indices, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "= array[index1][index2][...][indexN], and indices = {index1, index2, ..., indexN} Note this function doesn\u0027t support the replication of array indexing.",
+      "params": [
+        {
+          "name": "indices",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "GetValueFromIndices(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueFromIndices(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E indices, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "= array[index1][index2][...][indexN], and indices = {index1, index2, ..., indexN}",
+      "params": [
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "RemoveKey(ProtoCore.DSASM.StackValue)",
+      "signature": "bool RemoveKey(ProtoCore.DSASM.StackValue key)",
+      "summary": "Remove a key from array. Return true if key exsits.",
+      "params": [
+        {
+          "name": "key",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "SetValueForIndex(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue SetValueForIndex(ProtoCore.DSASM.StackValue index, ProtoCore.DSASM.StackValue value, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "array[index] = value. Here index can be any type. Note this function doesn\u0027t support the replication of array indexing.",
+      "params": [
+        {
+          "name": "index",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "SetValueForIndex(int, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue SetValueForIndex(int index, ProtoCore.DSASM.StackValue value, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "array[index] = value. The array will be expanded if necessary.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "SetValueForIndices(ProtoCore.DSASM.StackValue[], ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue SetValueForIndices(ProtoCore.DSASM.StackValue[] indices, ProtoCore.DSASM.StackValue value, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "array[index1][index2][...][indexN] = value, and indices = {index1, index2, ..., indexN} Note this function doesn\u0027t support the replication of array indexing.",
+      "params": [
+        {
+          "name": "indices",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "SetValueForIndices(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue SetValueForIndices(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E indices, ProtoCore.DSASM.StackValue value, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "array[index1][index2][...][indexN] = value, and indices = {index1, index2, ..., indexN}",
+      "params": [
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    },
+    {
+      "name": "ToDictionary",
+      "signature": "System.Collections.Generic.IDictionary\u003CProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue\u003E ToDictionary()",
+      "summary": "DSArray.ToDictionary",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003CProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Keys",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "DSArray.Keys",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/DSArray.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

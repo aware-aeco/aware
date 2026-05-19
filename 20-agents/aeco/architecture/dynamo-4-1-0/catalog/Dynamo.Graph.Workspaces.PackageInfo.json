@@ -1,0 +1,79 @@
+{
+  "name": "PackageInfo",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Class containing info about a package",
+  "interfaces": [
+    "Dynamo.Graph.Workspaces.IPackageInfo"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "Checks whether two PackageInfos are equal They are equal if their Name and Versions are equal",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Gets the hashcode for this PackageInfo",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Get the string representing this PackageInfo",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    },
+    {
+      "name": "Version",
+      "type": "System.Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Version of the package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/PackageDependencyInfo.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

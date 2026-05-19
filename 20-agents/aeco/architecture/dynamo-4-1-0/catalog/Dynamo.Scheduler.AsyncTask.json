@@ -1,0 +1,109 @@
+{
+  "name": "AsyncTask",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "class",
+  "summary": "This is the base class for async tasks, that are running on Dynamo Scheduler.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs",
+  "constructors": [
+    {
+      "name": "AsyncTask(Dynamo.Scheduler.IScheduler)",
+      "signature": "void AsyncTask(Dynamo.Scheduler.IScheduler scheduler)",
+      "summary": "Constructs an instance of AsyncTask object.",
+      "params": [
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.IScheduler",
+          "doc": "A reference to the DynamoScheduler, this parameter cannot be null.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanMergeWithCore(Dynamo.Scheduler.AsyncTask)",
+      "signature": "Dynamo.Scheduler.AsyncTask.TaskMergeInstruction CanMergeWithCore(Dynamo.Scheduler.AsyncTask otherTask)",
+      "summary": "AsyncTask.CanMergeWithCore",
+      "params": [
+        {
+          "name": "otherTask",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Scheduler.AsyncTask.TaskMergeInstruction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs"
+    },
+    {
+      "name": "CompareCore(Dynamo.Scheduler.AsyncTask)",
+      "signature": "int CompareCore(Dynamo.Scheduler.AsyncTask otherTask)",
+      "summary": "AsyncTask.CompareCore",
+      "params": [
+        {
+          "name": "otherTask",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs"
+    },
+    {
+      "name": "HandleTaskCompletionCore",
+      "signature": "void HandleTaskCompletionCore()",
+      "summary": "AsyncTask.HandleTaskCompletionCore",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs"
+    },
+    {
+      "name": "HandleTaskExecutionCore",
+      "signature": "void HandleTaskExecutionCore()",
+      "summary": "AsyncTask.HandleTaskExecutionCore",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Priority",
+      "type": "Dynamo.Scheduler.AsyncTask.TaskPriority",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoScheduler sorts tasks based on two key factors: the priority of a task, and the relative importance between two tasks that have the same priority. During task re-prioritizing process, DynamoScheduler first sorts the tasks in accordance to their AsyncTask.Priority property. The resulting ordered list is then sorted again by calling AsyncTask.Compare method to determine the relative importance among tasks having the same priority.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "Completed",
+      "delegate": "Dynamo.Scheduler.AsyncTaskCompletedHandler",
+      "signature": "public event Dynamo.Scheduler.AsyncTaskCompletedHandler Completed",
+      "summary": "This event is raised when the AsyncTask is completed, in the context of ISchedulerThread, any UI element access that is needed should be dispatched onto the UI dispatcher.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/AsyncTask.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

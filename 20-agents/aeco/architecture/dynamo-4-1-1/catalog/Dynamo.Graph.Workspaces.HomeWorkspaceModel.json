@@ -1,0 +1,495 @@
+{
+  "name": "HomeWorkspaceModel",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "This class contains methods and properties that defines a Dynamo.Graph.Workspaces.WorkspaceModel.",
+  "base": "Dynamo.Graph.Workspaces.WorkspaceModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "HomeWorkspaceModel(Dynamo.Engine.EngineController, Dynamo.Scheduler.DynamoScheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E, ProtoCore.Namespace.ElementResolver, Dynamo.Graph.Workspaces.WorkspaceInfo, bool, bool, Dynamo.Linting.LinterManager)",
+      "signature": "void HomeWorkspaceModel(Dynamo.Engine.EngineController engine, Dynamo.Scheduler.DynamoScheduler scheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E traceData, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E annotations, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E presets, ProtoCore.Namespace.ElementResolver resolver, Dynamo.Graph.Workspaces.WorkspaceInfo info, bool verboseLogging, bool isTestMode, Dynamo.Linting.LinterManager linterManager)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Workspaces.HomeWorkspaceModel class by given information about it and specified item collections",
+      "params": [
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "Dynamo.Graph.Workspaces.HomeWorkspaceModel.EngineController object assosiated with this home workspace to coordinate the interactions between some DesignScript sub components.",
+          "optional": false
+        },
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "doc": "Dynamo.Scheduler.DynamoScheduler object to add tasks in queue to execute",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Node factory to create nodes",
+          "optional": false
+        },
+        {
+          "name": "traceData",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E",
+          "doc": "Preloaded trace data",
+          "optional": false
+        },
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "Node collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "doc": "Note collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "annotations",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+          "doc": "Group collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "presets",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+          "doc": "Preset collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "ElementResolver responsible for resolving a partial class name to its fully resolved name",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "doc": "Information for creating custom node workspace",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "Indicates if detailed descriptions should be logged",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Indicates if current code is running in tests",
+          "optional": false
+        },
+        {
+          "name": "linterManager",
+          "type": "Dynamo.Linting.LinterManager",
+          "doc": "The linter manager from the DynamoModel that owns this workspace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "HomeWorkspaceModel(Dynamo.Engine.EngineController, Dynamo.Scheduler.DynamoScheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, bool, bool, Dynamo.Linting.LinterManager, string)",
+      "signature": "void HomeWorkspaceModel(Dynamo.Engine.EngineController engine, Dynamo.Scheduler.DynamoScheduler scheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, bool verboseLogging, bool isTestMode, Dynamo.Linting.LinterManager linterManager, string fileName)",
+      "summary": "Initializes a new empty instance of the Dynamo.Graph.Workspaces.HomeWorkspaceModel class",
+      "params": [
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "Dynamo.Graph.Workspaces.HomeWorkspaceModel.EngineController object assosiated with this home workspace to coordinate the interactions between some DesignScript sub components.",
+          "optional": false
+        },
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "doc": "Dynamo.Scheduler.DynamoScheduler object to add tasks in queue to execute",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Node factory to create nodes",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "Indicates if detailed descriptions should be logged",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Indicates if current code is running in tests",
+          "optional": false
+        },
+        {
+          "name": "linterManager",
+          "type": "Dynamo.Linting.LinterManager",
+          "doc": "The linter manager from the DynamoModel that owns this workspace",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Name of file where the workspace is saved",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "HomeWorkspaceModel(System.Guid, Dynamo.Engine.EngineController, Dynamo.Scheduler.DynamoScheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E, ProtoCore.Namespace.ElementResolver, Dynamo.Graph.Workspaces.WorkspaceInfo, bool, bool, Dynamo.Linting.LinterManager)",
+      "signature": "void HomeWorkspaceModel(System.Guid guid, Dynamo.Engine.EngineController engine, Dynamo.Scheduler.DynamoScheduler scheduler, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E traceData, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E annotations, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E presets, ProtoCore.Namespace.ElementResolver resolver, Dynamo.Graph.Workspaces.WorkspaceInfo info, bool verboseLogging, bool isTestMode, Dynamo.Linting.LinterManager linterManager)",
+      "summary": "Initializes a new empty instance of the Dynamo.Graph.Workspaces.HomeWorkspaceModel class",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "Dynamo.Graph.Workspaces.HomeWorkspaceModel.EngineController object assosiated with this home workspace to coordinate the interactions between some DesignScript sub components.",
+          "optional": false
+        },
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "doc": "Dynamo.Scheduler.DynamoScheduler object to add tasks in queue to execute",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Node factory to create nodes",
+          "optional": false
+        },
+        {
+          "name": "traceData",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CSystem.Guid, System.Collections.Generic.List\u003CProtoCore.CallSite.RawTraceData\u003E\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "annotations",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "presets",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "Indicates if detailed descriptions should be logged",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Indicates if current code is running in tests",
+          "optional": false
+        },
+        {
+          "name": "linterManager",
+          "type": "Dynamo.Linting.LinterManager",
+          "doc": "The linter manager from the DynamoModel that owns this workspace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clears this workspace of nodes, notes, and connectors.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "DisposeNode(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void DisposeNode(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "Called when a node is disposed and removed from the workspace",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "The node itself",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "NodeModified(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void NodeModified(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "Called when a Node is modified in the workspace",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "The node itself",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnEvaluationCompleted(Dynamo.Models.EvaluationCompletedEventArgs)",
+      "signature": "void OnEvaluationCompleted(Dynamo.Models.EvaluationCompletedEventArgs e)",
+      "summary": "Triggers EvaluationCompleted event.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Dynamo.Models.EvaluationCompletedEventArgs",
+          "doc": "The event data containing information if graph evaluation has completed successfully.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnEvaluationStarted(System.EventArgs)",
+      "signature": "void OnEvaluationStarted(System.EventArgs e)",
+      "summary": "Triggers EvaluationStarted event.",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.EventArgs",
+          "doc": "The event data.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnNodeRemoved(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnNodeRemoved(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "HomeWorkspaceModel.OnNodeRemoved",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnRefreshCompleted(Dynamo.Models.EvaluationCompletedEventArgs)",
+      "signature": "void OnRefreshCompleted(Dynamo.Models.EvaluationCompletedEventArgs e)",
+      "summary": "Triggers RefreshCompleted event",
+      "params": [
+        {
+          "name": "e",
+          "type": "Dynamo.Models.EvaluationCompletedEventArgs",
+          "doc": "The event data containing information if graph evaluation has completed successfully.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnToggleNodeFreeze(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnToggleNodeFreeze(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "When a node is frozen, then the node and its dependencies should be deleted from the current AST",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "The node.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "RegisterNode(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void RegisterNode(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "Called when a node is added to the workspace and event handlers are to be added",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "The node itself",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "Run",
+      "signature": "void Run()",
+      "summary": "This method is typically called from the main application thread (as a result of user actions such as button click or node UI changes) to schedule an update of the graph. This call may or may not represent an actual update. In the event that the user action does not result in actual graph update (e.g. moving of node on UI), the update task will not be scheduled for execution.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EngineController",
+      "type": "Dynamo.Engine.EngineController",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Graph.Workspaces.HomeWorkspaceModel.EngineController object assosiated with thisPreloadedTraceData home workspace to coordinate the interactions between some DesignScript sub components like library managment, live runner and so on.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "EvaluationCount",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "Evaluation count is incremented whenever the graph is evaluated. It is set to zero when the graph is Cleared.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "GraphDocumentationURL",
+      "type": "System.Uri",
+      "getter": true,
+      "setter": true,
+      "summary": "Link to documentation page for this workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "HasRunWithoutCrash",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether a run has completed successfully. This flag is critical to ensuring that crashing run-auto files are not left in run-auto upon reopening.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "IsTestMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Flag specifying if this workspace is operating in \u0022test mode\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "RunSettings",
+      "type": "Dynamo.Models.RunSettings",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns Dynamo.Graph.Workspaces.HomeWorkspaceModel.EngineController object containing properties to control how execution is carried out.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    },
+    {
+      "name": "Thumbnail",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Workspace thumbnail as Base64 string. Returns null if provide value is not Base64 encoded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "EvaluationCompleted",
+      "delegate": "System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E EvaluationCompleted",
+      "summary": "Notifies listeners that graph evaluation is completed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "EvaluationStarted",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CSystem.EventArgs\u003E EvaluationStarted",
+      "summary": "Notifies listeners that graph evaluation is started. At this stage, the graph has not been analyzed yet so Dynamo could find that the Graph does not need to be executed at all, or only part of it could be executed (delta compute)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RefreshCompleted",
+      "delegate": "System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E RefreshCompleted",
+      "summary": "Notifies listeners when all tasks in scheduler related to current evalution are completed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/HomeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,163 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DynamoApplications</name>
+    </assembly>
+    <members>
+        <member name="M:Dynamo.Applications.SandboxPathResolver.GetDynamoUserDataLocations">
+            <summary>
+            Returns the full path of user data location of all version of this
+            Dynamo product installed on this system. The default implementation
+            returns list of all subfolders in %appdata%\Dynamo as well as 
+            %appdata%\Dynamo\Dynamo Core\ folders.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:Dynamo.Applications.StartupUtils.ASMPreloadFailure">
+            <summary>
+            Raised when loading of the ASM binaries fails. A failure message is passed as a parameter.
+            </summary>
+        </member>
+        <member name="P:Dynamo.Applications.StartupUtils.CommandLineArguments.ServiceMode">
+            <summary>
+            Boolean indication of launching Dynamo in service mode, this mode is optimized for minimal launch time
+            </summary>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.PreloadShapeManager(System.String@,System.String@)">
+            <summary>
+            Attempts to load the geometry library binaries using the location params.
+            </summary>
+            <param name="geometryFactoryPath">libG ProtoInterface path</param>
+            <param name="preloaderLocation">libG folder path</param>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.PreloadShapeManager(System.String@,System.String@,System.Version@,System.String@)">
+            <summary>
+            Attempts to load the geometry library binaries and returns ASM version information.
+            </summary>
+            <param name="geometryFactoryPath">libG ProtoInterface path</param>
+            <param name="preloaderLocation">libG folder path</param>
+            <param name="asmVersion">Version of the loaded ASM, or null if version cannot be determined</param>
+            <param name="asmPath">Path where ASM binaries are located, or empty string if not found</param>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.MakeCLIModel(System.String,System.String,System.String,Dynamo.Models.HostAnalyticsInfo)">
+            <summary>
+            Use this overload to construct a DynamoModel in CLI context when the location of ASM to use is known, host analytics info is known and you want to set data paths.
+            </summary>
+            <param name="asmPath">Path to directory containing geometry library binaries</param>
+            <param name="userDataFolder">Path to be used by PathResolver for UserDataFolder</param>
+            <param name="commonDataFolder">Path to be used by PathResolver for CommonDataFolder</param>
+            <param name="info">Host analytics info specifying Dynamo launching host related information.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.MakeCLIModel(Dynamo.Applications.StartupUtils.CommandLineArguments)">
+            <summary>
+            Use this overload to construct a DynamoModel in CLI context when the location of ASM to use is known, host analytics info is known and you want to set data paths.
+            </summary>
+            <param name="cmdLineArgs"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.MakeModel(System.Boolean,System.String,System.String)">
+            <summary>
+            Use this overload to construct a DynamoModel when the location of ASM to use is known and host name is known.
+            </summary>
+            <param name="CLImode">CLI mode starts the model in test mode and uses a separate path resolver.</param>
+            <param name="asmPath">Path to directory containing geometry library binaries</param>
+            <param name="hostName">Dynamo variation identified by host.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.MakeModel(System.Boolean,System.Boolean,System.String,Dynamo.Models.HostAnalyticsInfo)">
+            <summary>
+            Use this overload to construct a DynamoModel when the location of ASM to use is known and host analytics info is known.
+            </summary>
+            <param name="CLImode">CLI mode starts the model in test mode and uses a separate path resolver.</param>
+            <param name="noNetworkMode">Option to initialize Dynamo in no-network mode</param>
+            <param name="asmPath">Path to directory containing geometry library binaries</param>
+            <param name="info">Host analytics info specifying Dynamo launching host related information.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.MakeModel(System.Boolean,System.String,System.Boolean,System.String,Dynamo.Models.HostAnalyticsInfo)">
+            <summary>
+            Use this overload to construct a DynamoModel when the location of ASM to use is known and host analytics info is known.
+            </summary>
+            <param name="CLImode">CLI mode starts the model in test mode and uses a separate path resolver.</param>
+            <param name="CLIlocale">CLI argument to force dynamo locale</param>
+            <param name="noNetworkMode">Option to initialize Dynamo in no-network mode</param>
+            <param name="asmPath">Path to directory containing geometry library binaries</param>
+            <param name="info">Host analytics info specifying Dynamo launching host related information.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.CreatePathResolver(System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            It returns an IPathResolver based on the mode and some locations
+            </summary>
+            <param name="CLImode">CLI mode starts the model in test mode and uses a seperate path resolver.</param>
+            <param name="preloaderLocation">Path to be used by PathResolver for preLoaderLocation</param>
+            <param name="userDataFolder">Path to be used by PathResolver for UserDataFolder</param>
+            <param name="commonDataFolder">Path to be used by PathResolver for CommonDataFolder</param>
+            <returns></returns>
+        </member>
+        <member name="F:Dynamo.Applications.StartupUtils.assemblyNamesToIgnore">
+            <summary>
+            The white list of dependencies to be ignored.
+            </summary>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.CheckAssemblyForVersionMismatches(System.Reflection.Assembly)">
+            <summary>
+            Checks that an assembly does not have any dependencies that have already been loaded into the 
+            appDomain with an incompatible to the one Dynamo requires.
+            </summary>
+            <param name="assembly"></param>
+            <returns>returns a list of fileLoad exceptions - if the list is empty no mismatched assemblies were encountered </returns>
+        </member>
+        <member name="M:Dynamo.Applications.StartupUtils.GetVersionMismatchedReferencesInAppDomain(System.Reflection.Assembly,System.String[])">
+            <summary>
+            Handler for an assembly load event into a host's appdomain - we need to make sure
+            that another addin or package has not loaded another version of a .dll that we require.
+            If this happens Dynamo will most likely crash. We should alert the user they
+            have an incompatible addin/package installed.. this is only called if the host calls or
+            subscribes to it during AppDomain.AssemblyLoad event.
+            </summary>
+        </member>
+        <member name="T:DynamoApplications.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.MismatchedAssemblyList">
+            <summary>
+              Looks up a localized string similar to It is likely one of the following assemblies loaded the incompatible version:.
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.MismatchedAssemblyVersion">
+            <summary>
+              Looks up a localized string similar to While loading assembly {0}, Dynamo detected that the dependency {1} was already loaded with an incompatible version. It is likely that another Revit Addin has loaded this assembly, please try uninstalling other Addins, and starting Dynamo again. Dynamo may be unstable in this state..
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.MismatchedAssemblyVersionShortMessage">
+            <summary>
+              Looks up a localized string similar to Dynamo has detected a conflict with a dependency and may be unstable. If any issues are detected, please uninstall addins or packages and contact the provider..
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.MismatchedAssemblyVersionTitle">
+            <summary>
+              Looks up a localized string similar to Error Loading A Dependency.
+            </summary>
+        </member>
+        <member name="P:DynamoApplications.Properties.Resources.SplashScreenPreLoadingAsm">
+            <summary>
+              Looks up a localized string similar to Preloading Geometry library.
+            </summary>
+        </member>
+    </members>
+</doc>

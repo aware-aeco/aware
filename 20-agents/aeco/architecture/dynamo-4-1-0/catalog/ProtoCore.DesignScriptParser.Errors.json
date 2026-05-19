@@ -1,0 +1,135 @@
+{
+  "name": "Errors",
+  "namespace": "ProtoCore.DesignScriptParser",
+  "kind": "class",
+  "summary": "Type Errors",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs",
+  "constructors": [
+    {
+      "name": "Errors()",
+      "signature": "void Errors()",
+      "summary": "Errors.Errors",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SemErr(int, int, string)",
+      "signature": "void SemErr(int line, int col, string s)",
+      "summary": "Errors.SemErr",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "SemErr(string)",
+      "signature": "void SemErr(string s)",
+      "summary": "Errors.SemErr",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "SynErr(int, int, int)",
+      "signature": "void SynErr(int line, int col, int n)",
+      "summary": "Errors.SynErr",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "Warning(int, int, string)",
+      "signature": "void Warning(int line, int col, string s)",
+      "summary": "Errors.Warning",
+      "params": [
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    },
+    {
+      "name": "Warning(string)",
+      "signature": "void Warning(string s)",
+      "summary": "Errors.Warning",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Parser.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

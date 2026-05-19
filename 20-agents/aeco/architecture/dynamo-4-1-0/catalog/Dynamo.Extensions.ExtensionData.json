@@ -1,0 +1,78 @@
+{
+  "name": "ExtensionData",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Type ExtensionData",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionData.cs",
+  "constructors": [
+    {
+      "name": "ExtensionData(string, string, string, System.Collections.Generic.Dictionary\u003Cstring, string\u003E)",
+      "signature": "void ExtensionData(string extensionGuid, string name, string version, System.Collections.Generic.Dictionary\u003Cstring, string\u003E data)",
+      "summary": "ExtensionData.ExtensionData",
+      "params": [
+        {
+          "name": "extensionGuid",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionData.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Data",
+      "type": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Extension specific data.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionData.cs"
+    },
+    {
+      "name": "ExtensionGuid",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Extensions unique id.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionData.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of extension.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionData.cs"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Extension version.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

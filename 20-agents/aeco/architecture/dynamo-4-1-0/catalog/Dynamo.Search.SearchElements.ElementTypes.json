@@ -1,0 +1,39 @@
+{
+  "name": "ElementTypes",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "enum",
+  "summary": "Enumeration of external elements\u0027 types",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/SearchElementGroup.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BuiltIn",
+      "value": 65536,
+      "summary": "Type for things that Dynamo ships with (operator, geometries...)"
+    },
+    {
+      "name": "CustomNode",
+      "value": 2,
+      "summary": "Type for all the DYFs (both loose DYF files and packaged)"
+    },
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Represents no type"
+    },
+    {
+      "name": "Packaged",
+      "value": 131072,
+      "summary": "Type for a packaged element (either zero-touch DLLs or DYFs)"
+    },
+    {
+      "name": "ZeroTouch",
+      "value": 1,
+      "summary": "Type for all the DLLs (can be built-in, third-party, and packaged)"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "CompilationServices",
+  "namespace": "Dynamo.Engine",
+  "kind": "class",
+  "summary": "This class is used to precompile code block node. Also it\u0027s used as helper for resolving code in Input and Output nodes.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs",
+  "constructors": [
+    {
+      "name": "CompilationServices(Dynamo.Engine.LibraryServices)",
+      "signature": "void CompilationServices(Dynamo.Engine.LibraryServices libraryServices)",
+      "summary": "Creates CompilationServices.",
+      "params": [
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "Copilation core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,25 @@
+{
+  "name": "IsMetaNodeAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The MetaNode attribute means this node shouldn\u0027t be added to the category, only its instances are allowed",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "IsMetaNodeAttribute()",
+      "signature": "void IsMetaNodeAttribute()",
+      "summary": "IsMetaNodeAttribute.IsMetaNodeAttribute",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

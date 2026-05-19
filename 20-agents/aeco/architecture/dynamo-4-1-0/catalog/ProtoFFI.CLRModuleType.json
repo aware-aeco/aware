@@ -1,0 +1,306 @@
+{
+  "name": "CLRModuleType",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "This class creates ClassDeclNode for a given type and caches all the imported types. This class also keeps the list of FFIFunctionPointer for the given type.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClearTypes",
+      "signature": "void ClearTypes()",
+      "summary": "This method is for testing, to ensure cache is cleared before every test.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "EnsureDisposeMethod(ProtoFFI.CLRDLLModule)",
+      "signature": "void EnsureDisposeMethod(ProtoFFI.CLRDLLModule module)",
+      "summary": "Ensures that dispose method node is created for this empty type.",
+      "params": [
+        {
+          "name": "module",
+          "type": "ProtoFFI.CLRDLLModule",
+          "doc": "Reference module",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetEmptyTypes",
+      "signature": "System.Collections.Generic.List\u003CProtoFFI.CLRModuleType\u003E GetEmptyTypes()",
+      "summary": "Returns all the types, which was referenced by other types but were not imported explicitly. These are empty types and corresponding DS Type don\u0027t contain any methods, constructors, properties or fields",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoFFI.CLRModuleType\u003E",
+        "doc": "List of CLRModuleType"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetFunctionPointers(string)",
+      "signature": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E GetFunctionPointers(string name)",
+      "summary": "Returns list of function pointers available on this type for a given function name",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Function name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E",
+        "doc": "List of FFIFunctionPointer"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetImportedType(string)",
+      "signature": "System.Type GetImportedType(string typename)",
+      "summary": "CLRModuleType.GetImportedType",
+      "params": [
+        {
+          "name": "typename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetInstance(System.Type, ProtoFFI.CLRDLLModule, string)",
+      "signature": "ProtoFFI.CLRModuleType GetInstance(System.Type type, ProtoFFI.CLRDLLModule module, string alias)",
+      "summary": "Returns CLRModuleType for given Type. If CLRModuleType instance for the given type is not found, it creates a new one. If CLRDLLModule is passed as null, it creates empty CLRModuleType.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "System.Type to be imported in DesignScript",
+          "optional": false
+        },
+        {
+          "name": "module",
+          "type": "ProtoFFI.CLRDLLModule",
+          "doc": "CLRDLLModule which imports this type",
+          "optional": false
+        },
+        {
+          "name": "alias",
+          "type": "string",
+          "doc": "Alias name, if any. For now its not supported.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.CLRModuleType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetProtoCoreType(System.Type, ProtoFFI.CLRDLLModule)",
+      "signature": "ProtoCore.Type GetProtoCoreType(System.Type type, ProtoFFI.CLRDLLModule module)",
+      "summary": "CLRModuleType.GetProtoCoreType",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "module",
+          "type": "ProtoFFI.CLRDLLModule",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetTypes(System.Func\u003CProtoFFI.CLRModuleType, bool\u003E)",
+      "signature": "System.Collections.Generic.List\u003CProtoFFI.CLRModuleType\u003E GetTypes(System.Func\u003CProtoFFI.CLRModuleType, bool\u003E predicate)",
+      "summary": "Returns all the types for the given predicate.",
+      "params": [
+        {
+          "name": "predicate",
+          "type": "System.Func\u003CProtoFFI.CLRModuleType, bool\u003E",
+          "doc": "A delegate for defining criteria",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoFFI.CLRModuleType\u003E",
+        "doc": "List of CLRModuleType"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "SetTypeAttributes(System.Type, ProtoFFI.FFIClassAttributes)",
+      "signature": "void SetTypeAttributes(System.Type type, ProtoFFI.FFIClassAttributes attributes)",
+      "summary": "CLRModuleType.SetTypeAttributes",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "ProtoFFI.FFIClassAttributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "SupressesImport(System.Reflection.MemberInfo)",
+      "signature": "bool SupressesImport(System.Reflection.MemberInfo member)",
+      "summary": "CLRModuleType.SupressesImport",
+      "params": [
+        {
+          "name": "member",
+          "type": "System.Reflection.MemberInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "TryGetImportedDSType(System.Type, ref ProtoCore.Type)",
+      "signature": "bool TryGetImportedDSType(System.Type type, ref ProtoCore.Type dsType)",
+      "summary": "CLRModuleType.TryGetImportedDSType",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "dsType",
+          "type": "ref ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "TryGetTypeAttributes(System.Type, ref ProtoFFI.FFIClassAttributes)",
+      "signature": "bool TryGetTypeAttributes(System.Type type, ref ProtoFFI.FFIClassAttributes attributes)",
+      "summary": "CLRModuleType.TryGetTypeAttributes",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "ref ProtoFFI.FFIClassAttributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CLRType",
+      "type": "System.Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Type that was imported",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "ClassNode",
+      "type": "ProtoCore.AST.AssociativeAST.ClassDeclNode",
+      "getter": true,
+      "setter": false,
+      "summary": "Imported ClassDeclNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "DisposeMethod",
+      "type": "System.Reflection.MethodInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "CLRModuleType.DisposeMethod",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DesignScript Class name, together with Namespace name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "Module",
+      "type": "ProtoFFI.CLRDLLModule",
+      "getter": true,
+      "setter": false,
+      "summary": "CLRDLLModule from which this type was imported.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "ProtoCoreType",
+      "type": "ProtoCore.Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Imported ProtoCore.Type",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,238 @@
+{
+  "name": "InstalledProductLookUp",
+  "namespace": "DynamoInstallDetective",
+  "kind": "class",
+  "summary": "Type InstalledProductLookUp",
+  "interfaces": [
+    "DynamoInstallDetective.IProductLookUp"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs",
+  "constructors": [
+    {
+      "name": "InstalledProductLookUp(string, System.Func\u003Cstring, string\u003E)",
+      "signature": "void InstalledProductLookUp(string lookUpName, System.Func\u003Cstring, string\u003E fileLocator)",
+      "summary": "InstalledProductLookUp.InstalledProductLookUp",
+      "params": [
+        {
+          "name": "lookUpName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileLocator",
+          "type": "System.Func\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "InstalledProductLookUp(string, string)",
+      "signature": "void InstalledProductLookUp(string lookUpName, string fileLookup)",
+      "summary": "InstalledProductLookUp.InstalledProductLookUp",
+      "params": [
+        {
+          "name": "lookUpName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileLookup",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExistsAtPath(string)",
+      "signature": "bool ExistsAtPath(string basePath)",
+      "summary": "InstalledProductLookUp.ExistsAtPath",
+      "params": [
+        {
+          "name": "basePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetCoreFilePathFromInstallation(string)",
+      "signature": "string GetCoreFilePathFromInstallation(string installPath)",
+      "summary": "InstalledProductLookUp.GetCoreFilePathFromInstallation",
+      "params": [
+        {
+          "name": "installPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetInstallLocationFromProductCode(string, ref string)",
+      "signature": "string GetInstallLocationFromProductCode(string productCode, ref string productName)",
+      "summary": "InstalledProductLookUp.GetInstallLocationFromProductCode",
+      "params": [
+        {
+          "name": "productCode",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "productName",
+          "type": "ref string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetInstallLocationFromProductName(string)",
+      "signature": "string GetInstallLocationFromProductName(string name)",
+      "summary": "InstalledProductLookUp.GetInstallLocationFromProductName",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetProductFromInstallPath(string)",
+      "signature": "DynamoInstallDetective.IInstalledProduct GetProductFromInstallPath(string path)",
+      "summary": "InstalledProductLookUp.GetProductFromInstallPath",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoInstallDetective.IInstalledProduct",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetProductFromProductCode(string)",
+      "signature": "DynamoInstallDetective.IInstalledProduct GetProductFromProductCode(string productCode)",
+      "summary": "InstalledProductLookUp.GetProductFromProductCode",
+      "params": [
+        {
+          "name": "productCode",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoInstallDetective.IInstalledProduct",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetProductFromProductName(string)",
+      "signature": "DynamoInstallDetective.IInstalledProduct GetProductFromProductName(string name)",
+      "summary": "InstalledProductLookUp.GetProductFromProductName",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DynamoInstallDetective.IInstalledProduct",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetProductNameList",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetProductNameList()",
+      "summary": "InstalledProductLookUp.GetProductNameList",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "GetVersionInfoFromFile(string)",
+      "signature": "System.Tuple\u003Cint, int, int, int\u003E GetVersionInfoFromFile(string filePath)",
+      "summary": "InstalledProductLookUp.GetVersionInfoFromFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Tuple\u003Cint, int, int, int\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ProductLookUpName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "InstalledProductLookUp.ProductLookUpName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

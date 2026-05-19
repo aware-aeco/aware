@@ -1,0 +1,181 @@
+{
+  "name": "TypeExtensions",
+  "namespace": "Dynamo.Utilities",
+  "kind": "static-class",
+  "summary": "Type TypeExtensions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDefaultConstructor",
+      "signature": "System.Func\u003CT\u003E GetDefaultConstructor\u003CT\u003E()",
+      "summary": "Creates a function that constructs an instance of an object of the given type.",
+      "params": [],
+      "returns": {
+        "type": "System.Func\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    },
+    {
+      "name": "GetDefaultConstructor(System.Type)",
+      "signature": "System.Func\u003CT\u003E GetDefaultConstructor\u003CT\u003E(System.Type type)",
+      "summary": "Creates a function that constructs an instance of an object of the given type.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The type to create a constructor for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Func\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    },
+    {
+      "name": "GetInstance(System.Type)",
+      "signature": "object GetInstance(System.Type type)",
+      "summary": "Returns an instance of the type on which the method is invoked.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The type on which the method was invoked.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "An instance of the type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    },
+    {
+      "name": "GetInstance(System.Type, TArg)",
+      "signature": "object GetInstance\u003CTArg\u003E(System.Type type, TArg argument)",
+      "summary": "Returns an instance of the type on which the method is invoked.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The type on which the method was invoked.",
+          "optional": false
+        },
+        {
+          "name": "argument",
+          "type": "TArg",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "An instance of the type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    },
+    {
+      "name": "GetInstance(System.Type, TArg1, TArg2)",
+      "signature": "object GetInstance\u003CTArg1, TArg2\u003E(System.Type type, TArg1 argument1, TArg2 argument2)",
+      "summary": "Returns an instance of the type on which the method is invoked.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The type on which the method was invoked.",
+          "optional": false
+        },
+        {
+          "name": "argument1",
+          "type": "TArg1",
+          "optional": false
+        },
+        {
+          "name": "argument2",
+          "type": "TArg2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "An instance of the type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    },
+    {
+      "name": "GetInstance(System.Type, TArg1, TArg2, TArg3)",
+      "signature": "object GetInstance\u003CTArg1, TArg2, TArg3\u003E(System.Type type, TArg1 argument1, TArg2 argument2, TArg3 argument3)",
+      "summary": "Returns an instance of the type on which the method is invoked.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The type on which the method was invoked.",
+          "optional": false
+        },
+        {
+          "name": "argument1",
+          "type": "TArg1",
+          "optional": false
+        },
+        {
+          "name": "argument2",
+          "type": "TArg2",
+          "optional": false
+        },
+        {
+          "name": "argument3",
+          "type": "TArg3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "An instance of the type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    },
+    {
+      "name": "ImplementsGeneric(System.Type, System.Type)",
+      "signature": "bool ImplementsGeneric(System.Type generic, System.Type toCheck)",
+      "summary": "TypeExtensions.ImplementsGeneric",
+      "params": [
+        {
+          "name": "generic",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "toCheck",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/TypeExtensions.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

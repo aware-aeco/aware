@@ -1,0 +1,59 @@
+{
+  "name": "BuiltInMethods",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Type BuiltInMethods",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs",
+  "constructors": [
+    {
+      "name": "BuiltInMethods(ProtoCore.Core)",
+      "signature": "void BuiltInMethods(ProtoCore.Core core)",
+      "summary": "BuiltInMethods.BuiltInMethods",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMethodName(ProtoCore.Lang.BuiltInMethods.MethodID)",
+      "signature": "string GetMethodName(ProtoCore.Lang.BuiltInMethods.MethodID id)",
+      "summary": "BuiltInMethods.GetMethodName",
+      "params": [
+        {
+          "name": "id",
+          "type": "ProtoCore.Lang.BuiltInMethods.MethodID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Methods",
+      "type": "System.Collections.Generic.List\u003CProtoCore.Lang.BuiltInMethods.BuiltInMethod\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "BuiltInMethods.Methods",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,40 @@
+{
+  "name": "FailFunc",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "static-class",
+  "summary": "Type FailFunc",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/FailFunc.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "TryExecute(System.Func\u003CT\u003E, T)",
+      "signature": "T TryExecute\u003CT\u003E(System.Func\u003CT\u003E func, T failureResult)",
+      "summary": "Attempt to run a computation. If the function throws, return the second argument unmodified",
+      "params": [
+        {
+          "name": "func",
+          "type": "System.Func\u003CT\u003E",
+          "doc": "The function",
+          "optional": false
+        },
+        {
+          "name": "failureResult",
+          "type": "T",
+          "doc": "The result",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/FailFunc.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

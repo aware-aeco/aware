@@ -1,0 +1,66 @@
+{
+  "name": "StyleItem",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "This class stores the group styles added by the user",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs",
+  "constructors": [
+    {
+      "name": "StyleItem()",
+      "signature": "void StyleItem()",
+      "summary": "StyleItem.StyleItem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FontSize",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "This property will support the font size of the GroupStyle",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs"
+    },
+    {
+      "name": "GroupStyleId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "This property will support the id of the Groupstyle",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs"
+    },
+    {
+      "name": "HexColorString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "StyleItem.HexColorString",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs"
+    },
+    {
+      "name": "IsDefault",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This property will describe if the current GroupStyle added is a default one or a custom one.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "StyleItem.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/StyleItem.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

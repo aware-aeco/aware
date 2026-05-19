@@ -1,0 +1,114 @@
+{
+  "name": "WarningID",
+  "namespace": "ProtoCore.Runtime",
+  "kind": "enum",
+  "summary": "Type WarningID",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AccessViolation",
+      "value": 1
+    },
+    {
+      "name": "AmbiguousMethodDispatch",
+      "value": 2
+    },
+    {
+      "name": "AurgumentIsNotExpected",
+      "value": 3
+    },
+    {
+      "name": "CallingConstructorOnInstance",
+      "value": 4
+    },
+    {
+      "name": "ConversionNotPossible",
+      "value": 5
+    },
+    {
+      "name": "CyclicDependency",
+      "value": 11
+    },
+    {
+      "name": "Default",
+      "value": 0
+    },
+    {
+      "name": "DereferencingNonPointer",
+      "value": 6
+    },
+    {
+      "name": "FileNotExist",
+      "value": 7
+    },
+    {
+      "name": "IndexOutOfRange",
+      "value": 8
+    },
+    {
+      "name": "IntegerOverflow",
+      "value": 24
+    },
+    {
+      "name": "InvalidArguments",
+      "value": 10
+    },
+    {
+      "name": "InvalidArrayIndexType",
+      "value": 23
+    },
+    {
+      "name": "InvalidIndexing",
+      "value": 17
+    },
+    {
+      "name": "InvalidRecursion",
+      "value": 9
+    },
+    {
+      "name": "InvalidType",
+      "value": 19
+    },
+    {
+      "name": "MethodResolutionFailure",
+      "value": 12
+    },
+    {
+      "name": "ModuloByZero",
+      "value": 18
+    },
+    {
+      "name": "MoreThanOneDominantList",
+      "value": 21
+    },
+    {
+      "name": "OverIndexing",
+      "value": 13
+    },
+    {
+      "name": "RangeExpressionOutOfMemory",
+      "value": 20
+    },
+    {
+      "name": "ReplicationWarning",
+      "value": 16
+    },
+    {
+      "name": "RunOutOfMemory",
+      "value": 22
+    },
+    {
+      "name": "TypeConvertionCauseInfoLoss",
+      "value": 14
+    },
+    {
+      "name": "TypeMismatch",
+      "value": 15
+    }
+  ]
+}

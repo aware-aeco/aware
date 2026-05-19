@@ -1,0 +1,377 @@
+{
+  "name": "DynamoLogger",
+  "namespace": "Dynamo.Logging",
+  "kind": "class",
+  "summary": "This class contains methods and properties used for logging in Dynamo,",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [
+    "Dynamo.Logging.ILogger",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs",
+  "constructors": [
+    {
+      "name": "DynamoLogger(Dynamo.Configuration.DebugSettings, string, bool, bool, bool)",
+      "signature": "void DynamoLogger(Dynamo.Configuration.DebugSettings debugSettings, string logDirectory, bool isTestMode, bool isCLIMode, bool isServiceMode)",
+      "summary": "Initializes a new instance of Dynamo.Logging.DynamoLogger class with specified debug settings and directory where to write logs",
+      "params": [
+        {
+          "name": "debugSettings",
+          "type": "Dynamo.Configuration.DebugSettings",
+          "doc": "Debug settings",
+          "optional": false
+        },
+        {
+          "name": "logDirectory",
+          "type": "string",
+          "doc": "Directory path where log file will be written",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Test mode is true or false.",
+          "optional": false
+        },
+        {
+          "name": "isCLIMode",
+          "type": "bool",
+          "doc": "We want to allow logging when CLI mode is true even if we are in test mode.",
+          "optional": false
+        },
+        {
+          "name": "isServiceMode",
+          "type": "bool",
+          "doc": "We want restrict logging in service mode to console only due to lambda limitations.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearStartupNotifications",
+      "signature": "void ClearStartupNotifications()",
+      "summary": "Clear any notifications after displaying them.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Disposes the logger and finishes logging.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Log(System.Exception)",
+      "signature": "void Log(System.Exception e)",
+      "summary": "Log an exception",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Exception",
+          "doc": "Exception to log",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Log(string)",
+      "signature": "void Log(string message)",
+      "summary": "Log a message",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "Message to log",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Log(string, Dynamo.Logging.LogLevel)",
+      "signature": "void Log(string message, Dynamo.Logging.LogLevel level)",
+      "summary": "Logs the specified message.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The message.",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Dynamo.Logging.LogLevel",
+          "doc": "The level.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Log(string, Dynamo.Logging.LogLevel, bool)",
+      "signature": "void Log(string message, Dynamo.Logging.LogLevel level, bool reportModification)",
+      "summary": "Log the message to the the correct path",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Dynamo.Logging.LogLevel",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "reportModification",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Log(string, string)",
+      "signature": "void Log(string tag, string data)",
+      "summary": "Log some data with an associated tag",
+      "params": [
+        {
+          "name": "tag",
+          "type": "string",
+          "doc": "Tag of the message to log",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "doc": "Message to log",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogError(string)",
+      "signature": "void LogError(string error)",
+      "summary": "Logs the error.",
+      "params": [
+        {
+          "name": "error",
+          "type": "string",
+          "doc": "The error.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogError(string, string)",
+      "signature": "void LogError(string tag, string error)",
+      "summary": "Logs the error.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "string",
+          "doc": "The tag.",
+          "optional": false
+        },
+        {
+          "name": "error",
+          "type": "string",
+          "doc": "The error.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogInfo(string, string)",
+      "signature": "void LogInfo(string tag, string info)",
+      "summary": "Log an information message",
+      "params": [
+        {
+          "name": "tag",
+          "type": "string",
+          "doc": "Tag of the message to log",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "string",
+          "doc": "Message to log",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogNotification(string, string, string, string)",
+      "signature": "void LogNotification(string sender, string title, string shortMessage, string detailedMessage)",
+      "summary": "Logs a tagged notification to the console, also fires an event that a notification was logged",
+      "params": [
+        {
+          "name": "sender",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "shortMessage",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "detailedMessage",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogWarning(string, Dynamo.Logging.WarningLevel)",
+      "signature": "void LogWarning(string message, Dynamo.Logging.WarningLevel level)",
+      "summary": "Logs the warning.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The message.",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Dynamo.Logging.WarningLevel",
+          "doc": "The level.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "StartLoggingToConsoleAndFile(string)",
+      "signature": "void StartLoggingToConsoleAndFile(string logDirectory)",
+      "summary": "Begin logging.",
+      "params": [
+        {
+          "name": "logDirectory",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LogPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns full path to log file",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Contains all message which have been logged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "StartupNotifications",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Logging.NotificationMessage\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Notifications logged during startup such as library load failures that need to be displayed to user.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Warning",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns warning message text",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "WarningLevel",
+      "type": "Dynamo.Logging.WarningLevel",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns warning level for log messages.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "NotificationLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.NotificationMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.NotificationMessage\u003E NotificationLogged",
+      "summary": "event that is raised when a notification is logged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

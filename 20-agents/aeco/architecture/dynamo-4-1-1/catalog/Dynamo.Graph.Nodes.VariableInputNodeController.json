@@ -1,0 +1,198 @@
+{
+  "name": "VariableInputNodeController",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "This is a helper class that processess inputs of VariableInputNode.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs",
+  "constructors": [
+    {
+      "name": "VariableInputNodeController(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void VariableInputNodeController(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "VariableInputNodeController.VariableInputNodeController",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddInputToModel",
+      "signature": "void AddInputToModel()",
+      "summary": "Adds an input to this node. Called when the \u0027\u002B\u0027 button is clicked.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Deserializes object",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "xml node",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "save context",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "GetInputIndexFromModel",
+      "signature": "int GetInputIndexFromModel()",
+      "summary": "Fetches the index number to use for the next port.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "GetInputName(int)",
+      "signature": "string GetInputName(int index)",
+      "summary": "VariableInputNodeController.GetInputName",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "GetInputTooltip(int)",
+      "signature": "string GetInputTooltip(int index)",
+      "summary": "VariableInputNodeController.GetInputTooltip",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "OnBuilt",
+      "signature": "void OnBuilt()",
+      "summary": "This is called when a node is built.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "RemoveInputFromModel",
+      "signature": "void RemoveInputFromModel()",
+      "summary": "Removes an input from this node. Called when the \u0027-\u0027 button is clicked.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Serializes object",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "xml node",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "save context",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "SerializeInputCount(System.Xml.XmlElement, int)",
+      "signature": "void SerializeInputCount(System.Xml.XmlElement nodeElement, int amount)",
+      "summary": "Serializes the input count of a VariableInputNode to Xml.",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    },
+    {
+      "name": "SetNumInputs(int)",
+      "signature": "void SetNumInputs(int numInputs)",
+      "summary": "Set the number of inputs.",
+      "params": [
+        {
+          "name": "numInputs",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/VariableInputNode.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

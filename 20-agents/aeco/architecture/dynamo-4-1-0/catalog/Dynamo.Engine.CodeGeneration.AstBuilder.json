@@ -1,0 +1,47 @@
+{
+  "name": "AstBuilder",
+  "namespace": "Dynamo.Engine.CodeGeneration",
+  "kind": "class",
+  "summary": "AstBuilder is a factory class to create different kinds of AST nodes.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/AstBuilder.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CompileToAstNodes(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, Dynamo.Engine.CodeGeneration.CompilationContext, bool)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CDynamo.Graph.Nodes.NodeModel, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E\u003E\u003E CompileToAstNodes(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, Dynamo.Engine.CodeGeneration.CompilationContext context, bool verboseLogging)",
+      "summary": "Compile a collection of NodeModel to AST nodes in different contexts. If the context is ForNodeToCode, nodes should already be sorted in topological order.",
+      "params": [
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Engine.CodeGeneration.CompilationContext",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CDynamo.Graph.Nodes.NodeModel, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/AstBuilder.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

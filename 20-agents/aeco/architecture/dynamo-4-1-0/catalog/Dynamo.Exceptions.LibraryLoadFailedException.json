@@ -1,0 +1,38 @@
+{
+  "name": "LibraryLoadFailedException",
+  "namespace": "Dynamo.Exceptions",
+  "kind": "class",
+  "summary": "Customized exception thrown when library load failed.",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Exceptions/LibraryLoadFailedException.cs",
+  "constructors": [
+    {
+      "name": "LibraryLoadFailedException(string, string)",
+      "signature": "void LibraryLoadFailedException(string path, string reason)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Exceptions/LibraryLoadFailedException.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,243 @@
+{
+  "name": "UpdateModelValueCommand",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type UpdateModelValueCommand",
+  "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "UpdateModelValueCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string, string)",
+      "signature": "void UpdateModelValueCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E modelGuid, string name, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "UpdateModelValueCommand(System.Guid, System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string, string)",
+      "signature": "void UpdateModelValueCommand(System.Guid workspaceGuid, System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E modelGuid, string name, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "workspaceGuid",
+          "type": "System.Guid",
+          "doc": "Guid of the target workspace. Guid.Empty means current workspace",
+          "optional": false
+        },
+        {
+          "name": "modelGuid",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "UpdateModelValueCommand(System.Guid, System.Guid, string, string)",
+      "signature": "void UpdateModelValueCommand(System.Guid workspaceGuid, System.Guid modelGuid, string name, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "workspaceGuid",
+          "type": "System.Guid",
+          "doc": "Guid of the target workspace. Guid.Empty means current workspace",
+          "optional": false
+        },
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "doc": "Guid of node model",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "UpdateModelValueCommand(System.Guid, string, string)",
+      "signature": "void UpdateModelValueCommand(System.Guid modelGuid, string name, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "UpdateModelValueCommand(string, string, string)",
+      "signature": "void UpdateModelValueCommand(string modelGuid, string name, string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "UpdateModelValueCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "UpdateModelValueCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "UpdateModelValueCommand.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ModelGuids",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A collection of System.Guid which identify the model objects to update.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the property to update.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "Value",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The new value to apply to the property.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

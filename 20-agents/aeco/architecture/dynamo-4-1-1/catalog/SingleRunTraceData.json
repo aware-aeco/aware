@@ -1,0 +1,92 @@
+{
+  "name": "SingleRunTraceData",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type SingleRunTraceData",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Contains(string)",
+      "signature": "bool Contains(string data)",
+      "summary": "SingleRunTraceData.Contains",
+      "params": [
+        {
+          "name": "data",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "GetLeftMostData",
+      "signature": "string GetLeftMostData()",
+      "summary": "This gets the zero-most, left most index null if no data",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "RecursiveGetNestedData",
+      "signature": "System.Collections.Generic.List\u003Cstring\u003E RecursiveGetNestedData()",
+      "summary": "SingleRunTraceData.RecursiveGetNestedData",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasAnyNestedData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there any data anywhere in this run data, or is it all empty structure",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "HasData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "SingleRunTraceData.HasData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "HasNestedData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "SingleRunTraceData.HasNestedData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this struct contain any trace data",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/CallSite.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

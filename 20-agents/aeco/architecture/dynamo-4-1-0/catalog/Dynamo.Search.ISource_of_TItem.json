@@ -1,0 +1,23 @@
+{
+  "name": "ISource\u003CTItem\u003E",
+  "namespace": "Dynamo.Search",
+  "kind": "interface",
+  "summary": "Has an event that produces items.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISource.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "ItemProduced",
+      "delegate": "System.Action\u003CTItem\u003E",
+      "signature": "public event System.Action\u003CTItem\u003E ItemProduced",
+      "summary": "Produces items, potentially asynchronously.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISource.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

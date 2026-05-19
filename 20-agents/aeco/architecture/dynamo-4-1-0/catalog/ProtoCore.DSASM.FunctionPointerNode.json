@@ -1,0 +1,30 @@
+{
+  "name": "FunctionPointerNode",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "struct",
+  "summary": "Type FunctionPointerNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs",
+  "constructors": [
+    {
+      "name": "FunctionPointerNode(ProtoCore.DSASM.ProcedureNode)",
+      "signature": "void FunctionPointerNode(ProtoCore.DSASM.ProcedureNode procNode)",
+      "summary": "FunctionPointerNode.FunctionPointerNode",
+      "params": [
+        {
+          "name": "procNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,40 @@
+{
+  "name": "SymbolNotFoundException",
+  "namespace": "ProtoCore.DSASM.Mirror",
+  "kind": "class",
+  "summary": "Type SymbolNotFoundException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs",
+  "constructors": [
+    {
+      "name": "SymbolNotFoundException(string)",
+      "signature": "void SymbolNotFoundException(string symbolName)",
+      "summary": "SymbolNotFoundException.SymbolNotFoundException",
+      "params": [
+        {
+          "name": "symbolName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SymbolName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "SymbolNotFoundException.SymbolName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "IInstalledProduct",
+  "namespace": "DynamoInstallDetective",
+  "kind": "interface",
+  "summary": "Type IInstalledProduct",
+  "interfaces": [
+    "System.IComparable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "InstallLocation",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IInstalledProduct.InstallLocation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "ProductName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IInstalledProduct.ProductName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "VersionInfo",
+      "type": "System.Tuple\u003Cint, int, int, int\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "IInstalledProduct.VersionInfo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "VersionString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "IInstalledProduct.VersionString",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

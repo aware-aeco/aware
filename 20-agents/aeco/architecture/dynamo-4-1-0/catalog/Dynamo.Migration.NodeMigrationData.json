@@ -1,0 +1,247 @@
+{
+  "name": "NodeMigrationData",
+  "namespace": "Dynamo.Migration",
+  "kind": "class",
+  "summary": "This class contains the resulting nodes as a result of node migration. Note that this class may contain other information (e.g. connectors) in the future in the event a migration process results in other elements.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs",
+  "constructors": [
+    {
+      "name": "NodeMigrationData(System.Xml.XmlDocument)",
+      "signature": "void NodeMigrationData(System.Xml.XmlDocument document)",
+      "summary": "NodeMigrationData.NodeMigrationData",
+      "params": [
+        {
+          "name": "document",
+          "type": "System.Xml.XmlDocument",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendNode(System.Xml.XmlElement)",
+      "signature": "void AppendNode(System.Xml.XmlElement node)",
+      "summary": "NodeMigrationData.AppendNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateConnector(System.Xml.XmlElement)",
+      "signature": "void CreateConnector(System.Xml.XmlElement connector)",
+      "summary": "NodeMigrationData.CreateConnector",
+      "params": [
+        {
+          "name": "connector",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateConnector(System.Xml.XmlElement, int, System.Xml.XmlElement, int)",
+      "signature": "void CreateConnector(System.Xml.XmlElement startNode, int startIndex, System.Xml.XmlElement endNode, int endIndex)",
+      "summary": "NodeMigrationData.CreateConnector",
+      "params": [
+        {
+          "name": "startNode",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endNode",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "endIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "CreateConnectorFromId(string, int, string, int)",
+      "signature": "void CreateConnectorFromId(string startNodeId, int startIndex, string endNodeId, int endIndex)",
+      "summary": "NodeMigrationData.CreateConnectorFromId",
+      "params": [
+        {
+          "name": "startNodeId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "endNodeId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "endIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "FindConnector(Dynamo.Migration.PortId, Dynamo.Migration.PortId)",
+      "signature": "System.Xml.XmlElement FindConnector(Dynamo.Migration.PortId startPort, Dynamo.Migration.PortId endPort)",
+      "summary": "Call this method to find the connector in the associate XmlDocument, given its start and end port information.",
+      "params": [
+        {
+          "name": "startPort",
+          "type": "Dynamo.Migration.PortId",
+          "doc": "The identity of the start port.",
+          "optional": false
+        },
+        {
+          "name": "endPort",
+          "type": "Dynamo.Migration.PortId",
+          "doc": "The identity of the end port.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the notmatching connector if one is found, or null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "FindConnectors(Dynamo.Migration.PortId)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Xml.XmlElement\u003E FindConnectors(Dynamo.Migration.PortId portId)",
+      "summary": "Given a port, get all connectors that connect to it.",
+      "params": [
+        {
+          "name": "portId",
+          "type": "Dynamo.Migration.PortId",
+          "doc": "The identity of the port for which connectors are to be retrieved.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Xml.XmlElement\u003E",
+        "doc": "Returns the list of connectors connecting to the given port, or null if no connection is found connecting to it."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "FindFirstConnector(Dynamo.Migration.PortId)",
+      "signature": "System.Xml.XmlElement FindFirstConnector(Dynamo.Migration.PortId portId)",
+      "summary": "Call this method to retrieve the first connector given a port. This method is a near equivalent of FindConnectors, but only return the first connector found. This way the caller codes can be simplified in a way that it does not have the validate the returned list for item count before accessing its element.",
+      "params": [
+        {
+          "name": "portId",
+          "type": "Dynamo.Migration.PortId",
+          "doc": "The identity of the port for which the first connector is to be retrieved.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": "Returns the first connector found to connect to the given port, or null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "ReconnectToPort(System.Xml.XmlElement, Dynamo.Migration.PortId)",
+      "signature": "void ReconnectToPort(System.Xml.XmlElement connector, Dynamo.Migration.PortId port)",
+      "summary": "Reconnect a given connector to another port identified by \u0022port\u0022.",
+      "params": [
+        {
+          "name": "connector",
+          "type": "System.Xml.XmlElement",
+          "doc": "The connector to update. Note that this parameter can be null, in which case there won\u0027t be any movement performed. This simplifies the caller so that it does not have to do a null-check before every call to this method (connectors may not present).",
+          "optional": false
+        },
+        {
+          "name": "port",
+          "type": "Dynamo.Migration.PortId",
+          "doc": "The new port to connect to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "RemoveFirstConnector(Dynamo.Migration.PortId)",
+      "signature": "void RemoveFirstConnector(Dynamo.Migration.PortId portId)",
+      "summary": "NodeMigrationData.RemoveFirstConnector",
+      "params": [
+        {
+          "name": "portId",
+          "type": "Dynamo.Migration.PortId",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "System.Xml.XmlDocument",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeMigrationData.Document",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "MigratedNodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Xml.XmlElement\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeMigrationData.MigratedNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

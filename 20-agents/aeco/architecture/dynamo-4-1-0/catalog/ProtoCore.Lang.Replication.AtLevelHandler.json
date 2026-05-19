@@ -1,0 +1,95 @@
+{
+  "name": "AtLevelHandler",
+  "namespace": "ProtoCore.Lang.Replication",
+  "kind": "class",
+  "summary": "Type AtLevelHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs",
+  "constructors": [
+    {
+      "name": "AtLevelHandler()",
+      "signature": "void AtLevelHandler()",
+      "summary": "AtLevelHandler.AtLevelHandler",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetArgumentAtLevelStructure(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.AtLevel\u003E, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.Lang.Replication.ArgumentAtLevelStructure GetArgumentAtLevelStructure(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments, System.Collections.Generic.List\u003CProtoCore.AtLevel\u003E atLevels, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns arguments at the corresponding levles and dominant list structure.",
+      "params": [
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "atLevels",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AtLevel\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Lang.Replication.ArgumentAtLevelStructure",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    },
+    {
+      "name": "RestoreDominantStructure(ProtoCore.DSASM.StackValue, ProtoCore.Lang.Replication.DominantListStructure, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue RestoreDominantStructure(ProtoCore.DSASM.StackValue ret, ProtoCore.Lang.Replication.DominantListStructure domStructure, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E instructions, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "If an input is a dominant list, restructure the result based on the structure of dominant list. Note the dominant structure will be restored only if the dominant list is zipped with other arguments, or the replication is applied to the dominant list firstly.",
+      "params": [
+        {
+          "name": "ret",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "domStructure",
+          "type": "ProtoCore.Lang.Replication.DominantListStructure",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "instructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

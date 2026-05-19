@@ -1,0 +1,353 @@
+{
+  "name": "DummyNode",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "DummyNode is used for tests or in case if node couldn\u0027t be loaded.",
+  "base": "Dynamo.Graph.Nodes.NodeModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs",
+  "constructors": [
+    {
+      "name": "DummyNode()",
+      "signature": "void DummyNode()",
+      "summary": "This function creates DummyNode. DummyNode is used for tests or in case if node couldn\u0027t be loaded.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "DummyNode(int, int, string, System.Xml.XmlElement, string, Dynamo.Graph.Nodes.DummyNode.Nature)",
+      "signature": "void DummyNode(int inputCount, int outputCount, string legacyName, System.Xml.XmlElement originalElement, string legacyAssembly, Dynamo.Graph.Nodes.DummyNode.Nature nodeNature)",
+      "summary": "This function creates DummyNode with specified number of ports.",
+      "params": [
+        {
+          "name": "inputCount",
+          "type": "int",
+          "doc": "Number of input ports",
+          "optional": false
+        },
+        {
+          "name": "outputCount",
+          "type": "int",
+          "doc": "Number of output ports",
+          "optional": false
+        },
+        {
+          "name": "legacyName",
+          "type": "string",
+          "doc": "Name of the node",
+          "optional": false
+        },
+        {
+          "name": "originalElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml node",
+          "optional": false
+        },
+        {
+          "name": "legacyAssembly",
+          "type": "string",
+          "doc": "Assembly of the node",
+          "optional": false
+        },
+        {
+          "name": "nodeNature",
+          "type": "Dynamo.Graph.Nodes.DummyNode.Nature",
+          "doc": "Node can be Deprecated or Unresolved",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "DummyNode(string, int, int, string, Newtonsoft.Json.Linq.JObject)",
+      "signature": "void DummyNode(string id, int inputCount, int outputCount, string legacyAssembly, Newtonsoft.Json.Linq.JObject originalElement)",
+      "summary": "This function creates DummyNode with specified number of ports.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "Id of the original node",
+          "optional": false
+        },
+        {
+          "name": "inputCount",
+          "type": "int",
+          "doc": "Number of input ports",
+          "optional": false
+        },
+        {
+          "name": "outputCount",
+          "type": "int",
+          "doc": "Number of output ports",
+          "optional": false
+        },
+        {
+          "name": "legacyAssembly",
+          "type": "string",
+          "doc": "Assembly of the node",
+          "optional": false
+        },
+        {
+          "name": "originalElement",
+          "type": "Newtonsoft.Json.Linq.JObject",
+          "doc": "Original JSON description of the node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "DummyNode(string, int, int, string, string, Newtonsoft.Json.Linq.JObject)",
+      "signature": "void DummyNode(string id, int inputCount, int outputCount, string legacyAssembly, string functionName, Newtonsoft.Json.Linq.JObject originalElement)",
+      "summary": "This function creates DummyNode with specified number of ports.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "Id of the original node",
+          "optional": false
+        },
+        {
+          "name": "inputCount",
+          "type": "int",
+          "doc": "Number of input ports",
+          "optional": false
+        },
+        {
+          "name": "outputCount",
+          "type": "int",
+          "doc": "Number of output ports",
+          "optional": false
+        },
+        {
+          "name": "legacyAssembly",
+          "type": "string",
+          "doc": "Assembly of the node",
+          "optional": false
+        },
+        {
+          "name": "functionName",
+          "type": "string",
+          "doc": "Function name of the node",
+          "optional": false
+        },
+        {
+          "name": "originalElement",
+          "type": "Newtonsoft.Json.Linq.JObject",
+          "doc": "Original JSON description of the node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "DummyNode(string, int, int, string, string, string, Newtonsoft.Json.Linq.JObject)",
+      "signature": "void DummyNode(string id, int inputCount, int outputCount, string legacyAssembly, string functionName, string typeName, Newtonsoft.Json.Linq.JObject originalElement)",
+      "summary": "This function creates DummyNode with specified number of ports.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "doc": "Id of the original node",
+          "optional": false
+        },
+        {
+          "name": "inputCount",
+          "type": "int",
+          "doc": "Number of input ports",
+          "optional": false
+        },
+        {
+          "name": "outputCount",
+          "type": "int",
+          "doc": "Number of output ports",
+          "optional": false
+        },
+        {
+          "name": "legacyAssembly",
+          "type": "string",
+          "doc": "Assembly of the node",
+          "optional": false
+        },
+        {
+          "name": "functionName",
+          "type": "string",
+          "doc": "Function name of the node",
+          "optional": false
+        },
+        {
+          "name": "typeName",
+          "type": "string",
+          "doc": "Type of the node",
+          "optional": false
+        },
+        {
+          "name": "originalElement",
+          "type": "Newtonsoft.Json.Linq.JObject",
+          "doc": "Original JSON description of the node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateElement(System.Xml.XmlDocument, Dynamo.Graph.SaveContext)",
+      "signature": "System.Xml.XmlElement CreateElement(System.Xml.XmlDocument xmlDocument, Dynamo.Graph.SaveContext context)",
+      "summary": "DummyNode.CreateElement",
+      "params": [
+        {
+          "name": "xmlDocument",
+          "type": "System.Xml.XmlDocument",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "DummyNode.DeserializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "DummyNode.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FunctionName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the node\u0027s function name. This property is only valid for ZeroTouch dummy nodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "InputCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of input ports",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "LegacyAssembly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the node assembly",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "LegacyFullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the original node DSFunction description or UI node type",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "LegacyNodeName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the node name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "NodeNature",
+      "type": "Dynamo.Graph.Nodes.DummyNode.Nature",
+      "getter": true,
+      "setter": false,
+      "summary": "Node can be Deprecated or Unresolved",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "OriginalNodeContent",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Xml node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "OutputCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of output ports",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    },
+    {
+      "name": "TypeName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Type name of the node. This is property is only valid for NodeModel dummy nodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/DummyNode.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

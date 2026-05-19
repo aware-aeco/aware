@@ -1,0 +1,49 @@
+{
+  "name": "UpdateBlock",
+  "namespace": "ProtoCore.AssociativeGraph",
+  "kind": "class",
+  "summary": "Type UpdateBlock",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "UpdateBlock()",
+      "signature": "void UpdateBlock()",
+      "summary": "UpdateBlock.UpdateBlock",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "endpc",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateBlock.endpc",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "startpc",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateBlock.startpc",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "updateRegisterStartPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateBlock.updateRegisterStartPC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

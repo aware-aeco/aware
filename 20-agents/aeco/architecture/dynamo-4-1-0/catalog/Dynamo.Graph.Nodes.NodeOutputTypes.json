@@ -1,0 +1,34 @@
+{
+  "name": "NodeOutputTypes",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Type NodeOutputTypes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeOutputData.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "booleanOutput",
+      "value": 2
+    },
+    {
+      "name": "floatOutput",
+      "value": 1
+    },
+    {
+      "name": "integerOutput",
+      "value": 0
+    },
+    {
+      "name": "stringOutput",
+      "value": 3
+    },
+    {
+      "name": "unknownOutput",
+      "value": 4
+    }
+  ]
+}

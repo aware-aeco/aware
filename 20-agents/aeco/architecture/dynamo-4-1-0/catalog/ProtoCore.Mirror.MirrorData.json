@@ -1,0 +1,178 @@
+{
+  "name": "MirrorData",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "An object that performs marshalling of all relevant data associated with this object",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs",
+  "constructors": [
+    {
+      "name": "MirrorData(ProtoCore.Core, ProtoCore.DSASM.StackValue)",
+      "signature": "void MirrorData(ProtoCore.Core core, ProtoCore.DSASM.StackValue sv)",
+      "summary": "Experimental constructor that takes in a core object Takes a core object to read static data",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "MirrorData(ProtoCore.Core, ProtoCore.RuntimeCore, ProtoCore.DSASM.StackValue)",
+      "signature": "void MirrorData(ProtoCore.Core core, ProtoCore.RuntimeCore runtimeCore, ProtoCore.DSASM.StackValue sv)",
+      "summary": "Takes a runtime core object to read runtime data",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "GetElements",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MirrorData\u003E GetElements()",
+      "summary": "Returns the list of MirrorData if this data represents a collection, else null.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MirrorData\u003E",
+        "doc": "List of MirrorData represented by this data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "GetStackValue",
+      "signature": "ProtoCore.DSASM.StackValue GetStackValue()",
+      "summary": "Retrieve the stack value for this mirror",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Class",
+      "type": "ProtoCore.Mirror.ClassMirror",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns ClassMirror if this data is an instance of a DesignScript Class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "Data",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the CLR object for all the value type or FFI objects, else null",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "IsCollection",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if this data points to a collection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "IsDictionary",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MirrorData.IsDictionary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "IsFunction",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MirrorData.IsFunction",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "IsNull",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns if this data points to null.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "IsPointer",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if this data is a pointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    },
+    {
+      "name": "StringData",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns string representation of data",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/MirrorData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "ConnectorType",
+  "namespace": "Dynamo.Graph.Connectors",
+  "kind": "enum",
+  "summary": "Returns the Type of connector.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BEZIER",
+      "value": 0,
+      "summary": "Displays connectors as bezier curves"
+    },
+    {
+      "name": "POLYLINE",
+      "value": 1,
+      "summary": "Displays connectors as set of connected straight lines"
+    }
+  ]
+}

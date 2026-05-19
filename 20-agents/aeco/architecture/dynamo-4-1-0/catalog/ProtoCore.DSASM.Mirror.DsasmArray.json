@@ -1,0 +1,24 @@
+{
+  "name": "DsasmArray",
+  "namespace": "ProtoCore.DSASM.Mirror",
+  "kind": "class",
+  "summary": "Type DsasmArray",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs",
+  "constructors": [
+    {
+      "name": "DsasmArray()",
+      "signature": "void DsasmArray()",
+      "summary": "DsasmArray.DsasmArray",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

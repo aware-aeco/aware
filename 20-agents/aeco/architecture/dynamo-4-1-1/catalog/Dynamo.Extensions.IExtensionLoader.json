@@ -1,0 +1,62 @@
+{
+  "name": "IExtensionLoader",
+  "namespace": "Dynamo.Extensions",
+  "kind": "interface",
+  "summary": "Handles loading extensions given an extension definition files path",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/IExtensionLoader.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Load(string)",
+      "signature": "Dynamo.Extensions.IExtension Load(string extensionPath)",
+      "summary": "Extension method for loading assembly from the path. Returns Dynamo.Extensions.IExtension.",
+      "params": [
+        {
+          "name": "extensionPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Extensions.IExtension",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/IExtensionLoader.cs"
+    },
+    {
+      "name": "LoadDirectory(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E LoadDirectory(string extensionsPath)",
+      "summary": "Extension method for loading assembly from a directory. Returns Dynamo.Extensions.IExtension.",
+      "params": [
+        {
+          "name": "extensionsPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/IExtensionLoader.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "ExtensionLoading",
+      "delegate": "System.Action\u003CDynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.IExtension\u003E ExtensionLoading",
+      "summary": "An event that is raised when an extension starts loading.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/IExtensionLoader.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

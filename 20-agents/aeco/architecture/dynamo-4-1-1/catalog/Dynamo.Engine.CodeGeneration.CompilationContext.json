@@ -1,0 +1,34 @@
+{
+  "name": "CompilationContext",
+  "namespace": "Dynamo.Engine.CodeGeneration",
+  "kind": "enum",
+  "summary": "The context of AST compilation",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Engine/CodeGeneration/CompilationContext.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DeltaExecution",
+      "value": 1,
+      "summary": "Compiled AST nodes finally will be executed."
+    },
+    {
+      "name": "NodeToCode",
+      "value": 2,
+      "summary": "Compiled AST nodes used in node to code."
+    },
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No specific context."
+    },
+    {
+      "name": "PreviewGraph",
+      "value": 3,
+      "summary": "Compiled AST nodes used in previwing graph."
+    }
+  ]
+}

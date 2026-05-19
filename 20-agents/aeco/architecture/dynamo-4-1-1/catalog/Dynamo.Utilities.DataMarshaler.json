@@ -1,0 +1,112 @@
+{
+  "name": "DataMarshaler",
+  "namespace": "Dynamo.Utilities",
+  "kind": "class",
+  "summary": "Provides ability to register data marshalers which can then be used to marshal arbitrary data.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs",
+  "constructors": [
+    {
+      "name": "DataMarshaler()",
+      "signature": "void DataMarshaler()",
+      "summary": "DataMarshaler.DataMarshaler",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Marshal(object)",
+      "signature": "object Marshal(object obj)",
+      "summary": "Marshals data using the registered marshalers. If no marshaler exists, data is returned unmodified.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "Data to marshal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs"
+    },
+    {
+      "name": "RegisterMarshaler(System.Converter\u003CT, object\u003E)",
+      "signature": "void RegisterMarshaler\u003CT\u003E(System.Converter\u003CT, object\u003E marshaler)",
+      "summary": "Registers a new data marshaler for a given type.",
+      "params": [
+        {
+          "name": "marshaler",
+          "type": "System.Converter\u003CT, object\u003E",
+          "doc": "Converter to be used to marshaling.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs"
+    },
+    {
+      "name": "RegisterMarshaler(System.Type, System.Converter\u003Cobject, object\u003E)",
+      "signature": "void RegisterMarshaler(System.Type t, System.Converter\u003Cobject, object\u003E marshaler)",
+      "summary": "Registers a new data marshaler for a given type.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Type",
+          "doc": "Type to marshal.",
+          "optional": false
+        },
+        {
+          "name": "marshaler",
+          "type": "System.Converter\u003Cobject, object\u003E",
+          "doc": "Converter to be used to marshaling.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs"
+    },
+    {
+      "name": "UnregisterMarshalerOfType",
+      "signature": "void UnregisterMarshalerOfType\u003CT\u003E()",
+      "summary": "Unregisters a data marshaler for a given type.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs"
+    },
+    {
+      "name": "UnregisterMarshalerOfType(System.Type)",
+      "signature": "void UnregisterMarshalerOfType(System.Type t)",
+      "summary": "Unregisters a data marshaler for a given type.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Type",
+          "doc": "Type of data to unregister marshaling for.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/DataMarshaler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

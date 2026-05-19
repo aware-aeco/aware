@@ -1,0 +1,52 @@
+{
+  "name": "IProductCollection",
+  "namespace": "DynamoInstallDetective",
+  "kind": "interface",
+  "summary": "Type IProductCollection",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLatestProduct",
+      "signature": "DynamoInstallDetective.IInstalledProduct GetLatestProduct()",
+      "summary": "IProductCollection.GetLatestProduct",
+      "params": [],
+      "returns": {
+        "type": "DynamoInstallDetective.IInstalledProduct",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    },
+    {
+      "name": "LookUpAndInitProducts(DynamoInstallDetective.IProductLookUp)",
+      "signature": "void LookUpAndInitProducts(DynamoInstallDetective.IProductLookUp lookUp)",
+      "summary": "IProductCollection.LookUpAndInitProducts",
+      "params": [
+        {
+          "name": "lookUp",
+          "type": "DynamoInstallDetective.IProductLookUp",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Products",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamoInstallDetective.IInstalledProduct\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "IProductCollection.Products",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Tools/DynamoInstallDetective/ProductLookUp.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

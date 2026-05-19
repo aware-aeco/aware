@@ -1,0 +1,26 @@
+{
+  "name": "UpdateNodeType",
+  "namespace": "ProtoCore.AssociativeGraph",
+  "kind": "enum",
+  "summary": "Type UpdateNodeType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Literal",
+      "value": 0
+    },
+    {
+      "name": "Method",
+      "value": 2
+    },
+    {
+      "name": "Symbol",
+      "value": 1
+    }
+  ]
+}

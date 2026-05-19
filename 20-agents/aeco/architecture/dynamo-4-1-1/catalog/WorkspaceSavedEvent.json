@@ -1,0 +1,98 @@
+{
+  "name": "WorkspaceSavedEvent",
+  "namespace": "",
+  "kind": "delegate",
+  "summary": "Type WorkspaceSavedEvent",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "WorkspaceSavedEvent(object, IntPtr)",
+      "signature": "void WorkspaceSavedEvent(object object, IntPtr method)",
+      "summary": "WorkspaceSavedEvent.WorkspaceSavedEvent",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Graph.Workspaces.WorkspaceModel, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Graph.Workspaces.WorkspaceModel model, System.AsyncCallback callback, object object)",
+      "summary": "WorkspaceSavedEvent.BeginInvoke",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "WorkspaceSavedEvent.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "void Invoke(Dynamo.Graph.Workspaces.WorkspaceModel model)",
+      "summary": "WorkspaceSavedEvent.Invoke",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Graph.Workspaces.WorkspaceModel model)"
+}

@@ -1,0 +1,105 @@
+{
+  "name": "Utilities",
+  "namespace": "DynamoInstallDetective",
+  "kind": "static-class",
+  "summary": "Type Utilities",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/Utilities.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindDynamoInstallations(string)",
+      "signature": "System.Collections.IEnumerable FindDynamoInstallations(string additionalDynamoPath)",
+      "summary": "Utilities.FindDynamoInstallations",
+      "params": [
+        {
+          "name": "additionalDynamoPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.IEnumerable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/Utilities.cs"
+    },
+    {
+      "name": "FindMultipleProductInstallations(System.Collections.Generic.List\u003Cstring\u003E, string)",
+      "signature": "System.Collections.IEnumerable FindMultipleProductInstallations(System.Collections.Generic.List\u003Cstring\u003E productSearchPatterns, string fileSearchPattern)",
+      "summary": "Utilities.FindMultipleProductInstallations",
+      "params": [
+        {
+          "name": "productSearchPatterns",
+          "type": "System.Collections.Generic.List\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "fileSearchPattern",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.IEnumerable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/Utilities.cs"
+    },
+    {
+      "name": "FindProductInstallations(string, string)",
+      "signature": "System.Collections.IEnumerable FindProductInstallations(string productSearchPattern, string fileSearchPattern)",
+      "summary": "Utilities.FindProductInstallations",
+      "params": [
+        {
+          "name": "productSearchPattern",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileSearchPattern",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.IEnumerable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/Utilities.cs"
+    },
+    {
+      "name": "LocateDynamoInstallations(string, System.Func\u003Cstring, string\u003E)",
+      "signature": "System.Collections.IEnumerable LocateDynamoInstallations(string additionalDynamoPath, System.Func\u003Cstring, string\u003E fileLocator)",
+      "summary": "Utilities.LocateDynamoInstallations",
+      "params": [
+        {
+          "name": "additionalDynamoPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileLocator",
+          "type": "System.Func\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.IEnumerable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Tools/DynamoInstallDetective/Utilities.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

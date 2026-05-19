@@ -1,0 +1,85 @@
+{
+  "name": "SearchElementBase",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "A base class for elements found in search",
+  "base": "Dynamo.Search.BrowserInternalElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs",
+  "constructors": [
+    {
+      "name": "SearchElementBase()",
+      "signature": "void SearchElementBase()",
+      "summary": "SearchElementBase.SearchElementBase",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnExecuted",
+      "signature": "void OnExecuted()",
+      "summary": "SearchElementBase.OnExecuted",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name that is used during node creation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    },
+    {
+      "name": "Keywords",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Keywords property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    },
+    {
+      "name": "Searchable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Searchable property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Type property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    },
+    {
+      "name": "Weight",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Weight property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/SearchElementBase.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

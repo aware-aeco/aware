@@ -1,0 +1,578 @@
+{
+  "name": "ImperativeAstVisitor",
+  "namespace": "ProtoCore.SyntaxAnalysis",
+  "kind": "class",
+  "summary": "Type ImperativeAstVisitor",
+  "interfaces": [
+    "ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003Cbool\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs",
+  "constructors": [
+    {
+      "name": "ImperativeAstVisitor()",
+      "signature": "void ImperativeAstVisitor()",
+      "summary": "ImperativeAstVisitor.ImperativeAstVisitor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DefaultVisit(ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "bool DefaultVisit(ProtoCore.AST.ImperativeAST.ImperativeNode node)",
+      "summary": "ImperativeAstVisitor.DefaultVisit",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "Visit(ProtoCore.AST.Node)",
+      "signature": "bool Visit(ProtoCore.AST.Node node)",
+      "summary": "ImperativeAstVisitor.Visit",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitArrayNameNode(ProtoCore.AST.ImperativeAST.ArrayNameNode)",
+      "signature": "bool VisitArrayNameNode(ProtoCore.AST.ImperativeAST.ArrayNameNode node)",
+      "summary": "ImperativeAstVisitor.VisitArrayNameNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ArrayNameNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitArrayNode(ProtoCore.AST.ImperativeAST.ArrayNode)",
+      "signature": "bool VisitArrayNode(ProtoCore.AST.ImperativeAST.ArrayNode node)",
+      "summary": "ImperativeAstVisitor.VisitArrayNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ArrayNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitBinaryExpressionNode(ProtoCore.AST.ImperativeAST.BinaryExpressionNode)",
+      "signature": "bool VisitBinaryExpressionNode(ProtoCore.AST.ImperativeAST.BinaryExpressionNode node)",
+      "summary": "ImperativeAstVisitor.VisitBinaryExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BinaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitBooleanNode(ProtoCore.AST.ImperativeAST.BooleanNode)",
+      "signature": "bool VisitBooleanNode(ProtoCore.AST.ImperativeAST.BooleanNode node)",
+      "summary": "ImperativeAstVisitor.VisitBooleanNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BooleanNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitBreakNode(ProtoCore.AST.ImperativeAST.BreakNode)",
+      "signature": "bool VisitBreakNode(ProtoCore.AST.ImperativeAST.BreakNode node)",
+      "summary": "ImperativeAstVisitor.VisitBreakNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BreakNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitCharNode(ProtoCore.AST.ImperativeAST.CharNode)",
+      "signature": "bool VisitCharNode(ProtoCore.AST.ImperativeAST.CharNode node)",
+      "summary": "ImperativeAstVisitor.VisitCharNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.CharNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitCodeBlockNode(ProtoCore.AST.ImperativeAST.CodeBlockNode)",
+      "signature": "bool VisitCodeBlockNode(ProtoCore.AST.ImperativeAST.CodeBlockNode node)",
+      "summary": "ImperativeAstVisitor.VisitCodeBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitContinueNode(ProtoCore.AST.ImperativeAST.ContinueNode)",
+      "signature": "bool VisitContinueNode(ProtoCore.AST.ImperativeAST.ContinueNode node)",
+      "summary": "ImperativeAstVisitor.VisitContinueNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ContinueNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitDoubleNode(ProtoCore.AST.ImperativeAST.DoubleNode)",
+      "signature": "bool VisitDoubleNode(ProtoCore.AST.ImperativeAST.DoubleNode node)",
+      "summary": "ImperativeAstVisitor.VisitDoubleNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.DoubleNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitElseIfNode(ProtoCore.AST.ImperativeAST.ElseIfBlock)",
+      "signature": "bool VisitElseIfNode(ProtoCore.AST.ImperativeAST.ElseIfBlock node)",
+      "summary": "ImperativeAstVisitor.VisitElseIfNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ElseIfBlock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitExprListNode(ProtoCore.AST.ImperativeAST.ExprListNode)",
+      "signature": "bool VisitExprListNode(ProtoCore.AST.ImperativeAST.ExprListNode node)",
+      "summary": "ImperativeAstVisitor.VisitExprListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ExprListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitForLoopNode(ProtoCore.AST.ImperativeAST.ForLoopNode)",
+      "signature": "bool VisitForLoopNode(ProtoCore.AST.ImperativeAST.ForLoopNode node)",
+      "summary": "ImperativeAstVisitor.VisitForLoopNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ForLoopNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitFunctionCallNode(ProtoCore.AST.ImperativeAST.FunctionCallNode)",
+      "signature": "bool VisitFunctionCallNode(ProtoCore.AST.ImperativeAST.FunctionCallNode node)",
+      "summary": "ImperativeAstVisitor.VisitFunctionCallNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.FunctionCallNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitGroupExpressionNode(ProtoCore.AST.ImperativeAST.GroupExpressionNode)",
+      "signature": "bool VisitGroupExpressionNode(ProtoCore.AST.ImperativeAST.GroupExpressionNode node)",
+      "summary": "ImperativeAstVisitor.VisitGroupExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.GroupExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitIdentifierListNode(ProtoCore.AST.ImperativeAST.IdentifierListNode)",
+      "signature": "bool VisitIdentifierListNode(ProtoCore.AST.ImperativeAST.IdentifierListNode node)",
+      "summary": "ImperativeAstVisitor.VisitIdentifierListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IdentifierListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitIdentifierNode(ProtoCore.AST.ImperativeAST.IdentifierNode)",
+      "signature": "bool VisitIdentifierNode(ProtoCore.AST.ImperativeAST.IdentifierNode node)",
+      "summary": "ImperativeAstVisitor.VisitIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitIfStatementNode(ProtoCore.AST.ImperativeAST.IfStmtNode)",
+      "signature": "bool VisitIfStatementNode(ProtoCore.AST.ImperativeAST.IfStmtNode node)",
+      "summary": "ImperativeAstVisitor.VisitIfStatementNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IfStmtNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitIfStmtPositionNode(ProtoCore.AST.ImperativeAST.IfStmtPositionNode)",
+      "signature": "bool VisitIfStmtPositionNode(ProtoCore.AST.ImperativeAST.IfStmtPositionNode node)",
+      "summary": "ImperativeAstVisitor.VisitIfStmtPositionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IfStmtPositionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitInlineConditionalNode(ProtoCore.AST.ImperativeAST.InlineConditionalNode)",
+      "signature": "bool VisitInlineConditionalNode(ProtoCore.AST.ImperativeAST.InlineConditionalNode node)",
+      "summary": "ImperativeAstVisitor.VisitInlineConditionalNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.InlineConditionalNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitIntNode(ProtoCore.AST.ImperativeAST.IntNode)",
+      "signature": "bool VisitIntNode(ProtoCore.AST.ImperativeAST.IntNode node)",
+      "summary": "ImperativeAstVisitor.VisitIntNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IntNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitLanguageBlockNode(ProtoCore.AST.ImperativeAST.LanguageBlockNode)",
+      "signature": "bool VisitLanguageBlockNode(ProtoCore.AST.ImperativeAST.LanguageBlockNode node)",
+      "summary": "ImperativeAstVisitor.VisitLanguageBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.LanguageBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitNullNode(ProtoCore.AST.ImperativeAST.NullNode)",
+      "signature": "bool VisitNullNode(ProtoCore.AST.ImperativeAST.NullNode node)",
+      "summary": "ImperativeAstVisitor.VisitNullNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.NullNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitRangeExprNode(ProtoCore.AST.ImperativeAST.RangeExprNode)",
+      "signature": "bool VisitRangeExprNode(ProtoCore.AST.ImperativeAST.RangeExprNode node)",
+      "summary": "ImperativeAstVisitor.VisitRangeExprNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.RangeExprNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitStringNode(ProtoCore.AST.ImperativeAST.StringNode)",
+      "signature": "bool VisitStringNode(ProtoCore.AST.ImperativeAST.StringNode node)",
+      "summary": "ImperativeAstVisitor.VisitStringNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.StringNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitTypedIdentifierNode(ProtoCore.AST.ImperativeAST.TypedIdentifierNode)",
+      "signature": "bool VisitTypedIdentifierNode(ProtoCore.AST.ImperativeAST.TypedIdentifierNode node)",
+      "summary": "ImperativeAstVisitor.VisitTypedIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.TypedIdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitUnaryExpressionNode(ProtoCore.AST.ImperativeAST.UnaryExpressionNode)",
+      "signature": "bool VisitUnaryExpressionNode(ProtoCore.AST.ImperativeAST.UnaryExpressionNode node)",
+      "summary": "ImperativeAstVisitor.VisitUnaryExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.UnaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    },
+    {
+      "name": "VisitWhileStatementNode(ProtoCore.AST.ImperativeAST.WhileStmtNode)",
+      "signature": "bool VisitWhileStatementNode(ProtoCore.AST.ImperativeAST.WhileStmtNode node)",
+      "summary": "ImperativeAstVisitor.VisitWhileStatementNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.WhileStmtNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/ImperativeAstVisitor.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

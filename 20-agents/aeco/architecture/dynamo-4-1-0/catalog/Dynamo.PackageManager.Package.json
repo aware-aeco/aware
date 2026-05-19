@@ -1,0 +1,379 @@
+{
+  "name": "Package",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type Package",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [
+    "Dynamo.Logging.ILogSource"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs",
+  "constructors": [
+    {
+      "name": "Package(string, string, string, string)",
+      "signature": "void Package(string directory, string name, string versionName, string license)",
+      "summary": "Package.Package",
+      "params": [
+        {
+          "name": "directory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "versionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "license",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EnumerateAdditionalFiles",
+      "signature": "void EnumerateAdditionalFiles()",
+      "summary": "Package.EnumerateAdditionalFiles",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "EnumerateAssemblyFilesInPackage",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E EnumerateAssemblyFilesInPackage()",
+      "summary": "Package.EnumerateAssemblyFilesInPackage",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "FromDirectory(string, Dynamo.Logging.ILogger)",
+      "signature": "Dynamo.PackageManager.Package FromDirectory(string rootPath, Dynamo.Logging.ILogger logger)",
+      "summary": "Package.FromDirectory",
+      "params": [
+        {
+          "name": "rootPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "logger",
+          "type": "Dynamo.Logging.ILogger",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "FromJson(string, Dynamo.Logging.ILogger)",
+      "signature": "Dynamo.PackageManager.Package FromJson(string headerPath, Dynamo.Logging.ILogger logger)",
+      "summary": "Package.FromJson",
+      "params": [
+        {
+          "name": "headerPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "logger",
+          "type": "Dynamo.Logging.ILogger",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Package",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Log(Dynamo.Logging.ILogMessage)",
+      "signature": "void Log(Dynamo.Logging.ILogMessage obj)",
+      "summary": "Package.Log",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Logging.ILogMessage",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Log(string)",
+      "signature": "void Log(string s)",
+      "summary": "Package.Log",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdditionalFiles",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.PackageManager.PackageFileInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.AdditionalFiles",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "BinaryDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.BinaryDirectory",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "CompatibilityMatrix",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CGreg.Requests.PackageCompatibility\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.CompatibilityMatrix",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Contents",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.Contents",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "CopyrightHolder",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.CopyrightHolder",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "CopyrightYear",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.CopyrightYear",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "CustomNodeDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.CustomNodeDirectory",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Dependencies",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CGreg.Requests.PackageDependency\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.Dependencies",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.Description",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "EngineVersion",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.EngineVersion",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "ExtraDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.ExtraDirectory",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Group",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.Group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Header",
+      "type": "Greg.Requests.PackageUploadRequestBody",
+      "getter": true,
+      "setter": false,
+      "summary": "A header used to create the package, this data does not reflect runtime changes to the package, but instead reflects how the package was formed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "HostDependencies",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Package Host Dependencies, e.g. specifying \u0022Revit\u0022 in the list means this package can be guaranteed to work in this host environment only",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "ID",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.ID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Keywords",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.Keywords",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "License",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.License",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "LoadedAssemblies",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.PackageManager.PackageAssembly\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.LoadedAssemblies",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "LoadedCustomNodes",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.CustomNodeInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.LoadedCustomNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "LoadedTypes",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CSystem.Type\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Package.LoadedTypes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "NodeDocumentaionDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Directory path to where node documentation markdown files should be placed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "RepositoryUrl",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.RepositoryUrl",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "RootDirectory",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.RootDirectory",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "SiteUrl",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.SiteUrl",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "TypesVisibleInManager",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.TypesVisibleInManager",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    },
+    {
+      "name": "VersionName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Package.VersionName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "Package.MessageLogged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Package.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

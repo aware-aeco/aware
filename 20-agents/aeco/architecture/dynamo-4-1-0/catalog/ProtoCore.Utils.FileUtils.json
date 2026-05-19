@@ -1,0 +1,77 @@
+{
+  "name": "FileUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type FileUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/FileUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDSFullPathName(string, ProtoCore.Options)",
+      "signature": "string GetDSFullPathName(string fileName, ProtoCore.Options options)",
+      "summary": "Locates the given file from the search path options and gets the full file path.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Name of the file to locate",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "ProtoCore.Options",
+          "doc": "Options structure for search path, if options is null it will search only in the executing assembly path or the current directory.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Full path for the file if located successfully else the file name when failed to locate the given file"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/FileUtils.cs"
+    },
+    {
+      "name": "GetFullPathName(string, string)",
+      "signature": "string GetFullPathName(string fileName, string currentDirectory)",
+      "summary": "FileUtils.GetFullPathName",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "currentDirectory",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/FileUtils.cs"
+    },
+    {
+      "name": "GetInstallLocation",
+      "signature": "string GetInstallLocation()",
+      "summary": "FileUtils.GetInstallLocation",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/FileUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

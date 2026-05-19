@@ -1,0 +1,33 @@
+{
+  "name": "IFileCompressor",
+  "namespace": "Dynamo.PackageManager.Interfaces",
+  "kind": "interface",
+  "summary": "An abstract IFileCompressor for mocking purposes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Interfaces/IFileCompressor.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Zip(Dynamo.PackageManager.Interfaces.IDirectoryInfo)",
+      "signature": "Dynamo.PackageManager.Interfaces.IFileInfo Zip(Dynamo.PackageManager.Interfaces.IDirectoryInfo directory)",
+      "summary": "IFileCompressor.Zip",
+      "params": [
+        {
+          "name": "directory",
+          "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IFileInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Interfaces/IFileCompressor.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

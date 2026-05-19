@@ -1,0 +1,13 @@
+{
+  "name": "SearchCategoryUtil",
+  "namespace": "Dynamo.Search",
+  "kind": "static-class",
+  "summary": "Utility methods for categorizing search elements.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchLibrary.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

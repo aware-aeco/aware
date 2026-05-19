@@ -1,0 +1,1069 @@
+{
+  "name": "CoreUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type CoreUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddStackValueString(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue AddStackValueString(ProtoCore.DSASM.StackValue sv1, ProtoCore.DSASM.StackValue sv2, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Performs addition on 2 StackValues This is used by the VM when adding strings",
+      "params": [
+        {
+          "name": "sv1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "sv2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "BuildASTList(ProtoCore.Core, System.Collections.Generic.List\u003Cstring\u003E)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E BuildASTList(ProtoCore.Core core, System.Collections.Generic.List\u003Cstring\u003E codeList)",
+      "summary": "Parses designscript code and outputs ProtoAST",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "codeList",
+          "type": "System.Collections.Generic.List\u003Cstring\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "BuildASTList(ProtoCore.Core, string)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E BuildASTList(ProtoCore.Core core, string code)",
+      "summary": "Parses designscript code and outputs ProtoAST",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "code",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "BuildArrayExprList(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.ExprListNode BuildArrayExprList(ProtoCore.AST.AssociativeAST.AssociativeNode arrayNode)",
+      "summary": "CoreUtils.BuildArrayExprList",
+      "params": [
+        {
+          "name": "arrayNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.ExprListNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "BuildSSATemp(ProtoCore.Core)",
+      "signature": "string BuildSSATemp(ProtoCore.Core core)",
+      "summary": "CoreUtils.BuildSSATemp",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "BuildStackValueForPrimitive(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue BuildStackValueForPrimitive(ProtoCore.AST.AssociativeAST.AssociativeNode node, ProtoCore.RuntimeCore rt)",
+      "summary": "CoreUtils.BuildStackValueForPrimitive",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "rt",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "CopyDebugData(ProtoCore.AST.Node, ProtoCore.AST.Node)",
+      "signature": "void CopyDebugData(ProtoCore.AST.Node nodeTo, ProtoCore.AST.Node nodeFrom)",
+      "summary": "CoreUtils.CopyDebugData",
+      "params": [
+        {
+          "name": "nodeTo",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "nodeFrom",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "CreateNodeByCombiningIdentifiers(System.Collections.Generic.IList\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode CreateNodeByCombiningIdentifiers(System.Collections.Generic.IList\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E nodeList)",
+      "summary": "CoreUtils.CreateNodeByCombiningIdentifiers",
+      "params": [
+        {
+          "name": "nodeList",
+          "type": "System.Collections.Generic.IList\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "CreateNodeFromString(string)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode CreateNodeFromString(string name)",
+      "summary": "Given a name or string of names, this creates an IdentifierNode or IdentifierListNode e.g. Creates an IdentifierNode from A and IdentifierListNode from A.B",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GenerateCallDotNode(ProtoCore.AST.AssociativeAST.AssociativeNode, ProtoCore.AST.AssociativeAST.FunctionCallNode, ProtoCore.Core)",
+      "signature": "ProtoCore.AST.AssociativeAST.FunctionDotCallNode GenerateCallDotNode(ProtoCore.AST.AssociativeAST.AssociativeNode lhs, ProtoCore.AST.AssociativeAST.FunctionCallNode rhsCall, ProtoCore.Core core)",
+      "summary": "CoreUtils.GenerateCallDotNode",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "rhsCall",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionCallNode",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.FunctionDotCallNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GenerateIdentListNameString(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "string GenerateIdentListNameString(ProtoCore.AST.AssociativeAST.AssociativeNode node)",
+      "summary": "CoreUtils.GenerateIdentListNameString",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetAssemblyFromClassName(ProtoCore.DSASM.ClassTable, string)",
+      "signature": "string GetAssemblyFromClassName(ProtoCore.DSASM.ClassTable classTable, string className)",
+      "summary": "Given a partial class name, get assembly to which the class belongs",
+      "params": [
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "doc": "class table in Core",
+          "optional": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "doc": "class name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "assembly to which the class belongs"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetCodeBlock(System.Collections.Generic.List\u003CProtoCore.DSASM.CodeBlock\u003E, int)",
+      "signature": "ProtoCore.DSASM.CodeBlock GetCodeBlock(System.Collections.Generic.List\u003CProtoCore.DSASM.CodeBlock\u003E blockList, int blockId)",
+      "summary": "Returns the Codeblock given the blockId",
+      "params": [
+        {
+          "name": "blockList",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.CodeBlock\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "blockId",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.CodeBlock",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetDataOfValue(ProtoCore.Mirror.MirrorData)",
+      "signature": "object GetDataOfValue(ProtoCore.Mirror.MirrorData value)",
+      "summary": "Returns the CLR object for a given mirror data",
+      "params": [
+        {
+          "name": "value",
+          "type": "ProtoCore.Mirror.MirrorData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetFunctionByName(string, ProtoCore.DSASM.CodeBlock)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFunctionByName(string name, ProtoCore.DSASM.CodeBlock codeBlock)",
+      "summary": "CoreUtils.GetFunctionByName",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "codeBlock",
+          "type": "ProtoCore.DSASM.CodeBlock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetFunctionBySignature(string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.DSASM.CodeBlock)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFunctionBySignature(string name, System.Collections.Generic.List\u003CProtoCore.Type\u003E argTypeList, ProtoCore.DSASM.CodeBlock codeblock)",
+      "summary": "CoreUtils.GetFunctionBySignature",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argTypeList",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "codeblock",
+          "type": "ProtoCore.DSASM.CodeBlock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetFunctionHash(ProtoCore.AST.AssociativeAST.FunctionDefinitionNode)",
+      "signature": "int GetFunctionHash(ProtoCore.AST.AssociativeAST.FunctionDefinitionNode functionDef)",
+      "summary": "Returns the has id of a function signature given the name and argument types",
+      "params": [
+        {
+          "name": "functionDef",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionDefinitionNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetIdentifierExceptMethodName(ProtoCore.AST.AssociativeAST.IdentifierListNode)",
+      "signature": "string GetIdentifierExceptMethodName(ProtoCore.AST.AssociativeAST.IdentifierListNode identList)",
+      "summary": "Retrieves the string format of the identifier list from left to right, leaving out any symbols after the last identifier. Given: A.B() Return: \u0022A\u0022 Given: A.B.C()[0] Return: \u0022A.B\u0022 Given: A.B().C Return: \u0022A\u0022 Given: A.B[0].C Return: \u0022A.B[0].C\u0022 Given: A().B (global function) Return: empty string Given: A.B[0].C() Return: \u0022A.B[0]\u0022",
+      "params": [
+        {
+          "name": "identList",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierListNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetIdentifierExceptMethodName(ProtoCore.AST.ImperativeAST.IdentifierListNode)",
+      "signature": "string GetIdentifierExceptMethodName(ProtoCore.AST.ImperativeAST.IdentifierListNode identList)",
+      "summary": "Retrieves the string format of the identifier list from left to right, leaving out any symbols after the last identifier. Given: A.B() Return: \u0022A\u0022 Given: A.B.C()[0] Return: \u0022A.B\u0022 Given: A.B().C Return: \u0022A\u0022 Given: A.B[0].C Return: \u0022A.B[0].C\u0022 Given: A().B (global function) Return: empty string Given: A.B[0].C() Return: \u0022A.B[0]\u0022",
+      "params": [
+        {
+          "name": "identList",
+          "type": "ProtoCore.AST.ImperativeAST.IdentifierListNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetIdentifierStringUntilFirstParenthesis(ProtoCore.AST.Node)",
+      "signature": "string GetIdentifierStringUntilFirstParenthesis(ProtoCore.AST.Node node)",
+      "summary": "Retrieves the string format of the identifier list from left to right, leaving out any symbols after the last identifier. Given: A.B() Return: \u0022A.B\u0022 Given: A.B.C()[0] Return: \u0022A.B.C\u0022 Given: A.B().C Return: \u0022A.B\u0022 Given: A.B[0].C Return: \u0022A.B[0].C\u0022",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.Node",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetLanguageString(ProtoCore.Language)",
+      "signature": "string GetLanguageString(ProtoCore.Language language)",
+      "summary": "CoreUtils.GetLanguageString",
+      "params": [
+        {
+          "name": "language",
+          "type": "ProtoCore.Language",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetOperatorString(ProtoCore.DSASM.Operator)",
+      "signature": "string GetOperatorString(ProtoCore.DSASM.Operator optr)",
+      "summary": "CoreUtils.GetOperatorString",
+      "params": [
+        {
+          "name": "optr",
+          "type": "ProtoCore.DSASM.Operator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "GetResolvedClassName(ProtoCore.DSASM.ClassTable, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "string[] GetResolvedClassName(ProtoCore.DSASM.ClassTable classTable, ProtoCore.AST.AssociativeAST.AssociativeNode identifierList)",
+      "summary": "Inspects the input identifier list to match all class names with the class used in it",
+      "params": [
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "identifierList",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "single identifier or identifier list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string[]",
+        "doc": "list of fully resolved class names"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "InsertPredefinedAndBuiltinMethods(ProtoCore.Core, ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "void InsertPredefinedAndBuiltinMethods(ProtoCore.Core core, ProtoCore.AST.AssociativeAST.CodeBlockNode root)",
+      "summary": "CoreUtils.InsertPredefinedAndBuiltinMethods",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "root",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsAutoGeneratedVar(string)",
+      "signature": "bool IsAutoGeneratedVar(string name)",
+      "summary": "CoreUtils.IsAutoGeneratedVar",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsDefaultArgTemp(string)",
+      "signature": "bool IsDefaultArgTemp(string varname)",
+      "summary": "CoreUtils.IsDefaultArgTemp",
+      "params": [
+        {
+          "name": "varname",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsDisposeMethod(string)",
+      "signature": "bool IsDisposeMethod(string methodName)",
+      "summary": "CoreUtils.IsDisposeMethod",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsDotMethod(string)",
+      "signature": "bool IsDotMethod(string methodName)",
+      "summary": "CoreUtils.IsDotMethod",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsGetTypeMethod(string)",
+      "signature": "bool IsGetTypeMethod(string methodName)",
+      "summary": "CoreUtils.IsGetTypeMethod",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsGetter(string)",
+      "signature": "bool IsGetter(string propertyName)",
+      "summary": "CoreUtils.IsGetter",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsGetterSetter(string)",
+      "signature": "bool IsGetterSetter(string propertyName)",
+      "summary": "CoreUtils.IsGetterSetter",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsInternalFunction(string)",
+      "signature": "bool IsInternalFunction(string methodName)",
+      "summary": "CoreUtils.IsInternalFunction",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsInternalMethod(string)",
+      "signature": "bool IsInternalMethod(string methodName)",
+      "summary": "CoreUtils.IsInternalMethod",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsNonStaticPropertyLookupOnClass(ProtoCore.DSASM.ProcedureNode, string)",
+      "signature": "bool IsNonStaticPropertyLookupOnClass(ProtoCore.DSASM.ProcedureNode procCallNode, string className)",
+      "summary": "CoreUtils.IsNonStaticPropertyLookupOnClass",
+      "params": [
+        {
+          "name": "procCallNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsPrimitiveASTNode(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "bool IsPrimitiveASTNode(ProtoCore.AST.AssociativeAST.AssociativeNode node)",
+      "summary": "Checks if an AST node is a primitive",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsPropertyTemp(string)",
+      "signature": "bool IsPropertyTemp(string varname)",
+      "summary": "CoreUtils.IsPropertyTemp",
+      "params": [
+        {
+          "name": "varname",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsSSATemp(string)",
+      "signature": "bool IsSSATemp(string ssaVar)",
+      "summary": "CoreUtils.IsSSATemp",
+      "params": [
+        {
+          "name": "ssaVar",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "IsSetter(string)",
+      "signature": "bool IsSetter(string propertyName)",
+      "summary": "CoreUtils.IsSetter",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "LogSemanticError(ProtoCore.Core, string, string, int, int)",
+      "signature": "void LogSemanticError(ProtoCore.Core core, string msg, string fileName, int line, int col)",
+      "summary": "CoreUtils.LogSemanticError",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "LogSemanticError(ProtoCore.DSASM.Interpreter, string, string, int, int)",
+      "signature": "void LogSemanticError(ProtoCore.DSASM.Interpreter dsi, string msg, string fileName, int line, int col)",
+      "summary": "CoreUtils.LogSemanticError",
+      "params": [
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "LogWarning(ProtoCore.Core, ProtoCore.BuildData.WarningID, string, string, int, int)",
+      "signature": "void LogWarning(ProtoCore.Core core, ProtoCore.BuildData.WarningID id, string msg, string fileName, int line, int col)",
+      "summary": "CoreUtils.LogWarning",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "ProtoCore.BuildData.WarningID",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "LogWarning(ProtoCore.DSASM.Interpreter, ProtoCore.Runtime.WarningID, string, string, int, int)",
+      "signature": "void LogWarning(ProtoCore.DSASM.Interpreter dsi, ProtoCore.Runtime.WarningID id, string msg, string fileName, int line, int col)",
+      "summary": "CoreUtils.LogWarning",
+      "params": [
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "ProtoCore.Runtime.WarningID",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "StartsWithDoubleUnderscores(string)",
+      "signature": "bool StartsWithDoubleUnderscores(string name)",
+      "summary": "CoreUtils.StartsWithDoubleUnderscores",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "StartsWithSingleUnderscore(string)",
+      "signature": "bool StartsWithSingleUnderscore(string name)",
+      "summary": "CoreUtils.StartsWithSingleUnderscore",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "TryGetOperator(string, ref ProtoCore.DSASM.Operator)",
+      "signature": "bool TryGetOperator(string methodName, ref ProtoCore.DSASM.Operator op)",
+      "summary": "CoreUtils.TryGetOperator",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "op",
+          "type": "ref ProtoCore.DSASM.Operator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    },
+    {
+      "name": "TryGetPropertyName(string, ref string)",
+      "signature": "bool TryGetPropertyName(string methodName, ref string propertyName)",
+      "summary": "CoreUtils.TryGetPropertyName",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyName",
+          "type": "ref string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/CoreUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

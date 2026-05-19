@@ -1,0 +1,150 @@
+{
+  "name": "ElementResolver",
+  "namespace": "ProtoCore.Namespace",
+  "kind": "class",
+  "summary": "Responsible for resolving a partial class name to its fully resolved name",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs",
+  "constructors": [
+    {
+      "name": "ElementResolver()",
+      "signature": "void ElementResolver()",
+      "summary": "ElementResolver.ElementResolver",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    },
+    {
+      "name": "ElementResolver(System.Collections.Generic.IDictionary\u003Cstring, System.Collections.Generic.KeyValuePair\u003Cstring, string\u003E\u003E)",
+      "signature": "void ElementResolver(System.Collections.Generic.IDictionary\u003Cstring, System.Collections.Generic.KeyValuePair\u003Cstring, string\u003E\u003E namespaceLookupMap)",
+      "summary": "ElementResolver.ElementResolver",
+      "params": [
+        {
+          "name": "namespaceLookupMap",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, System.Collections.Generic.KeyValuePair\u003Cstring, string\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddToResolutionMap(string, string, string)",
+      "signature": "void AddToResolutionMap(string partialName, string resolvedName, string assemblyName)",
+      "summary": "ElementResolver.AddToResolutionMap",
+      "params": [
+        {
+          "name": "partialName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolvedName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "assemblyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    },
+    {
+      "name": "CopyResolutionMap(ProtoCore.Namespace.ElementResolver)",
+      "signature": "void CopyResolutionMap(ProtoCore.Namespace.ElementResolver otherResolver)",
+      "summary": "ElementResolver.CopyResolutionMap",
+      "params": [
+        {
+          "name": "otherResolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    },
+    {
+      "name": "LookupAssemblyName(string)",
+      "signature": "string LookupAssemblyName(string partialName)",
+      "summary": "ElementResolver.LookupAssemblyName",
+      "params": [
+        {
+          "name": "partialName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    },
+    {
+      "name": "LookupResolvedName(string)",
+      "signature": "string LookupResolvedName(string partialName)",
+      "summary": "Looks up resolved name in resolution map given the partial name",
+      "params": [
+        {
+          "name": "partialName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "returns null if partial name is not found in resolution map"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    },
+    {
+      "name": "LookupShortName(string)",
+      "signature": "string LookupShortName(string resolvedName)",
+      "summary": "ElementResolver.LookupShortName",
+      "params": [
+        {
+          "name": "resolvedName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ResolutionMap",
+      "type": "System.Collections.Generic.IDictionary\u003Cstring, System.Collections.Generic.KeyValuePair\u003Cstring, string\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Maintains a lookup table of partial class identifiers vs. fully qualified class identifier names and assembly name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementResolver.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

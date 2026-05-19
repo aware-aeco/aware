@@ -1,0 +1,91 @@
+{
+  "name": "AstFactory",
+  "namespace": "ProtoCore.AST.ImperativeAST",
+  "kind": "static-class",
+  "summary": "Type AstFactory",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BuildForLoopIndexExpression(ProtoCore.AST.ImperativeAST.ImperativeNode, ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ImperativeNode BuildForLoopIndexExpression(ProtoCore.AST.ImperativeAST.ImperativeNode value, ProtoCore.AST.ImperativeAST.ImperativeNode index)",
+      "summary": "AstFactory.BuildForLoopIndexExpression",
+      "params": [
+        {
+          "name": "value",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildFunctionCall(string, string, System.Collections.Generic.List\u003CProtoCore.AST.ImperativeAST.ImperativeNode\u003E)",
+      "signature": "ProtoCore.AST.ImperativeAST.ImperativeNode BuildFunctionCall(string className, string functionName, System.Collections.Generic.List\u003CProtoCore.AST.ImperativeAST.ImperativeNode\u003E args)",
+      "summary": "AstFactory.BuildFunctionCall",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "functionName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.ImperativeAST.ImperativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "BuildIndexExpression(ProtoCore.AST.ImperativeAST.ImperativeNode, ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ImperativeNode BuildIndexExpression(ProtoCore.AST.ImperativeAST.ImperativeNode value, ProtoCore.AST.ImperativeAST.ImperativeNode index)",
+      "summary": "AstFactory.BuildIndexExpression",
+      "params": [
+        {
+          "name": "value",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,80 @@
+{
+  "name": "Compiler",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type Compiler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Compiler.cs",
+  "constructors": [
+    {
+      "name": "Compiler(ProtoCore.Core)",
+      "signature": "void Compiler(ProtoCore.Core core)",
+      "summary": "Compiler.Compiler",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Compiler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Compile(ref int, ProtoCore.DSASM.CodeBlock, ProtoCore.LanguageCodeBlock, ProtoCore.CompileTime.Context, ProtoCore.DebugServices.EventSink, ProtoCore.AST.Node, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "bool Compile(ref int blockId, ProtoCore.DSASM.CodeBlock parentBlock, ProtoCore.LanguageCodeBlock codeblock, ProtoCore.CompileTime.Context callContext, ProtoCore.DebugServices.EventSink sink, ProtoCore.AST.Node codeBlockNode, ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "Compiler.Compile",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "parentBlock",
+          "type": "ProtoCore.DSASM.CodeBlock",
+          "optional": false
+        },
+        {
+          "name": "codeblock",
+          "type": "ProtoCore.LanguageCodeBlock",
+          "optional": false
+        },
+        {
+          "name": "callContext",
+          "type": "ProtoCore.CompileTime.Context",
+          "optional": false
+        },
+        {
+          "name": "sink",
+          "type": "ProtoCore.DebugServices.EventSink",
+          "optional": false
+        },
+        {
+          "name": "codeBlockNode",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Compiler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

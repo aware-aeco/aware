@@ -1,0 +1,51 @@
+{
+  "name": "NotifyPropertyChangedInvocatorAttribute",
+  "namespace": "Dynamo.Annotations",
+  "kind": "class",
+  "summary": "Indicates that the method is contained in a type that implements System.ComponentModel.INotifyPropertyChanged interface and this method is used to notify that some property value changed.",
+  "remarks": "The method should be non-static and conform to one of the supported signatures: ; NotifyChanged(string); NotifyChanged(params string[]); NotifyChanged{T}(Expression{Func{T}}); NotifyChanged{T,U}(Expression{Func{T,U}}); SetProperty{T}(ref T, T, string)",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Annotations.cs",
+  "constructors": [
+    {
+      "name": "NotifyPropertyChangedInvocatorAttribute()",
+      "signature": "void NotifyPropertyChangedInvocatorAttribute()",
+      "summary": "NotifyPropertyChangedInvocatorAttribute.NotifyPropertyChangedInvocatorAttribute",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Annotations.cs"
+    },
+    {
+      "name": "NotifyPropertyChangedInvocatorAttribute(string)",
+      "signature": "void NotifyPropertyChangedInvocatorAttribute(string parameterName)",
+      "summary": "NotifyPropertyChangedInvocatorAttribute.NotifyPropertyChangedInvocatorAttribute",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Annotations.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ParameterName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "NotifyPropertyChangedInvocatorAttribute.ParameterName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Annotations.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

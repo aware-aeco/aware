@@ -1,0 +1,182 @@
+{
+  "name": "CodeBlock",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type CodeBlock",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs",
+  "constructors": [
+    {
+      "name": "CodeBlock(System.Guid, ProtoCore.DSASM.CodeBlockType, ProtoCore.Language, int, ProtoCore.DSASM.SymbolTable, ProtoCore.DSASM.ProcedureTable, bool, ProtoCore.Core)",
+      "signature": "void CodeBlock(System.Guid guid, ProtoCore.DSASM.CodeBlockType type, ProtoCore.Language langId, int cbID, ProtoCore.DSASM.SymbolTable symbols, ProtoCore.DSASM.ProcedureTable procTable, bool isBreakableBlock, ProtoCore.Core core)",
+      "summary": "A CodeBlock represents a body of DS code",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.DSASM.CodeBlockType",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "langId",
+          "type": "ProtoCore.Language",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "cbID",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "ProtoCore.DSASM.SymbolTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "procTable",
+          "type": "ProtoCore.DSASM.ProcedureTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isBreakableBlock",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsMyAncestorBlock(int)",
+      "signature": "bool IsMyAncestorBlock(int blockId)",
+      "summary": "CodeBlock.IsMyAncestorBlock",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.AttributeEntry\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.Attributes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "blockType",
+      "type": "ProtoCore.DSASM.CodeBlockType",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.blockType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "children",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.CodeBlock\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.children",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "codeBlockId",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "CodeBlock.codeBlockId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.guid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "instrStream",
+      "type": "ProtoCore.DSASM.InstructionStream",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.instrStream",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "isBreakable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.isBreakable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "language",
+      "type": "ProtoCore.Language",
+      "getter": true,
+      "setter": false,
+      "summary": "CodeBlock.language",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "parent",
+      "type": "ProtoCore.DSASM.CodeBlock",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.parent",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "procedureTable",
+      "type": "ProtoCore.DSASM.ProcedureTable",
+      "getter": true,
+      "setter": false,
+      "summary": "CodeBlock.procedureTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "symbolTable",
+      "type": "ProtoCore.DSASM.SymbolTable",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeBlock.symbolTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

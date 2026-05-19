@@ -1,0 +1,71 @@
+{
+  "name": "IExtensionStorageAccess",
+  "namespace": "Dynamo.Extensions",
+  "kind": "interface",
+  "summary": "Type IExtensionStorageAccess",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtensionStorageAccess.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnWorkspaceOpen(System.Collections.Generic.Dictionary\u003Cstring, string\u003E)",
+      "signature": "void OnWorkspaceOpen(System.Collections.Generic.Dictionary\u003Cstring, string\u003E extensionData)",
+      "summary": "Action to be invoked when the workspace is opened. The passed extensionData dictionary is a copy of the Dynamo.Extensions.ExtensionData data dictionary. Modifying the extensionData from this action will not modify the stored Dynamo.Extensions.ExtensionData. To modify the stored Dynamo.Extensions.ExtensionData data dictionary use the Dynamo.Extensions.IExtensionStorageAccess.OnWorkspaceSaving(System.Collections.Generic.Dictionary{System.String,System.String},Dynamo.Graph.SaveContext).",
+      "params": [
+        {
+          "name": "extensionData",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+          "doc": "A copy of the ExtensionData dictionary",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtensionStorageAccess.cs"
+    },
+    {
+      "name": "OnWorkspaceSaving(System.Collections.Generic.Dictionary\u003Cstring, string\u003E, Dynamo.Graph.SaveContext)",
+      "signature": "void OnWorkspaceSaving(System.Collections.Generic.Dictionary\u003Cstring, string\u003E extensionData, Dynamo.Graph.SaveContext saveContext)",
+      "summary": "Action to be invoked when the workspace has begun its saving process. The passed extensionData dictionary is a direct reference to the stored Dynamo.Extensions.ExtensionData data dictionary, modifications to this dictionary will be reflected in the stored Dynamo.Extensions.ExtensionData data dictionary",
+      "params": [
+        {
+          "name": "extensionData",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "saveContext",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtensionStorageAccess.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A name for the Extension. The name will be equivalent to the extension that implements this interface name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtensionStorageAccess.cs"
+    },
+    {
+      "name": "UniqueId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A unique id for this extension instance. The id will be equivalent to the extension that implements this interface id.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IExtensionStorageAccess.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

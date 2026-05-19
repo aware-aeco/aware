@@ -1,0 +1,104 @@
+{
+  "name": "NodeOutputData",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Represents a node which acts as a UI output for the graph - may also hold a value for that output",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs",
+  "constructors": [
+    {
+      "name": "NodeOutputData()",
+      "signature": "void NodeOutputData()",
+      "summary": "NodeOutputData.NodeOutputData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "NodeOutputData.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    },
+    {
+      "name": "getNodeOutputTypeFromType(System.Type)",
+      "signature": "Dynamo.Graph.Nodes.NodeOutputTypes getNodeOutputTypeFromType(System.Type type)",
+      "summary": "NodeOutputData.getNodeOutputTypeFromType",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeOutputTypes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description displayed to user of this output node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    },
+    {
+      "name": "Id",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "The id of the node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    },
+    {
+      "name": "InitialValue",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the output when the graph was saved. This should always be a string for all types.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Display name of the output node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    },
+    {
+      "name": "Type",
+      "type": "Dynamo.Graph.Nodes.NodeOutputTypes",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of output this node is.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/NodeOutputData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

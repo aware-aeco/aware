@@ -1,0 +1,77 @@
+{
+  "name": "VersionUtilities",
+  "namespace": "Dynamo.Utilities",
+  "kind": "static-class",
+  "summary": "Type VersionUtilities",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/VersionUtilities.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Parse(string)",
+      "signature": "System.Version Parse(string version)",
+      "summary": "A utility method accepting any string input and trying to return a valid Version from it If the initial input is not valid, returns null",
+      "params": [
+        {
+          "name": "version",
+          "type": "string",
+          "doc": "The string representation of the version to be parsed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Version",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/VersionUtilities.cs"
+    },
+    {
+      "name": "PartialParse(string, int)",
+      "signature": "System.Version PartialParse(string versionString, int numberOfFields)",
+      "summary": "Parse the first n fields of a version string. Delegates to Version.Parse.",
+      "params": [
+        {
+          "name": "versionString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "numberOfFields",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Version",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/VersionUtilities.cs"
+    },
+    {
+      "name": "WildCardParse(string)",
+      "signature": "System.Version WildCardParse(string version)",
+      "summary": "Parse the first n fields of a version string. Delegates to Version.Parse.",
+      "params": [
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Version",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/VersionUtilities.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

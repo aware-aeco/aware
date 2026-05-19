@@ -1,0 +1,46 @@
+{
+  "name": "ISearchEntry",
+  "namespace": "Dynamo.Search",
+  "kind": "interface",
+  "summary": "Has a collection of strings that can be used to identifiy the instance in a search.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchEntry.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description of this search entry.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchEntry.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of this search entry.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchEntry.cs"
+    },
+    {
+      "name": "SearchTagWeights",
+      "type": "System.Collections.Generic.IEnumerable\u003Cdouble\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Every search tag should have weight. This weight will be taken into account during search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchEntry.cs"
+    },
+    {
+      "name": "SearchTags",
+      "type": "System.Collections.Generic.ICollection\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Tags which can be used to search for this entry.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/ISearchEntry.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

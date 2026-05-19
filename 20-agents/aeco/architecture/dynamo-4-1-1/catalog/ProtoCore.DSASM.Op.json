@@ -1,0 +1,185 @@
+{
+  "name": "Op",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Translate an operator to other representations.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [
+    {
+      "name": "Op()",
+      "signature": "void Op()",
+      "summary": "Op.Op",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetOpCode(ProtoCore.DSASM.Operator)",
+      "signature": "ProtoCore.DSASM.OpCode GetOpCode(ProtoCore.DSASM.Operator op)",
+      "summary": "Returns the corresponding opcode of an operator.",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.Operator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.OpCode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetOpFunction(ProtoCore.DSASM.Operator)",
+      "signature": "string GetOpFunction(ProtoCore.DSASM.Operator op)",
+      "summary": "Returns the internal function name for operator.",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.Operator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetOpName(ProtoCore.DSASM.Operator)",
+      "signature": "string GetOpName(ProtoCore.DSASM.Operator op)",
+      "summary": "Returns the string representation of an operator. E.g., return \u0022add\u0022 for Operator.add.",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.Operator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetOpSymbol(ProtoCore.DSASM.Operator)",
+      "signature": "string GetOpSymbol(ProtoCore.DSASM.Operator op)",
+      "summary": "Returns the symbol representation of an operator. E.g., return \u0022\u002B\u0022 for Operator.add.",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.Operator",
+          "doc": "Operator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetUnaryOpCode(ProtoCore.DSASM.UnaryOperator)",
+      "signature": "ProtoCore.DSASM.OpCode GetUnaryOpCode(ProtoCore.DSASM.UnaryOperator op)",
+      "summary": "Returns the corresponding opcode of an unary operator.",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.UnaryOperator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.OpCode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetUnaryOpFunction(ProtoCore.DSASM.UnaryOperator)",
+      "signature": "string GetUnaryOpFunction(ProtoCore.DSASM.UnaryOperator op)",
+      "summary": "Returns the internal function name for unary operator",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.UnaryOperator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetUnaryOpName(ProtoCore.DSASM.UnaryOperator)",
+      "signature": "string GetUnaryOpName(ProtoCore.DSASM.UnaryOperator op)",
+      "summary": "Returns the string representation of an unary operator. E.g., return \u0022not\u0022 for UnaryOperator.not.",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.UnaryOperator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    },
+    {
+      "name": "GetUnaryOpSymbol(ProtoCore.DSASM.UnaryOperator)",
+      "signature": "string GetUnaryOpSymbol(ProtoCore.DSASM.UnaryOperator op)",
+      "summary": "Returns the symbol representation of an unary operator. E.g., return \u0022-\u0022 for UnaryOperator.neg",
+      "params": [
+        {
+          "name": "op",
+          "type": "ProtoCore.DSASM.UnaryOperator",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,265 @@
+{
+  "name": "StackFrame",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Stack frame.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs",
+  "constructors": [
+    {
+      "name": "StackFrame(ProtoCore.DSASM.StackValue, int, int, int, int, int, ProtoCore.DSASM.StackFrameType, ProtoCore.DSASM.StackFrameType, int, int, int, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, int)",
+      "signature": "void StackFrame(ProtoCore.DSASM.StackValue thisPtr, int classIndex, int functionIndex, int returnAddress, int functionBlockIndex, int callerBlockIndex, ProtoCore.DSASM.StackFrameType callerStackFrameType, ProtoCore.DSASM.StackFrameType stackFrameType, int depth, int framePointer, int blockIndex, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E registers, int executionStateSize)",
+      "summary": "StackFrame.StackFrame",
+      "params": [
+        {
+          "name": "thisPtr",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "returnAddress",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionBlockIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "callerBlockIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "callerStackFrameType",
+          "type": "ProtoCore.DSASM.StackFrameType",
+          "optional": false
+        },
+        {
+          "name": "stackFrameType",
+          "type": "ProtoCore.DSASM.StackFrameType",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "framePointer",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "blockIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "registers",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "executionStateSize",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "StackFrame(ProtoCore.DSASM.StackValue[])",
+      "signature": "void StackFrame(ProtoCore.DSASM.StackValue[] frame)",
+      "summary": "StackFrame.StackFrame",
+      "params": [
+        {
+          "name": "frame",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "StackFrame(int)",
+      "signature": "void StackFrame(int globalOffset)",
+      "summary": "StackFrame.StackFrame",
+      "params": [
+        {
+          "name": "globalOffset",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetRegisters",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E GetRegisters()",
+      "summary": "StackFrame.GetRegisters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BlockIndex",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.BlockIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "CallerStackFrameType",
+      "type": "ProtoCore.DSASM.StackFrameType",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.CallerStackFrameType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "ClassScope",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.ClassScope",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "Depth",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.Depth",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "ExecutionStateSize",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.ExecutionStateSize",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "ExecutionStates",
+      "type": "ProtoCore.DSASM.StackValue[]",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.ExecutionStates",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "Frame",
+      "type": "ProtoCore.DSASM.StackValue[]",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.Frame",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "FramePointer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.FramePointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "FunctionBlock",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.FunctionBlock",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "FunctionCallerBlock",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.FunctionCallerBlock",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "FunctionScope",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.FunctionScope",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "RX",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.RX",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "ReturnPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.ReturnPC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "StackFrameType",
+      "type": "ProtoCore.DSASM.StackFrameType",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.StackFrameType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "TX",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.TX",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "ThisPtr",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "StackFrame.ThisPtr",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

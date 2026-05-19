@@ -1,0 +1,302 @@
+{
+  "name": "PackageManagerSearchElement",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "A search element representing an element from the package manager",
+  "base": "Dynamo.Search.SearchElements.SearchElementBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs",
+  "constructors": [
+    {
+      "name": "PackageManagerSearchElement(Greg.Responses.PackageHeader)",
+      "signature": "void PackageManagerSearchElement(Greg.Responses.PackageHeader header)",
+      "summary": "The class constructor",
+      "params": [
+        {
+          "name": "header",
+          "type": "Greg.Responses.PackageHeader",
+          "doc": "The PackageHeader object describing the element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "PackageManagerSearchElement(Greg.Responses.PackageVersion)",
+      "signature": "void PackageManagerSearchElement(Greg.Responses.PackageVersion infectedVersion)",
+      "summary": "The class constructor",
+      "params": [
+        {
+          "name": "infectedVersion",
+          "type": "Greg.Responses.PackageVersion",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Upvote",
+      "signature": "void Upvote()",
+      "summary": "PackageManagerSearchElement.Upvote",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Downloads",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.Downloads",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "EngineVersion",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.EngineVersion",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "HasUpvote",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Shows if the current user has upvoted this package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Header",
+      "type": "Greg.Responses.PackageHeader",
+      "getter": true,
+      "setter": false,
+      "summary": "Header property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Hosts",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Hosts dependencies specified for latest version of particular package",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "HostsString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Hosts dependencies string specified for latest version of particular package Used for package search element UI",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Id property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "InfectedPackageCreationDate",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerSearchElement.InfectedPackageCreationDate",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "InfectedPackageName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerSearchElement.InfectedPackageName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "InfectedPackageVersion",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerSearchElement.InfectedPackageVersion",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "IsDeprecated",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.IsDeprecated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Keywords",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerSearchElement.Keywords",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "LatestCompatibleVersion",
+      "type": "Dynamo.PackageManager.VersionInformation",
+      "getter": true,
+      "setter": true,
+      "summary": "The latest compatible package version, or latest version if no compatible version is found",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "LatestVersion",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.LatestVersion",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "LatestVersionCreated",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.LatestVersionCreated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Maintainers",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.Maintainers",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "PackageVersions",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A list of all package versions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "RepositoryUrl",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.RepositoryUrl",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Searchable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.Searchable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "SelectedVersion",
+      "type": "Dynamo.PackageManager.VersionInformation",
+      "getter": true,
+      "setter": false,
+      "summary": "The currently selected version - need to pass onto the PackageDetailView",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "SiteUrl",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.SiteUrl",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Type",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Type property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "UsedBy",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerSearchElement.UsedBy",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "VersionDetails",
+      "type": "System.Collections.Generic.List\u003CDynamo.PackageManager.VersionInformation\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A property for package Versions details (\u002B compatibility info)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Votes",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageManagerSearchElement.Votes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Weight",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Weight property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "UpvoteRequested",
+      "delegate": "System.Func\u003Cstring, bool\u003E",
+      "signature": "public event System.Func\u003Cstring, bool\u003E UpvoteRequested",
+      "summary": "An event that\u0027s invoked when the user has attempted to upvote this package.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

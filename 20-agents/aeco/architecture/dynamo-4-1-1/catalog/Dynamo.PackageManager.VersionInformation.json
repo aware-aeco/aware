@@ -1,0 +1,76 @@
+{
+  "name": "VersionInformation",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type VersionInformation",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs",
+  "constructors": [
+    {
+      "name": "VersionInformation()",
+      "signature": "void VersionInformation()",
+      "summary": "VersionInformation.VersionInformation",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetVersionCompatibility(System.Collections.Generic.List\u003CDynamo.PackageManager.VersionInformation\u003E, string)",
+      "signature": "System.Nullable\u003Cbool\u003E GetVersionCompatibility(System.Collections.Generic.List\u003CDynamo.PackageManager.VersionInformation\u003E versionDetails, string packageVersion)",
+      "summary": "A helper method to determine the compatibility of a specific package version from the provided version details.",
+      "params": [
+        {
+          "name": "versionDetails",
+          "type": "System.Collections.Generic.List\u003CDynamo.PackageManager.VersionInformation\u003E",
+          "doc": "A collection of VersionInformation",
+          "optional": false
+        },
+        {
+          "name": "packageVersion",
+          "type": "string",
+          "doc": "The version to look for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Nullable\u003Cbool\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsCompatible",
+      "type": "System.Nullable\u003Cbool\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the version is compatible (true, false, or unknown)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "IsInstalled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether this version is currently installed locally.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The version number as string",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerSearchElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

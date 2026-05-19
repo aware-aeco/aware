@@ -1,0 +1,24 @@
+{
+  "name": "JILActivationRecord",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Type JILActivationRecord",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs",
+  "constructors": [
+    {
+      "name": "JILActivationRecord()",
+      "signature": "void JILActivationRecord()",
+      "summary": "JILActivationRecord.JILActivationRecord",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

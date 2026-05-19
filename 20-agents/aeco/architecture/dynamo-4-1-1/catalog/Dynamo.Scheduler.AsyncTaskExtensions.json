@@ -1,0 +1,120 @@
+{
+  "name": "AsyncTaskExtensions",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "static-class",
+  "summary": "Tools for working productively with AsyncTask\u0027s",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTaskExtensions.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AllComplete(System.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E, System.Action\u003CSystem.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E\u003E)",
+      "signature": "System.IDisposable AllComplete(System.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E tasks, System.Action\u003CSystem.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E\u003E action)",
+      "summary": "Await the completion of a collection of scheduled tasks. The given action will only be executed after all events are complete or discarded. The tasks must already be scheduled and not yet completed or this action will never be executed.",
+      "params": [
+        {
+          "name": "tasks",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CSystem.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": "An IDisposable representing all of the event subscription"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTaskExtensions.cs"
+    },
+    {
+      "name": "Then(Dynamo.Scheduler.AsyncTask, Dynamo.Scheduler.AsyncTaskCompletedHandler)",
+      "signature": "System.IDisposable Then(Dynamo.Scheduler.AsyncTask task, Dynamo.Scheduler.AsyncTaskCompletedHandler action)",
+      "summary": "Upon completion of the task, invoke the specified action",
+      "params": [
+        {
+          "name": "task",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Dynamo.Scheduler.AsyncTaskCompletedHandler",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": "An IDisposable representing the event subscription"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTaskExtensions.cs"
+    },
+    {
+      "name": "ThenPost(Dynamo.Scheduler.AsyncTask, Dynamo.Scheduler.AsyncTaskCompletedHandler, System.Threading.SynchronizationContext)",
+      "signature": "System.IDisposable ThenPost(Dynamo.Scheduler.AsyncTask task, Dynamo.Scheduler.AsyncTaskCompletedHandler action, System.Threading.SynchronizationContext context)",
+      "summary": "Upon completion of the task, invoke the action asynchronously in the specified SynchronizationContext",
+      "params": [
+        {
+          "name": "task",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Dynamo.Scheduler.AsyncTaskCompletedHandler",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Threading.SynchronizationContext",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": "An IDisposable representing the event subscription"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTaskExtensions.cs"
+    },
+    {
+      "name": "ThenSend(Dynamo.Scheduler.AsyncTask, Dynamo.Scheduler.AsyncTaskCompletedHandler, System.Threading.SynchronizationContext)",
+      "signature": "System.IDisposable ThenSend(Dynamo.Scheduler.AsyncTask task, Dynamo.Scheduler.AsyncTaskCompletedHandler action, System.Threading.SynchronizationContext context)",
+      "summary": "Upon completion of the task, invoke the action synchronously in the specified SynchronizationContext",
+      "params": [
+        {
+          "name": "task",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Dynamo.Scheduler.AsyncTaskCompletedHandler",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Threading.SynchronizationContext",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": "An IDisposable representing the event subscription"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTaskExtensions.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

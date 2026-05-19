@@ -1,0 +1,31 @@
+{
+  "name": "StringOverIndexingException",
+  "namespace": "DesignScript.Builtin",
+  "kind": "class",
+  "summary": "Type StringOverIndexingException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/IndexingExceptions.cs",
+  "constructors": [
+    {
+      "name": "StringOverIndexingException(string)",
+      "signature": "void StringOverIndexingException(string message)",
+      "summary": "StringOverIndexingException.StringOverIndexingException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/IndexingExceptions.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

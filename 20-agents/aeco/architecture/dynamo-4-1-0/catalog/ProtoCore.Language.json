@@ -1,0 +1,26 @@
+{
+  "name": "Language",
+  "namespace": "ProtoCore",
+  "kind": "enum",
+  "summary": "Type Language",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeBlock.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Associative",
+      "value": 0
+    },
+    {
+      "name": "Imperative",
+      "value": 1
+    },
+    {
+      "name": "NotSpecified",
+      "value": -1
+    }
+  ]
+}

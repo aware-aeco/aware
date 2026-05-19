@@ -1,0 +1,41 @@
+{
+  "name": "RuntimeException",
+  "namespace": "ProtoCore.Exceptions",
+  "kind": "class",
+  "summary": "Type RuntimeException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs",
+  "constructors": [
+    {
+      "name": "RuntimeException()",
+      "signature": "void RuntimeException()",
+      "summary": "RuntimeException.RuntimeException",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs"
+    },
+    {
+      "name": "RuntimeException(string)",
+      "signature": "void RuntimeException(string message)",
+      "summary": "RuntimeException.RuntimeException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,65 @@
+{
+  "name": "WindowSettings",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "Settings that define how to display an extension control in floating window mode.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs",
+  "constructors": [
+    {
+      "name": "WindowSettings()",
+      "signature": "void WindowSettings()",
+      "summary": "WindowSettings.WindowSettings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Height",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Height of the window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "Left",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Coordinates of the leftmost side of the window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "Status",
+      "type": "Dynamo.Configuration.WindowStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Status of the window, i.e. whether it is maximized.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "Top",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Coordinates of the topmost side of the window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "Width",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Width of the window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

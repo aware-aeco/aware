@@ -1,0 +1,174 @@
+{
+  "name": "StaticMirror",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "StaticMirror is a base class representing all Mirror classes that perform static (build time) reflection on types Static reflection can be done without executing the code",
+  "base": "ProtoCore.Mirror.MirrorObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [
+    {
+      "name": "StaticMirror()",
+      "signature": "void StaticMirror()",
+      "summary": "StaticMirror.StaticMirror",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "StaticMirror(ProtoCore.Core, string)",
+      "signature": "void StaticMirror(ProtoCore.Core core, string name)",
+      "summary": "StaticMirror.StaticMirror",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAllTypes(ProtoCore.Core)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.ClassMirror\u003E GetAllTypes(ProtoCore.Core core)",
+      "summary": "Get all types except for internal VM types",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.ClassMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetBuiltInMethods(ProtoCore.Core)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetBuiltInMethods(ProtoCore.Core core)",
+      "summary": "List of built-in methods that are preloaded by default",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetClasses(ProtoCore.Core)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.ClassMirror\u003E GetClasses(ProtoCore.Core core)",
+      "summary": "Get all reference type classes imported in the VM except for internal and placeholder types",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.ClassMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetGlobals(ProtoCore.Core)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.StaticMirror\u003E GetGlobals(ProtoCore.Core core)",
+      "summary": "Get all methods and properties for all classes",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.StaticMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetOverloadsOnBuiltIns(ProtoCore.Core, string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetOverloadsOnBuiltIns(ProtoCore.Core core, string methodName)",
+      "summary": "Returns list of overloads (one or more) for a given built-in method",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "StaticMirror.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the Mirror object - In the case of: ClassMirror: class name MethodMirror: method name PropertyMirror: property name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

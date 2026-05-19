@@ -1,0 +1,166 @@
+{
+  "name": "Function",
+  "namespace": "Dynamo.Graph.Nodes.CustomNodes",
+  "kind": "class",
+  "summary": "DesignScript Custom Node instance.",
+  "base": "Dynamo.Graph.Nodes.FunctionCallBase\u003CDynamo.Graph.Nodes.CustomNodes.CustomNodeController\u003CDynamo.CustomNodeDefinition\u003E, Dynamo.CustomNodeDefinition\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs",
+  "constructors": [
+    {
+      "name": "Function(Dynamo.CustomNodeDefinition, string, string, string)",
+      "signature": "void Function(Dynamo.CustomNodeDefinition def, string name, string description, string category)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.CustomNodes.Function class.",
+      "params": [
+        {
+          "name": "def",
+          "type": "Dynamo.CustomNodeDefinition",
+          "doc": "CustomNode definition.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "doc": "Description.",
+          "optional": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "doc": "Category.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "Function.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "ResyncWithDefinition(Dynamo.CustomNodeDefinition)",
+      "signature": "void ResyncWithDefinition(Dynamo.CustomNodeDefinition def)",
+      "summary": "Validates passed Custom Node definition and synchronizes node with it.",
+      "params": [
+        {
+          "name": "def",
+          "type": "Dynamo.CustomNodeDefinition",
+          "doc": "Custom Node definition.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Function.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "UpdatePortsForUnresolved(Dynamo.Graph.Nodes.PortModel[], Dynamo.Graph.Nodes.PortModel[])",
+      "signature": "void UpdatePortsForUnresolved(Dynamo.Graph.Nodes.PortModel[] inputs, Dynamo.Graph.Nodes.PortModel[] outputs)",
+      "summary": "Initializes ports with default information when the function is unresolved.",
+      "params": [
+        {
+          "name": "inputs",
+          "type": "Dynamo.Graph.Nodes.PortModel[]",
+          "doc": "The input nodes for tis function node.",
+          "optional": false
+        },
+        {
+          "name": "outputs",
+          "type": "Dynamo.Graph.Nodes.PortModel[]",
+          "doc": "The output nodes for tis function node.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Definition",
+      "type": "Dynamo.CustomNodeDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns customNode definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "FunctionSignature",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The unique id of the underlying function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "FunctionType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "It indicates which of the three types of function calls this node represents, a call to an external graph, a call to a function with a vararg argument, or a standard function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "NodeType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The type of node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

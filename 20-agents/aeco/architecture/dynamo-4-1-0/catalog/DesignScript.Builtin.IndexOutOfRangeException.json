@@ -1,0 +1,31 @@
+{
+  "name": "IndexOutOfRangeException",
+  "namespace": "DesignScript.Builtin",
+  "kind": "class",
+  "summary": "Type IndexOutOfRangeException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Libraries/DesignScriptBuiltin/IndexingExceptions.cs",
+  "constructors": [
+    {
+      "name": "IndexOutOfRangeException(string)",
+      "signature": "void IndexOutOfRangeException(string message)",
+      "summary": "IndexOutOfRangeException.IndexOutOfRangeException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Libraries/DesignScriptBuiltin/IndexingExceptions.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

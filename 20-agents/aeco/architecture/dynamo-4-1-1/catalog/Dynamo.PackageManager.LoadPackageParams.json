@@ -1,0 +1,22 @@
+{
+  "name": "LoadPackageParams",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "struct",
+  "summary": "Type LoadPackageParams",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageLoader.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Preferences",
+      "type": "Dynamo.Interfaces.IPreferences",
+      "getter": true,
+      "setter": true,
+      "summary": "LoadPackageParams.Preferences",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageLoader.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

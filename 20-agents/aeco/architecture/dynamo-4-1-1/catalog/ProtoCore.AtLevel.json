@@ -1,0 +1,52 @@
+{
+  "name": "AtLevel",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type AtLevel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs",
+  "constructors": [
+    {
+      "name": "AtLevel(int, bool)",
+      "signature": "void AtLevel(int level, bool isDominant)",
+      "summary": "AtLevel.AtLevel",
+      "params": [
+        {
+          "name": "level",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "isDominant",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsDominant",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "AtLevel.IsDominant",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "Level",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "AtLevel.Level",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,223 @@
+{
+  "name": "EngineController",
+  "namespace": "Dynamo.Engine",
+  "kind": "class",
+  "summary": "A controller to coordinate the interactions between some DesignScript sub components like library management, live runner and so on.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [
+    "Dynamo.Engine.CodeGeneration.IAstNodeContainer",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs",
+  "constructors": [
+    {
+      "name": "EngineController(Dynamo.Engine.LibraryServices, string, bool)",
+      "signature": "void EngineController(Dynamo.Engine.LibraryServices libraryServices, string geometryFactoryFileName, bool verboseLogging)",
+      "summary": "This function creates EngineController",
+      "params": [
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "LibraryServices manages builtin libraries and imported libraries.",
+          "optional": false
+        },
+        {
+          "name": "geometryFactoryFileName",
+          "type": "string",
+          "doc": "Path to LibG",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "Bool value, if set to true, enables verbose logging",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Disposes EngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "EnableProfiling(bool, Dynamo.Graph.Workspaces.HomeWorkspaceModel, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E)",
+      "signature": "void EnableProfiling(bool enable, Dynamo.Graph.Workspaces.HomeWorkspaceModel workspace, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes)",
+      "summary": "Enables or disables profiling depending on the given argument",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "doc": "Indicates enabling or disabling of profiling.",
+          "optional": false
+        },
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.HomeWorkspaceModel",
+          "doc": "The workspace to enable or disable profiling for.",
+          "optional": false
+        },
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "The list of nodes to enable or disable profiling for.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "GetMirror(string)",
+      "signature": "ProtoCore.Mirror.RuntimeMirror GetMirror(string variableName)",
+      "summary": "Returns runtime mirror for variable.",
+      "params": [
+        {
+          "name": "variableName",
+          "type": "string",
+          "doc": "Unique ID of AST node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Mirror.RuntimeMirror",
+        "doc": "RuntimeMirror object that reflects status of a single designscript variable"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "NodeDeleted(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void NodeDeleted(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "NodeDeleted event handler.",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "OnCompiled(System.Guid, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void OnCompiled(System.Guid nodeGuid, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E astNodes)",
+      "summary": "This class represents a state after a nodemodel is compiled to AST nodes.",
+      "params": [
+        {
+          "name": "nodeGuid",
+          "type": "System.Guid",
+          "doc": "Node unique ID",
+          "optional": false
+        },
+        {
+          "name": "astNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Resulting AST nodes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "OnCompiling(System.Guid)",
+      "signature": "void OnCompiling(System.Guid nodeGuid)",
+      "summary": "This class represents the intermediate state (Compiling state), when a nodemodel is compiled to AST nodes.",
+      "params": [
+        {
+          "name": "nodeGuid",
+          "type": "System.Guid",
+          "doc": "Node unique ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExecutionTimeData",
+      "type": "Dynamo.Engine.Profiling.IProfilingExecutionTimeData",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns information about time spent compiling and executing nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "HasPendingGraphSyncData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if there are graph sync data in the queue waiting to be executed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "IsDisposed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "A property defining whether the EngineController has been disposed or not. This is a conservative field, as there should only be one owner of a valid EngineController or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "LibraryServices",
+      "type": "Dynamo.Engine.LibraryServices",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns library service instance.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "LiveRunnerCore",
+      "type": "ProtoCore.Core",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns DesignScript core.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    },
+    {
+      "name": "LiveRunnerRuntimeCore",
+      "type": "ProtoCore.RuntimeCore",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns DesignScript runtime core.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "AstBuilt",
+      "delegate": "Dynamo.Engine.AstBuiltEventHandler",
+      "signature": "public event Dynamo.Engine.AstBuiltEventHandler AstBuilt",
+      "summary": "This event is fired when a node has been compiled.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/EngineController.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

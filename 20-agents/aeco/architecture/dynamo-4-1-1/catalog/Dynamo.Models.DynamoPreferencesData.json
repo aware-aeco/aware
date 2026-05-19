@@ -1,0 +1,118 @@
+{
+  "name": "DynamoPreferencesData",
+  "namespace": "Dynamo.Models",
+  "kind": "class",
+  "summary": "This class contains the extra Dynamo-specific preferences data",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs",
+  "constructors": [
+    {
+      "name": "DynamoPreferencesData(double, bool, bool, string, string, string)",
+      "signature": "void DynamoPreferencesData(double scaleFactor, bool hasRunWithoutCrash, bool isVisibleInDynamoLibrary, string version, string runType, string runPeriod)",
+      "summary": "DynamoPreferencesData.DynamoPreferencesData",
+      "params": [
+        {
+          "name": "scaleFactor",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "hasRunWithoutCrash",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "isVisibleInDynamoLibrary",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "runType",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "runPeriod",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Default",
+      "signature": "Dynamo.Models.DynamoPreferencesData Default()",
+      "summary": "DynamoPreferencesData.Default",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Models.DynamoPreferencesData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasRunWithoutCrash",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoPreferencesData.HasRunWithoutCrash",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "IsVisibleInDynamoLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoPreferencesData.IsVisibleInDynamoLibrary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "RunPeriod",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoPreferencesData.RunPeriod",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "RunType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoPreferencesData.RunType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "ScaleFactor",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoPreferencesData.ScaleFactor",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoPreferencesData.Version",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,54 @@
+{
+  "name": "LayoutElementType",
+  "namespace": "Dynamo.Wpf.Interfaces",
+  "kind": "enum",
+  "summary": "Represents the type of the element. Possible values are section, category, group, create, action, query and none.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Interfaces/LayoutSpecification.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "action",
+      "value": 4,
+      "summary": "Elements of this type result in library items that get clubbed under the Action cluster"
+    },
+    {
+      "name": "category",
+      "value": 1,
+      "summary": "Category elements represent the root library items contained in section elements."
+    },
+    {
+      "name": "classType",
+      "value": 7,
+      "summary": "classType comes directly under its parent category, it contains just text without icon"
+    },
+    {
+      "name": "create",
+      "value": 3,
+      "summary": "Elements of this type result in library items that get clubbed under the Create cluster"
+    },
+    {
+      "name": "group",
+      "value": 2,
+      "summary": "Groups comes directly under its parent category, it contains just text without icon"
+    },
+    {
+      "name": "none",
+      "value": 6,
+      "summary": "All other expandable library items that are not categories or groups"
+    },
+    {
+      "name": "query",
+      "value": 5,
+      "summary": "Elements of this type result in library items that get clubbed under the Query cluster"
+    },
+    {
+      "name": "section",
+      "value": 0,
+      "summary": "Section elements represent the root items on the library view"
+    }
+  ]
+}

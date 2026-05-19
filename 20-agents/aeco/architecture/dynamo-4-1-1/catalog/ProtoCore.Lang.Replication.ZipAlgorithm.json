@@ -1,0 +1,22 @@
+{
+  "name": "ZipAlgorithm",
+  "namespace": "ProtoCore.Lang.Replication",
+  "kind": "enum",
+  "summary": "How should the zip algorithm handle cases where one data stream is longer than the other",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/Replication/ReplicationInstruction.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Longest",
+      "value": 1
+    },
+    {
+      "name": "Shortest",
+      "value": 0
+    }
+  ]
+}

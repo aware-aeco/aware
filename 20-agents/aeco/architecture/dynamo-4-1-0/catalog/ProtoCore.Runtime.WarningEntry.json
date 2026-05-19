@@ -1,0 +1,13 @@
+{
+  "name": "WarningEntry",
+  "namespace": "ProtoCore.Runtime",
+  "kind": "struct",
+  "summary": "Type WarningEntry",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,137 @@
+{
+  "name": "PackageUploadHandle",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageUploadHandle",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs",
+  "constructors": [
+    {
+      "name": "PackageUploadHandle(Greg.Requests.PackageUploadRequestBody)",
+      "signature": "void PackageUploadHandle(Greg.Requests.PackageUploadRequestBody header)",
+      "summary": "PackageUploadHandle.PackageUploadHandle",
+      "params": [
+        {
+          "name": "header",
+          "type": "Greg.Requests.PackageUploadRequestBody",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "PackageUploadHandle(Greg.Requests.PackageVersionUploadRequestBody)",
+      "signature": "void PackageUploadHandle(Greg.Requests.PackageVersionUploadRequestBody header)",
+      "summary": "PackageUploadHandle.PackageUploadHandle",
+      "params": [
+        {
+          "name": "header",
+          "type": "Greg.Requests.PackageVersionUploadRequestBody",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Done(Greg.Responses.PackageHeader)",
+      "signature": "void Done(Greg.Responses.PackageHeader ph)",
+      "summary": "PackageUploadHandle.Done",
+      "params": [
+        {
+          "name": "ph",
+          "type": "Greg.Responses.PackageHeader",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "Error(string)",
+      "signature": "void Error(string errorString)",
+      "summary": "PackageUploadHandle.Error",
+      "params": [
+        {
+          "name": "errorString",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CompletedHeader",
+      "type": "Greg.Responses.PackageHeader",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageUploadHandle.CompletedHeader",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "ErrorString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageUploadHandle.ErrorString",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "Header",
+      "type": "Greg.Requests.PackageUploadRequestBody",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageUploadHandle.Header",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageUploadHandle.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "UploadState",
+      "type": "Dynamo.PackageManager.PackageUploadHandle.State",
+      "getter": true,
+      "setter": true,
+      "summary": "PackageUploadHandle.UploadState",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "VersionHeader",
+      "type": "Greg.Requests.PackageVersionUploadRequestBody",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageUploadHandle.VersionHeader",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    },
+    {
+      "name": "VersionName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageUploadHandle.VersionName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadHandle.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

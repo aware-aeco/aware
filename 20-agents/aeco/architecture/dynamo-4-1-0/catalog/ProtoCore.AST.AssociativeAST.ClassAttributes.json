@@ -1,0 +1,68 @@
+{
+  "name": "ClassAttributes",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type ClassAttributes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "ClassAttributes(string, string)",
+      "signature": "void ClassAttributes(string msg, string preferredShortName)",
+      "summary": "ClassAttributes.ClassAttributes",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "preferredShortName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HiddenInLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassAttributes.HiddenInLibrary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "IsObsolete",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassAttributes.IsObsolete",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ObsoleteMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassAttributes.ObsoleteMessage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "PreferredShortName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassAttributes.PreferredShortName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,55 @@
+{
+  "name": "BackpatchTable",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type BackpatchTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs",
+  "constructors": [
+    {
+      "name": "BackpatchTable()",
+      "signature": "void BackpatchTable()",
+      "summary": "BackpatchTable.BackpatchTable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Append(int, int)",
+      "signature": "void Append(int bp, int pc)",
+      "summary": "BackpatchTable.Append",
+      "params": [
+        {
+          "name": "bp",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "backpatchList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.BackpatchNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "BackpatchTable.backpatchList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,300 @@
+{
+  "name": "CustomNodeWorkspaceModel",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "This class contains methods and properties that defines a customnodeworkspace.",
+  "base": "Dynamo.Graph.Workspaces.WorkspaceModel",
+  "interfaces": [
+    "Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel",
+    "Dynamo.Graph.Workspaces.IWorkspaceModel",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "CustomNodeWorkspaceModel(Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E, ProtoCore.Namespace.ElementResolver, Dynamo.Graph.Workspaces.WorkspaceInfo)",
+      "signature": "void CustomNodeWorkspaceModel(Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E annotations, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E presets, ProtoCore.Namespace.ElementResolver elementResolver, Dynamo.Graph.Workspaces.WorkspaceInfo info)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel class by given information about it and specified item collections",
+      "params": [
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Node factory to create nodes",
+          "optional": false
+        },
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "Node collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "doc": "Note collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "annotations",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+          "doc": "Group collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "presets",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+          "doc": "Preset collection of the workspace",
+          "optional": false
+        },
+        {
+          "name": "elementResolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "ElementResolver responsible for resolving a partial class name to its fully resolved name",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "doc": "Information for creating custom node workspace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeWorkspaceModel(Dynamo.Graph.Workspaces.WorkspaceInfo, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory)",
+      "signature": "void CustomNodeWorkspaceModel(Dynamo.Graph.Workspaces.WorkspaceInfo info, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory factory)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel class by given information about it and node factory",
+      "params": [
+        {
+          "name": "info",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "doc": "Information for creating custom node workspace",
+          "optional": false
+        },
+        {
+          "name": "factory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "Node factory to create nodes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSharedName",
+      "signature": "string GetSharedName()",
+      "summary": "Gets appropriate name of workspace for sharing.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "The name of workspace for sharing"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "NodeModified(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void NodeModified(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "CustomNodeWorkspaceModel.NodeModified",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnFunctionIdChanged(System.Guid)",
+      "signature": "void OnFunctionIdChanged(System.Guid oldId)",
+      "summary": "CustomNodeWorkspaceModel.OnFunctionIdChanged",
+      "params": [
+        {
+          "name": "oldId",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "OnInfoChanged",
+      "signature": "void OnInfoChanged()",
+      "summary": "CustomNodeWorkspaceModel.OnInfoChanged",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "Save(string, bool, Dynamo.Engine.EngineController)",
+      "signature": "void Save(string newPath, bool isBackup, Dynamo.Engine.EngineController engine)",
+      "summary": "Saves custom node workspace",
+      "params": [
+        {
+          "name": "newPath",
+          "type": "string",
+          "doc": "New location to save the workspace.",
+          "optional": false
+        },
+        {
+          "name": "isBackup",
+          "type": "bool",
+          "doc": "Indicates whether saved workspace is backup or not. If it\u0027s not backup, we should add it to recent files. Otherwise leave it.",
+          "optional": false
+        },
+        {
+          "name": "engine",
+          "type": "Dynamo.Engine.EngineController",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "SetInfo(string, string, string, string)",
+      "signature": "void SetInfo(string newName, string newCategory, string newDescription, string newFilename)",
+      "summary": "Updates custom node information by given data",
+      "params": [
+        {
+          "name": "newName",
+          "type": "string",
+          "doc": "New name of the workspace. The name will not change if the parameter is omitted.",
+          "optional": false
+        },
+        {
+          "name": "newCategory",
+          "type": "string",
+          "doc": "New category of the workspace. The category will not change if the parameter is omitted.",
+          "optional": false
+        },
+        {
+          "name": "newDescription",
+          "type": "string",
+          "doc": "New description of the workspace. The description will not change if the parameter is omitted.",
+          "optional": false
+        },
+        {
+          "name": "newFilename",
+          "type": "string",
+          "doc": "New file name of the workspace. The file name will not change if the parameter is omitted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Search category for this workspace, if it is a Custom Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeDefinition",
+      "type": "Dynamo.CustomNodeDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "The definition of this custom node, based on the current state of this workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeDependencies",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeDefinition\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All CustomNodeDefinitions which this Custom Node depends on.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns identifier of the custom node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeInfo",
+      "type": "Dynamo.CustomNodeInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "The information about this custom node, based on the current state of this workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "A description of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "IsVisibleInDynamoLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Custom node visibility in the Dynamo library",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "DefinitionUpdated",
+      "delegate": "System.Action",
+      "signature": "public event System.Action DefinitionUpdated",
+      "summary": "Notifies all custom node instances that definition has changed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FunctionIdChanged",
+      "delegate": "System.Action\u003CSystem.Guid\u003E",
+      "signature": "public event System.Action\u003CSystem.Guid\u003E FunctionIdChanged",
+      "summary": "Notifies listeners that custom node identifier has changed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "InfoChanged",
+      "delegate": "System.Action",
+      "signature": "public event System.Action InfoChanged",
+      "summary": "Notifies listeners that custom node workspace has changed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/CustomNodeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

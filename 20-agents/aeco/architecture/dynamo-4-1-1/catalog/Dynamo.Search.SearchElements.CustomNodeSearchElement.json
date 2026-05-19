@@ -1,0 +1,120 @@
+{
+  "name": "CustomNodeSearchElement",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "Search element for custom nodes.",
+  "base": "Dynamo.Search.SearchElements.NodeSearchElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs",
+  "constructors": [
+    {
+      "name": "CustomNodeSearchElement(Dynamo.Graph.Nodes.CustomNodes.ICustomNodeSource, Dynamo.CustomNodeInfo)",
+      "signature": "void CustomNodeSearchElement(Dynamo.Graph.Nodes.CustomNodes.ICustomNodeSource customNodeManager, Dynamo.CustomNodeInfo info)",
+      "summary": "Initializes a new instance of the Dynamo.Search.SearchElements.CustomNodeSearchElement class.",
+      "params": [
+        {
+          "name": "customNodeManager",
+          "type": "Dynamo.Graph.Nodes.CustomNodes.ICustomNodeSource",
+          "doc": "Custom node manager",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.CustomNodeInfo",
+          "doc": "Custom node info",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstructNewNodeModel",
+      "signature": "Dynamo.Graph.Nodes.NodeModel ConstructNewNodeModel()",
+      "summary": "CustomNodeSearchElement.ConstructNewNodeModel",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    },
+    {
+      "name": "GenerateInputParameters",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003Cstring, string\u003E\u003E GenerateInputParameters()",
+      "summary": "CustomNodeSearchElement.GenerateInputParameters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003Cstring, string\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    },
+    {
+      "name": "GenerateOutputParameters",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GenerateOutputParameters()",
+      "summary": "CustomNodeSearchElement.GenerateOutputParameters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    },
+    {
+      "name": "SyncWithCustomNodeInfo(Dynamo.CustomNodeInfo)",
+      "signature": "void SyncWithCustomNodeInfo(Dynamo.CustomNodeInfo info)",
+      "summary": "Updates the properties of this search element.",
+      "params": [
+        {
+          "name": "info",
+          "type": "Dynamo.CustomNodeInfo",
+          "doc": "Actual data of custom node",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a name using which this node can be created",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    },
+    {
+      "name": "ID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns identifier of the custom node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Path to this custom node in disk, used in the Edit context menu.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Search/SearchElements/CustomNodeSearchElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,98 @@
+{
+  "name": "NodeHandler",
+  "namespace": "Dynamo.Models",
+  "kind": "delegate",
+  "summary": "Delegate used in events, when it\u0027s required to send node.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs",
+  "constructors": [
+    {
+      "name": "NodeHandler(object, IntPtr)",
+      "signature": "void NodeHandler(object object, IntPtr method)",
+      "summary": "NodeHandler.NodeHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Graph.Nodes.NodeModel, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Graph.Nodes.NodeModel node, System.AsyncCallback callback, object object)",
+      "summary": "NodeHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "NodeHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void Invoke(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "NodeHandler.Invoke",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelDelegates.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Graph.Nodes.NodeModel node)"
+}

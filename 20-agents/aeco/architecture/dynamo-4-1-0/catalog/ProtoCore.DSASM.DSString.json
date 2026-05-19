@@ -1,0 +1,158 @@
+{
+  "name": "DSString",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type DSString",
+  "base": "ProtoCore.DSASM.HeapElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs",
+  "constructors": [
+    {
+      "name": "DSString(ProtoCore.DSASM.StackValue[], ProtoCore.DSASM.Heap)",
+      "signature": "void DSString(ProtoCore.DSASM.StackValue[] values, ProtoCore.DSASM.Heap heap)",
+      "summary": "DSString.DSString",
+      "params": [
+        {
+          "name": "values",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    },
+    {
+      "name": "DSString(int, ProtoCore.DSASM.Heap)",
+      "signature": "void DSString(int size, ProtoCore.DSASM.Heap heap)",
+      "summary": "DSString.DSString",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "DSString.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    },
+    {
+      "name": "GetValueAtIndex(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueAtIndex(ProtoCore.DSASM.StackValue index, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "DSString.GetValueAtIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    },
+    {
+      "name": "GetValueAtIndex(int, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetValueAtIndex(int index, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "DSString.GetValueAtIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    },
+    {
+      "name": "SetPointer(ProtoCore.DSASM.StackValue)",
+      "signature": "void SetPointer(ProtoCore.DSASM.StackValue pointer)",
+      "summary": "DSString.SetPointer",
+      "params": [
+        {
+          "name": "pointer",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MemorySize",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "DSString.MemorySize",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    },
+    {
+      "name": "Value",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DSString.Value",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/DSString.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,643 @@
+{
+  "name": "ProtoDouble",
+  "namespace": "ProtoCore.Utils",
+  "kind": "struct",
+  "summary": "Type ProtoDouble",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs",
+  "constructors": [
+    {
+      "name": "ProtoDouble(ProtoCore.Utils.ProtoDouble)",
+      "signature": "void ProtoDouble(ProtoCore.Utils.ProtoDouble d)",
+      "summary": "ProtoDouble.ProtoDouble",
+      "params": [
+        {
+          "name": "d",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "ProtoDouble(double)",
+      "signature": "void ProtoDouble(double value)",
+      "summary": "ProtoDouble.ProtoDouble",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "ProtoDouble.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "ProtoDouble.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "Parse(string)",
+      "signature": "ProtoCore.Utils.ProtoDouble Parse(string s)",
+      "summary": "ProtoDouble.Parse",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "Parse(string, System.Globalization.NumberStyles)",
+      "signature": "ProtoCore.Utils.ProtoDouble Parse(string s, System.Globalization.NumberStyles style)",
+      "summary": "ProtoDouble.Parse",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Globalization.NumberStyles",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "Parse(string, System.Globalization.NumberStyles, System.IFormatProvider)",
+      "signature": "ProtoCore.Utils.ProtoDouble Parse(string s, System.Globalization.NumberStyles style, System.IFormatProvider provider)",
+      "summary": "ProtoDouble.Parse",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Globalization.NumberStyles",
+          "optional": false
+        },
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "Parse(string, System.IFormatProvider)",
+      "signature": "ProtoCore.Utils.ProtoDouble Parse(string s, System.IFormatProvider provider)",
+      "summary": "ProtoDouble.Parse",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ProtoDouble.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "ToString(System.IFormatProvider)",
+      "signature": "string ToString(System.IFormatProvider provider)",
+      "summary": "ProtoDouble.ToString",
+      "params": [
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "ToString(string)",
+      "signature": "string ToString(string format)",
+      "summary": "ProtoDouble.ToString",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "ToString(string, System.IFormatProvider)",
+      "signature": "string ToString(string format, System.IFormatProvider provider)",
+      "summary": "ProtoDouble.ToString",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "TryParse(string, System.Globalization.NumberStyles, System.IFormatProvider, ref ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool TryParse(string s, System.Globalization.NumberStyles style, System.IFormatProvider provider, ref ProtoCore.Utils.ProtoDouble result)",
+      "summary": "ProtoDouble.TryParse",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "System.Globalization.NumberStyles",
+          "optional": false
+        },
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "ref ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "TryParse(string, ref ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool TryParse(string s, ref ProtoCore.Utils.ProtoDouble result)",
+      "summary": "ProtoDouble.TryParse",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "ref ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Addition(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "ProtoCore.Utils.ProtoDouble op_Addition(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_Addition",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Division(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "ProtoCore.Utils.ProtoDouble op_Division(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_Division",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Equality(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool op_Equality(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_Equality",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Explicit(ProtoCore.Utils.ProtoDouble)",
+      "signature": "long op_Explicit(ProtoCore.Utils.ProtoDouble d)",
+      "summary": "ProtoDouble.op_Explicit",
+      "params": [
+        {
+          "name": "d",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Explicit(ProtoCore.Utils.ProtoDouble)",
+      "signature": "float op_Explicit(ProtoCore.Utils.ProtoDouble d)",
+      "summary": "ProtoDouble.op_Explicit",
+      "params": [
+        {
+          "name": "d",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Explicit(ProtoCore.Utils.ProtoDouble)",
+      "signature": "int op_Explicit(ProtoCore.Utils.ProtoDouble d)",
+      "summary": "ProtoDouble.op_Explicit",
+      "params": [
+        {
+          "name": "d",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_GreaterThan(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool op_GreaterThan(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_GreaterThan",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_GreaterThanOrEqual(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool op_GreaterThanOrEqual(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_GreaterThanOrEqual",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Implicit(ProtoCore.Utils.ProtoDouble)",
+      "signature": "double op_Implicit(ProtoCore.Utils.ProtoDouble d)",
+      "summary": "ProtoDouble.op_Implicit",
+      "params": [
+        {
+          "name": "d",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Implicit(double)",
+      "signature": "ProtoCore.Utils.ProtoDouble op_Implicit(double value)",
+      "summary": "ProtoDouble.op_Implicit",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Inequality(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool op_Inequality(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_Inequality",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_LessThan(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool op_LessThan(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_LessThan",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_LessThanOrEqual(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "bool op_LessThanOrEqual(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_LessThanOrEqual",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Multiply(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "ProtoCore.Utils.ProtoDouble op_Multiply(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_Multiply",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    },
+    {
+      "name": "op_Subtraction(ProtoCore.Utils.ProtoDouble, ProtoCore.Utils.ProtoDouble)",
+      "signature": "ProtoCore.Utils.ProtoDouble op_Subtraction(ProtoCore.Utils.ProtoDouble left, ProtoCore.Utils.ProtoDouble right)",
+      "summary": "ProtoDouble.op_Subtraction",
+      "params": [
+        {
+          "name": "left",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "ProtoCore.Utils.ProtoDouble",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Utils.ProtoDouble",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/ProtoDouble.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

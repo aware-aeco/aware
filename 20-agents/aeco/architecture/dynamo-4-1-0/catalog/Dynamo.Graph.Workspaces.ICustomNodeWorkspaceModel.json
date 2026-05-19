@@ -1,0 +1,69 @@
+{
+  "name": "ICustomNodeWorkspaceModel",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "interface",
+  "summary": "Type ICustomNodeWorkspaceModel",
+  "interfaces": [
+    "Dynamo.Graph.Workspaces.IWorkspaceModel",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CustomNodeDefinition",
+      "type": "Dynamo.CustomNodeDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "ICustomNodeWorkspaceModel.CustomNodeDefinition",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "ICustomNodeWorkspaceModel.CustomNodeId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs"
+    },
+    {
+      "name": "CustomNodeInfo",
+      "type": "Dynamo.CustomNodeInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "ICustomNodeWorkspaceModel.CustomNodeInfo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "DefinitionUpdated",
+      "delegate": "System.Action",
+      "signature": "public event System.Action DefinitionUpdated",
+      "summary": "ICustomNodeWorkspaceModel.DefinitionUpdated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FunctionIdChanged",
+      "delegate": "System.Action\u003CSystem.Guid\u003E",
+      "signature": "public event System.Action\u003CSystem.Guid\u003E FunctionIdChanged",
+      "summary": "ICustomNodeWorkspaceModel.FunctionIdChanged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "InfoChanged",
+      "delegate": "System.Action",
+      "signature": "public event System.Action InfoChanged",
+      "summary": "ICustomNodeWorkspaceModel.InfoChanged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/ICustomNodeWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

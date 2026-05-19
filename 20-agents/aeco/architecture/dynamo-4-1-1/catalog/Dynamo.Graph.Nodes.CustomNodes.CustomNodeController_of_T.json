@@ -1,0 +1,199 @@
+{
+  "name": "CustomNodeController\u003CT\u003E",
+  "namespace": "Dynamo.Graph.Nodes.CustomNodes",
+  "kind": "class",
+  "summary": "Controller that synchronizes a custom node with a node definition.",
+  "base": "Dynamo.Graph.Nodes.FunctionCallNodeController\u003CT\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs",
+  "constructors": [
+    {
+      "name": "CustomNodeController(T)",
+      "signature": "void CustomNodeController(T def)",
+      "summary": "CustomNodeController.CustomNodeController",
+      "params": [
+        {
+          "name": "def",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AssignIdentifiersForFunctionCall(Dynamo.Graph.Nodes.NodeModel, ProtoCore.AST.AssociativeAST.AssociativeNode, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void AssignIdentifiersForFunctionCall(Dynamo.Graph.Nodes.NodeModel model, ProtoCore.AST.AssociativeAST.AssociativeNode rhs, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E resultAst)",
+      "summary": "CustomNodeController.AssignIdentifiersForFunctionCall",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        },
+        {
+          "name": "resultAst",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "BuildOutputAst(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void BuildOutputAst(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E resultAst)",
+      "summary": "CustomNodeController.BuildOutputAst",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        },
+        {
+          "name": "resultAst",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "GetFunctionApplication(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode GetFunctionApplication(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes)",
+      "summary": "CustomNodeController.GetFunctionApplication",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "InitializeInputs(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void InitializeInputs(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "CustomNodeController.InitializeInputs",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "InitializeOutputs(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void InitializeOutputs(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "CustomNodeController.InitializeOutputs",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "IsInSyncWithNode(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "bool IsInSyncWithNode(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "Return if the custom node instance is in sync with its definition. It may be out of sync if .dyf file is opened and updated and then .dyn file is opened.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext saveContext)",
+      "summary": "Serializes CustomNode.",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "doc": "Xml node",
+          "optional": false
+        },
+        {
+          "name": "saveContext",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "SaveContext is used in base class.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    },
+    {
+      "name": "SyncNodeWithDefinition(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void SyncNodeWithDefinition(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "Synchronizes custom node with its definition.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Custom node model",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/CustomNodes/CustomNodeController.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

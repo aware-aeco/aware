@@ -1,0 +1,137 @@
+{
+  "name": "ScopedNodeModel",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "ScopedNodeModel will put its children in its scope so that they won\u0027t get compiled in global scope.",
+  "base": "Dynamo.Graph.Nodes.NodeModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ScopedNodeModel.cs",
+  "constructors": [
+    {
+      "name": "ScopedNodeModel()",
+      "signature": "void ScopedNodeModel()",
+      "summary": "ScopedNodeModel.ScopedNodeModel",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ScopedNodeModel.cs"
+    },
+    {
+      "name": "ScopedNodeModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E)",
+      "signature": "void ScopedNodeModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E inPorts, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E outPorts)",
+      "summary": "ScopedNodeModel.ScopedNodeModel",
+      "params": [
+        {
+          "name": "inPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "outPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ScopedNodeModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BuildOutputAstInScope(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, bool, Dynamo.Engine.CodeGeneration.AstBuilder)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E BuildOutputAstInScope(System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes, bool verboseLogging, Dynamo.Engine.CodeGeneration.AstBuilder builder)",
+      "summary": "Similar to NodeModel.BuildOutputAst(). When compiled to AST, for ScopedNodeModel this method will be called when all requirements are satisfied. The derived class needs to implement this method to compile its children into some scopes.",
+      "params": [
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "verboseLogging",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "builder",
+          "type": "Dynamo.Engine.CodeGeneration.AstBuilder",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ScopedNodeModel.cs"
+    },
+    {
+      "name": "GetInScopeNodesForInport(int, bool, bool, bool)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E GetInScopeNodesForInport(int portIndex, bool checkEscape, bool isInclusive, bool forceToGetNodeForInport)",
+      "summary": "Returns all nodes that in its input ports\u0027 scope. A node is in its scope if that node is one of its upstream nodes.",
+      "params": [
+        {
+          "name": "portIndex",
+          "type": "int",
+          "doc": "Inport index",
+          "optional": false
+        },
+        {
+          "name": "checkEscape",
+          "type": "bool",
+          "doc": "If need to exclude nodes that one of their downstream nodes are not in the scope",
+          "optional": false
+        },
+        {
+          "name": "isInclusive",
+          "type": "bool",
+          "doc": "If a upstream node is ScopedNodeModel, need to include all upstream nodes of that node.",
+          "optional": false
+        },
+        {
+          "name": "forceToGetNodeForInport",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ScopedNodeModel.cs"
+    },
+    {
+      "name": "IsScopedInport(int)",
+      "signature": "bool IsScopedInport(int portIndex)",
+      "summary": "Specify if the corresponding inport has scope or not.",
+      "params": [
+        {
+          "name": "portIndex",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ScopedNodeModel.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

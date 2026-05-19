@@ -1,0 +1,17 @@
+{
+  "name": "IRecursiveGrouping\u003CT\u003E",
+  "namespace": "Dynamo.Utilities",
+  "kind": "interface",
+  "summary": "A collection of recursive groupings that have a common key.",
+  "interfaces": [
+    "System.Linq.IGrouping\u003CT, Dynamo.Utilities.IRecursiveGrouping\u003CT\u003E\u003E",
+    "System.Collections.Generic.IEnumerable\u003CDynamo.Utilities.IRecursiveGrouping\u003CT\u003E\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

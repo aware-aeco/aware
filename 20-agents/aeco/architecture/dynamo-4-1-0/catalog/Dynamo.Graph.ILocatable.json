@@ -1,0 +1,81 @@
+{
+  "name": "ILocatable",
+  "namespace": "Dynamo.Graph",
+  "kind": "interface",
+  "summary": "Interface contains definitions for locatable objects. Objects such as nodes, connectors, workspaces etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ReportPosition",
+      "signature": "void ReportPosition()",
+      "summary": "Notify listeners that the position of the object has changed, then all dependant objects will also redraw themselves.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CenterX",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "X coordinate of center point.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "CenterY",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Y coordinate of center point.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Height of locatable object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Rect",
+      "type": "Dynamo.Utilities.Rect2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Bounds of locatable object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Width",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Width of locatable object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "X coordinate of locatable object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Y coordinate of locatable object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/ModelBase.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

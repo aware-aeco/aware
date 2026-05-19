@@ -1,0 +1,296 @@
+{
+  "name": "ArrayUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type ArrayUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ContainsDoubleElement(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "bool ContainsDoubleElement(ProtoCore.DSASM.StackValue sv, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Whether sv is double or arrays contains double value.",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "ContainsNonArrayElement(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "bool ContainsNonArrayElement(ProtoCore.DSASM.StackValue sv, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "If the passed in value is not an array or an empty array or an array which contains only empty arrays, return false. Otherwise, return true;",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetCommonItems(System.Collections.Generic.IEnumerable\u003CT\u003E[])",
+      "signature": "System.Collections.Generic.IEnumerable\u003CT\u003E GetCommonItems\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E[] lists)",
+      "summary": "Returns the list of common items from a given collection of generic lists",
+      "params": [
+        {
+          "name": "lists",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+        "doc": "list of common items from multiple lists"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetFirstNonArrayStackValue(ProtoCore.DSASM.StackValue, ref ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "bool GetFirstNonArrayStackValue(ProtoCore.DSASM.StackValue svArray, ref ProtoCore.DSASM.StackValue sv, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Retrieve the first non-array element in an array",
+      "params": [
+        {
+          "name": "svArray",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "sv",
+          "type": "ref ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the element was found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetGreatestCommonSubclassForArray(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.ClassNode GetGreatestCommonSubclassForArray(ProtoCore.DSASM.StackValue array, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "If an empty array is passed, the result will be null if there are instances, but they share no common supertype the result will be var",
+      "params": [
+        {
+          "name": "array",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ClassNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetMaxRankForArray(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "int GetMaxRankForArray(ProtoCore.DSASM.StackValue array, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "ArrayUtils.GetMaxRankForArray",
+      "params": [
+        {
+          "name": "array",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetTypeExamplesForLayer(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.Dictionary\u003Cint, ProtoCore.DSASM.StackValue\u003E GetTypeExamplesForLayer(ProtoCore.DSASM.StackValue paramStackValue, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "This method returns the distinct(by metadata type) reduced params for all the elements inside the paramStackValue, if it is an array. If it is not an array, it just returns the paramStackValue.",
+      "params": [
+        {
+          "name": "paramStackValue",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003Cint, ProtoCore.DSASM.StackValue\u003E",
+        "doc": "A dictionary where the value is the current ReducedParam and the key is its metaData type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetTypeStatisticsForArray(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.Dictionary\u003CProtoCore.DSASM.ClassNode, int\u003E GetTypeStatisticsForArray(ProtoCore.DSASM.StackValue array, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Generate type statistics for the whole array",
+      "params": [
+        {
+          "name": "array",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CProtoCore.DSASM.ClassNode, int\u003E",
+        "doc": "usage frequency by type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetTypeStatisticsForLayer(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.Dictionary\u003CProtoCore.DSASM.ClassNode, int\u003E GetTypeStatisticsForLayer(ProtoCore.DSASM.StackValue array, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Generate type statistics for given layer of an array",
+      "params": [
+        {
+          "name": "array",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CProtoCore.DSASM.ClassNode, int\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "GetZippedIndices(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue[][] GetZippedIndices(System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E indices, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "For an array we supporting zipped replicaiton for array indexing as well. I.e., for the following expression: a[1..3][2..4] = x; It will be expanded to a[1][2] = x; a[2][3] = x; a[3][4] = x; So here we need to calculate zipped indices. The length of returned indices is decided by the shortest length of index that used in array indexing. E.g., For array indexing [{1, 2, 3}][{\u0022x\u0022, \u0022y\u0022}][{6, 7, 8}], i.e., 1 -\u003E \u0022x\u0022 -\u003E 6 2 -\u003E \u0022y\u0022 -\u003E 7 3 -\u003E -\u003E 8 The shortest length of index is 2 ({\u0022x\u0022, \u0022y\u0022}), so function will returns: {{1, \u0022x\u0022, 6}, {2, \u0022y\u0022, 7}}",
+      "params": [
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue[][]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    },
+    {
+      "name": "IsEmpty(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "bool IsEmpty(ProtoCore.DSASM.StackValue arrayPointer, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns true if an array is an empty list or all its elements are empty lists.",
+      "params": [
+        {
+          "name": "arrayPointer",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/ArrayUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

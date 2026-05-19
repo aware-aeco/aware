@@ -1,0 +1,94 @@
+{
+  "name": "Operator",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type Operator",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "add",
+      "value": 8
+    },
+    {
+      "name": "and",
+      "value": 13
+    },
+    {
+      "name": "assign",
+      "value": 1
+    },
+    {
+      "name": "bitwiseand",
+      "value": 16
+    },
+    {
+      "name": "bitwisenegate",
+      "value": 19
+    },
+    {
+      "name": "bitwiseor",
+      "value": 17
+    },
+    {
+      "name": "bitwisexor",
+      "value": 18
+    },
+    {
+      "name": "div",
+      "value": 11
+    },
+    {
+      "name": "dot",
+      "value": 15
+    },
+    {
+      "name": "eq",
+      "value": 6
+    },
+    {
+      "name": "ge",
+      "value": 5
+    },
+    {
+      "name": "gt",
+      "value": 3
+    },
+    {
+      "name": "le",
+      "value": 4
+    },
+    {
+      "name": "lt",
+      "value": 2
+    },
+    {
+      "name": "mod",
+      "value": 12
+    },
+    {
+      "name": "mul",
+      "value": 10
+    },
+    {
+      "name": "none",
+      "value": 0
+    },
+    {
+      "name": "nq",
+      "value": 7
+    },
+    {
+      "name": "or",
+      "value": 14
+    },
+    {
+      "name": "sub",
+      "value": 9
+    }
+  ]
+}

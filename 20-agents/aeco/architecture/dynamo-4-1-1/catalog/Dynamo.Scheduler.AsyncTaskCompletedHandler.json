@@ -1,0 +1,98 @@
+{
+  "name": "AsyncTaskCompletedHandler",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "delegate",
+  "summary": "This delegate is used in AsyncTask events: Completed and Discarded.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTask.cs",
+  "constructors": [
+    {
+      "name": "AsyncTaskCompletedHandler(object, IntPtr)",
+      "signature": "void AsyncTaskCompletedHandler(object object, IntPtr method)",
+      "summary": "AsyncTaskCompletedHandler.AsyncTaskCompletedHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTask.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Scheduler.AsyncTask, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Scheduler.AsyncTask asyncTask, System.AsyncCallback callback, object object)",
+      "summary": "AsyncTaskCompletedHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "asyncTask",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTask.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "AsyncTaskCompletedHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTask.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Scheduler.AsyncTask)",
+      "signature": "void Invoke(Dynamo.Scheduler.AsyncTask asyncTask)",
+      "summary": "AsyncTaskCompletedHandler.Invoke",
+      "params": [
+        {
+          "name": "asyncTask",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/AsyncTask.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Scheduler.AsyncTask asyncTask)"
+}

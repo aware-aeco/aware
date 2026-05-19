@@ -1,0 +1,26 @@
+{
+  "name": "ParseMode",
+  "namespace": "ProtoCore",
+  "kind": "enum",
+  "summary": "Type ParseMode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Core.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AllowNonAssignment",
+      "value": 1
+    },
+    {
+      "name": "None",
+      "value": 2
+    },
+    {
+      "name": "Normal",
+      "value": 0
+    }
+  ]
+}

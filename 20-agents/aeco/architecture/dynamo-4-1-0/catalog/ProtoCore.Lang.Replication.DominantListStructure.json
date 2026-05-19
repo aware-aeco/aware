@@ -1,0 +1,52 @@
+{
+  "name": "DominantListStructure",
+  "namespace": "ProtoCore.Lang.Replication",
+  "kind": "class",
+  "summary": "The positions of items at dominant list.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs",
+  "constructors": [
+    {
+      "name": "DominantListStructure(System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E, int)",
+      "signature": "void DominantListStructure(System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E indices, int argumentIndex)",
+      "summary": "DominantListStructure.DominantListStructure",
+      "params": [
+        {
+          "name": "indices",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "argumentIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ArgumentIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "DominantListStructure.ArgumentIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    },
+    {
+      "name": "Indices",
+      "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003Cint\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "DominantListStructure.Indices",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/Replication/ArgumentAtLevel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

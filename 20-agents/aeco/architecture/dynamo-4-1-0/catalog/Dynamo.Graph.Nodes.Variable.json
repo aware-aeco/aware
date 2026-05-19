@@ -1,0 +1,102 @@
+{
+  "name": "Variable",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Represents variable in CBN.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs",
+  "constructors": [
+    {
+      "name": "Variable(ProtoCore.AST.AssociativeAST.IdentifierNode)",
+      "signature": "void Variable(ProtoCore.AST.AssociativeAST.IdentifierNode identNode)",
+      "summary": "Creates Variable",
+      "params": [
+        {
+          "name": "identNode",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+          "doc": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetCorrectColumn(System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Variable\u003E, Dynamo.Graph.Nodes.Statement.StatementType, int)",
+      "signature": "void SetCorrectColumn(System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Variable\u003E refVar, Dynamo.Graph.Nodes.Statement.StatementType type, int line)",
+      "summary": "Moves column index back only if variable is not an expression.",
+      "params": [
+        {
+          "name": "refVar",
+          "type": "System.Collections.Generic.List\u003CDynamo.Graph.Nodes.Variable\u003E",
+          "doc": "list of variables",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Dynamo.Graph.Nodes.Statement.StatementType",
+          "doc": "statement type",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "doc": "line index",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndColumn",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the index of end column.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "This returns the name of the variable. E.g. a = 5; Name will be \u0022a\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "NameWithIndex",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "This returns the name of the list including its index. E.g. for \u0022a[0] = 5;\u0022, NameWithIndex will be \u0022a[0]\u0022. It simply returns the name of the variable otherwise. E.g. for \u0022a = 5;\u0022 NameWithIndex will be \u0022a\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "Row",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the index of row.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    },
+    {
+      "name": "StartColumn",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the index of start column.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockNode.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

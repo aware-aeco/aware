@@ -1,0 +1,13 @@
+{
+  "name": "InfoEntry",
+  "namespace": "ProtoCore.Runtime",
+  "kind": "struct",
+  "summary": "Type InfoEntry",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,108 @@
+{
+  "name": "SymbolConflictWarningHandler",
+  "namespace": "",
+  "kind": "delegate",
+  "summary": "Type SymbolConflictWarningHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/ElementRewriter.cs",
+  "constructors": [
+    {
+      "name": "SymbolConflictWarningHandler(object, IntPtr)",
+      "signature": "void SymbolConflictWarningHandler(object object, IntPtr method)",
+      "summary": "SymbolConflictWarningHandler.SymbolConflictWarningHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(string, string[], System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(string symbolName, string[] collidingSymbolNames, System.AsyncCallback callback, object object)",
+      "summary": "SymbolConflictWarningHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "symbolName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "collidingSymbolNames",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "SymbolConflictWarningHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    },
+    {
+      "name": "Invoke(string, string[])",
+      "signature": "void Invoke(string symbolName, string[] collidingSymbolNames)",
+      "summary": "SymbolConflictWarningHandler.Invoke",
+      "params": [
+        {
+          "name": "symbolName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "collidingSymbolNames",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(string symbolName, string[] collidingSymbolNames)"
+}

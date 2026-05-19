@@ -1,0 +1,13 @@
+{
+  "name": "Constants",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "struct",
+  "summary": "Type Constants",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

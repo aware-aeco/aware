@@ -1,0 +1,30 @@
+{
+  "name": "ArgumentInfo",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "struct",
+  "summary": "Type ArgumentInfo",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/ProcedureTable.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsDefault",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "ArgumentInfo.IsDefault",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/ProcedureTable.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ArgumentInfo.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/ProcedureTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

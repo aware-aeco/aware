@@ -1,0 +1,40 @@
+{
+  "name": "CompilingEventArgs",
+  "namespace": "Dynamo.Engine.CodeGeneration",
+  "kind": "class",
+  "summary": "This event is triggerred when compiling a NodeModel to AST nodes.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/CompilingEventArgs.cs",
+  "constructors": [
+    {
+      "name": "CompilingEventArgs(System.Guid)",
+      "signature": "void CompilingEventArgs(System.Guid node)",
+      "summary": "CompilingEventArgs.CompilingEventArgs",
+      "params": [
+        {
+          "name": "node",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/CompilingEventArgs.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "NodeId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid of NodeModel that is being compiled to AST.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/CompilingEventArgs.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

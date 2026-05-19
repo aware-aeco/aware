@@ -1,0 +1,23 @@
+{
+  "name": "IRenderPackageSource\u003CT\u003E",
+  "namespace": "Dynamo.Visualization",
+  "kind": "interface",
+  "summary": "This interface has events that is fired when the render packages are changed.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/IRenderPackageSource.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "RenderPackagesUpdated",
+      "delegate": "System.Action\u003CT, Dynamo.Visualization.RenderPackageCache\u003E",
+      "signature": "public event System.Action\u003CT, Dynamo.Visualization.RenderPackageCache\u003E RenderPackagesUpdated",
+      "summary": "An event raised then the source has updated IRenderPackages.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Visualization/IRenderPackageSource.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

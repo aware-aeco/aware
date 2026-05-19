@@ -1,0 +1,24 @@
+{
+  "name": "BackpatchNode",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type BackpatchNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs",
+  "constructors": [
+    {
+      "name": "BackpatchNode()",
+      "signature": "void BackpatchNode()",
+      "summary": "BackpatchNode.BackpatchNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodeGen.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

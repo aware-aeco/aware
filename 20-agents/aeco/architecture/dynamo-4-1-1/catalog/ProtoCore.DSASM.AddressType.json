@@ -1,0 +1,126 @@
+{
+  "name": "AddressType",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type AddressType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ArrayDim",
+      "value": 19
+    },
+    {
+      "name": "ArrayKey",
+      "value": 27
+    },
+    {
+      "name": "ArrayPointer",
+      "value": 15
+    },
+    {
+      "name": "BlockIndex",
+      "value": 13
+    },
+    {
+      "name": "Boolean",
+      "value": 9
+    },
+    {
+      "name": "CallingConvention",
+      "value": 23
+    },
+    {
+      "name": "Char",
+      "value": 10
+    },
+    {
+      "name": "ClassIndex",
+      "value": 6
+    },
+    {
+      "name": "DefaultArg",
+      "value": 18
+    },
+    {
+      "name": "Double",
+      "value": 8
+    },
+    {
+      "name": "Dynamic",
+      "value": 21
+    },
+    {
+      "name": "ExplicitCall",
+      "value": 26
+    },
+    {
+      "name": "FrameType",
+      "value": 24
+    },
+    {
+      "name": "FunctionIndex",
+      "value": 3
+    },
+    {
+      "name": "FunctionPointer",
+      "value": 16
+    },
+    {
+      "name": "Int",
+      "value": 7
+    },
+    {
+      "name": "Invalid",
+      "value": 0
+    },
+    {
+      "name": "LabelIndex",
+      "value": 12
+    },
+    {
+      "name": "MemVarIndex",
+      "value": 4
+    },
+    {
+      "name": "Null",
+      "value": 17
+    },
+    {
+      "name": "Pointer",
+      "value": 14
+    },
+    {
+      "name": "Register",
+      "value": 1
+    },
+    {
+      "name": "ReplicationGuide",
+      "value": 20
+    },
+    {
+      "name": "StaticMemVarIndex",
+      "value": 5
+    },
+    {
+      "name": "StaticType",
+      "value": 22
+    },
+    {
+      "name": "String",
+      "value": 11
+    },
+    {
+      "name": "ThisPtr",
+      "value": 25
+    },
+    {
+      "name": "VarIndex",
+      "value": 2
+    }
+  ]
+}

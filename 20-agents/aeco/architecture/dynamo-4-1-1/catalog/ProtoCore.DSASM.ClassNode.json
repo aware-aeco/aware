@@ -1,0 +1,440 @@
+{
+  "name": "ClassNode",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type ClassNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs",
+  "constructors": [
+    {
+      "name": "ClassNode()",
+      "signature": "void ClassNode()",
+      "summary": "ClassNode.ClassNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "ClassNode(ProtoCore.DSASM.ClassNode)",
+      "signature": "void ClassNode(ProtoCore.DSASM.ClassNode rhs)",
+      "summary": "ClassNode.ClassNode",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.DSASM.ClassNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConvertibleTo(int)",
+      "signature": "bool ConvertibleTo(int type)",
+      "summary": "ClassNode.ConvertibleTo",
+      "params": [
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetCoercionScore(int)",
+      "signature": "int GetCoercionScore(int type)",
+      "summary": "ClassNode.GetCoercionScore",
+      "params": [
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetDisposeMethod",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetDisposeMethod()",
+      "summary": "ClassNode.GetDisposeMethod",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetFirstConstructorBy(string, int)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFirstConstructorBy(string procName, int argCount)",
+      "summary": "ClassNode.GetFirstConstructorBy",
+      "params": [
+        {
+          "name": "procName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argCount",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetFirstMemberFunctionBy(string)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFirstMemberFunctionBy(string procName)",
+      "summary": "ClassNode.GetFirstMemberFunctionBy",
+      "params": [
+        {
+          "name": "procName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetFirstMemberFunctionBy(string, int)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFirstMemberFunctionBy(string procName, int argCount)",
+      "summary": "ClassNode.GetFirstMemberFunctionBy",
+      "params": [
+        {
+          "name": "procName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argCount",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetFirstStaticFunctionBy(string)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFirstStaticFunctionBy(string procName)",
+      "summary": "ClassNode.GetFirstStaticFunctionBy",
+      "params": [
+        {
+          "name": "procName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetFirstStaticFunctionBy(string, int)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetFirstStaticFunctionBy(string procName, int argCount)",
+      "summary": "ClassNode.GetFirstStaticFunctionBy",
+      "params": [
+        {
+          "name": "procName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argCount",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetFirstVisibleSymbolNoAccessCheck(string)",
+      "signature": "int GetFirstVisibleSymbolNoAccessCheck(string name)",
+      "summary": "ClassNode.GetFirstVisibleSymbolNoAccessCheck",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetMemberFunction(string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, int, ref bool, ref int, bool)",
+      "signature": "ProtoCore.DSASM.ProcedureNode GetMemberFunction(string procName, System.Collections.Generic.List\u003CProtoCore.Type\u003E argTypeList, int classScope, ref bool isAccessible, ref int functionHostClassIndex, bool isStaticOrConstructor)",
+      "summary": "ClassNode.GetMemberFunction",
+      "params": [
+        {
+          "name": "procName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argTypeList",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "isAccessible",
+          "type": "ref bool",
+          "optional": false
+        },
+        {
+          "name": "functionHostClassIndex",
+          "type": "ref int",
+          "optional": false
+        },
+        {
+          "name": "isStaticOrConstructor",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.ProcedureNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IsMemberVariable(ProtoCore.DSASM.SymbolNode)",
+      "signature": "bool IsMemberVariable(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "ClassNode.IsMemberVariable",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IsMyBase(int)",
+      "signature": "bool IsMyBase(int type)",
+      "summary": "ClassNode.IsMyBase",
+      "params": [
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.AttributeEntry\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Attributes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Base",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Base",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "ClassAttributes",
+      "type": "ProtoCore.AST.AssociativeAST.ClassAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.ClassAttributes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "CoerceTypes",
+      "type": "System.Collections.Generic.Dictionary\u003Cint, int\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.CoerceTypes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "ExternLib",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "String description of where the classnode was loaded from The implementation of the class is stored from here",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "ID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.ID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Interfaces",
+      "type": "System.Collections.Generic.List\u003Cint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Interfaces",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassNode.IsEmpty",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IsImportedClass",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.IsImportedClass",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IsInterface",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.IsInterface",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IsStatic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.IsStatic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "ProcTable",
+      "type": "ProtoCore.DSASM.ProcedureTable",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.ProcTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Rank",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Rank",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Size",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Size",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Symbols",
+      "type": "ProtoCore.DSASM.SymbolTable",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.Symbols",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "TypeSystem",
+      "type": "ProtoCore.TypeSystem",
+      "getter": true,
+      "setter": true,
+      "summary": "ClassNode.TypeSystem",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

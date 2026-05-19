@@ -1,0 +1,84 @@
+{
+  "name": "LanguageCodeBlock",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type LanguageCodeBlock",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs",
+  "constructors": [
+    {
+      "name": "LanguageCodeBlock(ProtoCore.Language)",
+      "signature": "void LanguageCodeBlock(ProtoCore.Language lang)",
+      "summary": "LanguageCodeBlock.LanguageCodeBlock",
+      "params": [
+        {
+          "name": "lang",
+          "type": "ProtoCore.Language",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "LanguageCodeBlock(ProtoCore.LanguageCodeBlock)",
+      "signature": "void LanguageCodeBlock(ProtoCore.LanguageCodeBlock rhs)",
+      "summary": "LanguageCodeBlock.LanguageCodeBlock",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.LanguageCodeBlock",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(ProtoCore.LanguageCodeBlock)",
+      "signature": "bool Equals(ProtoCore.LanguageCodeBlock other)",
+      "summary": "Equality check for properties of a language block",
+      "params": [
+        {
+          "name": "other",
+          "type": "ProtoCore.LanguageCodeBlock",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Code",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "LanguageCodeBlock.Code",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    },
+    {
+      "name": "Language",
+      "type": "ProtoCore.Language",
+      "getter": true,
+      "setter": true,
+      "summary": "LanguageCodeBlock.Language",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/CodeBlock.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

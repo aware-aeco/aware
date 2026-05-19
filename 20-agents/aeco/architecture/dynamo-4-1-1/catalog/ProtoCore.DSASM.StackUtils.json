@@ -1,0 +1,87 @@
+{
+  "name": "StackUtils",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "static-class",
+  "summary": "Type StackUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CompareStackValues(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "bool CompareStackValues(ProtoCore.DSASM.StackValue sv1, ProtoCore.DSASM.StackValue sv2, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Deep comparison for two StackValue.",
+      "params": [
+        {
+          "name": "sv1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "sv2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "CompareStackValues(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore, ProtoCore.RuntimeCore, ProtoCore.Runtime.Context)",
+      "signature": "bool CompareStackValues(ProtoCore.DSASM.StackValue sv1, ProtoCore.DSASM.StackValue sv2, ProtoCore.RuntimeCore rtCore1, ProtoCore.RuntimeCore rtCore2, ProtoCore.Runtime.Context context)",
+      "summary": "Deep comparison for two StackValue.",
+      "params": [
+        {
+          "name": "sv1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "sv2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "rtCore1",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "rtCore2",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

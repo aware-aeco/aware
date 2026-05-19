@@ -1,0 +1,24 @@
+{
+  "name": "FFIActivationRecord",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Type FFIActivationRecord",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/FFIFunctionEndPoint.cs",
+  "constructors": [
+    {
+      "name": "FFIActivationRecord()",
+      "signature": "void FFIActivationRecord()",
+      "summary": "FFIActivationRecord.FFIActivationRecord",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/FFIFunctionEndPoint.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

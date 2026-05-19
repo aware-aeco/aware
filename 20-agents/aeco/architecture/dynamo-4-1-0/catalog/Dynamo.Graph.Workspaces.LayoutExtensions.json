@@ -1,0 +1,13 @@
+{
+  "name": "LayoutExtensions",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "static-class",
+  "summary": "Layout class contains methods for organizing graphs.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/LayoutExtensions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

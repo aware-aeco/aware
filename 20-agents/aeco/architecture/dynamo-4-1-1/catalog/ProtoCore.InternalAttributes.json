@@ -1,0 +1,39 @@
+{
+  "name": "InternalAttributes",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "These are DS defined class attributes These attributes are used internally by the compiler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/InternalAttributes.cs",
+  "constructors": [
+    {
+      "name": "InternalAttributes(ProtoCore.DSASM.ClassTable)",
+      "signature": "void InternalAttributes(ProtoCore.DSASM.ClassTable classTable)",
+      "summary": "InternalAttributes.InternalAttributes",
+      "params": [
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/InternalAttributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ClassTable",
+      "type": "ProtoCore.DSASM.ClassTable",
+      "getter": true,
+      "setter": false,
+      "summary": "InternalAttributes.ClassTable",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/InternalAttributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

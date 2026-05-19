@@ -1,0 +1,175 @@
+{
+  "name": "ILibraryViewCustomization",
+  "namespace": "Dynamo.Wpf.Interfaces",
+  "kind": "interface",
+  "summary": "Provides methods to customize library view",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddElements(System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutElement\u003E, string)",
+      "signature": "bool AddElements(System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutElement\u003E elements, string sectionText)",
+      "summary": "Allows clients to add a list of elements to a given section. This operation will fail if the text property of any of the child elements of the given section matches with the text property of the given elements.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutElement\u003E",
+          "doc": "List of layout elements to add",
+          "optional": false
+        },
+        {
+          "name": "sectionText",
+          "type": "string",
+          "doc": "The name of the section to be updated",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "AddIncludeInfo(System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutIncludeInfo\u003E, string)",
+      "signature": "bool AddIncludeInfo(System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutIncludeInfo\u003E includes, string sectionText)",
+      "summary": "Allows clients to add a list of layout include info to a given section. This operation will fail if the path property of any of the includes of the given section conflicts with the path property of the given includes.",
+      "params": [
+        {
+          "name": "includes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutIncludeInfo\u003E",
+          "doc": "List of layout include info to add",
+          "optional": false
+        },
+        {
+          "name": "sectionText",
+          "type": "string",
+          "doc": "The name of the section to be updated",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "AddSections(System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutSection\u003E)",
+      "signature": "bool AddSections(System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutSection\u003E sections)",
+      "summary": "Allows clients to add a new section to the layout specification. This operation will fail if the current specification already contains a section with the same text as of the given section. The clients must call AddElements method to add layout elements to a given section.",
+      "params": [
+        {
+          "name": "sections",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Wpf.Interfaces.LayoutSection\u003E",
+          "doc": "A list of new sections.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "GetSpecification",
+      "signature": "Dynamo.Wpf.Interfaces.LayoutSpecification GetSpecification()",
+      "summary": "Gets a copy of the current library layout specification",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Wpf.Interfaces.LayoutSpecification",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "OnAppShutdown",
+      "signature": "void OnAppShutdown()",
+      "summary": "This method can be called by host application to notify the aplication shutdown so that the customization service can do the cleanup of resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "RegisterResourceStream(string, System.IO.Stream)",
+      "signature": "bool RegisterResourceStream(string urlpath, System.IO.Stream resource)",
+      "summary": "Registers a given resource stream for a given url. If registered successfully the requested resource is returned from the given stream.",
+      "params": [
+        {
+          "name": "urlpath",
+          "type": "string",
+          "doc": "relative path of url including extension of the resource, e.g. /myicons/xicon.png",
+          "optional": false
+        },
+        {
+          "name": "resource",
+          "type": "System.IO.Stream",
+          "doc": "resource data stream",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "SetSpecification(Dynamo.Wpf.Interfaces.LayoutSpecification)",
+      "signature": "void SetSpecification(Dynamo.Wpf.Interfaces.LayoutSpecification specification)",
+      "summary": "Sets the given specification as the current library layout specification by overwriting the current one.",
+      "params": [
+        {
+          "name": "specification",
+          "type": "Dynamo.Wpf.Interfaces.LayoutSpecification",
+          "doc": "New layout specification",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    },
+    {
+      "name": "ToJSONStream",
+      "signature": "System.IO.Stream ToJSONStream()",
+      "summary": "Serializes the current specification to JSON stream",
+      "params": [],
+      "returns": {
+        "type": "System.IO.Stream",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "SpecificationUpdated",
+      "delegate": "System.EventHandler",
+      "signature": "public event System.EventHandler SpecificationUpdated",
+      "summary": "This event is raised when the specification is updated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/ILibraryViewCustomization.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,194 @@
+{
+  "name": "OpCode",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type OpCode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ADD",
+      "value": 1
+    },
+    {
+      "name": "AND",
+      "value": 7
+    },
+    {
+      "name": "BOUNCE",
+      "value": 38
+    },
+    {
+      "name": "CALL",
+      "value": 33
+    },
+    {
+      "name": "CALLR",
+      "value": 34
+    },
+    {
+      "name": "CAST",
+      "value": 32
+    },
+    {
+      "name": "CJMP",
+      "value": 40
+    },
+    {
+      "name": "DEP",
+      "value": 42
+    },
+    {
+      "name": "DIV",
+      "value": 4
+    },
+    {
+      "name": "EQ",
+      "value": 10
+    },
+    {
+      "name": "GE",
+      "value": 14
+    },
+    {
+      "name": "GT",
+      "value": 12
+    },
+    {
+      "name": "JDEP",
+      "value": 41
+    },
+    {
+      "name": "JMP",
+      "value": 39
+    },
+    {
+      "name": "LE",
+      "value": 15
+    },
+    {
+      "name": "LOADELEMENT",
+      "value": 29
+    },
+    {
+      "name": "LT",
+      "value": 13
+    },
+    {
+      "name": "MOD",
+      "value": 5
+    },
+    {
+      "name": "MUL",
+      "value": 3
+    },
+    {
+      "name": "NEG",
+      "value": 6
+    },
+    {
+      "name": "NEWARR",
+      "value": 16
+    },
+    {
+      "name": "NEWOBJ",
+      "value": 17
+    },
+    {
+      "name": "NONE",
+      "value": 0
+    },
+    {
+      "name": "NOT",
+      "value": 9
+    },
+    {
+      "name": "NQ",
+      "value": 11
+    },
+    {
+      "name": "OR",
+      "value": 8
+    },
+    {
+      "name": "POP",
+      "value": 25
+    },
+    {
+      "name": "POPM",
+      "value": 27
+    },
+    {
+      "name": "POPREPGUIDES",
+      "value": 28
+    },
+    {
+      "name": "POPW",
+      "value": 26
+    },
+    {
+      "name": "PUSH",
+      "value": 18
+    },
+    {
+      "name": "PUSHBLOCK",
+      "value": 19
+    },
+    {
+      "name": "PUSHDEP",
+      "value": 22
+    },
+    {
+      "name": "PUSHLEVEL",
+      "value": 24
+    },
+    {
+      "name": "PUSHM",
+      "value": 20
+    },
+    {
+      "name": "PUSHREPGUIDE",
+      "value": 23
+    },
+    {
+      "name": "PUSHW",
+      "value": 21
+    },
+    {
+      "name": "PUSH_ARRAYKEY",
+      "value": 43
+    },
+    {
+      "name": "RETB",
+      "value": 36
+    },
+    {
+      "name": "RETCN",
+      "value": 37
+    },
+    {
+      "name": "RETURN",
+      "value": 35
+    },
+    {
+      "name": "SETELEMENT",
+      "value": 30
+    },
+    {
+      "name": "SETEXPUID",
+      "value": 44
+    },
+    {
+      "name": "SETMEMElEMENT",
+      "value": 31
+    },
+    {
+      "name": "SUB",
+      "value": 2
+    }
+  ]
+}

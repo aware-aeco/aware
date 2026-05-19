@@ -1,0 +1,69 @@
+{
+  "name": "IServiceManager",
+  "namespace": "Dynamo.Extensions",
+  "kind": "interface",
+  "summary": "Defines a mechanism for registering and retrieving a service object; that is, an object that provides custom support to other objects.",
+  "interfaces": [
+    "System.IServiceProvider"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IServiceManager.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RegisterService(T)",
+      "signature": "string RegisterService\u003CT\u003E(T service)",
+      "summary": "Allows extension applications to register some specific service by its type. Only one service of a given type can be registered.",
+      "params": [
+        {
+          "name": "service",
+          "type": "T",
+          "doc": "The service object to register",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "A key for the registered service if registeration is successful else null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IServiceManager.cs"
+    },
+    {
+      "name": "Service",
+      "signature": "T Service\u003CT\u003E()",
+      "summary": "Gets the service object of the specified type.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "The service object if registered else null"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IServiceManager.cs"
+    },
+    {
+      "name": "UnregisterService(string)",
+      "signature": "bool UnregisterService\u003CT\u003E(string serviceKey)",
+      "summary": "Unregisters a service of given type registered with given key.",
+      "params": [
+        {
+          "name": "serviceKey",
+          "type": "string",
+          "doc": "The service key to ensure that only authorized client is unregistering this service type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/IServiceManager.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

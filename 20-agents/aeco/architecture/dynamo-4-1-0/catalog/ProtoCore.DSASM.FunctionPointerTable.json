@@ -1,0 +1,66 @@
+{
+  "name": "FunctionPointerTable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type FunctionPointerTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs",
+  "constructors": [
+    {
+      "name": "FunctionPointerTable()",
+      "signature": "void FunctionPointerTable()",
+      "summary": "FunctionPointerTable.FunctionPointerTable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryGetFunction(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore, ref ProtoCore.DSASM.ProcedureNode)",
+      "signature": "bool TryGetFunction(ProtoCore.DSASM.StackValue functionPointer, ProtoCore.RuntimeCore runtimeCore, ref ProtoCore.DSASM.ProcedureNode procNode)",
+      "summary": "Try to get the original procedure node that the function pointer points to.",
+      "params": [
+        {
+          "name": "functionPointer",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "Function pointer",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "Core",
+          "optional": false
+        },
+        {
+          "name": "procNode",
+          "type": "ref ProtoCore.DSASM.ProcedureNode",
+          "doc": "Procedure node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "functionPointerDictionary",
+      "type": "ProtoCore.DSASM.BiDictionaryOneToOne\u003Cint, ProtoCore.DSASM.FunctionPointerNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "FunctionPointerTable.functionPointerDictionary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

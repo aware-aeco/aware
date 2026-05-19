@@ -1,0 +1,174 @@
+{
+  "name": "IdReferenceResolver",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "The IdReferenceResolver class allows us to use the Guid of an object as the reference id during serialization.",
+  "interfaces": [
+    "Newtonsoft.Json.Serialization.IReferenceResolver"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs",
+  "constructors": [
+    {
+      "name": "IdReferenceResolver()",
+      "signature": "void IdReferenceResolver()",
+      "summary": "IdReferenceResolver.IdReferenceResolver",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddReference(object, string, object)",
+      "signature": "void AddReference(object context, string reference, object value)",
+      "summary": "IdReferenceResolver.AddReference",
+      "params": [
+        {
+          "name": "context",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "AddToReferenceMap(System.Guid, object)",
+      "signature": "void AddToReferenceMap(System.Guid oldId, object newObject)",
+      "summary": "Add a reference to a newly created object, referencing an old id.",
+      "params": [
+        {
+          "name": "oldId",
+          "type": "System.Guid",
+          "doc": "The old id of the object.",
+          "optional": false
+        },
+        {
+          "name": "newObject",
+          "type": "object",
+          "doc": "The new object which maps to the old id.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "GetReference(object, object)",
+      "signature": "string GetReference(object context, object value)",
+      "summary": "IdReferenceResolver.GetReference",
+      "params": [
+        {
+          "name": "context",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "IsReferenced(object, object)",
+      "signature": "bool IsReferenced(object context, object value)",
+      "summary": "IdReferenceResolver.IsReferenced",
+      "params": [
+        {
+          "name": "context",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "ResolveReference(object, string)",
+      "signature": "object ResolveReference(object context, string reference)",
+      "summary": "IdReferenceResolver.ResolveReference",
+      "params": [
+        {
+          "name": "context",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "ResolveReferenceFromMap(object, string)",
+      "signature": "object ResolveReferenceFromMap(object context, string reference)",
+      "summary": "Resolve a reference to a newly created object, given the original id for the object.",
+      "params": [
+        {
+          "name": "context",
+          "type": "object",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

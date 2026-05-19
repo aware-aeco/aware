@@ -1,0 +1,144 @@
+{
+  "name": "DLLModule",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type DLLModule",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [
+    {
+      "name": "DLLModule()",
+      "signature": "void DLLModule()",
+      "summary": "DLLModule.DLLModule",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetExtensionAppType",
+      "signature": "System.Type GetExtensionAppType()",
+      "summary": "DLLModule.GetExtensionAppType",
+      "params": [],
+      "returns": {
+        "type": "System.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetFunctionPointer(string, string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.Type)",
+      "signature": "ProtoFFI.FFIFunctionPointer GetFunctionPointer(string className, string name, System.Collections.Generic.List\u003CProtoCore.Type\u003E argTypes, ProtoCore.Type returnType)",
+      "summary": "DLLModule.GetFunctionPointer",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argTypes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIFunctionPointer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetFunctionPointers(string, string)",
+      "signature": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E GetFunctionPointers(string className, string name)",
+      "summary": "DLLModule.GetFunctionPointers",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetMarshaler(ProtoCore.RuntimeCore)",
+      "signature": "ProtoFFI.FFIObjectMarshaler GetMarshaler(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "DLLModule.GetMarshaler",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIObjectMarshaler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "ImportCodeBlock(string, string, ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.CodeBlockNode ImportCodeBlock(string typeName, string alias, ProtoCore.AST.AssociativeAST.CodeBlockNode refnode)",
+      "summary": "DLLModule.ImportCodeBlock",
+      "params": [
+        {
+          "name": "typeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "alias",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "refnode",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

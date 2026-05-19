@@ -1,0 +1,171 @@
+{
+  "name": "CreateNoteCommand",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type CreateNoteCommand",
+  "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "CreateNoteCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string, double, double, bool)",
+      "signature": "void CreateNoteCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E nodeIds, string noteText, double x, double y, bool defaultPosition)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nodeIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "noteText",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "CreateNoteCommand(System.Guid, string, double, double, bool)",
+      "signature": "void CreateNoteCommand(System.Guid nodeId, string noteText, double x, double y, bool defaultPosition)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nodeId",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "noteText",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "CreateNoteCommand(string, string, double, double, bool)",
+      "signature": "void CreateNoteCommand(string nodeId, string noteText, double x, double y, bool defaultPosition)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nodeId",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "noteText",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "CreateNoteCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "CreateNoteCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

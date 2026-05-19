@@ -1,0 +1,99 @@
+{
+  "name": "XmlHelper",
+  "namespace": "DynamoUtilities",
+  "kind": "class",
+  "summary": "Type XmlHelper",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/XmlHelper.cs",
+  "constructors": [
+    {
+      "name": "XmlHelper()",
+      "signature": "void XmlHelper()",
+      "summary": "XmlHelper.XmlHelper",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/XmlHelper.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAttribute(System.Xml.XmlNode, string, string)",
+      "signature": "void AddAttribute(System.Xml.XmlNode parent, string name, string value)",
+      "summary": "XmlHelper.AddAttribute",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Xml.XmlNode",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/XmlHelper.cs"
+    },
+    {
+      "name": "AddNode(System.Xml.XmlNode, string, string)",
+      "signature": "System.Xml.XmlNode AddNode(System.Xml.XmlNode parent, string name, string value)",
+      "summary": "XmlHelper.AddNode",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Xml.XmlNode",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/XmlHelper.cs"
+    },
+    {
+      "name": "CreateDocument(string)",
+      "signature": "System.Xml.XmlDocument CreateDocument(string rootName)",
+      "summary": "XmlHelper.CreateDocument",
+      "params": [
+        {
+          "name": "rootName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Xml.XmlDocument",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/XmlHelper.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

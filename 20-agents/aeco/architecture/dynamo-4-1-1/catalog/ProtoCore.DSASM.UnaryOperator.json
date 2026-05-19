@@ -1,0 +1,38 @@
+{
+  "name": "UnaryOperator",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type UnaryOperator",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Decrement",
+      "value": 4
+    },
+    {
+      "name": "Increment",
+      "value": 3
+    },
+    {
+      "name": "Neg",
+      "value": 5
+    },
+    {
+      "name": "Negate",
+      "value": 2
+    },
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Not",
+      "value": 1
+    }
+  ]
+}

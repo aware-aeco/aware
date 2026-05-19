@@ -1,0 +1,436 @@
+{
+  "name": "XmlElementHelper",
+  "namespace": "Dynamo.Utilities",
+  "kind": "class",
+  "summary": "Type XmlElementHelper",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs",
+  "constructors": [
+    {
+      "name": "XmlElementHelper(System.Xml.XmlElement)",
+      "signature": "void XmlElementHelper(System.Xml.XmlElement xmlElement)",
+      "summary": "XmlElementHelper.XmlElementHelper",
+      "params": [
+        {
+          "name": "xmlElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "HasAttribute(string)",
+      "signature": "bool HasAttribute(string attribName)",
+      "summary": "XmlElementHelper.HasAttribute",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadBoolean(string)",
+      "signature": "bool ReadBoolean(string attribName)",
+      "summary": "XmlElementHelper.ReadBoolean",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadBoolean(string, bool)",
+      "signature": "bool ReadBoolean(string attribName, bool defaultValue)",
+      "summary": "XmlElementHelper.ReadBoolean",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadDouble(string)",
+      "signature": "double ReadDouble(string attribName)",
+      "summary": "XmlElementHelper.ReadDouble",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadDouble(string, double)",
+      "signature": "double ReadDouble(string attribName, double defaultValue)",
+      "summary": "XmlElementHelper.ReadDouble",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadEnum(string, TEnum)",
+      "signature": "TEnum ReadEnum\u003CTEnum\u003E(string attribName, TEnum defaultValue)",
+      "summary": "XmlElementHelper.ReadEnum",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "TEnum",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TEnum",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadGuid(string)",
+      "signature": "System.Guid ReadGuid(string attribName)",
+      "summary": "XmlElementHelper.ReadGuid",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadGuid(string, System.Guid)",
+      "signature": "System.Guid ReadGuid(string attribName, System.Guid defaultValue)",
+      "summary": "XmlElementHelper.ReadGuid",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadInteger(string)",
+      "signature": "int ReadInteger(string attribName)",
+      "summary": "XmlElementHelper.ReadInteger",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadInteger(string, int)",
+      "signature": "int ReadInteger(string attribName, int defaultValue)",
+      "summary": "XmlElementHelper.ReadInteger",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadString(string)",
+      "signature": "string ReadString(string attribName)",
+      "summary": "XmlElementHelper.ReadString",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "ReadString(string, string)",
+      "signature": "string ReadString(string attribName, string defaultValue)",
+      "summary": "XmlElementHelper.ReadString",
+      "params": [
+        {
+          "name": "attribName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, System.Guid)",
+      "signature": "void SetAttribute(string name, System.Guid value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, System.Nullable\u003Cbool\u003E)",
+      "signature": "void SetAttribute(string name, System.Nullable\u003Cbool\u003E value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Nullable\u003Cbool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, System.Type)",
+      "signature": "void SetAttribute(string name, System.Type value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, bool)",
+      "signature": "void SetAttribute(string name, bool value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, double)",
+      "signature": "void SetAttribute(string name, double value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, int)",
+      "signature": "void SetAttribute(string name, int value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    },
+    {
+      "name": "SetAttribute(string, string)",
+      "signature": "void SetAttribute(string name, string value)",
+      "summary": "XmlElementHelper.SetAttribute",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/XmlElementHelper.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

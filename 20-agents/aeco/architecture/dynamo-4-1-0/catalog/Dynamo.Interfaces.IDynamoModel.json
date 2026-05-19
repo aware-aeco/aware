@@ -1,0 +1,87 @@
+{
+  "name": "IDynamoModel",
+  "namespace": "Dynamo.Interfaces",
+  "kind": "interface",
+  "summary": "Interface contains definitions for core model of Dynamo.",
+  "interfaces": [
+    "System.ComponentModel.INotifyPropertyChanged"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CurrentWorkspace",
+      "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the current workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs"
+    },
+    {
+      "name": "Workspaces",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the Workspaces in Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "EvaluationCompleted",
+      "delegate": "System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Models.EvaluationCompletedEventArgs\u003E EvaluationCompleted",
+      "summary": "This event is fired when graph evaluation is completed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ShutdownStarted",
+      "delegate": "Dynamo.Models.DynamoModelHandler",
+      "signature": "public event Dynamo.Models.DynamoModelHandler ShutdownStarted",
+      "summary": "This event is fired when Dynamo is shutting down.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceAdded",
+      "summary": "This event is fired when a new workspace is added.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceCleared",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceCleared",
+      "summary": "This event is fired when workspace is cleared.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceOpening",
+      "delegate": "System.Action\u003Cobject\u003E",
+      "signature": "public event System.Action\u003Cobject\u003E WorkspaceOpening",
+      "summary": "This event is fired when a workspace is opened.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "WorkspaceRemoved",
+      "delegate": "System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Workspaces.WorkspaceModel\u003E WorkspaceRemoved",
+      "summary": "This event is fired when a workspace is removed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/IDynamoModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

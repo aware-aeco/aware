@@ -1,0 +1,30 @@
+{
+  "name": "IFileInfo",
+  "namespace": "Dynamo.PackageManager.Interfaces",
+  "kind": "interface",
+  "summary": "Type IFileInfo",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileInfo.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Length",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "IFileInfo.Length",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileInfo.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "IFileInfo.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/IFileInfo.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

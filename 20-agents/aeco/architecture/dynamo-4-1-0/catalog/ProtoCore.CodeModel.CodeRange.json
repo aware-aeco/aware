@@ -1,0 +1,92 @@
+{
+  "name": "CodeRange",
+  "namespace": "ProtoCore.CodeModel",
+  "kind": "struct",
+  "summary": "Type CodeRange",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodePoint.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "CodeRange.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "op_Equality(ProtoCore.CodeModel.CodeRange, ProtoCore.CodeModel.CodeRange)",
+      "signature": "bool op_Equality(ProtoCore.CodeModel.CodeRange lhs, ProtoCore.CodeModel.CodeRange rhs)",
+      "summary": "CodeRange.op_Equality",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.CodeModel.CodeRange",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.CodeModel.CodeRange",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "op_Inequality(ProtoCore.CodeModel.CodeRange, ProtoCore.CodeModel.CodeRange)",
+      "signature": "bool op_Inequality(ProtoCore.CodeModel.CodeRange lhs, ProtoCore.CodeModel.CodeRange rhs)",
+      "summary": "CodeRange.op_Inequality",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "ProtoCore.CodeModel.CodeRange",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.CodeModel.CodeRange",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodePoint.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndExclusive",
+      "type": "ProtoCore.CodeModel.CodePoint",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeRange.EndExclusive",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodePoint.cs"
+    },
+    {
+      "name": "StartInclusive",
+      "type": "ProtoCore.CodeModel.CodePoint",
+      "getter": true,
+      "setter": true,
+      "summary": "CodeRange.StartInclusive",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CodePoint.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

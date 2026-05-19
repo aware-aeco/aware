@@ -1,0 +1,40 @@
+{
+  "name": "BuildHaltException",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type BuildHaltException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [
+    {
+      "name": "BuildHaltException(string)",
+      "signature": "void BuildHaltException(string message)",
+      "summary": "BuildHaltException.BuildHaltException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ErrorMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "BuildHaltException.ErrorMessage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,45 @@
+{
+  "name": "UTF8Buffer",
+  "namespace": "ProtoCore.DesignScriptParser",
+  "kind": "class",
+  "summary": "Type UTF8Buffer",
+  "base": "ProtoCore.DesignScriptParser.Buffer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs",
+  "constructors": [
+    {
+      "name": "UTF8Buffer(ProtoCore.DesignScriptParser.Buffer)",
+      "signature": "void UTF8Buffer(ProtoCore.DesignScriptParser.Buffer b)",
+      "summary": "UTF8Buffer.UTF8Buffer",
+      "params": [
+        {
+          "name": "b",
+          "type": "ProtoCore.DesignScriptParser.Buffer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Read",
+      "signature": "int Read()",
+      "summary": "UTF8Buffer.Read",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

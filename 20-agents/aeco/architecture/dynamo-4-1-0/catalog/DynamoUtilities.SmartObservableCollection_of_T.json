@@ -1,0 +1,100 @@
+{
+  "name": "SmartObservableCollection\u003CT\u003E",
+  "namespace": "DynamoUtilities",
+  "kind": "class",
+  "summary": "Wrapper over System.Collections.ObjectModel.ObservableCollection that fires minimal notifications. This class supports batch operations that should defer CollectionChaned notifications.",
+  "base": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs",
+  "constructors": [
+    {
+      "name": "SmartObservableCollection()",
+      "signature": "void SmartObservableCollection()",
+      "summary": "SmartObservableCollection.SmartObservableCollection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs"
+    },
+    {
+      "name": "SmartObservableCollection(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "void SmartObservableCollection(System.Collections.Generic.IEnumerable\u003CT\u003E collection)",
+      "summary": "SmartObservableCollection.SmartObservableCollection",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs"
+    },
+    {
+      "name": "SmartObservableCollection(System.Collections.Generic.List\u003CT\u003E)",
+      "signature": "void SmartObservableCollection(System.Collections.Generic.List\u003CT\u003E list)",
+      "summary": "SmartObservableCollection.SmartObservableCollection",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearItems",
+      "signature": "void ClearItems()",
+      "summary": "SmartObservableCollection.ClearItems",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs"
+    },
+    {
+      "name": "OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs)",
+      "signature": "void OnCollectionChanged(System.Collections.Specialized.NotifyCollectionChangedEventArgs e)",
+      "summary": "SmartObservableCollection.OnCollectionChanged",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Collections.Specialized.NotifyCollectionChangedEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs"
+    },
+    {
+      "name": "OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs)",
+      "signature": "void OnPropertyChanged(System.ComponentModel.PropertyChangedEventArgs e)",
+      "summary": "SmartObservableCollection.OnPropertyChanged",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.ComponentModel.PropertyChangedEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/SmartObservableCollection.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

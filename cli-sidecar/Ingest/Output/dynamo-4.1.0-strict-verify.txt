@@ -1,0 +1,60 @@
+Sampled 50 types from 707 (seed = 173321044):
+
+
+idx ns                               name                                       kind         result issues                                                                    
+--- --                               ----                                       ----         ------ ------                                                                    
+664 ProtoCore.DSASM                  DynamicVariableTable                       class        PASS                                                                             
+ 53 Dynamo.Migration                 PortId                                     struct       PASS                                                                             
+501 ProtoCore.AST                    NodeEnumerableExtensions                   static-class PASS                                                                             
+ 40 Dynamo.Scheduler                 AsyncTask                                  class        PASS                                                                             
+339 Dynamo.PackageManager            IPackageDirectoryBuilder                   interface    PASS                                                                             
+666 ProtoCore.DSASM                  SymbolNode                                 class        PASS                                                                             
+633 ProtoCore.DSASM                  InstructionStream                          class        PASS                                                                             
+538 ProtoCore.AST.AssociativeAST     AtLevelNode                                class        PASS                                                                             
+336 Dynamo.PackageManager            PackageAssembly                            class        PASS                                                                             
+153 Dynamo.Graph                     ModelBase                                  class        PASS                                                                             
+  4 DesignScript.Builtin             StringOverIndexingException                class        PASS                                                                             
+ 89 Dynamo.Extensions                IExtensionSource                           interface    PASS                                                                             
+417 ProtoCore                        TextOutputStream                           class        PASS                                                                             
+206 Dynamo.Graph.Nodes               FunctionCallBase<TController, TDescriptor> class        PASS                                                                             
+496 ProtoCore.DesignScriptParser     Buffer                                     class        PASS                                                                             
+450 ProtoCore                        RuntimeData                                class        PASS                                                                             
+177 Dynamo.Graph.Workspaces          WorkspaceModel                             class        PASS                                                                             
+125 Dynamo.Models                    DynamoModel                                class        PASS                                                                             
+ 26 Dynamo.Search                    SearchLibrary<TEntry, TItem>               class        PASS                                                                             
+156 Dynamo.Graph.Workspaces          CustomNodeWorkspaceModel                   class        PASS                                                                             
+524 ProtoCore.AST.ImperativeAST      IfStmtNode                                 class        PASS                                                                             
+620 ProtoCore.DSASM                  ClassTable                                 class        PASS                                                                             
+294                                  CreateAndConnectNodeCommand                class        PASS                                                                             
+205 Dynamo.Graph.Nodes               DummyNode                                  class        FAIL   property-placeholder-type(OriginalNodeContent)                            
+ 86 Dynamo.Extensions                ExtensionDefinition                        class        PASS                                                                             
+102 Dynamo.Engine                    AstBuiltEventHandler                       delegate     PASS                                                                             
+ 60 Dynamo.Logging                   LogEventHandler                            delegate     PASS                                                                             
+563 ProtoCore.AST.AssociativeAST     UnaryExpressionNode                        class        PASS                                                                             
+691                                  DisposeDelegate                            delegate     PASS                                                                             
+354 Dynamo.PackageManager.Interfaces IFileCompressor                            interface    PASS                                                                             
+587 ProtoCore.Lang                   Obj                                        class        PASS                                                                             
+136 Dynamo.Models.Migration.Python   PythonEngineUpgradeService                 class        PASS                                                                             
+639 ProtoCore.DSASM                  StackValueComparer                         class        PASS                                                                             
+395 ProtoFFI                         CLRModuleType                              class        PASS                                                                             
+285                                  ModelBasedRecordableCommand                class        PASS                                                                             
+415 ProtoCore                        OutputMessage                              class        PASS                                                                             
+ 87 Dynamo.Extensions                ExtensionLibraryLoader                     class        PASS                                                                             
+686                                  StackFrameFlagOptions                      enum         PASS                                                                             
+208 Dynamo.Graph.Nodes               BuiltinNodeCategories                      static-class PASS                                                                             
+471 ProtoCore.SyntaxAnalysis         AstTraversal                               class        FAIL   type-fetch-failed: The remote server returned an error: (502) Bad Gateway.
+416 ProtoCore                        IOutputStream                              interface    PASS                                                                             
+445 ProtoCore                        PrimitiveType                              enum         PASS                                                                             
+401 ProtoFFI                         ReferenceEqualityComparer                  class        PASS                                                                             
+ 51 Dynamo.Annotations               NotifyPropertyChangedInvocatorAttribute    class        PASS                                                                             
+ 66 Dynamo.Logging                   LogMessage                                 static-class PASS                                                                             
+298                                  SelectInRegionCommand                      class        PASS                                                                             
+541 ProtoCore.AST.AssociativeAST     IdentifierNode                             class        PASS                                                                             
+  7 Dynamo.Applications              StartupUtils                               static-class PASS                                                                             
+ 18 Dynamo.Search                    BrowserInternalElement                     class        FAIL   property-placeholder-type(UIParent)                                       
+599 ProtoCore.Exceptions             ExecutionCancelledException                class        PASS                                                                             
+
+
+
+
+Strict verification summary: 47 pass / 3 fail / 50 total

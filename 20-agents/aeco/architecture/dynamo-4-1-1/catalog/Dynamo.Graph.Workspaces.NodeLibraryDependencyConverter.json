@@ -1,0 +1,121 @@
+{
+  "name": "NodeLibraryDependencyConverter",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Is used to serialize and deserialize graph workspace node library references",
+  "base": "Newtonsoft.Json.JsonConverter",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs",
+  "constructors": [
+    {
+      "name": "NodeLibraryDependencyConverter(Dynamo.Logging.ILogger)",
+      "signature": "void NodeLibraryDependencyConverter(Dynamo.Logging.ILogger logger)",
+      "summary": "Constructs a WorkspaceNodeReferenceConverter.",
+      "params": [
+        {
+          "name": "logger",
+          "type": "Dynamo.Logging.ILogger",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanConvert(System.Type)",
+      "signature": "bool CanConvert(System.Type objectType)",
+      "summary": "NodeLibraryDependencyConverter.CanConvert",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "ReadJson(Newtonsoft.Json.JsonReader, System.Type, object, Newtonsoft.Json.JsonSerializer)",
+      "signature": "object ReadJson(Newtonsoft.Json.JsonReader reader, System.Type objectType, object existingValue, Newtonsoft.Json.JsonSerializer serializer)",
+      "summary": "NodeLibraryDependencyConverter.ReadJson",
+      "params": [
+        {
+          "name": "reader",
+          "type": "Newtonsoft.Json.JsonReader",
+          "optional": false
+        },
+        {
+          "name": "objectType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "existingValue",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "serializer",
+          "type": "Newtonsoft.Json.JsonSerializer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    },
+    {
+      "name": "WriteJson(Newtonsoft.Json.JsonWriter, object, Newtonsoft.Json.JsonSerializer)",
+      "signature": "void WriteJson(Newtonsoft.Json.JsonWriter writer, object value, Newtonsoft.Json.JsonSerializer serializer)",
+      "summary": "NodeLibraryDependencyConverter.WriteJson",
+      "params": [
+        {
+          "name": "writer",
+          "type": "Newtonsoft.Json.JsonWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "serializer",
+          "type": "Newtonsoft.Json.JsonSerializer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanRead",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeLibraryDependencyConverter.CanRead",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/SerializationConverters.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,206 @@
+{
+  "name": "ModelEventCommand",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type ModelEventCommand",
+  "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "ModelEventCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string)",
+      "signature": "void ModelEventCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E modelGuid, string eventName)",
+      "summary": "ModelEventCommand.ModelEventCommand",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "optional": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ModelEventCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, string, int)",
+      "signature": "void ModelEventCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E modelGuid, string eventName, int value)",
+      "summary": "ModelEventCommand.ModelEventCommand",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "optional": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ModelEventCommand(System.Guid, string)",
+      "signature": "void ModelEventCommand(System.Guid modelGuid, string eventName)",
+      "summary": "ModelEventCommand.ModelEventCommand",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ModelEventCommand(System.Guid, string, int)",
+      "signature": "void ModelEventCommand(System.Guid modelGuid, string eventName, int value)",
+      "summary": "ModelEventCommand.ModelEventCommand",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ModelEventCommand(string, string)",
+      "signature": "void ModelEventCommand(string modelGuid, string eventName)",
+      "summary": "ModelEventCommand.ModelEventCommand",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ModelEventCommand(string, string, int)",
+      "signature": "void ModelEventCommand(string modelGuid, string eventName, int value)",
+      "summary": "ModelEventCommand.ModelEventCommand",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "eventName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "ModelEventCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "ModelEventCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EventName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ModelEventCommand.EventName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "Value",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "ModelEventCommand.Value",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,63 @@
+{
+  "name": "EvaluationCompletedEventArgs",
+  "namespace": "Dynamo.Models",
+  "kind": "class",
+  "summary": "This class represents the arguments when a graph evaluation is completed.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs",
+  "constructors": [
+    {
+      "name": "EvaluationCompletedEventArgs(bool, System.Exception)",
+      "signature": "void EvaluationCompletedEventArgs(bool evaluationTookPlace, System.Exception errorMsg)",
+      "summary": "Creates EvaluationCompletedEventArgs",
+      "params": [
+        {
+          "name": "evaluationTookPlace",
+          "type": "bool",
+          "doc": "Bool value indicates if evaluation took place",
+          "optional": false
+        },
+        {
+          "name": "errorMsg",
+          "type": "System.Exception",
+          "doc": "Exception thrown during evaluation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Error",
+      "type": "System.Exception",
+      "getter": true,
+      "setter": false,
+      "summary": "Exception thrown during graph evaluation.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs"
+    },
+    {
+      "name": "EvaluationSucceeded",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if Evaluation is succeeded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs"
+    },
+    {
+      "name": "EvaluationTookPlace",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if there was any evaluation.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

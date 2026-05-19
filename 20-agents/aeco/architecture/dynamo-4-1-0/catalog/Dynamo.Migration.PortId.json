@@ -1,0 +1,68 @@
+{
+  "name": "PortId",
+  "namespace": "Dynamo.Migration",
+  "kind": "struct",
+  "summary": "This structure uniquely identifies a given port in the graph.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs",
+  "constructors": [
+    {
+      "name": "PortId(string, int, Dynamo.Graph.Nodes.PortType)",
+      "signature": "void PortId(string owningNode, int portIndex, Dynamo.Graph.Nodes.PortType type)",
+      "summary": "Creates PortId.",
+      "params": [
+        {
+          "name": "owningNode",
+          "type": "string",
+          "doc": "Node GUID",
+          "optional": false
+        },
+        {
+          "name": "portIndex",
+          "type": "int",
+          "doc": "Index",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Dynamo.Graph.Nodes.PortType",
+          "doc": "Port type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "OwningNode",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Node GUID.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "PortIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    },
+    {
+      "name": "PortType",
+      "type": "Dynamo.Graph.Nodes.PortType",
+      "getter": true,
+      "setter": false,
+      "summary": "PortType. The port can be incoming or outcoming.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Migration/Migration.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

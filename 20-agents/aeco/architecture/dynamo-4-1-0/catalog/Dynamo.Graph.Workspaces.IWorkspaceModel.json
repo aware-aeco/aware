@@ -1,0 +1,142 @@
+{
+  "name": "IWorkspaceModel",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "interface",
+  "summary": "Exposes workspace model.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RecordModelsForModification(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E)",
+      "signature": "void RecordModelsForModification(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E models)",
+      "summary": "Implement to record node modification for undo/redo",
+      "params": [
+        {
+          "name": "models",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E",
+          "doc": "Collection of Dynamo.Graph.ModelBase objects to record.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CenterX",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns X coordinate of center point of visible workspace part",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "CenterY",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Y coordinate of center point of visible workspace part",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "Connectors",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns list of connectors in the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "CurrentSelection",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns list of selected nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns description of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns FileName of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns name of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    },
+    {
+      "name": "Nodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns list of nodes owned by this workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "ConnectorAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E ConnectorAdded",
+      "summary": "Triggers when a connector is added to the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ConnectorDeleted",
+      "delegate": "System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Connectors.ConnectorModel\u003E ConnectorDeleted",
+      "summary": "Triggers when a connector is removed from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeAdded",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeAdded",
+      "summary": "Triggers when a node is added to the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodeRemoved",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E NodeRemoved",
+      "summary": "Triggers when a node is removed from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "NodesCleared",
+      "delegate": "System.Action",
+      "signature": "public event System.Action NodesCleared",
+      "summary": "Triggers when nodes are cleared from the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/IWorkspaceModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

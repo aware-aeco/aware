@@ -1,0 +1,46 @@
+{
+  "name": "MutatingFileCompressor",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "An IFileCompressor that actually attempts to compress a directory",
+  "interfaces": [
+    "Dynamo.PackageManager.Interfaces.IFileCompressor"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileCompressor.cs",
+  "constructors": [
+    {
+      "name": "MutatingFileCompressor()",
+      "signature": "void MutatingFileCompressor()",
+      "summary": "MutatingFileCompressor.MutatingFileCompressor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileCompressor.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Zip(Dynamo.PackageManager.Interfaces.IDirectoryInfo)",
+      "signature": "Dynamo.PackageManager.Interfaces.IFileInfo Zip(Dynamo.PackageManager.Interfaces.IDirectoryInfo directory)",
+      "summary": "MutatingFileCompressor.Zip",
+      "params": [
+        {
+          "name": "directory",
+          "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IFileInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileCompressor.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

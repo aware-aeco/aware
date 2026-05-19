@@ -1,0 +1,153 @@
+{
+  "name": "DebugFrame",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type DebugFrame",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [
+    {
+      "name": "DebugFrame()",
+      "signature": "void DebugFrame()",
+      "summary": "DebugFrame.DebugFrame",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Arguments",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.Arguments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "DotCallDimensions",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.DotCallDimensions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "ExecutingGraphNode",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.ExecutingGraphNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "FepRun",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.FepRun",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "FinalFepChosen",
+      "type": "ProtoCore.FunctionEndPoint",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.FinalFepChosen",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "FunctionStepOver",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.FunctionStepOver",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "HasDebugInfo",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.HasDebugInfo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsBaseCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsBaseCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsDisposeCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsDisposeCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsDotCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsDotCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsExternalFunction",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsExternalFunction",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsInlineConditional",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsInlineConditional",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsMemberFunction",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsMemberFunction",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsReplicating",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsReplicating",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsResume",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.IsResume",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "ThisPtr",
+      "type": "System.Nullable\u003CProtoCore.DSASM.StackValue\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugFrame.ThisPtr",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
