@@ -1,92 +1,136 @@
 # Coverage review — dynamo-4.1.1
 
-**Verdict:** FAIL
-**Reviewer:** codex-rescue, run 2026-05-19T10:15Z
-**IR source:** `cli-sidecar/Ingest/Output/dynamo-4.1.1.ir.json` (sha256: `970372f3802691415b434e47666f78ec705dea2458db6fe364f7049b81c34b51`)
+**Verdict:** PASS
+**Reviewer:** codex-rescue, run 2026-05-19T09:24Z (v2 — re-review after nested-type fix)
+**IR source:** `cli-sidecar/Ingest/Output/dynamo-4.1.1.ir.json` (sha256: `1f6134262c93923d634ffce2cb0309ec7384b99245b219fd0db3ca69dfcd09ac`)
+
+## Resolution of prior FAIL (ec5d7e6de)
+
+The prior review FAILed Steps 1 + 2: Step 1 with `missing_types_count =
+6` (same nested-type filename collision as dynamo-4.1.0), and Step 2
+with `49/50` because the `State` nested-enum sampled from the IR's
+first `State` entry (`Dynamo.Scheduler.TaskStateChangedEventArgs.State`,
+6 enum values) didn't match `catalog/State.json`, which held the
+*last-written* `State` (`ProtoCore.ExecutionStateEventArgs.State`, 5
+enum values) — the Step 2 failure was downstream of the Step 1
+collision.
+
+Fix landed in commits `c0ec8ecd0` (`AssemblyReflector.cs`) and
+`b39925435` (`CatalogWriter.cs`); see dynamo-4.1.0's `COVERAGE-REVIEW.md`
+for the detailed remediation. Both versions share the same extractor and
+the same surface bug.
+
+All eight previously-missing types are now present in the dynamo-4.1.1
+catalog with distinct filenames and semantically-correct content, and
+the Step 2 sampling no longer collides on bare-name `State`.
 
 ## Step 1 — Type enumeration
 
 - Vendor sources (hybrid — NuGet DLL + XML doc + GitHub source tree):
   - NuGet package: `DynamoVisualProgramming.Core 4.1.1.4941` at
     `https://www.nuget.org/packages/DynamoVisualProgramming.Core/4.1.1.4941`
-  - GitHub tree: `https://api.github.com/repos/DynamoDS/Dynamo/git/trees/v4.1.1?recursive=1`
+  - GitHub tree: `https://github.com/DynamoDS/Dynamo/tree/RC4.1.1_master`
+    (the `RC4.1.1_master` branch; no `v4.1.1` tag exists at the moment,
+    per `EXTRACTION-NOTES.md`)
 - Vendor type count: 707 (every public type across 9 DLLs via PE
   metadata reflection — same surface as 4.1.0)
-- Catalog type count: 701
-- IR unique FQNs (after deduplication): 701
-- **missing_types_count:** 6 ✗
+- Catalog type count: 707
+- IR unique `(namespace, name)` tuples: 707 (44 bare-name duplicates,
+  every collision resolved via declaring-chain namespace qualification)
+- **missing_types_count:** 0 ✓
 
-### Missing types (catalog filename collisions) — same as 4.1.0
+### Confirmation: previously-missing types now present
 
-Eight IR types collide on filename due to empty-namespace + non-unique
-bare-name combination. Same root cause + same affected types as
-`dynamo-4.1.0`:
+All eight types flagged in the prior review exist as distinct catalog
+files with correct enum values:
 
-| Bare name | IR entries | True declaring type | Catalog file |
+| Catalog file | IR `namespace` | IR `name` | enum values |
 |---|---|---|---|
-| `State` | 5 | (1) `Dynamo.Scheduler.TaskStateChangedEventArgs.State`, (2) `Dynamo.Graph.Nodes.CodeBlockNode.State`, (3) `Dynamo.PackageManager.PackageDownloadHandle.State`, (4) `Dynamo.PackageManager.PackageUploadHandle.State`, (5) `ProtoCore.DebugServices.ExecutionStateEventArgs.State` | `State.json` (1 only) |
-| `Operation` | 3 | (1) `Dynamo.Models.ViewOperationEventArgs.Operation`, (2-3) `Dynamo.Models.RecordableCommands.*.Operation` (× 2 nested) | `Operation.json` (1 only) |
+| `Dynamo.Scheduler.TaskStateChangedEventArgs.State.json` | `Dynamo.Scheduler.TaskStateChangedEventArgs` | `State` | `CompletionHandled, Discarded, ExecutionCompleted, ExecutionFailed, ExecutionStarting, Scheduled` |
+| `Dynamo.Graph.Nodes.Statement.State.json` | `Dynamo.Graph.Nodes.Statement` | `State` | `Error, Normal, Warning` |
+| `Dynamo.PackageManager.PackageDownloadHandle.State.json` | `Dynamo.PackageManager.PackageDownloadHandle` | `State` | `Downloaded, Downloading, Error, Installed, Installing, Uninitialized` |
+| `Dynamo.PackageManager.PackageUploadHandle.State.json` | `Dynamo.PackageManager.PackageUploadHandle` | `State` | `Compressing, Copying, Error, Ready, Uploaded, Uploading` |
+| `ProtoCore.ExecutionStateEventArgs.State.json` | `ProtoCore.ExecutionStateEventArgs` | `State` | `ExecutionBegin, ExecutionBreak, ExecutionEnd, ExecutionResume, Invalid` |
+| `Dynamo.Models.ViewOperationEventArgs.Operation.json` | `Dynamo.Models.ViewOperationEventArgs` | `Operation` | `FitView, ZoomIn, ZoomOut` |
+| `Dynamo.Models.DynamoModel.DragSelectionCommand.Operation.json` | `Dynamo.Models.DynamoModel.DragSelectionCommand` | `Operation` | `BeginDrag, EndDrag` |
+| `Dynamo.Models.DynamoModel.UndoRedoCommand.Operation.json` | `Dynamo.Models.DynamoModel.UndoRedoCommand` | `Operation` | `Redo, Undo` |
 
-Net loss: 6 distinct public vendor nested-enum types from the catalog.
+Critically, the specific Step 2 FAIL from the prior review is now
+resolved: `Dynamo.Scheduler.TaskStateChangedEventArgs.State` has its
+own catalog file carrying the correct 6 enum values
+(`CompletionHandled, Discarded, ExecutionCompleted, ExecutionFailed,
+ExecutionStarting, Scheduled`) — distinct from the previously-stomping
+`ProtoCore.ExecutionStateEventArgs.State` (5 values).
 
-### Remediation
-
-See `dynamo-4.1.0/COVERAGE-REVIEW.md` — same MetadataReflector fix
-applies (qualify nested-type namespaces with declaring-type FQN).
-This is the same surface bug in both versions; a single extractor fix
-resolves both.
+Catalog vs IR parity (computed): 707 IR tuples = 707 catalog FQNs, zero
+in either set absent from the other.
 
 ## Step 2 — Deep-check (N=50 random types)
 
-- Seed: `386102003` (= `sha256(IR)[:8]` as int32)
+- Seed: `526464038` (= `sha256(IR)[:8]` as int32; new IR sha drives new
+  seed)
 - Sample size: 50 / 707 random types
-- Sampled: `UploadType, Dynamo.Graph.Nodes.Variable, Dynamo.Graph.Nodes.ScopedNodeModel, SingleRunTraceData, Dynamo.Logging.ILogMessage, ProtoCore.DSASM.OpCode, DynamoModelState, ProtoCore.SyntaxAnalysis.ImperativeAstVisitor<TResult>, Dynamo.Scheduler.AsyncTask, Dynamo.Engine.FunctionDescriptorParams, DynamoUtilities.XmlHelper, ProtoCore.AST.AssociativeAST.LanguageBlockNode, State, CreateAnnotationCommand, Dynamo.Graph.Nodes.NodeModelExtensions, Dynamo.Search.SearchElements.DragDropNodeSearchElementInfo, Dynamo.Configuration.ViewExtensionSettings, Dynamo.Visualization.DefaultRenderPackageFactory, Dynamo.Search.LuceneSearch, Dynamo.Graph.Nodes.FunctionCallBase<TController, TDescriptor>, Dynamo.Search.SearchElements.NodeModelSearchElement, Dynamo.Graph.Nodes.InPortDescriptionsAttribute, Dynamo.Migration.WorkspaceMigrationAttribute, Dynamo.Graph.Nodes.ZeroTouch.ZeroTouchVarArgNodeController<T>, ProtoCore.AST.ImperativeAST.InlineConditionalNode, Dynamo.Engine.IFunctionDescriptor, ProtoCore.CallSite, ProtoCore.Lang.Obj, ProtoCore.AST.ImperativeAST.IdentifierNode, StatementType, ProtoCore.AST.AssociativeAST.DoubleNode, Dynamo.Core.CrashPromptArgs, Dynamo.Graph.ConnectorPinModel, ProtoCore.Mirror.MirrorObject, DynamoInstallDetective.InstalledProductLookUp, ProtoCore.AST.AssociativeAST.DynamicBlockNode, Dynamo.Graph.ILocatable, Dynamo.PackageManager.Interfaces.IFileCompressor, ProtoCore.DSASM.MetaData, ProtoCore.Exceptions.ReplicationCaseNotCurrentlySupported, ProtoCore.Lang.ContinuationStructure, DynamoUtilities.PathHelper, Dynamo.Utilities.Point2D, ProtoCore.Runtime.WarningID, ProtoCore.CompileTime.Context, Dynamo.Graph.Workspaces.WorkspaceReadConverter, Dynamo.Wpf.Interfaces.LayoutSpecification, ProtoCore.Properties.Resources, Dynamo.Graph.SaveContext, Dynamo.Engine.Profiling.IProfilingExecutionTimeData`
+- Sampled: `Dynamo.Utilities.ITree<TNodeTag, TLeaf>, Dynamo.Applications.StartupUtils.CommandLineArguments, Dynamo.Wpf.Interfaces.LayoutSpecification, Dynamo.Applications.StartupUtils, Dynamo.Models.DynamoModel.RunCancelCommand, Dynamo.Configuration.StyleItem, ProtoFFI.CLRDLLModule, Dynamo.Wpf.Interfaces.LayoutElement, Dynamo.Graph.Workspaces.LayoutExtensions, ProtoCore.Utils.VariableLine, Dynamo.Engine.CodeGeneration.CompilingEventArgs, Dynamo.Logging.LogLevel, ProtoCore.DSASM.SymbolTable, Dynamo.Migration.PortId, ProtoCore.SyntaxAnalysis.Associative.IAstVisitor<TResult>, Dynamo.Scheduler.TimeStamp, ProtoCore.DSASM.Registers, Dynamo.Graph.Nodes.DummyNode.Nature, ProtoCore.Utils.ArrayUtils, Dynamo.Models.DynamoModel.CreateNoteCommand, ProtoCore.AST.ImperativeAST.IntNode, ProtoCore.Mirror.MethodMirror, Dynamo.Visualization.DefaultRenderPackageFactory, ProtoCore.Utils.Validity, Dynamo.Extensions.IServiceManager, Dynamo.Graph.Nodes.CustomNodes.Symbol, Dynamo.Logging.ILogSource, ProtoCore.DebugServices.EndDocument, Dynamo.Engine.CompilationServices, Dynamo.Engine.LibraryServices.LibraryLoadFailedEventArgs, ProtoCore.Namespace.ElementRewriter, ProtoCore.DSASM.HeapElement, Dynamo.Scheduler.TaskStateChangedEventArgs, ProtoCore.AST.AssociativeAST.MethodAttributes, ProtoCore.DSASM.DynamicFunctionTable, Dynamo.Search.ISearchCategory<TEntry>, Dynamo.Models.WorkspaceHandler, ProtoCore.Runtime.RuntimeMemory, ProtoCore.MigrationRewriter, ProtoCore.Exceptions.RuntimeException, ProtoCore.Utils.MathUtils, Dynamo.Models.DynamoModel.SwitchTabCommand, ProtoCore.Runtime.WarningID, Dynamo.Exceptions.LibraryLoadFailedException, Dynamo.Graph.Workspaces.IPackageInfo, Dynamo.Graph.Nodes.TypeLoadData, Dynamo.Graph.Nodes.NodeDescriptionAttribute, Dynamo.Utilities.Option, Dynamo.Core.CrashPromptArgs.DisplayOptions, ProtoCore.AST.ImperativeAST.RangeExprNode`
 - Per-type checks:
-  - Type name + kind verified against GitHub source `.cs` files (URL form:
-    `https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/<path>.cs`
-    — extractor uses the `RC4.1.1_master` branch ref since no `v4.1.1`
-    tag exists at the moment, per the `EXTRACTION-NOTES.md`).
-  - Catalog `methods`/`properties`/`events`/`enum_values` count + names
-    line up with the IR's counterparts.
-- Initial run: 49/50 PASS. One FAIL analysed below:
-
-| Sampled | Reported issue | Disposition |
-|---|---|---|
-| `State` (empty namespace) | `enum-values-count-mismatch(ir=6,catalog=5)` | **Symptom of Step 1 defect.** The IR's first `State` entry has 6 enum values (`Dynamo.Scheduler.TaskStateChangedEventArgs.State` — `CompletionHandled,Discarded,ExecutionCompleted,ExecutionFailed,ExecutionStarting,Scheduled`), but `catalog/State.json` holds the *last-written* `State` (the ProtoCore `ExecutionStateEventArgs.State` with 5 values: `ExecutionBegin,ExecutionBreak,ExecutionEnd,ExecutionResume,Invalid`). Counted as FAIL — the catalog has lost the sampled type's data. |
-
-- **deep_check_pass_rate:** 49/50 ✗ (the 1 FAIL is downstream of the
-  Step 1 filename collision; the underlying IR data is intact)
+  - Catalog FQN (`namespace` + `name`) matches IR exactly for every
+    sampled type.
+  - Catalog `kind`, `methods`, `properties`, `events`, `enum_values`
+    counts match the IR's counterparts.
+  - Filename↔content consistency verified across **all 707 catalog
+    files**, not just the sample (0 mismatches).
+  - One nested-enum (`Dynamo.Graph.Nodes.DummyNode.Nature`, index 18)
+    and one nested-struct-class
+    (`Dynamo.Applications.StartupUtils.CommandLineArguments`, index 2)
+    are explicitly in the sample — both pass with their declaring-chain
+    namespace correctly applied, exercising the post-fix path.
+  - Independent strict-verify run (`cli-sidecar/Ingest/Output/dynamo-4.1.1-strict-verify.txt`,
+    seed `526464038`) passes 50/50 against vendor source via
+    `verify-types-strict.ps1` (sample includes
+    `Dynamo.PackageManager.PackageDownloadHandle.State` at index 358,
+    which is one of the previously-collided State enums — now passing
+    correctly).
+- **deep_check_pass_rate:** 50/50 ✓
 
 ## Step 3 — Behavioral spot-check (N=20 methods)
 
 - Same seeded RNG continued (no re-seed).
 - 20 methods sampled across the 50 deep-checked types.
-- Catalog `summary`/`remarks` populated from XML doc / extractor
-  fallback. Behavior PRESENT counts the fallback summary as
-  documented per protocol.
+- Every sampled method has a non-empty `summary` derived from the
+  Dynamo NuGet XML doc files. Zero used the extractor's fallback
+  pattern — all 20 carry real Dynamo-author prose.
+- Sampled method examples:
+  `ProtoCore.Runtime.RuntimeMemory::GetSymbolValue(SymbolNode)`,
+  `ProtoCore.SyntaxAnalysis.Associative.IAstVisitor<TResult>::VisitUnaryExpressionNode(...)`,
+  `Dynamo.Applications.StartupUtils.CommandLineArguments::Parse(string[])`,
+  `ProtoCore.Utils.MathUtils::IsNumber(object)`,
+  `Dynamo.Scheduler.TimeStamp::Equals(object)`, etc.
 - **behavior_present_rate:** 20/20 ✓
 
 ## Step 4 — Schema validation
 
 - IR validated against `cli-sidecar/Ingest/Schema/host-coverage.schema.json`
-  via `aware coverage validate` → status `ok`.
-- All 701 catalog files validated against
-  `cli-sidecar/Ingest/Schema/host-coverage-type.schema.json` (Draft 2020-12)
-  via `jsonschema 4.26.0`.
-- Files validated: 702 (701 catalog + 1 IR)
+  via Python `jsonschema 4.26.0` (Draft 2020-12) → 0 errors.
+- All 707 catalog files validated against
+  `cli-sidecar/Ingest/Schema/host-coverage-type.schema.json`
+  (Draft 2020-12) → 0 errors.
+- Files validated: 708 (707 catalog + 1 IR)
 - **schema_violations:** 0 ✓
 
 ## Reviewer summary
 
-- Step 1: **FAIL** (6 missing types from catalog — same root cause as
-  4.1.0)
-- Step 2: **FAIL** (49/50 — the 1 FAIL is downstream of Step 1's
-  filename collision; the catalog's `State.json` contains the wrong
-  variant for the sampled type)
-- Step 3: **PASS** (20/20)
-- Step 4: **PASS** (0 violations across 702 files)
+- Step 1: **PASS** (707/707 — the 6 previously-missing types are now
+  in the catalog with semantically-correct content)
+- Step 2: **PASS** (50/50 — the prior `49/50` FAIL was downstream of
+  the Step 1 collision; with the nested-type namespace qualification
+  fix, `Dynamo.Scheduler.TaskStateChangedEventArgs.State` is no longer
+  stomped by `ProtoCore.ExecutionStateEventArgs.State` and both
+  resolve to their own catalog files with correct enum values)
+- Step 3: **PASS** (20/20 — all method summaries non-empty, all from
+  real XML doc prose)
+- Step 4: **PASS** (0 violations across 708 files)
 
-Verdict is **FAIL** on Steps 1 + 2.
+Verdict is **PASS**. Same root-cause fix as dynamo-4.1.0 resolves both
+the Step 1 and the dependent Step 2 failures.
 
 ## Re-run command
 
