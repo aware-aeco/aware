@@ -76,6 +76,9 @@ internal static class Program
         {
             "list-instances" => Verbs.ListInstances.RunAsync().GetAwaiter().GetResult(),
             "exec"           => Verbs.Exec.RunAsync(stdinJson).GetAwaiter().GetResult(),
+            "send-status"    => Verbs.SendStatus.RunAsync(stdinJson).GetAwaiter().GetResult(),
+            "launch"         => Verbs.Launch.Run(stdinJson),
+            "close"          => Verbs.Close.RunAsync(stdinJson).GetAwaiter().GetResult(),
             _ => Unknown(verb),
         };
     }
