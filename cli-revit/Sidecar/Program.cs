@@ -75,6 +75,7 @@ internal static class Program
         return verb switch
         {
             "list-instances" => Verbs.ListInstances.RunAsync().GetAwaiter().GetResult(),
+            "exec"           => Verbs.Exec.RunAsync(stdinJson).GetAwaiter().GetResult(),
             _ => Unknown(verb),
         };
     }
