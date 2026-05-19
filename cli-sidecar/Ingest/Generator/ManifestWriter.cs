@@ -58,11 +58,19 @@ public static class ManifestWriter
         sb.AppendLine($"    binary: aware-{ir.host}");
         sb.AppendLine();
         sb.AppendLine("commands:");
+        // Defense in depth: even though extractors now emit bare canonical method names (no
+        // embedded param lists), strip YAML-fragile characters (`()<>[]:,` etc.) before using a
+        // verb-id as a YAML key. If sanitisation produces a collision with a previously-emitted
+        // verb-id, append a numeric suffix (`-2`, `-3`, ...) so the manifest stays a valid map.
+        var emittedVerbs = new HashSet<string>(StringComparer.Ordinal);
         foreach (var t in ir.types.OrderBy(t => t.@namespace).ThenBy(t => t.name))
         {
             foreach (var m in t.methods.OrderBy(m => m.name))
             {
-                var verbId = $"{NormaliseToVerb(t.name)}-{NormaliseToVerb(m.name)}";
+                var rawVerbId = $"{NormaliseToVerb(t.name)}-{NormaliseToVerb(m.name)}";
+                var verbId = SanitizeYamlKey(rawVerbId);
+                verbId = MakeUniqueVerb(verbId, emittedVerbs);
+                emittedVerbs.Add(verbId);
                 var oneLineDesc = (m.summary ?? "").Replace("\n", " ").Replace("\r", " ").Trim();
                 if (oneLineDesc.Length > 200) oneLineDesc = oneLineDesc.Substring(0, 197) + "...";
                 sb.AppendLine($"  {verbId}:");
@@ -117,14 +125,102 @@ public static class ManifestWriter
     static string NormaliseToSlug(string s) =>
         s.Replace("::", "-").Replace('.', '-').ToLowerInvariant();
 
+    /// <summary>
+    /// Strip / collapse characters that make a token unsafe as a YAML map key. Targets the
+    /// fragile set: parentheses (`(`, `)`), angle brackets (`<`, `>`), square brackets (`[`, `]`),
+    /// colon (`:`), comma (`,`), space, hash (`#`), pipe (`|`), and curly braces (`{`, `}`). All
+    /// other characters pass through unchanged. Consecutive dashes collapse to a single dash, and
+    /// trailing/leading dashes are trimmed.
+    ///
+    /// This is defence-in-depth: extractors should emit clean canonical names (e.g. bare method
+    /// names with no embedded param lists). If a future extractor regression smuggles a `:` into
+    /// a verb-id, this sanitiser keeps the manifest a valid YAML document instead of failing
+    /// downstream deserialisation.
+    /// </summary>
+    static string SanitizeYamlKey(string s)
+    {
+        if (string.IsNullOrEmpty(s)) return s;
+        var sb = new StringBuilder(s.Length);
+        foreach (var c in s)
+        {
+            switch (c)
+            {
+                case '(': case ')':
+                case '<': case '>':
+                case '[': case ']':
+                case '{': case '}':
+                case ':': case ',':
+                case ' ': case '#':
+                case '|': case '!':
+                case '&': case '*':
+                case '"': case '\'':
+                    sb.Append('-');
+                    break;
+                default:
+                    sb.Append(c);
+                    break;
+            }
+        }
+        // Collapse consecutive dashes and trim edge dashes.
+        var collapsed = Regex.Replace(sb.ToString(), "-+", "-").Trim('-');
+        return collapsed.Length == 0 ? "_" : collapsed;
+    }
+
+    /// <summary>
+    /// Ensure a verb-id is unique within the set of already-emitted verbs. If `verbId` is taken,
+    /// append `-2`, `-3`, ... until a free slot is found. Returns the unique form (which the
+    /// caller is responsible for adding to `emitted`).
+    /// </summary>
+    static string MakeUniqueVerb(string verbId, HashSet<string> emitted)
+    {
+        if (!emitted.Contains(verbId)) return verbId;
+        for (int i = 2; i < int.MaxValue; i++)
+        {
+            var candidate = $"{verbId}-{i}";
+            if (!emitted.Contains(candidate)) return candidate;
+        }
+        // Theoretically unreachable.
+        return verbId;
+    }
+
     static string YamlList(IEnumerable<string> items) =>
         $"[{string.Join(", ", items.Select(s => $"\"{s}\""))}]";
 
     static string QuoteYamlScalar(string s)
     {
         if (string.IsNullOrEmpty(s)) return "\"\"";
-        if (s.Contains(":") || s.Contains("#") || s.StartsWith("-") || s.StartsWith("&") || s.StartsWith("*") || s.StartsWith("!") || s.StartsWith("|") || s.StartsWith(">"))
-            return $"\"{s.Replace("\"", "\\\"")}\"";
+        // Quote if the value contains any YAML-meaningful character anywhere, OR starts with
+        // one of YAML's reserved indicators (per YAML 1.2 § 5.3). The reserved set covers:
+        //   `@` and backtick — reserved for future YAML revisions; emitting bare triggers the
+        //     "found character that cannot start any token" error during parse.
+        //   `-`, `?`, `:`  — flow / block sequence / mapping indicators.
+        //   `,`, `[`, `]`, `{`, `}` — flow collection delimiters.
+        //   `#` — comment marker.
+        //   `&`, `*` — anchor / alias markers.
+        //   `!` — tag marker.
+        //   `|`, `>` — block scalar headers.
+        //   `'`, `"` — quoted-scalar delimiters.
+        //   `%` — directive (only meaningful at column 1, but quoting defensively).
+        var needsQuoting =
+            s.Contains(':')
+            || s.Contains('#')
+            || s.Contains('@')
+            || s.Contains('`')
+            || s.StartsWith('-') || s.StartsWith('?')
+            || s.StartsWith('&') || s.StartsWith('*')
+            || s.StartsWith('!') || s.StartsWith('|') || s.StartsWith('>')
+            || s.StartsWith('\'') || s.StartsWith('"')
+            || s.StartsWith('[') || s.StartsWith(']')
+            || s.StartsWith('{') || s.StartsWith('}')
+            || s.StartsWith(',')
+            || s.StartsWith('%');
+        if (needsQuoting)
+        {
+            // Backslash-escape any embedded backslashes first so the JSON-style double-quote
+            // escape below survives YAML round-trip.
+            var escaped = s.Replace("\\", "\\\\").Replace("\"", "\\\"");
+            return $"\"{escaped}\"";
+        }
         return s;
     }
 }
