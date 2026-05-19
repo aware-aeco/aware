@@ -17,9 +17,21 @@ Pawel, here's what ran while you were asleep.
 | [#74](https://github.com/aware-aeco/aware/pull/74) | feat(v0.33b): sketchup-2026 curated workflow verbs round 2 (total: 10) | v0.33-sketchup-curated-workflow | stacked on #72 |
 | [#75](https://github.com/aware-aeco/aware/pull/75) | feat(v0.33c): rhino-8 craft skills (5 hand-written narrative skills) | main | first craft skills outside tekla |
 | [#76](https://github.com/aware-aeco/aware/pull/76) | feat(v0.34): sketchup.exec runtime sidecar -- Ruby in-process bridge + .NET sidecar | main | **subagent**; live drill blocked on Welcome-dialog click |
-| [#77](https://github.com/aware-aeco/aware/pull/77) | feat(v0.33): revit.exec runtime sidecar -- in-Revit add-in + .NET sidecar over named pipe | main | **subagent**; live drill ready (install-addin first) |
+| [#77](https://github.com/aware-aeco/aware/pull/77) | feat(v0.33): revit.exec runtime sidecar -- in-Revit add-in + .NET sidecar over named pipe | main | **subagent**; **20/20 live drill PASS** ✅ |
+| [#78](https://github.com/aware-aeco/aware/pull/78) | feat(v0.33d): sketchup-2026 craft skills (6) | main | docs |
+| [#79](https://github.com/aware-aeco/aware/pull/79) | feat(v0.33e): revit-2026 craft skills (6) | main | docs |
+| [#80](https://github.com/aware-aeco/aware/pull/80) | feat(v0.33f): navisworks craft skills (6) | main | docs |
+| [#81](https://github.com/aware-aeco/aware/pull/81) | feat(v0.33g): autocad-2026 craft skills (6) | main | docs |
+| [#82](https://github.com/aware-aeco/aware/pull/82) | feat(v0.33h): autocad-2026 curated workflow verbs (5) | main | content |
+| [#83](https://github.com/aware-aeco/aware/pull/83) | feat(v0.33i): dynamo-4-1-1 curated workflow verbs (5) | main | content |
+| [#84](https://github.com/aware-aeco/aware/pull/84) | docs(v0.33): vendor curation matrix | main | planning doc |
+| [#85](https://github.com/aware-aeco/aware/pull/85) | feat(v0.33k): solibri-26.4.1 curated workflow verbs (5) | main | content |
+| [#86](https://github.com/aware-aeco/aware/pull/86) | feat(v0.33l): solibri-26.4.1 craft skills (3) | main | docs |
+| [#87](https://github.com/aware-aeco/aware/pull/87) | feat(v0.33m): bluebeam-studio craft skills (2) | main | docs |
+| [#88](https://github.com/aware-aeco/aware/pull/88) | feat(v0.33n): idea-statica-26 craft skills (2) | main | docs |
+| [#89](https://github.com/aware-aeco/aware/pull/89) | feat(v0.33o): allplan-2025 curated workflow verbs (5) | main | content |
 
-12 PRs total from this session.
+**26 PRs total from this session** across 11 vendor agents (Rhino, Revit, SketchUp, Navisworks, AutoCAD, Dynamo, Solibri, Bluebeam, IDEA Statica, Allplan, + Tekla backport) + 4 supporting docs.
 
 ## Goal status (per the active /goal directive)
 
