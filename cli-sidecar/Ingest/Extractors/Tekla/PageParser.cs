@@ -394,6 +394,17 @@ public static class PageParser
             var nameAnchor = cells[1].QuerySelector("a");
             if (nameAnchor is null) continue;
 
+            // The row's anchor text is the FULL disambiguated member name as the vendor
+            // renders it — including overload args. Examples (LST placeholders already
+            // resolved to their C# variant by CleanInlineText):
+            //   • method  → "ToString(IEnumerable<Angle>)"
+            //   • method  → "GetSolid()"
+            //   • ctor    → "Foo()"  (the default constructor's empty-parens overload)
+            //   • ctor    → "Foo(String)"
+            //   • ctor    → "ReinforcementBase.ReinforcementGroupAttributes()"  (nested type)
+            // We keep this text verbatim for both ctors and methods so the catalog
+            // preserves overload disambiguation. Previously ctors collapsed to the bare
+            // type name and lost their overload key — multiple ctors aliased to one row.
             var memberName = CleanInlineText(nameAnchor);
             var memberHref = nameAnchor.GetAttribute("href") ?? "";
             var memberUrl = AbsoluteUrl(memberHref);
@@ -401,12 +412,15 @@ public static class PageParser
             var summary = ExtractRowSummary(cells[2]);
 
             // Placeholder signature — overwritten by MemberPageParser during enrichment.
+            // For ctors we anchor on the bare type name (Foo(...)) so the placeholder check
+            // in Extractor.IsMethodPlaceholder still picks up these rows for enrichment;
+            // for methods we anchor on the full member text.
             var sig = isCtor
                 ? $"{typeName}(...)"
                 : $"{memberName}(...)";
 
             rows.Add(new MethodInfo(
-                name: isCtor ? typeName : memberName,
+                name: memberName,
                 signature: sig,
                 summary: summary,
                 remarks: null,

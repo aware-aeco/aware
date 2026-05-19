@@ -127,8 +127,18 @@ public static class MemberPageParser
         var title = CleanInlineText(h1);
         if (!title.EndsWith(" Property", StringComparison.Ordinal)) return null;
 
-        // Property type comes from "Property Value" subHeading section.
-        var propType = ExtractTypedSection(content, "Property Value") ?? "object";
+        // Property type comes from the typed-value subHeading section. Tekla's docs
+        // are INCONSISTENT here — most property pages use `<h4>Property Value</h4>` (the
+        // canonical heading per the docs template), but a significant minority (every
+        // property documented as overriding a base property — `IsUpToDate`,
+        // `ModificationTime`, etc.) use `<h4>Return Value</h4>` instead. Both encode
+        // the same "Type: X" layout, so we fall back from one to the other rather than
+        // letting the placeholder `object` leak through. Discovered while regenerating
+        // the 2025 catalog after the codex-coverage FAIL fix — the strict-verify on
+        // `BaseRebarModifier.IsUpToDate` (Boolean) was flagging it as a placeholder.
+        var propType = ExtractTypedSection(content, "Property Value")
+                       ?? ExtractTypedSection(content, "Return Value")
+                       ?? "object";
 
         // Getter/setter from the C# syntax block. Look for `{ get; }` vs `{ get; set; }`.
         var sigBlock = ExtractCSharpSyntaxBlock(content) ?? "";

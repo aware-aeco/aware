@@ -222,4 +222,185 @@ public class TeklaMemberPageParserTests
         Assert.Equal("Tekla.Structures.Model.Events.ModelChangedDelegate", r!.@delegate);
         Assert.NotEqual("EventHandler", r.@delegate);
     }
+
+    // ── B1 follow-up — defect 1+2 (codex-coverage FAIL 2026-05-19): per-cs= LST tokens ──
+
+    [Fact]
+    public void LstSubstitution_DefaultCtor_Parens_Are_Preserved()
+    {
+        // Defect 1 — codex-coverage FAIL 2026-05-19 on tekla-2025/2026: vendor renders
+        // default constructors as e.g. "TransformationPlane()" with the empty-parens being
+        // an LST script with `cs=(|vb=(|...` followed by `)|vb=)|...`. The old parser
+        // hardcoded `.` for every LST span and collapsed both parens to dots, leaving
+        // "TransformationPlane.." in the catalog — colliding with the non-default ctor
+        // overload "TransformationPlane(CoordinateSystem)" and breaking overload disambiguation.
+        // The corrected parser reads `cs=(` / `cs=)` from the script body and substitutes
+        // the literal parens.
+        var html = """
+<!DOCTYPE html><html><body><div>
+TransformationPlane<span id="LSTAAA_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTAAA_0?cs=(|vb=(|cpp=(|fs=(|nu=(");</script><span id="LSTAAA_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTAAA_1?cs=)|vb=)|cpp=)|fs=)|nu=)");</script>
+</div></body></html>
+""";
+        using var doc = new HtmlParser().ParseDocument(html);
+        var div = doc.QuerySelector("div")!;
+        var rendered = MemberPageParser.CleanInlineText(div);
+        Assert.Contains("TransformationPlane()", rendered);
+        Assert.DoesNotContain("TransformationPlane..", rendered);
+        Assert.DoesNotContain("AddLanguageSpecificTextSet", rendered);
+    }
+
+    [Fact]
+    public void LstSubstitution_Generic_Open_Bracket_Is_Decoded()
+    {
+        // Defect 2 — codex-coverage FAIL 2026-05-19: vendor renders generic angle brackets
+        // as LST scripts carrying `cs=&lt;` / `cs=&gt;` (HTML-entity-encoded, since the
+        // script body is HTML5 raw-text). The parser must HTML-entity-decode the captured
+        // value before substituting — without decoding, the literal text `&lt;` would
+        // round-trip into the catalog name (e.g. "IEnumerable&lt;Angle&gt;"). The old
+        // parser hardcoded `.` instead, producing "IEnumerable.Angle.".
+        var html = """
+<!DOCTYPE html><html><body><a href="/x">ToString(IEnumerable<span id="LSTBBB_3"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTBBB_3?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>Angle<span id="LSTBBB_4"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTBBB_4?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></body></html>
+""";
+        using var doc = new HtmlParser().ParseDocument(html);
+        var anchor = doc.QuerySelector("a")!;
+        var rendered = MemberPageParser.CleanInlineText(anchor);
+        Assert.Equal("ToString(IEnumerable<Angle>)", rendered);
+        Assert.DoesNotContain("IEnumerable.Angle.", rendered);
+        Assert.DoesNotContain("&lt;", rendered);
+        Assert.DoesNotContain("&gt;", rendered);
+    }
+
+    [Fact]
+    public void LstSubstitution_AmpEntity_Is_Decoded()
+    {
+        // Belt-and-braces: `cs=&amp;` would only ever appear in unusual signatures (ref-style
+        // params via & or similar) but the decoder must still handle it. This pins the
+        // entity-decoder behaviour so a future regression on the entity table is caught.
+        var html = """
+<!DOCTYPE html><html><body><div>Foo<span id="LSTCCC_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCCC_0?cs=&amp;|vb=&amp;|cpp=&amp;|nu=&amp;|fs=&amp;");</script>Bar</div></body></html>
+""";
+        using var doc = new HtmlParser().ParseDocument(html);
+        var div = doc.QuerySelector("div")!;
+        var rendered = MemberPageParser.CleanInlineText(div);
+        Assert.Equal("Foo&Bar", rendered);
+        Assert.DoesNotContain("&amp;", rendered);
+    }
+
+    // ── B1 follow-up — defect 1: ctor names preserve overload disambiguator ────
+
+    [Fact]
+    public void PageParser_TypePage_Ctor_Name_Carries_Overload_Args()
+    {
+        // Defect 1 — codex-coverage FAIL 2026-05-19: PageParser.ExtractMethodTable
+        // previously set `name = typeName` for ctors, dropping the overload disambiguator
+        // (`Foo()` vs `Foo(String)` both stored as "Foo"). The fix keeps the row's
+        // anchor-text verbatim as the name, including the parentheses + arg list.
+        //
+        // Minimal fixture: a type page with TWO ctor rows — default + one-arg. Both
+        // rows render with LST `cs=(` / `cs=)` for the parens. The catalog name must
+        // contain the disambiguator after parsing.
+        var html = """
+<!DOCTYPE html><html><body>
+<div class="topicContent" id="TopicContent">
+<table class="titleTable"><tr><td></td><td><h1>TransformationPlane Class</h1></td></tr></table>
+<div class="summary">A plane.</div>
+<strong>Namespace:</strong> <a href="/topic/x">Tekla.Structures.Model</a><br>
+<div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle">Constructors</span></div>
+<div class="collapsibleSection">
+<table class="members" id="constructorList">
+<tr><th>Name</th><th>Description</th><th>Notes</th></tr>
+<tr><td></td>
+<td><a href="/topic/ctor-default">TransformationPlane<span id="LSTAAA_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTAAA_0?cs=(|vb=(|cpp=(|fs=(|nu=(");</script><span id="LSTAAA_1"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTAAA_1?cs=)|vb=)|cpp=)|fs=)|nu=)");</script></a></td>
+<td><div class="summary">Default.</div></td>
+</tr>
+<tr><td></td>
+<td><a href="/topic/ctor-args">TransformationPlane<span id="LSTAAA_2"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTAAA_2?cs=(|vb=(|cpp=(|fs=(|nu=(");</script>CoordinateSystem<span id="LSTAAA_3"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTAAA_3?cs=)|vb=)|cpp=)|fs=)|nu=)");</script></a></td>
+<td><div class="summary">From coordinate system.</div></td>
+</tr>
+</table>
+</div>
+</div>
+</body></html>
+""";
+        var result = PageParser.Parse(html, "https://example.com/type");
+        Assert.NotNull(result);
+        Assert.Equal(2, result!.Type.constructors.Count);
+        // Both ctor names must include the disambiguator — NOT "TransformationPlane" twice.
+        Assert.Contains(result.Type.constructors, c => c.name == "TransformationPlane()");
+        Assert.Contains(result.Type.constructors, c => c.name == "TransformationPlane(CoordinateSystem)");
+        // And they must be distinct (the collision was the bug).
+        Assert.NotEqual(result.Type.constructors[0].name, result.Type.constructors[1].name);
+    }
+
+    [Fact]
+    public void Property_Falls_Back_From_PropertyValue_To_ReturnValue_Subheading()
+    {
+        // Tekla docs are inconsistent — every property documented as overriding a
+        // base property (e.g. `ModelObject.IsUpToDate`, `ModelObject.ModificationTime`)
+        // uses `<h4>Return Value</h4>` instead of the canonical `<h4>Property Value</h4>`.
+        // The parser must try Property Value first (the common case), then fall back to
+        // Return Value when absent — otherwise the type lands as the placeholder `object`
+        // in the catalog. Discovered while regenerating the 2025 catalog after the
+        // codex-coverage FAIL fix — `BaseRebarModifier.IsUpToDate` (Boolean) was
+        // flagged as a placeholder.
+        var html = """
+<!DOCTYPE html><html><body>
+<div class="topicContent" id="TopicContent">
+<table class="titleTable"><tr><td></td><td><h1>Foo.IsUpToDate Property</h1></td></tr></table>
+<div class="summary">A flag.</div>
+<strong>Namespace:</strong> <a href="/topic/x">Tekla.Test</a><br>
+<div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle">Syntax</span></div>
+<div id="ID1RBSection" class="collapsibleSection">
+<div class="codeSnippetContainer">
+<div class="codeSnippetContainerCodeContainer">
+<div id="ID0EBCA_code_Div1" class="codeSnippetContainerCode" style="display: block"><pre>public bool IsUpToDate { get; }</pre></div>
+</div>
+</div>
+<h4 class="subHeading">Return Value</h4>Type: <span class="nolink">Boolean</span><br>True when the object is up to date.
+</div>
+</div>
+</body></html>
+""";
+        var r = MemberPageParser.ParseProperty(html);
+        Assert.NotNull(r);
+        Assert.Equal("Boolean", r!.type);
+        Assert.NotEqual("object", r.type);
+        Assert.True(r.getter);
+        Assert.False(r.setter);
+    }
+
+    [Fact]
+    public void PageParser_TypePage_Method_Generic_Renders_Angle_Brackets()
+    {
+        // Defect 2 — codex-coverage FAIL 2026-05-19: type-page method rows with generics
+        // (e.g. `ToString(IEnumerable<Angle>)`) lost their angle brackets during the type-
+        // page crawl that built the snapshot. Verify via a freshly-parsed type-page that the
+        // row name now carries `<Angle>` literally — the fix only takes effect on a fresh
+        // crawl (snapshot must be deleted), but the parser-level check here pins the
+        // logic going forward.
+        var html = """
+<!DOCTYPE html><html><body>
+<div class="topicContent" id="TopicContent">
+<table class="titleTable"><tr><td></td><td><h1>AngleList Class</h1></td></tr></table>
+<div class="summary">Angle list helper.</div>
+<strong>Namespace:</strong> <a href="/topic/x">Tekla.Structures.Datatype</a><br>
+<div class="collapsibleAreaRegion"><span class="collapsibleRegionTitle">Methods</span></div>
+<div class="collapsibleSection">
+<table class="members" id="methodList">
+<tr><th>Name</th><th>Description</th><th>Notes</th></tr>
+<tr><td></td>
+<td><a href="/topic/method-x">ToString(IEnumerable<span id="LSTCB3882A2_3"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCB3882A2_3?cs=&lt;|vb=(Of |cpp=&lt;|fs=&lt;'|nu=(");</script>Angle<span id="LSTCB3882A2_4"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTCB3882A2_4?cs=&gt;|vb=)|cpp=&gt;|fs=&gt;|nu=)");</script>)</a></td>
+<td><div class="summary">Convert.</div></td>
+</tr>
+</table>
+</div>
+</div>
+</body></html>
+""";
+        var result = PageParser.Parse(html, "https://example.com/type");
+        Assert.NotNull(result);
+        Assert.Single(result!.Type.methods);
+        Assert.Equal("ToString(IEnumerable<Angle>)", result.Type.methods[0].name);
+        Assert.DoesNotContain("IEnumerable.Angle.", result.Type.methods[0].name);
+    }
 }
