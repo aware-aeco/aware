@@ -105,6 +105,17 @@ public sealed class AssemblyReflector
             var ns = td.Namespace.IsNil ? "" : mr.GetString(td.Namespace);
             var typeFullName = ComputeFullName(mr, td, ns);
             var typeName = CleanGenericArity(rawName);
+            // For nested types, qualify the IR `@namespace` with the declaring chain so
+            // `(namespace, name)` is unique — Allplan convention. Without this, multiple
+            // outer types each holding a nested `State` enum all serialise as
+            // `namespace="", name="State"` and collide in the catalog (silent-overwrite
+            // bug surfaced by dynamo codex-coverage FAIL 2026-05-19; 6 distinct vendor
+            // types were lost). Example: a `State` enum nested in
+            // `Dynamo.Models.AnnotationModel` becomes
+            // namespace="Dynamo.Models.AnnotationModel", name="State".
+            string irNamespace = td.IsNested
+                ? ComputeContainerNamespace(mr, td)
+                : ns;
 
             // Generic type parameters → list of names like "T", "TKey", "TValue"
             var typeGenericParams = td.GetGenericParameters()
@@ -424,7 +435,7 @@ public sealed class AssemblyReflector
 
             output.Add(new TypeInfo(
                 name: displayName,
-                @namespace: ns,
+                @namespace: irNamespace,
                 kind: kind,
                 summary: summary,
                 remarks: remarks,
@@ -502,6 +513,23 @@ public sealed class AssemblyReflector
             return parentFull + "." + name;
         }
         return string.IsNullOrEmpty(ns) ? name : ns + "." + name;
+    }
+
+    /// <summary>
+    /// For a nested type, returns the fully qualified path of its enclosing types so the
+    /// IR `@namespace` field can hold `<outer-namespace>.<outer-name>` (Allplan convention).
+    /// For `State` nested in `Dynamo.Models.AnnotationModel` this returns
+    /// `Dynamo.Models.AnnotationModel`. For a deeply nested `Inner` inside
+    /// `Outer.Mid.Inner` it returns `Ns.Outer.Mid`. The result is empty when the immediate
+    /// parent has no namespace and no enclosing types (root-level type that's still
+    /// IsNested by metadata) — caller treats that as a plain top-level namespace.
+    /// Precondition: `td.IsNested` is true; otherwise caller should pass `ns` directly.
+    /// </summary>
+    static string ComputeContainerNamespace(MetadataReader mr, TypeDefinition td)
+    {
+        var parent = mr.GetTypeDefinition(td.GetDeclaringType());
+        var parentNs = parent.Namespace.IsNil ? "" : mr.GetString(parent.Namespace);
+        return ComputeFullName(mr, parent, parentNs);
     }
 
     static string ComputeXmlNestedName(MetadataReader mr, TypeDefinition td)
