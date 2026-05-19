@@ -1,0 +1,258 @@
+{
+  "name": "GH_FileWatcher",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides easy mechanisms to monitor changes to the local File System.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_FileWatcher.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateDirectoryWatcher(String, String, GH_FileWatcherEvents, GH_FileWatcher.FileChanged)",
+      "signature": "public static GH_FileWatcher CreateDirectoryWatcher(string folderPath, string filter, GH_FileWatcherEvents events, GH_FileWatcher.FileChanged delegate)",
+      "summary": "Create a new FileSystem Watcher object aimed at a specific file.",
+      "params": [
+        {
+          "name": "folderPath",
+          "type": "System.String",
+          "doc": "Folder to watch.",
+          "optional": false
+        },
+        {
+          "name": "filter",
+          "type": "System.String",
+          "doc": "Filter string for filenames.",
+          "optional": false
+        },
+        {
+          "name": "events",
+          "type": "Grasshopper.Kernel.GH_FileWatcherEvents",
+          "doc": "Events to watch for.",
+          "optional": false
+        },
+        {
+          "name": "delegate",
+          "type": "Grasshopper.Kernel.GH_FileWatcher.FileChanged",
+          "doc": "Callback delegate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_FileWatcher",
+        "doc": "A new filewatcher aimed at the specified folder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_CreateDirectoryWatcher.htm"
+    },
+    {
+      "name": "CreateDirectoryWatcher(String, String, GH_FileWatcherEvents, GH_FileWatcher.FileChangedSimple)",
+      "signature": "public static GH_FileWatcher CreateDirectoryWatcher(string folderPath, string filter, GH_FileWatcherEvents events, GH_FileWatcher.FileChangedSimple delegate)",
+      "summary": "Create a new FileSystem Watcher object aimed at a specific file.",
+      "params": [
+        {
+          "name": "folderPath",
+          "type": "System.String",
+          "doc": "Folder to watch.",
+          "optional": false
+        },
+        {
+          "name": "filter",
+          "type": "System.String",
+          "doc": "Filter string for filenames.",
+          "optional": false
+        },
+        {
+          "name": "events",
+          "type": "Grasshopper.Kernel.GH_FileWatcherEvents",
+          "doc": "Events to watch for.",
+          "optional": false
+        },
+        {
+          "name": "delegate",
+          "type": "Grasshopper.Kernel.GH_FileWatcher.FileChangedSimple",
+          "doc": "Callback delegate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_FileWatcher",
+        "doc": "A new filewatcher aimed at the specified folder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_CreateDirectoryWatcher_1.htm"
+    },
+    {
+      "name": "CreateFileWatcher(String, GH_FileWatcherEvents, GH_FileWatcher.FileChanged)",
+      "signature": "public static GH_FileWatcher CreateFileWatcher(string filePath, GH_FileWatcherEvents events, GH_FileWatcher.FileChanged delegate)",
+      "summary": "Create a new FileSystem Watcher object aimed at a specific file.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "File to watch.",
+          "optional": false
+        },
+        {
+          "name": "events",
+          "type": "Grasshopper.Kernel.GH_FileWatcherEvents",
+          "doc": "Events to watch for.",
+          "optional": false
+        },
+        {
+          "name": "delegate",
+          "type": "Grasshopper.Kernel.GH_FileWatcher.FileChanged",
+          "doc": "Callback delegate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_FileWatcher",
+        "doc": "A new filewatcher aimed at the specified file."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_CreateFileWatcher.htm"
+    },
+    {
+      "name": "CreateFileWatcher(String, GH_FileWatcherEvents, GH_FileWatcher.FileChangedSimple)",
+      "signature": "public static GH_FileWatcher CreateFileWatcher(string filePath, GH_FileWatcherEvents events, GH_FileWatcher.FileChangedSimple delegate)",
+      "summary": "Create a new FileSystem Watcher object aimed at a specific file.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "File to watch.",
+          "optional": false
+        },
+        {
+          "name": "events",
+          "type": "Grasshopper.Kernel.GH_FileWatcherEvents",
+          "doc": "Events to watch for.",
+          "optional": false
+        },
+        {
+          "name": "delegate",
+          "type": "Grasshopper.Kernel.GH_FileWatcher.FileChangedSimple",
+          "doc": "Callback delegate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_FileWatcher",
+        "doc": "A new filewatcher aimed at the specified file."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_CreateFileWatcher_1.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the GH_FileWatcher",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_FileWatcher and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_Dispose_1.htm"
+    },
+    {
+      "name": "SetCustomUIThread(Control)",
+      "signature": "public void SetCustomUIThread(Control target)",
+      "summary": "If you want to override the default Invoke behaviour, you must set InvokeOnDefaultThread to False and supply either a custom Control or a Form.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Windows.Forms.Control",
+          "doc": "GUI target object which will be used for Invoking File System Events.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_SetCustomUIThread.htm"
+    },
+    {
+      "name": "SetCustomUIThread(Form)",
+      "signature": "public void SetCustomUIThread(Form target)",
+      "summary": "If you want to override the default Invoke behaviour, you must set InvokeOnDefaultThread to False and supply either a custom Control or a Form.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Windows.Forms.Form",
+          "doc": "GUI target object which will be used for Invoking File System Events.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileWatcher_SetCustomUIThread_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Active",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the active flag on this watcher.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_FileWatcher_Active.htm"
+    },
+    {
+      "name": "Buffer",
+      "type": "TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the time during which events are buffered. If multiple events for the same file occur within the buffered timespan, they will be merged into one event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_FileWatcher_Buffer.htm"
+    },
+    {
+      "name": "InvokeOnDefaultThread",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets invoke behaviour for events. If true, then the event delegate is called via the Grasshopper main UI thread. This is almost always what you need.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_FileWatcher_InvokeOnDefaultThread.htm"
+    },
+    {
+      "name": "IsDisposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_FileWatcher_IsDisposed.htm"
+    },
+    {
+      "name": "Path",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file or folder path currently being watched.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_FileWatcher_Path.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,143 @@
+{
+  "name": "GH_DebugDescriptionWriter",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Writer object used to create debug logs.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_DebugDescriptionWriter.htm",
+  "constructors": [
+    {
+      "name": "GH_DebugDescriptionWriter",
+      "signature": "public GH_DebugDescriptionWriter()",
+      "summary": "Initializes a new instance of the GH_DebugDescriptionWriter class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CloseBlock",
+      "signature": "public void CloseBlock()",
+      "summary": "Close the current block and decrease the depth by 1.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_CloseBlock.htm"
+    },
+    {
+      "name": "CreateBlock",
+      "signature": "public void CreateBlock(string name)",
+      "summary": "Begin a new block. This will increase the depth by 1. You must call CloseBlock() if you call this function.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_CreateBlock.htm"
+    },
+    {
+      "name": "CreateLog",
+      "signature": "public string CreateLog()",
+      "summary": "Get a single string that represents the entire log so far.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_CreateLog.htm"
+    },
+    {
+      "name": "WriteLine()",
+      "signature": "public void WriteLine()",
+      "summary": "Write a new blank line to the log.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_WriteLine.htm"
+    },
+    {
+      "name": "WriteLine(String)",
+      "signature": "public void WriteLine(string line)",
+      "summary": "Write a new line to the log.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to write.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_WriteLine_1.htm"
+    },
+    {
+      "name": "WriteLine(String, Object[])",
+      "signature": "public void WriteLine(string line, params Object[] args)",
+      "summary": "Write a new formatted line to the log.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to write with formatting tags.",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "Data to format.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_WriteLine_2.htm"
+    },
+    {
+      "name": "WriteLogToFile",
+      "signature": "public bool WriteLogToFile(string path)",
+      "summary": "Write the log to a text file.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "Path of file to write to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DebugDescriptionWriter_WriteLogToFile.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the depth of the current writer. Depth is represented by whitespace in front of each line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DebugDescriptionWriter_Depth.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,76 @@
+{
+  "name": "GH_StateTagList",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Maintains a collection of IGH_StateTag objects.",
+  "base": "List\u003CIGH_StateTag\u003E",
+  "interfaces": [
+    "IGH_TooltipAwareObject"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_StateTagList.htm",
+  "constructors": [
+    {
+      "name": "GH_StateTagList",
+      "signature": "public GH_StateTagList()",
+      "summary": "Initializes a new instance of the GH_StateTagList class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTagList__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Layout",
+      "signature": "public void Layout(Rectangle box, GH_StateTagLayoutDirection direction)",
+      "summary": "Layout the StateTags.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Content box to append to.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Grasshopper.Kernel.GH_StateTagLayoutDirection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTagList_Layout.htm"
+    },
+    {
+      "name": "RenderStateTags",
+      "signature": "public void RenderStateTags(Graphics G)",
+      "summary": "Render all StateTags in this list to the designated Graphics surface.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_StateTagList_RenderStateTags.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the boundingbox of all StateTags.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_StateTagList_BoundingBox.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

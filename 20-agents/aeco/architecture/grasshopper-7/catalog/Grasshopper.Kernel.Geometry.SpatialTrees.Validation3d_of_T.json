@@ -1,0 +1,14 @@
+{
+  "name": "Validation3d\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel.Geometry.SpatialTrees",
+  "kind": "delegate",
+  "summary": "Delegate to be used during advanced customized searches.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Geometry_SpatialTrees_Validation3d_1.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate bool Validation3d\u003CT\u003E( T element, int globalIndex, Node3d\u003CT\u003E node )"
+}

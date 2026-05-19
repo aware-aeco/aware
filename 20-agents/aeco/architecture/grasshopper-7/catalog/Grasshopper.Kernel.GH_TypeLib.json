@@ -1,0 +1,1518 @@
+{
+  "name": "GH_TypeLib",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Utility module that caches a number of oft-used types and type-ids for quick access. Do not change any of the values in this module or you\u0027ll wreck casting and conversion logic.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_TypeLib.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "id_bool",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Boolean",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_bool.htm"
+    },
+    {
+      "name": "id_byte",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Byte",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_byte.htm"
+    },
+    {
+      "name": "id_char",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Char",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_char.htm"
+    },
+    {
+      "name": "id_color",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_color.htm"
+    },
+    {
+      "name": "id_decimal",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Decimal",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_decimal.htm"
+    },
+    {
+      "name": "id_double",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Double",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_double.htm"
+    },
+    {
+      "name": "id_gh_arc",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Arc",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_arc.htm"
+    },
+    {
+      "name": "id_gh_bool",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Boolean",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_bool.htm"
+    },
+    {
+      "name": "id_gh_box",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Box",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_box.htm"
+    },
+    {
+      "name": "id_gh_brep",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Brep",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_brep.htm"
+    },
+    {
+      "name": "id_gh_circle",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Circle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_circle.htm"
+    },
+    {
+      "name": "id_gh_colour",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Colour",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_colour.htm"
+    },
+    {
+      "name": "id_gh_complex",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.Complex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_complex.htm"
+    },
+    {
+      "name": "id_gh_complexnumber",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_ComplexNumber",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_complexnumber.htm"
+    },
+    {
+      "name": "id_gh_curve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_curve.htm"
+    },
+    {
+      "name": "id_gh_goo",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.IGH_Goo",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_goo.htm"
+    },
+    {
+      "name": "id_gh_guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Guid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_guid.htm"
+    },
+    {
+      "name": "id_gh_int",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Integer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_int.htm"
+    },
+    {
+      "name": "id_gh_interval",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Interval",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_interval.htm"
+    },
+    {
+      "name": "id_gh_interval2D",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Interval2D",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_interval2D.htm"
+    },
+    {
+      "name": "id_gh_line",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Line",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_line.htm"
+    },
+    {
+      "name": "id_gh_material",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Material",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_material.htm"
+    },
+    {
+      "name": "id_gh_matrix",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Matrix",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_matrix.htm"
+    },
+    {
+      "name": "id_gh_mesh",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Mesh",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_mesh.htm"
+    },
+    {
+      "name": "id_gh_meshface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_MeshFace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_meshface.htm"
+    },
+    {
+      "name": "id_gh_number",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Number",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_number.htm"
+    },
+    {
+      "name": "id_gh_objwrapper",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_ObjectWrapper",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_objwrapper.htm"
+    },
+    {
+      "name": "id_gh_path",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Data.GH_Path",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_path.htm"
+    },
+    {
+      "name": "id_gh_plane",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_plane.htm"
+    },
+    {
+      "name": "id_gh_point",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Point",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_point.htm"
+    },
+    {
+      "name": "id_gh_rectangle",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Rectangle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_rectangle.htm"
+    },
+    {
+      "name": "id_gh_string",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_String",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_string.htm"
+    },
+    {
+      "name": "id_gh_structpath",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_StructurePath",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_structpath.htm"
+    },
+    {
+      "name": "id_gh_subd",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_SubD",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_subd.htm"
+    },
+    {
+      "name": "id_gh_surface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Surface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_surface.htm"
+    },
+    {
+      "name": "id_gh_time",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Time",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_time.htm"
+    },
+    {
+      "name": "id_gh_transform",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Transform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_transform.htm"
+    },
+    {
+      "name": "id_gh_uvinterval",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.UVInterval",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_uvinterval.htm"
+    },
+    {
+      "name": "id_gh_vector",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Vector",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_gh_vector.htm"
+    },
+    {
+      "name": "id_guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Guid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_guid.htm"
+    },
+    {
+      "name": "id_int16",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Int16",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_int16.htm"
+    },
+    {
+      "name": "id_int32",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Int32",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_int32.htm"
+    },
+    {
+      "name": "id_int64",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Int64",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_int64.htm"
+    },
+    {
+      "name": "id_object",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_object.htm"
+    },
+    {
+      "name": "id_point",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Point",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_point.htm"
+    },
+    {
+      "name": "id_pointf",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.PointF",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_pointf.htm"
+    },
+    {
+      "name": "id_rc_arc",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Arc",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_arc.htm"
+    },
+    {
+      "name": "id_rc_arccurve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.ArcCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_arccurve.htm"
+    },
+    {
+      "name": "id_rc_boundingbox",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.BoundingBox",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_boundingbox.htm"
+    },
+    {
+      "name": "id_rc_box",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Box",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_box.htm"
+    },
+    {
+      "name": "id_rc_brep",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Brep",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_brep.htm"
+    },
+    {
+      "name": "id_rc_brepedge",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.MeshEdge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_brepedge.htm"
+    },
+    {
+      "name": "id_rc_brepface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.MeshFace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_brepface.htm"
+    },
+    {
+      "name": "id_rc_circle",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Circle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_circle.htm"
+    },
+    {
+      "name": "id_rc_cone",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Cone",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_cone.htm"
+    },
+    {
+      "name": "id_rc_curve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_curve.htm"
+    },
+    {
+      "name": "id_rc_cylinder",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Cylinder",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_cylinder.htm"
+    },
+    {
+      "name": "id_rc_ellipse",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Circle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_ellipse.htm"
+    },
+    {
+      "name": "id_rc_extrusion",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Extrusion",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_extrusion.htm"
+    },
+    {
+      "name": "id_rc_interval",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Interval",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_interval.htm"
+    },
+    {
+      "name": "id_rc_line",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Line",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_line.htm"
+    },
+    {
+      "name": "id_rc_linecurve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.LineCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_linecurve.htm"
+    },
+    {
+      "name": "id_rc_matrix",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Matrix",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_matrix.htm"
+    },
+    {
+      "name": "id_rc_mesh",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Mesh",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_mesh.htm"
+    },
+    {
+      "name": "id_rc_meshface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.MeshFace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_meshface.htm"
+    },
+    {
+      "name": "id_rc_nurbscurve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.NurbsCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_nurbscurve.htm"
+    },
+    {
+      "name": "id_rc_nurbssurface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.NurbsSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_nurbssurface.htm"
+    },
+    {
+      "name": "id_rc_plane",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_plane.htm"
+    },
+    {
+      "name": "id_rc_planesurface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.PlaneSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_planesurface.htm"
+    },
+    {
+      "name": "id_rc_point3d",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Point3d",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_point3d.htm"
+    },
+    {
+      "name": "id_rc_point3f",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Point3f",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_point3f.htm"
+    },
+    {
+      "name": "id_rc_polycurve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.PolyCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_polycurve.htm"
+    },
+    {
+      "name": "id_rc_polyline",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Polyline",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_polyline.htm"
+    },
+    {
+      "name": "id_rc_polylinecurve",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.PolylineCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_polylinecurve.htm"
+    },
+    {
+      "name": "id_rc_rectangle",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Rectangle3d",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_rectangle.htm"
+    },
+    {
+      "name": "id_rc_revsurface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.RevSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_revsurface.htm"
+    },
+    {
+      "name": "id_rc_sphere",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Torus",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_sphere.htm"
+    },
+    {
+      "name": "id_rc_subd",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.SubD",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_subd.htm"
+    },
+    {
+      "name": "id_rc_sumsurface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.SumSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_sumsurface.htm"
+    },
+    {
+      "name": "id_rc_surface",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Surface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_surface.htm"
+    },
+    {
+      "name": "id_rc_torus",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Torus",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_torus.htm"
+    },
+    {
+      "name": "id_rc_transform",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Transform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_transform.htm"
+    },
+    {
+      "name": "id_rc_vector3d",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Vector3d",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_vector3d.htm"
+    },
+    {
+      "name": "id_rc_vector3f",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Vector3f",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rc_vector3f.htm"
+    },
+    {
+      "name": "id_rectangle",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Rectangle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rectangle.htm"
+    },
+    {
+      "name": "id_rectanglef",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.RectangleF",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_rectanglef.htm"
+    },
+    {
+      "name": "id_single",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Single",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_single.htm"
+    },
+    {
+      "name": "id_size",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Size",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_size.htm"
+    },
+    {
+      "name": "id_sizef",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.SizeF",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_sizef.htm"
+    },
+    {
+      "name": "id_string",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.String",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_string.htm"
+    },
+    {
+      "name": "id_time",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Date",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_time.htm"
+    },
+    {
+      "name": "id_uint16",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.UInt16",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_uint16.htm"
+    },
+    {
+      "name": "id_uint32",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.UInt32",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_uint32.htm"
+    },
+    {
+      "name": "id_uint64",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "System.UInt64",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_id_uint64.htm"
+    },
+    {
+      "name": "t_bool",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Boolean",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_bool.htm"
+    },
+    {
+      "name": "t_byte",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Byte",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_byte.htm"
+    },
+    {
+      "name": "t_char",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Char",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_char.htm"
+    },
+    {
+      "name": "t_color",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Color",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_color.htm"
+    },
+    {
+      "name": "t_decimal",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Decimal",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_decimal.htm"
+    },
+    {
+      "name": "t_double",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Double",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_double.htm"
+    },
+    {
+      "name": "t_gh_arc",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Arc",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_arc.htm"
+    },
+    {
+      "name": "t_gh_bool",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Boolean",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_bool.htm"
+    },
+    {
+      "name": "t_gh_box",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Box",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_box.htm"
+    },
+    {
+      "name": "t_gh_brep",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Brep",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_brep.htm"
+    },
+    {
+      "name": "t_gh_circle",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Circle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_circle.htm"
+    },
+    {
+      "name": "t_gh_colour",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Colour",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_colour.htm"
+    },
+    {
+      "name": "t_gh_complex",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.Complex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_complex.htm"
+    },
+    {
+      "name": "t_gh_complexnumber",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_ComplexNumber",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_complexnumber.htm"
+    },
+    {
+      "name": "t_gh_curve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_curve.htm"
+    },
+    {
+      "name": "t_gh_goo",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.IGH_Goo",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_goo.htm"
+    },
+    {
+      "name": "t_gh_guid",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Guid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_guid.htm"
+    },
+    {
+      "name": "t_gh_int",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Integer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_int.htm"
+    },
+    {
+      "name": "t_gh_interval",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Interval",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_interval.htm"
+    },
+    {
+      "name": "t_gh_interval2D",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Interval2D",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_interval2D.htm"
+    },
+    {
+      "name": "t_gh_line",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Line",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_line.htm"
+    },
+    {
+      "name": "t_gh_material",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Material",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_material.htm"
+    },
+    {
+      "name": "t_gh_matrix",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Matrix",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_matrix.htm"
+    },
+    {
+      "name": "t_gh_mesh",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Mesh",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_mesh.htm"
+    },
+    {
+      "name": "t_gh_meshface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_MeshFace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_meshface.htm"
+    },
+    {
+      "name": "t_gh_number",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Number",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_number.htm"
+    },
+    {
+      "name": "t_gh_objwrapper",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_ObjectWrapper",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_objwrapper.htm"
+    },
+    {
+      "name": "t_gh_path",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Data.GH_Path",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_path.htm"
+    },
+    {
+      "name": "t_gh_plane",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_plane.htm"
+    },
+    {
+      "name": "t_gh_point",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Point",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_point.htm"
+    },
+    {
+      "name": "t_gh_rectangle",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Rectangle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_rectangle.htm"
+    },
+    {
+      "name": "t_gh_string",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_String",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_string.htm"
+    },
+    {
+      "name": "t_gh_structpath",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_StructurePath",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_structpath.htm"
+    },
+    {
+      "name": "t_gh_subd",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Brep",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_subd.htm"
+    },
+    {
+      "name": "t_gh_surface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Surface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_surface.htm"
+    },
+    {
+      "name": "t_gh_time",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Time",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_time.htm"
+    },
+    {
+      "name": "t_gh_transform",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Transform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_transform.htm"
+    },
+    {
+      "name": "t_gh_uvinterval",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.UVInterval",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_uvinterval.htm"
+    },
+    {
+      "name": "t_gh_vector",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Grasshopper.Kernel.Types.GH_Vector",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_gh_vector.htm"
+    },
+    {
+      "name": "t_guid",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Guid",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_guid.htm"
+    },
+    {
+      "name": "t_int16",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Int16",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_int16.htm"
+    },
+    {
+      "name": "t_int32",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Int32",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_int32.htm"
+    },
+    {
+      "name": "t_int64",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Int64",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_int64.htm"
+    },
+    {
+      "name": "t_object",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_object.htm"
+    },
+    {
+      "name": "t_point",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Point",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_point.htm"
+    },
+    {
+      "name": "t_pointf",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.PointF",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_pointf.htm"
+    },
+    {
+      "name": "t_rc_arc",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Arc",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_arc.htm"
+    },
+    {
+      "name": "t_rc_arccurve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.ArcCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_arccurve.htm"
+    },
+    {
+      "name": "t_rc_boundingbox",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.BoundingBox",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_boundingbox.htm"
+    },
+    {
+      "name": "t_rc_box",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Box",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_box.htm"
+    },
+    {
+      "name": "t_rc_brep",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Brep",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_brep.htm"
+    },
+    {
+      "name": "t_rc_brepedge",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.MeshEdge",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_brepedge.htm"
+    },
+    {
+      "name": "t_rc_brepface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.MeshFace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_brepface.htm"
+    },
+    {
+      "name": "t_rc_circle",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Circle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_circle.htm"
+    },
+    {
+      "name": "t_rc_cone",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Cone",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_cone.htm"
+    },
+    {
+      "name": "t_rc_curve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Curve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_curve.htm"
+    },
+    {
+      "name": "t_rc_cylinder",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Cylinder",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_cylinder.htm"
+    },
+    {
+      "name": "t_rc_ellipse",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Circle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_ellipse.htm"
+    },
+    {
+      "name": "t_rc_extrusion",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Extrusion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_extrusion.htm"
+    },
+    {
+      "name": "t_rc_interval",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Interval",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_interval.htm"
+    },
+    {
+      "name": "t_rc_line",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Line",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_line.htm"
+    },
+    {
+      "name": "t_rc_linecurve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.LineCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_linecurve.htm"
+    },
+    {
+      "name": "t_rc_matrix",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Matrix",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_matrix.htm"
+    },
+    {
+      "name": "t_rc_mesh",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Mesh",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_mesh.htm"
+    },
+    {
+      "name": "t_rc_meshface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.MeshFace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_meshface.htm"
+    },
+    {
+      "name": "t_rc_nurbscurve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.NurbsCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_nurbscurve.htm"
+    },
+    {
+      "name": "t_rc_nurbssurface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.NurbsSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_nurbssurface.htm"
+    },
+    {
+      "name": "t_rc_plane",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_plane.htm"
+    },
+    {
+      "name": "t_rc_planesurface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.PlaneSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_planesurface.htm"
+    },
+    {
+      "name": "t_rc_point3d",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Point3d",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_point3d.htm"
+    },
+    {
+      "name": "t_rc_point3f",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Point3f",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_point3f.htm"
+    },
+    {
+      "name": "t_rc_polycurve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.PolyCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_polycurve.htm"
+    },
+    {
+      "name": "t_rc_polyline",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Polyline",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_polyline.htm"
+    },
+    {
+      "name": "t_rc_polylinecurve",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.PolylineCurve",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_polylinecurve.htm"
+    },
+    {
+      "name": "t_rc_rectangle",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Rectangle3d",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_rectangle.htm"
+    },
+    {
+      "name": "t_rc_revsurface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.RevSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_revsurface.htm"
+    },
+    {
+      "name": "t_rc_sphere",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Torus",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_sphere.htm"
+    },
+    {
+      "name": "t_rc_subd",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.SubD",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_subd.htm"
+    },
+    {
+      "name": "t_rc_sumsurface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.SumSurface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_sumsurface.htm"
+    },
+    {
+      "name": "t_rc_surface",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Surface",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_surface.htm"
+    },
+    {
+      "name": "t_rc_torus",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Torus",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_torus.htm"
+    },
+    {
+      "name": "t_rc_transform",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Transform",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_transform.htm"
+    },
+    {
+      "name": "t_rc_vector3d",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Vector3d",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_vector3d.htm"
+    },
+    {
+      "name": "t_rc_vector3f",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino.Geometry.Vector3f",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rc_vector3f.htm"
+    },
+    {
+      "name": "t_rectangle",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Rectangle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rectangle.htm"
+    },
+    {
+      "name": "t_rectanglef",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.RectangleF",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_rectanglef.htm"
+    },
+    {
+      "name": "t_single",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Single",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_single.htm"
+    },
+    {
+      "name": "t_size",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.Size",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_size.htm"
+    },
+    {
+      "name": "t_sizef",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Drawing.SizeF",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_sizef.htm"
+    },
+    {
+      "name": "t_string",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.String",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_string.htm"
+    },
+    {
+      "name": "t_time",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.Date",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_time.htm"
+    },
+    {
+      "name": "t_uint16",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.UInt16",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_uint16.htm"
+    },
+    {
+      "name": "t_uint32",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.UInt32",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_uint32.htm"
+    },
+    {
+      "name": "t_uint64",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "System.UInt64",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_TypeLib_t_uint64.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

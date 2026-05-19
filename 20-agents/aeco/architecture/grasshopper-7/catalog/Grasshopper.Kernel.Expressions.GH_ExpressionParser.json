@@ -1,0 +1,1201 @@
+{
+  "name": "GH_ExpressionParser",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "Provides a run-time evaluator for Grasshopper expressions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_ExpressionParser.htm",
+  "constructors": [
+    {
+      "name": "GH_ExpressionParser()",
+      "signature": "public GH_ExpressionParser()",
+      "summary": "Initializes a new instance of the GH_ExpressionParser class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser__ctor.htm"
+    },
+    {
+      "name": "GH_ExpressionParser(Boolean)",
+      "signature": "public GH_ExpressionParser(bool bThrowExceptions)",
+      "summary": "Initializes a new instance of the GH_ExpressionParser class",
+      "params": [
+        {
+          "name": "bThrowExceptions",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddVariable(String, Complex)",
+      "signature": "public void AddVariable(string name, Complex val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Grasshopper.Kernel.Types.Complex",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable.htm"
+    },
+    {
+      "name": "AddVariable(String, Plane)",
+      "signature": "public void AddVariable(string name, Plane val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_1.htm"
+    },
+    {
+      "name": "AddVariable(String, Point3d)",
+      "signature": "public void AddVariable(string name, Point3d val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_2.htm"
+    },
+    {
+      "name": "AddVariable(String, Vector3d)",
+      "signature": "public void AddVariable(string name, Vector3d val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_3.htm"
+    },
+    {
+      "name": "AddVariable(String, Boolean)",
+      "signature": "public void AddVariable(string name, bool val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_4.htm"
+    },
+    {
+      "name": "AddVariable(String, Double)",
+      "signature": "public void AddVariable(string name, double val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_5.htm"
+    },
+    {
+      "name": "AddVariable(String, Int32)",
+      "signature": "public void AddVariable(string name, int val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_6.htm"
+    },
+    {
+      "name": "AddVariable(String, String)",
+      "signature": "public void AddVariable(string name, string val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariable_7.htm"
+    },
+    {
+      "name": "AddVariableEx(String, GH_Variant)",
+      "signature": "public void AddVariableEx(string name, GH_Variant val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariableEx.htm"
+    },
+    {
+      "name": "AddVariableEx(String, IGH_Goo)",
+      "signature": "public void AddVariableEx(string name, IGH_Goo val)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "val",
+          "type": "Grasshopper.Kernel.Types.IGH_Goo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_AddVariableEx_1.htm"
+    },
+    {
+      "name": "BalancedCharTest",
+      "signature": "public static bool BalancedCharTest(string str, char char_open, char char_close, out int error_at)",
+      "summary": "Test a string for balanced open and close chars. You can use this function to see if brackets or parenthesis have been properly used.",
+      "params": [
+        {
+          "name": "str",
+          "type": "System.String",
+          "doc": "String to parse.",
+          "optional": false
+        },
+        {
+          "name": "char_open",
+          "type": "System.Char",
+          "doc": "Char that indicates an opening statement.",
+          "optional": false
+        },
+        {
+          "name": "char_close",
+          "type": "System.Char",
+          "doc": "Char that indicates a closing statement.",
+          "optional": false
+        },
+        {
+          "name": "error_at",
+          "type": "System.Int32",
+          "doc": "The index at which the first error appears or -1 if no error was found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the chars are balanced, false if they are not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_BalancedCharTest.htm"
+    },
+    {
+      "name": "CachedSymbols",
+      "signature": "public Queue\u003CGH_ParserSymbol\u003E CachedSymbols()",
+      "summary": "Retrieve a copy of the Queue of cached symbols. You can use the cached symbols as an uber-optimization to speed up successive calls to Evaluate() with an identical expression string",
+      "params": [],
+      "returns": {
+        "type": "Queue\u003CGH_ParserSymbol\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_CachedSymbols.htm"
+    },
+    {
+      "name": "CacheSymbols",
+      "signature": "public bool CacheSymbols(string Expression)",
+      "summary": "Create a Symbols array from the expression. Use this method if you intend to evaluate the same expression multiple times. At this point, the expression has to be in correct syntax format. Use the GH_ExpressionSyntaxWriter.RewriteAll() method to make sure.",
+      "params": [
+        {
+          "name": "Expression",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_CacheSymbols.htm"
+    },
+    {
+      "name": "ClearSymbols",
+      "signature": "public void ClearSymbols()",
+      "summary": "Destroy the Symbols cache.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_ClearSymbols.htm"
+    },
+    {
+      "name": "ClearVariables",
+      "signature": "public void ClearVariables()",
+      "summary": "Destroy the variable cache.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_ClearVariables.htm"
+    },
+    {
+      "name": "DisplayFunctionList",
+      "signature": "public void DisplayFunctionList(IWin32Window wnd = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "wnd",
+          "type": "System.Windows.Forms.IWin32Window",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_DisplayFunctionList.htm"
+    },
+    {
+      "name": "Evaluate()",
+      "signature": "public GH_Variant Evaluate()",
+      "summary": "Evaluate the expression currently loaded in the Symbols cache using the currently loaded variables.",
+      "params": [],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Evaluate.htm"
+    },
+    {
+      "name": "Evaluate(String)",
+      "signature": "public GH_Variant Evaluate(string expression)",
+      "summary": "Store a new expression in the Symbols cache and evaluate it using the current variables",
+      "params": [
+        {
+          "name": "expression",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Evaluate_2.htm"
+    },
+    {
+      "name": "Evaluate(Queue\u003CGH_ParserSymbol\u003E)",
+      "signature": "public GH_Variant Evaluate(Queue\u003CGH_ParserSymbol\u003E qHint)",
+      "summary": "Evaluate the expression queue without overriding any local caches. You can obtain an expression queue by calling CachedSymbols()",
+      "params": [
+        {
+          "name": "qHint",
+          "type": "System.Collections.Generic.Queue\u003CGH_ParserSymbol\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Evaluate_1.htm"
+    },
+    {
+      "name": "IsValidVariableName",
+      "signature": "public static bool IsValidVariableName(string name)",
+      "summary": "Tests whether a string is a valid variable name for expressions. Valid names must contain at least one character, must start with an alphabetic character, and only contain alphanumeric chars and underscores.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the name is valid (might still conflict with a function name though), false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_IsValidVariableName.htm"
+    },
+    {
+      "name": "Op_BinaryAddition",
+      "signature": "protected GH_Variant Op_BinaryAddition(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryAddition.htm"
+    },
+    {
+      "name": "Op_BinaryAmpersand",
+      "signature": "protected GH_Variant Op_BinaryAmpersand(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryAmpersand.htm"
+    },
+    {
+      "name": "Op_BinaryAND",
+      "signature": "protected GH_Variant Op_BinaryAND(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryAND.htm"
+    },
+    {
+      "name": "Op_BinaryAngle",
+      "signature": "protected GH_Variant Op_BinaryAngle(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryAngle.htm"
+    },
+    {
+      "name": "Op_BinaryCircumflex",
+      "signature": "protected GH_Variant Op_BinaryCircumflex(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryCircumflex.htm"
+    },
+    {
+      "name": "Op_BinaryCrossProduct",
+      "signature": "protected GH_Variant Op_BinaryCrossProduct(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryCrossProduct.htm"
+    },
+    {
+      "name": "Op_BinaryDistance",
+      "signature": "protected GH_Variant Op_BinaryDistance(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryDistance.htm"
+    },
+    {
+      "name": "Op_BinaryDivision",
+      "signature": "protected GH_Variant Op_BinaryDivision(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryDivision.htm"
+    },
+    {
+      "name": "Op_BinaryEquality",
+      "signature": "protected GH_Variant Op_BinaryEquality(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryEquality.htm"
+    },
+    {
+      "name": "Op_BinaryIntegerDivision",
+      "signature": "protected GH_Variant Op_BinaryIntegerDivision(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryIntegerDivision.htm"
+    },
+    {
+      "name": "Op_BinaryLargerThan",
+      "signature": "protected GH_Variant Op_BinaryLargerThan(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryLargerThan.htm"
+    },
+    {
+      "name": "Op_BinaryLargerThanOrEqual",
+      "signature": "protected GH_Variant Op_BinaryLargerThanOrEqual(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryLargerThanOrEqual.htm"
+    },
+    {
+      "name": "Op_BinaryModulus",
+      "signature": "protected GH_Variant Op_BinaryModulus(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryModulus.htm"
+    },
+    {
+      "name": "Op_BinaryMultiplication",
+      "signature": "protected GH_Variant Op_BinaryMultiplication(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryMultiplication.htm"
+    },
+    {
+      "name": "Op_BinaryNearEquality",
+      "signature": "protected GH_Variant Op_BinaryNearEquality(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryNearEquality.htm"
+    },
+    {
+      "name": "Op_BinaryOR",
+      "signature": "protected GH_Variant Op_BinaryOR(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryOR.htm"
+    },
+    {
+      "name": "Op_BinaryPull",
+      "signature": "protected GH_Variant Op_BinaryPull(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryPull.htm"
+    },
+    {
+      "name": "Op_BinaryPush",
+      "signature": "protected GH_Variant Op_BinaryPush(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryPush.htm"
+    },
+    {
+      "name": "Op_BinarySmallerThan",
+      "signature": "protected GH_Variant Op_BinarySmallerThan(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinarySmallerThan.htm"
+    },
+    {
+      "name": "Op_BinarySmallerThanOrEqual",
+      "signature": "protected GH_Variant Op_BinarySmallerThanOrEqual(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinarySmallerThanOrEqual.htm"
+    },
+    {
+      "name": "Op_BinarySubtraction",
+      "signature": "protected GH_Variant Op_BinarySubtraction(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinarySubtraction.htm"
+    },
+    {
+      "name": "Op_BinaryXOR",
+      "signature": "protected GH_Variant Op_BinaryXOR(GH_Variant A, GH_Variant B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_BinaryXOR.htm"
+    },
+    {
+      "name": "Op_UnaryBang",
+      "signature": "protected GH_Variant Op_UnaryBang(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryBang.htm"
+    },
+    {
+      "name": "Op_UnaryCube",
+      "signature": "protected GH_Variant Op_UnaryCube(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryCube.htm"
+    },
+    {
+      "name": "Op_UnaryDeg2Rad",
+      "signature": "protected GH_Variant Op_UnaryDeg2Rad(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryDeg2Rad.htm"
+    },
+    {
+      "name": "Op_UnaryImaginary",
+      "signature": "protected GH_Variant Op_UnaryImaginary(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryImaginary.htm"
+    },
+    {
+      "name": "Op_UnaryMinus",
+      "signature": "protected GH_Variant Op_UnaryMinus(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryMinus.htm"
+    },
+    {
+      "name": "Op_UnaryNOT",
+      "signature": "protected GH_Variant Op_UnaryNOT(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryNOT.htm"
+    },
+    {
+      "name": "Op_UnaryOComponent",
+      "signature": "protected GH_Variant Op_UnaryOComponent(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryOComponent.htm"
+    },
+    {
+      "name": "Op_UnaryPlus",
+      "signature": "protected GH_Variant Op_UnaryPlus(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryPlus.htm"
+    },
+    {
+      "name": "Op_UnarySquare",
+      "signature": "protected GH_Variant Op_UnarySquare(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnarySquare.htm"
+    },
+    {
+      "name": "Op_UnaryXComponent",
+      "signature": "protected GH_Variant Op_UnaryXComponent(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryXComponent.htm"
+    },
+    {
+      "name": "Op_UnaryYComponent",
+      "signature": "protected GH_Variant Op_UnaryYComponent(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryYComponent.htm"
+    },
+    {
+      "name": "Op_UnaryZComponent",
+      "signature": "protected GH_Variant Op_UnaryZComponent(GH_Variant V)",
+      "summary": "",
+      "params": [
+        {
+          "name": "V",
+          "type": "Grasshopper.Kernel.Expressions.GH_Variant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Variant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Op_UnaryZComponent.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ThrowExceptions",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ExpressionParser_ThrowExceptions.htm"
+    },
+    {
+      "name": "Variables",
+      "type": "SortedDictionary\u003CString,GH_Variant\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_ExpressionParser_Variables.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

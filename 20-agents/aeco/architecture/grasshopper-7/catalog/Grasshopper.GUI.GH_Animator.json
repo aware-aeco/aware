@@ -1,0 +1,942 @@
+{
+  "name": "GH_Animator",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides static methods and constructors GH_Animator(Of T).",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_Animator.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DecimalAnimator(Decimal, Decimal)",
+      "signature": "public static GH_Animator\u003Cdecimal\u003E DecimalAnimator(decimal A, decimal B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Decimal",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CDecimal\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_DecimalAnimator.htm"
+    },
+    {
+      "name": "DecimalAnimator(Decimal, Decimal, Int32)",
+      "signature": "public static GH_Animator\u003Cdecimal\u003E DecimalAnimator(decimal A, decimal B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CDecimal\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_DecimalAnimator_2.htm"
+    },
+    {
+      "name": "DecimalAnimator(Decimal, Decimal, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003Cdecimal\u003E DecimalAnimator(decimal A, decimal B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CDecimal\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_DecimalAnimator_1.htm"
+    },
+    {
+      "name": "DoubleAnimator(Double, Double)",
+      "signature": "public static GH_Animator\u003Cdouble\u003E DoubleAnimator(double A, double B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CDouble\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_DoubleAnimator.htm"
+    },
+    {
+      "name": "DoubleAnimator(Double, Double, Int32)",
+      "signature": "public static GH_Animator\u003Cdouble\u003E DoubleAnimator(double A, double B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CDouble\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_DoubleAnimator_2.htm"
+    },
+    {
+      "name": "DoubleAnimator(Double, Double, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003Cdouble\u003E DoubleAnimator(double A, double B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CDouble\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_DoubleAnimator_1.htm"
+    },
+    {
+      "name": "IntegerAnimator(Int32, Int32)",
+      "signature": "public static GH_Animator\u003Cint\u003E IntegerAnimator(int A, int B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CInt32\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_IntegerAnimator.htm"
+    },
+    {
+      "name": "IntegerAnimator(Int32, Int32, Int32)",
+      "signature": "public static GH_Animator\u003Cint\u003E IntegerAnimator(int A, int B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CInt32\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_IntegerAnimator_2.htm"
+    },
+    {
+      "name": "IntegerAnimator(Int32, Int32, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003Cint\u003E IntegerAnimator(int A, int B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CInt32\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_IntegerAnimator_1.htm"
+    },
+    {
+      "name": "InterpolateDecimal",
+      "signature": "public static decimal InterpolateDecimal(decimal A, decimal B, double factor)",
+      "summary": "Utility interpolation delegate for System.Decimal values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Decimal",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolateDecimal.htm"
+    },
+    {
+      "name": "InterpolateDouble",
+      "signature": "public static double InterpolateDouble(double A, double B, double factor)",
+      "summary": "Utility interpolation delegate for System.Double values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Double",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolateDouble.htm"
+    },
+    {
+      "name": "InterpolateInteger",
+      "signature": "public static int InterpolateInteger(int A, int B, double factor)",
+      "summary": "Utility interpolation delegate for System.Int32 values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolateInteger.htm"
+    },
+    {
+      "name": "InterpolatePoint",
+      "signature": "public static Point InterpolatePoint(Point A, Point B, double factor)",
+      "summary": "Utility interpolation delegate for System.Drawing.Point values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolatePoint.htm"
+    },
+    {
+      "name": "InterpolatePointF",
+      "signature": "public static PointF InterpolatePointF(PointF A, PointF B, double factor)",
+      "summary": "Utility interpolation delegate for System.Drawing.PointF values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolatePointF.htm"
+    },
+    {
+      "name": "InterpolateRectangle",
+      "signature": "public static Rectangle InterpolateRectangle(Rectangle A, Rectangle B, double factor)",
+      "summary": "Utility interpolation delegate for System.Drawing.Rectangle values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolateRectangle.htm"
+    },
+    {
+      "name": "InterpolateRectangleF",
+      "signature": "public static RectangleF InterpolateRectangleF(RectangleF A, RectangleF B, double factor)",
+      "summary": "Utility interpolation delegate for System.Drawing.RectangleF values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RectangleF",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolateRectangleF.htm"
+    },
+    {
+      "name": "InterpolateSingle",
+      "signature": "public static float InterpolateSingle(float A, float B, double factor)",
+      "summary": "Utility interpolation delegate for System.Single values.",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Single",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_InterpolateSingle.htm"
+    },
+    {
+      "name": "PointAnimator(Point, Point)",
+      "signature": "public static GH_Animator\u003CPoint\u003E PointAnimator(Point A, Point B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CPoint\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_PointAnimator.htm"
+    },
+    {
+      "name": "PointAnimator(Point, Point, Int32)",
+      "signature": "public static GH_Animator\u003CPoint\u003E PointAnimator(Point A, Point B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CPoint\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_PointAnimator_2.htm"
+    },
+    {
+      "name": "PointAnimator(Point, Point, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003CPoint\u003E PointAnimator(Point A, Point B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Point",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CPoint\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_PointAnimator_1.htm"
+    },
+    {
+      "name": "PointFAnimator(PointF, PointF)",
+      "signature": "public static GH_Animator\u003CPointF\u003E PointFAnimator(PointF A, PointF B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CPointF\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_PointFAnimator.htm"
+    },
+    {
+      "name": "PointFAnimator(PointF, PointF, Int32)",
+      "signature": "public static GH_Animator\u003CPointF\u003E PointFAnimator(PointF A, PointF B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CPointF\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_PointFAnimator_2.htm"
+    },
+    {
+      "name": "PointFAnimator(PointF, PointF, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003CPointF\u003E PointFAnimator(PointF A, PointF B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.PointF",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CPointF\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_PointFAnimator_1.htm"
+    },
+    {
+      "name": "RectangleAnimator(Rectangle, Rectangle)",
+      "signature": "public static GH_Animator\u003CRectangle\u003E RectangleAnimator(Rectangle A, Rectangle B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CRectangle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_RectangleAnimator.htm"
+    },
+    {
+      "name": "RectangleAnimator(Rectangle, Rectangle, Int32)",
+      "signature": "public static GH_Animator\u003CRectangle\u003E RectangleAnimator(Rectangle A, Rectangle B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CRectangle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_RectangleAnimator_2.htm"
+    },
+    {
+      "name": "RectangleAnimator(Rectangle, Rectangle, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003CRectangle\u003E RectangleAnimator(Rectangle A, Rectangle B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.Rectangle",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CRectangle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_RectangleAnimator_1.htm"
+    },
+    {
+      "name": "RectangleFAnimator(RectangleF, RectangleF)",
+      "signature": "public static GH_Animator\u003CRectangleF\u003E RectangleFAnimator(RectangleF A, RectangleF B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CRectangleF\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_RectangleFAnimator.htm"
+    },
+    {
+      "name": "RectangleFAnimator(RectangleF, RectangleF, Int32)",
+      "signature": "public static GH_Animator\u003CRectangleF\u003E RectangleFAnimator(RectangleF A, RectangleF B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CRectangleF\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_RectangleFAnimator_2.htm"
+    },
+    {
+      "name": "RectangleFAnimator(RectangleF, RectangleF, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003CRectangleF\u003E RectangleFAnimator(RectangleF A, RectangleF B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Drawing.RectangleF",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CRectangleF\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_RectangleFAnimator_1.htm"
+    },
+    {
+      "name": "SingleAnimator(Single, Single)",
+      "signature": "public static GH_Animator\u003Cfloat\u003E SingleAnimator(float A, float B)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Single",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CSingle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_SingleAnimator.htm"
+    },
+    {
+      "name": "SingleAnimator(Single, Single, Int32)",
+      "signature": "public static GH_Animator\u003Cfloat\u003E SingleAnimator(float A, float B, int duration)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CSingle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_SingleAnimator_2.htm"
+    },
+    {
+      "name": "SingleAnimator(Single, Single, DateTime, DateTime)",
+      "signature": "public static GH_Animator\u003Cfloat\u003E SingleAnimator(float A, float B, DateTime time0, DateTime time1)",
+      "summary": "",
+      "params": [
+        {
+          "name": "A",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "B",
+          "type": "System.Single",
+          "optional": false
+        },
+        {
+          "name": "time0",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "time1",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Animator\u003CSingle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Animator_SingleAnimator_1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

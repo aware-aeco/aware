@@ -1,0 +1,228 @@
+{
+  "name": "GH_Slider_Obsolete",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "General purpose numeric slider.",
+  "base": "UserControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_Slider_Obsolete.htm",
+  "constructors": [
+    {
+      "name": "GH_Slider_Obsolete",
+      "signature": "public GH_Slider_Obsolete()",
+      "summary": "Initializes a new instance of the GH_Slider_Obsolete class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Obsolete__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_Slider_Obsolete and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Obsolete_Dispose.htm"
+    },
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Obsolete_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Obsolete_OnPaintBackground.htm"
+    },
+    {
+      "name": "OnValueChanged",
+      "signature": "public void OnValueChanged()",
+      "summary": "Raise the ValueChanged event",
+      "remarks": "See AlsoReferenceGH_Slider_Obsolete ClassGrasshopper.GUI Namespace",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Obsolete_OnValueChanged.htm"
+    },
+    {
+      "name": "SendMessage",
+      "signature": "public static IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, IntPtr lParam)",
+      "summary": "",
+      "params": [
+        {
+          "name": "hWnd",
+          "type": "System.IntPtr",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "wParam",
+          "type": "System.Int32",
+          "optional": false
+        },
+        {
+          "name": "lParam",
+          "type": "System.IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Slider_Obsolete_SendMessage.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayFormat",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the display format fo the slider. This is the formatting that is applied prior to drawing. The default is {0} which results in a 1:1 display. Use this to append units or symbols.",
+      "remarks": "See AlsoReferenceGH_Slider_Obsolete ClassGrasshopper.GUI Namespace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_DisplayFormat.htm"
+    },
+    {
+      "name": "DrawRail",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a flag that control whether or not grip rails are drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_DrawRail.htm"
+    },
+    {
+      "name": "GripBackColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Background colour of slider grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_GripBackColor.htm"
+    },
+    {
+      "name": "GripForeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Foreground colour of slider grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_GripForeColor.htm"
+    },
+    {
+      "name": "IsIntermediate",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the intermediate flag. If True, the user is currently dragging the slider.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_IsIntermediate.htm"
+    },
+    {
+      "name": "Max",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum allowed value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_Max.htm"
+    },
+    {
+      "name": "Min",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum allowed value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_Min.htm"
+    },
+    {
+      "name": "NumericFormat",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the numeric format for the slider. This is the formatting that is applied to the number. The default is #0.00 which results in a two digit rounding scheme.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_NumericFormat.htm"
+    },
+    {
+      "name": "TextInputMode",
+      "type": "GH_SliderInputMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Text input mode for this slider.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_TextInputMode.htm"
+    },
+    {
+      "name": "TickFrequency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tick frequency of the slider.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_TickFrequency.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_Value.htm"
+    },
+    {
+      "name": "ValueF",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the current value in single-floating-point precision.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Slider_Obsolete_ValueF.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ValueChanged",
+      "delegate": "Grasshopper.GUI.GH_Slider_Obsolete.ValueChangedEventHandler",
+      "signature": "public event GH_Slider_Obsolete.ValueChangedEventHandler ValueChanged",
+      "summary": "Raised whenever the value of the slider is changed via GUI interaction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_Slider_Obsolete_ValueChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,303 @@
+{
+  "name": "GH_NamedView",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Named views are used both to store named views but also to allow smooth programmatic canvas navigation.",
+  "base": "GH_ISerializable",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_NamedView.htm",
+  "constructors": [
+    {
+      "name": "GH_NamedView()",
+      "signature": "public GH_NamedView()",
+      "summary": "Create a default named view.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView__ctor.htm"
+    },
+    {
+      "name": "GH_NamedView(Rectangle, RectangleF)",
+      "signature": "public GH_NamedView(Rectangle view_box, RectangleF target_box)",
+      "summary": "Create a new view useful for box-fit transitions.",
+      "params": [
+        {
+          "name": "view_box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "The dimensions of the area into which we want to display something in control coordinates. For example, the Visible area in a Viewport.",
+          "optional": false
+        },
+        {
+          "name": "target_box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "The dimensions of the area we want to display in viewport coordinates. For example, the bounding box of some objects.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView__ctor_3.htm"
+    },
+    {
+      "name": "GH_NamedView(GH_Viewport, Point, PointF)",
+      "signature": "public GH_NamedView(GH_Viewport view, Point point, PointF target)",
+      "summary": "Create a new view useful for point match transitions.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "doc": "Viewport this transition is supposed to work in.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "System.Drawing.Point",
+          "doc": "Point in control coordinates that is supposed to be matched.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Drawing.PointF",
+          "doc": "Point in canvas coordinates that will be matched.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView__ctor_1.htm"
+    },
+    {
+      "name": "GH_NamedView(GH_Viewport, Rectangle, PointF)",
+      "signature": "public GH_NamedView(GH_Viewport view, Rectangle region, PointF target)",
+      "summary": "Create a new view useful for point inclusion transitions.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "doc": "Viewport this transition is supposed to work in.",
+          "optional": false
+        },
+        {
+          "name": "region",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Region into which the target is supposed to be visible in control coordinates. For example, the contents of the viewport.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Drawing.PointF",
+          "doc": "Point to ensure.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView__ctor_2.htm"
+    },
+    {
+      "name": "GH_NamedView(String, PointF, Single, GH_NamedViewType)",
+      "signature": "public GH_NamedView(string view_name, PointF view_point, float view_zoom = 1f, GH_NamedViewType view_type = GH_NamedViewType.target)",
+      "summary": "Create a new named view.",
+      "params": [
+        {
+          "name": "view_name",
+          "type": "System.String",
+          "doc": "Name of view.",
+          "optional": false
+        },
+        {
+          "name": "view_point",
+          "type": "System.Drawing.PointF",
+          "doc": "Anchor point of named view.",
+          "optional": false
+        },
+        {
+          "name": "view_zoom",
+          "type": "System.Single",
+          "doc": "Zoom factor of named view.",
+          "optional": true
+        },
+        {
+          "name": "view_type",
+          "type": "Grasshopper.GUI.Canvas.GH_NamedViewType",
+          "doc": "The type of named view.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "LoadFromViewport",
+      "signature": "public void LoadFromViewport(GH_Viewport vp, GH_NamedViewType view_type)",
+      "summary": "Create a named view from a viewport.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "doc": "Viewport to mimic.",
+          "optional": false
+        },
+        {
+          "name": "view_type",
+          "type": "Grasshopper.GUI.Canvas.GH_NamedViewType",
+          "doc": "Type of named view to create.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView_LoadFromViewport.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView_Read.htm"
+    },
+    {
+      "name": "SetToViewport(GH_Canvas)",
+      "signature": "public void SetToViewport(GH_Canvas cv)",
+      "summary": "Set the named view to the canvas viewport and redraw the canvas.",
+      "params": [
+        {
+          "name": "cv",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView_SetToViewport.htm"
+    },
+    {
+      "name": "SetToViewport(GH_Viewport)",
+      "signature": "public void SetToViewport(GH_Viewport vp)",
+      "summary": "Set the named view to a viewport.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Grasshopper.GUI.Canvas.GH_Viewport",
+          "doc": "Viewport to set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView_SetToViewport_2.htm"
+    },
+    {
+      "name": "SetToViewport(GH_Canvas, Int32)",
+      "signature": "public void SetToViewport(GH_Canvas cv, int length)",
+      "summary": "Animates a view transition.",
+      "params": [
+        {
+          "name": "cv",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to apply the transition to.",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "Length (in milliseconds) of the transition.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView_SetToViewport_1.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_NamedView_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_NamedView_Name.htm"
+    },
+    {
+      "name": "Point",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the anchor point of the named view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_NamedView_Point.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_NamedViewType",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the anchor point represents the target or the center.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_NamedView_Type.htm"
+    },
+    {
+      "name": "Zoom",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the zoom factor of the named view.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_NamedView_Zoom.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "SmoothFrame",
+      "delegate": "Grasshopper.GUI.Canvas.GH_NamedView.SmoothFrameEventHandler",
+      "signature": "public event GH_NamedView.SmoothFrameEventHandler SmoothFrame",
+      "summary": "This event is raised during smooth animations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_Canvas_GH_NamedView_SmoothFrame.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

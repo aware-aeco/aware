@@ -1,0 +1,14 @@
+{
+  "name": "GH_Gradient.SelectionChangedEventHandler",
+  "namespace": "Grasshopper.GUI.Gradient",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.Gradient.GH_Gradient.SelectionChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Gradient_GH_Gradient_SelectionChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void SelectionChangedEventHandler( Object sender, GH_GradientChangedEventArgs e )"
+}

@@ -1,0 +1,218 @@
+{
+  "name": "GH_UndoRecord",
+  "namespace": "Grasshopper.Kernel.Undo",
+  "kind": "class",
+  "summary": "Represents a single undo/redo record. A single record may contain any number of undo actions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Undo_GH_UndoRecord.htm",
+  "constructors": [
+    {
+      "name": "GH_UndoRecord()",
+      "signature": "public GH_UndoRecord()",
+      "summary": "Initializes a new instance of the GH_UndoRecord class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord__ctor.htm"
+    },
+    {
+      "name": "GH_UndoRecord(String)",
+      "signature": "public GH_UndoRecord(string name)",
+      "summary": "Initializes a new instance of the GH_UndoRecord class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord__ctor_1.htm"
+    },
+    {
+      "name": "GH_UndoRecord(String, IGH_UndoAction)",
+      "signature": "public GH_UndoRecord(string name, IGH_UndoAction action)",
+      "summary": "Initializes a new instance of the GH_UndoRecord class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Grasshopper.Kernel.Undo.IGH_UndoAction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord__ctor_2.htm"
+    },
+    {
+      "name": "GH_UndoRecord(String, IGH_UndoAction[])",
+      "signature": "public GH_UndoRecord(string name, params IGH_UndoAction[] actions)",
+      "summary": "Initializes a new instance of the GH_UndoRecord class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "actions",
+          "type": "Grasshopper.Kernel.Undo.IGH_UndoAction[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord__ctor_3.htm"
+    },
+    {
+      "name": "GH_UndoRecord(String, IEnumerable\u003CIGH_UndoAction\u003E)",
+      "signature": "public GH_UndoRecord(string name, IEnumerable\u003CIGH_UndoAction\u003E actions)",
+      "summary": "Initializes a new instance of the GH_UndoRecord class",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "actions",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_UndoAction\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAction",
+      "signature": "public void AddAction(IGH_UndoAction action)",
+      "summary": "Append an undo action to this record. You should only do this prior to calling undo for the first time.",
+      "params": [
+        {
+          "name": "action",
+          "type": "Grasshopper.Kernel.Undo.IGH_UndoAction",
+          "doc": "Action to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord_AddAction.htm"
+    },
+    {
+      "name": "Redo",
+      "signature": "public void Redo(GH_Document doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord_Redo.htm"
+    },
+    {
+      "name": "Undo",
+      "signature": "public void Undo(GH_Document doc)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoRecord_Undo.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActionCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of actions stored in this record.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_ActionCount.htm"
+    },
+    {
+      "name": "Actions",
+      "type": "IList\u003CIGH_UndoAction\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets or sets the actions inside this record.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_Actions.htm"
+    },
+    {
+      "name": "ExpiresDisplay",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the display expiration flag for this event. If True, the Rhino viewports will be redrawn once the entire undo record has been completed. If ExpiresSolution is set to true, ExpriresDisplay is implied.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_ExpiresDisplay.htm"
+    },
+    {
+      "name": "ExpiresSolution",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the solution expiration flag for this event. If True, the solution needs to be recalculated once the entire undo record has been completed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_ExpiresSolution.htm"
+    },
+    {
+      "name": "Guid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of this undo item. Every undo record has a unique ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_Guid.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the undo record (as displayed in the menu)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_Name.htm"
+    },
+    {
+      "name": "State",
+      "type": "GH_UndoState",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the undo state of this record. The state dictates which action are legal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_State.htm"
+    },
+    {
+      "name": "Time",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the time at which this record was created.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoRecord_Time.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

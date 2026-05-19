@@ -1,0 +1,68 @@
+{
+  "name": "GH_Interval1D",
+  "namespace": "GH_IO.Types",
+  "kind": "struct",
+  "summary": "Represents two double precision floating point values.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Types_GH_Interval1D.htm",
+  "constructors": [
+    {
+      "name": "GH_Interval1D",
+      "signature": "public GH_Interval1D(double na, double nb)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "na",
+          "type": "System.Double",
+          "doc": "Start of interval.",
+          "optional": false
+        },
+        {
+          "name": "nb",
+          "type": "System.Double",
+          "doc": "End of interval.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Interval1D__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Converts this structure to a human-readable string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string representation of the Interval structure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Interval1D_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "a",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Start of interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_GH_IO_Types_GH_Interval1D_a.htm"
+    },
+    {
+      "name": "b",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "End of interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_GH_IO_Types_GH_Interval1D_b.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

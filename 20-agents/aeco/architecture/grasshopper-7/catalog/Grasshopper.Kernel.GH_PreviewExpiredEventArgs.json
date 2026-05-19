@@ -1,0 +1,48 @@
+{
+  "name": "GH_PreviewExpiredEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Arguments for preview events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_PreviewExpiredEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_PreviewExpiredEventArgs",
+      "signature": "public GH_PreviewExpiredEventArgs(bool eForceRedraw)",
+      "summary": "Initializes a new instance of the GH_PreviewExpiredEventArgs class",
+      "params": [
+        {
+          "name": "eForceRedraw",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_PreviewExpiredEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ForceRedraw",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_PreviewExpiredEventArgs_ForceRedraw.htm"
+    },
+    {
+      "name": "m_redraw",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_GH_PreviewExpiredEventArgs_m_redraw.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

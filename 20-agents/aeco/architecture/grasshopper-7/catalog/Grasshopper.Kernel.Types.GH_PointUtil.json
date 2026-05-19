@@ -1,0 +1,130 @@
+{
+  "name": "GH_PointUtil",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_PointUtil.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_PointUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FitPlaneThroughPoints",
+      "signature": "public static Plane FitPlaneThroughPoints(IEnumerable\u003CGH_Point\u003E pts)",
+      "summary": "Fit a least-squares plane through a collection of points.",
+      "params": [
+        {
+          "name": "pts",
+          "type": "System.Collections.Generic.IEnumerable\u003CGH_Point\u003E",
+          "doc": "Points to fit, may contain nulls.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Plane",
+        "doc": "Best fit plane or null if insufficient points were supplied."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointUtil_FitPlaneThroughPoints.htm"
+    },
+    {
+      "name": "ProjectPointsToPlane",
+      "signature": "public static List\u003CGH_Point\u003E ProjectPointsToPlane(IEnumerable\u003CGH_Point\u003E pts, Plane plane, bool include_nulls)",
+      "summary": "Project a list of points onto the plane. The result will be points in plane-uv coordinates.",
+      "params": [
+        {
+          "name": "pts",
+          "type": "System.Collections.Generic.IEnumerable\u003CGH_Point\u003E",
+          "doc": "Points to project.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane",
+          "doc": "Plane to project onto.",
+          "optional": false
+        },
+        {
+          "name": "include_nulls",
+          "type": "System.Boolean",
+          "doc": "If True, nulls in the pts list are maintained.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Point\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointUtil_ProjectPointsToPlane.htm"
+    },
+    {
+      "name": "PullPointsToPlane",
+      "signature": "public static List\u003CGH_Point\u003E PullPointsToPlane(IEnumerable\u003CGH_Point\u003E pts, Plane plane, bool include_nulls)",
+      "summary": "Pull a list of points onto the plane. The result will be points in 3D world coordinates which are coincident with the given plane.",
+      "params": [
+        {
+          "name": "pts",
+          "type": "System.Collections.Generic.IEnumerable\u003CGH_Point\u003E",
+          "doc": "Points to pull.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane",
+          "doc": "Plane to pull onto.",
+          "optional": false
+        },
+        {
+          "name": "include_nulls",
+          "type": "System.Boolean",
+          "doc": "If True, nulls in the pts list are maintained.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Point\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointUtil_PullPointsToPlane.htm"
+    },
+    {
+      "name": "RemapPointsToPlane",
+      "signature": "public static List\u003CGH_Point\u003E RemapPointsToPlane(IEnumerable\u003CGH_Point\u003E pts, Plane plane, bool include_nulls)",
+      "summary": "Remap a list of points onto the plane. This operation equals a ChangeBasisXForm for each point.",
+      "params": [
+        {
+          "name": "pts",
+          "type": "System.Collections.Generic.IEnumerable\u003CGH_Point\u003E",
+          "doc": "Points to remap.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane",
+          "doc": "Plane to remap with.",
+          "optional": false
+        },
+        {
+          "name": "include_nulls",
+          "type": "System.Boolean",
+          "doc": "If True, nulls in the pts list are maintained.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Point\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointUtil_RemapPointsToPlane.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

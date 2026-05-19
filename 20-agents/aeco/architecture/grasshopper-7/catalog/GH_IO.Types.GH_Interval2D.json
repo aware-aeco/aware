@@ -1,0 +1,103 @@
+{
+  "name": "GH_Interval2D",
+  "namespace": "GH_IO.Types",
+  "kind": "struct",
+  "summary": "Represents two double precision domains.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Types_GH_Interval2D.htm",
+  "constructors": [
+    {
+      "name": "GH_Interval2D(GH_Interval1D, GH_Interval1D)",
+      "signature": "public GH_Interval2D(GH_Interval1D nu, GH_Interval1D nv)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "nu",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Interval component in U direction.",
+          "optional": false
+        },
+        {
+          "name": "nv",
+          "type": "GH_IO.Types.GH_Interval1D",
+          "doc": "Interval component in V direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Interval2D__ctor.htm"
+    },
+    {
+      "name": "GH_Interval2D(Double, Double, Double, Double)",
+      "signature": "public GH_Interval2D(double nu0, double nu1, double nv0, double nv1)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "nu0",
+          "type": "System.Double",
+          "doc": "Start of interval component in U direction.",
+          "optional": false
+        },
+        {
+          "name": "nu1",
+          "type": "System.Double",
+          "doc": "End of interval component in U direction.",
+          "optional": false
+        },
+        {
+          "name": "nv0",
+          "type": "System.Double",
+          "doc": "Start of interval component in V direction.",
+          "optional": false
+        },
+        {
+          "name": "nv1",
+          "type": "System.Double",
+          "doc": "End of interval component in V direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Interval2D__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Converts this structure to a human-readable string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string representation of the two-dimensional Interval structure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Types_GH_Interval2D_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "u",
+      "type": "GH_Interval1D",
+      "getter": true,
+      "setter": false,
+      "summary": "One dimensional component in U direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_GH_IO_Types_GH_Interval2D_u.htm"
+    },
+    {
+      "name": "v",
+      "type": "GH_Interval1D",
+      "getter": true,
+      "setter": false,
+      "summary": "One dimensional component in V direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_GH_IO_Types_GH_Interval2D_v.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

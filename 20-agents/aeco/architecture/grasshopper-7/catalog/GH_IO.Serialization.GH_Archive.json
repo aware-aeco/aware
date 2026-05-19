@@ -1,0 +1,579 @@
+{
+  "name": "GH_Archive",
+  "namespace": "GH_IO.Serialization",
+  "kind": "class",
+  "summary": "This is the base archive class which takes care of all (de)serialization and messaging.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_Serialization_GH_Archive.htm",
+  "constructors": [
+    {
+      "name": "GH_Archive",
+      "signature": "public GH_Archive()",
+      "summary": "Initializes a new instance of the GH_Archive class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddMessage(GH_Message)",
+      "signature": "public void AddMessage(GH_Message message)",
+      "summary": "Add a new message to the record.",
+      "params": [
+        {
+          "name": "message",
+          "type": "GH_IO.Serialization.GH_Message",
+          "doc": "Message to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the message is a null reference."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_AddMessage.htm"
+    },
+    {
+      "name": "AddMessage(String, GH_Message_Type)",
+      "signature": "public void AddMessage(string messageText, GH_Message_Type messageType)",
+      "summary": "Add a new message to the record.",
+      "params": [
+        {
+          "name": "messageText",
+          "type": "System.String",
+          "doc": "Message text.",
+          "optional": false
+        },
+        {
+          "name": "messageType",
+          "type": "GH_IO.Serialization.GH_Message_Type",
+          "doc": "Message type.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if message text is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_AddMessage_1.htm"
+    },
+    {
+      "name": "AppendObject",
+      "signature": "public bool AppendObject(GH_ISerializable target, string targetName)",
+      "summary": "Appends a target object into the root node of this archive tree. If the root doesn\u0027t exist yet, it will be created. Existing objects at the root scope will not be affected.",
+      "params": [
+        {
+          "name": "target",
+          "type": "GH_IO.GH_ISerializable",
+          "doc": "Object to append. Cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "targetName",
+          "type": "System.String",
+          "doc": "Name of object to append, name must be unique.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on succes, false on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if target is a null reference."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the target_name is null or empty."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_AppendObject.htm"
+    },
+    {
+      "name": "ClearMessages",
+      "signature": "public void ClearMessages()",
+      "summary": "Remove all messages from the log.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_ClearMessages.htm"
+    },
+    {
+      "name": "CreateNewRoot",
+      "signature": "public void CreateNewRoot(bool forWriting)",
+      "summary": "Discards the current data tree and instantiates a new root node. This root node contains some comments, a version value containing the current version of GH_IO.dll and a DateTime value containing the current date and time.",
+      "params": [
+        {
+          "name": "forWriting",
+          "type": "System.Boolean",
+          "doc": "If true, all data fields are reset.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_CreateNewRoot.htm"
+    },
+    {
+      "name": "CreateTopLevelNode",
+      "signature": "public GH_IWriter CreateTopLevelNode(string rootName)",
+      "summary": "Creates and returns a new root node for this archive in the form of a GH_IWriter instance. Typically you do not call this method. If you want to add an object to the archive, use AppendObject() instead.",
+      "params": [
+        {
+          "name": "rootName",
+          "type": "System.String",
+          "doc": "Name of root object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_IWriter",
+        "doc": "The GH_IWriter incarnation of the GH_Chunk that represents the new Node."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_CreateTopLevelNode.htm"
+    },
+    {
+      "name": "Deserialize_Binary",
+      "signature": "public bool Deserialize_Binary(byte[] data)",
+      "summary": "Deserializes an array of bytes.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Byte[]",
+          "doc": "Byte array to deserialize.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if data is a null reference."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_Deserialize_Binary.htm"
+    },
+    {
+      "name": "Deserialize_Xml",
+      "signature": "public bool Deserialize_Xml(string xmlContent)",
+      "summary": "Deserializes an Xml string.",
+      "params": [
+        {
+          "name": "xmlContent",
+          "type": "System.String",
+          "doc": "Xml to deserialize.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [
+        {
+          "type": "XmlException",
+          "when": "Thrown if xml_content is not a valid Grasshopper Xml stream."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_Deserialize_Xml.htm"
+    },
+    {
+      "name": "ExtractObject",
+      "signature": "public bool ExtractObject(GH_ISerializable target, string targetName)",
+      "summary": "Extract a target object from the data tree.",
+      "params": [
+        {
+          "name": "target",
+          "type": "GH_IO.GH_ISerializable",
+          "doc": "Object to extract. Cannot be null.",
+          "optional": false
+        },
+        {
+          "name": "targetName",
+          "type": "System.String",
+          "doc": "Name of object to extract, name must identify an existing chunk.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on succes, false on failure."
+      },
+      "throws": [
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if the Root node hasn\u0027t been instantiated yet."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if target is a null reference."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if the target_name is null or empty."
+        },
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if the target_name cannot be resolved."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_ExtractObject.htm"
+    },
+    {
+      "name": "MessageCount()",
+      "signature": "public int MessageCount()",
+      "summary": "Gets the number of messages recorded since the most recent IO operation began.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of recorded messages."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_MessageCount.htm"
+    },
+    {
+      "name": "MessageCount(Boolean, Boolean, Boolean)",
+      "signature": "public int MessageCount(bool includeInfo, bool includeWarnings, bool includeErrors)",
+      "summary": "Gets the number of messages recorded since the most recent IO operation began. Message count can be filtered by message type.",
+      "params": [
+        {
+          "name": "includeInfo",
+          "type": "System.Boolean",
+          "doc": "If true, info messages will be included in the count.",
+          "optional": false
+        },
+        {
+          "name": "includeWarnings",
+          "type": "System.Boolean",
+          "doc": "If true, warnings will be included in the count.",
+          "optional": false
+        },
+        {
+          "name": "includeErrors",
+          "type": "System.Boolean",
+          "doc": "If true, errors will be included in the count.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of recoded messages that pass the type filters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_MessageCount_1.htm"
+    },
+    {
+      "name": "OpenFileDialog",
+      "signature": "public static bool OpenFileDialog(string title, ref string filePath, List\u003Cstring\u003E additionalFilters)",
+      "summary": "Displays a standard OpenFileDialog with all the fields set to cater for Grasshopper files.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Title of the dialog. If null, the default title will be used.",
+          "optional": false
+        },
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Path to file picked by user. If file_path represents a valid string, the dialog is set up to match.",
+          "optional": false
+        },
+        {
+          "name": "additionalFilters",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "A list of additional file format filters or null. Filter strings must be in typical FileDialog.Filter syntax: \u0022File Name (*.ext)|*.ext\u0022",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is user picked a path, False if user cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_OpenFileDialog.htm"
+    },
+    {
+      "name": "ReadFromFile",
+      "signature": "public bool ReadFromFile(string fileName)",
+      "summary": "Reads a new archive tree from a file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "Path of file to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure. If the read operation fails, all the member fields of this archive ought to be treated as invalid."
+      },
+      "throws": [
+        {
+          "type": "FileNotFoundException",
+          "when": "Thrown if the file doesn\u0027t exist."
+        },
+        {
+          "type": "IOException",
+          "when": "Thrown if the file_name doesn\u0027t represent a known file extension."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_ReadFromFile.htm"
+    },
+    {
+      "name": "SaveFileDialog",
+      "signature": "public static bool SaveFileDialog(string title, ref string filePath, List\u003Cstring\u003E additionalFilters)",
+      "summary": "Displays a standard SaveFileDialog with all the fields set to cater for Grasshopper files.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Title of the dialog. If null, the default title will be used.",
+          "optional": false
+        },
+        {
+          "name": "filePath",
+          "type": "System.String",
+          "doc": "Path to file picked by user. If file_path represents a valid string, the dialog is set up to match.",
+          "optional": false
+        },
+        {
+          "name": "additionalFilters",
+          "type": "System.Collections.Generic.List\u003CString\u003E",
+          "doc": "A list of additional file format filters or null. Filter strings must be in typical FileDialog.Filter syntax: \u0022File Name (*.ext)|*.ext\u0022",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True is user picked a new path, False if user cancelled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_SaveFileDialog.htm"
+    },
+    {
+      "name": "Serialize_Binary",
+      "signature": "public byte[] Serialize_Binary()",
+      "summary": "Serializes the data tree into a Binary byte array.",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "A byte array containing the Binary stream."
+      },
+      "throws": [
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if the root of the current archive hasn\u0027t been instantiated yet."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_Serialize_Binary.htm"
+    },
+    {
+      "name": "Serialize_Xml",
+      "signature": "public string Serialize_Xml()",
+      "summary": "Serializes the data tree into an Xml string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the Xml content."
+      },
+      "throws": [
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if the root of the current archive hasn\u0027t been instantiated yet."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_Serialize_Xml.htm"
+    },
+    {
+      "name": "ShowMessageLog",
+      "signature": "public DialogResult ShowMessageLog()",
+      "summary": "Displays the message log viewer. You should typically only display the viewer if the WorstCaseMessageType equals GH_Message_Type.warning or GH_Message_Type.error",
+      "params": [],
+      "returns": {
+        "type": "DialogResult",
+        "doc": "The closing flag for the displayed log form."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_ShowMessageLog.htm"
+    },
+    {
+      "name": "WriteToFile",
+      "signature": "public bool WriteToFile(string fileName, bool overwrite, bool rememberPath)",
+      "summary": "Writes the current tree to a file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "Path of file to write to. If the extension is not a recognized Grasshopper extension, an exception will be thrown.",
+          "optional": false
+        },
+        {
+          "name": "overwrite",
+          "type": "System.Boolean",
+          "doc": "True to overwrite file at specified location.",
+          "optional": false
+        },
+        {
+          "name": "rememberPath",
+          "type": "System.Boolean",
+          "doc": "If True, the MRU path field will be updated to reflect the new path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on succes, false if file already exists and overwrite is set to false."
+      },
+      "throws": [
+        {
+          "type": "MemberAccessException",
+          "when": "Thrown if the root of the current archive hasn\u0027t been instantiated yet."
+        },
+        {
+          "type": "ArgumentNullException",
+          "when": "Thrown if file_name is either null or empty."
+        },
+        {
+          "type": "IOException",
+          "when": "Thrown if the file_name doesn\u0027t represent a known file extension."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_Serialization_GH_Archive_WriteToFile.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the filename (without extension) of the currently loaded data tree. If the path field has not been set, \u0022unnamed\u0022 is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_FileName.htm"
+    },
+    {
+      "name": "GetRootNode",
+      "type": "GH_Chunk",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the root node of this archive. Typically you do not need to modify the Root. Use functions like CreateTopLevelNode(), AppendObject() and ExtractObject() instead. If you modify the Root node, you may corrupt the archive.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_GetRootNode.htm"
+    },
+    {
+      "name": "GH_IO_Version",
+      "type": "GH_Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the version number of the current GH_IO build.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_GH_IO_Version.htm"
+    },
+    {
+      "name": "GrasshopperBinaryExtension",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file extension (including the dot) associated with Grasshopper\u00AE Binary data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_GrasshopperBinaryExtension.htm"
+    },
+    {
+      "name": "GrasshopperUserExtension",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file extension (including the dot) associated with Grasshopper\u00AE User Object file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_GrasshopperUserExtension.htm"
+    },
+    {
+      "name": "GrasshopperXmlExtension",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the file extension (including the dot) associated with Grasshopper\u00AE XML data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_GrasshopperXmlExtension.htm"
+    },
+    {
+      "name": "IsBinaryPath",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether the Path field points to a Binary Grasshopper file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_IsBinaryPath.htm"
+    },
+    {
+      "name": "IsPath",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether or not the path field has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_IsPath.htm"
+    },
+    {
+      "name": "IsXmlPath",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether the Path field points to an Xml Grasshopper file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_IsXmlPath.htm"
+    },
+    {
+      "name": "Messages",
+      "type": "List\u003CGH_Message\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal list of messages.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_Messages.htm"
+    },
+    {
+      "name": "Path",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the path to the file from which this archive was read and/or written to. If the archive hasn\u0027t been read or written yet, this field will be null.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_Path.htm"
+    },
+    {
+      "name": "WorstCaseMessageType",
+      "type": "GH_Message_Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the worst case message type. If the record contains at least 1 error, the worst case is GH_Message_Type.error. If the record contains no errors, but at least 1 warning, the worst case is GH_Message_Type.warning. If the record contains no messages or only infos, the worst case type is GH_Message_Type.info.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_Serialization_GH_Archive_WorstCaseMessageType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "GH_NamedViewType",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Types of named view anchor points.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_NamedViewType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "target",
+      "value": 0,
+      "summary": "Anchor represents the location of the target (the canvas origin)."
+    },
+    {
+      "name": "center",
+      "value": 1,
+      "summary": "Anchor represents the point that is supposed to end up in the middle of the canvas."
+    }
+  ]
+}

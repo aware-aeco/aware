@@ -1,0 +1,106 @@
+{
+  "name": "IGH_VarParamComponent",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "This interface is obsolete, please use the IGH_VariableParameterComponent interface instead.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_VarParamComponent.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConstructVariable",
+      "signature": "IGH_Param ConstructVariable(GH_VarParamEventArgs e)",
+      "summary": "This function is called whenever a new parameter is required. You must provide a non-null instance for new_param, otherwise the addition will be cancelled. The Param field of the event arguments will typically be null.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Grasshopper.Kernel.GH_VarParamEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_Param",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VarParamComponent_ConstructVariable.htm"
+    },
+    {
+      "name": "IsVariableParam",
+      "signature": "bool IsVariableParam(GH_VarParamEventArgs e)",
+      "summary": "Returns a value indicating whether a specific parameter is considered to be variable.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Grasshopper.Kernel.GH_VarParamEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VarParamComponent_IsVariableParam.htm"
+    },
+    {
+      "name": "ManagerConstructed",
+      "signature": "void ManagerConstructed(GH_VarParamSide side, GH_VariableParameterManager manager)",
+      "summary": "This function is called whenever a new manager is constructed. You can override this function if you wish to modify the default behaviour of the manager.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Grasshopper.Kernel.GH_VarParamSide",
+          "optional": false
+        },
+        {
+          "name": "manager",
+          "type": "GH_VariableParameterManager",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VarParamComponent_ManagerConstructed.htm"
+    },
+    {
+      "name": "ParametersModified",
+      "signature": "void ParametersModified(GH_VarParamSide side)",
+      "summary": "This function will be called wheneven the param collection of a component has been altered through the ParamManager. If your parameters have a peculiar naming scheme, this is the best place to assign those.",
+      "params": [
+        {
+          "name": "side",
+          "type": "Grasshopper.Kernel.GH_VarParamSide",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_VarParamComponent_ParametersModified.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsInputVariable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a flag specifying whether or not the input can potentially contain variable parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_VarParamComponent_IsInputVariable.htm"
+    },
+    {
+      "name": "IsOutputVariable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a flag specifying whether or not the output can potentially contain variable parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_VarParamComponent_IsOutputVariable.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

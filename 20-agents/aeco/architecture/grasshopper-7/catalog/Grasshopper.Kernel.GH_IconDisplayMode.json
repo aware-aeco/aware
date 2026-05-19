@@ -1,0 +1,29 @@
+{
+  "name": "GH_IconDisplayMode",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Lists all display modes that individual objects can have.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_IconDisplayMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "application",
+      "value": 0,
+      "summary": "Inherit the mode from the application setting. This is the default setting."
+    },
+    {
+      "name": "icon",
+      "value": 1,
+      "summary": "Always display the icon."
+    },
+    {
+      "name": "name",
+      "value": 2,
+      "summary": "Always display the nickname."
+    }
+  ]
+}

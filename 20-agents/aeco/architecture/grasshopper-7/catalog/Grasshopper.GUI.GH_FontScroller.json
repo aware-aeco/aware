@@ -1,0 +1,67 @@
+{
+  "name": "GH_FontScroller",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Represents a panel with a scrolling collection of pangrams.",
+  "base": "GH_DoubleBufferedPanel",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_FontScroller.htm",
+  "constructors": [
+    {
+      "name": "GH_FontScroller",
+      "signature": "public GH_FontScroller()",
+      "summary": "Initializes a new instance of the GH_FontScroller class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontScroller__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontScroller_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_FontScroller_OnPaintBackground.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PostPaintDelegate",
+      "type": "GH_FontScroller.PostPaint",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_FontScroller_PostPaintDelegate.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

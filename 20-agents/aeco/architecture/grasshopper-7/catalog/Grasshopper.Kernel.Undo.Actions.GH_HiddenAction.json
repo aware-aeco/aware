@@ -1,0 +1,201 @@
+{
+  "name": "GH_HiddenAction",
+  "namespace": "Grasshopper.Kernel.Undo.Actions",
+  "kind": "class",
+  "summary": "Records a single object Preview event.",
+  "base": "GH_ObjectUndoAction",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Undo_Actions_GH_HiddenAction.htm",
+  "constructors": [
+    {
+      "name": "GH_HiddenAction",
+      "signature": "public GH_HiddenAction(IGH_ActiveObject obj)",
+      "summary": "Initializes a new instance of the GH_HiddenAction class",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_ActiveObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_Actions_GH_HiddenAction__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Internal_Redo",
+      "signature": "protected override void Internal_Redo(GH_Document doc)",
+      "summary": "(Inherited from GH_ObjectUndoAction.)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_ObjectUndoAction_Internal_Redo.htm"
+    },
+    {
+      "name": "Internal_Undo",
+      "signature": "protected override void Internal_Undo(GH_Document doc)",
+      "summary": "(Inherited from GH_ObjectUndoAction.)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_ObjectUndoAction_Internal_Undo.htm"
+    },
+    {
+      "name": "Object_Redo",
+      "signature": "protected override void Object_Redo(GH_Document doc, IGH_DocumentObject obj)",
+      "summary": "(Overrides GH_ObjectUndoAction.Object_Redo(GH_Document, IGH_DocumentObject).)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_Actions_GH_HiddenAction_Object_Redo.htm"
+    },
+    {
+      "name": "Object_Undo",
+      "signature": "protected override void Object_Undo(GH_Document doc, IGH_DocumentObject obj)",
+      "summary": "(Overrides GH_ObjectUndoAction.Object_Undo(GH_Document, IGH_DocumentObject).)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_Actions_GH_HiddenAction_Object_Undo.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public virtual bool Read(GH_IReader reader)",
+      "summary": "(Inherited from GH_UndoAction.)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoAction_Read.htm"
+    },
+    {
+      "name": "Redo",
+      "signature": "public void Redo(GH_Document doc)",
+      "summary": "(Inherited from GH_UndoAction.)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoAction_Redo.htm"
+    },
+    {
+      "name": "Undo",
+      "signature": "public void Undo(GH_Document doc)",
+      "summary": "(Inherited from GH_UndoAction.)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoAction_Undo.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public virtual bool Write(GH_IWriter writer)",
+      "summary": "(Inherited from GH_UndoAction.)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoAction_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExpiresDisplay",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_UndoAction.ExpiresDisplay.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_Actions_GH_HiddenAction_ExpiresDisplay.htm"
+    },
+    {
+      "name": "ExpiresSolution",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Override this property if you want the Grasshopper solution to refresh upon undo completion.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoAction_ExpiresSolution.htm"
+    },
+    {
+      "name": "State",
+      "type": "GH_UndoState",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_UndoAction.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoAction_State.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

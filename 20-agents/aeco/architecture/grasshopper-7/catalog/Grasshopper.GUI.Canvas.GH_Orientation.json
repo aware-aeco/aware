@@ -1,0 +1,44 @@
+{
+  "name": "GH_Orientation",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Enumerates possible alignments.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Orientation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "horizontal_center",
+      "value": 0,
+      "summary": "Text is drawn horizontally, centered in the middle of the context."
+    },
+    {
+      "name": "horizontal_near",
+      "value": 1,
+      "summary": "Text is drawn horizontally, aligned near to the context edge."
+    },
+    {
+      "name": "horizontal_far",
+      "value": 2,
+      "summary": "Text is drawn horizontally, aligned far from the context edge."
+    },
+    {
+      "name": "vertical_center",
+      "value": 10,
+      "summary": "Text is drawn vertically, centered in the middle of the context."
+    },
+    {
+      "name": "vertical_near",
+      "value": 11,
+      "summary": "Text is drawn vertically, aligned near to the context edge."
+    },
+    {
+      "name": "vertical_far",
+      "value": 12,
+      "summary": "Text is drawn vertically, aligned far from the context edge."
+    }
+  ]
+}

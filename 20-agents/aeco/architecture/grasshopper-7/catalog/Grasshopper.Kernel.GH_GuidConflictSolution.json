@@ -1,0 +1,39 @@
+{
+  "name": "GH_GuidConflictSolution",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Contains a list of all possible Assembly GUID conflict solutions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_GuidConflictSolution.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Indicates there is no solution picked yet"
+    },
+    {
+      "name": "Replace",
+      "value": 1,
+      "summary": "Replace the loaded proxy with the conflicting proxy"
+    },
+    {
+      "name": "ReplaceAll",
+      "value": 2,
+      "summary": "Replace all loaded proxies with all conflicting proxies in the current assembly"
+    },
+    {
+      "name": "Skip",
+      "value": 3,
+      "summary": "Skip the conflicting proxy"
+    },
+    {
+      "name": "SkipAll",
+      "value": 4,
+      "summary": "Skip all conflicting proxies in the current assembly"
+    }
+  ]
+}

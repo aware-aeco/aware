@@ -1,0 +1,44 @@
+{
+  "name": "GH_BitmapChannel",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Lists all possible channels for 24 and 32 bit bitmaps.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_BitmapChannel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "A",
+      "value": 1,
+      "summary": "Alpha channel, not all bitmaps support this."
+    },
+    {
+      "name": "R",
+      "value": 2,
+      "summary": "Red channel."
+    },
+    {
+      "name": "G",
+      "value": 4,
+      "summary": "Green channel."
+    },
+    {
+      "name": "B",
+      "value": 8,
+      "summary": "Blue channel."
+    },
+    {
+      "name": "RGB",
+      "value": 14,
+      "summary": "Red, Green and Blue channel mashup."
+    },
+    {
+      "name": "ARGB",
+      "value": 15,
+      "summary": "Alpha, Red, Green and Blue channel mashup."
+    }
+  ]
+}

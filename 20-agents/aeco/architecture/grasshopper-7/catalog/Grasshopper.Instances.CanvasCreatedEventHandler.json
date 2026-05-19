@@ -1,0 +1,14 @@
+{
+  "name": "Instances.CanvasCreatedEventHandler",
+  "namespace": "Grasshopper",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.Instances.CanvasCreatedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Instances_CanvasCreatedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void CanvasCreatedEventHandler( GH_Canvas canvas )"
+}

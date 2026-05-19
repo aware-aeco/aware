@@ -1,0 +1,29 @@
+{
+  "name": "GH_Constraint",
+  "namespace": "Grasshopper.GUI",
+  "kind": "enum",
+  "summary": "Constraints used during UI dragging operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_Constraint.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No constraint is placed on drag direction."
+    },
+    {
+      "name": "Vertical",
+      "value": 1,
+      "summary": "Dragging is constrainted to the vertical direction."
+    },
+    {
+      "name": "Horizontal",
+      "value": 2,
+      "summary": "Dragging is constrainted to the horizontal direction."
+    }
+  ]
+}

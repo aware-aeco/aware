@@ -1,0 +1,34 @@
+{
+  "name": "GH_ObjectResponse",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "enum",
+  "summary": "Lists the possible responses an object can give when confronted with a UI event.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_ObjectResponse.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Ignore",
+      "value": 0,
+      "summary": "Event was ignored."
+    },
+    {
+      "name": "Capture",
+      "value": 1,
+      "summary": "Event caused the object to become active."
+    },
+    {
+      "name": "Release",
+      "value": 2,
+      "summary": "Object was active, but event caused object to become inactive."
+    },
+    {
+      "name": "Handled",
+      "value": 3,
+      "summary": "Something happened, but no capture is needed."
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "name": "GH_Exposure",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Lists the different kinds of GUI exposure an object can have.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_Exposure.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "hidden",
+      "value": -1,
+      "summary": "Do not expose the object anywhere. This is useful for legacy components."
+    },
+    {
+      "name": "primary",
+      "value": 2,
+      "summary": "Expose the object in the first section on the toolbar."
+    },
+    {
+      "name": "secondary",
+      "value": 4,
+      "summary": "Expose the object in the second section on the toolbar."
+    },
+    {
+      "name": "tertiary",
+      "value": 8,
+      "summary": "Expose the object in the third section on the toolbar."
+    },
+    {
+      "name": "quarternary",
+      "value": 16,
+      "summary": "Expose the object in the fourth section on the toolbar."
+    },
+    {
+      "name": "quinary",
+      "value": 32,
+      "summary": "Expose the object in the fifth section on the toolbar."
+    },
+    {
+      "name": "senary",
+      "value": 64,
+      "summary": "Expose the object in the sixth section on the toolbar."
+    },
+    {
+      "name": "septenary",
+      "value": 128,
+      "summary": "Expose the object in the seventh section on the toolbar."
+    },
+    {
+      "name": "dropdown",
+      "value": 65536,
+      "summary": "Obsolete. Only expose the object on the ribbon dropdown. Use this option for components which are unlikely to be used often. You can combine dropdown with any of the other flags (except hidden) to get both dropdown limitations and section control."
+    },
+    {
+      "name": "obscure",
+      "value": 65536,
+      "summary": "Mark the object as obscure. Use this option for components which are unlikely to be used often. You must combine obscure with one of the other flags (except hidden). Objects which are marked as Obscure will be the first to disappear when a ribbon resizes and they will always appear at the end of a panel."
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "name": "GH_Parser",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "class",
+  "summary": "Provides parsing methods for the Grasshopper Markdown flavour.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Documentation_GH_Parser.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsChapterHeaderLine",
+      "signature": "public static bool IsChapterHeaderLine(string line)",
+      "summary": "Test whether a line represents a chapter header underline. Chapter header underlines contain at least 4 consecutive equals symbols preceded or followed by any amount of white space.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line is considered to be a chapter header underline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsChapterHeaderLine.htm"
+    },
+    {
+      "name": "IsCommentLine",
+      "signature": "public static bool IsCommentLine(string line)",
+      "summary": "Test whether a line is a comment. Commented lines begin with double slashes (//) and are ignored during parsing.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to test. If you supply a multi-line string, death\u0027s too good for you.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line is a comment line."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsCommentLine.htm"
+    },
+    {
+      "name": "IsLinkLine(String)",
+      "signature": "public static bool IsLinkLine(string line)",
+      "summary": "Test whether a line represents a referenced link target. Note; this is a quick check. The link might still be invalid, use the IsLinkLine overload to include validity checks.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line is a referenced link."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsLinkLine.htm"
+    },
+    {
+      "name": "IsLinkLine(String, String, String, String)",
+      "signature": "public static bool IsLinkLine(string line, out string linkId, out string linkTarget, out string linkTooltip)",
+      "summary": "Test whether a line represents a referenced link target.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to test.",
+          "optional": false
+        },
+        {
+          "name": "linkId",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "linkTarget",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "linkTooltip",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line is a referenced link."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsLinkLine_1.htm"
+    },
+    {
+      "name": "IsListLine",
+      "signature": "public static bool IsListLine(string line)",
+      "summary": "Test whether a line contains a list item.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line contains a list item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsListLine.htm"
+    },
+    {
+      "name": "IsParagraphHeaderLine",
+      "signature": "public static bool IsParagraphHeaderLine(string line)",
+      "summary": "Test whether a line represents a paragraph header underline. Paragraph header underlines contain at least 4 consecutive dashes preceded or followed by any amount of white space.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line is considered to be a paragraph header underline."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsParagraphHeaderLine.htm"
+    },
+    {
+      "name": "IsQuoteLine",
+      "signature": "public static bool IsQuoteLine(string line)",
+      "summary": "Test whether a line is a block quote line. Block quotes start with a larger than symbol.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the line is a block quote."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_IsQuoteLine.htm"
+    },
+    {
+      "name": "StringToFragment",
+      "signature": "public static IGH_Content StringToFragment(string text)",
+      "summary": "Parse a block of text and return it as an interpreted IGH_Fragment.",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_Content",
+        "doc": "Fragment representing the text."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_Parser_StringToFragment.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Whitespace",
+      "type": "Char[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an array of characters that are considered to be whitespace. At the moment, this array contains the space char and the tab char, it does not contain feeds or breaks.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_Parser_Whitespace.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,44 @@
+{
+  "name": "GH_DigitScrollerBase.GH_MouseAction",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "enum",
+  "summary": "Enumerates the possible actions due to mouse-down mouse-move events.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_DigitScrollerBase_GH_MouseAction.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No specific action."
+    },
+    {
+      "name": "SignDown",
+      "value": 1,
+      "summary": "Mouse down on sign symbol."
+    },
+    {
+      "name": "DigitDown",
+      "value": 2,
+      "summary": "Mouse down on scrolling digit."
+    },
+    {
+      "name": "DigitDrag",
+      "value": 3,
+      "summary": "Mouse move on scrolling digit."
+    },
+    {
+      "name": "RadixDown",
+      "value": 4,
+      "summary": "Mouse down on radix point."
+    },
+    {
+      "name": "RadixDrag",
+      "value": 5,
+      "summary": "Mouse move on radix point."
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "name": "GH_GHXHarvester",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides static methods for harvesting data from GHX and GH files.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_GHXHarvester.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "HarvestBoundingBoxes(String)",
+      "signature": "public static List\u003CRectangleF\u003E HarvestBoundingBoxes(string file)",
+      "summary": "Harvest all attribute bounding boxes from a GHX/GH archive.",
+      "params": [
+        {
+          "name": "file",
+          "type": "System.String",
+          "doc": "File to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CRectangleF\u003E",
+        "doc": "A list of all attribute bounding boxes or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_GHXHarvester_HarvestBoundingBoxes_2.htm"
+    },
+    {
+      "name": "HarvestBoundingBoxes(GH_Archive)",
+      "signature": "public static List\u003CRectangleF\u003E HarvestBoundingBoxes(GH_Archive archive)",
+      "summary": "Harvest all attribute bounding boxes from a GHX/GH archive.",
+      "params": [
+        {
+          "name": "archive",
+          "type": "GH_IO.Serialization.GH_Archive",
+          "doc": "Archive to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CRectangleF\u003E",
+        "doc": "A list of all attribute bounding boxes or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_GHXHarvester_HarvestBoundingBoxes.htm"
+    },
+    {
+      "name": "HarvestBoundingBoxes(GH_IReader)",
+      "signature": "public static List\u003CRectangleF\u003E HarvestBoundingBoxes(GH_IReader node)",
+      "summary": "Harvest all attribute bounding boxes from a GHX/GH node.",
+      "params": [
+        {
+          "name": "node",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Node to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CRectangleF\u003E",
+        "doc": "A list of all attribute bounding boxes or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_GHXHarvester_HarvestBoundingBoxes_1.htm"
+    },
+    {
+      "name": "HarvestPivots(String)",
+      "signature": "public static List\u003CPointF\u003E HarvestPivots(string file)",
+      "summary": "Harvest all attribute pivots from a GHX/GH archive.",
+      "params": [
+        {
+          "name": "file",
+          "type": "System.String",
+          "doc": "File to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CPointF\u003E",
+        "doc": "A list of all attribute pivots or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_GHXHarvester_HarvestPivots_2.htm"
+    },
+    {
+      "name": "HarvestPivots(GH_Archive)",
+      "signature": "public static List\u003CPointF\u003E HarvestPivots(GH_Archive archive)",
+      "summary": "Harvest all attribute pivots from a GHX/GH archive.",
+      "params": [
+        {
+          "name": "archive",
+          "type": "GH_IO.Serialization.GH_Archive",
+          "doc": "Archive to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CPointF\u003E",
+        "doc": "A list of all attribute pivots or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_GHXHarvester_HarvestPivots.htm"
+    },
+    {
+      "name": "HarvestPivots(GH_IReader)",
+      "signature": "public static List\u003CPointF\u003E HarvestPivots(GH_IReader node)",
+      "summary": "Harvest all attribute pivots from a GHX/GH node.",
+      "params": [
+        {
+          "name": "node",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Node to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CPointF\u003E",
+        "doc": "A list of all attribute pivots or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_GHXHarvester_HarvestPivots_1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

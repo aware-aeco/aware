@@ -1,0 +1,89 @@
+{
+  "name": "GH_FileSystemEventServer",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides a easy-to-use way to keep tabs on files.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_FileSystemEventServer.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddWatcher",
+      "signature": "public static void AddWatcher(Object owner, string path, GH_FileSystemEventServer.FileEvent callback)",
+      "summary": "Add a new file watcher instance.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Object",
+          "doc": "The object that owns this watcher.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path of the file to watch.",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "Grasshopper.Kernel.GH_FileSystemEventServer.FileEvent",
+          "doc": "Callback delegate used during file changes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileSystemEventServer_AddWatcher.htm"
+    },
+    {
+      "name": "RemoveWatcher(Object)",
+      "signature": "public static void RemoveWatcher(Object owner)",
+      "summary": "Remove all watchers that are linked to a specific object.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileSystemEventServer_RemoveWatcher.htm"
+    },
+    {
+      "name": "RemoveWatcher(Object, String)",
+      "signature": "public static void RemoveWatcher(Object owner, string path)",
+      "summary": "Remove all watchers that are linked to a specific object and a specific file path.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Object",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_FileSystemEventServer_RemoveWatcher_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllPaths",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the paths currently under surveillance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_FileSystemEventServer_AllPaths.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

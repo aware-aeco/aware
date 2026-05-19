@@ -1,0 +1,92 @@
+{
+  "name": "UVInterval",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "struct",
+  "summary": "UVInterval data type. Do not confuse this with GH_Interval2D.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_UVInterval.htm",
+  "constructors": [
+    {
+      "name": "UVInterval",
+      "signature": "public UVInterval(Interval newU, Interval newV)",
+      "summary": "Initializes a new instance of the UVInterval class",
+      "params": [
+        {
+          "name": "newU",
+          "type": "Interval",
+          "optional": false
+        },
+        {
+          "name": "newV",
+          "type": "Interval",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_UVInterval__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this UVInterval is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_IsValid.htm"
+    },
+    {
+      "name": "U",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the U interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_U.htm"
+    },
+    {
+      "name": "U0",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the T0 value of the U domain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_U0.htm"
+    },
+    {
+      "name": "U1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the T1 value of the U domain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_U1.htm"
+    },
+    {
+      "name": "V",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the V interval.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_V.htm"
+    },
+    {
+      "name": "V0",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the T0 value of the V domain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_V0.htm"
+    },
+    {
+      "name": "V1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the T1 value of the V domain.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_UVInterval_V1.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

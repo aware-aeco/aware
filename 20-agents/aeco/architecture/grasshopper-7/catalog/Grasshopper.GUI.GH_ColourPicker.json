@@ -1,0 +1,134 @@
+{
+  "name": "GH_ColourPicker",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides the standard Grasshopper Colour picker as a winforms Control.",
+  "base": "UserControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_ColourPicker.htm",
+  "constructors": [
+    {
+      "name": "GH_ColourPicker",
+      "signature": "public GH_ColourPicker()",
+      "summary": "Initializes a new instance of the GH_ColourPicker class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ColourPicker__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_ColourPicker and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ColourPicker_Dispose.htm"
+    },
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ColourPicker_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ColourPicker_OnPaintBackground.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowNumericInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether this colour picker pops up a textbox on channel slider double clicks.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourPicker_AllowNumericInput.htm"
+    },
+    {
+      "name": "Colour",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the colour currently specified in the picker.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourPicker_Colour.htm"
+    },
+    {
+      "name": "DesiredHeight",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ideal height for this control given the current width and UI settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourPicker_DesiredHeight.htm"
+    },
+    {
+      "name": "ShowAlphaSlider",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the alpha channel slider is included.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourPicker_ShowAlphaSlider.htm"
+    },
+    {
+      "name": "ShowChannelSliders",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the channel sliders are included.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourPicker_ShowChannelSliders.htm"
+    },
+    {
+      "name": "SliceRectangle",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the rectangle that outlines the colour cube slice.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourPicker_SliceRectangle.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ColourChanged",
+      "delegate": "Grasshopper.GUI.GH_ColourPicker.ColourChangedEventHandler",
+      "signature": "public event GH_ColourPicker.ColourChangedEventHandler ColourChanged",
+      "summary": "Raised whenever the value of the slider is changed via GUI interaction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_ColourPicker_ColourChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

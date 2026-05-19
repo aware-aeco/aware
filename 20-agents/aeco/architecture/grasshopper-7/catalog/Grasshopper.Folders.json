@@ -1,0 +1,239 @@
+{
+  "name": "Folders",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "Provides access to all standard Grasshopper file and folder locations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Folders.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ShowFolderInExplorer",
+      "signature": "public static void ShowFolderInExplorer(string folder)",
+      "summary": "Open a specific folder in Windows Explorer.",
+      "params": [
+        {
+          "name": "folder",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Folders_ShowFolderInExplorer.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AppDataFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the appdata folder for Grasshopper. This folder is defined as %appdata%\\Grasshopper\\ and the physical uri may differ depending on Windows version.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_AppDataFolder.htm"
+    },
+    {
+      "name": "AssemblyFolders",
+      "type": "List\u003CGH_AssemblyFolderInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the directories from which GHA assemblies are loaded. Note: this is not the same as all folders from which GHA files were loaded at startup. This list includes the default Grasshopper folders, custom GHA folders and the locations provided by Rhino.Runtime.HostUtils.GetAssemblySearchPaths(). Folders which do not contain GHA files are omitted, as are duplicate entries.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_AssemblyFolders.htm"
+    },
+    {
+      "name": "AutoSaveFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the directory in windows ApplicationData that contains the Grasshopper autosave files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_AutoSaveFolder.htm"
+    },
+    {
+      "name": "ClusterFolders",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the directories from which GHCLUSTER files are loaded. GHUSER files are loaded from subfolders as well.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_ClusterFolders.htm"
+    },
+    {
+      "name": "CursorFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the directory that contains the cursor files that ship with Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_CursorFolder.htm"
+    },
+    {
+      "name": "CustomAssemblyFolders",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets all custom assembly folders.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_CustomAssemblyFolders.htm"
+    },
+    {
+      "name": "DefaultAssemblyFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the standard directory in windows ApplicationData that contains 3rd party GHA files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_DefaultAssemblyFolder.htm"
+    },
+    {
+      "name": "DefaultAssemblyFolderVersion6",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the standard directory in windows ApplicationData that contains 3rd party GHA files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_DefaultAssemblyFolderVersion6.htm"
+    },
+    {
+      "name": "DefaultClusterFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the standard directory in windows ApplicationData that contains GHCLUSTER files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_DefaultClusterFolder.htm"
+    },
+    {
+      "name": "DefaultTemplateFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the standard directory in windows ApplicationData that contains template files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_DefaultTemplateFolder.htm"
+    },
+    {
+      "name": "DefaultUserObjectFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the standard directory in windows ApplicationData that contains GHUSER files.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_DefaultUserObjectFolder.htm"
+    },
+    {
+      "name": "Desktop",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the desktop directory of the current user profile.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_Desktop.htm"
+    },
+    {
+      "name": "DownloaderApplication",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location where the Downloader.exe should be. If the application is not present, null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_DownloaderApplication.htm"
+    },
+    {
+      "name": "FileViewerApplication",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location where the FileViewer.exe should be. If the application is not present, null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_FileViewerApplication.htm"
+    },
+    {
+      "name": "IconFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the directory that contains the icon files that ship with Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_IconFolder.htm"
+    },
+    {
+      "name": "ImageStitcherApplication",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location where the ImageStitcher.exe should be. If the application is not present, null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_ImageStitcherApplication.htm"
+    },
+    {
+      "name": "PluginFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the directory that contains the Grasshopper.dll file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_PluginFolder.htm"
+    },
+    {
+      "name": "SDKDownloaderApplication",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location where the SDKDownloader.exe should be. If the application is not present, null is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_SDKDownloaderApplication.htm"
+    },
+    {
+      "name": "SettingsFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the folder into which all Grasshopper settings are stored. This folder might not exist until some settings are actually saved.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_SettingsFolder.htm"
+    },
+    {
+      "name": "TemplateFolders",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the directories from which template files are loaded. Templates are not loaded from subfolders.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_TemplateFolders.htm"
+    },
+    {
+      "name": "ToolsFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the directory that contains the additional executables that ship with Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_ToolsFolder.htm"
+    },
+    {
+      "name": "TutorialFiles",
+      "type": "String[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an array of all the tutorial files. This includes all the files with the *.gh or *.ghx extension in the Tutorials folder. Subfolders are not traversed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_TutorialFiles.htm"
+    },
+    {
+      "name": "TutorialFolder",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the directory that contains the tutorial files that ship with Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_TutorialFolder.htm"
+    },
+    {
+      "name": "UserObjectFolders",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a list of all the directories from which GHUSER files are loaded. GHUSER files are loaded from subfolders as well.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_UserObjectFolders.htm"
+    },
+    {
+      "name": "VersionHistoryFile",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the text file location where Grasshopper will save the latest version information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_VersionHistoryFile.htm"
+    },
+    {
+      "name": "VersionHistoryUrl",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the url of the version history data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Folders_VersionHistoryUrl.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

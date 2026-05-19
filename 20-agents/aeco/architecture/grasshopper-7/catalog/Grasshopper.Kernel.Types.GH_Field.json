@@ -1,0 +1,363 @@
+{
+  "name": "GH_Field",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Represents a field of forces.",
+  "interfaces": [
+    "IGH_Goo",
+    "IGH_PreviewData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Field.htm",
+  "constructors": [
+    {
+      "name": "GH_Field()",
+      "signature": "public GH_Field()",
+      "summary": "Blank constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field__ctor.htm"
+    },
+    {
+      "name": "GH_Field(GH_Field)",
+      "signature": "public GH_Field(GH_Field other)",
+      "summary": "Copy constructor.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Types.GH_Field",
+          "doc": "Field to duplicate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CastFrom",
+      "signature": "public bool CastFrom(Object source)",
+      "summary": "",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E",
+      "signature": "public bool CastTo\u003CT\u003E(ref T target)",
+      "summary": "",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_CastTo__1.htm"
+    },
+    {
+      "name": "CurvatureAt",
+      "signature": "public double CurvatureAt(Point3d location)",
+      "summary": "",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_CurvatureAt.htm"
+    },
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public IGH_Goo Duplicate()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_Duplicate.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public IGH_GooProxy EmitProxy()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_EmitProxy.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public bool Read(GH_IReader reader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public Object ScriptVariable()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_ScriptVariable.htm"
+    },
+    {
+      "name": "SolveStep",
+      "signature": "public Vector3d SolveStep(Point3d location, double factor, GH_DifferentialSolver method)",
+      "summary": "Move a point through the field.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "doc": "Point to move from.",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "System.Double",
+          "doc": "Multiplication factor to apply to sampling. A low factor results in more accurate sampling, but smaller steps.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "Grasshopper.Kernel.Types.GH_DifferentialSolver",
+          "doc": "Estimator to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "New point location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_SolveStep.htm"
+    },
+    {
+      "name": "SolveSteps",
+      "signature": "public Point3dList SolveSteps(Point3d location, double accuracy, int count, GH_DifferentialSolver method)",
+      "summary": "Move a point through a succession of steps.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "doc": "Point to move.",
+          "optional": false
+        },
+        {
+          "name": "accuracy",
+          "type": "System.Double",
+          "doc": "Rough accuracy.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "Number of samples to take.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "Grasshopper.Kernel.Types.GH_DifferentialSolver",
+          "doc": "Estimator to use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3dList",
+        "doc": "A track (including the original location) of all the samples."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_SolveSteps.htm"
+    },
+    {
+      "name": "TensorAt",
+      "signature": "public Vector3d TensorAt(Point3d location)",
+      "summary": "Compute the field tensor at the given location as contributed by all the field elements.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "doc": "Location to sample field at.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The strength and direction of the field at the given location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_TensorAt.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public string ToString()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_ToString.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public bool Write(GH_IWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Field_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Field_ClippingBox.htm"
+    },
+    {
+      "name": "Elements",
+      "type": "List\u003CIGH_FieldElement\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of elements of this field.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Field_Elements.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Field_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Field_IsValidWhyNot.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Field_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Field_TypeName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

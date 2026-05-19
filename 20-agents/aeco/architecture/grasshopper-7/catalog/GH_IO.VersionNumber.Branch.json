@@ -1,0 +1,39 @@
+{
+  "name": "VersionNumber.Branch",
+  "namespace": "GH_IO",
+  "kind": "enum",
+  "summary": "Build branch, set by the build process.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_VersionNumber_Branch.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Uninitialized value."
+    },
+    {
+      "name": "Developer",
+      "value": 1,
+      "summary": "Private developer build; should never be released to the public."
+    },
+    {
+      "name": "Trunk",
+      "value": 2,
+      "summary": "Mainline trunk build. May be released to the public."
+    },
+    {
+      "name": "ReleaseCandidate",
+      "value": 3,
+      "summary": "Release candidate build. Will be released to the public."
+    },
+    {
+      "name": "Release",
+      "value": 4,
+      "summary": "Final Release build. Will be released to the public."
+    }
+  ]
+}

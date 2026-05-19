@@ -1,0 +1,44 @@
+{
+  "name": "GH_SolutionPhase",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "The Phase flags are used to track object states during solutions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_SolutionPhase.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Blank",
+      "value": 0,
+      "summary": "There is no data available in this object. This object will be solved next time a solution begins."
+    },
+    {
+      "name": "Collecting",
+      "value": 1,
+      "summary": "This object is currently in the process of collecting data"
+    },
+    {
+      "name": "Collected",
+      "value": 2,
+      "summary": "This object has finished collecting all data and is ready for computation."
+    },
+    {
+      "name": "Computing",
+      "value": 3,
+      "summary": "This object is currently in the process of computing new data"
+    },
+    {
+      "name": "Computed",
+      "value": 4,
+      "summary": "This object has successfully completed data computation and it will be skipped in the next solution unless it expires in the meantime. This is the final step in a successful solution cycle."
+    },
+    {
+      "name": "Failed",
+      "value": 10,
+      "summary": "This object has failed to successfully complete the data computation stage. A new attempt at solving it will be made when the next solution starts. This is the final step in an unsuccessful solution cycle."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "name": "IGH_DocumentOwner",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface if you want to be the owner assigned to a document in the Grasshopper documentserver.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_DocumentOwner.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DocumentClosed",
+      "signature": "void DocumentClosed(GH_Document document)",
+      "summary": "This method will be called whenever the owner document was closed.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "the closed docment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DocumentOwner_DocumentClosed.htm"
+    },
+    {
+      "name": "DocumentModified",
+      "signature": "void DocumentModified(GH_Document document)",
+      "summary": "This method will be called whenever the owned document is modified.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "The modified document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DocumentOwner_DocumentModified.htm"
+    },
+    {
+      "name": "OwnerDocument",
+      "signature": "GH_Document OwnerDocument()",
+      "summary": "If the IGH_DocumentOwner is part of a GH_Document of its own, this function will return that document.",
+      "params": [],
+      "returns": {
+        "type": "GH_Document",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_DocumentOwner_OwnerDocument.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

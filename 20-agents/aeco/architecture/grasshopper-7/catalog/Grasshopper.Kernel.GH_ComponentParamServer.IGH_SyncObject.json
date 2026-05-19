@@ -1,0 +1,13 @@
+{
+  "name": "GH_ComponentParamServer.IGH_SyncObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Synch object for tracking long term changes to the parameter server.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ComponentParamServer_IGH_SyncObject.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

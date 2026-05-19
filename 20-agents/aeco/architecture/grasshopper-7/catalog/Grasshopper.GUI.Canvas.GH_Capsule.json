@@ -1,0 +1,1698 @@
+{
+  "name": "GH_Capsule",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Class used to draw standard Grasshopper interface boxes.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Capsule.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddInputGrip(Point)",
+      "signature": "public void AddInputGrip(Point P)",
+      "summary": "Add an input grip to this UI Box.",
+      "params": [
+        {
+          "name": "P",
+          "type": "System.Drawing.Point",
+          "doc": "Coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddInputGrip.htm"
+    },
+    {
+      "name": "AddInputGrip(PointF)",
+      "signature": "public void AddInputGrip(PointF P)",
+      "summary": "Add an input grip to this UI Box.",
+      "params": [
+        {
+          "name": "P",
+          "type": "System.Drawing.PointF",
+          "doc": "Coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddInputGrip_1.htm"
+    },
+    {
+      "name": "AddInputGrip(Single)",
+      "signature": "public void AddInputGrip(float Y)",
+      "summary": "Add an input grip to this UI Box. This is the recommended overload.",
+      "params": [
+        {
+          "name": "Y",
+          "type": "System.Single",
+          "doc": "Y coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddInputGrip_2.htm"
+    },
+    {
+      "name": "AddInputGrip(Single, Single)",
+      "signature": "public void AddInputGrip(float X, float Y)",
+      "summary": "Add an input grip to this UI Box.",
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Single",
+          "doc": "X coordinate of grip.",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Single",
+          "doc": "Y coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddInputGrip_3.htm"
+    },
+    {
+      "name": "AddOutputGrip(Point)",
+      "signature": "public void AddOutputGrip(Point P)",
+      "summary": "Add an output grip to this UI Box.",
+      "params": [
+        {
+          "name": "P",
+          "type": "System.Drawing.Point",
+          "doc": "Coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddOutputGrip.htm"
+    },
+    {
+      "name": "AddOutputGrip(PointF)",
+      "signature": "public void AddOutputGrip(PointF P)",
+      "summary": "Add an output grip to this UI Box.",
+      "params": [
+        {
+          "name": "P",
+          "type": "System.Drawing.PointF",
+          "doc": "Coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddOutputGrip_1.htm"
+    },
+    {
+      "name": "AddOutputGrip(Single)",
+      "signature": "public void AddOutputGrip(float Y)",
+      "summary": "Add an output grip to this UI Box. This is the recommended overload.",
+      "params": [
+        {
+          "name": "Y",
+          "type": "System.Single",
+          "doc": "Y coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddOutputGrip_2.htm"
+    },
+    {
+      "name": "AddOutputGrip(Single, Single)",
+      "signature": "public void AddOutputGrip(float X, float Y)",
+      "summary": "Add an output grip to this UI Box.",
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Single",
+          "doc": "X coordinate of grip.",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Single",
+          "doc": "Y coordinate of grip.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_AddOutputGrip_3.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(PointF pt)",
+      "summary": "Test a point for capsule containment.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the point is on the interior of the capsule."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Contains.htm"
+    },
+    {
+      "name": "CreateCapsule(Rectangle, GH_Palette)",
+      "signature": "public static GH_Capsule CreateCapsule(Rectangle box, GH_Palette palette)",
+      "summary": "Create a new blank capsule with default radius and highlight dimensions.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateCapsule.htm"
+    },
+    {
+      "name": "CreateCapsule(RectangleF, GH_Palette)",
+      "signature": "public static GH_Capsule CreateCapsule(RectangleF box, GH_Palette palette)",
+      "summary": "Create a new blank capsule with default radius and highlight dimensions.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateCapsule_3.htm"
+    },
+    {
+      "name": "CreateCapsule(Rectangle, GH_Palette, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateCapsule(Rectangle box, GH_Palette palette, int radius, int highlight)",
+      "summary": "Create a new blank capsule.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateCapsule_1.htm"
+    },
+    {
+      "name": "CreateCapsule(Rectangle, GH_Palette, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateCapsule(Rectangle box, GH_Palette palette, int[] radii, int highlight)",
+      "summary": "Create a new blank capsule.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateCapsule_2.htm"
+    },
+    {
+      "name": "CreateCapsule(RectangleF, GH_Palette, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateCapsule(RectangleF box, GH_Palette palette, int radius, int highlight)",
+      "summary": "Create a new blank capsule.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateCapsule_4.htm"
+    },
+    {
+      "name": "CreateCapsule(RectangleF, GH_Palette, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateCapsule(RectangleF box, GH_Palette palette, int[] radii, int highlight)",
+      "summary": "Create a new blank capsule.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateCapsule_5.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_9.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Font)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, Font font)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_1.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Font)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, Font font)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_10.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Font, GH_Orientation)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, Font font, GH_Orientation orientation)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Grasshopper.GUI.Canvas.GH_Orientation",
+          "doc": "Orientation of text within box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_2.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, int radius, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_7.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, int[] radii, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_8.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Font, GH_Orientation)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, Font font, GH_Orientation orientation)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Grasshopper.GUI.Canvas.GH_Orientation",
+          "doc": "Orientation of text within box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_11.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, int radius, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_16.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, int[] radii, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_17.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Font, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, Font font, int radius, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_5.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Font, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, Font font, int[] radii, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_6.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Font, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, Font font, int radius, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_14.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Font, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, Font font, int[] radii, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_15.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Font, GH_Orientation, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, Font font, GH_Orientation orientation, int radius, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Grasshopper.GUI.Canvas.GH_Orientation",
+          "doc": "Orientation of text within box.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_3.htm"
+    },
+    {
+      "name": "CreateTextCapsule(Rectangle, Rectangle, GH_Palette, String, Font, GH_Orientation, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(Rectangle box, Rectangle textbox, GH_Palette palette, string text, Font font, GH_Orientation orientation, int[] radii, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.Rectangle",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Grasshopper.GUI.Canvas.GH_Orientation",
+          "doc": "Orientation of text within box.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_4.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Font, GH_Orientation, Int32, Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, Font font, GH_Orientation orientation, int radius, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Grasshopper.GUI.Canvas.GH_Orientation",
+          "doc": "Orientation of text within box.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Int32",
+          "doc": "Radius of rounded corners. A radius of zero or lower disables corner fillets.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_12.htm"
+    },
+    {
+      "name": "CreateTextCapsule(RectangleF, RectangleF, GH_Palette, String, Font, GH_Orientation, Int32[], Int32)",
+      "signature": "public static GH_Capsule CreateTextCapsule(RectangleF box, RectangleF textbox, GH_Palette palette, string text, Font font, GH_Orientation orientation, int[] radii, int highlight)",
+      "summary": "Create a new capsule with content text.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for capsule dimensions. The box will be grown until it is at least 3 pixels wide and high.",
+          "optional": false
+        },
+        {
+          "name": "textbox",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box into which the text will be drawn.",
+          "optional": false
+        },
+        {
+          "name": "palette",
+          "type": "Grasshopper.GUI.Canvas.GH_Palette",
+          "doc": "Colour palette to apply.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "Text to display inside the capsule.",
+          "optional": false
+        },
+        {
+          "name": "font",
+          "type": "System.Drawing.Font",
+          "doc": "Font to draw text with.",
+          "optional": false
+        },
+        {
+          "name": "orientation",
+          "type": "Grasshopper.GUI.Canvas.GH_Orientation",
+          "doc": "Orientation of text within box.",
+          "optional": false
+        },
+        {
+          "name": "radii",
+          "type": "System.Int32[]",
+          "doc": "Radii of rounded corners. This array must contain at least 4 integers. Radii are defined clockwise, starting at the upper left corner.",
+          "optional": false
+        },
+        {
+          "name": "highlight",
+          "type": "System.Int32",
+          "doc": "Height of the highlight bar. A value of zero or lower disables the highlight.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_Capsule",
+        "doc": "A new instance of GH_Capsule. Caller is responsible for disposing of the object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_CreateTextCapsule_13.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the GH_Capsule",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the GH_Capsule and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Dispose_1.htm"
+    },
+    {
+      "name": "Render(Graphics, GH_PaletteStyle)",
+      "signature": "public void Render(Graphics G, GH_PaletteStyle style)",
+      "summary": "Have this capsule draw itself onto a Graphics surface with a custom Style override.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with. Zoom factor is implied by the G.Transform property.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "doc": "Style to draw capsule with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Render.htm"
+    },
+    {
+      "name": "Render(Graphics, Color)",
+      "signature": "public void Render(Graphics G, Color colour)",
+      "summary": "Have this capsule draw itself onto a Graphics surface with a custom colour override.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with. Zoom factor is implied by the G.Transform property.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Base colour for the capsule. Other colours will be derived from the base colour. If you want full control over every colour involved, then use the overload that allows you to supply a custom Style instead.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Render_2.htm"
+    },
+    {
+      "name": "Render(Graphics, Image, GH_PaletteStyle)",
+      "signature": "public void Render(Graphics G, Image icon, GH_PaletteStyle style)",
+      "summary": "Have this capsule draw itself onto a Graphics surface with a custom Style override.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with. Zoom factor is implied by the G.Transform property.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to render in center of content/bounding box.",
+          "optional": false
+        },
+        {
+          "name": "style",
+          "type": "Grasshopper.GUI.Canvas.GH_PaletteStyle",
+          "doc": "Style to draw capsule with.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Render_3.htm"
+    },
+    {
+      "name": "Render(Graphics, Image, Color)",
+      "signature": "public void Render(Graphics G, Image icon, Color colour)",
+      "summary": "Have this capsule draw itself onto a Graphics surface with a custom colour override.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with. Zoom factor is implied by the G.Transform property.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to render in center of content/bounding box.",
+          "optional": false
+        },
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "doc": "Base colour for the capsule. Other colours will be derived from the base colour. If you want full control over every colour involved, then use the overload that allows you to supply a custom Style instead.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Render_5.htm"
+    },
+    {
+      "name": "Render(Graphics, Boolean, Boolean, Boolean)",
+      "signature": "public void Render(Graphics G, bool selected, bool locked, bool hidden)",
+      "summary": "Render the capsule onto a graphics context.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with. Zoom factor is implied by the G.Transform property.",
+          "optional": false
+        },
+        {
+          "name": "selected",
+          "type": "System.Boolean",
+          "doc": "If true, the capsule will be drawn with selected colours.",
+          "optional": false
+        },
+        {
+          "name": "locked",
+          "type": "System.Boolean",
+          "doc": "If True, the capcule will be drawn in Locked style.",
+          "optional": false
+        },
+        {
+          "name": "hidden",
+          "type": "System.Boolean",
+          "doc": "If True, the capsule will be drawn in Hidden style.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Render_1.htm"
+    },
+    {
+      "name": "Render(Graphics, Image, Boolean, Boolean, Boolean)",
+      "signature": "public void Render(Graphics G, Image icon, bool selected, bool locked, bool hidden)",
+      "summary": "Render the capsule onto a graphics context.",
+      "params": [
+        {
+          "name": "G",
+          "type": "System.Drawing.Graphics",
+          "doc": "Graphics object to draw with. Zoom factor is implied by the G.Transform property.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "Icon to render in center of content/bounding box.",
+          "optional": false
+        },
+        {
+          "name": "selected",
+          "type": "System.Boolean",
+          "doc": "If true, the capsule will be drawn with selected colours.",
+          "optional": false
+        },
+        {
+          "name": "locked",
+          "type": "System.Boolean",
+          "doc": "If True, the capcule will be drawn in Locked style.",
+          "optional": false
+        },
+        {
+          "name": "hidden",
+          "type": "System.Boolean",
+          "doc": "If True, the capsule will be drawn in Hidden style.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_Render_4.htm"
+    },
+    {
+      "name": "SetJaggedEdges",
+      "signature": "public void SetJaggedEdges(bool left, bool right)",
+      "summary": "Assign left and right jagged edges.",
+      "params": [
+        {
+          "name": "left",
+          "type": "System.Boolean",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Capsule_SetJaggedEdges.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Box",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the outline box for this Capsule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Box.htm"
+    },
+    {
+      "name": "Box_Content",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the content box for this Capsule. Text and icons are drawn inside this box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Box_Content.htm"
+    },
+    {
+      "name": "Font",
+      "type": "Font",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Font to use for text rendering.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Font.htm"
+    },
+    {
+      "name": "Highlight",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the highlight size for this Capsule. Zero or negative means there is no highlight.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Highlight.htm"
+    },
+    {
+      "name": "HighlightShape",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the graphics path that describes the highlight bar shape of the capsule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_HighlightShape.htm"
+    },
+    {
+      "name": "InputGrips",
+      "type": "List\u003CPoint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of locally defined input grip locations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_InputGrips.htm"
+    },
+    {
+      "name": "JaggedLeft",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the left edge of this capsule is jagged.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_JaggedLeft.htm"
+    },
+    {
+      "name": "JaggedRight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the right edge of this capsule is jagged.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_JaggedRight.htm"
+    },
+    {
+      "name": "MaxRadius",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the largest radius defined for this capsule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_MaxRadius.htm"
+    },
+    {
+      "name": "OutlineShape",
+      "type": "GraphicsPath",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the graphics path that describes the outer edge of the capsule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_OutlineShape.htm"
+    },
+    {
+      "name": "OutputGrips",
+      "type": "List\u003CPoint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the list of locally defined output grip locations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_OutputGrips.htm"
+    },
+    {
+      "name": "Palette",
+      "type": "GH_Palette",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the palette for this Capsule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Palette.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the radius of the rounded corners of this Capsule.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Radius.htm"
+    },
+    {
+      "name": "RenderEngine",
+      "type": "GH_CapsuleRenderEngine",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the RenderEngine associated with this capsule. You typically don\u0027t need to go this far, just use one of the Render() overloads on GH_Capsule directly.",
+      "remarks": "Do not store pointers to the RenderEngine, always call this property anew.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_RenderEngine.htm"
+    },
+    {
+      "name": "Text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text to render in the content box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_Text.htm"
+    },
+    {
+      "name": "TextOrientation",
+      "type": "GH_Orientation",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the orientation of the text within the content box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Capsule_TextOrientation.htm"
+    },
+    {
+      "name": "DefaultHighlight",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The default size (in pixel units) of the highlight bar.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Capsule_DefaultHighlight.htm"
+    },
+    {
+      "name": "DefaultRadius",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The default radius (in pixel units) of the rounded corners.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_Capsule_DefaultRadius.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

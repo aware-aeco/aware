@@ -1,0 +1,30 @@
+{
+  "name": "GH_DeveloperDetails",
+  "namespace": "GH_IO.UserInterface",
+  "kind": "class",
+  "summary": "Constains a set of static fields and properties regarding developer contact details.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_GH_IO_UserInterface_GH_DeveloperDetails.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultDeveloperContact",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the default developer contact details.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_UserInterface_GH_DeveloperDetails_DefaultDeveloperContact.htm"
+    },
+    {
+      "name": "DeveloperContact",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the local developer contact info (e-mail). By default, the developer email is DefaultDeveloperContact; This email address is used in the Message Report viewer when sending a support e-mail.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_GH_IO_UserInterface_GH_DeveloperDetails_DeveloperContact.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,101 @@
+{
+  "name": "GH_SettingsCategory",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Base implementation of IGH_SettingsCategory. Derive from this class and provide an empty constructor to play ball.",
+  "interfaces": [
+    "IGH_SettingCategory"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_SettingsCategory.htm",
+  "constructors": [
+    {
+      "name": "GH_SettingsCategory(String, Bitmap)",
+      "signature": "protected GH_SettingsCategory(string name, Bitmap icon)",
+      "summary": "Create a new top-level category.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Category name, keep it short.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Category icon. If you supply an icon, it must be 48x48 pixels. If you supply a null instance, a generic Settings icon will be assigned.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_SettingsCategory__ctor.htm"
+    },
+    {
+      "name": "GH_SettingsCategory(String, String, Bitmap)",
+      "signature": "protected GH_SettingsCategory(string name, string parent, Bitmap icon)",
+      "summary": "Create a new nested category.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Category name, keep it short.",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "System.String",
+          "doc": "Name of parent category. If the parent category hasn\u0027t been defined, the category will be placed under a \u0022Misc\u0022 category.",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Bitmap",
+          "doc": "Category icon. If you supply an icon, it must be 48x48 pixels. If you supply a null instance, a generic Settings icon will be assigned.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_SettingsCategory__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_SettingsCategory_Description.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_SettingsCategory_Icon.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_SettingsCategory_Name.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_SettingsCategory_Parent.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

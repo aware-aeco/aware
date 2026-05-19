@@ -1,0 +1,257 @@
+{
+  "name": "GH_UndoServer",
+  "namespace": "Grasshopper.Kernel.Undo",
+  "kind": "class",
+  "summary": "Provides access to a documents undo data.",
+  "interfaces": [
+    "IGH_DebugDescription"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Undo_GH_UndoServer.htm",
+  "constructors": [
+    {
+      "name": "GH_UndoServer",
+      "signature": "public GH_UndoServer(GH_Document owner)",
+      "summary": "Initializes a new instance of the GH_UndoServer class",
+      "params": [
+        {
+          "name": "owner",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendToDebugLog",
+      "signature": "public void AppendToDebugLog(GH_DebugDescriptionWriter writer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "writer",
+          "type": "Grasshopper.Kernel.GH_DebugDescriptionWriter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_AppendToDebugLog.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clear both undo and redo lists.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_Clear.htm"
+    },
+    {
+      "name": "ClearRedo",
+      "signature": "public void ClearRedo()",
+      "summary": "Clear the undo list.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_ClearRedo.htm"
+    },
+    {
+      "name": "ClearUndo",
+      "signature": "public void ClearUndo()",
+      "summary": "Clear the redo list.",
+      "remarks": "See AlsoReferenceGH_UndoServer ClassGrasshopper.Kernel.Undo Namespace",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_ClearUndo.htm"
+    },
+    {
+      "name": "MergeRecords",
+      "signature": "public bool MergeRecords(int count)",
+      "summary": "Attempt to merge the N most recent records into one. The name of the merged record will be identical to the name of the oldest record.",
+      "params": [
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "Number of most recent records to merge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if merge was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_MergeRecords.htm"
+    },
+    {
+      "name": "PerformRedo",
+      "signature": "public void PerformRedo()",
+      "summary": "Performs a single Redo step if possible and migrates the record onto the undo stack. This function may throw all kinds of exceptions, if you\u0027re calling it from a UI thread, use a Try..Catch block to prevent crashes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_PerformRedo.htm"
+    },
+    {
+      "name": "PerformUndo",
+      "signature": "public void PerformUndo()",
+      "summary": "Performs a single Undo step when possible and migrates the record onto the redo stack. This function may throw all kinds of exceptions, if you\u0027re calling it from a UI thread, use a Try..Catch block to prevent crashes.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_PerformUndo.htm"
+    },
+    {
+      "name": "PushUndoRecord(GH_UndoRecord)",
+      "signature": "public void PushUndoRecord(GH_UndoRecord record)",
+      "summary": "Add a new undo record to the undo stack, this function clears the Redo stack.",
+      "params": [
+        {
+          "name": "record",
+          "type": "Grasshopper.Kernel.Undo.GH_UndoRecord",
+          "doc": "Record to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_PushUndoRecord.htm"
+    },
+    {
+      "name": "PushUndoRecord(String, GH_UndoAction)",
+      "signature": "public Guid PushUndoRecord(string name, GH_UndoAction action)",
+      "summary": "Add a new undo record to the undo stack, this function clears the Redo stack.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of undo record.",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Grasshopper.Kernel.Undo.GH_UndoAction",
+          "doc": "Undo action.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The ID of the newly created undo record."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_PushUndoRecord_1.htm"
+    },
+    {
+      "name": "RemoveRecord",
+      "signature": "public bool RemoveRecord(Guid id)",
+      "summary": "Remove the record with the specified ID from the undo or redo stack.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of record to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoServer_RemoveRecord.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FirstRedoName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the last item in the redo stack (the first item to be redone).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_FirstRedoName.htm"
+    },
+    {
+      "name": "FirstUndoName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the last item in the undo stack (the first item to be undone).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_FirstUndoName.htm"
+    },
+    {
+      "name": "MaxRecords",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum number of undo records that can be stored.",
+      "remarks": "The number of redo records is logically limited to the same number. THIS SETTING IS CURRENTLY IGNORED",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_MaxRecords.htm"
+    },
+    {
+      "name": "RedoCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of redo records currently in the stack.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_RedoCount.htm"
+    },
+    {
+      "name": "RedoGuids",
+      "type": "List\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a sorted list of all the redo Guids in this server.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_RedoGuids.htm"
+    },
+    {
+      "name": "RedoNames",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a sorted list of all the redo Guids in this server.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_RedoNames.htm"
+    },
+    {
+      "name": "UndoCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of undo records currently in the stack.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_UndoCount.htm"
+    },
+    {
+      "name": "UndoGuids",
+      "type": "List\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a sorted list of all the undo Guids in this server.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_UndoGuids.htm"
+    },
+    {
+      "name": "UndoNames",
+      "type": "List\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a sorted list of all the undo Guids in this server.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Undo_GH_UndoServer_UndoNames.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

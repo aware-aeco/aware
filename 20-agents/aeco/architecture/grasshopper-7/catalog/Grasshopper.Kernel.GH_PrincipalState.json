@@ -1,0 +1,29 @@
+{
+  "name": "GH_PrincipalState",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the different possible states in which the masterness of a parameter can occur.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_PrincipalState.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CannotBePrincipal",
+      "value": 0,
+      "summary": "This parameter cannot be a principal parameter. It is not a valid component input."
+    },
+    {
+      "name": "IsPrincipal",
+      "value": 1,
+      "summary": "This parameter is the current principal parameter as defined by the component which owns it."
+    },
+    {
+      "name": "IsNotPrincipal",
+      "value": 2,
+      "summary": "This parameter is not the current principal parameter, but it could be."
+    }
+  ]
+}

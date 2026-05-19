@@ -1,0 +1,63 @@
+{
+  "name": "GH_GHALoadingEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Event arguments used in the GH_GHALoaded event on GH_ComponentServer.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_GHALoadingEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the assembly that was loaded from the GHA file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_GHALoadingEventArgs_Assembly.htm"
+    },
+    {
+      "name": "FileName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the location of the gha file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_GHALoadingEventArgs_FileName.htm"
+    },
+    {
+      "name": "Icon",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the official icon of the GHA file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_GHALoadingEventArgs_Icon.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Id of the GHA file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_GHALoadingEventArgs_Id.htm"
+    },
+    {
+      "name": "LoadingMechanism",
+      "type": "GH_LoadingMechanism",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the mechanism that was used to load the file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_GHALoadingEventArgs_LoadingMechanism.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the official name of the GHA file.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_GHALoadingEventArgs_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

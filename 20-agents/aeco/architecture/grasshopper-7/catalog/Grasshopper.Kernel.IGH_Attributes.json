@@ -1,0 +1,553 @@
+{
+  "name": "IGH_Attributes",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Base interface for all Attributes. Attributes are the visual portion of GH_DocumentObjects. They handle display, mouse events, layout, context menus etc. etc. You should consider inheriting from GH_Attributes or some other abstract class instead of implementing this interface from scratch.",
+  "interfaces": [
+    "GH_ISerializable",
+    "IGH_ResponsiveObject",
+    "IGH_TooltipAwareObject"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_Attributes.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppendToAttributeTree",
+      "signature": "void AppendToAttributeTree(List\u003CIGH_Attributes\u003E attributes)",
+      "summary": "Recursively append these attributes and all child attributes to the attribute list.",
+      "params": [
+        {
+          "name": "attributes",
+          "type": "System.Collections.Generic.List\u003CIGH_Attributes\u003E",
+          "doc": "List to append to.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_AppendToAttributeTree.htm"
+    },
+    {
+      "name": "ExpireLayout",
+      "signature": "void ExpireLayout()",
+      "summary": "Expires the entire layout of the attributes. When overridden, implementer must place a call to the base class ExpireLayout().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_ExpireLayout.htm"
+    },
+    {
+      "name": "InvalidateCanvas",
+      "signature": "bool InvalidateCanvas(GH_Canvas canvas, GH_CanvasMouseEvent e)",
+      "summary": "If the mouse location should cause a canvas invalidation then return true. You only need to override this function if you draw objects that are dependant on cursor positions outside the bounds of the attributes.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to potentially invalidate.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Event arguments for canvas mousemove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the canvas ought to be invalidated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_InvalidateCanvas.htm"
+    },
+    {
+      "name": "IsMenuRegion",
+      "signature": "bool IsMenuRegion(PointF point)",
+      "summary": "Determines whether a point is available for context menu popups. By default, IsMenuRegion calls IsPickRegion(PointF).",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "doc": "Point location to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_IsMenuRegion.htm"
+    },
+    {
+      "name": "IsPickRegion(PointF)",
+      "signature": "bool IsPickRegion(PointF point)",
+      "summary": "Determines whether a point is within the pickable region for this object. By default, any point inside the Bounds is treated as pickable.",
+      "params": [
+        {
+          "name": "point",
+          "type": "System.Drawing.PointF",
+          "doc": "Point location to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_IsPickRegion.htm"
+    },
+    {
+      "name": "IsPickRegion(RectangleF, GH_PickBox)",
+      "signature": "bool IsPickRegion(RectangleF box, GH_PickBox method)",
+      "summary": "Determines whether a rectangle is a valid pick region for this object. By default, the picking rectangle is intersected with the Bounds rectangle.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Selection box.",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "Grasshopper.Kernel.GH_PickBox",
+          "doc": "Selection method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_IsPickRegion_1.htm"
+    },
+    {
+      "name": "IsTooltipRegion",
+      "signature": "bool IsTooltipRegion(PointF canvasPoint)",
+      "summary": "Determine whether the specified pixel should result in a tooltip when the cursor hovers over it.",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "Point in Canvas coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_IsTooltipRegion.htm"
+    },
+    {
+      "name": "NewInstanceGuid()",
+      "signature": "void NewInstanceGuid()",
+      "summary": "Generate a new instance GUID for the owner object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_NewInstanceGuid.htm"
+    },
+    {
+      "name": "NewInstanceGuid(Guid)",
+      "signature": "void NewInstanceGuid(Guid newID)",
+      "summary": "Generate a new instance GUID for the owner object. Do not use this overload unless you\u0027re \u003E 1.95m and called David.",
+      "params": [
+        {
+          "name": "newID",
+          "type": "System.Guid",
+          "doc": "New ID to assign.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_NewInstanceGuid_1.htm"
+    },
+    {
+      "name": "PerformLayout",
+      "signature": "void PerformLayout()",
+      "summary": "Recompute the layout for these attributes. This function is automatically called during Drawing operations, so you typically don\u0027t have to.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_PerformLayout.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "bool Read(GH_IReader reader)",
+      "summary": "This method is called whenever the instance is required to deserialize itself.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "doc": "Reader object to deserialize from.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_GH_ISerializable_Read.htm"
+    },
+    {
+      "name": "RenderToCanvas",
+      "signature": "void RenderToCanvas(GH_Canvas canvas, GH_CanvasChannel channel)",
+      "summary": "Render these attributes into a Canvas control.",
+      "params": [
+        {
+          "name": "canvas",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Canvas to draw on.",
+          "optional": false
+        },
+        {
+          "name": "channel",
+          "type": "Grasshopper.GUI.Canvas.GH_CanvasChannel",
+          "doc": "Current drawing channel.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_Attributes_RenderToCanvas.htm"
+    },
+    {
+      "name": "RespondToKeyDown",
+      "signature": "GH_ObjectResponse RespondToKeyDown(GH_Canvas sender, KeyEventArgs e)",
+      "summary": "(Inherited from IGH_ResponsiveObject.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.KeyEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToKeyDown.htm"
+    },
+    {
+      "name": "RespondToKeyUp",
+      "signature": "GH_ObjectResponse RespondToKeyUp(GH_Canvas sender, KeyEventArgs e)",
+      "summary": "(Inherited from IGH_ResponsiveObject.)",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.KeyEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToKeyUp.htm"
+    },
+    {
+      "name": "RespondToMouseDoubleClick",
+      "signature": "GH_ObjectResponse RespondToMouseDoubleClick(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called whenever the left button is double-clicked over the canvas. If you are active, you will be the only object who gets called.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseDoubleClick.htm"
+    },
+    {
+      "name": "RespondToMouseDown",
+      "signature": "GH_ObjectResponse RespondToMouseDown(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called whenever a mouse button is pressed over the canvas. If you are active, you will be the only object who gets called. If you are inactive, you might get called if nobody on top of you decides to become active.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseDown.htm"
+    },
+    {
+      "name": "RespondToMouseMove",
+      "signature": "GH_ObjectResponse RespondToMouseMove(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called when the mouse moves across the canvas. If you are active, you will be the only object who gets called. If you are inactive, you might get called if nobody on top of you decides to become active.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseMove.htm"
+    },
+    {
+      "name": "RespondToMouseUp",
+      "signature": "GH_ObjectResponse RespondToMouseUp(GH_Canvas sender, GH_CanvasMouseEvent e)",
+      "summary": "This function will be called whenever a mouse button is released over the canvas. If you are active, you will be the only object who gets called. If you are inactive, you will not be called at all for MouseUp events.",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Grasshopper.GUI.Canvas.GH_Canvas",
+          "doc": "Base canvas.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_CanvasMouseEvent",
+          "doc": "Mouse event arguments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_ObjectResponse",
+        "doc": "All Response flags are valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_ResponsiveObject_RespondToMouseUp.htm"
+    },
+    {
+      "name": "SetupTooltip",
+      "signature": "void SetupTooltip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)",
+      "summary": "This function is called when a tooltip it about to be displayed.",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "The pixel coordinate on the canvas of the cursor.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_TooltipDisplayEventArgs",
+          "doc": "Tooltip display arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_SetupTooltip.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "bool Write(GH_IWriter writer)",
+      "summary": "This method is called whenever the instance is required to serialize itself.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "doc": "Writer object to serialize with.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_GH_IO_GH_ISerializable_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowMessageBalloon",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether these attributes allow warning and error boxes to be drawn on top of them.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_AllowMessageBalloon.htm"
+    },
+    {
+      "name": "Bounds",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the rectangle that contains the active content of the attributes. Typically the Contents determine the active area for menus, tooltips etc. Attributes are not supposed to draw objects beyond the Bounds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_Bounds.htm"
+    },
+    {
+      "name": "DocObject",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the owner object of these attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_DocObject.htm"
+    },
+    {
+      "name": "GetTopLevel",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the top level attributes of these attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_GetTopLevel.htm"
+    },
+    {
+      "name": "HasInputGrip",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not these attributes have an input grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_HasInputGrip.htm"
+    },
+    {
+      "name": "HasOutputGrip",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not these attributes have an output grip.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_HasOutputGrip.htm"
+    },
+    {
+      "name": "InputGrip",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the input grip location for these attributes. If HasInputGrip equals False, this point is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_InputGrip.htm"
+    },
+    {
+      "name": "InstanceGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the instance ID for these attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_InstanceGuid.htm"
+    },
+    {
+      "name": "IsTopLevel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether these attributes are top_level (i.e. no Parent attributes)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_IsTopLevel.htm"
+    },
+    {
+      "name": "OutputGrip",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the output grip location for these attributes. If HasOutputGrip equals False, this point is meaningless.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_OutputGrip.htm"
+    },
+    {
+      "name": "Parent",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the parent attributes. Top level attributes do not have parents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_Parent.htm"
+    },
+    {
+      "name": "PathName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get a description of the location of these attributes within the local attribute tree.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_PathName.htm"
+    },
+    {
+      "name": "Pivot",
+      "type": "PointF",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the pivot for these attributes. The pivot controls the general placement of the attributes. If you want to move the attributes, change the pivot location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_Pivot.htm"
+    },
+    {
+      "name": "Selected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected state of the top-level attributes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Attributes_Selected.htm"
+    },
+    {
+      "name": "TooltipEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the tooltip enabled value. If False, no further tooltip functions will be called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_TooltipEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,119 @@
+{
+  "name": "GH_ListUtil",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides utilities for dealing with list of Data from input parameters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ListUtil.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CountNonNullRefs\u003CT\u003E",
+      "signature": "public static int CountNonNullRefs\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Count all object references in L",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of proper objects in L"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ListUtil_CountNonNullRefs__1.htm"
+    },
+    {
+      "name": "CountNullRefs\u003CT\u003E",
+      "signature": "public static int CountNullRefs\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Count all null references in L",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of nulls in L"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ListUtil_CountNullRefs__1.htm"
+    },
+    {
+      "name": "EnsureNonNullCount\u003CT\u003E",
+      "signature": "public static bool EnsureNonNullCount\u003CT\u003E(List\u003CT\u003E L, int N)",
+      "summary": "Tests a list to see if it contains sufficient non-null references.",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse",
+          "optional": false
+        },
+        {
+          "name": "N",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if L contains N or more non-null references."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ListUtil_EnsureNonNullCount__1.htm"
+    },
+    {
+      "name": "FirstNonNullItem\u003CT\u003E",
+      "signature": "public static int FirstNonNullItem\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Returns the index of the first non-null item in a list.",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the first non-null item or -1 if no object reference could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ListUtil_FirstNonNullItem__1.htm"
+    },
+    {
+      "name": "RemoveNullRefs\u003CT\u003E",
+      "signature": "public static List\u003CT\u003E RemoveNullRefs\u003CT\u003E(List\u003CT\u003E L)",
+      "summary": "Remove all null references from a list of items.",
+      "params": [
+        {
+          "name": "L",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "doc": "List to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CT\u003E",
+        "doc": "List containing only non-null items. References are shared with L"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ListUtil_RemoveNullRefs__1.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

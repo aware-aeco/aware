@@ -1,0 +1,62 @@
+{
+  "name": "Versioning",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "Static class that provides information regarding the Grasshopper versioning.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Versioning.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SyncVersionHistoryData",
+      "signature": "public static void SyncVersionHistoryData()",
+      "summary": "Attempts to download the version history information. The downloaded data (if the download works) will eventually be stored at: Grasshopper.Folders.VersionHistoryFile",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Versioning_SyncVersionHistoryData.htm"
+    },
+    {
+      "name": "VersionHistoryData",
+      "signature": "public static string[] VersionHistoryData()",
+      "summary": "Gets the currently most up-to-date version history data.",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "The latest version history or null if no such record exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Versioning_VersionHistoryData.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BuildDate",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the build date string. This is the visible release iteration tag. Typically the BuildDate is just the date (MMMM-dd, yyyy), but it may carry a prefix or suffix for special builds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Versioning_BuildDate.htm"
+    },
+    {
+      "name": "Version",
+      "type": "GH_Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the version of the current build of Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Versioning_Version.htm"
+    },
+    {
+      "name": "VersionString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the version of the current build of Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Versioning_VersionString.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

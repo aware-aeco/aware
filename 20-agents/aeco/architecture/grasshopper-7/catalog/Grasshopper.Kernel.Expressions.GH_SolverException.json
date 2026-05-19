@@ -1,0 +1,31 @@
+{
+  "name": "GH_SolverException",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_SolverException.)",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_SolverException.htm",
+  "constructors": [
+    {
+      "name": "GH_SolverException",
+      "signature": "public GH_SolverException(string nMessage)",
+      "summary": "Initializes a new instance of the GH_SolverException class",
+      "params": [
+        {
+          "name": "nMessage",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_SolverException__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

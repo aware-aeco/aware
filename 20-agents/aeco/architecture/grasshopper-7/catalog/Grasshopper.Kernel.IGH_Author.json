@@ -1,0 +1,78 @@
+{
+  "name": "IGH_Author",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Provides of collection of basic author details.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_Author.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Address",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the address of the author.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Address.htm"
+    },
+    {
+      "name": "Company",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Company name of the author.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Company.htm"
+    },
+    {
+      "name": "Copyright",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the copyright message for these details.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Copyright.htm"
+    },
+    {
+      "name": "Email",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the email of the author.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Email.htm"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether any data has been assigned to this object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_IsEmpty.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the author.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Name.htm"
+    },
+    {
+      "name": "Phone",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the phone number of the author.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Phone.htm"
+    },
+    {
+      "name": "Website",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the website of the author.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_Author_Website.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

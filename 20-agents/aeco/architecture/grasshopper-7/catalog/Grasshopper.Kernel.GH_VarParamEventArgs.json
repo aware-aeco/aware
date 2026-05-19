@@ -1,0 +1,87 @@
+{
+  "name": "GH_VarParamEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Arguments used in Variable Parameter events.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_VarParamEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_VarParamEventArgs(IGH_Param, GH_VarParamSide)",
+      "signature": "public GH_VarParamEventArgs(IGH_Param n_param, GH_VarParamSide n_side)",
+      "summary": "Initializes a new instance of the GH_VarParamEventArgs class",
+      "params": [
+        {
+          "name": "n_param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "n_side",
+          "type": "Grasshopper.Kernel.GH_VarParamSide",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_VarParamEventArgs__ctor.htm"
+    },
+    {
+      "name": "GH_VarParamEventArgs(IGH_Param, GH_VarParamSide, Int32)",
+      "signature": "public GH_VarParamEventArgs(IGH_Param n_param, GH_VarParamSide n_side, int n_index)",
+      "summary": "Initializes a new instance of the GH_VarParamEventArgs class",
+      "params": [
+        {
+          "name": "n_param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "optional": false
+        },
+        {
+          "name": "n_side",
+          "type": "Grasshopper.Kernel.GH_VarParamSide",
+          "optional": false
+        },
+        {
+          "name": "n_index",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_VarParamEventArgs__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index of the parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_VarParamEventArgs_Index.htm"
+    },
+    {
+      "name": "Param",
+      "type": "IGH_Param",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_VarParamEventArgs_Param.htm"
+    },
+    {
+      "name": "Side",
+      "type": "GH_VarParamSide",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the side of the parameter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_VarParamEventArgs_Side.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

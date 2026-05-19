@@ -1,0 +1,172 @@
+{
+  "name": "GH_Tooltip",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Implements a custom Tooltip class with advanced functionality. All methods and fields are Shared. There can never be more than one GH_Tooltip.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_Tooltip.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Adjust",
+      "signature": "public static void Adjust()",
+      "summary": "Repositions the tooltip to match with new cursor positions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_Adjust.htm"
+    },
+    {
+      "name": "AssignTooltipFields",
+      "signature": "public static void AssignTooltipFields(string title = null, string text = null, string description = null, Image icon = null, Image diagram = null)",
+      "summary": "Set all fields of the Tooltip. You\u0027ll still need to call Show() to display the tooltip.",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "The Title text on the tooltip",
+          "optional": true
+        },
+        {
+          "name": "text",
+          "type": "System.String",
+          "doc": "The text content of the tooltip",
+          "optional": true
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The block text to be displayed in the sunken area of the tooltip.",
+          "optional": true
+        },
+        {
+          "name": "icon",
+          "type": "System.Drawing.Image",
+          "doc": "The Icon to be displayed next to the Title.",
+          "optional": true
+        },
+        {
+          "name": "diagram",
+          "type": "System.Drawing.Image",
+          "doc": "The image to be displayed in the sunken area.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_AssignTooltipFields.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public static void Clear()",
+      "summary": "Hides the tooltip and clears all references and caches.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_Clear.htm"
+    },
+    {
+      "name": "IsOwner",
+      "signature": "public static bool IsOwner(Control test)",
+      "summary": "Returns true if the test control matches the internal Owner control. Use this method to make sure you actually own this tooltip prior to clearing it.",
+      "remarks": "See AlsoReferenceGH_Tooltip ClassGrasshopper.GUI Namespace",
+      "params": [
+        {
+          "name": "test",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_IsOwner.htm"
+    },
+    {
+      "name": "IsTag",
+      "signature": "public static bool IsTag(Object test)",
+      "summary": "Returns True if the test object matches the internal Tag object",
+      "remarks": "See AlsoReferenceGH_Tooltip ClassGrasshopper.GUI Namespace",
+      "params": [
+        {
+          "name": "test",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_IsTag.htm"
+    },
+    {
+      "name": "Layout",
+      "signature": "public static void Layout()",
+      "summary": "Layout the tooltip fields. Layout happens automatically if you use the AssigTooltipField method, if however you poke values directly in the tooltip form you must place a call to Layout() before showing the tooltip.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_Layout.htm"
+    },
+    {
+      "name": "Show",
+      "signature": "public static void Show(Control owner)",
+      "summary": "Display the tooltip on screen.",
+      "params": [
+        {
+          "name": "owner",
+          "type": "System.Windows.Forms.Control",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_Show.htm"
+    },
+    {
+      "name": "TooltipDetailedInformation",
+      "signature": "public static string TooltipDetailedInformation()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_Tooltip_TooltipDetailedInformation.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tag object for the tooltip",
+      "remarks": "See AlsoReferenceGH_Tooltip ClassGrasshopper.GUI Namespace",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Tooltip_Tag.htm"
+    },
+    {
+      "name": "TooltipForm",
+      "type": "GH_ToolTipForm",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal instance of GH_TooltipForm.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_Tooltip_TooltipForm.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

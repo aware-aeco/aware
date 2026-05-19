@@ -1,0 +1,32 @@
+{
+  "name": "GH_CanvasWidgetListEventArgs",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "The event arguments are used in the WidgetListCreated event.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_CanvasWidgetListEventArgs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddWidget",
+      "signature": "public void AddWidget(IGH_Widget widget)",
+      "summary": "Append a widget to the canvas.",
+      "params": [
+        {
+          "name": "widget",
+          "type": "IGH_Widget",
+          "doc": "Widget to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_CanvasWidgetListEventArgs_AddWidget.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

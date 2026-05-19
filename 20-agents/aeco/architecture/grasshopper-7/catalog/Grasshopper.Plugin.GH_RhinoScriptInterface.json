@@ -1,0 +1,384 @@
+{
+  "name": "GH_RhinoScriptInterface",
+  "namespace": "Grasshopper.Plugin",
+  "kind": "class",
+  "summary": "Plugin Interface object that is exposed via the RhinoScript layer.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Plugin_GH_RhinoScriptInterface.htm",
+  "constructors": [
+    {
+      "name": "GH_RhinoScriptInterface",
+      "signature": "public GH_RhinoScriptInterface()",
+      "summary": "Initializes a new instance of the GH_RhinoScriptInterface class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AssignDataToParameter",
+      "signature": "public bool AssignDataToParameter(string parameterID, Object data)",
+      "summary": "Find a parameter and assign some persistent data.",
+      "params": [
+        {
+          "name": "parameterID",
+          "type": "System.String",
+          "doc": "Instance ID of parameter or parameter name.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "Data to assign.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_AssignDataToParameter.htm"
+    },
+    {
+      "name": "BakeDataInObject",
+      "signature": "public Object BakeDataInObject(string objectID)",
+      "summary": "Find an object and bake all geometry inside of it.",
+      "params": [
+        {
+          "name": "objectID",
+          "type": "System.String",
+          "doc": "Object InstanceID or name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "An array of Rhino object IDs, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_BakeDataInObject.htm"
+    },
+    {
+      "name": "CloseAllDocuments",
+      "signature": "public bool CloseAllDocuments()",
+      "summary": "Close all Grasshopper documents.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_CloseAllDocuments.htm"
+    },
+    {
+      "name": "CloseDocument",
+      "signature": "public bool CloseDocument()",
+      "summary": "Close the currently active Grasshopper document. If there is not active document, nothing will happen.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_CloseDocument.htm"
+    },
+    {
+      "name": "DisableBanner",
+      "signature": "public void DisableBanner()",
+      "summary": "Disables the display of the Grasshopper banner during Component loading. The banner is typically only shown once during a Grasshopper session, namely when the Editor is first loaded.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_DisableBanner.htm"
+    },
+    {
+      "name": "DisableSolver",
+      "signature": "public void DisableSolver()",
+      "summary": "Disables the Grasshopper Solver. If the Solver is disabled, expired components and parameter will not be recomputed, though any existing solution will remain intact.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_DisableSolver.htm"
+    },
+    {
+      "name": "EnableBanner",
+      "signature": "public void EnableBanner()",
+      "summary": "Enables the display of the Grasshopper banner during Component loading. The banner is typically only shown once during a Grasshopper session, namely when the Editor is first loaded.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_EnableBanner.htm"
+    },
+    {
+      "name": "EnableSolver",
+      "signature": "public void EnableSolver()",
+      "summary": "Enables the Grasshopper Solver. If the Solver is enabled, expired components and parameter will be recomputed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_EnableSolver.htm"
+    },
+    {
+      "name": "HideEditor",
+      "signature": "public void HideEditor()",
+      "summary": "Hide the main Grasshopper Editor. If the editor hasn\u0027t been loaded or if the Editor is already hidden, nothing will happen.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_HideEditor.htm"
+    },
+    {
+      "name": "IsEditorLoaded",
+      "signature": "public bool IsEditorLoaded()",
+      "summary": "Returns the loaded state of the Grasshopper Main window.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the Main Grasshopper Window has been loaded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_IsEditorLoaded.htm"
+    },
+    {
+      "name": "IsEditorVisible",
+      "signature": "public bool IsEditorVisible()",
+      "summary": "Returns the visible state of the Grasshopper Main window.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the Main Grasshopper Window has been loaded and is visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_IsEditorVisible.htm"
+    },
+    {
+      "name": "IsSolverEnabled",
+      "signature": "public bool IsSolverEnabled()",
+      "summary": "Returns the state of the Grasshopper Solver.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the Grasshopper Solver is enabled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_IsSolverEnabled.htm"
+    },
+    {
+      "name": "LoadEditor",
+      "signature": "public void LoadEditor()",
+      "summary": "Load the main Grasshopper Editor. If the editor has already been loaded nothing will happen.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_LoadEditor.htm"
+    },
+    {
+      "name": "OpenDocument",
+      "signature": "public bool OpenDocument(string filename)",
+      "summary": "Open a Grasshopper document. The editor will be loaded if necessary, but it will not be automatically shown.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Path of file to open (must be a *.gh or *.ghx extension).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_OpenDocument.htm"
+    },
+    {
+      "name": "RunAsCommand",
+      "signature": "public Result RunAsCommand(GH_Document ghDoc, Command command, RhinoDoc rhinoDoc, RunMode mode)",
+      "summary": "",
+      "params": [
+        {
+          "name": "ghDoc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        },
+        {
+          "name": "command",
+          "type": "Command",
+          "optional": false
+        },
+        {
+          "name": "rhinoDoc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "RunMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_RunAsCommand.htm"
+    },
+    {
+      "name": "RunHeadless",
+      "signature": "public void RunHeadless()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_RunHeadless.htm"
+    },
+    {
+      "name": "RunSolver",
+      "signature": "public void RunSolver(bool expireAllObjects)",
+      "summary": "Runs the solver once, even if the global solver lock is on.",
+      "params": [
+        {
+          "name": "expireAllObjects",
+          "type": "System.Boolean",
+          "doc": "If true, will expire all objects in the current document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_RunSolver.htm"
+    },
+    {
+      "name": "SaveDocument",
+      "signature": "public bool SaveDocument()",
+      "summary": "Save the currently active Grasshopper document. If the active document has never been saved, a Save... dialog will be shown. If there is no active document, nothing will happen.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_SaveDocument.htm"
+    },
+    {
+      "name": "SaveDocumentAs",
+      "signature": "public bool SaveDocumentAs(string filename)",
+      "summary": "Save the currently active Grasshopper document in a specific location. If there is no active document, nothing will happen.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "System.String",
+          "doc": "Path of file to save to (must be a *.gh or *ghx extension).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_SaveDocumentAs.htm"
+    },
+    {
+      "name": "SetSliderRangeAndValue",
+      "signature": "public bool SetSliderRangeAndValue(string sliderID, double value, double minimum, double maximum)",
+      "summary": "Find a slider and assign a new value.",
+      "params": [
+        {
+          "name": "sliderID",
+          "type": "System.String",
+          "doc": "Slider ID.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "New value. If the value exceeds the limits, it will be clipped.",
+          "optional": false
+        },
+        {
+          "name": "minimum",
+          "type": "System.Double",
+          "doc": "New slider minimum.",
+          "optional": false
+        },
+        {
+          "name": "maximum",
+          "type": "System.Double",
+          "doc": "New slider maximum.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_SetSliderRangeAndValue.htm"
+    },
+    {
+      "name": "SetSliderValue",
+      "signature": "public bool SetSliderValue(string sliderID, double value)",
+      "summary": "Find a slider and assign a new value.",
+      "params": [
+        {
+          "name": "sliderID",
+          "type": "System.String",
+          "doc": "Slider ID.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "New value. If the value exceeds the limits, it will be clipped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_SetSliderValue.htm"
+    },
+    {
+      "name": "ShowEditor",
+      "signature": "public void ShowEditor()",
+      "summary": "Show the main Grasshopper Editor. The editor will be loaded first if needed. If the Editor is already on screen, nothing will happen.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Plugin_GH_RhinoScriptInterface_ShowEditor.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

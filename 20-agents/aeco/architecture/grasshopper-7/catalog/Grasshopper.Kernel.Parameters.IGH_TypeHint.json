@@ -1,0 +1,57 @@
+{
+  "name": "IGH_TypeHint",
+  "namespace": "Grasshopper.Kernel.Parameters",
+  "kind": "interface",
+  "summary": "Represents conversion logic for a certain data type.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Parameters_IGH_TypeHint.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Cast",
+      "signature": "bool Cast(Object data, out Object target)",
+      "summary": "Apply conversion logic to a specific object. This function should not throw exceptions.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Object",
+          "doc": "Data to convert.",
+          "optional": false
+        },
+        {
+          "name": "target",
+          "type": "System.Object",
+          "doc": "Output instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure. If False is returned, target may be null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Parameters_IGH_TypeHint_Cast.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HintID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique ID for every type of Hint.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Parameters_IGH_TypeHint_HintID.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of target Type",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Parameters_IGH_TypeHint_TypeName.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,35 @@
+{
+  "name": "GH_ParamData",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible states of being for data inside a parameter.",
+  "remarks": "See AlsoReferenceGrasshopper.Kernel Namespace",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParamData.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "unknown",
+      "value": 0,
+      "summary": "Unknown, this really shouldn\u0027t happen too often."
+    },
+    {
+      "name": "void",
+      "value": 1,
+      "summary": "Parameter contains no data."
+    },
+    {
+      "name": "local",
+      "value": 2,
+      "summary": "Parameter contains local data."
+    },
+    {
+      "name": "remote",
+      "value": 3,
+      "summary": "Parameter contains data that came from elsewhere."
+    }
+  ]
+}

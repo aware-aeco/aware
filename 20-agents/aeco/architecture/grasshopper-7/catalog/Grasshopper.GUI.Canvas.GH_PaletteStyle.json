@@ -1,0 +1,159 @@
+{
+  "name": "GH_PaletteStyle",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Contains all the colours for a single capsule palette.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_PaletteStyle.htm",
+  "constructors": [
+    {
+      "name": "GH_PaletteStyle(Color)",
+      "signature": "public GH_PaletteStyle(Color fill)",
+      "summary": "Construct a new GH_Box_Palette_Colours instance with a single base colour.",
+      "params": [
+        {
+          "name": "fill",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to use for background fills. All other colours are computed based on this colour.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_PaletteStyle__ctor.htm"
+    },
+    {
+      "name": "GH_PaletteStyle(Color, Color)",
+      "signature": "public GH_PaletteStyle(Color fill, Color edge)",
+      "summary": "Construct a new GH_Box_Palette_Colours instance.",
+      "params": [
+        {
+          "name": "fill",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to use for background fills.",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to use for edges.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_PaletteStyle__ctor_1.htm"
+    },
+    {
+      "name": "GH_PaletteStyle(Color, Color, Color)",
+      "signature": "public GH_PaletteStyle(Color fill, Color edge, Color text)",
+      "summary": "Construct a new GH_Box_Palette_Colours instance.",
+      "params": [
+        {
+          "name": "fill",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to use for background fills.",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to use for edges.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "System.Drawing.Color",
+          "doc": "Colour to use for text objects.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_PaletteStyle__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateBrush",
+      "signature": "public virtual Brush CreateBrush(RectangleF rec, float zoom)",
+      "summary": "Create a fill brush. At low zoom levels the brush will be solid colour, at medium to high zoom levels the brush will have a gradient.",
+      "params": [
+        {
+          "name": "rec",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Target rectangle of fill brush.",
+          "optional": false
+        },
+        {
+          "name": "zoom",
+          "type": "System.Single",
+          "doc": "Zoom level of target graphics surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brush",
+        "doc": "A brush object that can be used to fill a custom area."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_PaletteStyle_CreateBrush.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Edge",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the edge of this style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_PaletteStyle_Edge.htm"
+    },
+    {
+      "name": "Fill",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fill of this style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_PaletteStyle_Fill.htm"
+    },
+    {
+      "name": "Text",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text of this style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_PaletteStyle_Text.htm"
+    },
+    {
+      "name": "m_edge",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_PaletteStyle_m_edge.htm"
+    },
+    {
+      "name": "m_fill",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_PaletteStyle_m_fill.htm"
+    },
+    {
+      "name": "m_text",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_GUI_Canvas_GH_PaletteStyle_m_text.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,86 @@
+{
+  "name": "IGH_PreviewArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Preview display arguments for IGH_PreviewObjects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_PreviewArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultCurveThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the curve thickness as defined by the viewport display scheme.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_DefaultCurveThickness.htm"
+    },
+    {
+      "name": "Display",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Pipeline that is being used to draw the current preview.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_Display.htm"
+    },
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Grasshopper document that is currently drawing the preview.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_Document.htm"
+    },
+    {
+      "name": "MeshingParameters",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the meshing parameters to be used during meshing breps.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_MeshingParameters.htm"
+    },
+    {
+      "name": "ShadeMaterial",
+      "type": "DisplayMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document default material for unselected Faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_ShadeMaterial.htm"
+    },
+    {
+      "name": "ShadeMaterial_Selected",
+      "type": "DisplayMaterial",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document default material for selected Faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_ShadeMaterial_Selected.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Viewport in which the current preview is drawn.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_Viewport.htm"
+    },
+    {
+      "name": "WireColour",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document default colour for unselected Wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_WireColour.htm"
+    },
+    {
+      "name": "WireColour_Selected",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document default colour for selected Wires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_IGH_PreviewArgs_WireColour_Selected.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

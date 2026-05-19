@@ -1,0 +1,217 @@
+{
+  "name": "GH_PointCharge",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Point charge implementation for IGH_Fields.",
+  "base": "GH_FieldElement",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_PointCharge.htm",
+  "constructors": [
+    {
+      "name": "GH_PointCharge",
+      "signature": "public GH_PointCharge()",
+      "summary": "Initializes a new instance of the GH_PointCharge class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public virtual void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "(Inherited from GH_FieldElement.)",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_FieldElement_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public override void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "(Overrides GH_FieldElement.DrawViewportWires(GH_PreviewWireArgs).)",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public override IGH_FieldElement Duplicate()",
+      "summary": "(Overrides GH_FieldElement.Duplicate().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_FieldElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge_Duplicate.htm"
+    },
+    {
+      "name": "Force",
+      "signature": "public override Vector3d Force(Point3d location)",
+      "summary": "(Overrides GH_FieldElement.Force(Point3d).)",
+      "params": [
+        {
+          "name": "location",
+          "type": "Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge_Force.htm"
+    },
+    {
+      "name": "IsCoincident",
+      "signature": "public override bool IsCoincident(Point3d point, double tolerance)",
+      "summary": "(Overrides GH_FieldElement.IsCoincident(Point3d, Double).)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3d",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge_IsCoincident.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Overrides GH_FieldElement.Read(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Overrides GH_FieldElement.Write(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_PointCharge_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_FieldElement.BoundingBox.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_PointCharge_BoundingBox.htm"
+    },
+    {
+      "name": "Charge",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_PointCharge_Charge.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_FieldElement.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_ClippingBox.htm"
+    },
+    {
+      "name": "Decay",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_PointCharge_Decay.htm"
+    },
+    {
+      "name": "ElementGuid",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_FieldElement.ElementGuid.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_PointCharge_ElementGuid.htm"
+    },
+    {
+      "name": "IsLimited",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from GH_FieldElement.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_IsLimited.htm"
+    },
+    {
+      "name": "Limits",
+      "type": "Box",
+      "getter": true,
+      "setter": true,
+      "summary": "(Inherited from GH_FieldElement.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_FieldElement_Limits.htm"
+    },
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_PointCharge_Location.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

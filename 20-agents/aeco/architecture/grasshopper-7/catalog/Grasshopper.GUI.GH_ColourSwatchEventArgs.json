@@ -1,0 +1,40 @@
+{
+  "name": "GH_ColourSwatchEventArgs",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Event arguments used in the GH_ColourSwatchControl.ColourChanged event.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_ColourSwatchEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_ColourSwatchEventArgs",
+      "signature": "public GH_ColourSwatchEventArgs(Color colour)",
+      "summary": "Initializes a new instance of the GH_ColourSwatchEventArgs class",
+      "params": [
+        {
+          "name": "colour",
+          "type": "System.Drawing.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_ColourSwatchEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Colour",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_ColourSwatchEventArgs_Colour.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

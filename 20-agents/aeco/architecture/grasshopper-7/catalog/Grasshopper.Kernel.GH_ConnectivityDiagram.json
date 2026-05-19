@@ -1,0 +1,134 @@
+{
+  "name": "GH_ConnectivityDiagram",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Represents a complete connectivity diagram (topology) of a GH_Document. A connectivity diagram is basically an undirected network of all the wires in a document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ConnectivityDiagram.htm",
+  "constructors": [
+    {
+      "name": "GH_ConnectivityDiagram(GH_ConnectivityDiagram)",
+      "signature": "public GH_ConnectivityDiagram(GH_ConnectivityDiagram other)",
+      "summary": "Create a duplicate of another Connectivity Diagram.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.GH_ConnectivityDiagram",
+          "doc": "Diagram to copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDiagram__ctor.htm"
+    },
+    {
+      "name": "GH_ConnectivityDiagram(GH_Document)",
+      "signature": "public GH_ConnectivityDiagram(GH_Document doc)",
+      "summary": "Create a new Connectivity Diagram from a GH_Document.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "doc": "Document to examine.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDiagram__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ContainsID",
+      "signature": "public bool ContainsID(Guid id)",
+      "summary": "Test the diagram for a given Node ID.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the ID is part of this diagram, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDiagram_ContainsID.htm"
+    },
+    {
+      "name": "GetAllInputs",
+      "signature": "public List\u003CGuid\u003E GetAllInputs(Guid id)",
+      "summary": "Get all the Nodes that are part of the specified node input.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of node to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "A list of input nodes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDiagram_GetAllInputs.htm"
+    },
+    {
+      "name": "GetAllOutputs",
+      "signature": "public List\u003CGuid\u003E GetAllOutputs(Guid id)",
+      "summary": "Get all the Nodes that are part of the specified node output.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of node to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGuid\u003E",
+        "doc": "A list of output nodes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_ConnectivityDiagram_GetAllOutputs.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Node",
+      "type": "GH_ConnectivityNode",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the connectivity node with the specified ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDiagram_Node.htm"
+    },
+    {
+      "name": "NodeCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of connectivity nodes in this diagram.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDiagram_NodeCount.htm"
+    },
+    {
+      "name": "Nodes",
+      "type": "ReadOnlyCollection\u003CGuid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a proxy for all the Nodes in this diagram.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_ConnectivityDiagram_Nodes.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

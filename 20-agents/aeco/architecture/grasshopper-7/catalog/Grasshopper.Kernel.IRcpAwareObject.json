@@ -1,0 +1,27 @@
+{
+  "name": "IRcpAwareObject",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in a parameter or component if you want to be publishable on the remote control panel.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IRcpAwareObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PublishRcpItem",
+      "signature": "IRcpItem PublishRcpItem()",
+      "summary": "Emit a new object to be inserted on a Remote Control Panel.",
+      "params": [],
+      "returns": {
+        "type": "IRcpItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IRcpAwareObject_PublishRcpItem.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

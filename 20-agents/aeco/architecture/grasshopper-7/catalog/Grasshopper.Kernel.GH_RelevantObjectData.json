@@ -1,0 +1,176 @@
+{
+  "name": "GH_RelevantObjectData",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Contains information about relevant objects at a specific canvas location.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_RelevantObjectData.htm",
+  "constructors": [
+    {
+      "name": "GH_RelevantObjectData",
+      "signature": "public GH_RelevantObjectData(PointF pt)",
+      "summary": "Construct a new instance.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point for relevant data aquisition.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RelevantObjectData__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateBalloonData",
+      "signature": "public void CreateBalloonData(IGH_DocumentObject obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RelevantObjectData_CreateBalloonData.htm"
+    },
+    {
+      "name": "CreateGripData",
+      "signature": "public void CreateGripData(IGH_DocumentObject obj, bool is_input)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        },
+        {
+          "name": "is_input",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RelevantObjectData_CreateGripData.htm"
+    },
+    {
+      "name": "CreateGroupData",
+      "signature": "public void CreateGroupData(GH_Group group)",
+      "summary": "",
+      "params": [
+        {
+          "name": "group",
+          "type": "GH_Group",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RelevantObjectData_CreateGroupData.htm"
+    },
+    {
+      "name": "CreateObjectData",
+      "signature": "public void CreateObjectData(IGH_DocumentObject obj)",
+      "summary": "",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Grasshopper.Kernel.IGH_DocumentObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RelevantObjectData_CreateObjectData.htm"
+    },
+    {
+      "name": "CreateWireData",
+      "signature": "public void CreateWireData()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RelevantObjectData_CreateWireData.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "IGH_Attributes",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the attributes that belong to the object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_Attributes.htm"
+    },
+    {
+      "name": "Group",
+      "type": "GH_Group",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cast of the DocObject to GH_Group.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_Group.htm"
+    },
+    {
+      "name": "IsTopLevelObject",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the Object is a top-level object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_IsTopLevelObject.htm"
+    },
+    {
+      "name": "Object",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the raw object cached in this data instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_Object.htm"
+    },
+    {
+      "name": "ObjectType",
+      "type": "GH_ObjectSpecies",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of object indicated by this data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_ObjectType.htm"
+    },
+    {
+      "name": "Parameter",
+      "type": "IGH_Param",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cast of the DocObject to IGH_Param. If the DocObject is not of type IGH_Param, the attributes of the object will be perused to find a nested IGH_Param at the point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_Parameter.htm"
+    },
+    {
+      "name": "Point",
+      "type": "PointF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point for which this GH_RelevantObjectData has been made.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_Point.htm"
+    },
+    {
+      "name": "TopLevelObject",
+      "type": "IGH_DocumentObject",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the top-level object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RelevantObjectData_TopLevelObject.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

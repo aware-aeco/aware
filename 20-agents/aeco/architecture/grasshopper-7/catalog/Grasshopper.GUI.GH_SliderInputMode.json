@@ -1,0 +1,34 @@
+{
+  "name": "GH_SliderInputMode",
+  "namespace": "Grasshopper.GUI",
+  "kind": "enum",
+  "summary": "Enumerates all possible slider text input modes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_SliderInputMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Text input mode is not available."
+    },
+    {
+      "name": "OnKeyDown",
+      "value": 1,
+      "summary": "Text input mode will be available on keydown."
+    },
+    {
+      "name": "OnDoubleClick",
+      "value": 2,
+      "summary": "Text input mode will be available upon double click."
+    },
+    {
+      "name": "All",
+      "value": 3,
+      "summary": "All text input modes will be available."
+    }
+  ]
+}

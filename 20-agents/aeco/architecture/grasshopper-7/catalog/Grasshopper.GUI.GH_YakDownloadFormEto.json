@@ -1,0 +1,31 @@
+{
+  "name": "GH_YakDownloadFormEto",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_YakDownloadFormEto.)",
+  "base": "Dialog",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_YakDownloadFormEto.htm",
+  "constructors": [
+    {
+      "name": "GH_YakDownloadFormEto",
+      "signature": "public GH_YakDownloadFormEto(IEnumerable\u003CGH_YakDownloadFormEto.MissingObjectItem\u003E items)",
+      "summary": "Initializes a new instance of the GH_YakDownloadFormEto class",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CGH_YakDownloadFormEto.MissingObjectItem\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_YakDownloadFormEto__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

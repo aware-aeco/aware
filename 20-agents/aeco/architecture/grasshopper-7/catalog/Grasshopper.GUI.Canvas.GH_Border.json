@@ -1,0 +1,211 @@
+{
+  "name": "GH_Border",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "class",
+  "summary": "Represents a resizing border of a Grasshopper canvas object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_GH_Border.htm",
+  "constructors": [
+    {
+      "name": "GH_Border",
+      "signature": "public GH_Border(RectangleF rectangle, GH_BorderTopology topology)",
+      "summary": "Create a new border.",
+      "params": [
+        {
+          "name": "rectangle",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Shape of border.",
+          "optional": false
+        },
+        {
+          "name": "topology",
+          "type": "Grasshopper.GUI.Canvas.GH_BorderTopology",
+          "doc": "Border topology.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(PointF pt)",
+      "summary": "Test a point for border inclusion.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "System.Drawing.PointF",
+          "doc": "Point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if pt is inside or on this border."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border_Contains.htm"
+    },
+    {
+      "name": "CreateBorders(RectangleF, Int32)",
+      "signature": "public static List\u003CGH_Border\u003E CreateBorders(RectangleF box, int borderSize)",
+      "summary": "Static (Shared) method for creating a set of borders.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for border creation.",
+          "optional": false
+        },
+        {
+          "name": "borderSize",
+          "type": "System.Int32",
+          "doc": "The width of all borders.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Border\u003E",
+        "doc": "A list of borders."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border_CreateBorders.htm"
+    },
+    {
+      "name": "CreateBorders(RectangleF, Padding)",
+      "signature": "public static List\u003CGH_Border\u003E CreateBorders(RectangleF box, Padding padding)",
+      "summary": "Static (Shared) method for creating a set of borders.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for border creation.",
+          "optional": false
+        },
+        {
+          "name": "padding",
+          "type": "System.Windows.Forms.Padding",
+          "doc": "The size of the borders along all four edges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Border\u003E",
+        "doc": "A list of borders."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border_CreateBorders_3.htm"
+    },
+    {
+      "name": "CreateBorders(RectangleF, Int32, Int32)",
+      "signature": "public static List\u003CGH_Border\u003E CreateBorders(RectangleF box, int borderWidth, int borderHeight)",
+      "summary": "Static (Shared) method for creating a set of borders.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for border creation.",
+          "optional": false
+        },
+        {
+          "name": "borderWidth",
+          "type": "System.Int32",
+          "doc": "The width of all vertical.",
+          "optional": false
+        },
+        {
+          "name": "borderHeight",
+          "type": "System.Int32",
+          "doc": "The height of all horizontal borders.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Border\u003E",
+        "doc": "A list of borders."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border_CreateBorders_1.htm"
+    },
+    {
+      "name": "CreateBorders(RectangleF, Int32, Int32, Int32, Int32)",
+      "signature": "public static List\u003CGH_Border\u003E CreateBorders(RectangleF box, int borderLeft, int borderRight, int borderTop, int borderBottom)",
+      "summary": "Static (Shared) method for creating a set of borders.",
+      "params": [
+        {
+          "name": "box",
+          "type": "System.Drawing.RectangleF",
+          "doc": "Box for border creation.",
+          "optional": false
+        },
+        {
+          "name": "borderLeft",
+          "type": "System.Int32",
+          "doc": "Width of the leftmost border.",
+          "optional": false
+        },
+        {
+          "name": "borderRight",
+          "type": "System.Int32",
+          "doc": "Width of the rightmost border.",
+          "optional": false
+        },
+        {
+          "name": "borderTop",
+          "type": "System.Int32",
+          "doc": "Width of the topmost border.",
+          "optional": false
+        },
+        {
+          "name": "borderBottom",
+          "type": "System.Int32",
+          "doc": "Width of the bottommost border.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CGH_Border\u003E",
+        "doc": "A list of borders."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_GH_Border_CreateBorders_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Region",
+      "type": "RectangleF",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the shape of the border.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Border_Region.htm"
+    },
+    {
+      "name": "Size_Cursor",
+      "type": "Cursor",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the cursor associated with this border.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Border_Size_Cursor.htm"
+    },
+    {
+      "name": "Topology",
+      "type": "GH_BorderTopology",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type of border.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_GH_Border_Topology.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

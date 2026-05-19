@@ -1,0 +1,52 @@
+{
+  "name": "IGH_SettingFrontend",
+  "namespace": "Grasshopper.GUI",
+  "kind": "interface",
+  "summary": "Represents a single setting in the Settings UI. Implement this interface to participate in the Grasshopper Settings interface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_IGH_SettingFrontend.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SettingsUI",
+      "signature": "Control SettingsUI()",
+      "summary": "Create the winforms UI portion for this setting.",
+      "params": [],
+      "returns": {
+        "type": "Control",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_IGH_SettingFrontend_SettingsUI.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Category of this setting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingFrontend_Category.htm"
+    },
+    {
+      "name": "Keywords",
+      "type": "IEnumerable\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Optional keywords for this setting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingFrontend_Keywords.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of this setting.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_IGH_SettingFrontend_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "GH_SliderBase.DrawSliderChannel",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "delegate",
+  "summary": "This delegate is used to intervene in the slider drawing process.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_GH_SliderBase_DrawSliderChannel.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void DrawSliderChannel( GH_SliderBase slider, Graphics G )"
+}

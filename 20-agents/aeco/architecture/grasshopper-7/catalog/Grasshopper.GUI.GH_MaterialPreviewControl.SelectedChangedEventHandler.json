@@ -1,0 +1,14 @@
+{
+  "name": "GH_MaterialPreviewControl.SelectedChangedEventHandler",
+  "namespace": "Grasshopper.GUI",
+  "kind": "delegate",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_MaterialPreviewControl.SelectedChangedEventHandler.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_MaterialPreviewControl_SelectedChangedEventHandler.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void SelectedChangedEventHandler( Object sender, EventArgs e )"
+}

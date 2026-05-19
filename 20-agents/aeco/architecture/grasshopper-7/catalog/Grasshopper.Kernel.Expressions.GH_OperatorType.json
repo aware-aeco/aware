@@ -1,0 +1,26 @@
+{
+  "name": "GH_OperatorType",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_OperatorType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_OperatorType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UnaryOnLeft",
+      "value": 0
+    },
+    {
+      "name": "UnaryOnRight",
+      "value": 1
+    },
+    {
+      "name": "Binary",
+      "value": 2
+    }
+  ]
+}

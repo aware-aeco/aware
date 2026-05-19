@@ -1,0 +1,14 @@
+{
+  "name": "GH_FileSystemEventServer.FileEvent",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "delegate",
+  "summary": "This delegate is called when changes to a certain file occur.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_FileSystemEventServer_FileEvent.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void FileEvent( string path )"
+}

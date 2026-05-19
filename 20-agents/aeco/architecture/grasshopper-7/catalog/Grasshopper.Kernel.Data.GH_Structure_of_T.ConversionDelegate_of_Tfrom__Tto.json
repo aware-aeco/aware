@@ -1,0 +1,14 @@
+{
+  "name": "GH_Structure\u003CT\u003E.ConversionDelegate\u003CTfrom, Tto\u003E",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "delegate",
+  "summary": "Represents a conversion between two types of IGH_Goo.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_Structure_1_ConversionDelegate_2.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate Tto ConversionDelegate\u003CTfrom, Tto\u003E( Tfrom data ) where Tfrom : IGH_Goo where Tto : IGH_Goo"
+}

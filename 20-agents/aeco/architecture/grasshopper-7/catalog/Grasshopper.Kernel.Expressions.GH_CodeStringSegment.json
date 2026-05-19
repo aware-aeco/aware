@@ -1,0 +1,161 @@
+{
+  "name": "GH_CodeStringSegment",
+  "namespace": "Grasshopper.Kernel.Expressions",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Expressions.GH_CodeStringSegment.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Expressions_GH_CodeStringSegment.htm",
+  "constructors": [
+    {
+      "name": "GH_CodeStringSegment",
+      "signature": "public GH_CodeStringSegment(string nString, bool bIsCode)",
+      "summary": "Initializes a new instance of the GH_CodeStringSegment class",
+      "params": [
+        {
+          "name": "nString",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "bIsCode",
+          "type": "System.Boolean",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeStringSegment__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsAlpha",
+      "signature": "protected bool IsAlpha(char C)",
+      "summary": "",
+      "params": [
+        {
+          "name": "C",
+          "type": "System.Char",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_IsAlpha.htm"
+    },
+    {
+      "name": "Replace",
+      "signature": "public void Replace(string search, string replace, bool bIgnoreCase = true)",
+      "summary": "",
+      "params": [
+        {
+          "name": "search",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "replace",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "bIgnoreCase",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_Replace.htm"
+    },
+    {
+      "name": "ReplaceToken",
+      "signature": "public void ReplaceToken(string token, string replace, bool bIgnoreCase = true)",
+      "summary": "",
+      "params": [
+        {
+          "name": "token",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "replace",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "bIgnoreCase",
+          "type": "System.Boolean",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_ReplaceToken.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsCode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_IsCode.htm"
+    },
+    {
+      "name": "String",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_String.htm"
+    },
+    {
+      "name": "StringValue",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_StringValue.htm"
+    },
+    {
+      "name": "m_IsCode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_m_IsCode.htm"
+    },
+    {
+      "name": "m_String",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Expressions_GH_CodeStringSegment_m_String.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

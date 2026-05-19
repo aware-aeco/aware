@@ -1,0 +1,14 @@
+{
+  "name": "Coordinates3d\u003CT\u003E",
+  "namespace": "Grasshopper.Kernel.Geometry.SpatialTrees",
+  "kind": "delegate",
+  "summary": "Delegate for coordinate retrieval.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Geometry_SpatialTrees_Coordinates3d_1.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void Coordinates3d\u003CT\u003E( T element, out double x, out double y, out double z )"
+}

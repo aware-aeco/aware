@@ -1,0 +1,545 @@
+{
+  "name": "GH_Mesh",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "Represents a 3D polygonal mesh composed of quads and tris. GH_MEsh wraps the functionality of the OpenNURBS OnMesh class.",
+  "base": "Mesh",
+  "interfaces": [
+    "IGH_BakeAwareData",
+    "IGH_PreviewData",
+    "IGH_RenderAwareData"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Mesh.htm",
+  "constructors": [
+    {
+      "name": "GH_Mesh()",
+      "signature": "public GH_Mesh()",
+      "summary": "Initializes a new instance of the GH_Mesh class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh__ctor.htm"
+    },
+    {
+      "name": "GH_Mesh(Mesh)",
+      "signature": "public GH_Mesh(Mesh mesh)",
+      "summary": "Initializes a new instance of the GH_Mesh class",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Mesh",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh__ctor_2.htm"
+    },
+    {
+      "name": "GH_Mesh(Guid)",
+      "signature": "public GH_Mesh(Guid id)",
+      "summary": "Initializes a new instance of the GH_Mesh class",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh__ctor_3.htm"
+    },
+    {
+      "name": "GH_Mesh(GH_Mesh)",
+      "signature": "public GH_Mesh(GH_Mesh other)",
+      "summary": "Initializes a new instance of the GH_Mesh class",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.Kernel.Types.GH_Mesh",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendRenderGeometry",
+      "signature": "public void AppendRenderGeometry(GH_RenderArgs args, RenderMaterial materialHint)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_RenderArgs",
+          "optional": false
+        },
+        {
+          "name": "materialHint",
+          "type": "RenderMaterial",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_AppendRenderGeometry.htm"
+    },
+    {
+      "name": "BakeGeometry",
+      "signature": "public bool BakeGeometry(RhinoDoc doc, ObjectAttributes att, ref Guid obj_guid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        },
+        {
+          "name": "att",
+          "type": "ObjectAttributes",
+          "optional": false
+        },
+        {
+          "name": "obj_guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_BakeGeometry.htm"
+    },
+    {
+      "name": "CastFrom",
+      "signature": "public override bool CastFrom(Object source)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.CastFrom(Object).)",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_CastFrom.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public override bool CastTo\u003CQ\u003E(out Q target)",
+      "summary": "Attempt a cast to type T.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CQ\u003E(Q)",
+      "signature": "public virtual bool CastTo\u003CQ\u003E(ref Q target)",
+      "summary": "Attempt a cast to type Q.",
+      "remarks": "If false, the target instance contents are not guaranteed to be valid.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Q",
+          "doc": "Pointer to target of cast.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Goo_1_CastTo__1.htm"
+    },
+    {
+      "name": "CastTo\u003CT\u003E(T)",
+      "signature": "public override bool CastTo\u003CT\u003E(out T target)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.CastTo\u003CQ\u003E(Q).)",
+      "params": [
+        {
+          "name": "target",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_CastTo__1.htm"
+    },
+    {
+      "name": "ClearCaches",
+      "signature": "public override void ClearCaches()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.ClearCaches().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_ClearCaches.htm"
+    },
+    {
+      "name": "DrawViewportMeshes",
+      "signature": "public void DrawViewportMeshes(GH_PreviewMeshArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewMeshArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_DrawViewportMeshes.htm"
+    },
+    {
+      "name": "DrawViewportWires",
+      "signature": "public void DrawViewportWires(GH_PreviewWireArgs args)",
+      "summary": "",
+      "params": [
+        {
+          "name": "args",
+          "type": "Grasshopper.Kernel.GH_PreviewWireArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_DrawViewportWires.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public override IGH_Goo Duplicate()",
+      "summary": "Make a complete duplicate of this instance. No shallow copies.",
+      "remarks": "Classes which implement this interface should also provide type specific Duplicate methods",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateGeometry",
+      "signature": "public override IGH_GeometricGoo DuplicateGeometry()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.DuplicateGeometry().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_DuplicateGeometry.htm"
+    },
+    {
+      "name": "DuplicateMesh",
+      "signature": "public GH_Mesh DuplicateMesh()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "GH_Mesh",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_DuplicateMesh.htm"
+    },
+    {
+      "name": "EmitProxy",
+      "signature": "public override IGH_GooProxy EmitProxy()",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.EmitProxy().)",
+      "params": [],
+      "returns": {
+        "type": "IGH_GooProxy",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_EmitProxy.htm"
+    },
+    {
+      "name": "GetBoundingBox",
+      "signature": "public override BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.GetBoundingBox(Transform).)",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_GetBoundingBox.htm"
+    },
+    {
+      "name": "LoadGeometry()",
+      "signature": "public virtual bool LoadGeometry()",
+      "summary": "If the geometry is referenced and currently unloaded, forces loading of the geometry. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GeometricGoo_1_LoadGeometry.htm"
+    },
+    {
+      "name": "LoadGeometry(RhinoDoc)",
+      "signature": "public override bool LoadGeometry(RhinoDoc doc)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.LoadGeometry(RhinoDoc).)",
+      "params": [
+        {
+          "name": "doc",
+          "type": "RhinoDoc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_LoadGeometry.htm"
+    },
+    {
+      "name": "Morph",
+      "signature": "public override IGH_GeometricGoo Morph(SpaceMorph xmorph)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Morph(SpaceMorph).)",
+      "params": [
+        {
+          "name": "xmorph",
+          "type": "SpaceMorph",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_Morph.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "public override bool Read(GH_IReader reader)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Read(GH_IReader).)",
+      "params": [
+        {
+          "name": "reader",
+          "type": "GH_IO.Serialization.GH_IReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_Read.htm"
+    },
+    {
+      "name": "ScriptVariable",
+      "signature": "public override Object ScriptVariable()",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.ScriptVariable().)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_ScriptVariable.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public override IGH_GeometricGoo Transform(Transform xform)",
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Transform(Transform).)",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Transform",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IGH_GeometricGoo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_Transform.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "public override bool Write(GH_IWriter writer)",
+      "summary": "(Overrides GH_Goo\u003CT\u003E.Write(GH_IWriter).)",
+      "params": [
+        {
+          "name": "writer",
+          "type": "GH_IO.Serialization.GH_IWriter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Mesh_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Boundingbox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.Boundingbox.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_Boundingbox.htm"
+    },
+    {
+      "name": "ClippingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_ClippingBox.htm"
+    },
+    {
+      "name": "IsGeometryLoaded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.IsGeometryLoaded.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_IsGeometryLoaded.htm"
+    },
+    {
+      "name": "IsReferencedGeometry",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this geometry is referenced. Not all IGH_GeometricGoo implementations support referenced geometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_IsReferencedGeometry.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.IsValid.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_IsValid.htm"
+    },
+    {
+      "name": "IsValidWhyNot",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the state of \u0022invalidness\u0022. If the instance is valid, then this property should return Nothing or String.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_IsValidWhyNot.htm"
+    },
+    {
+      "name": "ReferenceID",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "(Overrides GH_GeometricGoo\u003CT\u003E.ReferenceID.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_ReferenceID.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeDescription.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Overrides GH_Goo\u003CT\u003E.TypeName.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Mesh_TypeName.htm"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value of this type. Note that if the type has a ReferenceID this value might get destroyed in the future.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GeometricGoo_1_Value.htm"
+    },
+    {
+      "name": "m_value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_Goo\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Kernel_Types_GH_Goo_1_m_value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

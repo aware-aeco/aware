@@ -1,0 +1,34 @@
+{
+  "name": "GH_SeparatorDisplay",
+  "namespace": "Grasshopper.GUI",
+  "kind": "enum",
+  "summary": "Enumerates all possible display modes for horizontal and vertical separators.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_SeparatorDisplay.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No separator is drawn."
+    },
+    {
+      "name": "Etched",
+      "value": 1,
+      "summary": "A double line etched separator is drawn."
+    },
+    {
+      "name": "EtchedFading",
+      "value": 2,
+      "summary": "A double line etched separator with fading extremes is drawn."
+    },
+    {
+      "name": "Dashed",
+      "value": 3,
+      "summary": "A single line dashed separator is drawn."
+    }
+  ]
+}

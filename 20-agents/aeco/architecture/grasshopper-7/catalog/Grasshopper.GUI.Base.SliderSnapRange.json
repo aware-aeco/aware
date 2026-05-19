@@ -1,0 +1,174 @@
+{
+  "name": "SliderSnapRange",
+  "namespace": "Grasshopper.GUI.Base",
+  "kind": "struct",
+  "summary": "Represents a snap range on a slider.",
+  "interfaces": [
+    "IComparable\u003CSliderSnapRange\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Base_SliderSnapRange.htm",
+  "constructors": [
+    {
+      "name": "SliderSnapRange(Decimal)",
+      "signature": "public SliderSnapRange(decimal value)",
+      "summary": "Initializes a new instance of the SliderSnapRange class",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange__ctor.htm"
+    },
+    {
+      "name": "SliderSnapRange(Decimal, Decimal)",
+      "signature": "public SliderSnapRange(decimal value0, decimal value1)",
+      "summary": "Initializes a new instance of the SliderSnapRange class",
+      "params": [
+        {
+          "name": "value0",
+          "type": "System.Decimal",
+          "optional": false
+        },
+        {
+          "name": "value1",
+          "type": "System.Decimal",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanMerge",
+      "signature": "public bool CanMerge(SliderSnapRange other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Base.SliderSnapRange",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange_CanMerge.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(SliderSnapRange other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Base.SliderSnapRange",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange_CompareTo.htm"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "public decimal DistanceTo(decimal value)",
+      "summary": "Compute the distance from a value to this snap range.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Decimal",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange_DistanceTo.htm"
+    },
+    {
+      "name": "Merge",
+      "signature": "public SliderSnapRange Merge(SliderSnapRange other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Grasshopper.GUI.Base.SliderSnapRange",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SliderSnapRange",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange_Merge.htm"
+    },
+    {
+      "name": "SnapValue",
+      "signature": "public decimal SnapValue(decimal value)",
+      "summary": "Gets the snapped value of another value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Decimal",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Decimal",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Base_SliderSnapRange_SnapValue.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsSingleton",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_SliderSnapRange_IsSingleton.htm"
+    },
+    {
+      "name": "Max",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_SliderSnapRange_Max.htm"
+    },
+    {
+      "name": "Min",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Base_SliderSnapRange_Min.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

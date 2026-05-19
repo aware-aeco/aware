@@ -1,0 +1,51 @@
+{
+  "name": "GH_LineParser",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Provides basic functionality for the custom ReadFile component script parsing.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_LineParser.htm",
+  "constructors": [
+    {
+      "name": "GH_LineParser",
+      "signature": "protected GH_LineParser()",
+      "summary": "Initializes a new instance of the GH_LineParser class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_LineParser__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ParseLine",
+      "signature": "public abstract Object ParseLine(string line, ref GH_LineParserAction action)",
+      "summary": "Parse a line of text and convert it to custom data.",
+      "params": [
+        {
+          "name": "line",
+          "type": "System.String",
+          "doc": "Line to parse.",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "Grasshopper.Kernel.GH_LineParserAction",
+          "doc": "Set the action to take after this function returns. The default is Include.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The data represented by the line."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_LineParser_ParseLine.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

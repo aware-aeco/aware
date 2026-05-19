@@ -1,0 +1,74 @@
+{
+  "name": "GH_RuleComplex",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Data.GH_RuleComplex.)",
+  "interfaces": [
+    "IGH_Rule"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_RuleComplex.htm",
+  "constructors": [
+    {
+      "name": "GH_RuleComplex",
+      "signature": "public GH_RuleComplex(IEnumerable\u003CIGH_Rule\u003E fragments, IEnumerable\u003CGH_RuleOperator\u003E operators)",
+      "summary": "Initializes a new instance of the GH_RuleComplex class",
+      "params": [
+        {
+          "name": "fragments",
+          "type": "System.Collections.Generic.IEnumerable\u003CIGH_Rule\u003E",
+          "optional": false
+        },
+        {
+          "name": "operators",
+          "type": "System.Collections.Generic.IEnumerable\u003CGH_RuleOperator\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_RuleComplex__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Apply",
+      "signature": "public bool Apply(int number)",
+      "summary": "",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_RuleComplex_Apply.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kind",
+      "type": "GH_RuleKind",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_RuleComplex_Kind.htm"
+    },
+    {
+      "name": "Notation",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_RuleComplex_Notation.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "EtoExtensions.EtoWin32Window",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.EtoExtensions.EtoWin32Window.)",
+  "interfaces": [
+    "IWin32Window"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_EtoExtensions_EtoWin32Window.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Handle",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_EtoExtensions_EtoWin32Window_Handle.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "GH_YakDownloadFormEto.MissingObjectItem",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.GUI.GH_YakDownloadFormEto.MissingObjectItem.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_YakDownloadFormEto_MissingObjectItem.htm",
+  "constructors": [
+    {
+      "name": "GH_YakDownloadFormEto.MissingObjectItem",
+      "signature": "public MissingObjectItem()",
+      "summary": "Initializes a new instance of the GH_YakDownloadFormEto.MissingObjectItem class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_YakDownloadFormEto_MissingObjectItem__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_YakDownloadFormEto_MissingObjectItem_Id.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_YakDownloadFormEto_MissingObjectItem_Name.htm"
+    },
+    {
+      "name": "Version",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_YakDownloadFormEto_MissingObjectItem_Version.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

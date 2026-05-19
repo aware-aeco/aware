@@ -1,0 +1,52 @@
+{
+  "name": "GH_UndoException",
+  "namespace": "Grasshopper.Kernel.Undo",
+  "kind": "class",
+  "summary": "Exception associated with undo events",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Undo_GH_UndoException.htm",
+  "constructors": [
+    {
+      "name": "GH_UndoException(String)",
+      "signature": "public GH_UndoException(string message)",
+      "summary": "Initializes a new instance of the GH_UndoException class",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoException__ctor.htm"
+    },
+    {
+      "name": "GH_UndoException(String, Object[])",
+      "signature": "public GH_UndoException(string message, params Object[] args)",
+      "summary": "Initializes a new instance of the GH_UndoException class",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Undo_GH_UndoException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

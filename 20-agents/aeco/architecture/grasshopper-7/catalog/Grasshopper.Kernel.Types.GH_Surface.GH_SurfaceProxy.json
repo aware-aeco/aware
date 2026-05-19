@@ -1,0 +1,306 @@
+{
+  "name": "GH_Surface.GH_SurfaceProxy",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_Surface.GH_SurfaceProxy.)",
+  "base": "GH_GooProxy\u003CGH_Surface\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy.htm",
+  "constructors": [
+    {
+      "name": "GH_Surface.GH_SurfaceProxy",
+      "signature": "public GH_SurfaceProxy(GH_Surface Value)",
+      "summary": "Initializes a new instance of the GH_Surface.GH_SurfaceProxy class",
+      "params": [
+        {
+          "name": "Value",
+          "type": "Grasshopper.Kernel.Types.GH_Surface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Construct",
+      "signature": "public override void Construct()",
+      "summary": "(Overrides GH_GooProxy\u003CT\u003E.Construct().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Construct.htm"
+    },
+    {
+      "name": "FormatInstance",
+      "signature": "public virtual string FormatInstance()",
+      "summary": "Returns a String description of the current value.",
+      "remarks": "If the implementation IsParsable(), then this representation must be in parsable format.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_FormatInstance.htm"
+    },
+    {
+      "name": "FromString",
+      "signature": "public override bool FromString(string in)",
+      "summary": "(Overrides GH_GooProxy\u003CT\u003E.FromString(String).)",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_FromString.htm"
+    },
+    {
+      "name": "MutateString",
+      "signature": "public virtual string MutateString(string in)",
+      "summary": "Munge a string to remove obvious errors on account of the user.",
+      "params": [
+        {
+          "name": "in",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_MutateString.htm"
+    },
+    {
+      "name": "NumberToString",
+      "signature": "protected string NumberToString(double number)",
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "number",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_NumberToString.htm"
+    },
+    {
+      "name": "StringToNumber",
+      "signature": "protected double StringToNumber(string text)",
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_StringToNumber.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Types_GH_GooProxy_1_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Area",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Area.htm"
+    },
+    {
+      "name": "Closed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Closed.htm"
+    },
+    {
+      "name": "Deformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Deformable.htm"
+    },
+    {
+      "name": "EdgeCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_EdgeCount.htm"
+    },
+    {
+      "name": "IsParsable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the type can be instantiated from a String.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_IsParsable.htm"
+    },
+    {
+      "name": "LoopCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_LoopCount.htm"
+    },
+    {
+      "name": "ObjectID",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_ObjectID.htm"
+    },
+    {
+      "name": "Owner",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_Owner.htm"
+    },
+    {
+      "name": "Periodic",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Periodic.htm"
+    },
+    {
+      "name": "Planar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Planar.htm"
+    },
+    {
+      "name": "ProxyOwner",
+      "type": "IGH_Goo",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the piece of Grasshopper data that spawned this proxy.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_ProxyOwner.htm"
+    },
+    {
+      "name": "Singular",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Singular.htm"
+    },
+    {
+      "name": "Solid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Solid.htm"
+    },
+    {
+      "name": "Trimmed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Trimmed.htm"
+    },
+    {
+      "name": "TypeDescription",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_TypeDescription.htm"
+    },
+    {
+      "name": "TypeName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from GH_GooProxy\u003CT\u003E.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_TypeName.htm"
+    },
+    {
+      "name": "UserString",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the user-defined string that describes this proxy. This only really makes sense if the Proxy is Parsable.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_UserString.htm"
+    },
+    {
+      "name": "Valid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this proxy represents valid data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_GooProxy_1_Valid.htm"
+    },
+    {
+      "name": "VertexCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_VertexCount.htm"
+    },
+    {
+      "name": "Volume",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Types_GH_Surface_GH_SurfaceProxy_Volume.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

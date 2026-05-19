@@ -1,0 +1,29 @@
+{
+  "name": "GH_ParamWireDisplay",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "enum",
+  "summary": "Enumerates the possible wire display types for parameters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_ParamWireDisplay.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "default",
+      "value": 0,
+      "summary": "Wire display is controlled by the application settings."
+    },
+    {
+      "name": "faint",
+      "value": 1,
+      "summary": "Wires are displayed faintly (thin and transparent) while the parameter is not selected."
+    },
+    {
+      "name": "hidden",
+      "value": 2,
+      "summary": "Wires are not displayed at all while the parameter is not selected."
+    }
+  ]
+}

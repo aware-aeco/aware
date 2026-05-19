@@ -1,0 +1,38 @@
+{
+  "name": "GH_PointRefType",
+  "namespace": "Grasshopper.Kernel.Types",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for Grasshopper.Kernel.Types.GH_PointRefType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Types_GH_PointRefType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "coordinate",
+      "value": 1
+    },
+    {
+      "name": "point_object",
+      "value": 2
+    },
+    {
+      "name": "curve_ratio",
+      "value": 10
+    },
+    {
+      "name": "curve_dist_start",
+      "value": 11
+    },
+    {
+      "name": "curve_dist_end",
+      "value": 12
+    },
+    {
+      "name": "srf_param",
+      "value": 20
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "GH_LexerCombo",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Contains both a source and a target lexer object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_LexerCombo.htm",
+  "constructors": [
+    {
+      "name": "GH_LexerCombo()",
+      "signature": "public GH_LexerCombo()",
+      "summary": "Initializes a new instance of the GH_LexerCombo class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_LexerCombo__ctor.htm"
+    },
+    {
+      "name": "GH_LexerCombo(String, String)",
+      "signature": "public GH_LexerCombo(string n_source, string n_target)",
+      "summary": "Initializes a new instance of the GH_LexerCombo class",
+      "params": [
+        {
+          "name": "n_source",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "n_target",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_LexerCombo__ctor_2.htm"
+    },
+    {
+      "name": "GH_LexerCombo(GH_Lexer, GH_Lexer)",
+      "signature": "public GH_LexerCombo(GH_Lexer n_source, GH_Lexer n_target)",
+      "summary": "Initializes a new instance of the GH_LexerCombo class",
+      "params": [
+        {
+          "name": "n_source",
+          "type": "Grasshopper.Kernel.Data.GH_Lexer",
+          "optional": false
+        },
+        {
+          "name": "n_target",
+          "type": "Grasshopper.Kernel.Data.GH_Lexer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_LexerCombo__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Source",
+      "type": "GH_Lexer",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lexer object that represents the source of a lexical operation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_LexerCombo_Source.htm"
+    },
+    {
+      "name": "Target",
+      "type": "GH_Lexer",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lexer object that represents the target of a lexical operation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_LexerCombo_Target.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

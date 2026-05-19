@@ -1,0 +1,66 @@
+{
+  "name": "IGH_TooltipAwareObject",
+  "namespace": "Grasshopper.GUI.Canvas",
+  "kind": "interface",
+  "summary": "Implement this interface if you want your object to participate in Grasshopper Canvas tooltips.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsTooltipRegion",
+      "signature": "bool IsTooltipRegion(PointF canvasPoint)",
+      "summary": "Determine whether the specified pixel should result in a tooltip when the cursor hovers over it.",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "Point in Canvas coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_IsTooltipRegion.htm"
+    },
+    {
+      "name": "SetupTooltip",
+      "signature": "void SetupTooltip(PointF canvasPoint, GH_TooltipDisplayEventArgs e)",
+      "summary": "This function is called when a tooltip it about to be displayed.",
+      "params": [
+        {
+          "name": "canvasPoint",
+          "type": "System.Drawing.PointF",
+          "doc": "The pixel coordinate on the canvas of the cursor.",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Grasshopper.GUI.GH_TooltipDisplayEventArgs",
+          "doc": "Tooltip display arguments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_SetupTooltip.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TooltipEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the tooltip enabled value. If False, no further tooltip functions will be called.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_Canvas_IGH_TooltipAwareObject_TooltipEnabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

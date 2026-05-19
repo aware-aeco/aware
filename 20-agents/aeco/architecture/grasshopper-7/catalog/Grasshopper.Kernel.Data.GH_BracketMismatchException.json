@@ -1,0 +1,71 @@
+{
+  "name": "GH_BracketMismatchException",
+  "namespace": "Grasshopper.Kernel.Data",
+  "kind": "class",
+  "summary": "Exception used during Rule Set parsing.",
+  "base": "Exception",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_Data_GH_BracketMismatchException.htm",
+  "constructors": [
+    {
+      "name": "GH_BracketMismatchException()",
+      "signature": "public GH_BracketMismatchException()",
+      "summary": "Initializes a new instance of the GH_BracketMismatchException class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_BracketMismatchException__ctor.htm"
+    },
+    {
+      "name": "GH_BracketMismatchException(String)",
+      "signature": "public GH_BracketMismatchException(string message)",
+      "summary": "Initializes a new instance of the GH_BracketMismatchException class",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_BracketMismatchException__ctor_1.htm"
+    },
+    {
+      "name": "GH_BracketMismatchException(String, Int32)",
+      "signature": "public GH_BracketMismatchException(string message, int location)",
+      "summary": "Initializes a new instance of the GH_BracketMismatchException class",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "System.Int32",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_Data_GH_BracketMismatchException__ctor_2.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_Data_GH_BracketMismatchException_Index.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

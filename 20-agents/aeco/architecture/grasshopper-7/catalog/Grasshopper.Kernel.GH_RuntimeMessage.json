@@ -1,0 +1,81 @@
+{
+  "name": "GH_RuntimeMessage",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "Contains all fields that together define a RuntimeMessage. Runtime Messages are created and recorded by document objects during Grasshopper solutions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_RuntimeMessage.htm",
+  "constructors": [
+    {
+      "name": "GH_RuntimeMessage",
+      "signature": "public GH_RuntimeMessage(string nMessage, GH_RuntimeMessageLevel nType = GH_RuntimeMessageLevel.Remark, string nSource = null)",
+      "summary": "Initializes a new instance of the GH_RuntimeMessage class",
+      "params": [
+        {
+          "name": "nMessage",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "nType",
+          "type": "Grasshopper.Kernel.GH_RuntimeMessageLevel",
+          "optional": true
+        },
+        {
+          "name": "nSource",
+          "type": "System.String",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_RuntimeMessage__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Event",
+      "type": "DateTime",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the time at which the message was recorded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RuntimeMessage_Event.htm"
+    },
+    {
+      "name": "HasSource",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this message has a source.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RuntimeMessage_HasSource.htm"
+    },
+    {
+      "name": "Message",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contents of the message.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RuntimeMessage_Message.htm"
+    },
+    {
+      "name": "Source",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a string describing the source object that created the message.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RuntimeMessage_Source.htm"
+    },
+    {
+      "name": "Type",
+      "type": "GH_RuntimeMessageLevel",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the type qualifier of the message.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_RuntimeMessage_Type.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

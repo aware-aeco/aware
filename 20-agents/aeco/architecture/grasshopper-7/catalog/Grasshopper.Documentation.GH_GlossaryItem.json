@@ -1,0 +1,91 @@
+{
+  "name": "GH_GlossaryItem",
+  "namespace": "Grasshopper.Documentation",
+  "kind": "class",
+  "summary": "Represents a single glossary entry in the Grasshopper help.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Documentation_GH_GlossaryItem.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ParseFile",
+      "signature": "public static GH_GlossaryItem ParseFile(string path)",
+      "summary": "Parse a *.glossary file and return a glossary entry.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "File to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "GH_GlossaryItem",
+        "doc": "The glossary entry defined by the file. This function always returns a valid glossary or it throws an exception."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Documentation_GH_GlossaryItem_ParseFile.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Author",
+      "type": "IGH_Content",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the author of this glossary entry. This field is optional and may not be defined.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Author.htm"
+    },
+    {
+      "name": "Contact",
+      "type": "IGH_Content",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the contact information for the glossary entry author. This field is optional and may not be defined.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Contact.htm"
+    },
+    {
+      "name": "Descriptions",
+      "type": "List\u003CIGH_Content\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the description (definition) for this glossary entry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Descriptions.htm"
+    },
+    {
+      "name": "Path",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the source file for this glossary entry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Path.htm"
+    },
+    {
+      "name": "Pronunciation",
+      "type": "IGH_Content",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the pronunciation guide to the word. This field is optional and may not be defined.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Pronunciation.htm"
+    },
+    {
+      "name": "Synonyms",
+      "type": "ReadOnlyCollection\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the synonyms for this glossary entry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Synonyms.htm"
+    },
+    {
+      "name": "Word",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the word this glossary entry is about.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Documentation_GH_GlossaryItem_Word.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

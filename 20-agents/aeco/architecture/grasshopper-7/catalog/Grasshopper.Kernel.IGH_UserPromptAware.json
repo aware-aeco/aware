@@ -1,0 +1,66 @@
+{
+  "name": "IGH_UserPromptAware",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "interface",
+  "summary": "Implement this interface in your IGH_Param if you want to allow users to set data either through the menu or by double clicking.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_IGH_UserPromptAware.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PromptMenuMultipleItems",
+      "signature": "ToolStripMenuItem PromptMenuMultipleItems()",
+      "summary": "Create a menu item that will be inserted into the Parameter context menu for getting multiple values.",
+      "params": [],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_UserPromptAware_PromptMenuMultipleItems.htm"
+    },
+    {
+      "name": "PromptMenuSingleItem",
+      "signature": "ToolStripMenuItem PromptMenuSingleItem()",
+      "summary": "Create a menu item that will be inserted into the Parameter context menu for getting single values.",
+      "params": [],
+      "returns": {
+        "type": "ToolStripMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_UserPromptAware_PromptMenuSingleItem.htm"
+    },
+    {
+      "name": "PromptMultipleItems",
+      "signature": "IGH_Structure PromptMultipleItems()",
+      "summary": "Get multiple items from the user.",
+      "params": [],
+      "returns": {
+        "type": "IGH_Structure",
+        "doc": "A data tree of items if successful or nothing on abort/failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_UserPromptAware_PromptMultipleItems.htm"
+    },
+    {
+      "name": "PromptSingleItem",
+      "signature": "IGH_Goo PromptSingleItem()",
+      "summary": "Get a single item from the user.",
+      "params": [],
+      "returns": {
+        "type": "IGH_Goo",
+        "doc": "The item if successful or nothing on abort/failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_IGH_UserPromptAware_PromptSingleItem.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

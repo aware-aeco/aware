@@ -1,0 +1,237 @@
+{
+  "name": "GH_DigitScroller",
+  "namespace": "Grasshopper.GUI",
+  "kind": "class",
+  "summary": "Provides the standard Grasshopper Digit scroller as a winforms Control.",
+  "base": "GH_TextInputBaseControl",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_GUI_GH_DigitScroller.htm",
+  "constructors": [
+    {
+      "name": "GH_DigitScroller",
+      "signature": "public GH_DigitScroller()",
+      "summary": "Initializes a new instance of the GH_DigitScroller class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DigitScroller__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Input_Assign",
+      "signature": "protected override void Input_Assign(string text)",
+      "summary": "(Overrides GH_TextInputBaseControl.Input_Assign(String).)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DigitScroller_Input_Assign.htm"
+    },
+    {
+      "name": "Input_Parse",
+      "signature": "protected override bool Input_Parse(string text)",
+      "summary": "(Overrides GH_TextInputBaseControl.Input_Parse(String).)",
+      "params": [
+        {
+          "name": "text",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DigitScroller_Input_Parse.htm"
+    },
+    {
+      "name": "Input_Supply",
+      "signature": "protected override string Input_Supply()",
+      "summary": "(Overrides GH_TextInputBaseControl.Input_Supply().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DigitScroller_Input_Supply.htm"
+    },
+    {
+      "name": "OnPaint",
+      "signature": "protected override void OnPaint(PaintEventArgs e)",
+      "summary": "(Overrides Control.OnPaint(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DigitScroller_OnPaint.htm"
+    },
+    {
+      "name": "OnPaintBackground",
+      "signature": "protected override void OnPaintBackground(PaintEventArgs e)",
+      "summary": "(Overrides ScrollableControl.OnPaintBackground(PaintEventArgs).)",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Windows.Forms.PaintEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_GUI_GH_DigitScroller_OnPaintBackground.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowRadixDrag",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the radix symbol can be dragged.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_AllowRadixDrag.htm"
+    },
+    {
+      "name": "AllowTextInput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the control accepts text input override.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_AllowTextInput.htm"
+    },
+    {
+      "name": "Amplify",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether vertical mouse movement ought to be amplified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Amplify.htm"
+    },
+    {
+      "name": "DecimalPlaces",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of decimal places.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_DecimalPlaces.htm"
+    },
+    {
+      "name": "DigitAlign",
+      "type": "GH_DigitAlign",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the digit align mode",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_DigitAlign.htm"
+    },
+    {
+      "name": "Digits",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of digits displayed in the scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Digits.htm"
+    },
+    {
+      "name": "DigitScroller",
+      "type": "GH_DigitScrollerBase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal scroller object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_DigitScroller.htm"
+    },
+    {
+      "name": "Epsilon",
+      "type": "Decimal",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smallest possible change with the current settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Epsilon.htm"
+    },
+    {
+      "name": "MaximumValue",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the upper bound of the scroll value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_MaximumValue.htm"
+    },
+    {
+      "name": "MinimumValue",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the lower bound of the scroll value.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_MinimumValue.htm"
+    },
+    {
+      "name": "Prefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the prefix text",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Prefix.htm"
+    },
+    {
+      "name": "Presets",
+      "type": "GH_NumberPresets",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the internal object that maintains numeric presets.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Presets.htm"
+    },
+    {
+      "name": "Radix",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radix point index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Radix.htm"
+    },
+    {
+      "name": "Suffix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the prefix text",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Suffix.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Decimal",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value of this scroller.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_GUI_GH_DigitScroller_Value.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "ValueChanged",
+      "delegate": "Grasshopper.GUI.GH_DigitScroller.ValueChangedEventHandler",
+      "signature": "public event GH_DigitScroller.ValueChangedEventHandler ValueChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_GUI_GH_DigitScroller_ValueChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,2511 @@
+{
+  "name": "GH_Component.GH_InputParamManager",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "This class is used during Component construction to add input parameters.",
+  "base": "GH_ParamManager",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_Component_GH_InputParamManager.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddAngleParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddAngleParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a floating point Number parameter to the input list of this component. The parameter will be aware that it is representing angles.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddAngleParameter.htm"
+    },
+    {
+      "name": "AddAngleParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CDouble\u003E)",
+      "signature": "public int AddAngleParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003Cdouble\u003E default)",
+      "summary": "Add a floating point Number parameter to the input list of this component. The parameter will be aware that it is representing angles.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddAngleParameter_1.htm"
+    },
+    {
+      "name": "AddAngleParameter(String, String, String, GH_ParamAccess, Double)",
+      "signature": "public int AddAngleParameter(string name, string nickname, string description, GH_ParamAccess access, double default)",
+      "summary": "Add a floating point Number parameter to the input list of this component. The parameter will be aware that it is representing angles.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Double",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddAngleParameter_2.htm"
+    },
+    {
+      "name": "AddArcParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddArcParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Arc parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddArcParameter.htm"
+    },
+    {
+      "name": "AddArcParameter(String, String, String, GH_ParamAccess, Arc)",
+      "signature": "public int AddArcParameter(string name, string nickname, string description, GH_ParamAccess access, Arc default)",
+      "summary": "Add a 3D Arc parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Arc",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddArcParameter_1.htm"
+    },
+    {
+      "name": "AddBooleanParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddBooleanParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Boolean parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddBooleanParameter.htm"
+    },
+    {
+      "name": "AddBooleanParameter(String, String, String, GH_ParamAccess, Boolean)",
+      "signature": "public int AddBooleanParameter(string name, string nickname, string description, GH_ParamAccess access, bool default)",
+      "summary": "Add a Boolean parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Boolean",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddBooleanParameter_1.htm"
+    },
+    {
+      "name": "AddBooleanParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CBoolean\u003E)",
+      "signature": "public int AddBooleanParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003Cbool\u003E default)",
+      "summary": "Add a Boolean parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CBoolean\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddBooleanParameter_2.htm"
+    },
+    {
+      "name": "AddBoxParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddBoxParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Box parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddBoxParameter.htm"
+    },
+    {
+      "name": "AddBoxParameter(String, String, String, GH_ParamAccess, Box)",
+      "signature": "public int AddBoxParameter(string name, string nickname, string description, GH_ParamAccess access, Box default)",
+      "summary": "Add a 3D Box parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Box",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddBoxParameter_1.htm"
+    },
+    {
+      "name": "AddBrepParameter",
+      "signature": "public int AddBrepParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Brep parameter to the input list of this component. Brep parameters can handle both trimmed and untrimmed single or multi-faced Breps.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddBrepParameter.htm"
+    },
+    {
+      "name": "AddCircleParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddCircleParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Circle parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddCircleParameter.htm"
+    },
+    {
+      "name": "AddCircleParameter(String, String, String, GH_ParamAccess, Circle)",
+      "signature": "public int AddCircleParameter(string name, string nickname, string description, GH_ParamAccess access, Circle default)",
+      "summary": "Add a 3D Circle parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Circle",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddCircleParameter_1.htm"
+    },
+    {
+      "name": "AddColourParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddColourParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add an ARGB Colour parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddColourParameter.htm"
+    },
+    {
+      "name": "AddColourParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CColor\u003E)",
+      "signature": "public int AddColourParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003CColor\u003E default)",
+      "summary": "Add an ARGB Colour parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CColor\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddColourParameter_1.htm"
+    },
+    {
+      "name": "AddColourParameter(String, String, String, GH_ParamAccess, Color)",
+      "signature": "public int AddColourParameter(string name, string nickname, string description, GH_ParamAccess access, Color default)",
+      "summary": "Add an ARGB Colour parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Drawing.Color",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddColourParameter_2.htm"
+    },
+    {
+      "name": "AddComplexNumberParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddComplexNumberParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Complex Number parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddComplexNumberParameter.htm"
+    },
+    {
+      "name": "AddComplexNumberParameter(String, String, String, GH_ParamAccess, GH_ComplexNumber)",
+      "signature": "public int AddComplexNumberParameter(string name, string nickname, string description, GH_ParamAccess access, GH_ComplexNumber default)",
+      "summary": "Add a Complex Number parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Grasshopper.Kernel.Types.GH_ComplexNumber",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddComplexNumberParameter_1.htm"
+    },
+    {
+      "name": "AddCultureParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddCultureParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Cultue parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddCultureParameter.htm"
+    },
+    {
+      "name": "AddCultureParameter(String, String, String, GH_ParamAccess, CultureInfo)",
+      "signature": "public int AddCultureParameter(string name, string nickname, string description, GH_ParamAccess access, CultureInfo default)",
+      "summary": "Add a Culture parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Globalization.CultureInfo",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddCultureParameter_1.htm"
+    },
+    {
+      "name": "AddCurveParameter",
+      "signature": "public int AddCurveParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Curve parameter to the input list of this component. Curve parameters can handle all curve types (Lines, Polylines, Circles, Arcs, NurbsCurves etc.)",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddCurveParameter.htm"
+    },
+    {
+      "name": "AddFieldParameter",
+      "signature": "public int AddFieldParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Field parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddFieldParameter.htm"
+    },
+    {
+      "name": "AddGenericParameter",
+      "signature": "public int AddGenericParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Generic parameter to the input list of this component. Generic parameters can handle all types of data.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddGenericParameter.htm"
+    },
+    {
+      "name": "AddGeometryParameter",
+      "signature": "public int AddGeometryParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a generic 3D Geometry parameter to the input list of this component. Geometry parameters can handle all types that represent actual shapes.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddGeometryParameter.htm"
+    },
+    {
+      "name": "AddGroupParameter",
+      "signature": "public int AddGroupParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Transform Group parameter to the input list of this component. Groups are collections of geometry that are transformed as one, they are not the same as Rhino groups.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddGroupParameter.htm"
+    },
+    {
+      "name": "AddIntegerParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddIntegerParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Integer parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddIntegerParameter.htm"
+    },
+    {
+      "name": "AddIntegerParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CInt32\u003E)",
+      "signature": "public int AddIntegerParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003Cint\u003E default)",
+      "summary": "Add a Integer parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddIntegerParameter_1.htm"
+    },
+    {
+      "name": "AddIntegerParameter(String, String, String, GH_ParamAccess, Int32)",
+      "signature": "public int AddIntegerParameter(string name, string nickname, string description, GH_ParamAccess access, int default)",
+      "summary": "Add a Integer parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Int32",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddIntegerParameter_2.htm"
+    },
+    {
+      "name": "AddInterval2DParameter",
+      "signature": "public int AddInterval2DParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add an Interval2D (i.e. uv domain) parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddInterval2DParameter.htm"
+    },
+    {
+      "name": "AddIntervalParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddIntervalParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add an Interval (i.e. numeric domain) parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddIntervalParameter.htm"
+    },
+    {
+      "name": "AddIntervalParameter(String, String, String, GH_ParamAccess, Interval)",
+      "signature": "public int AddIntervalParameter(string name, string nickname, string description, GH_ParamAccess access, Interval default)",
+      "summary": "Add an Interval (i.e. numeric domain) parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Interval",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddIntervalParameter_1.htm"
+    },
+    {
+      "name": "AddIntervalParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CInterval\u003E)",
+      "signature": "public int AddIntervalParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003CInterval\u003E default)",
+      "summary": "Add an Interval (i.e. numeric domain) parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CInterval\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddIntervalParameter_2.htm"
+    },
+    {
+      "name": "AddLineParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddLineParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Line parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddLineParameter.htm"
+    },
+    {
+      "name": "AddLineParameter(String, String, String, GH_ParamAccess, Line)",
+      "signature": "public int AddLineParameter(string name, string nickname, string description, GH_ParamAccess access, Line default)",
+      "summary": "Add a 3D Line parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Line",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddLineParameter_1.htm"
+    },
+    {
+      "name": "AddMatrixParameter",
+      "signature": "public int AddMatrixParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Matrix parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddMatrixParameter.htm"
+    },
+    {
+      "name": "AddMeshFaceParameter",
+      "signature": "public int AddMeshFaceParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a topological MeshFace parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddMeshFaceParameter.htm"
+    },
+    {
+      "name": "AddMeshParameter",
+      "signature": "public int AddMeshParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Mesh parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddMeshParameter.htm"
+    },
+    {
+      "name": "AddNumberParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddNumberParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a floating point Number parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddNumberParameter.htm"
+    },
+    {
+      "name": "AddNumberParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CDouble\u003E)",
+      "signature": "public int AddNumberParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003Cdouble\u003E default)",
+      "summary": "Add a floating point Number parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddNumberParameter_1.htm"
+    },
+    {
+      "name": "AddNumberParameter(String, String, String, GH_ParamAccess, Double)",
+      "signature": "public int AddNumberParameter(string name, string nickname, string description, GH_ParamAccess access, double default)",
+      "summary": "Add a floating point Number parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Double",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddNumberParameter_2.htm"
+    },
+    {
+      "name": "AddParameter(IGH_Param)",
+      "signature": "public int AddParameter(IGH_Param param)",
+      "summary": "Generic parameter addition. If you cannot use one of the utility methods provided by this class, you can register a customized parameter using this method.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index of the newly added parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddParameter.htm"
+    },
+    {
+      "name": "AddParameter(IGH_Param, String, String, String, GH_ParamAccess)",
+      "signature": "public int AddParameter(IGH_Param param, string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Generic parameter addition. If you cannot use one of the utility methods provided by this class, you can register a customized parameter using this method.",
+      "params": [
+        {
+          "name": "param",
+          "type": "Grasshopper.Kernel.IGH_Param",
+          "doc": "The parameter to add.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Index of the newly added parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddParameter_1.htm"
+    },
+    {
+      "name": "AddPathParameter",
+      "signature": "public int AddPathParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Data Path parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddPathParameter.htm"
+    },
+    {
+      "name": "AddPlaneParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddPlaneParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Plane parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddPlaneParameter.htm"
+    },
+    {
+      "name": "AddPlaneParameter(String, String, String, GH_ParamAccess, Plane)",
+      "signature": "public int AddPlaneParameter(string name, string nickname, string description, GH_ParamAccess access, Plane default)",
+      "summary": "Add a 3D Plane parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Plane",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddPlaneParameter_1.htm"
+    },
+    {
+      "name": "AddPointParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddPointParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Point parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddPointParameter.htm"
+    },
+    {
+      "name": "AddPointParameter(String, String, String, GH_ParamAccess, Point3d)",
+      "signature": "public int AddPointParameter(string name, string nickname, string description, GH_ParamAccess access, Point3d default)",
+      "summary": "Register a new 3D point param with a single default coordinate.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Point3d",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddPointParameter_1.htm"
+    },
+    {
+      "name": "AddPointParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public int AddPointParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003CPoint3d\u003E default)",
+      "summary": "Register a new 3D point param with multiple default coordinates.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddPointParameter_2.htm"
+    },
+    {
+      "name": "AddRectangleParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddRectangleParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Rectangle parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddRectangleParameter.htm"
+    },
+    {
+      "name": "AddRectangleParameter(String, String, String, GH_ParamAccess, Rectangle3d)",
+      "signature": "public int AddRectangleParameter(string name, string nickname, string description, GH_ParamAccess access, Rectangle3d default)",
+      "summary": "Add a 3D Rectangle parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Rectangle3d",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddRectangleParameter_1.htm"
+    },
+    {
+      "name": "AddScriptVariableParameter",
+      "signature": "public int AddScriptVariableParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Script Variable parameter to the input list of this component. Script variable parameters are used almost exclusively in VB/C#/Python components so you probably don\u0027t want this one.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddScriptVariableParameter.htm"
+    },
+    {
+      "name": "AddSubDParameter",
+      "signature": "public int AddSubDParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Sub-D parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddSubDParameter.htm"
+    },
+    {
+      "name": "AddSurfaceParameter",
+      "signature": "public int AddSurfaceParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Surface parameter to the input list of this component. Surface parameters can handle both trimmed and untrimmed single-faced Breps.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddSurfaceParameter.htm"
+    },
+    {
+      "name": "AddTextParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddTextParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Text parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddTextParameter.htm"
+    },
+    {
+      "name": "AddTextParameter(String, String, String, GH_ParamAccess, IEnumerable\u003CString\u003E)",
+      "signature": "public int AddTextParameter(string name, string nickname, string description, GH_ParamAccess access, IEnumerable\u003Cstring\u003E default)",
+      "summary": "Add a Text parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "A collection of default values to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddTextParameter_1.htm"
+    },
+    {
+      "name": "AddTextParameter(String, String, String, GH_ParamAccess, String)",
+      "signature": "public int AddTextParameter(string name, string nickname, string description, GH_ParamAccess access, string default)",
+      "summary": "Add a Text parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.String",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddTextParameter_2.htm"
+    },
+    {
+      "name": "AddTimeParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddTimeParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Time parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddTimeParameter.htm"
+    },
+    {
+      "name": "AddTimeParameter(String, String, String, GH_ParamAccess, DateTime)",
+      "signature": "public int AddTimeParameter(string name, string nickname, string description, GH_ParamAccess access, DateTime default)",
+      "summary": "Add a Time parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "System.DateTime",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddTimeParameter_1.htm"
+    },
+    {
+      "name": "AddTransformParameter",
+      "signature": "public int AddTransformParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a Transformation parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddTransformParameter.htm"
+    },
+    {
+      "name": "AddVectorParameter(String, String, String, GH_ParamAccess)",
+      "signature": "public int AddVectorParameter(string name, string nickname, string description, GH_ParamAccess access)",
+      "summary": "Add a 3D Vector parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddVectorParameter.htm"
+    },
+    {
+      "name": "AddVectorParameter(String, String, String, GH_ParamAccess, Vector3d)",
+      "signature": "public int AddVectorParameter(string name, string nickname, string description, GH_ParamAccess access, Vector3d default)",
+      "summary": "Add a 3D Vector parameter to the input list of this component.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the parameter. Keep it short, single words are best.",
+          "optional": false
+        },
+        {
+          "name": "nickname",
+          "type": "System.String",
+          "doc": "The nickname of the parameter. Keep it short, single characters are best.",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "The description of the parameter. Be succinct but clear, single sentences are best.",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Grasshopper.Kernel.GH_ParamAccess",
+          "doc": "Parameter access type. You must provide a correct access code in order to use GetData(), GetDataList() or GetDataTree() respectively.",
+          "optional": false
+        },
+        {
+          "name": "default",
+          "type": "Vector3d",
+          "doc": "A default value to store in the parameter Persistent Data.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_AddVectorParameter_1.htm"
+    },
+    {
+      "name": "HideParameter",
+      "signature": "public override void HideParameter(int index)",
+      "summary": "Hide a specific input parameter. If the parameter at the given index implements IGH_PreviewObject then the Hidden flag will be set to True. Otherwise, nothing will happen.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of parameter to hide.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_Component_GH_InputParamManager_HideParameter.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Param",
+      "type": "IGH_Param",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the input parameter at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_Component_GH_InputParamManager_Param.htm"
+    },
+    {
+      "name": "ParamCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of input parameters already part of this component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_Component_GH_InputParamManager_ParamCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

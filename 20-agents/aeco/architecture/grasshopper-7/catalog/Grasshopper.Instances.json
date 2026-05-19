@@ -1,0 +1,352 @@
+{
+  "name": "Instances",
+  "namespace": "Grasshopper",
+  "kind": "class",
+  "summary": "Provides access to a bunch of global instances and variables.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Instances.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DocumentEditorFadeIn",
+      "signature": "public static void DocumentEditorFadeIn()",
+      "summary": "Calls the FadeIn() method on the DocumentEditor if it exists.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_DocumentEditorFadeIn.htm"
+    },
+    {
+      "name": "DocumentEditorFadeOut",
+      "signature": "public static void DocumentEditorFadeOut()",
+      "summary": "Calls the FadeOut() method on the DocumentEditor if it exists.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_DocumentEditorFadeOut.htm"
+    },
+    {
+      "name": "EnforceInvariantCulture",
+      "signature": "public static void EnforceInvariantCulture()",
+      "summary": "If the Setting \u0022EnforceInvariantCulture\u0022 is set to False, this function does nothing",
+      "remarks": "See AlsoReferenceInstances ClassGrasshopper Namespace",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_EnforceInvariantCulture.htm"
+    },
+    {
+      "name": "HideRemotePanel",
+      "signature": "public static bool HideRemotePanel()",
+      "summary": "Hides the remote control panel.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_HideRemotePanel.htm"
+    },
+    {
+      "name": "InvalidateCanvas",
+      "signature": "public static void InvalidateCanvas()",
+      "summary": "Invalidates the currently active Grasshopper Canvas, causing a redraw sometime in the foreseeable future.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_InvalidateCanvas.htm"
+    },
+    {
+      "name": "RedrawAll",
+      "signature": "public static void RedrawAll()",
+      "summary": "Forces a redraw of both the active canvas and the Rhino viewports.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_RedrawAll.htm"
+    },
+    {
+      "name": "RedrawCanvas",
+      "signature": "public static void RedrawCanvas()",
+      "summary": "Forces a redraw of the currently active Grasshopper Canvas.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_RedrawCanvas.htm"
+    },
+    {
+      "name": "ReloadMemoryAssemblies",
+      "signature": "public static List\u003Cstring\u003E ReloadMemoryAssemblies()",
+      "summary": "Unload and attempt to reload all plugin assemblies that were loaded via the COFF pipeline.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "Collection of load messages."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_ReloadMemoryAssemblies.htm"
+    },
+    {
+      "name": "ShowRemotePanel",
+      "signature": "public static bool ShowRemotePanel()",
+      "summary": "Shows the remote control panel.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_ShowRemotePanel.htm"
+    },
+    {
+      "name": "UnloadAllObjects",
+      "signature": "public static void UnloadAllObjects()",
+      "summary": "Clears and unloads all cached objects. This function is called by the _GrasshopperUnloadPlugin command. Please don\u0027t use it.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Instances_UnloadAllObjects.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveCanvas",
+      "type": "GH_Canvas",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the currently active Grasshopper canvas (if any)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_ActiveCanvas.htm"
+    },
+    {
+      "name": "AutoHideBanner",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the banner ought to be hidden automatically when loading completes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_AutoHideBanner.htm"
+    },
+    {
+      "name": "AutoShowBanner",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not the banner will be displayed during the ComponentServer Loading process.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_AutoShowBanner.htm"
+    },
+    {
+      "name": "BakeIcon24",
+      "type": "Bitmap",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the 24x24 pixel bake icon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_BakeIcon24.htm"
+    },
+    {
+      "name": "ComponentServer",
+      "type": "GH_ComponentServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ComponentServer instance cached by the Instance Server. The ComponentServer will be instantiated the first time this property accessed. This is a rather involved process during which the Grasshopper Banner will be displayed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_ComponentServer.htm"
+    },
+    {
+      "name": "CursorServer",
+      "type": "GH_CursorServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the CursorServer instance cached by the Instance Server. The CursorServer will be instantiated the first time this property is accessed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_CursorServer.htm"
+    },
+    {
+      "name": "DocumentAssociationServer",
+      "type": "GH_DocumentAssociations",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the Document Association Server instance cached by the Instance Server. The Document Association Server will be instantiated the first time this property accessed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_DocumentAssociationServer.htm"
+    },
+    {
+      "name": "DocumentEditor",
+      "type": "GH_DocumentEditor",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the DocumentEditor of Grasshopper.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_DocumentEditor.htm"
+    },
+    {
+      "name": "DocumentServer",
+      "type": "GH_DocumentServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the DocumentServer instance cached by the Instance Server. The DocumentServer will be instantiated the first time this property accessed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_DocumentServer.htm"
+    },
+    {
+      "name": "EtoDocumentEditor",
+      "type": "Window",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_EtoDocumentEditor.htm"
+    },
+    {
+      "name": "GrasshopperPluginId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of the Grasshopper Plugin.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_GrasshopperPluginId.htm"
+    },
+    {
+      "name": "IsComponentServer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Component server has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsComponentServer.htm"
+    },
+    {
+      "name": "IsCursorServer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Cursor server has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsCursorServer.htm"
+    },
+    {
+      "name": "IsDocumentAssociationServer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Document Association server has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsDocumentAssociationServer.htm"
+    },
+    {
+      "name": "IsDocumentEditor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Document Editor has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsDocumentEditor.htm"
+    },
+    {
+      "name": "IsDocumentEditorOnTopOfViewports",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Grasshopper document editor (or any of its child forms) is obscuring a significant part of the Rhino viewports.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsDocumentEditorOnTopOfViewports.htm"
+    },
+    {
+      "name": "IsDocumentServer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Document server has been set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsDocumentServer.htm"
+    },
+    {
+      "name": "IsMarkovChain",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the MarkovChain has already been initialized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsMarkovChain.htm"
+    },
+    {
+      "name": "IsMruServer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not the MRU server has been initialized.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsMruServer.htm"
+    },
+    {
+      "name": "IsRemotePanelVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the Remote Control Panel is currently visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_IsRemotePanelVisible.htm"
+    },
+    {
+      "name": "MarkovChain",
+      "type": "GH_MarkovChain",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the MarkovChain instance cached by the Instance Server. The Markov chain will be instantiated if it hasn\u0027t been already.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_MarkovChain.htm"
+    },
+    {
+      "name": "MruServer",
+      "type": "GH_MRU_Server",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the MRU_Server instance cached by the Instance Server. The MRU_Server will be instantiated the first time this property accessed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_MruServer.htm"
+    },
+    {
+      "name": "RcpPanel",
+      "type": "RemoteControlPanel",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the app-domain wide RCP panel instance. If it doesn\u0027t exist yet it will be created.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_RcpPanel.htm"
+    },
+    {
+      "name": "RunningHeadless",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_RunningHeadless.htm"
+    },
+    {
+      "name": "Settings",
+      "type": "GH_SettingsServer",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents the default settings database. Feel free to add your own settings to this database.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Instances_Settings.htm"
+    },
+    {
+      "name": "LoadOneByOne",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/F_Grasshopper_Instances_LoadOneByOne.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "CanvasCreated",
+      "delegate": "Grasshopper.Instances.CanvasCreatedEventHandler",
+      "signature": "public static event Instances.CanvasCreatedEventHandler CanvasCreated",
+      "summary": "Raised when the main canvas is created.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Instances_CanvasCreated.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CanvasDestroyed",
+      "delegate": "Grasshopper.Instances.CanvasDestroyedEventHandler",
+      "signature": "public static event Instances.CanvasDestroyedEventHandler CanvasDestroyed",
+      "summary": "Raised when the main canvas is destroyed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/E_Grasshopper_Instances_CanvasDestroyed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

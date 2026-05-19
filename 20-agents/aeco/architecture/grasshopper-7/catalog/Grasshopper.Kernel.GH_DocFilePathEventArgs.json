@@ -1,0 +1,66 @@
+{
+  "name": "GH_DocFilePathEventArgs",
+  "namespace": "Grasshopper.Kernel",
+  "kind": "class",
+  "summary": "These arguments are passed along with FilePathChanged events on GH_Document.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/T_Grasshopper_Kernel_GH_DocFilePathEventArgs.htm",
+  "constructors": [
+    {
+      "name": "GH_DocFilePathEventArgs",
+      "signature": "public GH_DocFilePathEventArgs(GH_Document document, string oldPath, string newPath)",
+      "summary": "Create a new instance of the GH_DocFilePathEventArgs class.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Grasshopper.Kernel.GH_Document",
+          "optional": false
+        },
+        {
+          "name": "oldPath",
+          "type": "System.String",
+          "optional": false
+        },
+        {
+          "name": "newPath",
+          "type": "System.String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/M_Grasshopper_Kernel_GH_DocFilePathEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "GH_Document",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that raised this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocFilePathEventArgs_Document.htm"
+    },
+    {
+      "name": "NewFilePath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the new filepath, the one currently assigned to this document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocFilePathEventArgs_NewFilePath.htm"
+    },
+    {
+      "name": "OldFilePath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the old filepath, prior to the change that triggered this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/P_Grasshopper_Kernel_GH_DocFilePathEventArgs_OldFilePath.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
