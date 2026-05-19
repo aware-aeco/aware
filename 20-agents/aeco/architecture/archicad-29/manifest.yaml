@@ -777,6 +777,15 @@ commands:
     description: Performs a send operation on the currently opened Teamwork project.
 
 skills:
+  # === v0.34 curated craft skills =============================================
+  # Hand-written narrative skills covering the workflow / orchestration layer
+  # the AI agent needs in order to compose the curated workflow verbs above.
+  - archicad-scripting-context.md
+  - archicad-element-model.md
+  - archicad-zones-and-spaces.md
+  - archicad-layouts-and-issue.md
+  - archicad-hotlinks-and-teamwork.md
+  # === Auto-generated namespace skills ========================================
   - archicad-officialcommands.md
   - tapir-additionalcommands.md
   - tapir-schema.md
