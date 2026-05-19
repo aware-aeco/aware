@@ -10,7 +10,7 @@ internal static class Exec
 {
     public static int Run(JsonNode? input, SketchupClient? clientOverride = null, int timeoutMs = 30_000)
     {
-        var code = input?["code"]?.GetValue<string>();
+        var code = TryString(input, "code");
         if (string.IsNullOrEmpty(code))
         {
             Console.WriteLine(Receipts.ExecFail(
@@ -19,8 +19,10 @@ internal static class Exec
             return 2;
         }
 
-        var sketchupId = input?["sketchup_id"]?.GetValue<string>();
-        var version    = input?["version"]?.GetValue<string>();
+        // sketchup_id may arrive as either a string ("12345") or a number (12345).
+        // Coerce both forms; reject other types.
+        var sketchupId = TryStringOrNumber(input, "sketchup_id");
+        var version    = TryString(input, "version");
         var argsObj    = input?["args"] as JsonObject;
 
         var client = clientOverride ?? new SketchupClient();
@@ -91,5 +93,32 @@ internal static class Exec
             inst.Pid.ToString(),
             stdoutLog).ToJsonString());
         return 0;
+    }
+
+    /// <summary>
+    /// Defensive read of a string field — returns null if the field is absent,
+    /// null, or a non-string. Avoids InvalidOperationException from
+    /// JsonValue.GetValue&lt;string&gt;() on wrong-typed input.
+    /// </summary>
+    internal static string? TryString(JsonNode? input, string key)
+    {
+        var node = input?[key];
+        if (node is null) return null;
+        try { return node.GetValue<string>(); }
+        catch { return null; }
+    }
+
+    /// <summary>
+    /// Defensive read accepting either string or number form. Returns the
+    /// string representation of the number when applicable.
+    /// </summary>
+    internal static string? TryStringOrNumber(JsonNode? input, string key)
+    {
+        var node = input?[key];
+        if (node is null) return null;
+        try { return node.GetValue<string>(); } catch { /* try number */ }
+        try { return node.GetValue<long>().ToString(); } catch { /* try double */ }
+        try { return node.GetValue<double>().ToString("0", System.Globalization.CultureInfo.InvariantCulture); } catch { }
+        return null;
     }
 }

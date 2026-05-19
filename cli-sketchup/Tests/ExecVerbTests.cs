@@ -25,6 +25,29 @@ public class ExecVerbTests : IDisposable
     }
 
     [Fact]
+    public void TryString_HandlesMissingAndWrongType()
+    {
+        var obj = JsonNode.Parse("{\"s\":\"hello\",\"n\":42,\"b\":true,\"x\":null}");
+        Assert.Equal("hello", Exec.TryString(obj, "s"));
+        Assert.Null(Exec.TryString(obj, "n"));   // number, not string
+        Assert.Null(Exec.TryString(obj, "b"));   // bool
+        Assert.Null(Exec.TryString(obj, "x"));   // null
+        Assert.Null(Exec.TryString(obj, "missing"));
+    }
+
+    [Fact]
+    public void TryStringOrNumber_AcceptsBothForms()
+    {
+        var obj = JsonNode.Parse("{\"s\":\"42\",\"i\":42,\"big\":4000000000,\"f\":3.14,\"x\":null}");
+        Assert.Equal("42", Exec.TryStringOrNumber(obj, "s"));
+        Assert.Equal("42", Exec.TryStringOrNumber(obj, "i"));
+        Assert.Equal("4000000000", Exec.TryStringOrNumber(obj, "big"));
+        Assert.NotNull(Exec.TryStringOrNumber(obj, "f"));  // formatted some way
+        Assert.Null(Exec.TryStringOrNumber(obj, "x"));
+        Assert.Null(Exec.TryStringOrNumber(obj, "missing"));
+    }
+
+    [Fact]
     public void Exec_NoInstance_FailsWithDescriptiveError()
     {
         var client = new SketchupClient(_discoveryDir, pidAlive: _ => false);

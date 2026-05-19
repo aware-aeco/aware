@@ -14,11 +14,11 @@ internal static class Close
 {
     public static int Run(JsonNode? input, SketchupClient? clientOverride = null)
     {
-        bool force          = input?["force"]?.GetValue<bool?>() ?? false;
-        bool all            = input?["all"]?.GetValue<bool?>() ?? false;
-        string? sketchupId  = input?["sketchup_id"]?.GetValue<string>()
-                              ?? input?["pid"]?.GetValue<int?>()?.ToString();
-        string? version     = input?["version"]?.GetValue<string>();
+        bool force          = TryBool(input, "force") ?? false;
+        bool all            = TryBool(input, "all") ?? false;
+        string? sketchupId  = Exec.TryStringOrNumber(input, "sketchup_id")
+                              ?? Exec.TryStringOrNumber(input, "pid");
+        string? version     = Exec.TryString(input, "version");
 
         var client = clientOverride ?? new SketchupClient();
         var instances = client.ListInstances();
@@ -96,6 +96,14 @@ internal static class Close
 
         Console.WriteLine(Receipts.CloseOk(results).ToJsonString());
         return 0;
+    }
+
+    static bool? TryBool(JsonNode? input, string key)
+    {
+        var node = input?[key];
+        if (node is null) return null;
+        try { return node.GetValue<bool>(); }
+        catch { return null; }
     }
 
     static void CloseOne(SketchupInstance inst, bool force, SketchupClient client)

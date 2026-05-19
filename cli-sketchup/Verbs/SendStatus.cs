@@ -10,7 +10,7 @@ internal static class SendStatus
 {
     public static int Run(JsonNode? input, SketchupClient? clientOverride = null)
     {
-        var message = input?["message"]?.GetValue<string>();
+        var message = Exec.TryString(input, "message");
         if (string.IsNullOrEmpty(message))
         {
             Console.WriteLine(Receipts.GenericFail("send-status",
@@ -29,8 +29,8 @@ internal static class SendStatus
         var execInput = new JsonObject
         {
             ["verb"]        = "exec",
-            ["version"]     = input?["version"]?.GetValue<string>(),
-            ["sketchup_id"] = input?["sketchup_id"]?.GetValue<string>(),
+            ["version"]     = Exec.TryString(input, "version"),
+            ["sketchup_id"] = Exec.TryStringOrNumber(input, "sketchup_id"),
             ["code"]        = rubyCode,
             ["args"]        = new JsonObject { ["message"] = message },
         };

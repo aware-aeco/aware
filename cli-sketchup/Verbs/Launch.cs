@@ -13,9 +13,9 @@ internal static class Launch
 {
     public static int Run(JsonNode? input)
     {
-        int targetYear           = input?["target_year"]?.GetValue<int?>() ?? 2026;
-        string? modelPath        = input?["model_path"]?.GetValue<string>();
-        string? sketchupExeOverride = input?["sketchup_exe"]?.GetValue<string>();
+        int targetYear           = TryInt(input, "target_year") ?? 2026;
+        string? modelPath        = Exec.TryString(input, "model_path");
+        string? sketchupExeOverride = Exec.TryString(input, "sketchup_exe");
 
         var exe = sketchupExeOverride ?? DiscoverSketchupExe(targetYear);
         if (string.IsNullOrEmpty(exe) || !File.Exists(exe))
@@ -76,6 +76,14 @@ internal static class Launch
         });
         Console.WriteLine(receipt.ToJsonString());
         return 0;
+    }
+
+    static int? TryInt(JsonNode? input, string key)
+    {
+        var node = input?[key];
+        if (node is null) return null;
+        try { return node.GetValue<int>(); }
+        catch { return null; }
     }
 
     internal static string? DiscoverSketchupExe(int targetYear)

@@ -233,29 +233,39 @@ module AwareSketchupBridge
       # --- user-script wrapper ----------------------------------------------
 
       def run_user_script(code, args)
+        # Capture stdout so `puts` in user code goes into the receipt rather
+        # than SketchUp's Ruby Console.
         captured = String.new
-        result = nil
-        error  = nil
-        backtrace = ''
-
         original_stdout = $stdout
+
+        # Evaluate the user's code in a FRESH binding obtained from a sandbox
+        # object so user code can't accidentally rebind our outer locals
+        # (`result`, `error`, `captured`, etc.) via name reassignment. The
+        # sandbox is a plain Object with no methods of ours exposed.
+        sandbox_binding = Object.new.instance_eval { binding }
+
+        outcome = { ok: nil, value: nil, error: nil, stack: '' }
         begin
           $stdout = StringIO.new(captured)
-          # Wrap in a lambda so the user can use `return` to short-circuit
-          # without taking down the bridge.
-          fn = ::Kernel.send(:eval, "->(args) { #{code}\n}", binding, '(aware-exec)', 1)
-          result = fn.call(args)
+          # Wrap user code in a lambda so `return` short-circuits the lambda
+          # rather than the bridge. The lambda's own `args` parameter shadows
+          # any incidental references in surrounding scope.
+          fn = ::Kernel.send(:eval, "->(args) { #{code}\n}", sandbox_binding, '(aware-exec)', 1)
+          value = fn.call(args)
+          outcome[:ok] = true
+          outcome[:value] = value
         rescue Exception => e   # must catch SystemExit so user code can't kill SketchUp
-          error = "#{e.class}: #{e.message}"
-          backtrace = (e.backtrace || []).first(50).join("\n")
+          outcome[:ok] = false
+          outcome[:error] = "#{e.class}: #{e.message}"
+          outcome[:stack] = (e.backtrace || []).first(50).join("\n")
         ensure
           $stdout = original_stdout
         end
 
-        if error
-          { 'ok' => false, 'error' => error, 'stack' => backtrace, 'stdout_log' => captured }
+        if outcome[:ok]
+          { 'ok' => true, 'result' => encode_json_safe(outcome[:value]), 'stdout_log' => captured }
         else
-          { 'ok' => true, 'result' => encode_json_safe(result), 'stdout_log' => captured }
+          { 'ok' => false, 'error' => outcome[:error], 'stack' => outcome[:stack], 'stdout_log' => captured }
         end
       end
 
