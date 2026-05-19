@@ -13,19 +13,18 @@ public sealed class AddInApplication : IExternalApplication
     PipeServer? _server;
     ExecuteEventHandler? _handler;
     ExternalEvent? _event;
-    readonly UIApplicationProvider _uiProvider = new();
 
     public Result OnStartup(UIControlledApplication app)
     {
         try
         {
-            // Capture the live UIApplication on the first Idling event — that's
-            // when Revit guarantees the object is constructed and ready.
-            app.Idling += OnIdling;
-
+            // ExternalEvent.Create wires Revit's main-thread dispatch mechanism;
+            // the handler's Execute(UIApplication) receives the live UIApplication
+            // from Revit itself when the event fires, so we don't need to capture
+            // it ourselves.
             _handler = new ExecuteEventHandler();
             _event = ExternalEvent.Create(_handler);
-            _server = new PipeServer(_handler, _event, _uiProvider);
+            _server = new PipeServer(_handler, _event);
             _server.Start();
             return Result.Succeeded;
         }
@@ -38,33 +37,8 @@ public sealed class AddInApplication : IExternalApplication
 
     public Result OnShutdown(UIControlledApplication app)
     {
-        try
-        {
-            app.Idling -= OnIdling;
-            _server?.Stop();
-        }
+        try { _server?.Stop(); }
         catch { /* best effort */ }
         return Result.Succeeded;
-    }
-
-    void OnIdling(object? sender, Autodesk.Revit.UI.Events.IdlingEventArgs e)
-    {
-        if (sender is UIApplication ui) _uiProvider.Set(ui);
-    }
-}
-
-/// <summary>Thread-safe holder: the pipe server captures this at boot,
-/// and the Idling event populates it later (once Revit has a real UIApplication).</summary>
-internal sealed class UIApplicationProvider
-{
-    UIApplication? _ui;
-    readonly object _lock = new();
-    public void Set(UIApplication ui)
-    {
-        lock (_lock) { _ui ??= ui; }
-    }
-    public UIApplication? Get()
-    {
-        lock (_lock) { return _ui; }
     }
 }

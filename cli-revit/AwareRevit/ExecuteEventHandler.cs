@@ -20,11 +20,10 @@ internal sealed class ExecuteEventHandler : IExternalEventHandler
     /// <summary>Called by the pipe server thread. Returns a Task that completes
     /// when Execute() finishes the work. Holds at most one outstanding request
     /// per UI idle cycle (the queue is drained by Execute()).</summary>
-    public Task<ExecResponse> Enqueue(ExecRequest req, ExternalEvent ev,
-                                      UIApplicationProvider uiProvider)
+    public Task<ExecResponse> Enqueue(ExecRequest req, ExternalEvent ev)
     {
         var tcs = new TaskCompletionSource<ExecResponse>();
-        _queue.Enqueue(new PendingRequest(req, tcs, uiProvider));
+        _queue.Enqueue(new PendingRequest(req, tcs));
         ev.Raise();
         return tcs.Task;
     }
@@ -56,6 +55,5 @@ internal sealed class ExecuteEventHandler : IExternalEventHandler
 
     sealed record PendingRequest(
         ExecRequest Req,
-        TaskCompletionSource<ExecResponse> Tcs,
-        UIApplicationProvider UiProvider);
+        TaskCompletionSource<ExecResponse> Tcs);
 }

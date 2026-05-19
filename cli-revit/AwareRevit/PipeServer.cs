@@ -21,16 +21,14 @@ internal sealed class PipeServer
 
     readonly ExecuteEventHandler _handler;
     readonly ExternalEvent _event;
-    readonly UIApplicationProvider _uiProvider;
     readonly string _pipeName;
     readonly CancellationTokenSource _cts = new();
     Thread? _listener;
 
-    public PipeServer(ExecuteEventHandler handler, ExternalEvent ev, UIApplicationProvider uiProvider)
+    public PipeServer(ExecuteEventHandler handler, ExternalEvent ev)
     {
         _handler = handler;
         _event = ev;
-        _uiProvider = uiProvider;
         var pid = System.Diagnostics.Process.GetCurrentProcess().Id;
         _pipeName = $"aware-revit-{pid}";
     }
@@ -39,7 +37,22 @@ internal sealed class PipeServer
 
     public void Start()
     {
-        _listener = new Thread(() => ListenLoop(_cts.Token))
+        // Run the async listen-loop on a dedicated background thread. We
+        // wrap the await of ListenLoopAsync with `GetAwaiter().GetResult()` so
+        // that any unhandled exception in the loop terminates THIS thread, not
+        // Revit's main thread. The Thread is IsBackground=true so it dies with
+        // Revit. async void is avoided because unhandled async-void exceptions
+        // can take down the host process.
+        _listener = new Thread(() =>
+        {
+            try { ListenLoopAsync(_cts.Token).GetAwaiter().GetResult(); }
+            catch (OperationCanceledException) { /* normal shutdown */ }
+            catch (Exception ex)
+            {
+                try { System.Diagnostics.Debug.WriteLine($"AwareRevit pipe loop crashed: {ex}"); }
+                catch { }
+            }
+        })
         {
             IsBackground = true,
             Name = "AwareRevit.PipeServer",
@@ -54,7 +67,7 @@ internal sealed class PipeServer
         // the token; the loop exits naturally.
     }
 
-    async void ListenLoop(CancellationToken ct)
+    async Task ListenLoopAsync(CancellationToken ct)
     {
         while (!ct.IsCancellationRequested)
         {
@@ -124,7 +137,7 @@ internal sealed class PipeServer
             return;
         }
 
-        var resp = await _handler.Enqueue(req, _event, _uiProvider);
+        var resp = await _handler.Enqueue(req, _event);
         var respJson = JsonSerializer.Serialize(resp, JsonOpts);
         await PipeFrame.WriteAsync(server, respJson, ct);
     }
