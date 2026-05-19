@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecULongList/",
   "constructors": [
     {
-      "name": "VecULongList()",
-      "signature": "VecULongList()",
+      "name": "VecULongList",
+      "signature": "VecULongList() | VecULongList(valueList)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecULongList/#NemAll_Python_Utility.VecULongList.__init__"
-    },
-    {
-      "name": "VecULongList(valueList)",
-      "signature": "VecULongList(valueList)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "valueList",
-          "type": "list",
-          "doc": "Value list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/",
   "constructors": [
     {
-      "name": "ApproximationSettings( oType: eApproximationSettingsType = ASET_SEGMENTATION, value: float = 30.0 )",
-      "signature": "ApproximationSettings( oType: eApproximationSettingsType = ASET_SEGMENTATION, value: float = 30.0 )",
+      "name": "ApproximationSettings",
+      "signature": "ApproximationSettings( oType: eApproximationSettingsType = ASET_SEGMENTATION, value: float = 30.0 ) | ApproximationSettings(options: ApproximationSettings)",
       "summary": "Default constructor. Other members will be set to 0. Types can be found in GeometryEnums.h",
       "remarks": "Default constructor. Other members will be set to 0. Types can be found in GeometryEnums.h",
       "params": [
@@ -22,24 +22,6 @@
           "name": "value",
           "type": "float",
           "doc": "value which will be set",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/#NemAll_Python_Geometry.ApproximationSettings.__init__"
-    },
-    {
-      "name": "ApproximationSettings(options: ApproximationSettings)",
-      "signature": "ApproximationSettings(options: ApproximationSettings)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "options",
-          "type": "ApproximationSettings",
-          "doc": "ApproximationSettings which will be copied.",
           "optional": false
         }
       ],

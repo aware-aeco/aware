@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/",
   "constructors": [
     {
-      "name": "StructuralElementProperties()",
-      "signature": "StructuralElementProperties()",
+      "name": "StructuralElementProperties",
+      "signature": "StructuralElementProperties() | StructuralElementProperties(structuralElementProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.__init__"
-    },
-    {
-      "name": "StructuralElementProperties(structuralElementProperties)",
-      "signature": "StructuralElementProperties(structuralElementProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "structuralColumnProps",
-          "type": "object",
-          "doc": "Structural Element properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

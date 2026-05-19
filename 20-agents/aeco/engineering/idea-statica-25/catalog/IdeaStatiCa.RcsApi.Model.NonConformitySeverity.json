@@ -1,0 +1,30 @@
+{
+  "name": "NonConformitySeverity",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.NonConformitySeverity.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/NonConformitySeverity.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "info",
+      "value": "info"
+    },
+    {
+      "name": "warning",
+      "value": "warning"
+    },
+    {
+      "name": "error",
+      "value": "error"
+    },
+    {
+      "name": "terminatedError",
+      "value": "terminatedError"
+    }
+  ]
+}

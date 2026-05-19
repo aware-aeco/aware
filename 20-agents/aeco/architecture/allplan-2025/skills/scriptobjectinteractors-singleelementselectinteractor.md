@@ -20,7 +20,7 @@ implementation of the interactor for the single element selection
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectInteractor/)
 
 ### Constructors
-- `SingleElementSelectInteractor( interactor_result: SingleElementSelectResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, prompt_msg: str = "Select the element", )` — initialize
+- `SingleElementSelectInteractor( interactor_result: SingleElementSelectResult, ele_filter: list[GUID] | SingleElementSelectInteractor() | SingleElementSelectInteractor() | SingleElementSelectInteractor()` — initialize
 
 ### Methods
 #### `process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -> bool`

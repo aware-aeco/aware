@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/",
   "constructors": [
     {
-      "name": "AttributeEnum()",
-      "signature": "AttributeEnum()",
+      "name": "AttributeEnum",
+      "signature": "AttributeEnum() | AttributeEnum(id: int, value: int) | AttributeEnum(element: AttributeEnum)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__init__"
-    },
-    {
-      "name": "AttributeEnum(id: int, value: int)",
-      "signature": "AttributeEnum(id: int, value: int)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "int",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__init__"
-    },
-    {
-      "name": "AttributeEnum(element: AttributeEnum)",
-      "signature": "AttributeEnum(element: AttributeEnum)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeEnum",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

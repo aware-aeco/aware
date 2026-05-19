@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2DList/",
   "constructors": [
     {
-      "name": "Polygon2DList()",
+      "name": "Polygon2DList",
       "signature": "Polygon2DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

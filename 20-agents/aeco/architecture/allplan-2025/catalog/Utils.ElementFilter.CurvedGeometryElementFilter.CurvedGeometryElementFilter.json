@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/CurvedGeometryElementFilter/",
   "constructors": [
     {
-      "name": "CurvedGeometryElementFilter()",
+      "name": "CurvedGeometryElementFilter",
       "signature": "CurvedGeometryElementFilter(filter_curve_2d: bool, filter_curve_3d: bool)",
       "summary": "initialize",
       "remarks": "initialize",

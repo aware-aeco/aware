@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/PythonPartParameterUtil/",
   "constructors": [
     {
-      "name": "PythonPartParameterUtil()",
+      "name": "PythonPartParameterUtil",
       "signature": "PythonPartParameterUtil( python_part_ele: BaseElementAdapter, str_table: BuildingElementStringTable, material_str_table: BuildingElementMaterialStringTable, )",
       "summary": "initialize",
       "remarks": "initialize",

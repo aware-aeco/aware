@@ -14,7 +14,7 @@ Implementation of the handle modification service
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/)
 
 ### Constructors
-- `HandleModificationService( coord_input: CoordinateInput, build_ele_list: list[BuildingElement], control_props_list: list[BuildingElementControlProperties], asso_ref_ele: BaseElementAdapter | None = None, use_system_angle: bool = True, )` — initialize
+- `HandleModificationService( coord_input: CoordinateInput, build_ele_list: list[BuildingElement], control_props_list: list[BuildingElementControlProperties], asso_ref_ele: BaseElementAdapter | HandleModificationService()` — initialize
 
 ### Methods
 #### `get_local_handle_point(input_pnt: Point3D) -> Point3D | None`

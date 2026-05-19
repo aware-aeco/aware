@@ -1,0 +1,383 @@
+{
+  "name": "Array",
+  "namespace": "",
+  "kind": "class",
+  "summary": "The SketchUp Array class adds additional methods to the standard Ruby Array class. Specifically, it contains methods allowing an array to behave just as a Geom::Vector3d or Geom::Point3d object (which can be thought of as arrays of 3 coordinate values). Therefore, you can use the Array class in place of a Geom::Point3d or Geom::Vector3d as a way to pass coordinate values.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Array.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "cross",
+      "signature": "cross(vector) =\u003E Geom::Vector3d | cross(vector) =\u003E Geom::Vector2d",
+      "summary": "The #cross method is used to compute the cross product between two vectors.",
+      "remarks": "The #cross method is used to compute the cross product between two vectors.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#cross-instance_method"
+    },
+    {
+      "name": "distance",
+      "signature": "distance(point) =\u003E Length | distance(point) =\u003E Length",
+      "summary": "The #distance method is used to compute the distance between two points.",
+      "remarks": "The #distance method is used to compute the distance between two points.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Length",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#distance-instance_method"
+    },
+    {
+      "name": "distance_to_line",
+      "signature": "distance_to_line(point, vector) =\u003E Length | distance_to_line(point1, point2) =\u003E Length",
+      "summary": "The #distance_to_line method is used to compute the distance from a Geom::Point3d object to a line.",
+      "remarks": "The #distance_to_line method is used to compute the distance from a Geom::Point3d object to a line.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Length",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#distance_to_line-instance_method"
+    },
+    {
+      "name": "distance_to_plane",
+      "signature": "distance_to_plane(point, vector) =\u003E Length | distance_to_plane(point1, point2, point3) =\u003E Length | distance_to_plane(float1, float2, float3, float4) =\u003E Length | distance_to_plane(array) =\u003E Length | distance_to_plane(array) =\u003E Length | distance_to_plane(array) =\u003E Length",
+      "summary": "The #distance_to_plane method is used to compute the distance from a Geom::Point3d object to a plane.",
+      "remarks": "The #distance_to_plane method is used to compute the distance from a Geom::Point3d object to a plane.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Length",
+        "doc": "The distance between the two points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#distance_to_plane-instance_method"
+    },
+    {
+      "name": "dot",
+      "signature": "dot(vector) =\u003E Float | dot(vector) =\u003E Float",
+      "summary": "The #dot method is used to compute the dot product between two vectors.",
+      "remarks": "The #dot method is used to compute the dot product between two vectors.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#dot-instance_method"
+    },
+    {
+      "name": "normalize",
+      "signature": "normalize =\u003E Array(Float, Float, Float) | normalize =\u003E Array(Float, Float)",
+      "summary": "Note: The arguments and return value will be converted to a floating point value.",
+      "remarks": "Note: The arguments and return value will be converted to a floating point value. (Unlike in the Geom::Vector3d#normalize! method.) The #normalize method is used to normalize a vector (setting its length to 1). It returns a new array rather than changing the original in place.",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float, Float)",
+        "doc": "an array object representing a vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#normalize-instance_method"
+    },
+    {
+      "name": "normalize!",
+      "signature": "normalize! =\u003E Array(Float, Float, Float) | normalize! =\u003E Array(Float, Float)",
+      "summary": "The #normalize! method is used to normalize a vector in place (setting its length to 1).",
+      "remarks": "The #normalize! method is used to normalize a vector in place (setting its length to 1).",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float, Float)",
+        "doc": "an array object representing a vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#normalize!-instance_method"
+    },
+    {
+      "name": "offset",
+      "signature": "offset(vector) =\u003E Array(Length, Length, Length) | offset(vector) =\u003E Array(Length, Length) | offset(vector, length) =\u003E Array(Length, Length, Length) | offset(vector, length) =\u003E Array(Length, Length)",
+      "summary": "The #offset method is used to offset a point by a vector.",
+      "remarks": "The #offset method is used to offset a point by a vector. it returns a new array rather than modifying the original in place.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "doc": "A Vector3d object used to offset the point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array(Length, Length, Length)",
+        "doc": "The newly offset array representing a point or vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#offset-instance_method"
+    },
+    {
+      "name": "offset!",
+      "signature": "offset!(vector) =\u003E Array(Length, Length, Length) | offset!(vector) =\u003E Array(Length, Length) | offset!(vector, length) =\u003E Array(Length, Length, Length) | offset!(vector, length) =\u003E Array(Length, Length)",
+      "summary": "The #offset! method is used to offset a point by a vector.",
+      "remarks": "The #offset! method is used to offset a point by a vector. The array is modified in place.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "doc": "A Vector3d object used to offset the point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array(Length, Length, Length)",
+        "doc": "The newly offset array representing a point or vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#offset!-instance_method"
+    },
+    {
+      "name": "on_line?",
+      "signature": "on_line?(point, vector) =\u003E Boolean | on_line?(point1, point2) =\u003E Boolean",
+      "summary": "The #on_line? method is used to determine if a Geom::Point3d object is on a line.",
+      "remarks": "The #on_line? method is used to determine if a Geom::Point3d object is on a line.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the point is on the line, false if the point is not on the line."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#on_line?-instance_method"
+    },
+    {
+      "name": "on_plane?",
+      "signature": "on_plane?(point, vector) =\u003E Boolean | on_plane?(point1, point2, point3) =\u003E Boolean | on_plane?(float1, float2, float3, float4) =\u003E Boolean | on_plane?(array) =\u003E Boolean | on_plane?(array) =\u003E Boolean | on_plane?(array) =\u003E Boolean",
+      "summary": "The #on_plane? method is used to determine if a Geom::Point3d object is on a plane (to within SketchUp\u0027s standard floating point tolerance).",
+      "remarks": "The #on_plane? method is used to determine if a Geom::Point3d object is on a plane (to within SketchUp\u0027s standard floating point tolerance).",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#on_plane?-instance_method"
+    },
+    {
+      "name": "project_to_line",
+      "signature": "project_to_line(point, vector) =\u003E Array(Length, Length, Length) | project_to_line(point1, point2) =\u003E Array(Length, Length, Length)",
+      "summary": "The #project_to_line method is used to retrieve the projection of a Geom::Point3d object onto a line.",
+      "remarks": "The #project_to_line method is used to retrieve the projection of a Geom::Point3d object onto a line.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array(Length, Length, Length)",
+        "doc": "A new point on the line that is closest to this point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#project_to_line-instance_method"
+    },
+    {
+      "name": "project_to_plane",
+      "signature": "project_to_plane(point, vector) =\u003E Array(Length, Length, Length) | project_to_plane(point1, point2, point3) =\u003E Array(Length, Length, Length) | project_to_plane(float1, float2, float3, float4) =\u003E Array(Length, Length, Length) | project_to_plane(array) =\u003E Array(Length, Length, Length) | project_to_plane(array) =\u003E Array(Length, Length, Length) | project_to_plane(array) =\u003E Array(Length, Length, Length)",
+      "summary": "The #project_to_plane method retrieves the projection of a Geom::Point3d onto a plane.",
+      "remarks": "The #project_to_plane method retrieves the projection of a Geom::Point3d onto a plane.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array(Length, Length, Length)",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#project_to_plane-instance_method"
+    },
+    {
+      "name": "transform",
+      "signature": "transform(transform) =\u003E Array\u003CLength, Length\u003E | transform(transform) =\u003E Array\u003CLength, Length, Length\u003E",
+      "summary": "The #transform method is used to apply a Geom::Transformation or Geom::Transformation2d object to a Geom::Point3d or Geom::Point2d object defined by an Array object.",
+      "remarks": "The #transform method is used to apply a Geom::Transformation or Geom::Transformation2d object to a Geom::Point3d or Geom::Point2d object defined by an Array object. This method returns a new Array object instead of modifying the original.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation2d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array\u003CLength, Length\u003E",
+        "doc": "The newly transformed point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#transform-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transform) =\u003E Array | transform!(transform) =\u003E Array",
+      "summary": "Note: This method modifies the original.",
+      "remarks": "Note: This method modifies the original. The #transform! method is used to apply a Geom::Transformation object to a Geom::Point3d object defined by an Array object.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation2d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Array",
+        "doc": "The newly transformed point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#transform!-instance_method"
+    },
+    {
+      "name": "vector_to",
+      "signature": "vector_to(point) =\u003E Geom::Vector3d | vector_to(point) =\u003E Geom::Vector2d",
+      "summary": "The #vector_to method is used to create an array as a vector from one point to a second point.",
+      "remarks": "The #vector_to method is used to create an array as a vector from one point to a second point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Array.html#vector_to-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "x",
+      "type": "Object, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #x method retrieves the x coordinate.",
+      "remarks": "The #x method retrieves the x coordinate.",
+      "doc_url": "https://ruby.sketchup.com/Array.html#x-instance_method"
+    },
+    {
+      "name": "y",
+      "type": "Object, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #y method retrieves the y coordinate.",
+      "remarks": "The #y method retrieves the y coordinate.",
+      "doc_url": "https://ruby.sketchup.com/Array.html#y-instance_method"
+    },
+    {
+      "name": "z",
+      "type": "Object, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #z method retrieves the z coordinate.",
+      "remarks": "The #z method retrieves the z coordinate.",
+      "doc_url": "https://ruby.sketchup.com/Array.html#z-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

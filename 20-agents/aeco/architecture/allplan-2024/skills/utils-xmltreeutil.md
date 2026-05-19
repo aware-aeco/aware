@@ -1,6 +1,6 @@
 ---
 name: allplan-utils-xmltreeutil
-description: This skill encodes the allplan 2024.0 surface of the Utils.XmlTreeUtil namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: CommentedTreeBuilder, XmlTreeUtil.
+description: This skill encodes the allplan 2024.0 surface of the Utils.XmlTreeUtil namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: XmlTreeUtil, CommentedTreeBuilder.
 ---
 
 # Utils.XmlTreeUtil

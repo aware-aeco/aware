@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/",
   "constructors": [
     {
-      "name": "ParameterValueList()",
+      "name": "ParameterValueList",
       "signature": "ParameterValueList()",
       "summary": "initialize",
       "remarks": "initialize",

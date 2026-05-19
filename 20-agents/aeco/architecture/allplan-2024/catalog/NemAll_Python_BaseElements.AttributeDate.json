@@ -8,65 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/",
   "constructors": [
     {
-      "name": "AttributeDate()",
-      "signature": "AttributeDate()",
+      "name": "AttributeDate",
+      "signature": "AttributeDate() | AttributeDate(id, day, month, year) | AttributeDate(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__init__"
-    },
-    {
-      "name": "AttributeDate(id, day, month, year)",
-      "signature": "AttributeDate(id, day, month, year)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "day",
-          "type": "int",
-          "doc": "Day",
-          "optional": false
-        },
-        {
-          "name": "month",
-          "type": "int",
-          "doc": "Month",
-          "optional": false
-        },
-        {
-          "name": "year",
-          "type": "int",
-          "doc": "Year",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__init__"
-    },
-    {
-      "name": "AttributeDate(element)",
-      "signature": "AttributeDate(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeDate",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

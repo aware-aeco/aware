@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/",
   "constructors": [
     {
-      "name": "PatternProperties()",
-      "signature": "PatternProperties()",
+      "name": "PatternProperties",
+      "signature": "PatternProperties() | PatternProperties(element: PatternProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/#NemAll_Python_BasisElements.PatternProperties.__init__"
-    },
-    {
-      "name": "PatternProperties(element: PatternProperties)",
-      "signature": "PatternProperties(element: PatternProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "PatternProperties",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

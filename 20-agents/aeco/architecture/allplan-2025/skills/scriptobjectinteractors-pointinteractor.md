@@ -20,7 +20,7 @@ implementation of the interactor for the point input
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/)
 
 ### Constructors
-- `PointInteractor( interactor_result: PointInteractorResult, is_first_input: bool, request_text: str, preview_function: Callable[[], None] | None = None, default_input_value: float | None = None, abscissa_element: CURVES = None, )` — initialize
+- `PointInteractor( interactor_result: PointInteractorResult, is_first_input: bool, request_text: str, preview_function: Callable[[], None] | PointInteractor() | PointInteractor()` — initialize
 
 ### Methods
 #### `on_mouse_leave()`

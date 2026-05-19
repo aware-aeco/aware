@@ -1,0 +1,198 @@
+{
+  "name": "CalculationType",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.CalculationType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/CalculationType.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "notDefined",
+      "value": "notDefined"
+    },
+    {
+      "name": "capacity",
+      "value": "capacity"
+    },
+    {
+      "name": "response",
+      "value": "response"
+    },
+    {
+      "name": "shear",
+      "value": "shear"
+    },
+    {
+      "name": "torsion",
+      "value": "torsion"
+    },
+    {
+      "name": "interaction",
+      "value": "interaction"
+    },
+    {
+      "name": "fatigue",
+      "value": "fatigue"
+    },
+    {
+      "name": "stressLimitationShort",
+      "value": "stressLimitationShort"
+    },
+    {
+      "name": "stressLimitationLong",
+      "value": "stressLimitationLong"
+    },
+    {
+      "name": "stressLimitationStage",
+      "value": "stressLimitationStage"
+    },
+    {
+      "name": "crackWidthShort",
+      "value": "crackWidthShort"
+    },
+    {
+      "name": "crackWidthLong",
+      "value": "crackWidthLong"
+    },
+    {
+      "name": "crackWidthStage",
+      "value": "crackWidthStage"
+    },
+    {
+      "name": "stiffnessShort",
+      "value": "stiffnessShort"
+    },
+    {
+      "name": "stiffnessLong",
+      "value": "stiffnessLong"
+    },
+    {
+      "name": "stiffnessStage",
+      "value": "stiffnessStage"
+    },
+    {
+      "name": "deflection",
+      "value": "deflection"
+    },
+    {
+      "name": "brittleFailure",
+      "value": "brittleFailure"
+    },
+    {
+      "name": "detailing",
+      "value": "detailing"
+    },
+    {
+      "name": "linearStressShort",
+      "value": "linearStressShort"
+    },
+    {
+      "name": "linearStressLong",
+      "value": "linearStressLong"
+    },
+    {
+      "name": "linearStressStage",
+      "value": "linearStressStage"
+    },
+    {
+      "name": "crossSectionCharacteristicsShort",
+      "value": "crossSectionCharacteristicsShort"
+    },
+    {
+      "name": "crossSectionCharacteristicsLong",
+      "value": "crossSectionCharacteristicsLong"
+    },
+    {
+      "name": "crossSectionCharacteristicsStage",
+      "value": "crossSectionCharacteristicsStage"
+    },
+    {
+      "name": "baumann",
+      "value": "baumann"
+    },
+    {
+      "name": "overallColumnRecalculation",
+      "value": "overallColumnRecalculation"
+    },
+    {
+      "name": "columnForces",
+      "value": "columnForces"
+    },
+    {
+      "name": "prestressEffects",
+      "value": "prestressEffects"
+    },
+    {
+      "name": "primaryforces",
+      "value": "primaryforces"
+    },
+    {
+      "name": "longTermLosses",
+      "value": "longTermLosses"
+    },
+    {
+      "name": "mnKappaDiagramULS",
+      "value": "mnKappaDiagramULS"
+    },
+    {
+      "name": "mnKappaDiagramSLSShort",
+      "value": "mnKappaDiagramSLSShort"
+    },
+    {
+      "name": "mnKappaDiagramSLSLong",
+      "value": "mnKappaDiagramSLSLong"
+    },
+    {
+      "name": "creepAndShrinkageCoefficient",
+      "value": "creepAndShrinkageCoefficient"
+    },
+    {
+      "name": "concreteCover",
+      "value": "concreteCover"
+    },
+    {
+      "name": "crackingCalculation",
+      "value": "crackingCalculation"
+    },
+    {
+      "name": "crackingCalculationShort",
+      "value": "crackingCalculationShort"
+    },
+    {
+      "name": "crackingCalculationLong",
+      "value": "crackingCalculationLong"
+    },
+    {
+      "name": "redistribution",
+      "value": "redistribution"
+    },
+    {
+      "name": "initilaStateofCrossSection",
+      "value": "initilaStateofCrossSection"
+    },
+    {
+      "name": "strutAngle",
+      "value": "strutAngle"
+    },
+    {
+      "name": "designReinforcement",
+      "value": "designReinforcement"
+    },
+    {
+      "name": "capacityMesh",
+      "value": "capacityMesh"
+    },
+    {
+      "name": "stiffnessStageLong",
+      "value": "stiffnessStageLong"
+    },
+    {
+      "name": "longTermLossesCoefficient",
+      "value": "longTermLossesCoefficient"
+    }
+  ]
+}

@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartUtil/",
   "constructors": [
     {
-      "name": "PythonPartUtil()",
-      "signature": "PythonPartUtil(common_props: CommonProperties | None = None)",
+      "name": "PythonPartUtil",
+      "signature": "PythonPartUtil(common_props: CommonProperties | PythonPartUtil()",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [

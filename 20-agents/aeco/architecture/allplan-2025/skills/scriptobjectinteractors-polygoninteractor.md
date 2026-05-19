@@ -1,6 +1,6 @@
 ---
 name: allplan-scriptobjectinteractors-polygoninteractor
-description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.PolygonInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, PolygonInteractor, PolygonInteractorResult.
+description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.PolygonInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: PolygonInteractor, Functions, PolygonInteractorResult.
 ---
 
 # ScriptObjectInteractors.PolygonInteractor
@@ -20,7 +20,7 @@ implementation of the interactor for the polygon input
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/)
 
 ### Constructors
-- `PolygonInteractor( interactor_result: PolygonInteractorResult, common_prop: CommonProperties = GetCurrentCommonProperties(), z_coord_input: bool = True, multi_polygon_input: bool = True, preview_function: Callable[[Polygon3D], list] | None = None, )` — Create the interactor
+- `PolygonInteractor( interactor_result: PolygonInteractorResult, common_prop: CommonProperties = GetCurrentCommonProperties(), z_coord_input: bool = True, multi_polygon_input: bool = True, preview_function: Callable[[Polygon3D], list] | PolygonInteractor()` — Create the interactor
 
 ### Methods
 #### `draw_preview(polygon: Polygon3D)`

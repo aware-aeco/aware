@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/",
   "constructors": [
     {
-      "name": "ElementSelectFilterSetting()",
-      "signature": "ElementSelectFilterSetting()",
+      "name": "ElementSelectFilterSetting",
+      "signature": "ElementSelectFilterSetting() | ElementSelectFilterSetting(bSnoopAllElements: bool) | ElementSelectFilterSetting(filter: SelectionQuery, bSnoopAllElements: bool) | ElementSelectFilterSetting( filter: SelectionQuery, documentSnoopType: eDocumentSnoopType = eSnoopActiveDocuments, layerSnoopType: eLayerSnoopType = eSnoopActiveLayers, ) | ElementSelectFilterSetting(selectSetting: ElementSelectFilterSetting)",
       "summary": "Construct the filter with default settings:",
       "remarks": "Construct the filter with default settings:",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(bSnoopAllElements: bool)",
-      "signature": "ElementSelectFilterSetting(bSnoopAllElements: bool)",
-      "summary": "Construct the filter with an empty element type query (all type of elements can be selected)",
-      "remarks": "Construct the filter with an empty element type query (all type of elements can be selected)",
-      "params": [
-        {
-          "name": "bSnoopAllElements",
-          "type": "bool",
-          "doc": "True will consider elements on both active and passive layers and documents. False will consider elements on active layers and documents only",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(filter: SelectionQuery, bSnoopAllElements: bool)",
-      "signature": "ElementSelectFilterSetting(filter: SelectionQuery, bSnoopAllElements: bool)",
-      "summary": "Construct the filter with a custom element type query",
-      "remarks": "Construct the filter with a custom element type query",
-      "params": [
-        {
-          "name": "filter",
-          "type": "SelectionQuery",
-          "doc": "Query for specific elements to search for",
-          "optional": false
-        },
-        {
-          "name": "bSnoopAllElements",
-          "type": "bool",
-          "doc": "True will consider elements on both active and passive layers and documents. False will consider elements on active layers and documents only",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting( filter: SelectionQuery, documentSnoopType: eDocumentSnoopType = eSnoopActiveDocuments, layerSnoopType: eLayerSnoopType = eSnoopActiveLayers, )",
-      "signature": "ElementSelectFilterSetting( filter: SelectionQuery, documentSnoopType: eDocumentSnoopType = eSnoopActiveDocuments, layerSnoopType: eLayerSnoopType = eSnoopActiveLayers, )",
-      "summary": "Construct the filter with a custom element type query and separate search settings for documents and layers.",
-      "remarks": "Construct the filter with a custom element type query and separate search settings for documents and layers.",
-      "params": [
-        {
-          "name": "filter",
-          "type": "SelectionQuery",
-          "doc": "Filter for the type of the object to search for",
-          "optional": false
-        },
-        {
-          "name": "documentSnoopType",
-          "type": "eDocumentSnoopType",
-          "doc": "What documents to consider (active, passive or both)",
-          "optional": false
-        },
-        {
-          "name": "layerSnoopType",
-          "type": "eLayerSnoopType",
-          "doc": "What layers to consider (active, passive or both)",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(selectSetting: ElementSelectFilterSetting)",
-      "signature": "ElementSelectFilterSetting(selectSetting: ElementSelectFilterSetting)",
-      "summary": "Copy Constructor",
-      "remarks": "Copy Constructor",
-      "params": [
-        {
-          "name": "selectSetting",
-          "type": "ElementSelectFilterSetting",
-          "doc": "Filter settings to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

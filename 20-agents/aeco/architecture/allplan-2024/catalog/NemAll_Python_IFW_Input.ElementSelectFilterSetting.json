@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/",
   "constructors": [
     {
-      "name": "ElementSelectFilterSetting()",
-      "signature": "ElementSelectFilterSetting()",
+      "name": "ElementSelectFilterSetting",
+      "signature": "ElementSelectFilterSetting() | ElementSelectFilterSetting(bSnoopAllElements) | ElementSelectFilterSetting(filter, bSnoopAllElements) | ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType) | ElementSelectFilterSetting(selectSetting)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(bSnoopAllElements)",
-      "signature": "ElementSelectFilterSetting(bSnoopAllElements)",
-      "summary": "Constructor default values: Query is empty",
-      "remarks": "Constructor default values: Query is empty",
-      "params": [
-        {
-          "name": "bSnoopAllElements",
-          "type": "bool",
-          "doc": "true = snoop all elements, false = snoop active elements",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(filter, bSnoopAllElements)",
-      "signature": "ElementSelectFilterSetting(filter, bSnoopAllElements)",
-      "summary": "Constructor default value for eObjectSelectType == SEL_ALL",
-      "remarks": "Constructor default value for eObjectSelectType == SEL_ALL",
-      "params": [
-        {
-          "name": "filter",
-          "type": "SelectionQuery",
-          "doc": "Filter for the type of the object to search for",
-          "optional": false
-        },
-        {
-          "name": "bSnoopAllElements",
-          "type": "bool",
-          "doc": "true = snoop all elements, false = snoop active elements",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType)",
-      "signature": "ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType)",
-      "summary": "Constructor default value for eObjectSelectType == SEL_ALL",
-      "remarks": "Constructor default value for eObjectSelectType == SEL_ALL",
-      "params": [
-        {
-          "name": "filter",
-          "type": "SelectionQuery",
-          "doc": "Filter for the type of the object to search for",
-          "optional": false
-        },
-        {
-          "name": "documentSnoopType",
-          "type": "eDocumentSnoopType",
-          "doc": "Selection mode for the document (active, passive or all documents)",
-          "optional": false
-        },
-        {
-          "name": "layerSnoopType",
-          "type": "eLayerSnoopType",
-          "doc": "Selection mode for the layer (active, passive or all layers)",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
-    },
-    {
-      "name": "ElementSelectFilterSetting(selectSetting)",
-      "signature": "ElementSelectFilterSetting(selectSetting)",
-      "summary": "Copy Constructor",
-      "remarks": "Copy Constructor",
-      "params": [
-        {
-          "name": "selectSetting",
-          "type": "ElementSelectFilterSetting",
-          "doc": "Copy this ElementSelectFilterSetting",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

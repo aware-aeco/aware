@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/",
   "constructors": [
     {
-      "name": "AttributeSet()",
-      "signature": "AttributeSet()",
+      "name": "AttributeSet",
+      "signature": "AttributeSet() | AttributeSet(elements) | AttributeSet(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__init__"
-    },
-    {
-      "name": "AttributeSet(elements)",
-      "signature": "AttributeSet(elements)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "elements",
-          "type": "list",
-          "doc": "Attribute elements",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__init__"
-    },
-    {
-      "name": "AttributeSet(element)",
-      "signature": "AttributeSet(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeSet",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

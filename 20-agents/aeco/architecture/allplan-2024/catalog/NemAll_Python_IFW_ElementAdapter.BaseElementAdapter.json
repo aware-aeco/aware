@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/",
   "constructors": [
     {
-      "name": "BaseElementAdapter()",
-      "signature": "BaseElementAdapter()",
+      "name": "BaseElementAdapter",
+      "signature": "BaseElementAdapter() | BaseElementAdapter(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__init__"
-    },
-    {
-      "name": "BaseElementAdapter(element)",
-      "signature": "BaseElementAdapter(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BaseElementAdapter",
-          "doc": "Element",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -38,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "__eq__(element)",
-      "signature": "__eq__(element)",
+      "name": "__eq__",
+      "signature": "__eq__(element) | __eq__(eleTypeUUID)",
       "summary": "Equal operator",
       "remarks": "Equal operator",
       "params": [
@@ -59,50 +41,14 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__"
     },
     {
-      "name": "__eq__(eleTypeUUID)",
-      "signature": "__eq__(eleTypeUUID)",
-      "summary": "Equal operator for checking the element adapter type UUID",
-      "remarks": "Equal operator for checking the element adapter type UUID",
-      "params": [
-        {
-          "name": "eleTypeUUID",
-          "type": "GUID",
-          "doc": "Element type UUID",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__"
-    },
-    {
-      "name": "__ne__(eleType)",
-      "signature": "__ne__(eleType)",
+      "name": "__ne__",
+      "signature": "__ne__(eleType) | __ne__(eleType)",
       "summary": "Not equal operator for checking the element type",
       "remarks": "Not equal operator for checking the element type",
       "params": [
         {
           "name": "eleType",
           "type": "BaseElementAdapter",
-          "doc": "Element type",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__ne__"
-    },
-    {
-      "name": "__ne__(eleType)",
-      "signature": "__ne__(eleType)",
-      "summary": "Not equal operator for checking the element type",
-      "remarks": "Not equal operator for checking the element type",
-      "params": [
-        {
-          "name": "eleType",
-          "type": "GUID",
           "doc": "Element type",
           "optional": false
         }

@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/",
   "constructors": [
     {
-      "name": "TextureDefinition()",
-      "signature": "TextureDefinition()",
+      "name": "TextureDefinition",
+      "signature": "TextureDefinition() | TextureDefinition(surfacePath: str)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/#NemAll_Python_BasisElements.TextureDefinition.__init__"
-    },
-    {
-      "name": "TextureDefinition(surfacePath: str)",
-      "signature": "TextureDefinition(surfacePath: str)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "surfacePath",
-          "type": "str",
-          "doc": "Surface path of texture definition",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

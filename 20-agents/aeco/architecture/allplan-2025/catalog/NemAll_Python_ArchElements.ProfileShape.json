@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileShape/",
   "constructors": [
     {
-      "name": "ProfileShape()",
-      "signature": "ProfileShape()",
+      "name": "ProfileShape",
+      "signature": "ProfileShape() | ProfileShape(value: ProfileShape)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileShape/#NemAll_Python_ArchElements.ProfileShape.__init__"
-    },
-    {
-      "name": "ProfileShape(value: ProfileShape)",
-      "signature": "ProfileShape(value: ProfileShape)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "value",
-          "type": "ProfileShape",
-          "doc": "ProfileShape shape",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandleModificationService/HandleModificationService/",
   "constructors": [
     {
-      "name": "HandleModificationService()",
+      "name": "HandleModificationService",
       "signature": "HandleModificationService(coord_input, build_ele_list, control_props_list, asso_ref_ele=None)",
       "summary": "initialize",
       "remarks": "initialize",

@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/",
   "constructors": [
     {
-      "name": "AttributeStringVec()",
-      "signature": "AttributeStringVec()",
+      "name": "AttributeStringVec",
+      "signature": "AttributeStringVec() | AttributeStringVec(id: int, value: VecStringList) | AttributeStringVec(element: AttributeStringVec)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.__init__"
-    },
-    {
-      "name": "AttributeStringVec(id: int, value: VecStringList)",
-      "signature": "AttributeStringVec(id: int, value: VecStringList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "VecStringList",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/#NemAll_Python_BaseElements.AttributeStringVec.__init__"
-    },
-    {
-      "name": "AttributeStringVec(element: AttributeStringVec)",
-      "signature": "AttributeStringVec(element: AttributeStringVec)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeStringVec",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3DList/",
   "constructors": [
     {
-      "name": "ConicalSurface3DList()",
+      "name": "ConicalSurface3DList",
       "signature": "ConicalSurface3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

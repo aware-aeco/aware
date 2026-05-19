@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/RotationAngles/RotationAngles/",
   "constructors": [
     {
-      "name": "RotationAngles()",
+      "name": "RotationAngles",
       "signature": "RotationAngles(angle_x, angle_y, angle_z)",
       "summary": "Set the model angles",
       "remarks": "Set the model angles",

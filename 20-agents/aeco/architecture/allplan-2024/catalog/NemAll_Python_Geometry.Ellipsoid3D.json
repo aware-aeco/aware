@@ -7,95 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/",
   "constructors": [
     {
-      "name": "Ellipsoid3D()",
-      "signature": "Ellipsoid3D()",
+      "name": "Ellipsoid3D",
+      "signature": "Ellipsoid3D() | Ellipsoid3D(ellipsoid) | Ellipsoid3D(refPlacement, radiusX, radiusY, radiusZ) | Ellipsoid3D(radiusX, radiusY, radiusZ)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
-    },
-    {
-      "name": "Ellipsoid3D(ellipsoid)",
-      "signature": "Ellipsoid3D(ellipsoid)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "ellipsoid",
-          "type": "Ellipsoid3D",
-          "doc": "Ellipsoid which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
-    },
-    {
-      "name": "Ellipsoid3D(refPlacement, radiusX, radiusY, radiusZ)",
-      "signature": "Ellipsoid3D(refPlacement, radiusX, radiusY, radiusZ)",
-      "summary": "Constructor.",
-      "remarks": "Constructor.",
-      "params": [
-        {
-          "name": "refPlacement",
-          "type": "AxisPlacement3D",
-          "doc": "Local Placement of the ellipsoid.",
-          "optional": false
-        },
-        {
-          "name": "radiusX",
-          "type": "float",
-          "doc": "X radius of the Ellipsoid.",
-          "optional": false
-        },
-        {
-          "name": "radiusY",
-          "type": "float",
-          "doc": "Y radius of the Ellipsoid.",
-          "optional": false
-        },
-        {
-          "name": "radiusZ",
-          "type": "float",
-          "doc": "Z radius of the Ellipsoid.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
-    },
-    {
-      "name": "Ellipsoid3D(radiusX, radiusY, radiusZ)",
-      "signature": "Ellipsoid3D(radiusX, radiusY, radiusZ)",
-      "summary": "Constructor.",
-      "remarks": "Constructor.",
-      "params": [
-        {
-          "name": "radiusX",
-          "type": "float",
-          "doc": "X radius of the Ellipsoid.",
-          "optional": false
-        },
-        {
-          "name": "radiusY",
-          "type": "float",
-          "doc": "Y radius of the Ellipsoid.",
-          "optional": false
-        },
-        {
-          "name": "radiusZ",
-          "type": "float",
-          "doc": "Z radius of the Ellipsoid.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -104,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "SetLocalPlacement(placement)",
-      "signature": "SetLocalPlacement(placement)",
+      "name": "SetLocalPlacement",
+      "signature": "SetLocalPlacement(placement) | SetLocalPlacement(center, xAxis, zAxis)",
       "summary": "Set Local Placement.",
       "remarks": "Set Local Placement.",
       "params": [
@@ -113,36 +29,6 @@
           "name": "placement",
           "type": "AxisPlacement3D",
           "doc": "Local Placement.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetLocalPlacement"
-    },
-    {
-      "name": "SetLocalPlacement(center, xAxis, zAxis)",
-      "signature": "SetLocalPlacement(center, xAxis, zAxis)",
-      "summary": "Set Local Placement.",
-      "remarks": "Set Local Placement.",
-      "params": [
-        {
-          "name": "center",
-          "type": "Point3D",
-          "doc": "Center point of the placement",
-          "optional": false
-        },
-        {
-          "name": "xAxis",
-          "type": "Vector3D",
-          "doc": "X-axis of the placement",
-          "optional": false
-        },
-        {
-          "name": "zAxis",
-          "type": "Vector3D",
-          "doc": "Z-axis of the placement",
           "optional": false
         }
       ],

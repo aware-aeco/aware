@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Kanten_t/",
   "constructors": [
     {
-      "name": "Kanten_t()",
+      "name": "Kanten_t",
       "signature": "Kanten_t()",
       "summary": "Initialize",
       "remarks": "Initialize",

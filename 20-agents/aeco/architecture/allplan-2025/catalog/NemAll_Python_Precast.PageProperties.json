@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/",
   "constructors": [
     {
-      "name": "PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float)",
-      "signature": "PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float)",
+      "name": "PageProperties",
+      "signature": "PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float) | PageProperties(element: PageProperties)",
       "summary": "@brief Creates a helper to fill python palette for UVS Elementplan @param label Label of the page @param sizeType Size type of the page (Fixed | AutomaticSelection) @param scaleType Scale type of the page (ScaleAutomaticSelection | ScaleFixed | MaximumSize) @param fixedScale Fixed scale",
       "remarks": "@brief Creates a helper to fill python palette for UVS Elementplan @param label Label of the page @param sizeType Size type of the page (Fixed | AutomaticSelection) @param scaleType Scale type of the page (ScaleAutomaticSelection | ScaleFixed | MaximumSize) @param fixedScale Fixed scale",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.__init__"
-    },
-    {
-      "name": "PageProperties(element: PageProperties)",
-      "signature": "PageProperties(element: PageProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "PageProperties",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

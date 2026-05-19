@@ -7,32 +7,10 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/",
   "constructors": [
     {
-      "name": "LabelStyleProperties()",
-      "signature": "LabelStyleProperties()",
+      "name": "LabelStyleProperties",
+      "signature": "LabelStyleProperties() | LabelStyleProperties(fileEntryPath: FileEntryPath, fileNr: int, entryNr: int) | LabelStyleProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, location: Location )",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.__init__"
-    },
-    {
-      "name": "LabelStyleProperties(fileEntryPath: FileEntryPath, fileNr: int, entryNr: int)",
-      "signature": "LabelStyleProperties(fileEntryPath: FileEntryPath, fileNr: int, entryNr: int)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/#NemAll_Python_Precast.LabelStyleProperties.__init__"
-    },
-    {
-      "name": "LabelStyleProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, location: Location )",
-      "signature": "LabelStyleProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, location: Location )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
       "params": [],
       "returns": null,
       "throws": [],

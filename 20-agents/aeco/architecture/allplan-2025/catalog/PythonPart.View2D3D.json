@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View2D3D/",
   "constructors": [
     {
-      "name": "View2D3D()",
-      "signature": "View2D3D( elements: list[Any] | None = None, start_scale: float = 0.0, end_scale: float = 9999.0, )",
+      "name": "View2D3D",
+      "signature": "View2D3D( elements: list[Any] | View2D3D()",
       "summary": "Initialization of 3D view class",
       "remarks": "Initialization of 3D view class",
       "params": [

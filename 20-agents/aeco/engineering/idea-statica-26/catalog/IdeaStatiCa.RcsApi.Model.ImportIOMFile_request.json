@@ -1,0 +1,22 @@
+{
+  "name": "ImportIOMFile_request",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ImportIOMFile_request.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IomFile",
+      "type": "Stream",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ImportIOMFile_request.iomFile.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ImportIOMFile_request.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

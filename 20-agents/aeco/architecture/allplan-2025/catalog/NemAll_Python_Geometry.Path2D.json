@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/",
   "constructors": [
     {
-      "name": "Path2D()",
-      "signature": "Path2D()",
+      "name": "Path2D",
+      "signature": "Path2D() | Path2D(path: Path2D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__init__"
-    },
-    {
-      "name": "Path2D(path: Path2D)",
-      "signature": "Path2D(path: Path2D)",
-      "summary": "Copy constructor Copy constructor is expensive because all data are cloned in new path.",
-      "remarks": "Copy constructor Copy constructor is expensive because all data are cloned in new path.",
-      "params": [
-        {
-          "name": "path",
-          "type": "Path2D",
-          "doc": "Path which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -39,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "Add(element: Path2D) -\u003E eGeometryErrorCode",
-      "signature": "Add(element: Path2D) -\u003E eGeometryErrorCode",
+      "name": "Add",
+      "signature": "Add(element: Path2D) -\u003E eGeometryErrorCode | Add(element_object: object) -\u003E eGeometryErrorCode",
       "summary": "Add element into path Path2D",
       "remarks": "Add element into path Path2D",
       "params": [
@@ -48,27 +30,6 @@
           "name": "element",
           "type": "Path2D",
           "doc": "Path element to add",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "eGeometryErrorCode",
-        "doc": "error code"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.Add"
-    },
-    {
-      "name": "Add(element_object: object) -\u003E eGeometryErrorCode",
-      "signature": "Add(element_object: object) -\u003E eGeometryErrorCode",
-      "summary": "Add element into path Path2D",
-      "remarks": "Add element into path Path2D",
-      "params": [
-        {
-          "name": "element_object",
-          "type": "object",
-          "doc": "Pointer to element to add",
           "optional": false
         }
       ],
@@ -261,8 +222,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__eq__"
     },
     {
-      "name": "__iadd__(element: Path2D) -\u003E Path2D",
-      "signature": "__iadd__(element: Path2D) -\u003E Path2D",
+      "name": "__iadd__",
+      "signature": "__iadd__(element: Path2D) -\u003E Path2D | __iadd__(element: Line2D) -\u003E Path2D | __iadd__(element: Polyline2D) -\u003E Path2D | __iadd__(element: Spline2D) -\u003E Path2D | __iadd__(element: Clothoid2D) -\u003E Path2D | __iadd__(element: Arc2D) -\u003E Path2D",
       "summary": "Append operator",
       "remarks": "Append operator",
       "params": [
@@ -277,96 +238,6 @@
         "type": "Path2D",
         "doc": "Reference to path."
       },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Line2D) -\u003E Path2D",
-      "signature": "__iadd__(element: Line2D) -\u003E Path2D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Line2D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Polyline2D) -\u003E Path2D",
-      "signature": "__iadd__(element: Polyline2D) -\u003E Path2D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Polyline2D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Spline2D) -\u003E Path2D",
-      "signature": "__iadd__(element: Spline2D) -\u003E Path2D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Spline2D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Clothoid2D) -\u003E Path2D",
-      "signature": "__iadd__(element: Clothoid2D) -\u003E Path2D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Clothoid2D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Arc2D) -\u003E Path2D",
-      "signature": "__iadd__(element: Arc2D) -\u003E Path2D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Arc2D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"

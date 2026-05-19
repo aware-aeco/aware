@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_baseelements
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_BaseElements namespace — 49 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AttributeByteVec, AllplanElement, AssociationService, Attribute, AttributeDate, AttributeDataManager, AttributeDouble, AttributeInteger, and 41 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_BaseElements namespace — 49 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AssociationService, AttributeByteVec, Attribute, AttributeDataManager, AttributeDouble, AttributeDate, AttributeDoubleVec, and 41 more types.
 ---
 
 # NemAll_Python_BaseElements
@@ -175,9 +175,7 @@ ByteVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeByteVec/)
 
 ### Constructors
-- `AttributeByteVec()` — Initialize
-- `AttributeByteVec(id, value)` — Constructor
-- `AttributeByteVec(element)` — Copy constructor
+- `AttributeByteVec() | AttributeByteVec(id, value) | AttributeByteVec(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -244,9 +242,7 @@ Date attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/)
 
 ### Constructors
-- `AttributeDate()` — Initialize
-- `AttributeDate(id, day, month, year)` — Constructor
-- `AttributeDate(element)` — Copy constructor
+- `AttributeDate() | AttributeDate(id, day, month, year) | AttributeDate(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -295,9 +291,7 @@ Double attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDouble/)
 
 ### Constructors
-- `AttributeDouble()` — Initialize
-- `AttributeDouble(id, value)` — Constructor
-- `AttributeDouble(element)` — Copy constructor
+- `AttributeDouble() | AttributeDouble(id, value) | AttributeDouble(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -344,9 +338,7 @@ DoubleVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDoubleVec/)
 
 ### Constructors
-- `AttributeDoubleVec()` — Initialize
-- `AttributeDoubleVec(id, value)` — Constructor
-- `AttributeDoubleVec(element)` — Copy constructor
+- `AttributeDoubleVec() | AttributeDoubleVec(id, value) | AttributeDoubleVec(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -393,9 +385,7 @@ Enum attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/)
 
 ### Constructors
-- `AttributeEnum()` — Initialize
-- `AttributeEnum(id, value)` — Constructor
-- `AttributeEnum(element)` — Copy constructor
+- `AttributeEnum() | AttributeEnum(id, value) | AttributeEnum(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -442,9 +432,7 @@ Integer attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/)
 
 ### Constructors
-- `AttributeInteger()` — Initialize
-- `AttributeInteger(id, value)` — Constructor
-- `AttributeInteger(element)` — Copy constructor
+- `AttributeInteger() | AttributeInteger(id, value) | AttributeInteger(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -491,9 +479,7 @@ IntegerVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeIntegerVec/)
 
 ### Constructors
-- `AttributeIntegerVec()` — Initialize
-- `AttributeIntegerVec(id, value)` — Constructor
-- `AttributeIntegerVec(element)` — Copy constructor
+- `AttributeIntegerVec() | AttributeIntegerVec(id, value) | AttributeIntegerVec(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -704,9 +690,7 @@ Attribute set
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/)
 
 ### Constructors
-- `AttributeSet()` — Initialize
-- `AttributeSet(elements)` — Constructor
-- `AttributeSet(element)` — Copy constructor
+- `AttributeSet() | AttributeSet(elements) | AttributeSet(element)` — Initialize
 
 ### Methods
 #### `GetAttributes()`
@@ -774,9 +758,7 @@ String attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeString/)
 
 ### Constructors
-- `AttributeString()` — Initialize
-- `AttributeString(id, value)` — Constructor
-- `AttributeString(element)` — Copy constructor
+- `AttributeString() | AttributeString(id, value) | AttributeString(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -823,9 +805,7 @@ StringVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/)
 
 ### Constructors
-- `AttributeStringVec()` — Initialize
-- `AttributeStringVec(id, value)` — Constructor
-- `AttributeStringVec(element)` — Copy constructor
+- `AttributeStringVec() | AttributeStringVec(id, value) | AttributeStringVec(element)` — Initialize
 
 ### Methods
 #### `__eq__(element)`
@@ -872,8 +852,7 @@ Attributes class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attributes/)
 
 ### Constructors
-- `Attributes()` — Initialize
-- `Attributes(elements)` — Constructor
+- `Attributes() | Attributes(elements)` — Initialize
 
 ### Methods
 #### `GetAttributeSets()`
@@ -979,8 +958,7 @@ Implementation of the common properties of the element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/)
 
 ### Constructors
-- `CommonProperties()` — Initialize
-- `CommonProperties(element)` — Copy constructor
+- `CommonProperties() | CommonProperties(element)` — Initialize
 
 ### Methods
 #### `GetColorPenStrokeByLayerFromLayerNumber(layernumber)`
@@ -1375,7 +1353,7 @@ Implementation of the elements by attribute service
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/)
 
 ### Methods
-#### `GetElements(attributeValue)`
+#### `GetElements(attributeValue) | GetElements(attributeValue) | GetElements(attributeValue)`
 
 Get the elements for the double attribute value
 
@@ -1383,32 +1361,6 @@ Get the elements for the double attribute value
 
 **Parameters:**
 - `attributeValue` (float) — Attribute value
-
-**Returns:** `BaseElementAdapterList` — Elements
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements)
-
-#### `GetElements(attributeValue)`
-
-Get the elements for the integer attribute value
-
-**Remarks:** Get the elements for the integer attribute value
-
-**Parameters:**
-- `attributeValue` (int) — Attribute value
-
-**Returns:** `BaseElementAdapterList` — Elements
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements)
-
-#### `GetElements(attributeValue)`
-
-Get the elements for the string attribute value
-
-**Remarks:** Get the elements for the string attribute value
-
-**Parameters:**
-- `attributeValue` (str) — Attribute value
 
 **Returns:** `BaseElementAdapterList` — Elements
 
@@ -1525,8 +1477,7 @@ Implementation of the export/import service
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/)
 
 ### Constructors
-- `ExportImportService()` — Initialize
-- `ExportImportService(element)` — Copy constructor
+- `ExportImportService() | ExportImportService(element)` — Initialize
 
 ### Methods
 #### `ExportDWG(doc, fileName, configFileName, version)`
@@ -1866,7 +1817,7 @@ Draw the preview of the elements
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.DrawElementPreview)
 
-#### `ElementTransform(transMat, modelEleList)`
+#### `ElementTransform(transMat, modelEleList) | ElementTransform(transVec, xAngle, yAngle, zAngle, modelEleList)`
 
 Transform the model elements
 
@@ -1874,21 +1825,6 @@ Transform the model elements
 
 **Parameters:**
 - `transMat` (Matrix3D) — Transformation matrix
-- `modelEleList` (list) — List with the model elements
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ElementTransform)
-
-#### `ElementTransform(transVec, xAngle, yAngle, zAngle, modelEleList)`
-
-Transform the model elements
-
-**Remarks:** Transform the model elements
-
-**Parameters:**
-- `transVec` (Vector3D) — Transformation vector
-- `xAngle` (float) — Rotation angle around the x-axis
-- `yAngle` (float) — Rotation angle around the y-axis
-- `zAngle` (float) — Rotation angle around the z-axis
 - `modelEleList` (list) — List with the model elements
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ElementTransform)
@@ -2442,8 +2378,7 @@ Implementation of the plane service
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/)
 
 ### Constructors
-- `PlaneService()` — Initialize
-- `PlaneService(doc)` — Constructor (saves the current layer)
+- `PlaneService() | PlaneService(doc)` — Initialize
 
 ### Methods
 #### `GetCurrentLevelModelGuid()`
@@ -2463,7 +2398,7 @@ Implementation of the project attribute service
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/)
 
 ### Methods
-#### `ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc)`
+#### `ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc) | ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc) | ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc)`
 
 Change a project attribute from the current file
 
@@ -2472,32 +2407,6 @@ Change a project attribute from the current file
 **Parameters:**
 - `attributeNumber` (int) — Attribute number
 - `newValue` (int) — Attribute value
-- `doc` (DocumentAdapter) — Document
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject)
-
-#### `ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc)`
-
-Change a project attribute from the current file
-
-**Remarks:** Change a project attribute from the current file
-
-**Parameters:**
-- `attributeNumber` (int) — Attribute number
-- `newValue` (float) — Attribute value
-- `doc` (DocumentAdapter) — Document
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject)
-
-#### `ChangeAttributeFromCurrentProject(attributeNumber, newValue, doc)`
-
-Change a project attribute from the current file
-
-**Remarks:** Change a project attribute from the current file
-
-**Parameters:**
-- `attributeNumber` (int) — Attribute number
-- `newValue` (str) — Attribute value
 - `doc` (DocumentAdapter) — Document
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject)

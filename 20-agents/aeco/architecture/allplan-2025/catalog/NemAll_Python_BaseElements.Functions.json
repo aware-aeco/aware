@@ -427,8 +427,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/#NemAll_Python_BaseElements.DrawElementPreview"
     },
     {
-      "name": "ElementTransform(transMat: Matrix3D, modelEleList: list)",
-      "signature": "ElementTransform(transMat: Matrix3D, modelEleList: list)",
+      "name": "ElementTransform",
+      "signature": "ElementTransform(transMat: Matrix3D, modelEleList: list) | ElementTransform( transVec: Vector3D, xAngle: float, yAngle: float, zAngle: float, modelEleList: list, )",
       "summary": "Transform the model elements",
       "remarks": "Transform the model elements",
       "params": [
@@ -436,48 +436,6 @@
           "name": "transMat",
           "type": "Matrix3D",
           "doc": "Transformation matrix",
-          "optional": false
-        },
-        {
-          "name": "modelEleList",
-          "type": "list",
-          "doc": "List with the model elements",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/#NemAll_Python_BaseElements.ElementTransform"
-    },
-    {
-      "name": "ElementTransform( transVec: Vector3D, xAngle: float, yAngle: float, zAngle: float, modelEleList: list, )",
-      "signature": "ElementTransform( transVec: Vector3D, xAngle: float, yAngle: float, zAngle: float, modelEleList: list, )",
-      "summary": "Transform the model elements",
-      "remarks": "Transform the model elements",
-      "params": [
-        {
-          "name": "transVec",
-          "type": "Vector3D",
-          "doc": "Transformation vector",
-          "optional": false
-        },
-        {
-          "name": "xAngle",
-          "type": "float",
-          "doc": "Rotation angle around the x-axis",
-          "optional": false
-        },
-        {
-          "name": "yAngle",
-          "type": "float",
-          "doc": "Rotation angle around the y-axis",
-          "optional": false
-        },
-        {
-          "name": "zAngle",
-          "type": "float",
-          "doc": "Rotation angle around the z-axis",
           "optional": false
         },
         {

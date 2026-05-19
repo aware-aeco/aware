@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshOperations/",
   "constructors": [
     {
-      "name": "MeshOperations()",
+      "name": "MeshOperations",
       "signature": "MeshOperations()",
       "summary": "Initialize",
       "remarks": "Initialize",

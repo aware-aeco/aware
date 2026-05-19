@@ -10,21 +10,10 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AttributeContainer/",
   "constructors": [
     {
-      "name": "AttributeContainer()",
-      "signature": "AttributeContainer()",
+      "name": "AttributeContainer",
+      "signature": "AttributeContainer() | AttributeContainer(attributesObject)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AttributeContainer/#NemAll_Python_BasisElements.AttributeContainer.__init__"
-    },
-    {
-      "name": "AttributeContainer(attributesObject)",
-      "signature": "AttributeContainer(attributesObject)",
-      "summary": "Constructor Args:",
-      "remarks": "Constructor Args:",
       "params": [],
       "returns": null,
       "throws": [],

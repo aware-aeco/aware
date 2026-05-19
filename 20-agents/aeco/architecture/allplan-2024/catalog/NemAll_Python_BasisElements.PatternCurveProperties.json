@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveProperties/",
   "constructors": [
     {
-      "name": "PatternCurveProperties()",
+      "name": "PatternCurveProperties",
       "signature": "PatternCurveProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

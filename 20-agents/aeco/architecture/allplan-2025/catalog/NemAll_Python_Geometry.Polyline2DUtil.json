@@ -35,8 +35,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.AlignSegmentsToBaseSegment"
     },
     {
-      "name": "AppendToPolyline2D( polyline: Polyline2D, append: Line2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
-      "signature": "AppendToPolyline2D( polyline: Polyline2D, append: Line2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
+      "name": "AppendToPolyline2D",
+      "signature": "AppendToPolyline2D( polyline: Polyline2D, append: Line2D ) -\u003E tuple[bool, Polyline2D, bool, bool] | AppendToPolyline2D( polyline: Polyline2D, append: Polyline2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
       "summary": "Appends a line to a polyline the way that the line is always appended at the end",
       "remarks": "Appends a line to a polyline the way that the line is always appended at the end",
       "params": [
@@ -50,33 +50,6 @@
           "name": "append",
           "type": "Line2D",
           "doc": "Line to be appended",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[bool, Polyline2D, bool, bool]",
-        "doc": "tuple(True if successful, false if line is not valid or is not connected to polyline, Resulting polyline, Returns if function has to swap the polyline point order, Returns is function has to swap the appended line/polyline point order)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.AppendToPolyline2D"
-    },
-    {
-      "name": "AppendToPolyline2D( polyline: Polyline2D, append: Polyline2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
-      "signature": "AppendToPolyline2D( polyline: Polyline2D, append: Polyline2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
-      "summary": "Appends a line to a polyline the way that the line is always appended at the end",
-      "remarks": "Appends a line to a polyline the way that the line is always appended at the end",
-      "params": [
-        {
-          "name": "polyline",
-          "type": "Polyline2D",
-          "doc": "Polyline to be appended to",
-          "optional": false
-        },
-        {
-          "name": "append",
-          "type": "Polyline2D",
-          "doc": "Polyline to be appended",
           "optional": false
         }
       ],

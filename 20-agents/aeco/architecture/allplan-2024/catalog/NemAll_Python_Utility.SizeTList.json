@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/",
   "constructors": [
     {
-      "name": "SizeTList()",
+      "name": "SizeTList",
       "signature": "SizeTList()",
       "summary": "Initialize",
       "remarks": "Initialize",
@@ -20,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "pop()",
-      "signature": "pop()",
+      "name": "pop",
+      "signature": "pop() | pop(index)",
       "summary": "Pop the last value from the list",
       "remarks": "Pop the last value from the list",
       "params": [],
@@ -34,42 +34,10 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop"
     },
     {
-      "name": "pop(index)",
-      "signature": "pop(index)",
-      "summary": "Pop an item from the list",
-      "remarks": "Pop an item from the list",
-      "params": [
-        {
-          "name": "index",
-          "type": "int",
-          "doc": "Index of the item",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "int",
-        "doc": "Value of the item"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop"
-    },
-    {
-      "name": "sort()",
-      "signature": "sort()",
+      "name": "sort",
+      "signature": "sort() | sort(cmp)",
       "summary": "Sort the list",
       "remarks": "Sort the list",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.sort"
-    },
-    {
-      "name": "sort(cmp)",
-      "signature": "sort(cmp)",
-      "summary": "EXPERIMENTAL!",
-      "remarks": "EXPERIMENTAL!",
       "params": [],
       "returns": null,
       "throws": [],

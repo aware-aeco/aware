@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea2D/",
   "constructors": [
     {
-      "name": "ClosedArea2D()",
-      "signature": "ClosedArea2D()",
+      "name": "ClosedArea2D",
+      "signature": "ClosedArea2D() | ClosedArea2D(area)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea2D/#NemAll_Python_Geometry.ClosedArea2D.__init__"
-    },
-    {
-      "name": "ClosedArea2D(area)",
-      "signature": "ClosedArea2D(area)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "area",
-          "type": "ClosedArea2D",
-          "doc": "Area which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -1,0 +1,289 @@
+{
+  "name": "Label",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "This is an interface to a label entity. A Label consists of a FormattedText and the label leader Path. A Label may be connected to another Entity via a ConnectionPoint.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Label.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Label(text, leader_type, target_point, bounds)",
+      "summary": "The #initialize method creates a new disconnected Layout::Label.",
+      "remarks": "The #initialize method creates a new disconnected Layout::Label.",
+      "params": [
+        {
+          "name": "text",
+          "type": "String",
+          "doc": "The label text",
+          "optional": false
+        },
+        {
+          "name": "leader_type",
+          "type": "Integer",
+          "doc": "The leader line type",
+          "optional": false
+        },
+        {
+          "name": "target_point",
+          "type": "Geom::Point2d",
+          "doc": "Where the label leader should point to",
+          "optional": false
+        },
+        {
+          "name": "bounds",
+          "type": "Geom::Bounds2d",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if anchor_type is not a valid anchor type"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if leader_type is not a valid leader line type"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if bounds is zero size"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if plain_text is an empty string"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "connect",
+      "signature": "connect(connection_point) =\u003E Object",
+      "summary": "The #connect method connects the Layout::Label to the given ConnectionPoint.",
+      "remarks": "The #connect method connects the Layout::Label to the given ConnectionPoint. The leader line will be adjusted to point at the ConnectionPoint. The Layout::Label must be in the same Document as the ConnectionPoint. If both the Layout::Label and the ConnectionPoint\u0027s Entity are on non-shared Layout::Layers, they must be on the same Page.",
+      "params": [
+        {
+          "name": "connection_point",
+          "type": "Layout::ConnectionPoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Label is on a locked Layout::Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Label is locked"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if the Layout::Label is not in the same Document as the ConnectionPoint"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if both the Layout::Label and the ConnectionPoint are on non-shared Layout::Layers, but are not on the same Page."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#connect-instance_method"
+    },
+    {
+      "name": "disconnect",
+      "signature": "disconnect =\u003E Object",
+      "summary": "The #disconnect method disconnects the Layout::Label from its ConnectionPoint.",
+      "remarks": "The #disconnect method disconnects the Layout::Label from its ConnectionPoint. The leader line will not be adjusted by disconnecting from a ConnectionPoint.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Label is on a locked Layout::Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Label is locked"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#disconnect-instance_method"
+    },
+    {
+      "name": "entities",
+      "signature": "entities =\u003E Layout::Entities | entities(page) =\u003E Layout::Entities",
+      "summary": "The #entities method returns the Entities that represent the Layout::Label in its exploded form.",
+      "remarks": "The #entities method returns the Entities that represent the Layout::Label in its exploded form.",
+      "params": [
+        {
+          "name": "page",
+          "type": "Layout::Page",
+          "doc": "The Page to use to convert an auto-text tag to display text",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::Entities",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if page does not belong to the same document as the Layout::Label"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#entities-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "connection_type",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #connection_type method returns the type of the text connection for the Layout::Label.",
+      "remarks": "The #connection_type method returns the type of the text connection for the Layout::Label. The leader line type can be one of the following values: Layout::Label::CONNECTION_TYPE_NONE Layout::Label::CONNECTION_TYPE_AUTO Layout::Label::CONNECTION_TYPE_REVERSE_AUTO Layout::Label::CONNECTION_TYPE_TOP_LEFT Layout::Label::CONNECTION_TYPE_CENTER_LEFT Layout::Label::CONNECTION_TYPE_BOTTOM_LEFT Layout::Label::CONNECTION_TYPE_TOP_RIGHT Layout::Label::CONNECTION_TYPE_CENTER_RIGHT Layout::Label::CONNECTION_TYPE_BOTTOM_RIGHT",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#connection_type-instance_method"
+    },
+    {
+      "name": "leader_line",
+      "type": "Layout::Path",
+      "getter": true,
+      "setter": true,
+      "summary": "The #leader_line method returns a copy of the leader line.",
+      "remarks": "The #leader_line method returns a copy of the leader line.",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#leader_line-instance_method"
+    },
+    {
+      "name": "leader_line_type",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #leader_line_type method returns the type of the leader line for the Layout::Label.",
+      "remarks": "The #leader_line_type method returns the type of the leader line for the Layout::Label. The leader line type can be one of the following values: Layout::Label::LEADER_LINE_TYPE_SINGLE_SEGMENT Layout::Label::LEADER_LINE_TYPE_TWO_SEGMENT Layout::Label::LEADER_LINE_TYPE_BEZIER Layout::Label::LEADER_LINE_TYPE_UNKNOWN",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#leader_line_type-instance_method"
+    },
+    {
+      "name": "text",
+      "type": "Layout::FormattedText",
+      "getter": true,
+      "setter": true,
+      "summary": "The #text method returns a copy of the FormattedText of the Layout::Label.",
+      "remarks": "The #text method returns a copy of the FormattedText of the Layout::Label.",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#text-instance_method"
+    },
+    {
+      "name": "CONNECTION_TYPE_NONE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_NONE-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_AUTO",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_AUTO-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_REVERSE_AUTO",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_REVERSE_AUTO-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_TOP_LEFT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_TOP_LEFT-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_CENTER_LEFT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_CENTER_LEFT-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_BOTTOM_LEFT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_BOTTOM_LEFT-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_TOP_RIGHT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_TOP_RIGHT-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_CENTER_RIGHT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_CENTER_RIGHT-constant"
+    },
+    {
+      "name": "CONNECTION_TYPE_BOTTOM_RIGHT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#CONNECTION_TYPE_BOTTOM_RIGHT-constant"
+    },
+    {
+      "name": "LEADER_LINE_TYPE_SINGLE_SEGMENT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#LEADER_LINE_TYPE_SINGLE_SEGMENT-constant"
+    },
+    {
+      "name": "LEADER_LINE_TYPE_TWO_SEGMENT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#LEADER_LINE_TYPE_TWO_SEGMENT-constant"
+    },
+    {
+      "name": "LEADER_LINE_TYPE_BEZIER",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#LEADER_LINE_TYPE_BEZIER-constant"
+    },
+    {
+      "name": "LEADER_LINE_TYPE_UNKNOWN",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Label.html#LEADER_LINE_TYPE_UNKNOWN-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

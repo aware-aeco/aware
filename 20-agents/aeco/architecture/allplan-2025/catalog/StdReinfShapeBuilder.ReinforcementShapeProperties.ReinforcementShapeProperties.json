@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/",
   "constructors": [
     {
-      "name": "ReinforcementShapeProperties()",
+      "name": "ReinforcementShapeProperties",
       "signature": "ReinforcementShapeProperties( diameter: float, bending_roller: float, steel_grade: int, concrete_grade: int, bending_shape_type: BendingShapeType, mesh_type: str, mesh_bending_direction: MeshBendingDirection, )",
       "summary": "Default constructor",
       "remarks": "Default constructor",

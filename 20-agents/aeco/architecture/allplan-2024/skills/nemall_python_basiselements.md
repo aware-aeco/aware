@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_basiselements
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_BasisElements namespace — 94 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AssociativeViewElement, AllplanElement, AssociativeViewElementRepresentation, ARGB, BasisElement, AssociativeViewProperties, AttributeContainer, BasisPropertyDialogs, and 86 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_BasisElements namespace — 94 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ARGB, AllplanElement, AssociativeViewElement, AssociativeViewProperties, AssociativeViewElementRepresentation, BasisElement, AttributeContainer, BasisPropertyDialogs, and 86 more types.
 ---
 
 # NemAll_Python_BasisElements
@@ -14,10 +14,7 @@ ARGB class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/)
 
 ### Constructors
-- `ARGB()` — Initialize
-- `ARGB(red, green, blue, alpha)` — constructor with RGBA components
-- `ARGB(argb)` — constructor with ARGB color
-- `ARGB(argb)` — copy constructor
+- `ARGB() | ARGB(red, green, blue, alpha) | ARGB(argb) | ARGB(argb)` — Initialize
 
 ### Methods
 #### `GetARGB()`
@@ -240,9 +237,7 @@ get the item for a key
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AssociativeViewProperties/)
 
 ### Constructors
-- `AssociativeViewProperties()` — Initialize
-- `AssociativeViewProperties(arg2)` — Constructor
-- `AssociativeViewProperties(arg2)` — Constructor
+- `AssociativeViewProperties() | AssociativeViewProperties(arg2) | AssociativeViewProperties(arg2)` — Initialize
 
 ### Properties
 - `AdjacentEdges` (None, get) — Set/get the adjacent edges state :type: None
@@ -273,8 +268,7 @@ AttributeContainer class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AttributeContainer/)
 
 ### Constructors
-- `AttributeContainer()` — Initialize
-- `AttributeContainer(attributesObject)` — Constructor Args:
+- `AttributeContainer() | AttributeContainer(attributesObject)` — Initialize
 
 ### Methods
 #### `__repr__()`
@@ -333,9 +327,7 @@ BitmapAreaElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/)
 
 ### Constructors
-- `BitmapAreaElement()` — Initialize
-- `BitmapAreaElement(commonProp, bitmapAreaProp, geometryObject)` — Constructor
-- `BitmapAreaElement(BitmapAreaElement)` — Copy constructor
+- `BitmapAreaElement() | BitmapAreaElement(commonProp, bitmapAreaProp, geometryObject) | BitmapAreaElement(BitmapAreaElement)` — Initialize
 
 ### Methods
 #### `GetBitmapAreaProperties()`
@@ -578,8 +570,7 @@ DimensionLineElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/)
 
 ### Constructors
-- `DimensionLineElement()` — Initialize
-- `DimensionLineElement(arg2, dimensionPoints, placementPoint, directionVector)` — Constructor
+- `DimensionLineElement() | DimensionLineElement(arg2, dimensionPoints, placementPoint, directionVector)` — Initialize
 
 ### Methods
 #### `GetDimensionPoints()`
@@ -629,9 +620,7 @@ DimensionProperties class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/)
 
 ### Constructors
-- `DimensionProperties()` — Initialize
-- `DimensionProperties(arg2, arg3)` — Default constructor
-- `DimensionProperties(arg2)` — Constructor
+- `DimensionProperties() | DimensionProperties(arg2, arg3) | DimensionProperties(arg2)` — Initialize
 
 ### Properties
 - `ElevationBaseOffset` (None, get) — Property for the elevation base offset :type: None
@@ -677,8 +666,7 @@ ElementGroupElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/)
 
 ### Constructors
-- `ElementGroupElement()` — Initialize
-- `ElementGroupElement(commonProp, elementGroupProp, elementGroupObjectList)` — Constructor
+- `ElementGroupElement() | ElementGroupElement(commonProp, elementGroupProp, elementGroupObjectList)` — Initialize
 
 ### Methods
 #### `GetElementGroupProperties()`
@@ -767,8 +755,7 @@ ElementNodeElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/)
 
 ### Constructors
-- `ElementNodeElement()` — Initialize
-- `ElementNodeElement(commonProp, elementNodeId, elementNodeObjectList)` — Constructor
+- `ElementNodeElement() | ElementNodeElement(commonProp, elementNodeId, elementNodeObjectList)` — Initialize
 
 ### Methods
 #### `GetObjectList()`
@@ -819,8 +806,7 @@ ElevationElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElevationElement/)
 
 ### Constructors
-- `ElevationElement()` — Initialize
-- `ElevationElement(dimensionPoints, placementVector, directionVector, settings)` — Constructor
+- `ElevationElement() | ElevationElement(dimensionPoints, placementVector, directionVector, settings)` — Initialize
 
 ### Methods
 #### `__repr__()`
@@ -840,8 +826,7 @@ EndSymbolsProperties class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/)
 
 ### Constructors
-- `EndSymbolsProperties()` — Initialize
-- `EndSymbolsProperties(startID, startSize, endID, endSize)` — Constructor
+- `EndSymbolsProperties() | EndSymbolsProperties(startID, startSize, endID, endSize)` — Initialize
 
 ### Methods
 #### `__eq__(prop)`
@@ -880,9 +865,7 @@ FaceStyleElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/)
 
 ### Constructors
-- `FaceStyleElement()` — Initialize
-- `FaceStyleElement(commonProp, faceStyleProp, geometryObject)` — Constructor
-- `FaceStyleElement(FaceStyleElement)` — Copy constructor
+- `FaceStyleElement() | FaceStyleElement(commonProp, faceStyleProp, geometryObject) | FaceStyleElement(FaceStyleElement)` — Initialize
 
 ### Methods
 #### `GetFaceStyleProperties()`
@@ -964,9 +947,7 @@ FillingElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/)
 
 ### Constructors
-- `FillingElement()` — Initialize
-- `FillingElement(commonProp, gradientFillingProp, geometryObject)` — Constructor
-- `FillingElement(FillingElement)` — Copy constructor
+- `FillingElement() | FillingElement(commonProp, gradientFillingProp, geometryObject) | FillingElement(FillingElement)` — Initialize
 
 ### Methods
 #### `GetFillingProperties()`
@@ -1051,9 +1032,7 @@ Implementation of the hatching element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/)
 
 ### Constructors
-- `HatchingElement()` — Initialize
-- `HatchingElement(commonProp, hatchingProp, polygon)` — Constructor
-- `HatchingElement(element)` — Copy constructor
+- `HatchingElement() | HatchingElement(commonProp, hatchingProp, polygon) | HatchingElement(element)` — Initialize
 
 ### Methods
 #### `GetHatchingProperties()`
@@ -1095,8 +1074,7 @@ Implementation of the hatching properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/)
 
 ### Constructors
-- `HatchingProperties()` — Initialize
-- `HatchingProperties(element)` — Copy constructor
+- `HatchingProperties() | HatchingProperties(element)` — Initialize
 
 ### Methods
 #### `SetBackgroundColorBGR(value)`
@@ -1205,10 +1183,7 @@ Implementation of the Label element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/)
 
 ### Constructors
-- `LabelElement()` — Initialize
-- `LabelElement(text, labelType)` — Constructor
-- `LabelElement(textElements, labelType)` — Constructor
-- `LabelElement(element)` — Copy constructor
+- `LabelElement() | LabelElement(text, labelType) | LabelElement(textElements, labelType) | LabelElement(element)` — Initialize
 
 ### Methods
 #### `AddTextElement(text)`
@@ -1292,9 +1267,7 @@ Implementation of the library element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/)
 
 ### Constructors
-- `LibraryElement()` — Initialize
-- `LibraryElement(libEleProp)` — Constructor
-- `LibraryElement(libEle)` — Copy constructor
+- `LibraryElement() | LibraryElement(libEleProp) | LibraryElement(libEle)` — Initialize
 
 ### Methods
 #### `GetCount()`
@@ -1382,13 +1355,7 @@ Implementation of the library element properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementProperties/)
 
 ### Constructors
-- `LibraryElementProperties()` — Initialize
-- `LibraryElementProperties(fullPathName, elementType, placementMatrix)` — Constructor
-- `LibraryElementProperties(fullPathName, elementType, placementMatrices)` — Constructor
-- `LibraryElementProperties(path, group, element, elementType, placementMatrix)` — Constructor
-- `LibraryElementProperties(path, group, element, elementType, placementMatrices)` — Constructor
-- `LibraryElementProperties(arg2, path, group, element, elementType, placementMatrix)` — Constructor
-- `LibraryElementProperties(arg2, path, group, element, elementType, placementMatrices)` — Constructor
+- `LibraryElementProperties() | LibraryElementProperties(fullPathName, elementType, placementMatrix) | LibraryElementProperties(fullPathName, elementType, placementMatrices) | LibraryElementProperties(path, group, element, elementType, placementMatrix) | LibraryElementProperties(path, group, element, elementType, placementMatrices) | LibraryElementProperties(arg2, path, group, element, elementType, placementMatrix) | LibraryElementProperties(arg2, path, group, element, elementType, placementMatrices)` — Initialize
 
 ### Methods
 #### `GetElement()`
@@ -1589,8 +1556,7 @@ MacroElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/)
 
 ### Constructors
-- `MacroElement()` — Initialize
-- `MacroElement(macroProp, slideList)` — Constructor
+- `MacroElement() | MacroElement(macroProp, slideList)` — Initialize
 
 ### Methods
 #### `GetHash()`
@@ -1662,10 +1628,7 @@ Implementation of the macro group element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupElement/)
 
 ### Constructors
-- `MacroGroupElement()` — Initialize
-- `MacroGroupElement(macroGroupProp, placementList)` — Constructor
-- `MacroGroupElement(commonProp, macroGroupProp, placementList)` — Constructor
-- `MacroGroupElement(element)` — Copy constructor
+- `MacroGroupElement() | MacroGroupElement(macroGroupProp, placementList) | MacroGroupElement(commonProp, macroGroupProp, placementList) | MacroGroupElement(element)` — Initialize
 
 ### Methods
 #### `GetMacroGroupProperties()`
@@ -1725,8 +1688,7 @@ Implementation of the macro group element properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/)
 
 ### Constructors
-- `MacroGroupProperties()` — Initialize
-- `MacroGroupProperties(element)` — Copy constructor
+- `MacroGroupProperties() | MacroGroupProperties(element)` — Initialize
 
 ### Methods
 #### `__eq__(prop)`
@@ -1760,9 +1722,7 @@ Implementation of the macro placement element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/)
 
 ### Constructors
-- `MacroPlacementElement()` — Initialize
-- `MacroPlacementElement(commonProp, macroPlacementProp, macro, reinforcementList, libraryElementList=[], architectureElementsList=[], fixtureElementsList=[])` — Constructor
-- `MacroPlacementElement(placement)` — Copy constructor
+- `MacroPlacementElement() | MacroPlacementElement(commonProp, macroPlacementProp, macro, reinforcementList, libraryElementList=[], architectureElementsList=[], fixtureElementsList=[]) | MacroPlacementElement(placement)` — Initialize
 
 ### Methods
 #### `GetArchitectureElementsList()`
@@ -1864,8 +1824,7 @@ Implementation of the macro placement element properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/)
 
 ### Constructors
-- `MacroPlacementProperties()` — Initialize
-- `MacroPlacementProperties(element)` — Copy constructor
+- `MacroPlacementProperties() | MacroPlacementProperties(element)` — Initialize
 
 ### Methods
 #### `__eq__(prop)`
@@ -1922,8 +1881,7 @@ Implementation of the macro definition element properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/)
 
 ### Constructors
-- `MacroProperties()` — Initialize
-- `MacroProperties(element)` — Copy constructor
+- `MacroProperties() | MacroProperties(element)` — Initialize
 
 ### Methods
 #### `__eq__(prop)`
@@ -1964,8 +1922,7 @@ MacroSlideElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/)
 
 ### Constructors
-- `MacroSlideElement()` — Initialize
-- `MacroSlideElement(macroSlideProp, objectList)` — Constructor
+- `MacroSlideElement() | MacroSlideElement(macroSlideProp, objectList)` — Initialize
 
 ### Methods
 #### `GetMacroSlideProperties()`
@@ -2016,8 +1973,7 @@ Implementation of the macro slide element properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/)
 
 ### Constructors
-- `MacroSlideProperties()` — Initialize
-- `MacroSlideProperties(element)` — Copy constructor
+- `MacroSlideProperties() | MacroSlideProperties(element)` — Initialize
 
 ### Methods
 #### `__eq__(prop)`
@@ -2092,10 +2048,7 @@ Implementation of the 2D model element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement2D/)
 
 ### Constructors
-- `ModelElement2D()` — Initialize
-- `ModelElement2D(commonProp, geometryObject)` — Constructor
-- `ModelElement2D(commonProp, patternCurveProp, endSymbolProp, geometryObject)` — Constructor
-- `ModelElement2D(element)` — Copy constructor
+- `ModelElement2D() | ModelElement2D(commonProp, geometryObject) | ModelElement2D(commonProp, patternCurveProp, endSymbolProp, geometryObject) | ModelElement2D(element)` — Initialize
 
 ### Methods
 #### `GetEndSymbolsProperties()`
@@ -2181,14 +2134,7 @@ Implementation of the 3D model element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/)
 
 ### Constructors
-- `ModelElement3D()` — Initialize
-- `ModelElement3D(commonProp, geometryObject)` — Constructor
-- `ModelElement3D(commonProp, BrepIsoLinesU, BrepIsoLinesV, geometryObject)` — Constructor
-- `ModelElement3D(commonProp, textureDefinition, geometryObject)` — Constructor
-- `ModelElement3D(commonProp, textureDefinition, BrepIsoLinesU, BrepIsoLinesV, geometryObject)` — Constructor
-- `ModelElement3D(commonProp, textureDefinition, textureMapping, geometryObject)` — Constructor
-- `ModelElement3D(commonProp, textureDefinition, textureMapping, BrepIsoLinesU, BrepIsoLinesV, geometryObject)` — Constructor
-- `ModelElement3D(element)` — Copy constructor
+- `ModelElement3D() | ModelElement3D(commonProp, geometryObject) | ModelElement3D(commonProp, BrepIsoLinesU, BrepIsoLinesV, geometryObject) | ModelElement3D(commonProp, textureDefinition, geometryObject) | ModelElement3D(commonProp, textureDefinition, BrepIsoLinesU, BrepIsoLinesV, geometryObject) | ModelElement3D(commonProp, textureDefinition, textureMapping, geometryObject) | ModelElement3D(commonProp, textureDefinition, textureMapping, BrepIsoLinesU, BrepIsoLinesV, geometryObject) | ModelElement3D(element)` — Initialize
 
 ### Methods
 #### `GetTextureDefinition()`
@@ -2390,9 +2336,7 @@ Implementation of the Pattern element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/)
 
 ### Constructors
-- `PatternElement()` — Initialize
-- `PatternElement(commonProp, patternProp, polygon)` — Constructor
-- `PatternElement(element)` — Copy constructor
+- `PatternElement() | PatternElement(commonProp, patternProp, polygon) | PatternElement(element)` — Initialize
 
 ### Methods
 #### `GetPatternProperties()`
@@ -2434,8 +2378,7 @@ Implementation of the pattern properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternProperties/)
 
 ### Constructors
-- `PatternProperties()` — Initialize
-- `PatternProperties(element)` — Copy constructor
+- `PatternProperties() | PatternProperties(element)` — Initialize
 
 ### Methods
 #### `SetBackgroundColorBGR(value)`
@@ -2525,8 +2468,7 @@ Clipping path properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/)
 
 ### Constructors
-- `SectionAlongPathClippingPathProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathClippingPathProperties(B)` — copy constructor
+- `SectionAlongPathClippingPathProperties(bInitFromSTW=False) | SectionAlongPathClippingPathProperties(B)` — constructor
 
 ### Methods
 #### `GetClippingPathGeometryTolerance()`
@@ -2581,8 +2523,7 @@ Clipping path view properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/)
 
 ### Constructors
-- `SectionAlongPathClippingPathViewProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathClippingPathViewProperties(B)` — copy constructor
+- `SectionAlongPathClippingPathViewProperties(bInitFromSTW=False) | SectionAlongPathClippingPathViewProperties(B)` — constructor
 
 ### Methods
 #### `ConvertDirectionSymbolNumberFromViewModel(arg2, iPaletteIconNum)`
@@ -2629,9 +2570,7 @@ Implementation of the section along path element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElement/)
 
 ### Constructors
-- `SectionAlongPathElement(sectionAlongPathProperties, sectionPathElement)` — Default constructor
-- `SectionAlongPathElement(sectionAlongPathProperties, sectionPath, comProp)` — Constructor
-- `SectionAlongPathElement(element)` — Copy constructor
+- `SectionAlongPathElement(sectionAlongPathProperties, sectionPathElement) | SectionAlongPathElement(sectionAlongPathProperties, sectionPath, comProp) | SectionAlongPathElement(element)` — Default constructor
 
 ## SectionAlongPathElevationSpecifications (class)
 
@@ -2640,8 +2579,7 @@ Elevation specifications
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/)
 
 ### Constructors
-- `SectionAlongPathElevationSpecifications(bInitFromSTW=False)` — constructor
-- `SectionAlongPathElevationSpecifications(B)` — copy constructor
+- `SectionAlongPathElevationSpecifications(bInitFromSTW=False) | SectionAlongPathElevationSpecifications(B)` — constructor
 
 ### Properties
 - `DecimalPlaces` (int, get/set) — Get the number of places after decimal point
@@ -2690,8 +2628,7 @@ Filter properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/)
 
 ### Constructors
-- `SectionAlongPathFilterProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathFilterProperties(B)` — copy constructor
+- `SectionAlongPathFilterProperties(bInitFromSTW=False) | SectionAlongPathFilterProperties(B)` — constructor
 
 ### Properties
 - `DrawingFilesProperties` (SectionDrawingFilesProperties, get/set) — Access drawing file params Get the SectionDrawingFilesProperties
@@ -2706,8 +2643,7 @@ Format properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/)
 
 ### Constructors
-- `SectionAlongPathFormatProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathFormatProperties(B)` — copy constructor
+- `SectionAlongPathFormatProperties(bInitFromSTW=False) | SectionAlongPathFormatProperties(B)` — constructor
 
 ### Methods
 #### `GetEliminationAngleTolerance()`
@@ -2764,8 +2700,7 @@ General section properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathGeneralSectionProperties/)
 
 ### Constructors
-- `SectionAlongPathGeneralSectionProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathGeneralSectionProperties(B)` — copy constructor
+- `SectionAlongPathGeneralSectionProperties(bInitFromSTW=False) | SectionAlongPathGeneralSectionProperties(B)` — constructor
 
 ### Methods
 #### `GetOffset()`
@@ -2814,8 +2749,7 @@ Labeling strip settings
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathLabelingStripSetting/)
 
 ### Constructors
-- `SectionAlongPathLabelingStripSetting(bInitFromSTW=False)` — constructor
-- `SectionAlongPathLabelingStripSetting(B)` — copy constructor
+- `SectionAlongPathLabelingStripSetting(bInitFromSTW=False) | SectionAlongPathLabelingStripSetting(B)` — constructor
 
 ### Properties
 - `Distance_1` (float, get/set) — Get the Distance 1 in mm
@@ -2868,8 +2802,7 @@ Section along path properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathProperties/)
 
 ### Constructors
-- `SectionAlongPathProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathProperties(B)` — copy constructor
+- `SectionAlongPathProperties(bInitFromSTW=False) | SectionAlongPathProperties(B)` — constructor
 
 ### Properties
 - `ClippingPathProperties` (SectionAlongPathClippingPathProperties, get/set) — Get the SectionAlongPathClippingPathProperties
@@ -2884,8 +2817,7 @@ Scale properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/)
 
 ### Constructors
-- `SectionAlongPathScaleProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathScaleProperties(B)` — copy constructor
+- `SectionAlongPathScaleProperties(bInitFromSTW=False) | SectionAlongPathScaleProperties(B)` — constructor
 
 ### Methods
 #### `GetScaleFactorTolerance()`
@@ -2909,8 +2841,7 @@ Section labeling properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/)
 
 ### Constructors
-- `SectionAlongPathSectionLabelingProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathSectionLabelingProperties(B)` — copy constructor
+- `SectionAlongPathSectionLabelingProperties(bInitFromSTW=False) | SectionAlongPathSectionLabelingProperties(B)` — constructor
 
 ### Properties
 - `HeadingText` (str, get/set) — Get the HeadingText "longitudinal profile", "transversal profile", "elevation", "section", "Unfold", . and "none" (expandable)
@@ -2929,8 +2860,7 @@ Section view properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/)
 
 ### Constructors
-- `SectionAlongPathSectionViewProperties(bInitFromSTW=False)` — constructor
-- `SectionAlongPathSectionViewProperties(B)` — copy constructor
+- `SectionAlongPathSectionViewProperties(bInitFromSTW=False) | SectionAlongPathSectionViewProperties(B)` — constructor
 
 ### Methods
 #### `GetHorizontTolerance()`
@@ -2977,10 +2907,7 @@ Text parameter properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/)
 
 ### Constructors
-- `SectionAlongPathTextParameterProperties()` — Initialize
-- `SectionAlongPathTextParameterProperties(iTextParameterID, bInitFromSTW=False)` — constructor
-- `SectionAlongPathTextParameterProperties(bInitFromSTW)` — constructor
-- `SectionAlongPathTextParameterProperties(A)` — copy constructor
+- `SectionAlongPathTextParameterProperties() | SectionAlongPathTextParameterProperties(iTextParameterID, bInitFromSTW=False) | SectionAlongPathTextParameterProperties(bInitFromSTW) | SectionAlongPathTextParameterProperties(A)` — Initialize
 
 ### Methods
 #### `DetectBackgroundColorType(bHasBgColor, bgColor, backgroundIsTransparent)`
@@ -3065,8 +2992,7 @@ Drawing files properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/)
 
 ### Constructors
-- `SectionDrawingFilesProperties()` — Initialize
-- `SectionDrawingFilesProperties(A)` — copy constructor
+- `SectionDrawingFilesProperties() | SectionDrawingFilesProperties(A)` — Initialize
 
 ### Methods
 #### `__eq__(A)`
@@ -3104,8 +3030,7 @@ Section format properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionFormatProperties/)
 
 ### Constructors
-- `SectionFormatProperties()` — Initialize
-- `SectionFormatProperties(bInitFromSTW)` — constructor
+- `SectionFormatProperties() | SectionFormatProperties(bInitFromSTW)` — Initialize
 
 ### Properties
 - `EliminationAngle` (None, get) — Property for the adjacent edge elimination angle :type: None
@@ -3118,8 +3043,7 @@ General section properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/)
 
 ### Constructors
-- `SectionGeneralProperties()` — Initialize
-- `SectionGeneralProperties(bInitFromSTW)` — constructor
+- `SectionGeneralProperties() | SectionGeneralProperties(bInitFromSTW)` — Initialize
 
 ### Properties
 - `FilterProperties` (None, get) — Property for the filter properties :type: None
@@ -3448,8 +3372,7 @@ Symbol2DElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/)
 
 ### Constructors
-- `Symbol2DElement()` — Initialize
-- `Symbol2DElement(commonProp, Symbol2DProp, geometryObject)` — Constructor
+- `Symbol2DElement() | Symbol2DElement(commonProp, Symbol2DProp, geometryObject)` — Initialize
 
 ### Methods
 #### `GetSymbol2DProperties()`
@@ -3532,8 +3455,7 @@ Symbol3DElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/)
 
 ### Constructors
-- `Symbol3DElement()` — Initialize
-- `Symbol3DElement(commonProp, Symbol3DProp, geometryObject)` — Constructor
+- `Symbol3DElement() | Symbol3DElement(commonProp, Symbol3DProp, geometryObject)` — Initialize
 
 ### Methods
 #### `GetSymbol3DProperties()`
@@ -3651,9 +3573,7 @@ Implementation of the Text element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/)
 
 ### Constructors
-- `TextElement()` — Initialize
-- `TextElement(commonProp, textProp, text, textPnt)` — Constructor
-- `TextElement(element)` — Copy constructor
+- `TextElement() | TextElement(commonProp, textProp, text, textPnt) | TextElement(element)` — Initialize
 
 ### Methods
 #### `GetDimensions(arg2)`
@@ -3757,9 +3677,7 @@ List for TextElement objects
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/)
 
 ### Constructors
-- `TextElementList()` — Initialize
-- `TextElementList(ele)` — Constructor with a TextElement
-- `TextElementList(eleList)` — Constructor with a list of TextElement
+- `TextElementList() | TextElementList(ele) | TextElementList(eleList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -3876,18 +3794,7 @@ Append a list item
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/#NemAll_Python_BasisElements.TextElementList.append)
 
-#### `extend(eleList)`
-
-Extend the list
-
-**Remarks:** Extend the list
-
-**Parameters:**
-- `eleList` (list) — TextElement list
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/#NemAll_Python_BasisElements.TextElementList.extend)
-
-#### `extend(iterable)`
+#### `extend(iterable) | extend(eleList)`
 
 Add the items from an iterable to the end of the list
 
@@ -3937,8 +3844,7 @@ Implementation of the text properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/)
 
 ### Constructors
-- `TextProperties()` — Initialize
-- `TextProperties(element)` — Copy constructor
+- `TextProperties() | TextProperties(element)` — Initialize
 
 ### Methods
 #### `GetRatio()`
@@ -4050,8 +3956,7 @@ TextureDefinition class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureDefinition/)
 
 ### Constructors
-- `TextureDefinition()` — Initialize
-- `TextureDefinition(surfacePath)` — Constructor
+- `TextureDefinition() | TextureDefinition(surfacePath)` — Initialize
 
 ### Methods
 #### `__eq__(props)`
@@ -4087,11 +3992,7 @@ Texture mapping property class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/)
 
 ### Constructors
-- `TextureMapping()` — Initialize
-- `TextureMapping(mappingType, mappingAngle, scaleX, scaleY, offsetX, offsetY, phongAngle, refFace, refEdge)` — Constructor
-- `TextureMapping(mappingType, mappingAngle, scaleX, scaleY, offsetX, offsetY, phongAngle, refFace, refEdge, uvCoords)` — Constructor
-- `TextureMapping(uvCoords)` — Constructor, set the type to eUV
-- `TextureMapping(element)` — Copy constructor
+- `TextureMapping() | TextureMapping(mappingType, mappingAngle, scaleX, scaleY, offsetX, offsetY, phongAngle, refFace, refEdge) | TextureMapping(mappingType, mappingAngle, scaleX, scaleY, offsetX, offsetY, phongAngle, refFace, refEdge, uvCoords) | TextureMapping(uvCoords) | TextureMapping(element)` — Initialize
 
 ### Methods
 #### `FromSurfaceMapping(mapping)`
@@ -4227,8 +4128,7 @@ Implementation of the view section element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/)
 
 ### Constructors
-- `ViewSectionElement()` — Initialize
-- `ViewSectionElement(param)` — Args: param:
+- `ViewSectionElement() | ViewSectionElement(param)` — Initialize
 
 ### Methods
 #### `CreateSectionBody(doc, insertionMat, undoRedoService=None)`

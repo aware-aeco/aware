@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapePlacementUtil/",
   "constructors": [
     {
-      "name": "BarShapePlacementUtil()",
+      "name": "BarShapePlacementUtil",
       "signature": "BarShapePlacementUtil()",
       "summary": "Constructor",
       "remarks": "Constructor",

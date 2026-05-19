@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/",
   "constructors": [
     {
-      "name": "SelectionQuery()",
-      "signature": "SelectionQuery()",
+      "name": "SelectionQuery",
+      "signature": "SelectionQuery() | SelectionQuery(query: SelectionQuery) | SelectionQuery(query: list[QueryTypeID | SelectionQuery() | SelectionQuery() | SelectionQuery()",
       "summary": "Construct empty query. All elements are considered valid for selection",
       "remarks": "Construct empty query. All elements are considered valid for selection",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__init__"
-    },
-    {
-      "name": "SelectionQuery(query: SelectionQuery)",
-      "signature": "SelectionQuery(query: SelectionQuery)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "query",
-          "type": "SelectionQuery",
-          "doc": "Query to copy",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__init__"
-    },
-    {
-      "name": "SelectionQuery(query: list[QueryTypeID | object] | QueryTypeID | object)",
-      "signature": "SelectionQuery(query: list[QueryTypeID | object] | QueryTypeID | object)",
-      "summary": "Default constructor",
-      "remarks": "Default constructor",
-      "params": [
-        {
-          "name": "query",
-          "type": "list[QueryTypeID | object] | QueryTypeID | object",
-          "doc": "Selection query as list with queries or single query.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -10,77 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/",
   "constructors": [
     {
-      "name": "PrecastMWSElement()",
-      "signature": "PrecastMWSElement()",
+      "name": "PrecastMWSElement",
+      "signature": "PrecastMWSElement() | PrecastMWSElement( factory: str, name: str, number: int, piecefactor: int, longitBarHeight: int, SegmentNumber: int, SegmentVector: Point3D, SegementPointList: list, ReinforcementList: list, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/#NemAll_Python_Precast.PrecastMWSElement.__init__"
-    },
-    {
-      "name": "PrecastMWSElement( factory: str, name: str, number: int, piecefactor: int, longitBarHeight: int, SegmentNumber: int, SegmentVector: Point3D, SegementPointList: list, ReinforcementList: list, )",
-      "signature": "PrecastMWSElement( factory: str, name: str, number: int, piecefactor: int, longitBarHeight: int, SegmentNumber: int, SegmentVector: Point3D, SegementPointList: list, ReinforcementList: list, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "factory",
-          "type": "str",
-          "doc": "factory",
-          "optional": false
-        },
-        {
-          "name": "name",
-          "type": "str",
-          "doc": "name of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "number",
-          "type": "int",
-          "doc": "number of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "piecefactor",
-          "type": "int",
-          "doc": "piecefactor of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "longitBarHeight",
-          "type": "int",
-          "doc": "longitBarHeight of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "SegmentNumber",
-          "type": "int",
-          "doc": "SegmentNumber of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "SegmentVector",
-          "type": "Point3D",
-          "doc": "SegmentVector of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "SegementPointList",
-          "type": "list",
-          "doc": "SegementPointList of the MWS element",
-          "optional": false
-        },
-        {
-          "name": "ReinforcementList",
-          "type": "list",
-          "doc": "ReinforcementList of the MWS element",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathFormatProperties(bInitFromSTW=False)",
-      "signature": "SectionAlongPathFormatProperties(bInitFromSTW=False)",
+      "name": "SectionAlongPathFormatProperties",
+      "signature": "SectionAlongPathFormatProperties(bInitFromSTW=False) | SectionAlongPathFormatProperties(B)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -18,24 +18,6 @@
           "doc": "is structure initialized from standard values",
           "optional": true,
           "default": "False"
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFormatProperties/#NemAll_Python_BasisElements.SectionAlongPathFormatProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathFormatProperties(B)",
-      "signature": "SectionAlongPathFormatProperties(B)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathFormatProperties",
-          "doc": "object to copy",
-          "optional": false
         }
       ],
       "returns": null,

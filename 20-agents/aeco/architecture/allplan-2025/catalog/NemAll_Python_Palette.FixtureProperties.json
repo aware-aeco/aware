@@ -7,51 +7,10 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/",
   "constructors": [
     {
-      "name": "FixtureProperties()",
-      "signature": "FixtureProperties()",
+      "name": "FixtureProperties",
+      "signature": "FixtureProperties() | FixtureProperties(pathShortcut: str, group: str, element: str) | FixtureProperties(FixtureProperties: FixtureProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.__init__"
-    },
-    {
-      "name": "FixtureProperties(pathShortcut: str, group: str, element: str)",
-      "signature": "FixtureProperties(pathShortcut: str, group: str, element: str)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "pathShortcut",
-          "type": "str",
-          "doc": "Path shortcut (Office/Project/Privat)",
-          "optional": false
-        },
-        {
-          "name": "group",
-          "type": "str",
-          "doc": "Group name",
-          "optional": false
-        },
-        {
-          "name": "element",
-          "type": "str",
-          "doc": "Element name",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/#NemAll_Python_Palette.FixtureProperties.__init__"
-    },
-    {
-      "name": "FixtureProperties(FixtureProperties: FixtureProperties)",
-      "signature": "FixtureProperties(FixtureProperties: FixtureProperties)",
-      "summary": "Copy Constructor",
-      "remarks": "Copy Constructor",
       "params": [],
       "returns": null,
       "throws": [],

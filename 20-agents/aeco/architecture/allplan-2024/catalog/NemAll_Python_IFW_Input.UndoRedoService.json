@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/",
   "constructors": [
     {
-      "name": "UndoRedoService(doc, isPassivateAll=False, isLockPreviewDraw=False, collectEleForMultipleTransactions=False)",
-      "signature": "UndoRedoService(doc, isPassivateAll=False, isLockPreviewDraw=False, collectEleForMultipleTransactions=False)",
+      "name": "UndoRedoService",
+      "signature": "UndoRedoService(doc, isPassivateAll=False, isLockPreviewDraw=False, collectEleForMultipleTransactions=False) | UndoRedoService(element)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [
@@ -44,30 +44,12 @@
       "throws": [],
       "events_related": [],
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.__init__"
-    },
-    {
-      "name": "UndoRedoService(element)",
-      "signature": "UndoRedoService(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "UndoRedoService",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.__init__"
     }
   ],
   "methods": [
     {
-      "name": "CreateUndoStep(eventID)",
-      "signature": "CreateUndoStep(eventID)",
+      "name": "CreateUndoStep",
+      "signature": "CreateUndoStep(eventID) | CreateUndoStep()",
       "summary": "Create an undo step",
       "remarks": "Create an undo step",
       "params": [
@@ -78,17 +60,6 @@
           "optional": false
         }
       ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.CreateUndoStep"
-    },
-    {
-      "name": "CreateUndoStep()",
-      "signature": "CreateUndoStep()",
-      "summary": "Create an undo step",
-      "remarks": "Create an undo step",
-      "params": [],
       "returns": null,
       "throws": [],
       "events_related": [],

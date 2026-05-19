@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPartGroup/",
   "constructors": [
     {
-      "name": "PythonPartGroup()",
+      "name": "PythonPartGroup",
       "signature": "PythonPartGroup(name, parameter_list, hash_value, python_file, pythonparts=None)",
       "summary": "Initialization of class PythonPartGroup",
       "remarks": "Initialization of class PythonPartGroup",

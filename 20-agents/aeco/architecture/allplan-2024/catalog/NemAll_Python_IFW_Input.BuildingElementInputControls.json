@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/",
   "constructors": [
     {
-      "name": "BuildingElementInputControls()",
-      "signature": "BuildingElementInputControls()",
+      "name": "BuildingElementInputControls",
+      "signature": "BuildingElementInputControls() | BuildingElementInputControls(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/#NemAll_Python_IFW_Input.BuildingElementInputControls.__init__"
-    },
-    {
-      "name": "BuildingElementInputControls(element)",
-      "signature": "BuildingElementInputControls(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BuildingElementInputControls",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

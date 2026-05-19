@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/",
   "constructors": [
     {
-      "name": "BSpline3DService(bSpline: BSpline3D)",
-      "signature": "BSpline3DService(bSpline: BSpline3D)",
+      "name": "BSpline3DService",
+      "signature": "BSpline3DService(bSpline: BSpline3D) | BSpline3DService(element: BSpline3DService)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [
@@ -16,24 +16,6 @@
           "name": "bSpline",
           "type": "BSpline3D",
           "doc": "B-Spline",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3DService/#NemAll_Python_Geometry.BSpline3DService.__init__"
-    },
-    {
-      "name": "BSpline3DService(element: BSpline3DService)",
-      "signature": "BSpline3DService(element: BSpline3DService)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BSpline3DService",
-          "doc": "Element to copy",
           "optional": false
         }
       ],

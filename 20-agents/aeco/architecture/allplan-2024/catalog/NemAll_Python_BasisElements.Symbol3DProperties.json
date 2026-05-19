@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/",
   "constructors": [
     {
-      "name": "Symbol3DProperties()",
+      "name": "Symbol3DProperties",
       "signature": "Symbol3DProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

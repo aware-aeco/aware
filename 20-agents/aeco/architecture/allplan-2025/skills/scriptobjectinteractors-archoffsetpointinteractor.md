@@ -1,6 +1,6 @@
 ---
 name: allplan-scriptobjectinteractors-archoffsetpointinteractor
-description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.ArchOffsetPointInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ArchOffsetPointInteractor, ArchOffsetPointInteractorResult, Functions.
+description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.ArchOffsetPointInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ArchOffsetPointInteractor, ArchOffsetPointInteractorResult.
 ---
 
 # ScriptObjectInteractors.ArchOffsetPointInteractor
@@ -14,7 +14,7 @@ Implementation of the interactor for point input on an architectural element wit
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchOffsetPointInteractor/ArchOffsetPointInteractor/)
 
 ### Constructors
-- `ArchOffsetPointInteractor( interactor_result: ArchOffsetPointInteractorResult, request_text: str, preview_function: Callable[[], None] | None = None, )` — initialize
+- `ArchOffsetPointInteractor( interactor_result: ArchOffsetPointInteractorResult, request_text: str, preview_function: Callable[[], None] | ArchOffsetPointInteractor()` — initialize
 
 ### Methods
 #### `on_mouse_leave()`

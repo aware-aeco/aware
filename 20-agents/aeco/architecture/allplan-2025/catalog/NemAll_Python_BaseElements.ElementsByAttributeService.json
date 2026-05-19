@@ -8,56 +8,14 @@
   "constructors": [],
   "methods": [
     {
-      "name": "GetElements(attributeValue: float) -\u003E BaseElementAdapterList",
-      "signature": "GetElements(attributeValue: float) -\u003E BaseElementAdapterList",
+      "name": "GetElements",
+      "signature": "GetElements(attributeValue: float) -\u003E BaseElementAdapterList | GetElements(attributeValue: int) -\u003E BaseElementAdapterList | GetElements(attributeValue: str) -\u003E BaseElementAdapterList",
       "summary": "Get the elements for the double attribute value",
       "remarks": "Get the elements for the double attribute value",
       "params": [
         {
           "name": "attributeValue",
           "type": "float",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BaseElementAdapterList",
-        "doc": "Elements"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
-    },
-    {
-      "name": "GetElements(attributeValue: int) -\u003E BaseElementAdapterList",
-      "signature": "GetElements(attributeValue: int) -\u003E BaseElementAdapterList",
-      "summary": "Get the elements for the integer attribute value",
-      "remarks": "Get the elements for the integer attribute value",
-      "params": [
-        {
-          "name": "attributeValue",
-          "type": "int",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BaseElementAdapterList",
-        "doc": "Elements"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
-    },
-    {
-      "name": "GetElements(attributeValue: str) -\u003E BaseElementAdapterList",
-      "signature": "GetElements(attributeValue: str) -\u003E BaseElementAdapterList",
-      "summary": "Get the elements for the string attribute value",
-      "remarks": "Get the elements for the string attribute value",
-      "params": [
-        {
-          "name": "attributeValue",
-          "type": "str",
           "doc": "Attribute value",
           "optional": false
         }

@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPart/",
   "constructors": [
     {
-      "name": "PythonPart()",
-      "signature": "PythonPart( name: str, parameter_list: list[str], hash_value: str, python_file: str, views: list[View2D | View3D | View2D3D] | None = None, matrix: Matrix3D = Matrix3D(), common_props: CommonProperties | None = None, reinforcement: list[Any] | None = None, attribute_list: list[Any] | None = None, library_elements: list[Any] | None = None, architecture_elements: list[Any] | None = None, label_elements: list[Any] | None = None, fixture_elements: list[Any] | None = None, assembly_elements: list[Any] | None = None, mws_elements: list[Any] | None = None, placement_matrix: Matrix3D | None = None, type_uuid: str = \u0022\u0022, type_display_name: str = \u0022\u0022, structured_container_attributes: dict[ UUID, BuildingElementAttributeList ] = {}, )",
+      "name": "PythonPart",
+      "signature": "PythonPart( name: str, parameter_list: list[str], hash_value: str, python_file: str, views: list[View2D | PythonPart() | PythonPart() | PythonPart(), common_props: CommonProperties | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart()",
       "summary": "Initialization of class PythonPart",
       "remarks": "Initialization of class PythonPart",
       "params": [

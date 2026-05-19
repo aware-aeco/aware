@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingFileService/",
   "constructors": [
     {
-      "name": "DrawingFileService()",
+      "name": "DrawingFileService",
       "signature": "DrawingFileService()",
       "summary": "Initialize",
       "remarks": "Initialize",

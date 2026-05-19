@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3DList/",
   "constructors": [
     {
-      "name": "Polygon3DList()",
-      "signature": "Polygon3DList()",
+      "name": "Polygon3DList",
+      "signature": "Polygon3DList() | Polygon3DList(ele: Polygon3D) | Polygon3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3DList/#NemAll_Python_Geometry.Polygon3DList.__init__"
-    },
-    {
-      "name": "Polygon3DList(ele: Polygon3D)",
-      "signature": "Polygon3DList(ele: Polygon3D)",
-      "summary": "Constructor with a Polygon3D",
-      "remarks": "Constructor with a Polygon3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Polygon3D",
-          "doc": "Polygon3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3DList/#NemAll_Python_Geometry.Polygon3DList.__init__"
-    },
-    {
-      "name": "Polygon3DList(eleList: list)",
-      "signature": "Polygon3DList(eleList: list)",
-      "summary": "Constructor with a list of Polygon3D",
-      "remarks": "Constructor with a list of Polygon3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Polygon3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3DList/#NemAll_Python_Geometry.Polygon3DList.append"
     },
     {
-      "name": "extend(iterable: Polygon3DList)",
-      "signature": "extend(iterable: Polygon3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Polygon3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Polygon3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3DList/#NemAll_Python_Geometry.Polygon3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Polygon3D list",
           "optional": false
         }
       ],

@@ -14,7 +14,7 @@ implementation of the list with the data of the modification elements
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ModificationElementList/)
 
 ### Constructors
-- `ModificationElementList(elements: list[str | BaseElementAdapter] | None = None)` — initialize
+- `ModificationElementList(elements: list[str | ModificationElementList() | ModificationElementList()` — initialize
 
 ### Methods
 #### `get_base_element_adapter(doc: DocumentAdapter) -> BaseElementAdapter`

@@ -10,41 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/",
   "constructors": [
     {
-      "name": "FixturePlacementElement()",
-      "signature": "FixturePlacementElement()",
+      "name": "FixturePlacementElement",
+      "signature": "FixturePlacementElement() | FixturePlacementElement(commonProp, macroPlacementProp, macro)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.__init__"
-    },
-    {
-      "name": "FixturePlacementElement(commonProp, macroPlacementProp, macro)",
-      "signature": "FixturePlacementElement(commonProp, macroPlacementProp, macro)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "macroPlacementProp",
-          "type": "FixturePlacementProperties",
-          "doc": "MacroPlacement properties",
-          "optional": false
-        },
-        {
-          "name": "macro",
-          "type": "object",
-          "doc": "Macro definition element",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

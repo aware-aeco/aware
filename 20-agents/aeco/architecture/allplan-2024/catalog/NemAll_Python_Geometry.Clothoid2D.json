@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/",
   "constructors": [
     {
-      "name": "Clothoid2D()",
-      "signature": "Clothoid2D()",
+      "name": "Clothoid2D",
+      "signature": "Clothoid2D() | Clothoid2D(clothoid)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.__init__"
-    },
-    {
-      "name": "Clothoid2D(clothoid)",
-      "signature": "Clothoid2D(clothoid)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "clothoid",
-          "type": "Clothoid2D",
-          "doc": "Clothoid2D which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

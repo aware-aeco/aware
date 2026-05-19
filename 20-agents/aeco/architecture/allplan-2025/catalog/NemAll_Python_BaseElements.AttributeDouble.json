@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDouble/",
   "constructors": [
     {
-      "name": "AttributeDouble()",
-      "signature": "AttributeDouble()",
+      "name": "AttributeDouble",
+      "signature": "AttributeDouble() | AttributeDouble(id: int, value: float) | AttributeDouble(element: AttributeDouble)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDouble/#NemAll_Python_BaseElements.AttributeDouble.__init__"
-    },
-    {
-      "name": "AttributeDouble(id: int, value: float)",
-      "signature": "AttributeDouble(id: int, value: float)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "float",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDouble/#NemAll_Python_BaseElements.AttributeDouble.__init__"
-    },
-    {
-      "name": "AttributeDouble(element: AttributeDouble)",
-      "signature": "AttributeDouble(element: AttributeDouble)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeDouble",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

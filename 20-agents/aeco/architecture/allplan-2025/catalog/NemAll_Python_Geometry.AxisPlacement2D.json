@@ -7,53 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/",
   "constructors": [
     {
-      "name": "AxisPlacement2D()",
-      "signature": "AxisPlacement2D()",
+      "name": "AxisPlacement2D",
+      "signature": "AxisPlacement2D() | AxisPlacement2D(placement: AxisPlacement2D) | AxisPlacement2D(refPoint: Point2D, dirvector: Vector2D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.__init__"
-    },
-    {
-      "name": "AxisPlacement2D(placement: AxisPlacement2D)",
-      "signature": "AxisPlacement2D(placement: AxisPlacement2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "placement",
-          "type": "AxisPlacement2D",
-          "doc": "Extruded area placement which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/#NemAll_Python_Geometry.AxisPlacement2D.__init__"
-    },
-    {
-      "name": "AxisPlacement2D(refPoint: Point2D, dirvector: Vector2D)",
-      "signature": "AxisPlacement2D(refPoint: Point2D, dirvector: Vector2D)",
-      "summary": "Constructor which fully constructs the element.",
-      "remarks": "Constructor which fully constructs the element.",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point2D",
-          "doc": "reference point",
-          "optional": false
-        },
-        {
-          "name": "dirvector",
-          "type": "Vector2D",
-          "doc": "direction vector",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

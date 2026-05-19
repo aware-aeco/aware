@@ -10,107 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/",
   "constructors": [
     {
-      "name": "SpiralElement()",
-      "signature": "SpiralElement()",
+      "name": "SpiralElement",
+      "signature": "SpiralElement() | SpiralElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, pitch, hookLengthStart, hookAngleStart, hookLengthEnd, hookAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/#NemAll_Python_Reinforcement.SpiralElement.__init__"
-    },
-    {
-      "name": "SpiralElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, pitch, hookLengthStart, hookAngleStart, hookLengthEnd, hookAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)",
-      "signature": "SpiralElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, pitch, hookLengthStart, hookAngleStart, hookLengthEnd, hookAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "positionNumber",
-          "type": "int",
-          "doc": "Position number",
-          "optional": false
-        },
-        {
-          "name": "diameter",
-          "type": "float",
-          "doc": "Diameter",
-          "optional": false
-        },
-        {
-          "name": "steelGrade",
-          "type": "int",
-          "doc": "Steel grade",
-          "optional": false
-        },
-        {
-          "name": "concreteGrade",
-          "type": "int",
-          "doc": "Concrete grade",
-          "optional": false
-        },
-        {
-          "name": "rotationAxis",
-          "type": "Line3D",
-          "doc": "Rotation axis",
-          "optional": false
-        },
-        {
-          "name": "contourPoints",
-          "type": "Polyline3D",
-          "doc": "Contour points",
-          "optional": false
-        },
-        {
-          "name": "pitch",
-          "type": "float",
-          "doc": "Pitch",
-          "optional": false
-        },
-        {
-          "name": "hookLengthStart",
-          "type": "float",
-          "doc": "Hook length at the start",
-          "optional": false
-        },
-        {
-          "name": "hookAngleStart",
-          "type": "float",
-          "doc": "Hook angle at the start",
-          "optional": false
-        },
-        {
-          "name": "hookLengthEnd",
-          "type": "float",
-          "doc": "Hook length at the end",
-          "optional": false
-        },
-        {
-          "name": "hookAngleEnd",
-          "type": "float",
-          "doc": "Hook angle at the end",
-          "optional": false
-        },
-        {
-          "name": "concreteCoverStart",
-          "type": "float",
-          "doc": "Concrete cover at the start",
-          "optional": false
-        },
-        {
-          "name": "concreteCoverEnd",
-          "type": "float",
-          "doc": "Concrete cover at the end",
-          "optional": false
-        },
-        {
-          "name": "concreteCoverEnd",
-          "type": "float",
-          "doc": "Concrete cover at the contour",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

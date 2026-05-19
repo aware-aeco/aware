@@ -10,59 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/",
   "constructors": [
     {
-      "name": "BitmapAreaElement()",
-      "signature": "BitmapAreaElement()",
+      "name": "BitmapAreaElement",
+      "signature": "BitmapAreaElement() | BitmapAreaElement( commonProp: CommonProperties, bitmapAreaProp: BitmapAreaProperties, geometryObject: object, ) | BitmapAreaElement(BitmapAreaElement: BitmapAreaElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/#NemAll_Python_BasisElements.BitmapAreaElement.__init__"
-    },
-    {
-      "name": "BitmapAreaElement( commonProp: CommonProperties, bitmapAreaProp: BitmapAreaProperties, geometryObject: object, )",
-      "signature": "BitmapAreaElement( commonProp: CommonProperties, bitmapAreaProp: BitmapAreaProperties, geometryObject: object, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "bitmapAreaProp",
-          "type": "BitmapAreaProperties",
-          "doc": "BitmapArea properties",
-          "optional": false
-        },
-        {
-          "name": "geometryObject",
-          "type": "object",
-          "doc": "Geometry element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapAreaElement/#NemAll_Python_BasisElements.BitmapAreaElement.__init__"
-    },
-    {
-      "name": "BitmapAreaElement(BitmapAreaElement: BitmapAreaElement)",
-      "signature": "BitmapAreaElement(BitmapAreaElement: BitmapAreaElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "bitmpaAreaElement",
-          "type": "object",
-          "doc": "Bitmap area element element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

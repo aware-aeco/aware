@@ -10,71 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/",
   "constructors": [
     {
-      "name": "WindowOpeningElement()",
-      "signature": "WindowOpeningElement()",
+      "name": "WindowOpeningElement",
+      "signature": "WindowOpeningElement() | WindowOpeningElement( openingProp: WindowOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, ) | WindowOpeningElement(element: WindowOpeningElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/#NemAll_Python_ArchElements.WindowOpeningElement.__init__"
-    },
-    {
-      "name": "WindowOpeningElement( openingProp: WindowOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
-      "signature": "WindowOpeningElement( openingProp: WindowOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "openingProp",
-          "type": "WindowOpeningProperties",
-          "doc": "Opening properties",
-          "optional": false
-        },
-        {
-          "name": "generalEle",
-          "type": "BaseElementAdapter",
-          "doc": "General element which includes the opening",
-          "optional": false
-        },
-        {
-          "name": "startPnt",
-          "type": "Point2D",
-          "doc": "Start point of the opening",
-          "optional": false
-        },
-        {
-          "name": "endPnt",
-          "type": "Point2D",
-          "doc": "End point",
-          "optional": false
-        },
-        {
-          "name": "drawPlacementPreview",
-          "type": "bool",
-          "doc": "Draw as placement preview (no wall adaptions) state",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WindowOpeningElement/#NemAll_Python_ArchElements.WindowOpeningElement.__init__"
-    },
-    {
-      "name": "WindowOpeningElement(element: WindowOpeningElement)",
-      "signature": "WindowOpeningElement(element: WindowOpeningElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "WindowOpeningElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

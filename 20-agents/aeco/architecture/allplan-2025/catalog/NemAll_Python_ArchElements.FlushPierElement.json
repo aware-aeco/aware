@@ -10,71 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/",
   "constructors": [
     {
-      "name": "FlushPierElement()",
-      "signature": "FlushPierElement()",
+      "name": "FlushPierElement",
+      "signature": "FlushPierElement() | FlushPierElement( flushPierProp: FlushPierProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, ) | FlushPierElement(element: FlushPierElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.__init__"
-    },
-    {
-      "name": "FlushPierElement( flushPierProp: FlushPierProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
-      "signature": "FlushPierElement( flushPierProp: FlushPierProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "flushPierProp",
-          "type": "FlushPierProperties",
-          "doc": "FlushPier properties",
-          "optional": false
-        },
-        {
-          "name": "generalEle",
-          "type": "BaseElementAdapter",
-          "doc": "General element which includes the FlushPier",
-          "optional": false
-        },
-        {
-          "name": "startPnt",
-          "type": "Point2D",
-          "doc": "Start point of the FlushPier",
-          "optional": false
-        },
-        {
-          "name": "endPnt",
-          "type": "Point2D",
-          "doc": "End point of the FlushPier",
-          "optional": false
-        },
-        {
-          "name": "drawPlacementPreview",
-          "type": "bool",
-          "doc": "Draw a placement preview (no general element adaption) state",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierElement/#NemAll_Python_ArchElements.FlushPierElement.__init__"
-    },
-    {
-      "name": "FlushPierElement(element: FlushPierElement)",
-      "signature": "FlushPierElement(element: FlushPierElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "FlushPierElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

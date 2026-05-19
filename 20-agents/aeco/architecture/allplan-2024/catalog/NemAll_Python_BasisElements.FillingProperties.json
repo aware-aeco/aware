@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingProperties/",
   "constructors": [
     {
-      "name": "FillingProperties()",
+      "name": "FillingProperties",
       "signature": "FillingProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

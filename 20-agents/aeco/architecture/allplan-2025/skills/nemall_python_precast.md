@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_precast
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Precast namespace — 48 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, Anchor, AllplanElement, AllowedElements, Direction, AssemblyGroupElement, AnchorBorderPosition, DirectionMode, and 40 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Precast namespace — 48 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllowedElements, Anchor, AllplanElement, AnchorBorderPosition, AssemblyGroupElement, Direction, DirectionMode, and 40 more types.
 ---
 
 # NemAll_Python_Precast
@@ -153,12 +153,7 @@ Set the label elements
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Anchor/)
 
 ### Constructors
-- `Anchor( id: int, fromId: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, )` — Constructor
-- `Anchor( id: int, fromId: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, align: bool, offsetX: float, offsetY: float, )` — Constructor
-- `Anchor( id: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, )` — Constructor
-- `Anchor( id: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, offsetX: float, offsetY: float, )` — Constructor
-- `Anchor( id: int, fromCell: Cell, fromPos: AnchorBorderPosition, toCell: Cell, toPos: AnchorBorderPosition, )` — Constructor
-- `Anchor( id: int, fromCell: Cell, fromPos: AnchorBorderPosition, toCell: Cell, toPos: AnchorBorderPosition, align: bool, offsetX: float, offsetY: float, )` — Constructor
+- `Anchor( id: int, fromId: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, ) | Anchor( id: int, fromId: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, align: bool, offsetX: float, offsetY: float, ) | Anchor( id: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, ) | Anchor( id: int, fromPos: AnchorBorderPosition, toId: int, toPos: AnchorBorderPosition, offsetX: float, offsetY: float, ) | Anchor( id: int, fromCell: Cell, fromPos: AnchorBorderPosition, toCell: Cell, toPos: AnchorBorderPosition, ) | Anchor( id: int, fromCell: Cell, fromPos: AnchorBorderPosition, toCell: Cell, toPos: AnchorBorderPosition, align: bool, offsetX: float, offsetY: float, )` — Constructor
 
 ## AnchorBorderPosition (enum)
 
@@ -195,8 +190,7 @@ AssemblyGroupElement class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/)
 
 ### Constructors
-- `AssemblyGroupElement()` — Initialize
-- `AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )` — Constructor
+- `AssemblyGroupElement() | AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )` — Initialize
 
 ### Methods
 #### `__repr__() -> str`
@@ -270,8 +264,7 @@ FixtureElement class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureElement/)
 
 ### Constructors
-- `FixtureElement()` — Initialize
-- `FixtureElement(fixProp: FixtureProperties, slideList: list)` — Constructor
+- `FixtureElement() | FixtureElement(fixProp: FixtureProperties, slideList: list)` — Initialize
 
 ### Methods
 #### `GetFixtureProperties() -> FixtureProperties`
@@ -343,9 +336,7 @@ FixtureGroupElement class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/)
 
 ### Constructors
-- `FixtureGroupElement()` — Initialize
-- `FixtureGroupElement(FixtureGroupProp: FixtureGroupProperties, slideList: list)` — Constructor
-- `FixtureGroupElement( commonProp: CommonProperties, FixtureGroupProp: FixtureGroupProperties, slideList: list, )` — Constructor
+- `FixtureGroupElement() | FixtureGroupElement(FixtureGroupProp: FixtureGroupProperties, slideList: list) | FixtureGroupElement( commonProp: CommonProperties, FixtureGroupProp: FixtureGroupProperties, slideList: list, )` — Initialize
 
 ### Methods
 #### `GetFixtureGroupProperties() -> FixtureGroupProperties`
@@ -434,8 +425,7 @@ FixturePlacementElement class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/)
 
 ### Constructors
-- `FixturePlacementElement()` — Initialize
-- `FixturePlacementElement( commonProp: CommonProperties, macroPlacementProp: FixturePlacementProperties, macro: object, )` — Constructor
+- `FixturePlacementElement() | FixturePlacementElement( commonProp: CommonProperties, macroPlacementProp: FixturePlacementProperties, macro: object, )` — Initialize
 
 ### Methods
 #### `GetFixturePlacementProperties() -> FixturePlacementProperties`
@@ -594,8 +584,7 @@ FixtureSlideElement class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/)
 
 ### Constructors
-- `FixtureSlideElement()` — Initialize
-- `FixtureSlideElement(FixtureSlideProp: FixtureSlideProperties, objectList: list)` — Constructor
+- `FixtureSlideElement() | FixtureSlideElement(FixtureSlideProp: FixtureSlideProperties, objectList: list)` — Initialize
 
 ### Methods
 #### `GetFixtureSlideProperties() -> FixtureSlideProperties`
@@ -820,8 +809,7 @@ Height definition types
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyle/)
 
 ### Constructors
-- `LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, )` — Constructor
-- `LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, conditionTemplate: str, )` — Constructor
+- `LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, ) | LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, conditionTemplate: str, )` — Constructor
 
 ## LabelStyleProperties (class)
 
@@ -830,9 +818,7 @@ Height definition types
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyleProperties/)
 
 ### Constructors
-- `LabelStyleProperties()` — Initialize
-- `LabelStyleProperties(fileEntryPath: FileEntryPath, fileNr: int, entryNr: int)` — Constructor
-- `LabelStyleProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, location: Location )` — Constructor
+- `LabelStyleProperties() | LabelStyleProperties(fileEntryPath: FileEntryPath, fileNr: int, entryNr: int) | LabelStyleProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, location: Location )` — Initialize
 
 ### Properties
 - `EntryNr` (None, get) — Entry number of labelStyle props Value type: int :type: None
@@ -847,8 +833,7 @@ Height definition types
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Legend/)
 
 ### Constructors
-- `Legend(doc: DocumentAdapter, cellId: int, legendProps: LegendProperties)` — Constructor
-- `Legend( doc: DocumentAdapter, cellId: int, legendProps: LegendProperties, conditionTemplate: str, )` — Constructor
+- `Legend(doc: DocumentAdapter, cellId: int, legendProps: LegendProperties) | Legend( doc: DocumentAdapter, cellId: int, legendProps: LegendProperties, conditionTemplate: str, )` — Constructor
 
 ## LegendProperties (class)
 
@@ -857,8 +842,7 @@ Height definition types
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/)
 
 ### Constructors
-- `LegendProperties()` — Initialize
-- `LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )` — Constructor
+- `LegendProperties() | LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )` — Initialize
 
 ### Properties
 - `EntryNr` (None, get) — Entry number of legend props Value type: int :type: None
@@ -1049,14 +1033,7 @@ outline types in group
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Page/)
 
 ### Constructors
-- `Page(doc: DocumentAdapter, pageNr: int, anchors: list)` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, anchors: list, conditionTemplate: str )` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, anchors: list, size: MinMax2D, centeringCells: bool, )` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, )` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, scale: float, anchors: list, size: MinMax2D, centeringCells: bool, )` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, scale: float, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, )` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, scales: list, anchors: list, size: MinMax2D, centeringCells: bool, )` — Constructor
-- `Page( doc: DocumentAdapter, pageNr: int, scales: list, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, )` — Constructor
+- `Page(doc: DocumentAdapter, pageNr: int, anchors: list) | Page( doc: DocumentAdapter, pageNr: int, anchors: list, conditionTemplate: str ) | Page( doc: DocumentAdapter, pageNr: int, anchors: list, size: MinMax2D, centeringCells: bool, ) | Page( doc: DocumentAdapter, pageNr: int, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, ) | Page( doc: DocumentAdapter, pageNr: int, scale: float, anchors: list, size: MinMax2D, centeringCells: bool, ) | Page( doc: DocumentAdapter, pageNr: int, scale: float, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, ) | Page( doc: DocumentAdapter, pageNr: int, scales: list, anchors: list, size: MinMax2D, centeringCells: bool, ) | Page( doc: DocumentAdapter, pageNr: int, scales: list, anchors: list, size: MinMax2D, centeringCells: bool, conditionTemplate: str, )` — Constructor
 
 ### Methods
 #### `add_anchor(anchor: Anchor)`
@@ -1102,8 +1079,7 @@ Adds a cell (labelStyle/legend/view) to the page
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/)
 
 ### Constructors
-- `PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float)` — @brief Creates a helper to fill python palette for UVS Elementplan @param label Label of the page @param sizeType Size type of the page (Fixed | AutomaticSelection) @param scaleType Scale type of the page (ScaleAutomaticSelection | ScaleFixed | MaximumSize) @param fixedScale Fixed scale
-- `PageProperties(element: PageProperties)` — Copy constructor
+- `PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float) | PageProperties(element: PageProperties)` — @brief Creates a helper to fill python palette for UVS Elementplan @param label Label of the page @param sizeType Size type of the page (Fixed | AutomaticSelection) @param scaleType Scale type of the page (ScaleAutomaticSelection | ScaleFixed | MaximumSize) @param fixedScale Fixed scale
 
 ### Properties
 - `FixedScale` (float, get/set) — Get the Fixed scaleof the page
@@ -1118,9 +1094,7 @@ List for PageProperties objects
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/)
 
 ### Constructors
-- `PagePropertiesList()` — Initialize
-- `PagePropertiesList(ele: PageProperties)` — Constructor with a PageProperties
-- `PagePropertiesList(eleList: list)` — Constructor with a list of PageProperties
+- `PagePropertiesList() | PagePropertiesList(ele: PageProperties) | PagePropertiesList(eleList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: PageProperties) -> bool`
@@ -1229,18 +1203,7 @@ Append a list item
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/#NemAll_Python_Precast.PagePropertiesList.append)
 
-#### `extend(eleList: list)`
-
-Extend the list
-
-**Remarks:** Extend the list
-
-**Parameters:**
-- `eleList` (list) — PageProperties list
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/#NemAll_Python_Precast.PagePropertiesList.extend)
-
-#### `extend(iterable: PagePropertiesList)`
+#### `extend(iterable: PagePropertiesList) | extend(eleList: list)`
 
 Add the items from an iterable to the end of the list
 
@@ -1258,8 +1221,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/)
 
 ### Constructors
-- `Plan(doc: DocumentAdapter)` — Constructor
-- `Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)` — Constructor
+- `Plan(doc: DocumentAdapter) | Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)` — Constructor
 
 ### Methods
 #### `add_page(page: Page)`
@@ -1273,19 +1235,7 @@ Adds a page to the plan
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.add_page)
 
-#### `create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -> bool`
-
-Creates the elementplan
-
-**Remarks:** Creates the elementplan
-
-**Parameters:**
-- `Allplan` (object) — :IFW::ElementAdapter::BaseElementAdapter:-> created elementplan
-- `Allplan` (object) — :IFW::ElementAdapter::BaseElementAdapterList:-> elements to create
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.create)
-
-#### `create(elemPlan: BaseElementAdapter) -> bool`
+#### `create(elemPlan: BaseElementAdapter) -> bool | create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -> bool`
 
 Creates the elementplan
 
@@ -1438,8 +1388,7 @@ PrecastLayer class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/)
 
 ### Constructors
-- `PrecastLayer()` — Initialize
-- `PrecastLayer(Properties: PrecastLayerProperties)` — Constructor
+- `PrecastLayer() | PrecastLayer(Properties: PrecastLayerProperties)` — Initialize
 
 ### Methods
 #### `__repr__() -> str`
@@ -1510,8 +1459,7 @@ PrecastMWSElement class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastMWSElement/)
 
 ### Constructors
-- `PrecastMWSElement()` — Initialize
-- `PrecastMWSElement( factory: str, name: str, number: int, piecefactor: int, longitBarHeight: int, SegmentNumber: int, SegmentVector: Point3D, SegementPointList: list, ReinforcementList: list, )` — Constructor
+- `PrecastMWSElement() | PrecastMWSElement( factory: str, name: str, number: int, piecefactor: int, longitBarHeight: int, SegmentNumber: int, SegmentVector: Point3D, SegementPointList: list, ReinforcementList: list, )` — Initialize
 
 ### Methods
 #### `__repr__() -> str`
@@ -1699,9 +1647,7 @@ types
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/)
 
 ### Constructors
-- `View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation )` — Constructor
-- `View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, )` — Constructor
-- `View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )` — Constructor
+- `View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation ) | View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, ) | View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )` — Constructor
 
 ### Methods
 #### `create( elements: BaseElementAdapterList, position: Point2D, view: BaseElementAdapter, ) -> bool`

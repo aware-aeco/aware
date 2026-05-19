@@ -7,53 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/",
   "constructors": [
     {
-      "name": "OrientedEdge()",
-      "signature": "OrientedEdge()",
+      "name": "OrientedEdge",
+      "signature": "OrientedEdge() | OrientedEdge(edgeHandle: int, positiveOrientation: bool) | OrientedEdge(orientedEdge: OrientedEdge)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__init__"
-    },
-    {
-      "name": "OrientedEdge(edgeHandle: int, positiveOrientation: bool)",
-      "signature": "OrientedEdge(edgeHandle: int, positiveOrientation: bool)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "edgeHandle",
-          "type": "int",
-          "doc": "Set edge handle.",
-          "optional": false
-        },
-        {
-          "name": "positiveOrientation",
-          "type": "bool",
-          "doc": "Set orientation, true for positive, false for negative",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__init__"
-    },
-    {
-      "name": "OrientedEdge(orientedEdge: OrientedEdge)",
-      "signature": "OrientedEdge(orientedEdge: OrientedEdge)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "orientedEdge",
-          "type": "OrientedEdge",
-          "doc": "Edge which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -90,8 +48,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.HasPositiveOrientation"
     },
     {
-      "name": "Set(orientedEdge: OrientedEdge)",
-      "signature": "Set(orientedEdge: OrientedEdge)",
+      "name": "Set",
+      "signature": "Set(orientedEdge: OrientedEdge) | Set(edgeHandle: int, positiveOrientation: bool)",
       "summary": "Initialize edge from old Allplan structure",
       "remarks": "Initialize edge from old Allplan structure",
       "params": [
@@ -99,30 +57,6 @@
           "name": "orientedEdge",
           "type": "OrientedEdge",
           "doc": "Edge which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.Set"
-    },
-    {
-      "name": "Set(edgeHandle: int, positiveOrientation: bool)",
-      "signature": "Set(edgeHandle: int, positiveOrientation: bool)",
-      "summary": "Set edge handle and orientation Handle is not checked, you set anything.",
-      "remarks": "Set edge handle and orientation Handle is not checked, you set anything.",
-      "params": [
-        {
-          "name": "edgeHandle",
-          "type": "int",
-          "doc": "Handle to the edge which will be set.",
-          "optional": false
-        },
-        {
-          "name": "positiveOrientation",
-          "type": "bool",
-          "doc": "Set true when orientation is positive, otherwise false.",
           "optional": false
         }
       ],

@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/",
   "constructors": [
     {
-      "name": "MultiElementSelectInteractor()",
-      "signature": "MultiElementSelectInteractor( interactor_result: MultiElementSelectInteractorResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, prompt_msg: str = \u0022Select the elements\u0022, active_elements: bool = True, )",
+      "name": "MultiElementSelectInteractor",
+      "signature": "MultiElementSelectInteractor( interactor_result: MultiElementSelectInteractorResult, ele_filter: list[GUID] | MultiElementSelectInteractor() | MultiElementSelectInteractor() | MultiElementSelectInteractor()",
       "summary": "Initialize the multiple element selection interactor",
       "remarks": "Initialize the multiple element selection interactor",
       "params": [

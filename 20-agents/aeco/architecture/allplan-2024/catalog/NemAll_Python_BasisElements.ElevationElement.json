@@ -11,47 +11,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElevationElement/",
   "constructors": [
     {
-      "name": "ElevationElement()",
-      "signature": "ElevationElement()",
+      "name": "ElevationElement",
+      "signature": "ElevationElement() | ElevationElement(dimensionPoints, placementVector, directionVector, settings)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElevationElement/#NemAll_Python_BasisElements.ElevationElement.__init__"
-    },
-    {
-      "name": "ElevationElement(dimensionPoints, placementVector, directionVector, settings)",
-      "signature": "ElevationElement(dimensionPoints, placementVector, directionVector, settings)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "dimensionPoints",
-          "type": "Point3DList",
-          "doc": "Elevation points",
-          "optional": false
-        },
-        {
-          "name": "placementVector",
-          "type": "Vector2D",
-          "doc": "Placement vector to the first elevation point",
-          "optional": false
-        },
-        {
-          "name": "directionVector",
-          "type": "Vector2D",
-          "doc": "Direction vector",
-          "optional": false
-        },
-        {
-          "name": "settings",
-          "type": "DimensionProperties",
-          "doc": "Elevation settings",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

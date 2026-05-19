@@ -10,53 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/",
   "constructors": [
     {
-      "name": "AssemblyGroupElement()",
-      "signature": "AssemblyGroupElement()",
+      "name": "AssemblyGroupElement",
+      "signature": "AssemblyGroupElement() | AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.__init__"
-    },
-    {
-      "name": "AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )",
-      "signature": "AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "name",
-          "type": "str",
-          "doc": "Name of the assembly group",
-          "optional": false
-        },
-        {
-          "name": "number",
-          "type": "int",
-          "doc": "Number of the assembly group",
-          "optional": false
-        },
-        {
-          "name": "LibraryElementsList",
-          "type": "list",
-          "doc": "List of library fixtures which should be included in the assembly group",
-          "optional": false
-        },
-        {
-          "name": "FixtureElementsList",
-          "type": "list",
-          "doc": "List of parametric fixtures which should be included in the assembly group",
-          "optional": false
-        },
-        {
-          "name": "ReinforcementList",
-          "type": "list",
-          "doc": "List of reinforcement placements which should be included in the assembly group",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

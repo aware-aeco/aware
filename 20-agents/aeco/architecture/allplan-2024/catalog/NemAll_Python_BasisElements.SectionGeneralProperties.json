@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/",
   "constructors": [
     {
-      "name": "SectionGeneralProperties()",
-      "signature": "SectionGeneralProperties()",
+      "name": "SectionGeneralProperties",
+      "signature": "SectionGeneralProperties() | SectionGeneralProperties(bInitFromSTW)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.__init__"
-    },
-    {
-      "name": "SectionGeneralProperties(bInitFromSTW)",
-      "signature": "SectionGeneralProperties(bInitFromSTW)",
-      "summary": "constructor",
-      "remarks": "constructor",
-      "params": [
-        {
-          "name": "bInitFromSTW",
-          "type": "bool",
-          "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

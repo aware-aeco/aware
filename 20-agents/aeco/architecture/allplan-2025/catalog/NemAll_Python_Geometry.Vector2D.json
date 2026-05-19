@@ -7,137 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/",
   "constructors": [
     {
-      "name": "Vector2D()",
-      "signature": "Vector2D()",
+      "name": "Vector2D",
+      "signature": "Vector2D() | Vector2D(vec: Vector2D) | Vector2D(angle: Angle, length: float) | Vector2D(x: float, y: float) | Vector2D(startPoint: Point2D, endPoint: Point2D) | Vector2D(endPoint: Point2D) | Vector2D(vec: Vector3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
-    },
-    {
-      "name": "Vector2D(vec: Vector2D)",
-      "signature": "Vector2D(vec: Vector2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "vec",
-          "type": "Vector2D",
-          "doc": "Vector which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
-    },
-    {
-      "name": "Vector2D(angle: Angle, length: float)",
-      "signature": "Vector2D(angle: Angle, length: float)",
-      "summary": "Constructor. Create vector from the angle and from the length. Formula: [X_COORD, Y_COORD] = [lengthcos(angle), lengthsin(angle)]",
-      "remarks": "Constructor. Create vector from the angle and from the length. Formula: [X_COORD, Y_COORD] = [lengthcos(angle), lengthsin(angle)]",
-      "params": [
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "base angle.",
-          "optional": false
-        },
-        {
-          "name": "length",
-          "type": "float",
-          "doc": "length of vector (must be greater then zero).",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
-    },
-    {
-      "name": "Vector2D(x: float, y: float)",
-      "signature": "Vector2D(x: float, y: float)",
-      "summary": "Constructor. Initialize vector from single coordinates.",
-      "remarks": "Constructor. Initialize vector from single coordinates.",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "X coordinate of vector.",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "Y coordinate of vector.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
-    },
-    {
-      "name": "Vector2D(startPoint: Point2D, endPoint: Point2D)",
-      "signature": "Vector2D(startPoint: Point2D, endPoint: Point2D)",
-      "summary": "Constructor. Initialize vector from two points.",
-      "remarks": "Constructor. Initialize vector from two points.",
-      "params": [
-        {
-          "name": "startPoint",
-          "type": "Point2D",
-          "doc": "start point of vector.",
-          "optional": false
-        },
-        {
-          "name": "endPoint",
-          "type": "Point2D",
-          "doc": "end point of vector.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
-    },
-    {
-      "name": "Vector2D(endPoint: Point2D)",
-      "signature": "Vector2D(endPoint: Point2D)",
-      "summary": "Create a vector from a 2D point",
-      "remarks": "Create a vector from a 2D point",
-      "params": [
-        {
-          "name": "endPoint",
-          "type": "Point2D",
-          "doc": "End point of the vector (startpoint is 0./0.)",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__init__"
-    },
-    {
-      "name": "Vector2D(vec: Vector3D)",
-      "signature": "Vector2D(vec: Vector3D)",
-      "summary": "Copy constructor. Copy only X_COORD and Y_COORD from vector.",
-      "remarks": "Copy constructor. Copy only X_COORD and Y_COORD from vector.",
-      "params": [
-        {
-          "name": "vec",
-          "type": "Vector3D",
-          "doc": "2D vector which will be copied to the 3D vector.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -258,29 +132,11 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.IsZero"
     },
     {
-      "name": "Normalize()",
-      "signature": "Normalize()",
+      "name": "Normalize",
+      "signature": "Normalize() | Normalize(length: float)",
       "summary": "Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.",
       "remarks": "Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Normalize"
-    },
-    {
-      "name": "Normalize(length: float)",
-      "signature": "Normalize(length: float)",
-      "summary": "Normalize vector to new length. Formula: Vn(a1 * length / ||Va||, a2 * length / ||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.",
-      "remarks": "Normalize vector to new length. Formula: Vn(a1 * length / ||Va||, a2 * length / ||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.",
-      "params": [
-        {
-          "name": "length",
-          "type": "float",
-          "doc": "new length of vector.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -322,8 +178,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Reverse"
     },
     {
-      "name": "Set(vec: Vector2D)",
-      "signature": "Set(vec: Vector2D)",
+      "name": "Set",
+      "signature": "Set(vec: Vector2D) | Set(x: float, y: float) | Set(startPoint: Point2D, endPoint: Point2D)",
       "summary": "Initialize from vector 2D.",
       "remarks": "Initialize from vector 2D.",
       "params": [
@@ -331,54 +187,6 @@
           "name": "vec",
           "type": "Vector2D",
           "doc": "Vector.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Set"
-    },
-    {
-      "name": "Set(x: float, y: float)",
-      "signature": "Set(x: float, y: float)",
-      "summary": "Initialize from x,y coordinates.",
-      "remarks": "Initialize from x,y coordinates.",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "coordinate.",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "coordinate.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Set"
-    },
-    {
-      "name": "Set(startPoint: Point2D, endPoint: Point2D)",
-      "signature": "Set(startPoint: Point2D, endPoint: Point2D)",
-      "summary": "Initialize vector from two points.",
-      "remarks": "Initialize vector from two points.",
-      "params": [
-        {
-          "name": "startPoint",
-          "type": "Point2D",
-          "doc": "start point of vector.",
-          "optional": false
-        },
-        {
-          "name": "endPoint",
-          "type": "Point2D",
-          "doc": "end point of vector.",
           "optional": false
         }
       ],
@@ -486,8 +294,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__idiv__"
     },
     {
-      "name": "__imul__(matrix: Matrix2D) -\u003E Vector2D",
-      "signature": "__imul__(matrix: Matrix2D) -\u003E Vector2D",
+      "name": "__imul__",
+      "signature": "__imul__(matrix: Matrix2D) -\u003E Vector2D | __imul__(factor: float) -\u003E Vector2D",
       "summary": "Matrix transformation. Formula: Vector(this) = Vector(this) * matrix",
       "remarks": "Matrix transformation. Formula: Vector(this) = Vector(this) * matrix",
       "params": [
@@ -501,27 +309,6 @@
       "returns": {
         "type": "Vector2D",
         "doc": "Vector2D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__imul__"
-    },
-    {
-      "name": "__imul__(factor: float) -\u003E Vector2D",
-      "signature": "__imul__(factor: float) -\u003E Vector2D",
-      "summary": "Multiply the vector by a factor (scalar multiplication)",
-      "remarks": "Multiply the vector by a factor (scalar multiplication)",
-      "params": [
-        {
-          "name": "factor",
-          "type": "float",
-          "doc": "Scale factor",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Vector2D",
-        "doc": "New vector"
       },
       "throws": [],
       "events_related": [],
@@ -549,8 +336,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__isub__"
     },
     {
-      "name": "__mul__(vec: Vector2D) -\u003E Vector3D",
-      "signature": "__mul__(vec: Vector2D) -\u003E Vector3D",
+      "name": "__mul__",
+      "signature": "__mul__(vec: Vector2D) -\u003E Vector3D | __mul__(matrix: Matrix2D) -\u003E Vector2D | __mul__(factor: float) -\u003E Vector2D",
       "summary": "Cross(vector) product operator. Formula: Vc = Va x Vb Va is this Vector",
       "remarks": "Cross(vector) product operator. Formula: Vc = Va x Vb Va is this Vector",
       "params": [
@@ -564,48 +351,6 @@
       "returns": {
         "type": "Vector3D",
         "doc": "new Vector(Vc)."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__mul__"
-    },
-    {
-      "name": "__mul__(matrix: Matrix2D) -\u003E Vector2D",
-      "signature": "__mul__(matrix: Matrix2D) -\u003E Vector2D",
-      "summary": "Matrix transformation. Formula: Result = Vector(this) * matrix",
-      "remarks": "Matrix transformation. Formula: Result = Vector(this) * matrix",
-      "params": [
-        {
-          "name": "matrix",
-          "type": "Matrix2D",
-          "doc": "Transformation matrix.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Vector2D",
-        "doc": "Vector2D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__mul__"
-    },
-    {
-      "name": "__mul__(factor: float) -\u003E Vector2D",
-      "signature": "__mul__(factor: float) -\u003E Vector2D",
-      "summary": "Multiply the vector by a factor (scalar multiplication)",
-      "remarks": "Multiply the vector by a factor (scalar multiplication)",
-      "params": [
-        {
-          "name": "factor",
-          "type": "float",
-          "doc": "Scale factor",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Vector2D",
-        "doc": "New vector"
       },
       "throws": [],
       "events_related": [],

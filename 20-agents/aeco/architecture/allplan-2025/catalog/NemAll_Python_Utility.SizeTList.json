@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/",
   "constructors": [
     {
-      "name": "SizeTList()",
+      "name": "SizeTList",
       "signature": "SizeTList()",
       "summary": "Initialize",
       "remarks": "Initialize",
@@ -266,35 +266,14 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.insert"
     },
     {
-      "name": "pop() -\u003E int",
-      "signature": "pop() -\u003E int",
+      "name": "pop",
+      "signature": "pop() -\u003E int | pop(index: int) -\u003E int",
       "summary": "Pop the last value from the list",
       "remarks": "Pop the last value from the list",
       "params": [],
       "returns": {
         "type": "int",
         "doc": "Last value from the list"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop"
-    },
-    {
-      "name": "pop(index: int) -\u003E int",
-      "signature": "pop(index: int) -\u003E int",
-      "summary": "Pop an item from the list",
-      "remarks": "Pop an item from the list",
-      "params": [
-        {
-          "name": "index",
-          "type": "int",
-          "doc": "Index of the item",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "int",
-        "doc": "Value of the item"
       },
       "throws": [],
       "events_related": [],
@@ -330,21 +309,10 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.reverse"
     },
     {
-      "name": "sort()",
-      "signature": "sort()",
+      "name": "sort",
+      "signature": "sort() | sort(cmp: object)",
       "summary": "Sort the list",
       "remarks": "Sort the list",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.sort"
-    },
-    {
-      "name": "sort(cmp: object)",
-      "signature": "sort(cmp: object)",
-      "summary": "EXPERIMENTAL!",
-      "remarks": "EXPERIMENTAL!",
       "params": [],
       "returns": null,
       "throws": [],

@@ -7,173 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/",
   "constructors": [
     {
-      "name": "Line3D()",
-      "signature": "Line3D()",
+      "name": "Line3D",
+      "signature": "Line3D() | Line3D(line2D: Line2D) | Line3D(line: Line3D) | Line3D(point1: Point3D, point2: Point3D) | Line3D(startPoint: Point3D, vec: Vector3D) | Line3D(x1: float, y1: float, z1: float, x2: float, y2: float, z2: float) | Line3D(refPoint: Point3D, startPoint: Point3D, endPoint: Point3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
-    },
-    {
-      "name": "Line3D(line2D: Line2D)",
-      "signature": "Line3D(line2D: Line2D)",
-      "summary": "Copy constructor. Copy Line2D to Line3D at z=0.0",
-      "remarks": "Copy constructor. Copy Line2D to Line3D at z=0.0",
-      "params": [
-        {
-          "name": "line2D",
-          "type": "Line2D",
-          "doc": "Line2D which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
-    },
-    {
-      "name": "Line3D(line: Line3D)",
-      "signature": "Line3D(line: Line3D)",
-      "summary": "Copy constructor. Copy Line3D",
-      "remarks": "Copy constructor. Copy Line3D",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "Line3D which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
-    },
-    {
-      "name": "Line3D(point1: Point3D, point2: Point3D)",
-      "signature": "Line3D(point1: Point3D, point2: Point3D)",
-      "summary": "Constructor. Constructs a Line3D from point1 to point2 in world coordinates.",
-      "remarks": "Constructor. Constructs a Line3D from point1 to point2 in world coordinates.",
-      "params": [
-        {
-          "name": "point1",
-          "type": "Point3D",
-          "doc": "start point of line.",
-          "optional": false
-        },
-        {
-          "name": "point2",
-          "type": "Point3D",
-          "doc": "end point of line.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
-    },
-    {
-      "name": "Line3D(startPoint: Point3D, vec: Vector3D)",
-      "signature": "Line3D(startPoint: Point3D, vec: Vector3D)",
-      "summary": "Constructor. Constructs a Line3D from point1 to point1\u002Bvec in world coordinates.",
-      "remarks": "Constructor. Constructs a Line3D from point1 to point1\u002Bvec in world coordinates.",
-      "params": [
-        {
-          "name": "startPoint",
-          "type": "Point3D",
-          "doc": "start point of line.",
-          "optional": false
-        },
-        {
-          "name": "vec",
-          "type": "Vector3D",
-          "doc": "translation vector.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
-    },
-    {
-      "name": "Line3D(x1: float, y1: float, z1: float, x2: float, y2: float, z2: float)",
-      "signature": "Line3D(x1: float, y1: float, z1: float, x2: float, y2: float, z2: float)",
-      "summary": "Constructor. Constructs a Line3D from 6 doubles in world coordinates.",
-      "remarks": "Constructor. Constructs a Line3D from 6 doubles in world coordinates.",
-      "params": [
-        {
-          "name": "x1",
-          "type": "float",
-          "doc": "X coordinate of start point.",
-          "optional": false
-        },
-        {
-          "name": "y1",
-          "type": "float",
-          "doc": "Y coordinate of start point.",
-          "optional": false
-        },
-        {
-          "name": "z1",
-          "type": "float",
-          "doc": "Z coordinate of start point.",
-          "optional": false
-        },
-        {
-          "name": "x2",
-          "type": "float",
-          "doc": "X coordinate of end point.",
-          "optional": false
-        },
-        {
-          "name": "y2",
-          "type": "float",
-          "doc": "Y coordinate of end point.",
-          "optional": false
-        },
-        {
-          "name": "z2",
-          "type": "float",
-          "doc": "Z coordinate of end point.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
-    },
-    {
-      "name": "Line3D(refPoint: Point3D, startPoint: Point3D, endPoint: Point3D)",
-      "signature": "Line3D(refPoint: Point3D, startPoint: Point3D, endPoint: Point3D)",
-      "summary": "Constructor. Constructs a Line3D in local coordinate system.",
-      "remarks": "Constructor. Constructs a Line3D in local coordinate system.",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "Reference point.",
-          "optional": false
-        },
-        {
-          "name": "startPoint",
-          "type": "Point3D",
-          "doc": "relative start point.",
-          "optional": false
-        },
-        {
-          "name": "endPoint",
-          "type": "Point3D",
-          "doc": "relative end point.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -354,8 +192,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Reverse"
     },
     {
-      "name": "Set(x1: float, y1: float, z1: float, x2: float, y2: float, z2: float)",
-      "signature": "Set(x1: float, y1: float, z1: float, x2: float, y2: float, z2: float)",
+      "name": "Set",
+      "signature": "Set(x1: float, y1: float, z1: float, x2: float, y2: float, z2: float) | Set(line: Line3D) | Set(startPoint: Point3D, endPoint: Point3D) | Set(refPoint: Point3D, startPoint: Point3D, endPoint: Point3D)",
       "summary": "Initialize from 6 doubles Set line points in world coordinate system",
       "remarks": "Initialize from 6 doubles Set line points in world coordinate system",
       "params": [
@@ -393,78 +231,6 @@
           "name": "z2",
           "type": "float",
           "doc": "Z coordinate of end point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
-    },
-    {
-      "name": "Set(line: Line3D)",
-      "signature": "Set(line: Line3D)",
-      "summary": "Initialize line from line.",
-      "remarks": "Initialize line from line.",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "Line3D.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
-    },
-    {
-      "name": "Set(startPoint: Point3D, endPoint: Point3D)",
-      "signature": "Set(startPoint: Point3D, endPoint: Point3D)",
-      "summary": "Initialize from two points. Set line points in world coordinate system.",
-      "remarks": "Initialize from two points. Set line points in world coordinate system.",
-      "params": [
-        {
-          "name": "startPoint",
-          "type": "Point3D",
-          "doc": "start point.",
-          "optional": false
-        },
-        {
-          "name": "endPoint",
-          "type": "Point3D",
-          "doc": "end point.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
-    },
-    {
-      "name": "Set(refPoint: Point3D, startPoint: Point3D, endPoint: Point3D)",
-      "signature": "Set(refPoint: Point3D, startPoint: Point3D, endPoint: Point3D)",
-      "summary": "Initialize from 3 points. Set line points in local coordinate system.",
-      "remarks": "Initialize from 3 points. Set line points in local coordinate system.",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "Reference point.",
-          "optional": false
-        },
-        {
-          "name": "startPoint",
-          "type": "Point3D",
-          "doc": "relative start point.",
-          "optional": false
-        },
-        {
-          "name": "endPoint",
-          "type": "Point3D",
-          "doc": "relative end point.",
           "optional": false
         }
       ],
@@ -631,8 +397,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__eq__"
     },
     {
-      "name": "__mul__(matrix: Matrix2D) -\u003E object",
-      "signature": "__mul__(matrix: Matrix2D) -\u003E object",
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E object | __mul__(matrix: Matrix3D) -\u003E object",
       "summary": "2D matrix transformation. Multiplies line start and end point with matrix.",
       "remarks": "2D matrix transformation. Multiplies line start and end point with matrix.",
       "params": [
@@ -640,27 +406,6 @@
           "name": "matrix",
           "type": "Matrix2D",
           "doc": "2D transformation Matrix",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "Line3D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__mul__"
-    },
-    {
-      "name": "__mul__(matrix: Matrix3D) -\u003E object",
-      "signature": "__mul__(matrix: Matrix3D) -\u003E object",
-      "summary": "3D matrix transformation. Multiplies line start and end point with matrix.",
-      "remarks": "3D matrix transformation. Multiplies line start and end point with matrix.",
-      "params": [
-        {
-          "name": "matrix",
-          "type": "Matrix3D",
-          "doc": "3D transformation Matrix",
           "optional": false
         }
       ],

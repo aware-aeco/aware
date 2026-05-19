@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_utility
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Utility namespace — 19 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DefaultDirectories, FileDialog, GUID, InitTkinter, ProgressBar, SuppressLangDllErrorMessages, Timer, VecByteList, and 11 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Utility namespace — 19 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DefaultDirectories, GUID, ProgressBar, FileDialog, SizeTList, InitTkinter, SuppressLangDllErrorMessages, Timer, and 11 more types.
 ---
 
 # NemAll_Python_Utility
@@ -453,26 +453,13 @@ Insert an item in the list
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.insert)
 
-#### `pop()`
+#### `pop() | pop(index)`
 
 Pop the last value from the list
 
 **Remarks:** Pop the last value from the list
 
 **Returns:** `int` — Last value from the list
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop)
-
-#### `pop(index)`
-
-Pop an item from the list
-
-**Remarks:** Pop an item from the list
-
-**Parameters:**
-- `index` (int) — Index of the item
-
-**Returns:** `int` — Value of the item
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop)
 
@@ -495,19 +482,11 @@ Reverse the list
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.reverse)
 
-#### `sort()`
+#### `sort() | sort(cmp)`
 
 Sort the list
 
 **Remarks:** Sort the list
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.sort)
-
-#### `sort(cmp)`
-
-EXPERIMENTAL!
-
-**Remarks:** EXPERIMENTAL!
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.sort)
 
@@ -527,8 +506,7 @@ EXPERIMENTAL!
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/Timer/)
 
 ### Constructors
-- `Timer()` — Initialize
-- `Timer(arg2)` — Initialize
+- `Timer() | Timer(arg2)` — Initialize
 
 ### Methods
 #### `PrintTime(arg2)`
@@ -544,8 +522,7 @@ EXPERIMENTAL!
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecByteList/)
 
 ### Constructors
-- `VecByteList()` — Initialize
-- `VecByteList(valueList)` — Constructor with an initializer list
+- `VecByteList() | VecByteList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -669,8 +646,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecDoubleList/)
 
 ### Constructors
-- `VecDoubleList()` — Initialize
-- `VecDoubleList(valueList)` — Constructor with an initializer list
+- `VecDoubleList() | VecDoubleList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -908,8 +884,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecIntList/)
 
 ### Constructors
-- `VecIntList()` — Initialize
-- `VecIntList(valueList)` — Constructor with an initializer list
+- `VecIntList() | VecIntList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -1033,8 +1008,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecSizeTList/)
 
 ### Constructors
-- `VecSizeTList()` — Initialize
-- `VecSizeTList(valueList)` — Constructor with an initializer list
+- `VecSizeTList() | VecSizeTList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -1158,8 +1132,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecStringList/)
 
 ### Constructors
-- `VecStringList()` — Initialize
-- `VecStringList(valueList)` — Constructor with an initializer list
+- `VecStringList() | VecStringList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -1283,8 +1256,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecUIntList/)
 
 ### Constructors
-- `VecUIntList()` — Initialize
-- `VecUIntList(valueList)` — Constructor with an initializer list
+- `VecUIntList() | VecUIntList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -1408,8 +1380,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecULongList/)
 
 ### Constructors
-- `VecULongList()` — Initialize
-- `VecULongList(valueList)` — Constructor with an initializer list
+- `VecULongList() | VecULongList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -1533,8 +1504,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecUShortList/)
 
 ### Constructors
-- `VecUShortList()` — Initialize
-- `VecUShortList(valueList)` — Constructor with an initializer list
+- `VecUShortList() | VecUShortList(valueList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`

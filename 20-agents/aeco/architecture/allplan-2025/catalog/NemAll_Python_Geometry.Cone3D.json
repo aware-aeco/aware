@@ -7,95 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cone3D/",
   "constructors": [
     {
-      "name": "Cone3D()",
-      "signature": "Cone3D()",
+      "name": "Cone3D",
+      "signature": "Cone3D() | Cone3D(cone: Cone3D) | Cone3D( refPlacement: AxisPlacement3D, radiusMajor: float, radiusMinor: float, apex: Point3D, ) | Cone3D(radiusMajor: float, radiusMinor: float, apex: Point3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cone3D/#NemAll_Python_Geometry.Cone3D.__init__"
-    },
-    {
-      "name": "Cone3D(cone: Cone3D)",
-      "signature": "Cone3D(cone: Cone3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "cone",
-          "type": "Cone3D",
-          "doc": "Cone which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cone3D/#NemAll_Python_Geometry.Cone3D.__init__"
-    },
-    {
-      "name": "Cone3D( refPlacement: AxisPlacement3D, radiusMajor: float, radiusMinor: float, apex: Point3D, )",
-      "signature": "Cone3D( refPlacement: AxisPlacement3D, radiusMajor: float, radiusMinor: float, apex: Point3D, )",
-      "summary": "Constructor. Height of the Cone is z-coordinate of the Apex.",
-      "remarks": "Constructor. Height of the Cone is z-coordinate of the Apex.",
-      "params": [
-        {
-          "name": "refPlacement",
-          "type": "AxisPlacement3D",
-          "doc": "Local Placement of the Cone.",
-          "optional": false
-        },
-        {
-          "name": "radiusMajor",
-          "type": "float",
-          "doc": "Major radius of the Cone.",
-          "optional": false
-        },
-        {
-          "name": "radiusMinor",
-          "type": "float",
-          "doc": "Minor radius of the Cone.",
-          "optional": false
-        },
-        {
-          "name": "apex",
-          "type": "Point3D",
-          "doc": "Apex of the Cone",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cone3D/#NemAll_Python_Geometry.Cone3D.__init__"
-    },
-    {
-      "name": "Cone3D(radiusMajor: float, radiusMinor: float, apex: Point3D)",
-      "signature": "Cone3D(radiusMajor: float, radiusMinor: float, apex: Point3D)",
-      "summary": "Constructor. Height of the Cone is z-coordinate of the Apex.",
-      "remarks": "Constructor. Height of the Cone is z-coordinate of the Apex.",
-      "params": [
-        {
-          "name": "radiusMajor",
-          "type": "float",
-          "doc": "Major radius of the Cone.",
-          "optional": false
-        },
-        {
-          "name": "radiusMinor",
-          "type": "float",
-          "doc": "Minor radius of the Cone.",
-          "optional": false
-        },
-        {
-          "name": "apex",
-          "type": "Point3D",
-          "doc": "Apex of the Cone",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

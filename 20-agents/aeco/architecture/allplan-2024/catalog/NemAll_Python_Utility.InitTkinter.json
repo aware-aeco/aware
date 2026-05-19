@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/InitTkinter/",
   "constructors": [
     {
-      "name": "InitTkinter()",
+      "name": "InitTkinter",
       "signature": "InitTkinter()",
       "summary": "Initialize the use of tkinter in Allplan",
       "remarks": "Initialize the use of tkinter in Allplan",

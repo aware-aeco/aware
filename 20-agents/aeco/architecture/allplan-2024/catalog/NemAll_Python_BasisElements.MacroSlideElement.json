@@ -10,35 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/",
   "constructors": [
     {
-      "name": "MacroSlideElement()",
-      "signature": "MacroSlideElement()",
+      "name": "MacroSlideElement",
+      "signature": "MacroSlideElement() | MacroSlideElement(macroSlideProp, objectList)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.__init__"
-    },
-    {
-      "name": "MacroSlideElement(macroSlideProp, objectList)",
-      "signature": "MacroSlideElement(macroSlideProp, objectList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "macroSlideProp",
-          "type": "MacroSlideProperties",
-          "doc": "MacroSlide properties",
-          "optional": false
-        },
-        {
-          "name": "objectList",
-          "type": "list",
-          "doc": "Object list of slide",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

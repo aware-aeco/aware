@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3DList/",
   "constructors": [
     {
-      "name": "Spline3DList()",
+      "name": "Spline3DList",
       "signature": "Spline3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

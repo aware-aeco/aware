@@ -1,0 +1,77 @@
+{
+  "name": "Snap",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "A Snap is a custom grip used by SketchUp\u0027s Move tool. Snaps can be added at strategic places such as connectors to help assembling objects. #direction is the direction a snap is \u201Cpointing\u201D. This can be thought of as the normal direction of the snap. It can also be thought of as the direction you move an object when plugging it into another object, e.g. inserting a power coord. #up controls the rotation around the Snap\u0027s axis. When two objects are snapped together, the Snaps have opposite #direction vectors but matching #up vectors.",
+  "base": "Drawingelement",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Snap.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "direction",
+      "signature": "direction =\u003E Geom::Vector3d",
+      "summary": "The #direction method is used to get the direction this Snap is \u201Cpointing\u201D.",
+      "remarks": "The #direction method is used to get the direction this Snap is \u201Cpointing\u201D. When two Snaps are snapped into each other, they have the opposite #direction.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Snap.html#direction-instance_method"
+    },
+    {
+      "name": "position",
+      "signature": "position =\u003E Geom::Point3d",
+      "summary": "The #position method is used to get the position of this Snap.",
+      "remarks": "The #position method is used to get the position of this Snap.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Snap.html#position-instance_method"
+    },
+    {
+      "name": "set",
+      "signature": "set(position) =\u003E Sketchup::Snap | set(position, direction) =\u003E Sketchup::Snap | set(position, direction, up) =\u003E Sketchup::Snap",
+      "summary": "The #set method is used to move and/or reorient a Snap.",
+      "remarks": "The #set method is used to move and/or reorient a Snap.",
+      "params": [
+        {
+          "name": "position",
+          "type": "Geom::Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Snap",
+        "doc": "self"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Snap.html#set-instance_method"
+    },
+    {
+      "name": "up",
+      "signature": "up =\u003E Geom::Vector3d",
+      "summary": "The #up method is used to get a vector representing the rotation of this Snap along its axis.",
+      "remarks": "The #up method is used to get a vector representing the rotation of this Snap along its axis. When two Snaps are snapped into each other, they have the same aligned #up direction.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Snap.html#up-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

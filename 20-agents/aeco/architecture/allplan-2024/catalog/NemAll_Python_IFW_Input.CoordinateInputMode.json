@@ -7,35 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/",
   "constructors": [
     {
-      "name": "CoordinateInputMode()",
-      "signature": "CoordinateInputMode()",
+      "name": "CoordinateInputMode",
+      "signature": "CoordinateInputMode() | CoordinateInputMode(identMode, drawPointSymbol)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.__init__"
-    },
-    {
-      "name": "CoordinateInputMode(identMode, drawPointSymbol)",
-      "signature": "CoordinateInputMode(identMode, drawPointSymbol)",
-      "summary": "Constructor, sets the local coordinate input to false",
-      "remarks": "Constructor, sets the local coordinate input to false",
-      "params": [
-        {
-          "name": "identMode",
-          "type": "eIdentificationMode",
-          "doc": "Identification mode",
-          "optional": false
-        },
-        {
-          "name": "drawPointSymbol",
-          "type": "eDrawElementIdentPointSymbols",
-          "doc": "Draw the identification point symbol at the element (if an element is selected): true/false",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

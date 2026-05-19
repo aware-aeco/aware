@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/",
   "constructors": [
     {
-      "name": "MacroPlacementProperties()",
-      "signature": "MacroPlacementProperties()",
+      "name": "MacroPlacementProperties",
+      "signature": "MacroPlacementProperties() | MacroPlacementProperties(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementProperties/#NemAll_Python_BasisElements.MacroPlacementProperties.__init__"
-    },
-    {
-      "name": "MacroPlacementProperties(element)",
-      "signature": "MacroPlacementProperties(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "MacroPlacementProperties",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

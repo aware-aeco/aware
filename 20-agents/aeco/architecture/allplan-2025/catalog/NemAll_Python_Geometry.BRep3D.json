@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/",
   "constructors": [
     {
-      "name": "BRep3D()",
-      "signature": "BRep3D()",
+      "name": "BRep3D",
+      "signature": "BRep3D() | BRep3D(brep: BRep3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.__init__"
-    },
-    {
-      "name": "BRep3D(brep: BRep3D)",
-      "signature": "BRep3D(brep: BRep3D)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "brep",
-          "type": "BRep3D",
-          "doc": "BRep3D which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -1303,8 +1285,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.PickVertex"
     },
     {
-      "name": "ReadFromStream( sstream_str: str, transformationMatrix: Matrix3D ) -\u003E eGeometryErrorCode",
-      "signature": "ReadFromStream( sstream_str: str, transformationMatrix: Matrix3D ) -\u003E eGeometryErrorCode",
+      "name": "ReadFromStream",
+      "signature": "ReadFromStream( sstream_str: str, transformationMatrix: Matrix3D ) -\u003E eGeometryErrorCode | ReadFromStream( sstream_str: str, scale: float, translation: Vector3D, spaceminmax: MinMax3D, visibleminmax: MinMax3D, ) -\u003E eGeometryErrorCode",
       "summary": "Read BRep3D from string",
       "remarks": "Read BRep3D from string",
       "params": [
@@ -1318,51 +1300,6 @@
           "name": "transformationMatrix",
           "type": "Matrix3D",
           "doc": "Matrix to use for BRep transformation",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "eGeometryErrorCode",
-        "doc": "error code"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.ReadFromStream"
-    },
-    {
-      "name": "ReadFromStream( sstream_str: str, scale: float, translation: Vector3D, spaceminmax: MinMax3D, visibleminmax: MinMax3D, ) -\u003E eGeometryErrorCode",
-      "signature": "ReadFromStream( sstream_str: str, scale: float, translation: Vector3D, spaceminmax: MinMax3D, visibleminmax: MinMax3D, ) -\u003E eGeometryErrorCode",
-      "summary": "Read BRep3D from the string",
-      "remarks": "Read BRep3D from the string",
-      "params": [
-        {
-          "name": "sstream_str",
-          "type": "str",
-          "doc": "string to read brep data from",
-          "optional": false
-        },
-        {
-          "name": "scale",
-          "type": "float",
-          "doc": "transformation scale",
-          "optional": false
-        },
-        {
-          "name": "translation",
-          "type": "Vector3D",
-          "doc": "translation vector",
-          "optional": false
-        },
-        {
-          "name": "spaceminmax",
-          "type": "MinMax3D",
-          "doc": "space minmax (including control points",
-          "optional": false
-        },
-        {
-          "name": "visibleminmax",
-          "type": "MinMax3D",
-          "doc": "visible minmax of the body",
           "optional": false
         }
       ],

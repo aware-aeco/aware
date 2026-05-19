@@ -10,29 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/",
   "constructors": [
     {
-      "name": "SlabOpeningProperties(openingType: SlabOpeningType = eOpening)",
-      "signature": "SlabOpeningProperties(openingType: SlabOpeningType = eOpening)",
+      "name": "SlabOpeningProperties",
+      "signature": "SlabOpeningProperties(openingType: SlabOpeningType = eOpening) | SlabOpeningProperties(openingProps: SlabOpeningProperties)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/#NemAll_Python_ArchElements.SlabOpeningProperties.__init__"
-    },
-    {
-      "name": "SlabOpeningProperties(openingProps: SlabOpeningProperties)",
-      "signature": "SlabOpeningProperties(openingProps: SlabOpeningProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "openingProps",
-          "type": "SlabOpeningProperties",
-          "doc": "Opening properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

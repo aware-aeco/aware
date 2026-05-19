@@ -10,47 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/",
   "constructors": [
     {
-      "name": "StructuralBraceElement()",
-      "signature": "StructuralBraceElement()",
+      "name": "StructuralBraceElement",
+      "signature": "StructuralBraceElement() | StructuralBraceElement(structuralBraceProperties) | StructuralBraceElement(structuralBraceElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
-    },
-    {
-      "name": "StructuralBraceElement(structuralBraceProperties)",
-      "signature": "StructuralBraceElement(structuralBraceProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "structuralBraceProp",
-          "type": "object",
-          "doc": "StructuralBrace properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
-    },
-    {
-      "name": "StructuralBraceElement(structuralBraceElement)",
-      "signature": "StructuralBraceElement(structuralBraceElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "structuralBraceElement",
-          "type": "StructuralBraceElement",
-          "doc": "Structural Brace to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

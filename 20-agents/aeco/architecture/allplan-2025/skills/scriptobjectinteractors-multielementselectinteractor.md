@@ -20,7 +20,7 @@ Implementation of the interactor for selecting multiple elements
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractor/)
 
 ### Constructors
-- `MultiElementSelectInteractor( interactor_result: MultiElementSelectInteractorResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, prompt_msg: str = "Select the elements", active_elements: bool = True, )` — Initialize the multiple element selection interactor
+- `MultiElementSelectInteractor( interactor_result: MultiElementSelectInteractorResult, ele_filter: list[GUID] | MultiElementSelectInteractor() | MultiElementSelectInteractor() | MultiElementSelectInteractor()` — Initialize the multiple element selection interactor
 
 ### Methods
 #### `__del__()`

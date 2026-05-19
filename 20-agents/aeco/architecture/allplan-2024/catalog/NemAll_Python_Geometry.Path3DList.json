@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3DList/",
   "constructors": [
     {
-      "name": "Path3DList()",
+      "name": "Path3DList",
       "signature": "Path3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

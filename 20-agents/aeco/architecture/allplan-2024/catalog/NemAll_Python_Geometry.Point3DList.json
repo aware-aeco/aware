@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3DList/",
   "constructors": [
     {
-      "name": "Point3DList()",
+      "name": "Point3DList",
       "signature": "Point3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

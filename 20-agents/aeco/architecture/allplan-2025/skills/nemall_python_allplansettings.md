@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_allplansettings
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_AllplanSettings namespace — 29 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanGlobalSettings, Functions, AllplanLocalisationService, AllplanPaths, AngleUnits, AllplanVersion, FontProvider, ImperialUnitService, and 21 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_AllplanSettings namespace — 29 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllplanPaths, AllplanVersion, AllplanGlobalSettings, AllplanLocalisationService, ImperialUnitService, FontProvider, AngleUnits, and 21 more types.
 ---
 
 # NemAll_Python_AllplanSettings
@@ -367,20 +367,7 @@ Converts twips to mm
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.FontTwipsToMM)
 
-#### `GetCharsetList(fontName: str) -> tuple[bool, list[int]]`
-
-Returns the list of available charsets for the given font
-
-**Remarks:** Returns the list of available charsets for the given font
-
-**Parameters:**
-- `fontName` (str) — Font name
-
-**Returns:** `bool` — True if at least one Charset for the given font name exists
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetCharsetList)
-
-#### `GetCharsetList(nFontID: int) -> tuple[bool, list[int]]`
+#### `GetCharsetList(nFontID: int) -> tuple[bool, list[int]] | GetCharsetList(fontName: str) -> tuple[bool, list[int]]`
 
 Returns the list of available charsets for the given font
 

@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDoubleVec/",
   "constructors": [
     {
-      "name": "AttributeDoubleVec()",
-      "signature": "AttributeDoubleVec()",
+      "name": "AttributeDoubleVec",
+      "signature": "AttributeDoubleVec() | AttributeDoubleVec(id, value) | AttributeDoubleVec(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDoubleVec/#NemAll_Python_BaseElements.AttributeDoubleVec.__init__"
-    },
-    {
-      "name": "AttributeDoubleVec(id, value)",
-      "signature": "AttributeDoubleVec(id, value)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "VecDoubleList",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDoubleVec/#NemAll_Python_BaseElements.AttributeDoubleVec.__init__"
-    },
-    {
-      "name": "AttributeDoubleVec(element)",
-      "signature": "AttributeDoubleVec(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeDoubleVec",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

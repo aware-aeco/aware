@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/",
   "constructors": [
     {
-      "name": "FaceOffset(inputPolyhedron: Polyhedron3D)",
-      "signature": "FaceOffset(inputPolyhedron: Polyhedron3D)",
+      "name": "FaceOffset",
+      "signature": "FaceOffset(inputPolyhedron: Polyhedron3D) | FaceOffset(inputPolyhedron: Polyhedron3D, faceIndices: VecSizeTList) | FaceOffset(inputBRep: BRep3D) | FaceOffset(inputBRep: BRep3D, faceIndices: VecSizeTList) | FaceOffset(element: FaceOffset)",
       "summary": "Constructor with polyhedron input geometry",
       "remarks": "Constructor with polyhedron input geometry",
       "params": [
@@ -17,90 +17,6 @@
           "name": "inputPolyhedron",
           "type": "Polyhedron3D",
           "doc": "polyhedron to execute face offset/shell on",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
-    },
-    {
-      "name": "FaceOffset(inputPolyhedron: Polyhedron3D, faceIndices: VecSizeTList)",
-      "signature": "FaceOffset(inputPolyhedron: Polyhedron3D, faceIndices: VecSizeTList)",
-      "summary": "Constructor with polyhedron element",
-      "remarks": "Constructor with polyhedron element",
-      "params": [
-        {
-          "name": "inputPolyhedron",
-          "type": "Polyhedron3D",
-          "doc": "polyhedron to execute face offset/shell on",
-          "optional": false
-        },
-        {
-          "name": "faceIndices",
-          "type": "VecSizeTList",
-          "doc": "vector of indices of faces to offset/shell",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
-    },
-    {
-      "name": "FaceOffset(inputBRep: BRep3D)",
-      "signature": "FaceOffset(inputBRep: BRep3D)",
-      "summary": "Constructor with brep element",
-      "remarks": "Constructor with brep element",
-      "params": [
-        {
-          "name": "inputBRep",
-          "type": "BRep3D",
-          "doc": "brep to execute face offset/shell on",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
-    },
-    {
-      "name": "FaceOffset(inputBRep: BRep3D, faceIndices: VecSizeTList)",
-      "signature": "FaceOffset(inputBRep: BRep3D, faceIndices: VecSizeTList)",
-      "summary": "Constructor with brep element",
-      "remarks": "Constructor with brep element",
-      "params": [
-        {
-          "name": "inputBRep",
-          "type": "BRep3D",
-          "doc": "brep to execute face offset/shell on",
-          "optional": false
-        },
-        {
-          "name": "faceIndices",
-          "type": "VecSizeTList",
-          "doc": "vector of indices of faces for offset/shell",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
-    },
-    {
-      "name": "FaceOffset(element: FaceOffset)",
-      "signature": "FaceOffset(element: FaceOffset)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "FaceOffset",
-          "doc": "Element to copy",
           "optional": false
         }
       ],

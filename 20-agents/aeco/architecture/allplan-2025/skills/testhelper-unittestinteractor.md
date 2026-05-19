@@ -1,6 +1,6 @@
 ---
 name: allplan-testhelper-unittestinteractor
-description: This skill encodes the allplan 2025.0 surface of the TestHelper.UnitTestInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: UnitTestInteractorWrapper, Functions, UnitTestInteractor.
+description: This skill encodes the allplan 2025.0 surface of the TestHelper.UnitTestInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, UnitTestInteractor, UnitTestInteractorWrapper.
 ---
 
 # TestHelper.UnitTestInteractor

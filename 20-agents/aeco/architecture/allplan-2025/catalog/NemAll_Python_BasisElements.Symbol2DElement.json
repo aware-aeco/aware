@@ -10,41 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/",
   "constructors": [
     {
-      "name": "Symbol2DElement()",
-      "signature": "Symbol2DElement()",
+      "name": "Symbol2DElement",
+      "signature": "Symbol2DElement() | Symbol2DElement( commonProp: CommonProperties, Symbol2DProp: Symbol2DProperties, geometryObject: object, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DElement/#NemAll_Python_BasisElements.Symbol2DElement.__init__"
-    },
-    {
-      "name": "Symbol2DElement( commonProp: CommonProperties, Symbol2DProp: Symbol2DProperties, geometryObject: object, )",
-      "signature": "Symbol2DElement( commonProp: CommonProperties, Symbol2DProp: Symbol2DProperties, geometryObject: object, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "Symbol2DProp",
-          "type": "Symbol2DProperties",
-          "doc": "Symbol2D properties",
-          "optional": false
-        },
-        {
-          "name": "geometryObject",
-          "type": "object",
-          "doc": "Geometry element",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

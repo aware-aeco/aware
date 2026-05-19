@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/",
   "constructors": [
     {
-      "name": "WriteOneColorPngFile()",
+      "name": "WriteOneColorPngFile",
       "signature": "WriteOneColorPngFile(height, width, color)",
       "summary": "initialize",
       "remarks": "initialize",

@@ -10,35 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/",
   "constructors": [
     {
-      "name": "FixtureSlideElement()",
-      "signature": "FixtureSlideElement()",
+      "name": "FixtureSlideElement",
+      "signature": "FixtureSlideElement() | FixtureSlideElement(FixtureSlideProp: FixtureSlideProperties, objectList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/#NemAll_Python_Precast.FixtureSlideElement.__init__"
-    },
-    {
-      "name": "FixtureSlideElement(FixtureSlideProp: FixtureSlideProperties, objectList: list)",
-      "signature": "FixtureSlideElement(FixtureSlideProp: FixtureSlideProperties, objectList: list)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "FixtureSlideProp",
-          "type": "FixtureSlideProperties",
-          "doc": "FixtureSlide properties",
-          "optional": false
-        },
-        {
-          "name": "objectList",
-          "type": "list",
-          "doc": "Object list of slide",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

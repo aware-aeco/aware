@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ModificationElementList/",
   "constructors": [
     {
-      "name": "ModificationElementList()",
-      "signature": "ModificationElementList(elements: list[str | BaseElementAdapter] | None = None)",
+      "name": "ModificationElementList",
+      "signature": "ModificationElementList(elements: list[str | ModificationElementList() | ModificationElementList()",
       "summary": "initialize",
       "remarks": "initialize",
       "params": [

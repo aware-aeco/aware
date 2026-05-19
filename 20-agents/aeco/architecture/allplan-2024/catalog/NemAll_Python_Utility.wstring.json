@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/wstring/",
   "constructors": [
     {
-      "name": "wstring()",
+      "name": "wstring",
       "signature": "wstring()",
       "summary": "Initialize",
       "remarks": "Initialize",

@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3DList/",
   "constructors": [
     {
-      "name": "Polyline3DList()",
-      "signature": "Polyline3DList()",
+      "name": "Polyline3DList",
+      "signature": "Polyline3DList() | Polyline3DList(ele: Polyline3D) | Polyline3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3DList/#NemAll_Python_Geometry.Polyline3DList.__init__"
-    },
-    {
-      "name": "Polyline3DList(ele: Polyline3D)",
-      "signature": "Polyline3DList(ele: Polyline3D)",
-      "summary": "Constructor with a Polyline3D",
-      "remarks": "Constructor with a Polyline3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Polyline3D",
-          "doc": "Polyline3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3DList/#NemAll_Python_Geometry.Polyline3DList.__init__"
-    },
-    {
-      "name": "Polyline3DList(eleList: list)",
-      "signature": "Polyline3DList(eleList: list)",
-      "summary": "Constructor with a list of Polyline3D",
-      "remarks": "Constructor with a list of Polyline3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Polyline3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3DList/#NemAll_Python_Geometry.Polyline3DList.append"
     },
     {
-      "name": "extend(iterable: Polyline3DList)",
-      "signature": "extend(iterable: Polyline3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Polyline3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Polyline3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3DList/#NemAll_Python_Geometry.Polyline3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Polyline3D list",
           "optional": false
         }
       ],

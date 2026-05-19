@@ -10,59 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/",
   "constructors": [
     {
-      "name": "FaceStyleElement()",
-      "signature": "FaceStyleElement()",
+      "name": "FaceStyleElement",
+      "signature": "FaceStyleElement() | FaceStyleElement(commonProp, faceStyleProp, geometryObject) | FaceStyleElement(FaceStyleElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/#NemAll_Python_BasisElements.FaceStyleElement.__init__"
-    },
-    {
-      "name": "FaceStyleElement(commonProp, faceStyleProp, geometryObject)",
-      "signature": "FaceStyleElement(commonProp, faceStyleProp, geometryObject)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "faceStyleProp",
-          "type": "FaceStyleProperties",
-          "doc": "Face style properties",
-          "optional": false
-        },
-        {
-          "name": "geometryObject",
-          "type": "object",
-          "doc": "Geometry element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleElement/#NemAll_Python_BasisElements.FaceStyleElement.__init__"
-    },
-    {
-      "name": "FaceStyleElement(FaceStyleElement)",
-      "signature": "FaceStyleElement(FaceStyleElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "faceStyleElement",
-          "type": "object",
-          "doc": "FaceStyle element element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

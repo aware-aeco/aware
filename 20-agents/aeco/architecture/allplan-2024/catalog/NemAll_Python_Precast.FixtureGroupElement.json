@@ -10,65 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/",
   "constructors": [
     {
-      "name": "FixtureGroupElement()",
-      "signature": "FixtureGroupElement()",
+      "name": "FixtureGroupElement",
+      "signature": "FixtureGroupElement() | FixtureGroupElement(FixtureGroupProp, slideList) | FixtureGroupElement(commonProp, FixtureGroupProp, slideList)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.__init__"
-    },
-    {
-      "name": "FixtureGroupElement(FixtureGroupProp, slideList)",
-      "signature": "FixtureGroupElement(FixtureGroupProp, slideList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "FixtureGroupProp",
-          "type": "FixtureGroupProperties",
-          "doc": "FixtureGroup properties",
-          "optional": false
-        },
-        {
-          "name": "placementList",
-          "type": "object",
-          "doc": "Placement list of macro group",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.__init__"
-    },
-    {
-      "name": "FixtureGroupElement(commonProp, FixtureGroupProp, slideList)",
-      "signature": "FixtureGroupElement(commonProp, FixtureGroupProp, slideList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "FixtureGroupProp",
-          "type": "FixtureGroupProperties",
-          "doc": "FixtureGroup properties",
-          "optional": false
-        },
-        {
-          "name": "placementList",
-          "type": "object",
-          "doc": "Placement list of macro group",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

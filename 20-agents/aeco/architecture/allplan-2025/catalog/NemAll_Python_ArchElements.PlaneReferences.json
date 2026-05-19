@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/",
   "constructors": [
     {
-      "name": "PlaneReferences(doc: DocumentAdapter, refElement: BaseElementAdapter)",
-      "signature": "PlaneReferences(doc: DocumentAdapter, refElement: BaseElementAdapter)",
+      "name": "PlaneReferences",
+      "signature": "PlaneReferences(doc: DocumentAdapter, refElement: BaseElementAdapter) | PlaneReferences(element: PlaneReferences)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [
@@ -23,24 +23,6 @@
           "name": "refElement",
           "type": "BaseElementAdapter",
           "doc": "Reference element for the plane (if current exist)",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.__init__"
-    },
-    {
-      "name": "PlaneReferences(element: PlaneReferences)",
-      "signature": "PlaneReferences(element: PlaneReferences)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "PlaneReferences",
-          "doc": "Element to copy",
           "optional": false
         }
       ],

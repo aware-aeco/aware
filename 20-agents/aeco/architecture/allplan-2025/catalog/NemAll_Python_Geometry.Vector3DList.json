@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3DList/",
   "constructors": [
     {
-      "name": "Vector3DList()",
-      "signature": "Vector3DList()",
+      "name": "Vector3DList",
+      "signature": "Vector3DList() | Vector3DList(ele: Vector3D) | Vector3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3DList/#NemAll_Python_Geometry.Vector3DList.__init__"
-    },
-    {
-      "name": "Vector3DList(ele: Vector3D)",
-      "signature": "Vector3DList(ele: Vector3D)",
-      "summary": "Constructor with a Vector3D",
-      "remarks": "Constructor with a Vector3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Vector3D",
-          "doc": "Vector3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3DList/#NemAll_Python_Geometry.Vector3DList.__init__"
-    },
-    {
-      "name": "Vector3DList(eleList: list)",
-      "signature": "Vector3DList(eleList: list)",
-      "summary": "Constructor with a list of Vector3D",
-      "remarks": "Constructor with a list of Vector3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Vector3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3DList/#NemAll_Python_Geometry.Vector3DList.append"
     },
     {
-      "name": "extend(iterable: Vector3DList)",
-      "signature": "extend(iterable: Vector3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Vector3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Vector3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3DList/#NemAll_Python_Geometry.Vector3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Vector3D list",
           "optional": false
         }
       ],

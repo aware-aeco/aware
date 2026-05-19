@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ModelEleList/ModelEleList/",
   "constructors": [
     {
-      "name": "ModelEleList()",
+      "name": "ModelEleList",
       "signature": "ModelEleList(com_prop=GetCurrentCommonProperties())",
       "summary": "initialize",
       "remarks": "initialize",

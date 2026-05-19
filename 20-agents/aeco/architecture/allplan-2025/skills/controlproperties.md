@@ -14,7 +14,7 @@ Implementation of the control properties class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ControlProperties/)
 
 ### Constructors
-- `ControlProperties( text: str, value_name: str, enable_condition: str, visible_condition: str, page: int, expander_name: str, row_name: str, value_str: str, value_list: str, value_list_2: str, event_id: str, control_type: ControlType = CONTROL, value_index_name: str = "", value_list_start_row: int = 0, value_dialog: ValueDialogType | None = None, value_list_textids: str = "", as_slider: bool = False, height: str = "22", width: str = DEFAULT_WIDTH, font_style: int = 2, font_face_code: int = 0, background_color: str = "", row_state_key: str = "", expander_state_key: str = "", )` — Set the properties of the control
+- `ControlProperties( text: str, value_name: str, enable_condition: str, visible_condition: str, page: int, expander_name: str, row_name: str, value_str: str, value_list: str, value_list_2: str, event_id: str, control_type: ControlType = CONTROL, value_index_name: str = "", value_list_start_row: int = 0, value_dialog: ValueDialogType | ControlProperties()` — Set the properties of the control
 
 ### Methods
 #### `__repr__() -> str`

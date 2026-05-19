@@ -10,47 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/",
   "constructors": [
     {
-      "name": "LibraryElement()",
-      "signature": "LibraryElement()",
+      "name": "LibraryElement",
+      "signature": "LibraryElement() | LibraryElement(libEleProp: LibraryElementProperties) | LibraryElement(libEle: LibraryElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.__init__"
-    },
-    {
-      "name": "LibraryElement(libEleProp: LibraryElementProperties)",
-      "signature": "LibraryElement(libEleProp: LibraryElementProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "libEleProp",
-          "type": "LibraryElementProperties",
-          "doc": "Library element properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElement/#NemAll_Python_BasisElements.LibraryElement.__init__"
-    },
-    {
-      "name": "LibraryElement(libEle: LibraryElement)",
-      "signature": "LibraryElement(libEle: LibraryElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "libEle",
-          "type": "LibraryElement",
-          "doc": "Library element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

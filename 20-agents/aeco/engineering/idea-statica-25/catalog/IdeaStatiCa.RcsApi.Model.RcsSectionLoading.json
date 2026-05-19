@@ -1,0 +1,30 @@
+{
+  "name": "RcsSectionLoading",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsSectionLoading.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsSectionLoading.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "SectionId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsSectionLoading.sectionId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsSectionLoading.md"
+    },
+    {
+      "name": "LoadingXml",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsSectionLoading.loadingXml.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsSectionLoading.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

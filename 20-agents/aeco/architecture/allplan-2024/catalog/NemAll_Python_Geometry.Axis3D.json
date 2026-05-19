@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/",
   "constructors": [
     {
-      "name": "Axis3D()",
-      "signature": "Axis3D()",
+      "name": "Axis3D",
+      "signature": "Axis3D() | Axis3D(axisPoint, vector) | Axis3D(refPoint, axisPoint, vector) | Axis3D(line) | Axis3D(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.__init__"
-    },
-    {
-      "name": "Axis3D(axisPoint, vector)",
-      "signature": "Axis3D(axisPoint, vector)",
-      "summary": "Constructor. Reference point is initialized to [0.,0.,0.] Used world coordinate system for AxisPoint",
-      "remarks": "Constructor. Reference point is initialized to [0.,0.,0.] Used world coordinate system for AxisPoint",
-      "params": [
-        {
-          "name": "axisPoint",
-          "type": "Point3D",
-          "doc": "Axis point",
-          "optional": false
-        },
-        {
-          "name": "vector",
-          "type": "Vector3D",
-          "doc": "Axis vector",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.__init__"
-    },
-    {
-      "name": "Axis3D(refPoint, axisPoint, vector)",
-      "signature": "Axis3D(refPoint, axisPoint, vector)",
-      "summary": "Constructor. Used local coordinate system for AxisPoint",
-      "remarks": "Constructor. Used local coordinate system for AxisPoint",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "Reference point",
-          "optional": false
-        },
-        {
-          "name": "axisPoint",
-          "type": "Point3D",
-          "doc": "Axis point",
-          "optional": false
-        },
-        {
-          "name": "vector",
-          "type": "Vector3D",
-          "doc": "Axis vector",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.__init__"
-    },
-    {
-      "name": "Axis3D(line)",
-      "signature": "Axis3D(line)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "3D line representing axis",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.__init__"
-    },
-    {
-      "name": "Axis3D(element)",
-      "signature": "Axis3D(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "Axis3D",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -110,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Set(axis)",
-      "signature": "Set(axis)",
+      "name": "Set",
+      "signature": "Set(axis) | Set(refPoint, axisPoint, vector)",
       "summary": "Set axis",
       "remarks": "Set axis",
       "params": [
@@ -119,36 +29,6 @@
           "name": "axis",
           "type": "Axis3D",
           "doc": "Axis which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.Set"
-    },
-    {
-      "name": "Set(refPoint, axisPoint, vector)",
-      "signature": "Set(refPoint, axisPoint, vector)",
-      "summary": "Set axis Used local coordinate system for axisPoint",
-      "remarks": "Set axis Used local coordinate system for axisPoint",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "Reference point",
-          "optional": false
-        },
-        {
-          "name": "axisPoint",
-          "type": "Point3D",
-          "doc": "Axis point",
-          "optional": false
-        },
-        {
-          "name": "vector",
-          "type": "Vector3D",
-          "doc": "Axis vector",
           "optional": false
         }
       ],

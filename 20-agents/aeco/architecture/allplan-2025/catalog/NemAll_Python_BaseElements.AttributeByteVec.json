@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeByteVec/",
   "constructors": [
     {
-      "name": "AttributeByteVec()",
-      "signature": "AttributeByteVec()",
+      "name": "AttributeByteVec",
+      "signature": "AttributeByteVec() | AttributeByteVec(id: int, value: VecByteList) | AttributeByteVec(element: AttributeByteVec)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeByteVec/#NemAll_Python_BaseElements.AttributeByteVec.__init__"
-    },
-    {
-      "name": "AttributeByteVec(id: int, value: VecByteList)",
-      "signature": "AttributeByteVec(id: int, value: VecByteList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "VecByteList",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeByteVec/#NemAll_Python_BaseElements.AttributeByteVec.__init__"
-    },
-    {
-      "name": "AttributeByteVec(element: AttributeByteVec)",
-      "signature": "AttributeByteVec(element: AttributeByteVec)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeByteVec",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_ifw_elementadapter
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_IFW_ElementAdapter namespace — 19 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllplanElement, ArchElementType, AssocViewElementAdapter, AxisElementAdapter, BaseElementAdapterChildElementsService, BaseElementAdapterList, BaseElementAdapter, and 11 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_IFW_ElementAdapter namespace — 19 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, ArchElementType, Functions, AxisElementAdapter, AssocViewElementAdapter, BaseElementAdapterParentElementService, BaseElementAdapterList, BaseElementAdapterChildElementsService, and 11 more types.
 ---
 
 # NemAll_Python_IFW_ElementAdapter
@@ -154,8 +154,7 @@ Architecture element types
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/)
 
 ### Constructors
-- `AssocViewElementAdapter()` — Initialize
-- `AssocViewElementAdapter(ele: BaseElementAdapter)` — Constructor
+- `AssocViewElementAdapter() | AssocViewElementAdapter(ele: BaseElementAdapter)` — Initialize
 
 ### Methods
 #### `GetTransformationMatrix() -> Matrix3D`
@@ -185,9 +184,7 @@ Implementation of the axis element adapter
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/)
 
 ### Constructors
-- `AxisElementAdapter()` — Initialize
-- `AxisElementAdapter(element: BaseElementAdapter)` — Constructor
-- `AxisElementAdapter(element: AxisElementAdapter)` — Copy constructor
+- `AxisElementAdapter() | AxisElementAdapter(element: BaseElementAdapter) | AxisElementAdapter(element: AxisElementAdapter)` — Initialize
 
 ### Methods
 #### `GetAxis() -> Any`
@@ -287,8 +284,7 @@ Implementation of the base element adapter
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/)
 
 ### Constructors
-- `BaseElementAdapter()` — Initialize
-- `BaseElementAdapter(element: BaseElementAdapter)` — Copy constructor
+- `BaseElementAdapter() | BaseElementAdapter(element: BaseElementAdapter)` — Initialize
 
 ### Methods
 #### `FromGUID(guid: GUID, doc: DocumentAdapter) -> BaseElementAdapter`
@@ -617,20 +613,7 @@ Set the visibility state of the element
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.SetVisibilityState)
 
-#### `__eq__(eleTypeUUID: GUID) -> bool`
-
-Equal operator for checking the element adapter type UUID
-
-**Remarks:** Equal operator for checking the element adapter type UUID
-
-**Parameters:**
-- `eleTypeUUID` (GUID) — Element type UUID
-
-**Returns:** `bool` — Element has the type: true/false
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__)
-
-#### `__eq__(element: BaseElementAdapter) -> bool`
+#### `__eq__(element: BaseElementAdapter) -> bool | __eq__(eleTypeUUID: GUID) -> bool`
 
 Equal operator
 
@@ -643,7 +626,7 @@ Equal operator
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__)
 
-#### `__ne__(eleType: BaseElementAdapter) -> bool`
+#### `__ne__(eleType: BaseElementAdapter) -> bool | __ne__(eleType: GUID) -> bool`
 
 Not equal operator for checking the element type
 
@@ -651,19 +634,6 @@ Not equal operator for checking the element type
 
 **Parameters:**
 - `eleType` (BaseElementAdapter) — Element type
-
-**Returns:** `bool` — Element has not the type: true/false
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__ne__)
-
-#### `__ne__(eleType: GUID) -> bool`
-
-Not equal operator for checking the element type
-
-**Remarks:** Not equal operator for checking the element type
-
-**Parameters:**
-- `eleType` (GUID) — Element type
 
 **Returns:** `bool` — Element has not the type: true/false
 
@@ -698,21 +668,7 @@ Get the child elements of the element (includes the childs which have the same m
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildElements)
 
-#### `GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -> BaseElementAdapterList`
-
-Get the child model elements of the element
-
-**Remarks:** Get the child model elements of the element
-
-**Parameters:**
-- `ele` (BaseElementAdapter) — Element
-- `hiddenElements` (bool) — Include hidden elements: true/false
-
-**Returns:** `BaseElementAdapterList` — Child elements including hidden elements of the element
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildModelElements)
-
-#### `GetChildModelElements(ele: BaseElementAdapter) -> BaseElementAdapterList`
+#### `GetChildModelElements(ele: BaseElementAdapter) -> BaseElementAdapterList | GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -> BaseElementAdapterList`
 
 Get the child model elements of the element
 
@@ -786,9 +742,7 @@ Implementation of the base element adapter list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterList/)
 
 ### Constructors
-- `BaseElementAdapterList()` — Initialize
-- `BaseElementAdapterList(elements: List[BaseElementAdapter])` — Constructor
-- `BaseElementAdapterList(eleList: BaseElementAdapterList)` — Copy constructor
+- `BaseElementAdapterList() | BaseElementAdapterList(elements: List[BaseElementAdapter]) | BaseElementAdapterList(eleList: BaseElementAdapterList)` — Initialize
 
 ### Methods
 #### `__getitem__(index: int) -> BaseElementAdapter`

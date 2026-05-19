@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupProperties/",
   "constructors": [
     {
-      "name": "ElementGroupProperties()",
+      "name": "ElementGroupProperties",
       "signature": "ElementGroupProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

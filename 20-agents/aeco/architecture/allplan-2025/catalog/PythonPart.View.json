@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View/",
   "constructors": [
     {
-      "name": "View()",
-      "signature": "View( viewtype: MacroSlideType = eGeometry, visibility2d: bool = True, visibility3d: bool = True, start_scale: float = 0.0, end_scale: float = 9999.0, elements: list[Any] | None = None, )",
+      "name": "View",
+      "signature": "View( viewtype: MacroSlideType = eGeometry, visibility2d: bool = True, visibility3d: bool = True, start_scale: float = 0.0, end_scale: float = 9999.0, elements: list[Any] | View()",
       "summary": "initialization of view class",
       "remarks": "initialization of view class",
       "params": [

@@ -10,89 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/",
   "constructors": [
     {
-      "name": "SlabOpeningElement()",
-      "signature": "SlabOpeningElement()",
+      "name": "SlabOpeningElement",
+      "signature": "SlabOpeningElement() | SlabOpeningElement( slabOpeningProp: SlabOpeningProperties, placementPoint: Point3D, slabConnectionUUID: GUID, ) | SlabOpeningElement( slabOpeningProp: SlabOpeningProperties, placementPoint: Point2D, slabConnectionUUID: GUID, ) | SlabOpeningElement(element: SlabOpeningElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__init__"
-    },
-    {
-      "name": "SlabOpeningElement( slabOpeningProp: SlabOpeningProperties, placementPoint: Point3D, slabConnectionUUID: GUID, )",
-      "signature": "SlabOpeningElement( slabOpeningProp: SlabOpeningProperties, placementPoint: Point3D, slabConnectionUUID: GUID, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "slabOpeningProp",
-          "type": "SlabOpeningProperties",
-          "doc": "SlabOpening properties",
-          "optional": false
-        },
-        {
-          "name": "placementPoint",
-          "type": "Point3D",
-          "doc": "Placement point",
-          "optional": false
-        },
-        {
-          "name": "slabConnectionUUID",
-          "type": "GUID",
-          "doc": "Connection UUID of the slab",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__init__"
-    },
-    {
-      "name": "SlabOpeningElement( slabOpeningProp: SlabOpeningProperties, placementPoint: Point2D, slabConnectionUUID: GUID, )",
-      "signature": "SlabOpeningElement( slabOpeningProp: SlabOpeningProperties, placementPoint: Point2D, slabConnectionUUID: GUID, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "slabOpeningProp",
-          "type": "SlabOpeningProperties",
-          "doc": "SlabOpening properties",
-          "optional": false
-        },
-        {
-          "name": "placementPoint",
-          "type": "Point2D",
-          "doc": "Placement point",
-          "optional": false
-        },
-        {
-          "name": "slabConnectionUUID",
-          "type": "GUID",
-          "doc": "Connection UUID of the slab",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__init__"
-    },
-    {
-      "name": "SlabOpeningElement(element: SlabOpeningElement)",
-      "signature": "SlabOpeningElement(element: SlabOpeningElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "SlabOpeningElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

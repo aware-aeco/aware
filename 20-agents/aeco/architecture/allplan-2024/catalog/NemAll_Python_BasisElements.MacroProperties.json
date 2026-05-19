@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/",
   "constructors": [
     {
-      "name": "MacroProperties()",
-      "signature": "MacroProperties()",
+      "name": "MacroProperties",
+      "signature": "MacroProperties() | MacroProperties(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.__init__"
-    },
-    {
-      "name": "MacroProperties(element)",
-      "signature": "MacroProperties(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "MacroProperties",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

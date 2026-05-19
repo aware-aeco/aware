@@ -10,29 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/",
   "constructors": [
     {
-      "name": "StructuralColumnProperties()",
-      "signature": "StructuralColumnProperties()",
+      "name": "StructuralColumnProperties",
+      "signature": "StructuralColumnProperties() | StructuralColumnProperties(value: StructuralColumnProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/#NemAll_Python_ArchElements.StructuralColumnProperties.__init__"
-    },
-    {
-      "name": "StructuralColumnProperties(value: StructuralColumnProperties)",
-      "signature": "StructuralColumnProperties(value: StructuralColumnProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "value",
-          "type": "StructuralColumnProperties",
-          "doc": "Structural Beam properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

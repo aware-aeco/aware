@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3DList/",
   "constructors": [
     {
-      "name": "ExtrudedAreaSolid3DList()",
+      "name": "ExtrudedAreaSolid3DList",
       "signature": "ExtrudedAreaSolid3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

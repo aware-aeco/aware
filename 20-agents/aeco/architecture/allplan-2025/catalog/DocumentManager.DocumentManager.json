@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/DocumentManager/",
   "constructors": [
     {
-      "name": "DocumentManager()",
+      "name": "DocumentManager",
       "signature": "DocumentManager()",
       "summary": "Constructor",
       "remarks": "Constructor",

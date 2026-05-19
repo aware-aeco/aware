@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AngleList/",
   "constructors": [
     {
-      "name": "AngleList()",
-      "signature": "AngleList()",
+      "name": "AngleList",
+      "signature": "AngleList() | AngleList(ele: Angle) | AngleList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AngleList/#NemAll_Python_Geometry.AngleList.__init__"
-    },
-    {
-      "name": "AngleList(ele: Angle)",
-      "signature": "AngleList(ele: Angle)",
-      "summary": "Constructor with a Angle",
-      "remarks": "Constructor with a Angle",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Angle",
-          "doc": "Angle",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AngleList/#NemAll_Python_Geometry.AngleList.__init__"
-    },
-    {
-      "name": "AngleList(eleList: list)",
-      "signature": "AngleList(eleList: list)",
-      "summary": "Constructor with a list of Angle",
-      "remarks": "Constructor with a list of Angle",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Angle list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AngleList/#NemAll_Python_Geometry.AngleList.append"
     },
     {
-      "name": "extend(iterable: AngleList)",
-      "signature": "extend(iterable: AngleList)",
+      "name": "extend",
+      "signature": "extend(iterable: AngleList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "AngleList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AngleList/#NemAll_Python_Geometry.AngleList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Angle list",
           "optional": false
         }
       ],

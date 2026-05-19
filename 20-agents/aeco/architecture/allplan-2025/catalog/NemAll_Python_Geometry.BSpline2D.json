@@ -8,71 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/",
   "constructors": [
     {
-      "name": "BSpline2D()",
-      "signature": "BSpline2D()",
+      "name": "BSpline2D",
+      "signature": "BSpline2D() | BSpline2D( points: Point2DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool, ) | BSpline2D(spline: BSpline2D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.__init__"
-    },
-    {
-      "name": "BSpline2D( points: Point2DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool, )",
-      "signature": "BSpline2D( points: Point2DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool, )",
-      "summary": "Constructor from b-spline data. Creates b-spline using provided data.",
-      "remarks": "Constructor from b-spline data. Creates b-spline using provided data.",
-      "params": [
-        {
-          "name": "points",
-          "type": "Point2DList",
-          "doc": "control points of b-spline.",
-          "optional": false
-        },
-        {
-          "name": "weights",
-          "type": "VecDoubleList",
-          "doc": "weights of b-spline.",
-          "optional": false
-        },
-        {
-          "name": "knots",
-          "type": "VecDoubleList",
-          "doc": "knots of b-spline.",
-          "optional": false
-        },
-        {
-          "name": "degree",
-          "type": "int",
-          "doc": "degree of b-spline.",
-          "optional": false
-        },
-        {
-          "name": "isPeriodic",
-          "type": "bool",
-          "doc": "flag of periodicity of b-spline.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/#NemAll_Python_Geometry.BSpline2D.__init__"
-    },
-    {
-      "name": "BSpline2D(spline: BSpline2D)",
-      "signature": "BSpline2D(spline: BSpline2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "spline",
-          "type": "BSpline2D",
-          "doc": "Spline which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/",
   "constructors": [
     {
-      "name": "HiddenMaterial()",
-      "signature": "HiddenMaterial()",
+      "name": "HiddenMaterial",
+      "signature": "HiddenMaterial() | HiddenMaterial(source: HiddenMaterial)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/#NemAll_Python_Geometry.HiddenMaterial.__init__"
-    },
-    {
-      "name": "HiddenMaterial(source: HiddenMaterial)",
-      "signature": "HiddenMaterial(source: HiddenMaterial)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "source",
-          "type": "HiddenMaterial",
-          "doc": "Source.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

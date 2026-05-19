@@ -1,0 +1,154 @@
+{
+  "name": "ParameterApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Parameter endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ParameterApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DeleteParametersAsync",
+      "signature": "Task DeleteParametersAsync(Guid projectId, int connectionId)",
+      "summary": "Delete all parameters and parameter model links for the connection connectionId in the project projectId",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "Id of the connection where to delete parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ParameterApi.md"
+    },
+    {
+      "name": "GetParametersAsync",
+      "signature": "Task\u003CList\u003CIdeaParameter\u003E\u003E GetParametersAsync(Guid projectId, int connectionId, bool includeHidden)",
+      "summary": "Gets all parameters defined for the specified project and connection.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection from which to retrieve parameters.",
+          "optional": false
+        },
+        {
+          "name": "includeHidden",
+          "type": "bool",
+          "doc": "If true, includes hidden parameters in the result.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "List\u003CIdeaParameter\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ParameterApi.md"
+    },
+    {
+      "name": "UpdateAsync",
+      "signature": "Task\u003CParameterUpdateResponse\u003E UpdateAsync(Guid projectId, int connectionId, List\u003CIdeaParameterUpdate\u003E requestBody)",
+      "summary": "Updates parameters for the specified connection in the project with the values provided.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection to update.",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003CIdeaParameterUpdate\u003E",
+          "doc": "New values of parameters to apply.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ParameterUpdateResponse",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ParameterApi.md"
+    },
+    {
+      "name": "EvaluateExpressionAsync",
+      "signature": "Task\u003Cstring\u003E EvaluateExpressionAsync(Guid projectId, int connectionId, string string)",
+      "summary": "Evaluate the expression and return the result. For more detailssee documentation about parameters: https://developer.ideastatica.com/docs/api/api_parameters_getting_started.html nor https://developer.ideastatica.com/docs/api/api_parameter_reference_guide.html",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "Id of the connection to use for evaluation expression.",
+          "optional": false
+        },
+        {
+          "name": "string",
+          "type": "string",
+          "doc": "Expression to evaluate. See the API documentation for supportedsyntax and examples: https://developer.ideastatica.com/docs/api/api_parameters_getting_started.html",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ParameterApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

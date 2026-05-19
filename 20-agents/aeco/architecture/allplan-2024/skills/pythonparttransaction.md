@@ -1,6 +1,6 @@
 ---
 name: allplan-pythonparttransaction
-description: This skill encodes the allplan 2024.0 surface of the PythonPartTransaction namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ConnectToPythonPartState, ConnectToPythonPart, PythonPartTransaction.
+description: This skill encodes the allplan 2024.0 surface of the PythonPartTransaction namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ConnectToPythonPart, ConnectToPythonPartState, PythonPartTransaction.
 ---
 
 # PythonPartTransaction

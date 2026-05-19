@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/",
   "constructors": [
     {
-      "name": "InputStringConvert(id: int)",
-      "signature": "InputStringConvert(id: int)",
+      "name": "InputStringConvert",
+      "signature": "InputStringConvert(id: int) | InputStringConvert(text: str)",
       "summary": "Construct the prompt from an ID pointing out to a built-in string",
       "remarks": "Construct the prompt from an ID pointing out to a built-in string",
       "params": [
@@ -16,24 +16,6 @@
           "name": "arg2",
           "type": "object",
           "doc": "ID of the build-in prompt",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.__init__"
-    },
-    {
-      "name": "InputStringConvert(text: str)",
-      "signature": "InputStringConvert(text: str)",
-      "summary": "Construct the prompt from any string",
-      "remarks": "Construct the prompt from any string",
-      "params": [
-        {
-          "name": "arg2",
-          "type": "object",
-          "doc": "Prompt to show in the dialog line",
           "optional": false
         }
       ],

@@ -1,0 +1,77 @@
+{
+  "name": "ConversionApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Conversion endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConversionApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetConversionMappingAsync",
+      "signature": "Task\u003CConConversionSettings\u003E GetConversionMappingAsync(Guid projectId, CountryCode countryCode)",
+      "summary": "Gets default conversion mappings for converting the project to a different design code.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service (only ECEN design code is supported).",
+          "optional": false
+        },
+        {
+          "name": "countryCode",
+          "type": "CountryCode",
+          "doc": "The requested design code for the converted project.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConConversionSettings",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConversionApi.md"
+    },
+    {
+      "name": "ChangeCodeAsync",
+      "signature": "Task\u003Cstring\u003E ChangeCodeAsync(Guid projectId, ConConversionSettings conConversionSettings)",
+      "summary": "Changes the design code of the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service (only ECEN projects are supported).",
+          "optional": false
+        },
+        {
+          "name": "conConversionSettings",
+          "type": "ConConversionSettings",
+          "doc": "Conversion table for materials in the project (pairs \u0027ECEN MATERIAL\u0027 to \u0027TARGET DESIGN CODE MATERIAL\u0027).",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConversionApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -10,28 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/",
   "constructors": [
     {
-      "name": "ColumnProperties()",
-      "signature": "ColumnProperties()",
+      "name": "ColumnProperties",
+      "signature": "ColumnProperties() | ColumnProperties(columnProp)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/#NemAll_Python_ArchElements.ColumnProperties.__init__"
-    },
-    {
-      "name": "ColumnProperties(columnProp)",
-      "signature": "ColumnProperties(columnProp)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "columnProp",
-          "type": "ColumnProperties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

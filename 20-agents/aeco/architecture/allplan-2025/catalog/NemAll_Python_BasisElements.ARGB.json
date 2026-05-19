@@ -7,83 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/",
   "constructors": [
     {
-      "name": "ARGB()",
-      "signature": "ARGB()",
+      "name": "ARGB",
+      "signature": "ARGB() | ARGB(argb: int) | ARGB(red: int, green: int, blue: int, alpha: int) | ARGB(argb: ARGB)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
-    },
-    {
-      "name": "ARGB(argb: int)",
-      "signature": "ARGB(argb: int)",
-      "summary": "constructor from unsigned long",
-      "remarks": "constructor from unsigned long",
-      "params": [
-        {
-          "name": "argb",
-          "type": "int",
-          "doc": "windows argb value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
-    },
-    {
-      "name": "ARGB(red: int, green: int, blue: int, alpha: int)",
-      "signature": "ARGB(red: int, green: int, blue: int, alpha: int)",
-      "summary": "constructor with RGBA components",
-      "remarks": "constructor with RGBA components",
-      "params": [
-        {
-          "name": "red",
-          "type": "int",
-          "doc": "red component",
-          "optional": false
-        },
-        {
-          "name": "green",
-          "type": "int",
-          "doc": "green component",
-          "optional": false
-        },
-        {
-          "name": "blue",
-          "type": "int",
-          "doc": "blue component",
-          "optional": false
-        },
-        {
-          "name": "alpha",
-          "type": "int",
-          "doc": "alpha component",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
-    },
-    {
-      "name": "ARGB(argb: ARGB)",
-      "signature": "ARGB(argb: ARGB)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "argb",
-          "type": "ARGB",
-          "doc": "copy from",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

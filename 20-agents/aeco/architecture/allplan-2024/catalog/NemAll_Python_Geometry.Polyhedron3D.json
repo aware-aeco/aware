@@ -7,71 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/",
   "constructors": [
     {
-      "name": "Polyhedron3D()",
-      "signature": "Polyhedron3D()",
+      "name": "Polyhedron3D",
+      "signature": "Polyhedron3D() | Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation) | Polyhedron3D(polyhedron)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__init__"
-    },
-    {
-      "name": "Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation)",
-      "signature": "Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation)",
-      "summary": "Constructor The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
-      "remarks": "Constructor The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
-      "params": [
-        {
-          "name": "polyhedronType",
-          "type": "PolyhedronType",
-          "doc": "Polyhedron type - edges, faces or volume.",
-          "optional": false
-        },
-        {
-          "name": "verticesCount",
-          "type": "int",
-          "doc": "Count of expected vertices.",
-          "optional": false
-        },
-        {
-          "name": "edgesCount",
-          "type": "int",
-          "doc": "Count of expected edges.",
-          "optional": false
-        },
-        {
-          "name": "facesCount",
-          "type": "int",
-          "doc": "Count of expected faces.",
-          "optional": false
-        },
-        {
-          "name": "negativeOrientation",
-          "type": "bool",
-          "doc": "True for negative orientation.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__init__"
-    },
-    {
-      "name": "Polyhedron3D(polyhedron)",
-      "signature": "Polyhedron3D(polyhedron)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "polyhedron",
-          "type": "Polyhedron3D",
-          "doc": "Polyhedron which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -80,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Clear()",
-      "signature": "Clear()",
+      "name": "Clear",
+      "signature": "Clear() | Clear(verticesCount, edgesCount, facesCount, negativeOrientation)",
       "summary": "Clear all vertices, edges and faces Type and vertices,edges,faces preallocation size of polyhedron will be preserved",
       "remarks": "Clear all vertices, edges and faces Type and vertices,edges,faces preallocation size of polyhedron will be preserved",
       "params": [],
@@ -91,44 +31,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Clear"
     },
     {
-      "name": "Clear(verticesCount, edgesCount, facesCount, negativeOrientation)",
-      "signature": "Clear(verticesCount, edgesCount, facesCount, negativeOrientation)",
-      "summary": "Clear all vertices, edges and faces The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
-      "remarks": "Clear all vertices, edges and faces The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
-      "params": [
-        {
-          "name": "verticesCount",
-          "type": "int",
-          "doc": "Count of expected vertices.",
-          "optional": false
-        },
-        {
-          "name": "edgesCount",
-          "type": "int",
-          "doc": "Count of expected edges.",
-          "optional": false
-        },
-        {
-          "name": "facesCount",
-          "type": "int",
-          "doc": "Count of expected faces.",
-          "optional": false
-        },
-        {
-          "name": "negativeOrientation",
-          "type": "bool",
-          "doc": "True for negative orientation.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Clear"
-    },
-    {
-      "name": "CreateCuboid(p1, p2)",
-      "signature": "CreateCuboid(p1, p2)",
+      "name": "CreateCuboid",
+      "signature": "CreateCuboid(p1, p2) | CreateCuboid(box) | CreateCuboid(placement, length, width, height) | CreateCuboid(length, width, height)",
       "summary": "static constructor for cuboid",
       "remarks": "static constructor for cuboid",
       "params": [
@@ -151,98 +55,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
     },
     {
-      "name": "CreateCuboid(box)",
-      "signature": "CreateCuboid(box)",
-      "summary": "static constructor for cuboid",
-      "remarks": "static constructor for cuboid",
-      "params": [
-        {
-          "name": "box",
-          "type": "MinMax3D",
-          "doc": "min/max box that states the cuboid\u0027s size",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
-    },
-    {
-      "name": "CreateCuboid(placement, length, width, height)",
-      "signature": "CreateCuboid(placement, length, width, height)",
-      "summary": "Create Polyhedron3D as cuboid",
-      "remarks": "Create Polyhedron3D as cuboid",
-      "params": [
-        {
-          "name": "placement",
-          "type": "AxisPlacement3D",
-          "doc": "cuboid origin",
-          "optional": false
-        },
-        {
-          "name": "length",
-          "type": "float",
-          "doc": "length in its x axis",
-          "optional": false
-        },
-        {
-          "name": "width",
-          "type": "float",
-          "doc": "width in its y axis",
-          "optional": false
-        },
-        {
-          "name": "height",
-          "type": "float",
-          "doc": "height in its z axis",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polyhedron3D",
-        "doc": "created geometry"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
-    },
-    {
-      "name": "CreateCuboid(length, width, height)",
-      "signature": "CreateCuboid(length, width, height)",
-      "summary": "Create a cuboid",
-      "remarks": "Create a cuboid",
-      "params": [
-        {
-          "name": "length",
-          "type": "float",
-          "doc": "Length",
-          "optional": false
-        },
-        {
-          "name": "width",
-          "type": "float",
-          "doc": "Width",
-          "optional": false
-        },
-        {
-          "name": "height",
-          "type": "float",
-          "doc": "Height",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polyhedron3D",
-        "doc": "Polyhedron3D"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
-    },
-    {
-      "name": "GetEdge(edgeHandle)",
-      "signature": "GetEdge(edgeHandle)",
+      "name": "GetEdge",
+      "signature": "GetEdge(edgeHandle) | GetEdge(orientedEdge)",
       "summary": "Get edge at the specified position",
       "remarks": "Get edge at the specified position",
       "params": [
@@ -250,27 +64,6 @@
           "name": "edgeHandle",
           "type": "int",
           "doc": "Specified position of the edge.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "eGeometryErrorCode",
-        "doc": "tuple(Error code.,"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdge"
-    },
-    {
-      "name": "GetEdge(orientedEdge)",
-      "signature": "GetEdge(orientedEdge)",
-      "summary": "Get edge at the specified position with orientation",
-      "remarks": "Get edge at the specified position with orientation",
-      "params": [
-        {
-          "name": "orientedEdge",
-          "type": "OrientedEdge",
-          "doc": "Specified position and orientation of the edge.",
           "optional": false
         }
       ],

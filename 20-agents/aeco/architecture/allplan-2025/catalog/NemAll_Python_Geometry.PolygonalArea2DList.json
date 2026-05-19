@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2DList/",
   "constructors": [
     {
-      "name": "PolygonalArea2DList()",
+      "name": "PolygonalArea2DList",
       "signature": "PolygonalArea2DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

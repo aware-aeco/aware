@@ -8,47 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/",
   "constructors": [
     {
-      "name": "Polygon2D()",
-      "signature": "Polygon2D()",
+      "name": "Polygon2D",
+      "signature": "Polygon2D() | Polygon2D(pntList) | Polygon2D(polygon)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__init__"
-    },
-    {
-      "name": "Polygon2D(pntList)",
-      "signature": "Polygon2D(pntList)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "pntList",
-          "type": "list",
-          "doc": "Point list",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__init__"
-    },
-    {
-      "name": "Polygon2D(polygon)",
-      "signature": "Polygon2D(polygon)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "Polygon2D",
-          "doc": "Polygon which will be copied",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

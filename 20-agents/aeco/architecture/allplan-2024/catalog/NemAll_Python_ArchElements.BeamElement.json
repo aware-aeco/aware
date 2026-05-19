@@ -10,53 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/",
   "constructors": [
     {
-      "name": "BeamElement()",
-      "signature": "BeamElement()",
+      "name": "BeamElement",
+      "signature": "BeamElement() | BeamElement(beamProp, axis) | BeamElement(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.__init__"
-    },
-    {
-      "name": "BeamElement(beamProp, axis)",
-      "signature": "BeamElement(beamProp, axis)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "beamProp",
-          "type": "BeamProperties",
-          "doc": "Beam properties",
-          "optional": false
-        },
-        {
-          "name": "axis",
-          "type": "object",
-          "doc": "Axis",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/#NemAll_Python_ArchElements.BeamElement.__init__"
-    },
-    {
-      "name": "BeamElement(element)",
-      "signature": "BeamElement(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BeamElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3DList/",
   "constructors": [
     {
-      "name": "BSplineSurface3DList()",
-      "signature": "BSplineSurface3DList()",
+      "name": "BSplineSurface3DList",
+      "signature": "BSplineSurface3DList() | BSplineSurface3DList(ele: BSplineSurface3D) | BSplineSurface3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3DList/#NemAll_Python_Geometry.BSplineSurface3DList.__init__"
-    },
-    {
-      "name": "BSplineSurface3DList(ele: BSplineSurface3D)",
-      "signature": "BSplineSurface3DList(ele: BSplineSurface3D)",
-      "summary": "Constructor with a BSplineSurface3D",
-      "remarks": "Constructor with a BSplineSurface3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "BSplineSurface3D",
-          "doc": "BSplineSurface3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3DList/#NemAll_Python_Geometry.BSplineSurface3DList.__init__"
-    },
-    {
-      "name": "BSplineSurface3DList(eleList: list)",
-      "signature": "BSplineSurface3DList(eleList: list)",
-      "summary": "Constructor with a list of BSplineSurface3D",
-      "remarks": "Constructor with a list of BSplineSurface3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "BSplineSurface3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3DList/#NemAll_Python_Geometry.BSplineSurface3DList.append"
     },
     {
-      "name": "extend(iterable: BSplineSurface3DList)",
-      "signature": "extend(iterable: BSplineSurface3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: BSplineSurface3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "BSplineSurface3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3DList/#NemAll_Python_Geometry.BSplineSurface3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "BSplineSurface3D list",
           "optional": false
         }
       ],

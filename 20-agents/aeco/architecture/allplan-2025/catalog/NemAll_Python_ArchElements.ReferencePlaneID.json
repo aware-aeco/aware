@@ -7,53 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/",
   "constructors": [
     {
-      "name": "ReferencePlaneID()",
-      "signature": "ReferencePlaneID()",
+      "name": "ReferencePlaneID",
+      "signature": "ReferencePlaneID() | ReferencePlaneID(modelGuid: GUID, planeId: int) | ReferencePlaneID(element: ReferencePlaneID)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__init__"
-    },
-    {
-      "name": "ReferencePlaneID(modelGuid: GUID, planeId: int)",
-      "signature": "ReferencePlaneID(modelGuid: GUID, planeId: int)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "modelGuid",
-          "type": "GUID",
-          "doc": "Model guid",
-          "optional": false
-        },
-        {
-          "name": "planeId",
-          "type": "int",
-          "doc": "Plane ID",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/#NemAll_Python_ArchElements.ReferencePlaneID.__init__"
-    },
-    {
-      "name": "ReferencePlaneID(element: ReferencePlaneID)",
-      "signature": "ReferencePlaneID(element: ReferencePlaneID)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "ReferencePlaneID",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

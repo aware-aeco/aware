@@ -236,8 +236,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetStartRelPoint"
     },
     {
-      "name": "Insert(polyPoints: PolyPoints2D, position: int = 18446744073709551615) -\u003E bool",
-      "signature": "Insert(polyPoints: PolyPoints2D, position: int = 18446744073709551615) -\u003E bool",
+      "name": "Insert",
+      "signature": "Insert(polyPoints: PolyPoints2D, position: int = 18446744073709551615) -\u003E bool | Insert(point: Point2D, position: int = 18446744073709551615) -\u003E bool",
       "summary": "Insert vector of points at specific position. If return false then points weren\u0027t inserted.",
       "remarks": "Insert vector of points at specific position. If return false then points weren\u0027t inserted.",
       "params": [
@@ -245,33 +245,6 @@
           "name": "polyPoints",
           "type": "PolyPoints2D",
           "doc": "constant the PolyPoints.",
-          "optional": false
-        },
-        {
-          "name": "position",
-          "type": "int",
-          "doc": "position where points will be inserted.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "bool true if successful."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Insert"
-    },
-    {
-      "name": "Insert(point: Point2D, position: int = 18446744073709551615) -\u003E bool",
-      "signature": "Insert(point: Point2D, position: int = 18446744073709551615) -\u003E bool",
-      "summary": "Insert point at specific position. Used world coordinates. If return false then points weren\u0027t Inserted.",
-      "remarks": "Insert point at specific position. Used world coordinates. If return false then points weren\u0027t Inserted.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "constant the Point.",
           "optional": false
         },
         {

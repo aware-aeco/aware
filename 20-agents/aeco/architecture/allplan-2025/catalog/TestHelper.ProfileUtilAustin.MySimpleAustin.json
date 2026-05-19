@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtilAustin/",
   "constructors": [
     {
-      "name": "MySimpleAustin()",
+      "name": "MySimpleAustin",
       "signature": "MySimpleAustin( austin_running_event: Event, test_running_event: Event, terminate_event: Event, process_id: str, result_file_name: str, )",
       "summary": "initialize",
       "remarks": "initialize",

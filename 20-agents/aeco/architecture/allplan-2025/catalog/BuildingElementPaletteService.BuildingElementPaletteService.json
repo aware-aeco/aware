@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementPaletteService/",
   "constructors": [
     {
-      "name": "BuildingElementPaletteService()",
-      "signature": "BuildingElementPaletteService( build_ele_list: list[BuildingElement], build_ele_composite: BuildingElementComposite, build_ele_script: Any, build_ele_ctrl_props_list: list[BuildingElementControlProperties], picture_path: str, script_object: BaseScriptObject | None = None, )",
+      "name": "BuildingElementPaletteService",
+      "signature": "BuildingElementPaletteService( build_ele_list: list[BuildingElement], build_ele_composite: BuildingElementComposite, build_ele_script: Any, build_ele_ctrl_props_list: list[BuildingElementControlProperties], picture_path: str, script_object: BaseScriptObject | BuildingElementPaletteService()",
       "summary": "Initialize the data",
       "remarks": "Initialize the data",
       "params": [

@@ -14,7 +14,7 @@ Implementation of the interactor for point input on an architectural element
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/)
 
 ### Constructors
-- `ArchPointInteractor( interactor_result: ArchPointInteractorResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, request_text: str = "Select the element", preview_function: Callable[[], None] | None = None, )` — initialize
+- `ArchPointInteractor( interactor_result: ArchPointInteractorResult, ele_filter: list[GUID] | ArchPointInteractor() | ArchPointInteractor() | ArchPointInteractor() | ArchPointInteractor()` — initialize
 
 ### Methods
 #### `get_outline_segment_and_point(sel_ele: BaseElementAdapter, input_pnt: Point3D)`

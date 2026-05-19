@@ -8,51 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/",
   "constructors": [
     {
-      "name": "PolygonalArea2D()",
-      "signature": "PolygonalArea2D()",
+      "name": "PolygonalArea2D",
+      "signature": "PolygonalArea2D() | PolygonalArea2D(verticesCount: int, edgesCount: int) | PolygonalArea2D(refPoint: Point2D, verticesCount: int, edgesCount: int) | PolygonalArea2D(polygon: PolygonalArea2D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
-    },
-    {
-      "name": "PolygonalArea2D(verticesCount: int, edgesCount: int)",
-      "signature": "PolygonalArea2D(verticesCount: int, edgesCount: int)",
-      "summary": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "remarks": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
-    },
-    {
-      "name": "PolygonalArea2D(refPoint: Point2D, verticesCount: int, edgesCount: int)",
-      "signature": "PolygonalArea2D(refPoint: Point2D, verticesCount: int, edgesCount: int)",
-      "summary": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "remarks": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
-    },
-    {
-      "name": "PolygonalArea2D(polygon: PolygonalArea2D)",
-      "signature": "PolygonalArea2D(polygon: PolygonalArea2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "PolygonalArea2D",
-          "doc": "2D polygon which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -278,8 +238,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__getitem__"
     },
     {
-      "name": "__iadd__(polygonalarea: PolygonalArea2D) -\u003E object",
-      "signature": "__iadd__(polygonalarea: PolygonalArea2D) -\u003E object",
+      "name": "__iadd__",
+      "signature": "__iadd__(polygonalarea: PolygonalArea2D) -\u003E object | __iadd__(polygon: Polygon2D) -\u003E object",
       "summary": "Append polygon.",
       "remarks": "Append polygon.",
       "params": [
@@ -287,27 +247,6 @@
           "name": "polygonalarea",
           "type": "PolygonalArea2D",
           "doc": "polygonal area which will be appended.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "Reference to PolygonalArea2D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(polygon: Polygon2D) -\u003E object",
-      "signature": "__iadd__(polygon: Polygon2D) -\u003E object",
-      "summary": "Append loop.",
-      "remarks": "Append loop.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "Polygon2D",
-          "doc": "polygon which will be appended.",
           "optional": false
         }
       ],

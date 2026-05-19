@@ -10,83 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupElement/",
   "constructors": [
     {
-      "name": "MacroGroupElement()",
-      "signature": "MacroGroupElement()",
+      "name": "MacroGroupElement",
+      "signature": "MacroGroupElement() | MacroGroupElement(macroGroupProp, placementList) | MacroGroupElement(commonProp, macroGroupProp, placementList) | MacroGroupElement(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupElement/#NemAll_Python_BasisElements.MacroGroupElement.__init__"
-    },
-    {
-      "name": "MacroGroupElement(macroGroupProp, placementList)",
-      "signature": "MacroGroupElement(macroGroupProp, placementList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "macroGroupProp",
-          "type": "MacroGroupProperties",
-          "doc": "MacroGroup properties",
-          "optional": false
-        },
-        {
-          "name": "placementList",
-          "type": "List[MacroPlacementElement]",
-          "doc": "Placements list of macro group",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupElement/#NemAll_Python_BasisElements.MacroGroupElement.__init__"
-    },
-    {
-      "name": "MacroGroupElement(commonProp, macroGroupProp, placementList)",
-      "signature": "MacroGroupElement(commonProp, macroGroupProp, placementList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "macroGroupProp",
-          "type": "MacroGroupProperties",
-          "doc": "MacroGroup properties",
-          "optional": false
-        },
-        {
-          "name": "placementList",
-          "type": "List[MacroPlacementElement]",
-          "doc": "Placements list of macro group",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupElement/#NemAll_Python_BasisElements.MacroGroupElement.__init__"
-    },
-    {
-      "name": "MacroGroupElement(element)",
-      "signature": "MacroGroupElement(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "MacroGroupElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

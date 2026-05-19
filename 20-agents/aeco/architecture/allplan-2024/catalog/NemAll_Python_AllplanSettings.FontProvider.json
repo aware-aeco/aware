@@ -8,8 +8,8 @@
   "constructors": [],
   "methods": [
     {
-      "name": "GetCharsetList(nFontID)",
-      "signature": "GetCharsetList(nFontID)",
+      "name": "GetCharsetList",
+      "signature": "GetCharsetList(nFontID) | GetCharsetList(fontName)",
       "summary": "Returns the list of available charsets for the given font",
       "remarks": "Returns the list of available charsets for the given font",
       "params": [
@@ -17,27 +17,6 @@
           "name": "nFontID",
           "type": "int",
           "doc": "Font ID",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "tuple(Charsets for the given font,"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetCharsetList"
-    },
-    {
-      "name": "GetCharsetList(fontName)",
-      "signature": "GetCharsetList(fontName)",
-      "summary": "Returns the list of available charsets for the given font",
-      "remarks": "Returns the list of available charsets for the given font",
-      "params": [
-        {
-          "name": "fontName",
-          "type": "str",
-          "doc": "Font name",
           "optional": false
         }
       ],

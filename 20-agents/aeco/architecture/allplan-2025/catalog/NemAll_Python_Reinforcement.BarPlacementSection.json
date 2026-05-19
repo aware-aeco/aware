@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/",
   "constructors": [
     {
-      "name": "BarPlacementSection(isEnabled: bool, length: float, distance: float)",
-      "signature": "BarPlacementSection(isEnabled: bool, length: float, distance: float)",
+      "name": "BarPlacementSection",
+      "signature": "BarPlacementSection(isEnabled: bool, length: float, distance: float) | BarPlacementSection(element: BarPlacementSection)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [
@@ -28,24 +28,6 @@
           "name": "distance",
           "type": "float",
           "doc": "Bar distance",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/#NemAll_Python_Reinforcement.BarPlacementSection.__init__"
-    },
-    {
-      "name": "BarPlacementSection(element: BarPlacementSection)",
-      "signature": "BarPlacementSection(element: BarPlacementSection)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BarPlacementSection",
-          "doc": "Element to copy",
           "optional": false
         }
       ],

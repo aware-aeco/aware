@@ -7,21 +7,10 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/",
   "constructors": [
     {
-      "name": "LegendProperties()",
-      "signature": "LegendProperties()",
+      "name": "LegendProperties",
+      "signature": "LegendProperties() | LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.__init__"
-    },
-    {
-      "name": "LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )",
-      "signature": "LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
       "params": [],
       "returns": null,
       "throws": [],

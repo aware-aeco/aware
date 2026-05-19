@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/",
   "constructors": [
     {
-      "name": "TextProperties()",
-      "signature": "TextProperties()",
+      "name": "TextProperties",
+      "signature": "TextProperties() | TextProperties(element: TextProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.__init__"
-    },
-    {
-      "name": "TextProperties(element: TextProperties)",
-      "signature": "TextProperties(element: TextProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "TextProperties",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

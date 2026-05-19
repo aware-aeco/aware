@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3DList/",
   "constructors": [
     {
-      "name": "Vector3DList()",
+      "name": "Vector3DList",
       "signature": "Vector3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

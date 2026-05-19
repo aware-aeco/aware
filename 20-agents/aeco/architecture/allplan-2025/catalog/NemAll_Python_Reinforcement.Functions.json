@@ -8,8 +8,8 @@
   "constructors": [],
   "methods": [
     {
-      "name": "CreateReinforcementLabeling( doc: DocumentAdapter, insertionMat: Matrix3D, labelList: list, viewProj: ViewWorldProjection, undoRedoService: object | None = None, )",
-      "signature": "CreateReinforcementLabeling( doc: DocumentAdapter, insertionMat: Matrix3D, labelList: list, viewProj: ViewWorldProjection, undoRedoService: object | None = None, )",
+      "name": "CreateReinforcementLabeling",
+      "signature": "CreateReinforcementLabeling( doc: DocumentAdapter, insertionMat: Matrix3D, labelList: list, viewProj: ViewWorldProjection, undoRedoService: object | None = None, ) | CreateReinforcementLabeling( doc: DocumentAdapter, insertionMat: Matrix3D, labelList: ReinforcementLabelList, viewProj: ViewWorldProjection, )",
       "summary": "Create the reinforcement labels",
       "remarks": "Create the reinforcement labels",
       "params": [
@@ -41,42 +41,6 @@
           "name": "undoRedoService",
           "type": "object | None",
           "doc": "Undo redo service",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/#NemAll_Python_Reinforcement.CreateReinforcementLabeling"
-    },
-    {
-      "name": "CreateReinforcementLabeling( doc: DocumentAdapter, insertionMat: Matrix3D, labelList: ReinforcementLabelList, viewProj: ViewWorldProjection, )",
-      "signature": "CreateReinforcementLabeling( doc: DocumentAdapter, insertionMat: Matrix3D, labelList: ReinforcementLabelList, viewProj: ViewWorldProjection, )",
-      "summary": "Create the reinforcement labels",
-      "remarks": "Create the reinforcement labels",
-      "params": [
-        {
-          "name": "doc",
-          "type": "DocumentAdapter",
-          "doc": "Document",
-          "optional": false
-        },
-        {
-          "name": "insertionMat",
-          "type": "Matrix3D",
-          "doc": "Insertion matrix",
-          "optional": false
-        },
-        {
-          "name": "labelList",
-          "type": "ReinforcementLabelList",
-          "doc": "List with the labels",
-          "optional": false
-        },
-        {
-          "name": "viewProj",
-          "type": "ViewWorldProjection",
-          "doc": "View projection",
           "optional": false
         }
       ],

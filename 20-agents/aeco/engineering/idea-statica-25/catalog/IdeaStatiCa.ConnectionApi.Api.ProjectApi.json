@@ -1,0 +1,212 @@
+{
+  "name": "ProjectApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Project endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OpenProjectAsync",
+      "signature": "Task\u003CConProject\u003E OpenProjectAsync(OpenProject_request openProject_request)",
+      "summary": "Opens an IdeaCon project from the provided file.",
+      "params": [
+        {
+          "name": "openProject_request",
+          "type": "OpenProject_request",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "CloseProjectAsync",
+      "signature": "Task\u003Cstring\u003E CloseProjectAsync(Guid projectId)",
+      "summary": "Closes the project and releases resources in the service.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the project to be closed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "GetActiveProjectsAsync",
+      "signature": "Task\u003CList\u003CConProject\u003E\u003E GetActiveProjectsAsync()",
+      "summary": "Gets the list of projects in the service that were opened by the client connected via M:IdeaStatiCa.ConnectionRestApi.Controllers.ClientController.ConnectClient.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CConProject\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "DownloadProjectAsync",
+      "signature": "Task DownloadProjectAsync(Guid projectId)",
+      "summary": "Downloads the current IdeaCon project from the service, includingall changes made by previous API calls.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "GetProjectDataAsync",
+      "signature": "Task\u003CConProject\u003E GetProjectDataAsync(Guid projectId)",
+      "summary": "Get data of the project.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the requested project",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "UpdateProjectDataAsync",
+      "signature": "Task\u003CConProject\u003E UpdateProjectDataAsync(Guid projectId, ConProjectData conProjectData)",
+      "summary": "Updates ConProjectData of project",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "conProjectData",
+          "type": "ConProjectData",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "ImportIOMAsync",
+      "signature": "Task\u003CConProject\u003E ImportIOMAsync(ImportIOM_request importIOM_request)",
+      "summary": "Create the IDEA Connection project from IOM provided in xml format. nThe parameter \u0027containerXmlFile\u0027 passed in HTTP body represents : [IdeaRS.OpenModel.OpenModelContainer](https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/OpenModelContainer.cs) nwhich is serialized to XML string by [IdeaRS.OpenModel.Tools.OpenModelContainerToXml](https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/Tools.cs)",
+      "params": [
+        {
+          "name": "importIOM_request",
+          "type": "ImportIOM_request",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "UpdateFromIOMAsync",
+      "signature": "Task\u003CConProject\u003E UpdateFromIOMAsync(Guid projectId, UpdateFromIOM_request updateFromIOM_request)",
+      "summary": "Update the IDEA Connection project by [IdeaRS.OpenModel.OpenModelContainer](https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/OpenModelContainer.cs) (model and results). IOM is passed in the body of the request as thexml string. [IdeaRS.OpenModel.Tools.OpenModelContainerToXml](https://github.com/idea-statica/ideastatica-public/blob/main/src/IdeaRS.OpenModel/Tools.cs)should be used to generate the valid xml string",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service to be updated",
+          "optional": false
+        },
+        {
+          "name": "updateFromIOM_request",
+          "type": "UpdateFromIOM_request",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "ConProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ProjectApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

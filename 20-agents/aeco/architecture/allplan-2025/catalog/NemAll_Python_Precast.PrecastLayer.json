@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/",
   "constructors": [
     {
-      "name": "PrecastLayer()",
-      "signature": "PrecastLayer()",
+      "name": "PrecastLayer",
+      "signature": "PrecastLayer() | PrecastLayer(Properties: PrecastLayerProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/#NemAll_Python_Precast.PrecastLayer.__init__"
-    },
-    {
-      "name": "PrecastLayer(Properties: PrecastLayerProperties)",
-      "signature": "PrecastLayer(Properties: PrecastLayerProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "layerProp",
-          "type": "object",
-          "doc": "Layer properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

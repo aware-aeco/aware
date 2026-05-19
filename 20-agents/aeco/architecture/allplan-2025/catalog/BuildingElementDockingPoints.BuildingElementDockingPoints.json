@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementDockingPoints/",
   "constructors": [
     {
-      "name": "BuildingElementDockingPoints()",
+      "name": "BuildingElementDockingPoints",
       "signature": "BuildingElementDockingPoints(element: BaseElementAdapter, path: str)",
       "summary": "Initialization of class BuildingElementInput",
       "remarks": "Initialization of class BuildingElementInput",

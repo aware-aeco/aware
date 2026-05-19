@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/",
   "constructors": [
     {
-      "name": "BRep3DBuilder()",
-      "signature": "BRep3DBuilder()",
+      "name": "BRep3DBuilder",
+      "signature": "BRep3DBuilder() | BRep3DBuilder(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.__init__"
-    },
-    {
-      "name": "BRep3DBuilder(element)",
-      "signature": "BRep3DBuilder(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BRep3DBuilder",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -38,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "AddEdge(edgeIdx, edgeSense, loopIdx)",
-      "signature": "AddEdge(edgeIdx, edgeSense, loopIdx)",
+      "name": "AddEdge",
+      "signature": "AddEdge(edgeIdx, edgeSense, loopIdx) | AddEdge(curve_object, curveSense, edgeSense, loopIdx, precision)",
       "summary": "Add edge to loop",
       "remarks": "Add edge to loop",
       "params": [
@@ -68,53 +50,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddEdge"
     },
     {
-      "name": "AddEdge(curve_object, curveSense, edgeSense, loopIdx, precision)",
-      "signature": "AddEdge(curve_object, curveSense, edgeSense, loopIdx, precision)",
-      "summary": "Add edge to loop",
-      "remarks": "Add edge to loop",
-      "params": [
-        {
-          "name": "curve_object",
-          "type": "object",
-          "doc": "Geometry of curve",
-          "optional": false
-        },
-        {
-          "name": "curveSense",
-          "type": "bool",
-          "doc": "Sense of curve",
-          "optional": false
-        },
-        {
-          "name": "edgeSense",
-          "type": "bool",
-          "doc": "Sense of edge",
-          "optional": false
-        },
-        {
-          "name": "loopIdx",
-          "type": "int",
-          "doc": "Index of loop to which edge will be added",
-          "optional": false
-        },
-        {
-          "name": "precision",
-          "type": "float",
-          "doc": "Precision of edge",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "int",
-        "doc": "Index of edge"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddEdge"
-    },
-    {
-      "name": "AddVertex(point, edgeIdx, precision)",
-      "signature": "AddVertex(point, edgeIdx, precision)",
+      "name": "AddVertex",
+      "signature": "AddVertex(point, edgeIdx, precision) | AddVertex(vertexIdx, edgeIdx)",
       "summary": "Add vertex to edge",
       "remarks": "Add vertex to edge",
       "params": [
@@ -141,30 +78,6 @@
         "type": "int",
         "doc": "Index of vertex"
       },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddVertex"
-    },
-    {
-      "name": "AddVertex(vertexIdx, edgeIdx)",
-      "signature": "AddVertex(vertexIdx, edgeIdx)",
-      "summary": "Add vertex to edge",
-      "remarks": "Add vertex to edge",
-      "params": [
-        {
-          "name": "vertexIdx",
-          "type": "int",
-          "doc": "Index of already added vertex",
-          "optional": false
-        },
-        {
-          "name": "edgeIdx",
-          "type": "int",
-          "doc": "Index of edge to which vertex will be added",
-          "optional": false
-        }
-      ],
-      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddVertex"

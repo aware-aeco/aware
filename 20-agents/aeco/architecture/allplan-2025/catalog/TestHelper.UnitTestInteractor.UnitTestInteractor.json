@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractor/",
   "constructors": [
     {
-      "name": "UnitTestInteractor()",
+      "name": "UnitTestInteractor",
       "signature": "UnitTestInteractor(interactor)",
       "summary": "initialize",
       "remarks": "initialize",

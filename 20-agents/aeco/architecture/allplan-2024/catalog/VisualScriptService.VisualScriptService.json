@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/",
   "constructors": [
     {
-      "name": "VisualScriptService()",
+      "name": "VisualScriptService",
       "signature": "VisualScriptService(coord_input, script_path, global_str_table_service, build_ele_list, control_props_list, default_values)",
       "summary": "Initialize the script",
       "remarks": "Initialize the script",

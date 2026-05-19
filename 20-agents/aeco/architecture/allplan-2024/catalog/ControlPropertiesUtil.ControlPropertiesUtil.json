@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ControlPropertiesUtil/ControlPropertiesUtil/",
   "constructors": [
     {
-      "name": "ControlPropertiesUtil()",
+      "name": "ControlPropertiesUtil",
       "signature": "ControlPropertiesUtil(control_props_list, build_ele_list)",
       "summary": "initialize",
       "remarks": "initialize",

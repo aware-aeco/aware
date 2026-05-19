@@ -1,0 +1,42 @@
+{
+  "name": "AnchorType",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.AnchorType.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/AnchorType.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "straight",
+      "value": "straight"
+    },
+    {
+      "name": "washerPlateCircular",
+      "value": "washerPlateCircular"
+    },
+    {
+      "name": "washerPlateRectangular",
+      "value": "washerPlateRectangular"
+    },
+    {
+      "name": "hook",
+      "value": "hook"
+    },
+    {
+      "name": "headedStud",
+      "value": "headedStud"
+    },
+    {
+      "name": "reinforcement",
+      "value": "reinforcement"
+    },
+    {
+      "name": "generalAnchor",
+      "value": "generalAnchor"
+    }
+  ]
+}

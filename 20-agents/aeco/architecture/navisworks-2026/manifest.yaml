@@ -36,10 +36,10 @@ commands:
   application-begin-progress:
     lifecycle: single
     description: Provides an instance of the Progress class which starts reporting of progress of an operation, typically displaying a progress bar or dialog to the end user.
-  application-begin-progress:
+  application-begin-progress-2:
     lifecycle: single
     description: Provides an instance of the Progress class which starts reporting of progress of an operation, typically displaying a progress bar or dialog to the end user.
-  application-begin-progress:
+  application-begin-progress-3:
     lifecycle: single
     description: Provides an instance of the Progress class which starts reporting of progress of an operation, typically displaying a progress bar or dialog to the end user.
   application-end-progress:
@@ -87,7 +87,7 @@ commands:
   bounding-box2d-contains:
     lifecycle: single
     description: True if this completely contains box
-  bounding-box2d-contains:
+  bounding-box2d-contains-2:
     lifecycle: single
     description: True if this contains point
   bounding-box2d-equals:
@@ -111,7 +111,7 @@ commands:
   bounding-box2d-intersects:
     lifecycle: single
     description: True if this intersects box
-  bounding-box2d-intersects:
+  bounding-box2d-intersects-2:
     lifecycle: single
     description: True if this intersects point (same as Contains() for a point)
   bounding-box2d-to-string:
@@ -126,7 +126,7 @@ commands:
   bounding-box3d-contains:
     lifecycle: single
     description: True if this completely contains box
-  bounding-box3d-contains:
+  bounding-box3d-contains-2:
     lifecycle: single
     description: True if this contains point
   bounding-box3d-equals:
@@ -135,7 +135,7 @@ commands:
   bounding-box3d-extend:
     lifecycle: single
     description: Return box that represents union of this with another box
-  bounding-box3d-extend:
+  bounding-box3d-extend-2:
     lifecycle: single
     description: Return box that represents union of this with another point
   bounding-box3d-get-hash-code:
@@ -153,7 +153,7 @@ commands:
   bounding-box3d-intersects:
     lifecycle: single
     description: True if this intersects box
-  bounding-box3d-intersects:
+  bounding-box3d-intersects-2:
     lifecycle: single
     description: True if this intersects point (same as Contains() for a point)
   bounding-box3d-to-string:
@@ -186,7 +186,7 @@ commands:
   clip-plane-align-to-pick:
     lifecycle: single
     description: AlignToPick method of ClipPlane.
-  clip-plane-align-to-pick:
+  clip-plane-align-to-pick-2:
     lifecycle: single
     description: AlignToPick method of ClipPlane.
   clip-plane-apply-transform:
@@ -198,13 +198,13 @@ commands:
   clip-plane-initialize:
     lifecycle: single
     description: Initialize method of ClipPlane.
-  clip-plane-initialize:
+  clip-plane-initialize-2:
     lifecycle: single
     description: Initialize method of ClipPlane.
-  clip-plane-initialize:
+  clip-plane-initialize-3:
     lifecycle: single
     description: Initialize method of ClipPlane.
-  clip-plane-initialize:
+  clip-plane-initialize-4:
     lifecycle: single
     description: Initialize method of ClipPlane.
   clip-plane-internal-creator:
@@ -267,7 +267,7 @@ commands:
   clip-plane-set-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  clip-plane-set-value-equals:
+  clip-plane-set-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   color-add:
@@ -309,7 +309,7 @@ commands:
   color-op-multiply:
     lifecycle: single
     description: Multiplies the R, G and B values of color by intensity and returns the Resulting Color
-  color-op-multiply:
+  color-op-multiply-2:
     lifecycle: single
     description: Multiplies the R, G and B values of color by intensity and returns the Resulting Color
   color-op-subtraction:
@@ -347,8 +347,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   comment-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  comment-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  comment-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   comment-collection-get-enumerator:
@@ -371,7 +371,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   comment-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   data-property-equals:
     lifecycle: single
     description: Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.
@@ -410,8 +410,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   data-property-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  data-property-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  data-property-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   data-property-collection-find-property-by-combined-name:
@@ -443,7 +443,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   data-property-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   document-append-file:
     lifecycle: single
     description: Append file with files already in document, adding to current contents.
@@ -468,7 +468,7 @@ commands:
   document-create-comment-with-unique-id:
     lifecycle: single
     description: Create a Comment with an Id that is unique within this Document
-  document-create-comment-with-unique-id:
+  document-create-comment-with-unique-id-2:
     lifecycle: single
     description: Create a Comment with an Id that is unique within this Document
   document-describe-as-aggregate:
@@ -489,7 +489,7 @@ commands:
   document-generate-image:
     lifecycle: single
     description: Generates an Image for this Document.
-  document-generate-image:
+  document-generate-image-2:
     lifecycle: single
     description: Generates an Image for this Document.
   document-get-bounding-box:
@@ -531,7 +531,7 @@ commands:
   document-save-file:
     lifecycle: single
     description: Save contents of document to a file.
-  document-save-file:
+  document-save-file-2:
     lifecycle: single
     description: Save contents of document to a file using a specific file version.
   document-set-active-sheet:
@@ -606,7 +606,7 @@ commands:
   document-try-save-file:
     lifecycle: single
     description: Try to save contents of document to a file.
-  document-try-save-file:
+  document-try-save-file-2:
     lifecycle: single
     description: Try to save contents of document to a file using a specific file version.
   document-try-set-active-sheet:
@@ -645,7 +645,7 @@ commands:
   file-reference-resolver-resolve:
     lifecycle: single
     description: Resolve a file reference (absolute path, relative path, URL, ...)
-  file-reference-resolver-resolve:
+  file-reference-resolver-resolve-2:
     lifecycle: single
     description: Resolve a file reference (absolute path, relative path, URL, ...)
   folder-item-internal-creator:
@@ -657,7 +657,7 @@ commands:
   graphics-arc:
     lifecycle: single
     description: Renders a 2D arc in the XY plane at the current Z depth.
-  graphics-arc:
+  graphics-arc-2:
     lifecycle: single
     description: Renders a 3D arc.
   graphics-begin-complex-polygon:
@@ -681,13 +681,13 @@ commands:
   graphics-bezier-segment:
     lifecycle: single
     description: Renders a 2D segment of a 3rd order Bezier curve.
-  graphics-bezier-segment:
+  graphics-bezier-segment-2:
     lifecycle: single
     description: Renders a 2D segment of a 3rd order Bezier curve.
   graphics-bitmap:
     lifecycle: single
     description: Renders a registered bitmap
-  graphics-bitmap:
+  graphics-bitmap-2:
     lifecycle: single
     description: Renders a registered bitmap
   graphics-blend:
@@ -699,7 +699,7 @@ commands:
   graphics-circle:
     lifecycle: single
     description: Renders a 2D circle in the XY plane at the current Z depth.
-  graphics-circle:
+  graphics-circle-2:
     lifecycle: single
     description: Renders a 3D circle in the model space.
   graphics-color:
@@ -723,7 +723,7 @@ commands:
   graphics-ellipse:
     lifecycle: single
     description: Renders a 2D axis-aligned ellipse in the XY plane at the current Z depth.
-  graphics-ellipse:
+  graphics-ellipse-2:
     lifecycle: single
     description: Renders a 2D axis-aligned ellipse in the XY plane at the current Z depth.
   graphics-end-complex-polygon:
@@ -759,7 +759,7 @@ commands:
   graphics-line:
     lifecycle: single
     description: Renders a 2D line in the XY plane at the current depth.
-  graphics-line:
+  graphics-line-2:
     lifecycle: single
     description: Renders a 3D line.
   graphics-line-stipple:
@@ -771,7 +771,7 @@ commands:
   graphics-point:
     lifecycle: single
     description: Renders a 2D point in the XY plane at the current depth.
-  graphics-point:
+  graphics-point-2:
     lifecycle: single
     description: Renders a 3D point.
   graphics-polyline2d:
@@ -783,7 +783,7 @@ commands:
   graphics-rectangle:
     lifecycle: single
     description: Renders a 2D rectangle in the XY plane at the current Z depth.
-  graphics-rectangle:
+  graphics-rectangle-2:
     lifecycle: single
     description: Renders a 3D rectangle.
   graphics-set-texture:
@@ -804,7 +804,7 @@ commands:
   graphics-triangle:
     lifecycle: single
     description: Renders a 2D triangle in the XY plane at the current Z depth.
-  graphics-triangle:
+  graphics-triangle-2:
     lifecycle: single
     description: Renders a 3D triangle.
   graphics-vertex:
@@ -857,8 +857,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   grid-level-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  grid-level-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  grid-level-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   grid-level-collection-get-enumerator:
@@ -881,7 +881,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   grid-level-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   grid-line-internal-creator:
     lifecycle: single
     description: InternalCreator method of GridLine.
@@ -905,8 +905,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   grid-line-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  grid-line-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  grid-line-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   grid-line-collection-get-enumerator:
@@ -929,7 +929,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   grid-line-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   grid-system-closest-intersection:
     lifecycle: single
     description: Returns the location closest to a given 3D point.
@@ -956,8 +956,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   grid-system-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  grid-system-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  grid-system-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   grid-system-collection-get-enumerator:
@@ -980,7 +980,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   grid-system-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   grids-data-create-copy:
     lifecycle: single
     description: Create a new copy of this item
@@ -1031,8 +1031,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   hyperlink-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  hyperlink-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  hyperlink-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   hyperlink-collection-get-enumerator:
@@ -1055,7 +1055,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   hyperlink-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   ihas-dynamic-properties-get-property:
     lifecycle: single
     description: Fetches the property value specified by the string argument.
@@ -1092,15 +1092,15 @@ commands:
   matrix3-equals:
     lifecycle: single
     description: Equal within a tolerance, each element of matrix is equal to corresponding element within given tolerance.
-  matrix3-equals:
+  matrix3-equals-2:
     lifecycle: single
     description: Equal within a tolerance, each element of matrix is equal to corresponding element within given tolerance.
-  matrix3-equals:
+  matrix3-equals-3:
     lifecycle: single
     description: Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.
   matrix3-get:
     lifecycle: single
-    description: "Get a single matrix element."
+    description: "\"Get a single matrix element.\""
   matrix3-get-hash-code:
     lifecycle: single
     description: Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.
@@ -1149,7 +1149,7 @@ commands:
   model-item-bounding-box:
     lifecycle: single
     description: Calculates bounding box of item and its children
-  model-item-bounding-box:
+  model-item-bounding-box-2:
     lifecycle: single
     description: Calculates bounding box of item and its children
   model-item-equals:
@@ -1181,7 +1181,7 @@ commands:
     description: Does this item refer to the same instance data as another item ?
   model-item-collection-add:
     lifecycle: single
-    description: Adds an item to the ICollection`1.
+    description: "Adds an item to the ICollection`1."
   model-item-collection-add-all-instances:
     lifecycle: single
     description: Add all instances of items included in the selection
@@ -1194,25 +1194,25 @@ commands:
   model-item-collection-bounding-box:
     lifecycle: single
     description: Calculates bounding box of all items contained in the selection
-  model-item-collection-bounding-box:
+  model-item-collection-bounding-box-2:
     lifecycle: single
     description: Calculates bounding box of all items contained in the selection
   model-item-collection-clear:
     lifecycle: single
-    description: Removes all items from the ICollection`1.
+    description: "Removes all items from the ICollection`1."
   model-item-collection-contains:
     lifecycle: single
     description: Determines whether the Selection contains a specific value.
   model-item-collection-copy-from:
     lifecycle: single
     description: Sets the contents of the collection to the items in from
-  model-item-collection-copy-from:
+  model-item-collection-copy-from-2:
     lifecycle: single
     description: Sets the contents of the collection to the items in from
   model-item-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  model-item-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  model-item-collection-copy-to-2:
     lifecycle: single
     description: Copies the contents of the collection into to
   model-item-collection-get-enumerator:
@@ -1239,7 +1239,7 @@ commands:
   model-item-collection-is-contained:
     lifecycle: single
     description: Is item contained in selection? Item must be contained in any of the items in this selection
-  model-item-collection-is-contained:
+  model-item-collection-is-contained-2:
     lifecycle: single
     description: Is sel contained in selection? Are all items in value contained in any of the items in this selection?
   model-item-collection-is-contents-intersected:
@@ -1251,7 +1251,7 @@ commands:
   model-item-collection-is-selected:
     lifecycle: single
     description: Is item a member of this selection?
-  model-item-collection-is-selected:
+  model-item-collection-is-selected-2:
     lifecycle: single
     description: Is value a subset of this selection? All paths in value must also be in this selection
   model-item-collection-make-disjoint:
@@ -1266,13 +1266,13 @@ commands:
   model-item-collection-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  model-item-collection-value-equals:
+  model-item-collection-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   model-item-collection-where:
     lifecycle: single
     description: Filters the items based on a search condition
-  model-item-collection-where:
+  model-item-collection-where-2:
     lifecycle: single
     description: Filters the items based on a set of search conditions
   model-item-enumerable-collection-copy-to:
@@ -1290,7 +1290,7 @@ commands:
   model-item-enumerable-collection-where:
     lifecycle: single
     description: Filters the items based on a search condition
-  model-item-enumerable-collection-where:
+  model-item-enumerable-collection-where-2:
     lifecycle: single
     description: Filters the instances based on a set of search conditions
   model-item-enumerable-collection-where-instance-guid:
@@ -1319,8 +1319,8 @@ commands:
     description: Determines whether the SavedItemCollection contains a specific value.
   named-constant-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  named-constant-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  named-constant-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   named-constant-collection-get-enumerator:
@@ -1386,7 +1386,7 @@ commands:
   point2d-subtract:
     lifecycle: single
     description: Translates a point by a vector to produce a new point
-  point2d-subtract:
+  point2d-subtract-2:
     lifecycle: single
     description: Creates a new vector from point to this
   point2d-to-data:
@@ -1398,13 +1398,13 @@ commands:
   point2d-tolerant-equals:
     lifecycle: single
     description: Compare points using a tolerance
-  point2d-tolerant-equals:
+  point2d-tolerant-equals-2:
     lifecycle: single
     description: Compare points using a tolerance
-  point2d-tolerant-equals:
+  point2d-tolerant-equals-3:
     lifecycle: single
     description: Compare points using a tolerance
-  point2d-tolerant-equals:
+  point2d-tolerant-equals-4:
     lifecycle: single
     description: Compare points using a tolerance
   point2dlist-add:
@@ -1440,7 +1440,7 @@ commands:
   point3d-subtract:
     lifecycle: single
     description: Translates a point by a vector to produce a new point
-  point3d-subtract:
+  point3d-subtract-2:
     lifecycle: single
     description: Creates a new vector from point to this
   point3d-to-data:
@@ -1455,25 +1455,25 @@ commands:
   point3d-tolerant-equals:
     lifecycle: single
     description: Compare points using a tolerance
-  point3d-tolerant-equals:
+  point3d-tolerant-equals-2:
     lifecycle: single
     description: Compare points using a tolerance
-  point3d-tolerant-equals:
+  point3d-tolerant-equals-3:
     lifecycle: single
     description: Compare points using a tolerance
-  point3d-tolerant-equals:
+  point3d-tolerant-equals-4:
     lifecycle: single
     description: Compare points using a tolerance
   point3d-op-addition:
     lifecycle: single
     description: Translates a point by a vector to produce a new point
-  point3d-op-addition:
+  point3d-op-addition-2:
     lifecycle: single
     description: Translates a vector by a point to produce a new point
   point3d-op-subtraction:
     lifecycle: single
     description: Translates a point by a vector to produce a new point
-  point3d-op-subtraction:
+  point3d-op-subtraction-2:
     lifecycle: single
     description: Creates a new Vector from value2 to value1
   point3dlist-add:
@@ -1488,7 +1488,7 @@ commands:
   progress-begin-sub-operation:
     lifecycle: single
     description: Starts a sub operation. Progress in sub op between 0 and 1 maps to fraction of remaining time in main operation. Can be nested.
-  progress-begin-sub-operation:
+  progress-begin-sub-operation-2:
     lifecycle: single
     description: Starts a sub operation. Progress in sub op between 0 and 1 maps to fraction of remaining time in main operation. Can be nested.
   progress-cancel:
@@ -1497,7 +1497,7 @@ commands:
   progress-end-sub-operation:
     lifecycle: single
     description: Ends the current sub operation. It may have either fully completed or ended early.
-  progress-end-sub-operation:
+  progress-end-sub-operation-2:
     lifecycle: single
     description: Ends the current sub operation. It may have either fully completed or ended early.
   progress-hide:
@@ -1512,10 +1512,10 @@ commands:
   progress-report-error:
     lifecycle: single
     description: Report an error immediately to the user.
-  progress-report-error:
+  progress-report-error-2:
     lifecycle: single
     description: Report an error immediately to the user.
-  progress-report-error:
+  progress-report-error-3:
     lifecycle: single
     description: Report an error immediately to the user.
   progress-show:
@@ -1626,7 +1626,7 @@ commands:
   rotation3d-tolerant-equals:
     lifecycle: single
     description: Equal within a tolerance, treating quaternion as 4D position. Equality of representation, not of rotation.
-  rotation3d-tolerant-equals:
+  rotation3d-tolerant-equals-2:
     lifecycle: single
     description: Equal within a tolerance, treating quaternion as 4D position. Equality of representation, not of rotation.
   rule-create-copy:
@@ -1641,7 +1641,7 @@ commands:
   rule-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  rule-value-equals:
+  rule-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   rule-collection-add:
@@ -1661,8 +1661,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   rule-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  rule-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  rule-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   rule-collection-create-copy:
@@ -1691,11 +1691,11 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   rule-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   rule-collection-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  rule-collection-value-equals:
+  rule-collection-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   saved-item-can-transform:
@@ -1719,7 +1719,7 @@ commands:
   saved-item-make-display-name-unique:
     lifecycle: single
     description: Makes a name unique within the immediate children on the group
-  saved-item-make-display-name-unique:
+  saved-item-make-display-name-unique-2:
     lifecycle: single
     description: Makes a name unique within the immediate children on the group
   saved-item-transform:
@@ -1745,8 +1745,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   saved-item-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  saved-item-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  saved-item-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   saved-item-collection-get-enumerator:
@@ -1772,7 +1772,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   saved-item-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   saved-item-collection-sort:
     lifecycle: single
     description: Performs a case-insensitive lexicographical sort of the items in the collection. Folders sort to top (like Windows Explorer).
@@ -1830,19 +1830,19 @@ commands:
   search-find-all:
     lifecycle: single
     description: Returns a ModelItemCollection that represents the items specified by this Search in document.
-  search-find-all:
+  search-find-all-2:
     lifecycle: single
     description: Returns a ModelItemCollection that represents the items specified by this Search in the document which it is associated with.
   search-find-first:
     lifecycle: single
     description: Returns the first ModelItem specified by this Search in document. Returns null if none found.
-  search-find-first:
+  search-find-first-2:
     lifecycle: single
     description: Returns the first ModelItem specified by this Search in the document which it is associated with. Returns null if none found.
   search-find-incremental:
     lifecycle: single
     description: Returns an enumerable that steps through the items specified by this Search in document.
-  search-find-incremental:
+  search-find-incremental-2:
     lifecycle: single
     description: Returns a an enumerable that steps through the items specified by this Search in the document which it is associated with.
   search-internal-creator:
@@ -1860,7 +1860,7 @@ commands:
   search-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  search-value-equals:
+  search-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   search-condition-compare-with:
@@ -1946,8 +1946,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   search-condition-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  search-condition-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  search-condition-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   search-condition-collection-get-enumerator:
@@ -1970,26 +1970,26 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   search-condition-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   selection-clear:
     lifecycle: single
     description: Reset selection to the default state, explicit and nothing selected
   selection-copy-from:
     lifecycle: single
     description: Initialise as explicit selection with a copy of items
-  selection-copy-from:
+  selection-copy-from-2:
     lifecycle: single
     description: Initialise selection with a copy of another selection
-  selection-copy-from:
+  selection-copy-from-3:
     lifecycle: single
     description: Initialise as collection of SelectionSources
-  selection-copy-from:
+  selection-copy-from-4:
     lifecycle: single
     description: Initialise as explicit selection with items in from
   selection-get-selected-items:
     lifecycle: single
     description: Returns a ModelItemCollection that represents the items specified by this Selection in the document which it is associated with.
-  selection-get-selected-items:
+  selection-get-selected-items-2:
     lifecycle: single
     description: Returns a ModelItemCollection that represents the items specified by this Selection in document.
   selection-internal-creator:
@@ -2004,25 +2004,25 @@ commands:
   selection-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  selection-value-equals:
+  selection-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   selection-set-copy-from:
     lifecycle: single
     description: Initialize SelectionSet with copy of ExplicitModelItems
-  selection-set-copy-from:
+  selection-set-copy-from-2:
     lifecycle: single
     description: Initialize SelectionSet with copy of a Search
-  selection-set-copy-from:
+  selection-set-copy-from-3:
     lifecycle: single
     description: Initialize SelectionSet with copy of another SelectionSet
-  selection-set-copy-from:
+  selection-set-copy-from-4:
     lifecycle: single
     description: Initialise as explicit ModelItems with items in from
   selection-set-get-selected-items:
     lifecycle: single
     description: Returns a ModelItemCollection that represents the items specified by this SelectionSet in the document which it is associated with.
-  selection-set-get-selected-items:
+  selection-set-get-selected-items-2:
     lifecycle: single
     description: Returns a ModelItemCollection that represents the items specified by this SelectionSet in document.
   selection-set-internal-creator:
@@ -2034,7 +2034,7 @@ commands:
   selection-set-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  selection-set-value-equals:
+  selection-set-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   selection-source-equals:
@@ -2063,13 +2063,13 @@ commands:
     description: Returns a ModelItemCollection that represents the selected items specified by the selection source
   selection-source-collection-add:
     lifecycle: single
-    description: Adds an item to the ICollection`1.
+    description: "Adds an item to the ICollection`1."
   selection-source-collection-add-range:
     lifecycle: single
     description: Add the items of the specified collection to the SelectionSourceCollection
   selection-source-collection-clear:
     lifecycle: single
-    description: Removes all items from the ICollection`1.
+    description: "Removes all items from the ICollection`1."
   selection-source-collection-contains:
     lifecycle: single
     description: Determines whether the SelectionSourceCollection contains a specific value.
@@ -2078,8 +2078,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   selection-source-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  selection-source-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  selection-source-collection-copy-to-2:
     lifecycle: single
     description: Copies the contents of the collection into to
   selection-source-collection-get-enumerator:
@@ -2090,7 +2090,7 @@ commands:
     description: Determines the index of a specific item in the SelectionSourceCollection
   selection-source-collection-insert:
     lifecycle: single
-    description: Inserts an item to the IList`1 at the specified index.
+    description: "Inserts an item to the IList`1 at the specified index."
   selection-source-collection-internal-creator:
     lifecycle: single
     description: InternalCreator method of SelectionSourceCollection.
@@ -2105,11 +2105,11 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   selection-source-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   selection-source-collection-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  selection-source-collection-value-equals:
+  selection-source-collection-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   sheet-info-check-is-converted-for-load:
@@ -2184,7 +2184,7 @@ commands:
   transform3d-factor:
     lifecycle: single
     description: Treat as homogenous 3D matrix and factor into scale orientation, scale, rotation and translation components.
-  transform3d-factor:
+  transform3d-factor-2:
     lifecycle: single
     description: Treat as homogenous 3D matrix and factor into scale orientation, scale, rotation and translation components.
   transform3d-get-hash-code:
@@ -2226,7 +2226,7 @@ commands:
   transform3d-tolerant-equals:
     lifecycle: single
     description: Equal within a tolerance. Each element of matrix is equal to corresponding element, within the given tolerance.
-  transform3d-tolerant-equals:
+  transform3d-tolerant-equals-2:
     lifecycle: single
     description: Equal within a tolerance. Each element of matrix is equal to corresponding element, within the given tolerance.
   transform3d-translate-right:
@@ -2259,7 +2259,7 @@ commands:
   unit-vector3d-add:
     lifecycle: single
     description: Adds a vector to this to produce a new vector
-  unit-vector3d-add:
+  unit-vector3d-add-2:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   unit-vector3d-angle:
@@ -2274,13 +2274,13 @@ commands:
   unit-vector3d-direction-equals:
     lifecycle: single
     description: Compare with direction of vector using a tolerance
-  unit-vector3d-direction-equals:
+  unit-vector3d-direction-equals-2:
     lifecycle: single
     description: Compare with direction of vector using a tolerance
   unit-vector3d-divide:
     lifecycle: single
     description: Divides this vector by another to produce a new vector
-  unit-vector3d-divide:
+  unit-vector3d-divide-2:
     lifecycle: single
     description: Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   unit-vector3d-dot:
@@ -2301,7 +2301,7 @@ commands:
   unit-vector3d-multiply:
     lifecycle: single
     description: Multiplies a vector by this to produce a new vector
-  unit-vector3d-multiply:
+  unit-vector3d-multiply-2:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   unit-vector3d-negate:
@@ -2310,7 +2310,7 @@ commands:
   unit-vector3d-subtract:
     lifecycle: single
     description: Subtracts a vector from this to produce a new vector
-  unit-vector3d-subtract:
+  unit-vector3d-subtract-2:
     lifecycle: single
     description: Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   unit-vector3d-to-string:
@@ -2322,28 +2322,28 @@ commands:
   unit-vector3d-tolerant-equals:
     lifecycle: single
     description: Compare unit vectors using a tolerance
-  unit-vector3d-tolerant-equals:
+  unit-vector3d-tolerant-equals-2:
     lifecycle: single
     description: Compare unit vectors using a tolerance
-  unit-vector3d-tolerant-equals:
+  unit-vector3d-tolerant-equals-3:
     lifecycle: single
     description: Compare vectors using a tolerance
-  unit-vector3d-tolerant-equals:
+  unit-vector3d-tolerant-equals-4:
     lifecycle: single
     description: Compare vectors using a tolerance
   unit-vector3d-op-addition:
     lifecycle: single
     description: Adds two vectors to produce a new vector
-  unit-vector3d-op-addition:
+  unit-vector3d-op-addition-2:
     lifecycle: single
     description: Adds two vectors to produce a new vector
-  unit-vector3d-op-addition:
+  unit-vector3d-op-addition-3:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
-  unit-vector3d-op-addition:
+  unit-vector3d-op-addition-4:
     lifecycle: single
     description: Adds two vectors to produce a new vector
-  unit-vector3d-op-addition:
+  unit-vector3d-op-addition-5:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   unit-vector3d-op-division:
@@ -2355,19 +2355,19 @@ commands:
   unit-vector3d-op-multiply:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
-  unit-vector3d-op-multiply:
+  unit-vector3d-op-multiply-2:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   unit-vector3d-op-subtraction:
     lifecycle: single
     description: Subtracts two vectors to produce a new vector
-  unit-vector3d-op-subtraction:
+  unit-vector3d-op-subtraction-2:
     lifecycle: single
     description: Subtracts two vectors to produce a new vector
-  unit-vector3d-op-subtraction:
+  unit-vector3d-op-subtraction-3:
     lifecycle: single
     description: Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result
-  unit-vector3d-op-subtraction:
+  unit-vector3d-op-subtraction-4:
     lifecycle: single
     description: Subtracts two vectors to produce a new vector
   variant-data-element-name:
@@ -2424,13 +2424,13 @@ commands:
   variant-data-from-point2d:
     lifecycle: single
     description: Creates a Point2D value
-  variant-data-from-point2d:
+  variant-data-from-point2d-2:
     lifecycle: single
     description: Creates a 2D point value
   variant-data-from-point3d:
     lifecycle: single
     description: Creates a Point3D value
-  variant-data-from-point3d:
+  variant-data-from-point3d-2:
     lifecycle: single
     description: Creates a 3D point value
   variant-data-get-hash-code:
@@ -2516,8 +2516,8 @@ commands:
     description: Determines whether the SavedItemCollection contains a specific value.
   variant-data-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  variant-data-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  variant-data-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   variant-data-collection-get-enumerator:
@@ -2535,10 +2535,10 @@ commands:
   vector2d-add:
     lifecycle: single
     description: Translates a point by this vector and returns the resulting point
-  vector2d-add:
+  vector2d-add-2:
     lifecycle: single
     description: Adds another vector to this to produce a new vector
-  vector2d-add:
+  vector2d-add-3:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector2d-angle:
@@ -2553,13 +2553,13 @@ commands:
   vector2d-direction-equals:
     lifecycle: single
     description: Compare direction of vectors using a tolerance
-  vector2d-direction-equals:
+  vector2d-direction-equals-2:
     lifecycle: single
     description: Compare direction of vectors using a tolerance
   vector2d-divide:
     lifecycle: single
     description: Divides this vector by another to produce a new vector
-  vector2d-divide:
+  vector2d-divide-2:
     lifecycle: single
     description: Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector2d-dot:
@@ -2583,7 +2583,7 @@ commands:
   vector2d-multiply:
     lifecycle: single
     description: Multiplies a vector by this to produce a new vector
-  vector2d-multiply:
+  vector2d-multiply-2:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector2d-negate:
@@ -2595,7 +2595,7 @@ commands:
   vector2d-subtract:
     lifecycle: single
     description: Subtracts a vector from this to produce a new vector
-  vector2d-subtract:
+  vector2d-subtract-2:
     lifecycle: single
     description: Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector2d-to-point2d:
@@ -2607,52 +2607,52 @@ commands:
   vector2d-tolerant-equals:
     lifecycle: single
     description: Compare vectors using a tolerance
-  vector2d-tolerant-equals:
+  vector2d-tolerant-equals-2:
     lifecycle: single
     description: Compare vectors using a tolerance
-  vector2d-tolerant-equals:
+  vector2d-tolerant-equals-3:
     lifecycle: single
     description: Compare vectors using a tolerance
-  vector2d-tolerant-equals:
+  vector2d-tolerant-equals-4:
     lifecycle: single
     description: Compare vectors using a tolerance
   vector2d-op-addition:
     lifecycle: single
     description: Adds two vectors to produce a new vector
-  vector2d-op-addition:
+  vector2d-op-addition-2:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
-  vector2d-op-addition:
+  vector2d-op-addition-3:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector2d-op-division:
     lifecycle: single
     description: Divides two vectors to produce a new vector
-  vector2d-op-division:
+  vector2d-op-division-2:
     lifecycle: single
     description: Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector2d-op-multiply:
     lifecycle: single
     description: Multiplies two vectors to produce a new vector
-  vector2d-op-multiply:
+  vector2d-op-multiply-2:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
-  vector2d-op-multiply:
+  vector2d-op-multiply-3:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector2d-op-subtraction:
     lifecycle: single
     description: Subtracts two vectors to produce a new vector
-  vector2d-op-subtraction:
+  vector2d-op-subtraction-2:
     lifecycle: single
     description: Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector3d-add:
     lifecycle: single
     description: Translates a point by this vector and returns the resulting point
-  vector3d-add:
+  vector3d-add-2:
     lifecycle: single
     description: Adds another vector to this to produce a new vector
-  vector3d-add:
+  vector3d-add-3:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector3d-angle:
@@ -2667,19 +2667,19 @@ commands:
   vector3d-direction-equals:
     lifecycle: single
     description: Compare direction of vectors using a tolerance
-  vector3d-direction-equals:
+  vector3d-direction-equals-2:
     lifecycle: single
     description: Compare direction of vectors using a tolerance
-  vector3d-direction-equals:
+  vector3d-direction-equals-3:
     lifecycle: single
     description: Compare direction of vectors using a tolerance
-  vector3d-direction-equals:
+  vector3d-direction-equals-4:
     lifecycle: single
     description: Compare direction of vectors using a tolerance
   vector3d-divide:
     lifecycle: single
     description: Divides this vector by another to produce a new vector
-  vector3d-divide:
+  vector3d-divide-2:
     lifecycle: single
     description: Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector3d-dot:
@@ -2703,10 +2703,10 @@ commands:
   vector3d-multiply:
     lifecycle: single
     description: Multiply method of Vector3D.
-  vector3d-multiply:
+  vector3d-multiply-2:
     lifecycle: single
     description: Multiply method of Vector3D.
-  vector3d-multiply:
+  vector3d-multiply-3:
     lifecycle: single
     description: Multiply method of Vector3D.
   vector3d-negate:
@@ -2718,7 +2718,7 @@ commands:
   vector3d-subtract:
     lifecycle: single
     description: Subtracts a vector from this to produce a new vector
-  vector3d-subtract:
+  vector3d-subtract-2:
     lifecycle: single
     description: Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector3d-to-color:
@@ -2733,43 +2733,43 @@ commands:
   vector3d-tolerant-equals:
     lifecycle: single
     description: Compare vectors using a tolerance
-  vector3d-tolerant-equals:
+  vector3d-tolerant-equals-2:
     lifecycle: single
     description: Compare vectors using a tolerance
-  vector3d-tolerant-equals:
+  vector3d-tolerant-equals-3:
     lifecycle: single
     description: Compare vectors using a tolerance
-  vector3d-tolerant-equals:
+  vector3d-tolerant-equals-4:
     lifecycle: single
     description: Compare vectors using a tolerance
   vector3d-op-addition:
     lifecycle: single
     description: Adds two vectors to produce a new vector
-  vector3d-op-addition:
+  vector3d-op-addition-2:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
-  vector3d-op-addition:
+  vector3d-op-addition-3:
     lifecycle: single
     description: Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   vector3d-op-division:
     lifecycle: single
     description: Divides two vectors to produce a new vector
-  vector3d-op-division:
+  vector3d-op-division-2:
     lifecycle: single
     description: Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector3d-op-multiply:
     lifecycle: single
     description: Multiplies two vectors to produce a new vector
-  vector3d-op-multiply:
+  vector3d-op-multiply-2:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
-  vector3d-op-multiply:
+  vector3d-op-multiply-3:
     lifecycle: single
     description: Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result
   vector3d-op-subtraction:
     lifecycle: single
     description: Subtracts two vectors to produce a new vector
-  vector3d-op-subtraction:
+  vector3d-op-subtraction-2:
     lifecycle: single
     description: Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result
   view-copy-viewpoint-from:
@@ -2790,7 +2790,7 @@ commands:
   view-generate-image:
     lifecycle: single
     description: Generates an Image for this View.
-  view-generate-image:
+  view-generate-image-2:
     lifecycle: single
     description: Generates an Image for this View.
   view-get-clipping-planes:
@@ -2805,19 +2805,19 @@ commands:
   view-pick-item-from-point:
     lifecycle: single
     description: Picks a single item from the given window coordinate point.
-  view-pick-item-from-point:
+  view-pick-item-from-point-2:
     lifecycle: single
     description: Picks a single item from the given window coordinate point.
   view-pick-item-from-rectangle:
     lifecycle: single
     description: Picks a single item from the given window coordinate rectangle.
-  view-pick-item-from-rectangle:
+  view-pick-item-from-rectangle-2:
     lifecycle: single
     description: Picks a single item from the given window coordinate rectangle.
   view-pick-items-from-rectangle:
     lifecycle: single
     description: Picks multiple items from the given window coordinate rectangle.
-  view-pick-items-from-rectangle:
+  view-pick-items-from-rectangle-2:
     lifecycle: single
     description: Picks multiple items from the given window coordinate rectangle.
   view-project-point:
@@ -2904,13 +2904,13 @@ commands:
   application-automation-print:
     lifecycle: single
     description: Sends the current View to the Printer
-  application-automation-print:
+  application-automation-print-2:
     lifecycle: single
     description: Sends the current View to the Printer
-  application-automation-print:
+  application-automation-print-3:
     lifecycle: single
     description: Sends the current View to the Printer
-  application-automation-print:
+  application-automation-print-4:
     lifecycle: single
     description: Sends the current View to the Printer
   application-automation-save-file:
@@ -2988,10 +2988,10 @@ commands:
   database-change-collection-where:
     lifecycle: single
     description: Filters the changes based on changeType
-  database-change-collection-where:
+  database-change-collection-where-2:
     lifecycle: single
     description: Filters the changes based on tablesName
-  database-change-collection-where:
+  database-change-collection-where-3:
     lifecycle: single
     description: Filters the changes based on tableNames and changeType
   navis-works-data-reader-close:
@@ -3084,7 +3084,7 @@ commands:
   navisworks-command-execute-reader:
     lifecycle: single
     description: Overrides the default behavior of DbDataReader to return a specialized NavisWorksDataReader class
-  navisworks-command-execute-reader:
+  navisworks-command-execute-reader-2:
     lifecycle: single
     description: Overrides the default behavior to return a NavisWorksDataReader specialization class
   navisworks-command-execute-scalar:
@@ -3117,13 +3117,13 @@ commands:
   navisworks-data-adapter-update:
     lifecycle: single
     description: Not implement
-  navisworks-data-adapter-update:
+  navisworks-data-adapter-update-2:
     lifecycle: single
     description: Not implement
-  navisworks-data-adapter-update:
+  navisworks-data-adapter-update-3:
     lifecycle: single
     description: Not implement
-  navisworks-data-adapter-update:
+  navisworks-data-adapter-update-4:
     lifecycle: single
     description: Not implement
   navisworks-parameter-reset-db-type:
@@ -3132,7 +3132,7 @@ commands:
   navisworks-parameter-collection-add:
     lifecycle: single
     description: Adds a parameter to the collection
-  navisworks-parameter-collection-add:
+  navisworks-parameter-collection-add-2:
     lifecycle: single
     description: Adds a parameter to the collection
   navisworks-parameter-collection-add-range:
@@ -3147,7 +3147,7 @@ commands:
   navisworks-parameter-collection-contains:
     lifecycle: single
     description: Determines if the parameter exists in the collection
-  navisworks-parameter-collection-contains:
+  navisworks-parameter-collection-contains-2:
     lifecycle: single
     description: Determines if the named parameter exists in the collection
   navisworks-parameter-collection-copy-to:
@@ -3162,7 +3162,7 @@ commands:
   navisworks-parameter-collection-index-of:
     lifecycle: single
     description: Returns the index of a parameter
-  navisworks-parameter-collection-index-of:
+  navisworks-parameter-collection-index-of-2:
     lifecycle: single
     description: Returns the index of a parameter given its name
   navisworks-parameter-collection-insert:
@@ -3174,7 +3174,7 @@ commands:
   navisworks-parameter-collection-remove-at:
     lifecycle: single
     description: Removes a parameter from the collection given its index
-  navisworks-parameter-collection-remove-at:
+  navisworks-parameter-collection-remove-at-2:
     lifecycle: single
     description: Removes a parameter from the collection given its name
   navisworks-transaction-commit:
@@ -3192,7 +3192,7 @@ commands:
   document-current-comments-change-source:
     lifecycle: single
     description: Changes the Current Comments. Typically called when the focus changes from one Comment Source to an other.
-  document-current-comments-change-source:
+  document-current-comments-change-source-2:
     lifecycle: single
     description: Changes the Current Comments. Typically called when the focus changes from one Comment Source to an other.
   document-current-comments-clear-source:
@@ -3240,13 +3240,13 @@ commands:
   document-current-selection-copy-from:
     lifecycle: single
     description: Copies the ModelItems from a ModelItemCollection and replaces the list of entries held in SelectedItems
-  document-current-selection-copy-from:
+  document-current-selection-copy-from-2:
     lifecycle: single
     description: Copies the Selection from selection and replaces the list of entries held in SelectedItems
-  document-current-selection-copy-from:
+  document-current-selection-copy-from-3:
     lifecycle: single
     description: Updates the SelectionSources in Selection from selectionSources and replaces the list of entries held in SelectedItems
-  document-current-selection-copy-from:
+  document-current-selection-copy-from-4:
     lifecycle: single
     description: Copies the ModelItems from a IEnumerable>ModelItem< and replaces the list of entries held in SelectedItems
   document-current-selection-create-copy:
@@ -3312,7 +3312,7 @@ commands:
   document-info-part-add-copy:
     lifecycle: single
     description: Adds a copy of item to the end of the specified parent group contained by DocumentInfo.
-  document-info-part-add-copy:
+  document-info-part-add-copy-2:
     lifecycle: single
     description: Adds a copy of item to the end of Value.
   document-info-part-add-unique-copy:
@@ -3327,7 +3327,7 @@ commands:
   document-info-part-insert-copy:
     lifecycle: single
     description: Inserts a copy of item into the specified parent group contained by DocumentInfo.
-  document-info-part-insert-copy:
+  document-info-part-insert-copy-2:
     lifecycle: single
     description: Inserts a copy of item into Value.
   document-info-part-insert-unique-copy:
@@ -3336,25 +3336,25 @@ commands:
   document-info-part-move:
     lifecycle: single
     description: Moves item at oldIndex in OldParent to newIndex in newParent
-  document-info-part-move:
+  document-info-part-move-2:
     lifecycle: single
     description: Move sheet from oldIndex to new position in collection.
   document-info-part-remove:
     lifecycle: single
     description: Removes specified item from the specified parent group contained by DocumentInfo.
-  document-info-part-remove:
+  document-info-part-remove-2:
     lifecycle: single
     description: Removes specified item from DocumentInfo.
   document-info-part-remove-at:
     lifecycle: single
     description: Removes item from the specified parent group contained by DocumentInfo.
-  document-info-part-remove-at:
+  document-info-part-remove-at-2:
     lifecycle: single
     description: Removes item at the specified index from DocumentInfo.
   document-info-part-replace-with-copy:
     lifecycle: single
     description: Replaces item from the specified parent group with a copy of item
-  document-info-part-replace-with-copy:
+  document-info-part-replace-with-copy-2:
     lifecycle: single
     description: Replaces item at given index within DocumentInfo with a copy of item
   document-info-part-to-document-info:
@@ -3368,8 +3368,8 @@ commands:
     description: Determines whether the collection contains a specific value.
   document-models-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  document-models-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  document-models-copy-to-2:
     lifecycle: single
     description: Copies the contents of the collection into to
   document-models-create-collection:
@@ -3498,7 +3498,7 @@ commands:
   document-saved-viewpoints-add-copy:
     lifecycle: single
     description: Adds a copy of item to the end of the specified parent group contained by SavedViewpoints.
-  document-saved-viewpoints-add-copy:
+  document-saved-viewpoints-add-copy-2:
     lifecycle: single
     description: Adds a copy of item to the end of Value.
   document-saved-viewpoints-capture-runtime-overrides:
@@ -3510,7 +3510,7 @@ commands:
   document-saved-viewpoints-copy-from:
     lifecycle: single
     description: Copies the SavedViewpoints from value and replaces the list of entries held in Value.
-  document-saved-viewpoints-copy-from:
+  document-saved-viewpoints-copy-from-2:
     lifecycle: single
     description: Copies the SavedViewpoints from value and replaces the list of entries held in Value.
   document-saved-viewpoints-create-copy:
@@ -3531,25 +3531,25 @@ commands:
   document-saved-viewpoints-insert-copy:
     lifecycle: single
     description: Inserts a copy of item into the specified parent group contained by SavedViewpoints.
-  document-saved-viewpoints-insert-copy:
+  document-saved-viewpoints-insert-copy-2:
     lifecycle: single
     description: Inserts a copy of item into Value.
   document-saved-viewpoints-move:
     lifecycle: single
     description: Moves item at oldIndex in OldParent to newIndex in newParent
-  document-saved-viewpoints-move:
+  document-saved-viewpoints-move-2:
     lifecycle: single
     description: Moves item from oldIndex to newIndex within Value
   document-saved-viewpoints-remove:
     lifecycle: single
     description: Removes specified item from the specified parent group contained by SavedViewpoints.
-  document-saved-viewpoints-remove:
+  document-saved-viewpoints-remove-2:
     lifecycle: single
     description: Removes specified item from Value.
   document-saved-viewpoints-remove-at:
     lifecycle: single
     description: Removes item from the specified parent group contained by SavedViewpoints.
-  document-saved-viewpoints-remove-at:
+  document-saved-viewpoints-remove-at-2:
     lifecycle: single
     description: Removes item at the specified index from Value.
   document-saved-viewpoints-replace-from-current-view:
@@ -3558,7 +3558,7 @@ commands:
   document-saved-viewpoints-replace-with-copy:
     lifecycle: single
     description: Replaces item from the specified parent group with a copy of item
-  document-saved-viewpoints-replace-with-copy:
+  document-saved-viewpoints-replace-with-copy-2:
     lifecycle: single
     description: Replaces item at given index within Value with a copy of item
   document-saved-viewpoints-resolve-guid:
@@ -3582,7 +3582,7 @@ commands:
   document-selection-sets-add-copy:
     lifecycle: single
     description: Adds a copy of item to the end of the specified parent group contained by SelectionSets.
-  document-selection-sets-add-copy:
+  document-selection-sets-add-copy-2:
     lifecycle: single
     description: Adds a copy of item to the end of Value.
   document-selection-sets-clear:
@@ -3591,7 +3591,7 @@ commands:
   document-selection-sets-copy-from:
     lifecycle: single
     description: Copies the SelectionSets from value and replaces the list of entries held in Value.
-  document-selection-sets-copy-from:
+  document-selection-sets-copy-from-2:
     lifecycle: single
     description: Copies the SelectionSets from value and replaces the list of entries held in Value.
   document-selection-sets-create-copy:
@@ -3615,31 +3615,31 @@ commands:
   document-selection-sets-insert-copy:
     lifecycle: single
     description: Inserts a copy of item into the specified parent group contained by SelectionSets.
-  document-selection-sets-insert-copy:
+  document-selection-sets-insert-copy-2:
     lifecycle: single
     description: Inserts a copy of item into Value.
   document-selection-sets-move:
     lifecycle: single
     description: Moves item at oldIndex in OldParent to newIndex in newParent
-  document-selection-sets-move:
+  document-selection-sets-move-2:
     lifecycle: single
     description: Moves item from oldIndex to newIndex within Value
   document-selection-sets-remove:
     lifecycle: single
     description: Removes specified item from the specified parent group contained by SelectionSets.
-  document-selection-sets-remove:
+  document-selection-sets-remove-2:
     lifecycle: single
     description: Removes specified item from Value.
   document-selection-sets-remove-at:
     lifecycle: single
     description: Removes item from the specified parent group contained by SelectionSets.
-  document-selection-sets-remove-at:
+  document-selection-sets-remove-at-2:
     lifecycle: single
     description: Removes item at the specified index from Value.
   document-selection-sets-replace-with-copy:
     lifecycle: single
     description: Replaces item from the specified parent group with a copy of item
-  document-selection-sets-replace-with-copy:
+  document-selection-sets-replace-with-copy-2:
     lifecycle: single
     description: Replaces item at given index within Value with a copy of item
   document-selection-sets-resolve-guid:
@@ -3675,55 +3675,55 @@ commands:
   abort-on-exception-call-action:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-2:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-3:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-4:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-5:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-6:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-7:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-8:
     lifecycle: single
     description: CallAction method of AbortOnException.
-  abort-on-exception-call-action:
+  abort-on-exception-call-action-9:
     lifecycle: single
     description: CallAction method of AbortOnException.
   abort-on-exception-call-func:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-2:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-3:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-4:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-5:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-6:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-7:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-8:
     lifecycle: single
     description: CallFunc method of AbortOnException.
-  abort-on-exception-call-func:
+  abort-on-exception-call-func-9:
     lifecycle: single
     description: CallFunc method of AbortOnException.
   application-trace-enter:
@@ -3735,10 +3735,10 @@ commands:
   application-trace-trace:
     lifecycle: single
     description: Trace method of ApplicationTrace.
-  application-trace-trace:
+  application-trace-trace-2:
     lifecycle: single
     description: Trace method of ApplicationTrace.
-  application-trace-trace:
+  application-trace-trace-3:
     lifecycle: single
     description: Trace method of ApplicationTrace.
   icommand-handler-plugin-on-cmd:
@@ -3819,25 +3819,25 @@ commands:
   lc-lmatrix4f-equals:
     lifecycle: single
     description: Equals method of LcLMatrix4f.
-  lc-lmatrix4f-equals:
+  lc-lmatrix4f-equals-2:
     lifecycle: single
     description: Equals method of LcLMatrix4f.
   lc-lmatrix4f-factor:
     lifecycle: single
     description: Factor method of LcLMatrix4f.
-  lc-lmatrix4f-factor:
+  lc-lmatrix4f-factor-2:
     lifecycle: single
     description: Factor method of LcLMatrix4f.
-  lc-lmatrix4f-factor:
+  lc-lmatrix4f-factor-3:
     lifecycle: single
     description: Factor method of LcLMatrix4f.
-  lc-lmatrix4f-factor:
+  lc-lmatrix4f-factor-4:
     lifecycle: single
     description: Factor method of LcLMatrix4f.
   lc-lmatrix4f-get-linear:
     lifecycle: single
     description: GetLinear method of LcLMatrix4f.
-  lc-lmatrix4f-get-linear:
+  lc-lmatrix4f-get-linear-2:
     lifecycle: single
     description: GetLinear method of LcLMatrix4f.
   lc-lmatrix4f-get-translation:
@@ -3867,7 +3867,7 @@ commands:
   lc-lmatrix4f-make-affine:
     lifecycle: single
     description: MakeAffine method of LcLMatrix4f.
-  lc-lmatrix4f-make-affine:
+  lc-lmatrix4f-make-affine-2:
     lifecycle: single
     description: MakeAffine method of LcLMatrix4f.
   lc-lmatrix4f-make-identity:
@@ -3888,13 +3888,13 @@ commands:
   lc-lmatrix4f-mult-left:
     lifecycle: single
     description: MultLeft method of LcLMatrix4f.
-  lc-lmatrix4f-mult-left:
+  lc-lmatrix4f-mult-left-2:
     lifecycle: single
     description: MultLeft method of LcLMatrix4f.
   lc-lmatrix4f-mult-right:
     lifecycle: single
     description: MultRight method of LcLMatrix4f.
-  lc-lmatrix4f-mult-right:
+  lc-lmatrix4f-mult-right-2:
     lifecycle: single
     description: MultRight method of LcLMatrix4f.
   lc-lmatrix4f-rotate-left:
@@ -3912,13 +3912,13 @@ commands:
   lc-lmatrix4f-set-value:
     lifecycle: single
     description: SetValue method of LcLMatrix4f.
-  lc-lmatrix4f-set-value:
+  lc-lmatrix4f-set-value-2:
     lifecycle: single
     description: SetValue method of LcLMatrix4f.
-  lc-lmatrix4f-set-value:
+  lc-lmatrix4f-set-value-3:
     lifecycle: single
     description: SetValue method of LcLMatrix4f.
-  lc-lmatrix4f-set-value:
+  lc-lmatrix4f-set-value-4:
     lifecycle: single
     description: SetValue method of LcLMatrix4f.
   lc-lmatrix4f-to-string:
@@ -3954,10 +3954,10 @@ commands:
   lc-lplane3f-equals:
     lifecycle: single
     description: Equals method of LcLPlane3f.
-  lc-lplane3f-equals:
+  lc-lplane3f-equals-2:
     lifecycle: single
     description: Equals method of LcLPlane3f.
-  lc-lplane3f-equals:
+  lc-lplane3f-equals-3:
     lifecycle: single
     description: Equals method of LcLPlane3f.
   lc-lplane3f-get-distance:
@@ -3975,13 +3975,13 @@ commands:
   lc-lplane3f-inverse-transform:
     lifecycle: single
     description: InverseTransform method of LcLPlane3f.
-  lc-lplane3f-inverse-transform:
+  lc-lplane3f-inverse-transform-2:
     lifecycle: single
     description: InverseTransform method of LcLPlane3f.
-  lc-lplane3f-inverse-transform:
+  lc-lplane3f-inverse-transform-3:
     lifecycle: single
     description: InverseTransform method of LcLPlane3f.
-  lc-lplane3f-inverse-transform:
+  lc-lplane3f-inverse-transform-4:
     lifecycle: single
     description: InverseTransform method of LcLPlane3f.
   lc-lplane3f-is-in-halfspace:
@@ -3990,13 +3990,13 @@ commands:
   lc-lplane3f-is-point-in-triangle:
     lifecycle: single
     description: IsPointInTriangle method of LcLPlane3f.
-  lc-lplane3f-is-point-in-triangle:
+  lc-lplane3f-is-point-in-triangle-2:
     lifecycle: single
     description: IsPointInTriangle method of LcLPlane3f.
-  lc-lplane3f-is-point-in-triangle:
+  lc-lplane3f-is-point-in-triangle-3:
     lifecycle: single
     description: IsPointInTriangle method of LcLPlane3f.
-  lc-lplane3f-is-point-in-triangle:
+  lc-lplane3f-is-point-in-triangle-4:
     lifecycle: single
     description: IsPointInTriangle method of LcLPlane3f.
   lc-lplane3f-max-distance-from-plane:
@@ -4029,49 +4029,49 @@ commands:
   lc-lplane3f-set-value:
     lifecycle: single
     description: SetValue method of LcLPlane3f.
-  lc-lplane3f-set-value:
+  lc-lplane3f-set-value-2:
     lifecycle: single
     description: SetValue method of LcLPlane3f.
-  lc-lplane3f-set-value:
+  lc-lplane3f-set-value-3:
     lifecycle: single
     description: SetValue method of LcLPlane3f.
-  lc-lplane3f-set-value:
+  lc-lplane3f-set-value-4:
     lifecycle: single
     description: SetValue method of LcLPlane3f.
   lc-lplane3f-transform:
     lifecycle: single
     description: Transform method of LcLPlane3f.
-  lc-lplane3f-transform:
+  lc-lplane3f-transform-2:
     lifecycle: single
     description: Transform method of LcLPlane3f.
-  lc-lplane3f-transform:
+  lc-lplane3f-transform-3:
     lifecycle: single
     description: Transform method of LcLPlane3f.
-  lc-lplane3f-transform:
+  lc-lplane3f-transform-4:
     lifecycle: single
     description: Transform method of LcLPlane3f.
   lc-lplane3f-transformed-by:
     lifecycle: single
     description: TransformedBy method of LcLPlane3f.
-  lc-lplane3f-transformed-by:
+  lc-lplane3f-transformed-by-2:
     lifecycle: single
     description: TransformedBy method of LcLPlane3f.
-  lc-lplane3f-transformed-by:
+  lc-lplane3f-transformed-by-3:
     lifecycle: single
     description: TransformedBy method of LcLPlane3f.
-  lc-lplane3f-transformed-by:
+  lc-lplane3f-transformed-by-4:
     lifecycle: single
     description: TransformedBy method of LcLPlane3f.
   lc-lplane3f-transformed-by-inverse:
     lifecycle: single
     description: TransformedByInverse method of LcLPlane3f.
-  lc-lplane3f-transformed-by-inverse:
+  lc-lplane3f-transformed-by-inverse-2:
     lifecycle: single
     description: TransformedByInverse method of LcLPlane3f.
-  lc-lplane3f-transformed-by-inverse:
+  lc-lplane3f-transformed-by-inverse-3:
     lifecycle: single
     description: TransformedByInverse method of LcLPlane3f.
-  lc-lplane3f-transformed-by-inverse:
+  lc-lplane3f-transformed-by-inverse-4:
     lifecycle: single
     description: TransformedByInverse method of LcLPlane3f.
   lc-lplane3f-translate:
@@ -4209,7 +4209,7 @@ commands:
   lc-nv-camera-pan-center-at:
     lifecycle: single
     description: PanCenterAt method of LcNvCamera.
-  lc-nv-camera-pan-center-at:
+  lc-nv-camera-pan-center-at-2:
     lifecycle: single
     description: PanCenterAt method of LcNvCamera.
   lc-nv-camera-point-at:
@@ -4275,7 +4275,7 @@ commands:
   lc-nv-nav-base-end-editing:
     lifecycle: single
     description: EndEditing method of LcNvNavBase.
-  lc-nv-nav-base-end-editing:
+  lc-nv-nav-base-end-editing-2:
     lifecycle: single
     description: EndEditing method of LcNvNavBase.
   lc-nv-nav-base-get-bounding-box:
@@ -4299,16 +4299,16 @@ commands:
   lc-nv-nav-base-norm-right-vector:
     lifecycle: single
     description: NormRightVector method of LcNvNavBase.
-  lc-nv-nav-base-norm-right-vector:
+  lc-nv-nav-base-norm-right-vector-2:
     lifecycle: single
     description: NormRightVector method of LcNvNavBase.
   lc-nv-nav-base-norm-view-dir:
     lifecycle: single
     description: NormViewDir method of LcNvNavBase.
-  lc-nv-nav-base-norm-view-dir:
+  lc-nv-nav-base-norm-view-dir-2:
     lifecycle: single
     description: NormViewDir method of LcNvNavBase.
-  lc-nv-nav-base-norm-view-dir:
+  lc-nv-nav-base-norm-view-dir-3:
     lifecycle: single
     description: NormViewDir method of LcNvNavBase.
   lc-nv-nav-base-require-angular-speed:
@@ -4323,7 +4323,7 @@ commands:
   lc-nv-nav-base-require-world-up-vector:
     lifecycle: single
     description: RequireWorldUpVector method of LcNvNavBase.
-  lc-nv-nav-base-require-world-up-vector:
+  lc-nv-nav-base-require-world-up-vector-2:
     lifecycle: single
     description: RequireWorldUpVector method of LcNvNavBase.
   lc-nv-nav-base-set-lighting:
@@ -4407,7 +4407,7 @@ commands:
   lc-nv-view-point-copy-from:
     lifecycle: single
     description: CopyFrom method of LcNvViewPoint.
-  lc-nv-view-point-copy-from:
+  lc-nv-view-point-copy-from-2:
     lifecycle: single
     description: CopyFrom method of LcNvViewPoint.
   lc-nv-view-point-edit-viewer:
@@ -4701,7 +4701,7 @@ commands:
   lc-oa-data-convert-and-pretty-print:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaData.
-  lc-oa-data-convert-and-pretty-print:
+  lc-oa-data-convert-and-pretty-print-2:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaData.
   lc-oa-data-internal-creator:
@@ -4719,7 +4719,7 @@ commands:
   lc-oa-data-pretty-print:
     lifecycle: single
     description: PrettyPrint method of LcOaData.
-  lc-oa-data-pretty-print:
+  lc-oa-data-pretty-print-2:
     lifecycle: single
     description: PrettyPrint method of LcOaData.
   lc-oa-ex-group-internal-creator:
@@ -4815,7 +4815,7 @@ commands:
   lc-oa-partition-get-runtime-bounding-box:
     lifecycle: single
     description: GetRuntimeBoundingBox method of LcOaPartition.
-  lc-oa-partition-get-runtime-bounding-box:
+  lc-oa-partition-get-runtime-bounding-box-2:
     lifecycle: single
     description: GetRuntimeBoundingBox method of LcOaPartition.
   lc-oa-partition-get-source-filename:
@@ -4938,7 +4938,7 @@ commands:
   lc-oa-prop-override-cat-vec-copy-to:
     lifecycle: single
     description: CopyTo method of LcOaPropOverrideCatVec.
-  lc-oa-prop-override-cat-vec-copy-to:
+  lc-oa-prop-override-cat-vec-copy-to-2:
     lifecycle: single
     description: CopyTo method of LcOaPropOverrideCatVec.
   lc-oa-prop-override-cat-vec-get-enumerator:
@@ -5013,34 +5013,34 @@ commands:
   lc-oa-unit-convert:
     lifecycle: single
     description: Convert method of LcOaUnit.
-  lc-oa-unit-convert:
+  lc-oa-unit-convert-2:
     lifecycle: single
     description: Convert method of LcOaUnit.
-  lc-oa-unit-convert:
+  lc-oa-unit-convert-3:
     lifecycle: single
     description: Convert method of LcOaUnit.
-  lc-oa-unit-convert:
+  lc-oa-unit-convert-4:
     lifecycle: single
     description: Convert method of LcOaUnit.
-  lc-oa-unit-convert:
+  lc-oa-unit-convert-5:
     lifecycle: single
     description: Convert method of LcOaUnit.
   lc-oa-unit-convert-and-pretty-print:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaUnit.
-  lc-oa-unit-convert-and-pretty-print:
+  lc-oa-unit-convert-and-pretty-print-2:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaUnit.
-  lc-oa-unit-convert-and-pretty-print:
+  lc-oa-unit-convert-and-pretty-print-3:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaUnit.
-  lc-oa-unit-convert-and-pretty-print:
+  lc-oa-unit-convert-and-pretty-print-4:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaUnit.
-  lc-oa-unit-convert-and-pretty-print:
+  lc-oa-unit-convert-and-pretty-print-5:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaUnit.
-  lc-oa-unit-convert-and-pretty-print:
+  lc-oa-unit-convert-and-pretty-print-6:
     lifecycle: single
     description: ConvertAndPrettyPrint method of LcOaUnit.
   lc-oa-unit-current-scale-factor:
@@ -5073,10 +5073,10 @@ commands:
   lc-oa-unit-get-unit-abbreviation:
     lifecycle: single
     description: GetUnitAbbreviation method of LcOaUnit.
-  lc-oa-unit-get-unit-abbreviation:
+  lc-oa-unit-get-unit-abbreviation-2:
     lifecycle: single
     description: GetUnitAbbreviation method of LcOaUnit.
-  lc-oa-unit-get-unit-abbreviation:
+  lc-oa-unit-get-unit-abbreviation-3:
     lifecycle: single
     description: GetUnitAbbreviation method of LcOaUnit.
   lc-oa-unit-initialise:
@@ -5094,28 +5094,28 @@ commands:
   lc-oa-unit-parse-input:
     lifecycle: single
     description: ParseInput method of LcOaUnit.
-  lc-oa-unit-parse-input:
+  lc-oa-unit-parse-input-2:
     lifecycle: single
     description: ParseInput method of LcOaUnit.
   lc-oa-unit-pretty-print:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
-  lc-oa-unit-pretty-print:
+  lc-oa-unit-pretty-print-2:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
-  lc-oa-unit-pretty-print:
+  lc-oa-unit-pretty-print-3:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
-  lc-oa-unit-pretty-print:
+  lc-oa-unit-pretty-print-4:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
-  lc-oa-unit-pretty-print:
+  lc-oa-unit-pretty-print-5:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
-  lc-oa-unit-pretty-print:
+  lc-oa-unit-pretty-print-6:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
-  lc-oa-unit-pretty-print:
+  lc-oa-unit-pretty-print-7:
     lifecycle: single
     description: PrettyPrint method of LcOaUnit.
   lc-oa-unit-scale:
@@ -5124,10 +5124,10 @@ commands:
   lc-oa-unit-scale-factor:
     lifecycle: single
     description: ScaleFactor method of LcOaUnit.
-  lc-oa-unit-scale-factor:
+  lc-oa-unit-scale-factor-2:
     lifecycle: single
     description: ScaleFactor method of LcOaUnit.
-  lc-oa-unit-scale-factor:
+  lc-oa-unit-scale-factor-3:
     lifecycle: single
     description: ScaleFactor method of LcOaUnit.
   lc-oa-unit-setup-names:
@@ -5136,7 +5136,7 @@ commands:
   lc-oa-unit-str-to-unit-format:
     lifecycle: single
     description: StrToUnitFormat method of LcOaUnit.
-  lc-oa-unit-str-to-unit-format:
+  lc-oa-unit-str-to-unit-format-2:
     lifecycle: single
     description: StrToUnitFormat method of LcOaUnit.
   lc-oa-unit-terminate:
@@ -5145,7 +5145,7 @@ commands:
   lc-oa-unit-unit-format-to-str:
     lifecycle: single
     description: UnitFormatToStr method of LcOaUnit.
-  lc-oa-unit-unit-format-to-str:
+  lc-oa-unit-unit-format-to-str-2:
     lifecycle: single
     description: UnitFormatToStr method of LcOaUnit.
   lc-oa-unit-props-get-angular-format-pref:
@@ -5481,7 +5481,7 @@ commands:
   lc-op-animation-adjust-duration:
     lifecycle: single
     description: AdjustDuration method of LcOpAnimation.
-  lc-op-animation-adjust-duration:
+  lc-op-animation-adjust-duration-2:
     lifecycle: single
     description: AdjustDuration method of LcOpAnimation.
   lc-op-animation-apply-frame:
@@ -5679,7 +5679,7 @@ commands:
   lc-op-animation-controller-set-animation:
     lifecycle: single
     description: SetAnimation method of LcOpAnimationController.
-  lc-op-animation-controller-set-animation:
+  lc-op-animation-controller-set-animation-2:
     lifecycle: single
     description: SetAnimation method of LcOpAnimationController.
   lc-op-animation-controller-set-animation-do-not-tell-engine:
@@ -5799,7 +5799,7 @@ commands:
   lc-op-animation-engine-find-animation:
     lifecycle: single
     description: FindAnimation method of LcOpAnimationEngine.
-  lc-op-animation-engine-find-animation:
+  lc-op-animation-engine-find-animation-2:
     lifecycle: single
     description: FindAnimation method of LcOpAnimationEngine.
   lc-op-animation-engine-get-interface:
@@ -6510,13 +6510,13 @@ commands:
   lc-op-current-animation-element-edit:
     lifecycle: single
     description: Edit method of LcOpCurrentAnimationElement.
-  lc-op-current-animation-element-edit:
+  lc-op-current-animation-element-edit-2:
     lifecycle: single
     description: Edit method of LcOpCurrentAnimationElement.
   lc-op-current-animation-element-get:
     lifecycle: single
     description: Get method of LcOpCurrentAnimationElement.
-  lc-op-current-animation-element-get:
+  lc-op-current-animation-element-get-2:
     lifecycle: single
     description: Get method of LcOpCurrentAnimationElement.
   lc-op-current-animation-element-get-class:
@@ -6558,7 +6558,7 @@ commands:
   lc-op-current-saved-view-set:
     lifecycle: single
     description: Set method of LcOpCurrentSavedView.
-  lc-op-current-saved-view-set:
+  lc-op-current-saved-view-set-2:
     lifecycle: single
     description: Set method of LcOpCurrentSavedView.
   lc-op-current-view-element-get:
@@ -6687,7 +6687,7 @@ commands:
   lc-op-diff-do-diff:
     lifecycle: single
     description: DoDiff method of LcOpDiff.
-  lc-op-diff-do-diff:
+  lc-op-diff-do-diff-2:
     lifecycle: single
     description: DoDiff method of LcOpDiff.
   lc-op-diff-internal-creator:
@@ -6699,10 +6699,10 @@ commands:
   lc-op-diff-make-summary:
     lifecycle: single
     description: MakeSummary method of LcOpDiff.
-  lc-op-diff-make-summary:
+  lc-op-diff-make-summary-2:
     lifecycle: single
     description: MakeSummary method of LcOpDiff.
-  lc-op-diff-make-summary:
+  lc-op-diff-make-summary-3:
     lifecycle: single
     description: MakeSummary method of LcOpDiff.
   lc-op-diff-detail-format-info:
@@ -6774,13 +6774,13 @@ commands:
   lc-op-dummy-progress-begin-sub-op:
     lifecycle: single
     description: BeginSubOp method of LcOpDummyProgress.
-  lc-op-dummy-progress-begin-sub-op:
+  lc-op-dummy-progress-begin-sub-op-2:
     lifecycle: single
     description: BeginSubOp method of LcOpDummyProgress.
   lc-op-dummy-progress-end-sub-op:
     lifecycle: single
     description: EndSubOp method of LcOpDummyProgress.
-  lc-op-dummy-progress-end-sub-op:
+  lc-op-dummy-progress-end-sub-op-2:
     lifecycle: single
     description: EndSubOp method of LcOpDummyProgress.
   lc-op-dummy-progress-internal-creator:
@@ -6795,10 +6795,10 @@ commands:
   lc-op-dummy-progress-progress-error:
     lifecycle: single
     description: ProgressError method of LcOpDummyProgress.
-  lc-op-dummy-progress-progress-error:
+  lc-op-dummy-progress-progress-error-2:
     lifecycle: single
     description: ProgressError method of LcOpDummyProgress.
-  lc-op-dummy-progress-progress-error:
+  lc-op-dummy-progress-progress-error-3:
     lifecycle: single
     description: ProgressError method of LcOpDummyProgress.
   lc-op-dummy-progress-set-message:
@@ -6948,10 +6948,10 @@ commands:
   lc-op-export-plugin-export:
     lifecycle: single
     description: Export method of LcOpExportPlugin.
-  lc-op-export-plugin-export:
+  lc-op-export-plugin-export-2:
     lifecycle: single
     description: Export method of LcOpExportPlugin.
-  lc-op-export-plugin-export:
+  lc-op-export-plugin-export-3:
     lifecycle: single
     description: Export method of LcOpExportPlugin.
   lc-op-export-plugin-get-context-state:
@@ -6981,10 +6981,10 @@ commands:
   lc-op-file-database-element-begin-transaction:
     lifecycle: single
     description: BeginTransaction method of LcOpFileDatabaseElement.
-  lc-op-file-database-element-begin-transaction:
+  lc-op-file-database-element-begin-transaction-2:
     lifecycle: single
     description: BeginTransaction method of LcOpFileDatabaseElement.
-  lc-op-file-database-element-begin-transaction:
+  lc-op-file-database-element-begin-transaction-3:
     lifecycle: single
     description: BeginTransaction method of LcOpFileDatabaseElement.
   lc-op-file-database-element-clear-last-error:
@@ -7005,10 +7005,10 @@ commands:
   lc-op-file-database-element-end-transaction:
     lifecycle: single
     description: EndTransaction method of LcOpFileDatabaseElement.
-  lc-op-file-database-element-end-transaction:
+  lc-op-file-database-element-end-transaction-2:
     lifecycle: single
     description: EndTransaction method of LcOpFileDatabaseElement.
-  lc-op-file-database-element-end-transaction:
+  lc-op-file-database-element-end-transaction-3:
     lifecycle: single
     description: EndTransaction method of LcOpFileDatabaseElement.
   lc-op-file-database-element-get:
@@ -7056,7 +7056,7 @@ commands:
   lc-op-file-database-element-query-changes:
     lifecycle: single
     description: QueryChanges method of LcOpFileDatabaseElement.
-  lc-op-file-database-element-query-changes:
+  lc-op-file-database-element-query-changes-2:
     lifecycle: single
     description: QueryChanges method of LcOpFileDatabaseElement.
   lc-op-file-database-element-loaded-internal-creator:
@@ -7086,13 +7086,13 @@ commands:
   lc-op-file-info-element-edit:
     lifecycle: single
     description: Edit method of LcOpFileInfoElement.
-  lc-op-file-info-element-edit:
+  lc-op-file-info-element-edit-2:
     lifecycle: single
     description: Edit method of LcOpFileInfoElement.
   lc-op-file-info-element-get:
     lifecycle: single
     description: Get method of LcOpFileInfoElement.
-  lc-op-file-info-element-get:
+  lc-op-file-info-element-get-2:
     lifecycle: single
     description: Get method of LcOpFileInfoElement.
   lc-op-file-info-element-get-class:
@@ -7137,7 +7137,7 @@ commands:
   lc-op-file-plugin-get-format-description:
     lifecycle: single
     description: GetFormatDescription method of LcOpFilePlugin.
-  lc-op-file-plugin-get-format-description:
+  lc-op-file-plugin-get-format-description-2:
     lifecycle: single
     description: GetFormatDescription method of LcOpFilePlugin.
   lc-op-file-plugin-get-format-filter:
@@ -7146,7 +7146,7 @@ commands:
   lc-op-file-plugin-get-format-name:
     lifecycle: single
     description: GetFormatName method of LcOpFilePlugin.
-  lc-op-file-plugin-get-format-name:
+  lc-op-file-plugin-get-format-name-2:
     lifecycle: single
     description: GetFormatName method of LcOpFilePlugin.
   lc-op-file-plugin-get-format-suffix:
@@ -7389,13 +7389,13 @@ commands:
   lc-op-group-item-can-add-type:
     lifecycle: single
     description: CanAddType method of LcOpGroupItem.
-  lc-op-group-item-can-add-type:
+  lc-op-group-item-can-add-type-2:
     lifecycle: single
     description: CanAddType method of LcOpGroupItem.
   lc-op-group-item-get-child:
     lifecycle: single
     description: GetChild method of LcOpGroupItem.
-  lc-op-group-item-get-child:
+  lc-op-group-item-get-child-2:
     lifecycle: single
     description: GetChild method of LcOpGroupItem.
   lc-op-group-item-get-count-of-type:
@@ -7434,7 +7434,7 @@ commands:
   lc-op-hyperlinks-override-element-get-hyperlinks:
     lifecycle: single
     description: GetHyperlinks method of LcOpHyperlinksOverrideElement.
-  lc-op-hyperlinks-override-element-get-hyperlinks:
+  lc-op-hyperlinks-override-element-get-hyperlinks-2:
     lifecycle: single
     description: GetHyperlinks method of LcOpHyperlinksOverrideElement.
   lc-op-hyperlinks-override-element-internal-creator:
@@ -7566,37 +7566,37 @@ commands:
   lc-op-kernel-append-file:
     lifecycle: single
     description: AppendFile method of LcOpKernel.
-  lc-op-kernel-append-file:
+  lc-op-kernel-append-file-2:
     lifecycle: single
     description: AppendFile method of LcOpKernel.
   lc-op-kernel-append-files:
     lifecycle: single
     description: AppendFiles method of LcOpKernel.
-  lc-op-kernel-append-files:
+  lc-op-kernel-append-files-2:
     lifecycle: single
     description: AppendFiles method of LcOpKernel.
   lc-op-kernel-append-sheet:
     lifecycle: single
     description: AppendSheet method of LcOpKernel.
-  lc-op-kernel-append-sheet:
+  lc-op-kernel-append-sheet-2:
     lifecycle: single
     description: AppendSheet method of LcOpKernel.
   lc-op-kernel-auto-recover-from:
     lifecycle: single
     description: AutoRecoverFrom method of LcOpKernel.
-  lc-op-kernel-auto-recover-from:
+  lc-op-kernel-auto-recover-from-2:
     lifecycle: single
     description: AutoRecoverFrom method of LcOpKernel.
   lc-op-kernel-auto-save-as:
     lifecycle: single
     description: AutoSaveAs method of LcOpKernel.
-  lc-op-kernel-auto-save-as:
+  lc-op-kernel-auto-save-as-2:
     lifecycle: single
     description: AutoSaveAs method of LcOpKernel.
   lc-op-kernel-begin-edit:
     lifecycle: single
     description: BeginEdit method of LcOpKernel.
-  lc-op-kernel-begin-edit:
+  lc-op-kernel-begin-edit-2:
     lifecycle: single
     description: BeginEdit method of LcOpKernel.
   lc-op-kernel-can-resave-scene:
@@ -7608,19 +7608,19 @@ commands:
   lc-op-kernel-close-file-handles:
     lifecycle: single
     description: CloseFileHandles method of LcOpKernel.
-  lc-op-kernel-close-file-handles:
+  lc-op-kernel-close-file-handles-2:
     lifecycle: single
     description: CloseFileHandles method of LcOpKernel.
   lc-op-kernel-convert-sheet:
     lifecycle: single
     description: ConvertSheet method of LcOpKernel.
-  lc-op-kernel-convert-sheet:
+  lc-op-kernel-convert-sheet-2:
     lifecycle: single
     description: ConvertSheet method of LcOpKernel.
   lc-op-kernel-create-cache:
     lifecycle: single
     description: CreateCache method of LcOpKernel.
-  lc-op-kernel-create-cache:
+  lc-op-kernel-create-cache-2:
     lifecycle: single
     description: CreateCache method of LcOpKernel.
   lc-op-kernel-create-index-path:
@@ -7632,7 +7632,7 @@ commands:
   lc-op-kernel-delete-current-selection:
     lifecycle: single
     description: DeleteCurrentSelection method of LcOpKernel.
-  lc-op-kernel-delete-current-selection:
+  lc-op-kernel-delete-current-selection-2:
     lifecycle: single
     description: DeleteCurrentSelection method of LcOpKernel.
   lc-op-kernel-delete-kernel-contents:
@@ -7641,7 +7641,7 @@ commands:
   lc-op-kernel-delete-selection:
     lifecycle: single
     description: DeleteSelection method of LcOpKernel.
-  lc-op-kernel-delete-selection:
+  lc-op-kernel-delete-selection-2:
     lifecycle: single
     description: DeleteSelection method of LcOpKernel.
   lc-op-kernel-describe-scene-set-as-json-aggregate:
@@ -7653,7 +7653,7 @@ commands:
   lc-op-kernel-export-file:
     lifecycle: single
     description: ExportFile method of LcOpKernel.
-  lc-op-kernel-export-file:
+  lc-op-kernel-export-file-2:
     lifecycle: single
     description: ExportFile method of LcOpKernel.
   lc-op-kernel-get-active-sheet-event:
@@ -7776,34 +7776,34 @@ commands:
   lc-op-kernel-load-whole-json-aggregate:
     lifecycle: single
     description: LoadWholeJsonAggregate method of LcOpKernel.
-  lc-op-kernel-load-whole-json-aggregate:
+  lc-op-kernel-load-whole-json-aggregate-2:
     lifecycle: single
     description: LoadWholeJsonAggregate method of LcOpKernel.
   lc-op-kernel-merge-file:
     lifecycle: single
     description: MergeFile method of LcOpKernel.
-  lc-op-kernel-merge-file:
+  lc-op-kernel-merge-file-2:
     lifecycle: single
     description: MergeFile method of LcOpKernel.
-  lc-op-kernel-merge-file:
+  lc-op-kernel-merge-file-3:
     lifecycle: single
     description: MergeFile method of LcOpKernel.
   lc-op-kernel-merge-files:
     lifecycle: single
     description: MergeFiles method of LcOpKernel.
-  lc-op-kernel-merge-files:
+  lc-op-kernel-merge-files-2:
     lifecycle: single
     description: MergeFiles method of LcOpKernel.
   lc-op-kernel-merge-sheet:
     lifecycle: single
     description: MergeSheet method of LcOpKernel.
-  lc-op-kernel-merge-sheet:
+  lc-op-kernel-merge-sheet-2:
     lifecycle: single
     description: MergeSheet method of LcOpKernel.
   lc-op-kernel-publish-file:
     lifecycle: single
     description: PublishFile method of LcOpKernel.
-  lc-op-kernel-publish-file:
+  lc-op-kernel-publish-file-2:
     lifecycle: single
     description: PublishFile method of LcOpKernel.
   lc-op-kernel-redo:
@@ -7815,7 +7815,7 @@ commands:
   lc-op-kernel-remove-file:
     lifecycle: single
     description: RemoveFile method of LcOpKernel.
-  lc-op-kernel-remove-file:
+  lc-op-kernel-remove-file-2:
     lifecycle: single
     description: RemoveFile method of LcOpKernel.
   lc-op-kernel-request-one-shot-timer:
@@ -7833,25 +7833,25 @@ commands:
   lc-op-kernel-save-file:
     lifecycle: single
     description: SaveFile method of LcOpKernel.
-  lc-op-kernel-save-file:
+  lc-op-kernel-save-file-2:
     lifecycle: single
     description: SaveFile method of LcOpKernel.
   lc-op-kernel-save-nwd:
     lifecycle: single
     description: SaveNWD method of LcOpKernel.
-  lc-op-kernel-save-nwd:
+  lc-op-kernel-save-nwd-2:
     lifecycle: single
     description: SaveNWD method of LcOpKernel.
   lc-op-kernel-save-nwf:
     lifecycle: single
     description: SaveNWF method of LcOpKernel.
-  lc-op-kernel-save-nwf:
+  lc-op-kernel-save-nwf-2:
     lifecycle: single
     description: SaveNWF method of LcOpKernel.
   lc-op-kernel-select-matching-item-in-sheet:
     lifecycle: single
     description: SelectMatchingItemInSheet method of LcOpKernel.
-  lc-op-kernel-select-matching-item-in-sheet:
+  lc-op-kernel-select-matching-item-in-sheet-2:
     lifecycle: single
     description: SelectMatchingItemInSheet method of LcOpKernel.
   lc-op-kernel-set-clipping-planes-from-json-clip-plane-set:
@@ -7866,19 +7866,19 @@ commands:
   lc-op-kernel-switch-sheet:
     lifecycle: single
     description: SwitchSheet method of LcOpKernel.
-  lc-op-kernel-switch-sheet:
+  lc-op-kernel-switch-sheet-2:
     lifecycle: single
     description: SwitchSheet method of LcOpKernel.
   lc-op-kernel-try-load-file:
     lifecycle: single
     description: TryLoadFile method of LcOpKernel.
-  lc-op-kernel-try-load-file:
+  lc-op-kernel-try-load-file-2:
     lifecycle: single
     description: TryLoadFile method of LcOpKernel.
   lc-op-kernel-try-load-file-info:
     lifecycle: single
     description: TryLoadFileInfo method of LcOpKernel.
-  lc-op-kernel-try-load-file-info:
+  lc-op-kernel-try-load-file-info-2:
     lifecycle: single
     description: TryLoadFileInfo method of LcOpKernel.
   lc-op-kernel-undo:
@@ -7890,7 +7890,7 @@ commands:
   lc-op-kernel-update-files:
     lifecycle: single
     description: UpdateFiles method of LcOpKernel.
-  lc-op-kernel-update-files:
+  lc-op-kernel-update-files-2:
     lifecycle: single
     description: UpdateFiles method of LcOpKernel.
   lc-op-kernel-ex-apply-global-props:
@@ -7974,7 +7974,7 @@ commands:
   lc-op-kernel-ex-invert-selection:
     lifecycle: single
     description: InvertSelection method of LcOpKernelEx.
-  lc-op-kernel-ex-invert-selection:
+  lc-op-kernel-ex-invert-selection-2:
     lifecycle: single
     description: InvertSelection method of LcOpKernelEx.
   lc-op-kernel-ex-is-override-force-render:
@@ -8097,7 +8097,7 @@ commands:
   lc-op-kernel-ex-select-all:
     lifecycle: single
     description: SelectAll method of LcOpKernelEx.
-  lc-op-kernel-ex-select-all:
+  lc-op-kernel-ex-select-all-2:
     lifecycle: single
     description: SelectAll method of LcOpKernelEx.
   lc-op-kernel-ex-select-none:
@@ -8652,7 +8652,7 @@ commands:
   lc-op-measure-tool-reset:
     lifecycle: single
     description: Reset method of LcOpMeasureTool.
-  lc-op-measure-tool-reset:
+  lc-op-measure-tool-reset-2:
     lifecycle: single
     description: Reset method of LcOpMeasureTool.
   lc-op-measure-tool-set-lock-mode:
@@ -8826,13 +8826,13 @@ commands:
   lc-op-option-set-define-element-item-path:
     lifecycle: single
     description: DefineElementItemPath method of LcOpOptionSet.
-  lc-op-option-set-define-element-item-path:
+  lc-op-option-set-define-element-item-path-2:
     lifecycle: single
     description: DefineElementItemPath method of LcOpOptionSet.
   lc-op-option-set-define-find-selection:
     lifecycle: single
     description: DefineFindSelection method of LcOpOptionSet.
-  lc-op-option-set-define-find-selection:
+  lc-op-option-set-define-find-selection-2:
     lifecycle: single
     description: DefineFindSelection method of LcOpOptionSet.
   lc-op-option-set-edit-element-item-path:
@@ -8997,10 +8997,10 @@ commands:
   lc-op-redline-camera-to-window-space:
     lifecycle: single
     description: CameraToWindowSpace method of LcOpRedline.
-  lc-op-redline-camera-to-window-space:
+  lc-op-redline-camera-to-window-space-2:
     lifecycle: single
     description: CameraToWindowSpace method of LcOpRedline.
-  lc-op-redline-camera-to-window-space:
+  lc-op-redline-camera-to-window-space-3:
     lifecycle: single
     description: CameraToWindowSpace method of LcOpRedline.
   lc-op-redline-get-line-color:
@@ -9024,7 +9024,7 @@ commands:
   lc-op-redline-make-camera-space-frustum:
     lifecycle: single
     description: MakeCameraSpaceFrustum method of LcOpRedline.
-  lc-op-redline-make-camera-space-frustum:
+  lc-op-redline-make-camera-space-frustum-2:
     lifecycle: single
     description: MakeCameraSpaceFrustum method of LcOpRedline.
   lc-op-redline-screen-to-camera-space:
@@ -9045,10 +9045,10 @@ commands:
   lc-op-redline-window-to-camera-space:
     lifecycle: single
     description: WindowToCameraSpace method of LcOpRedline.
-  lc-op-redline-window-to-camera-space:
+  lc-op-redline-window-to-camera-space-2:
     lifecycle: single
     description: WindowToCameraSpace method of LcOpRedline.
-  lc-op-redline-window-to-camera-space:
+  lc-op-redline-window-to-camera-space-3:
     lifecycle: single
     description: WindowToCameraSpace method of LcOpRedline.
   lc-op-redline-window-to-screen-space:
@@ -9390,7 +9390,7 @@ commands:
   lc-op-saved-item-make-path:
     lifecycle: single
     description: MakePath method of LcOpSavedItem.
-  lc-op-saved-item-make-path:
+  lc-op-saved-item-make-path-2:
     lifecycle: single
     description: MakePath method of LcOpSavedItem.
   lc-op-saved-item-set-gui-expanded:
@@ -9459,7 +9459,7 @@ commands:
   lc-op-saved-items-element-contains:
     lifecycle: single
     description: Contains method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-contains:
+  lc-op-saved-items-element-contains-2:
     lifecycle: single
     description: Contains method of LcOpSavedItemsElement.
   lc-op-saved-items-element-copy-from:
@@ -9468,16 +9468,16 @@ commands:
   lc-op-saved-items-element-get:
     lifecycle: single
     description: Get method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-get:
+  lc-op-saved-items-element-get-2:
     lifecycle: single
     description: Get method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-get:
+  lc-op-saved-items-element-get-3:
     lifecycle: single
     description: Get method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-get:
+  lc-op-saved-items-element-get-4:
     lifecycle: single
     description: Get method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-get:
+  lc-op-saved-items-element-get-5:
     lifecycle: single
     description: Get method of LcOpSavedItemsElement.
   lc-op-saved-items-element-get-guid-set:
@@ -9486,7 +9486,7 @@ commands:
   lc-op-saved-items-element-get-item:
     lifecycle: single
     description: GetItem method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-get-item:
+  lc-op-saved-items-element-get-item-2:
     lifecycle: single
     description: GetItem method of LcOpSavedItemsElement.
   lc-op-saved-items-element-get-num:
@@ -9504,7 +9504,7 @@ commands:
   lc-op-saved-items-element-make-path:
     lifecycle: single
     description: MakePath method of LcOpSavedItemsElement.
-  lc-op-saved-items-element-make-path:
+  lc-op-saved-items-element-make-path-2:
     lifecycle: single
     description: MakePath method of LcOpSavedItemsElement.
   lc-op-saved-view-animation-add-key-frame-own:
@@ -9558,13 +9558,13 @@ commands:
   lc-op-saved-views-element-edit:
     lifecycle: single
     description: Edit method of LcOpSavedViewsElement.
-  lc-op-saved-views-element-edit:
+  lc-op-saved-views-element-edit-2:
     lifecycle: single
     description: Edit method of LcOpSavedViewsElement.
   lc-op-saved-views-element-get:
     lifecycle: single
     description: Get method of LcOpSavedViewsElement.
-  lc-op-saved-views-element-get:
+  lc-op-saved-views-element-get-2:
     lifecycle: single
     description: Get method of LcOpSavedViewsElement.
   lc-op-saved-views-element-get-class:
@@ -9603,7 +9603,7 @@ commands:
   lc-op-saved-views-element-try-update-view-copy:
     lifecycle: single
     description: TryUpdateViewCopy method of LcOpSavedViewsElement.
-  lc-op-saved-views-element-try-update-view-copy:
+  lc-op-saved-views-element-try-update-view-copy-2:
     lifecycle: single
     description: TryUpdateViewCopy method of LcOpSavedViewsElement.
   lc-op-scene-loaded-event-get-model:
@@ -9921,7 +9921,7 @@ commands:
   lc-op-selection-element-get:
     lifecycle: single
     description: Get method of LcOpSelectionElement.
-  lc-op-selection-element-get:
+  lc-op-selection-element-get-2:
     lifecycle: single
     description: Get method of LcOpSelectionElement.
   lc-op-selection-element-get-class:
@@ -9954,7 +9954,7 @@ commands:
   lc-op-selection-element-set:
     lifecycle: single
     description: Set method of LcOpSelectionElement.
-  lc-op-selection-element-set:
+  lc-op-selection-element-set-2:
     lifecycle: single
     description: Set method of LcOpSelectionElement.
   lc-op-selection-key-frame-apply-interpolated:
@@ -9990,7 +9990,7 @@ commands:
   lc-op-selection-key-frame-get-transform:
     lifecycle: single
     description: GetTransform method of LcOpSelectionKeyFrame.
-  lc-op-selection-key-frame-get-transform:
+  lc-op-selection-key-frame-get-transform-2:
     lifecycle: single
     description: GetTransform method of LcOpSelectionKeyFrame.
   lc-op-selection-key-frame-get-transparency:
@@ -10017,13 +10017,13 @@ commands:
   lc-op-selection-key-frame-set-rotation:
     lifecycle: single
     description: SetRotation method of LcOpSelectionKeyFrame.
-  lc-op-selection-key-frame-set-rotation:
+  lc-op-selection-key-frame-set-rotation-2:
     lifecycle: single
     description: SetRotation method of LcOpSelectionKeyFrame.
   lc-op-selection-key-frame-set-scale:
     lifecycle: single
     description: SetScale method of LcOpSelectionKeyFrame.
-  lc-op-selection-key-frame-set-scale:
+  lc-op-selection-key-frame-set-scale-2:
     lifecycle: single
     description: SetScale method of LcOpSelectionKeyFrame.
   lc-op-selection-key-frame-set-tool-orientation:
@@ -10059,16 +10059,16 @@ commands:
   lc-op-selection-sets-element-edit:
     lifecycle: single
     description: Edit method of LcOpSelectionSetsElement.
-  lc-op-selection-sets-element-edit:
+  lc-op-selection-sets-element-edit-2:
     lifecycle: single
     description: Edit method of LcOpSelectionSetsElement.
   lc-op-selection-sets-element-get:
     lifecycle: single
     description: Get method of LcOpSelectionSetsElement.
-  lc-op-selection-sets-element-get:
+  lc-op-selection-sets-element-get-2:
     lifecycle: single
     description: Get method of LcOpSelectionSetsElement.
-  lc-op-selection-sets-element-get:
+  lc-op-selection-sets-element-get-3:
     lifecycle: single
     description: Get method of LcOpSelectionSetsElement.
   lc-op-selection-sets-element-get-class:
@@ -10203,25 +10203,25 @@ commands:
   lc-op-shad-frag-transform-element-apply-override:
     lifecycle: single
     description: ApplyOverride method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-apply-override:
+  lc-op-shad-frag-transform-element-apply-override-2:
     lifecycle: single
     description: ApplyOverride method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-element-apply-snapshot:
     lifecycle: single
     description: ApplySnapshot method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-apply-snapshot:
+  lc-op-shad-frag-transform-element-apply-snapshot-2:
     lifecycle: single
     description: ApplySnapshot method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-apply-snapshot:
+  lc-op-shad-frag-transform-element-apply-snapshot-3:
     lifecycle: single
     description: ApplySnapshot method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-apply-snapshot:
+  lc-op-shad-frag-transform-element-apply-snapshot-4:
     lifecycle: single
     description: ApplySnapshot method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-element-apply-temp-override:
     lifecycle: single
     description: ApplyTempOverride method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-apply-temp-override:
+  lc-op-shad-frag-transform-element-apply-temp-override-2:
     lifecycle: single
     description: ApplyTempOverride method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-element-apply-temp-snapshot:
@@ -10230,7 +10230,7 @@ commands:
   lc-op-shad-frag-transform-element-capture-snapshot:
     lifecycle: single
     description: CaptureSnapshot method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-capture-snapshot:
+  lc-op-shad-frag-transform-element-capture-snapshot-2:
     lifecycle: single
     description: CaptureSnapshot method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-element-create:
@@ -10272,19 +10272,19 @@ commands:
   lc-op-shad-frag-transform-element-reset-all-temp-overrides:
     lifecycle: single
     description: ResetAllTempOverrides method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-reset-all-temp-overrides:
+  lc-op-shad-frag-transform-element-reset-all-temp-overrides-2:
     lifecycle: single
     description: ResetAllTempOverrides method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-element-reset-override:
     lifecycle: single
     description: ResetOverride method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-reset-override:
+  lc-op-shad-frag-transform-element-reset-override-2:
     lifecycle: single
     description: ResetOverride method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-element-reset-temp-override:
     lifecycle: single
     description: ResetTempOverride method of LcOpShadFragTransformElement.
-  lc-op-shad-frag-transform-element-reset-temp-override:
+  lc-op-shad-frag-transform-element-reset-temp-override-2:
     lifecycle: single
     description: ResetTempOverride method of LcOpShadFragTransformElement.
   lc-op-shad-frag-transform-snapshot-clear:
@@ -10305,13 +10305,13 @@ commands:
   lc-op-shad-node-attribs-element-update-file-transform:
     lifecycle: single
     description: UpdateFileTransform method of LcOpShadNodeAttribsElement.
-  lc-op-shad-node-attribs-element-update-file-transform:
+  lc-op-shad-node-attribs-element-update-file-transform-2:
     lifecycle: single
     description: UpdateFileTransform method of LcOpShadNodeAttribsElement.
   lc-op-simple-progress-begin-sub-op:
     lifecycle: single
     description: BeginSubOp method of LcOpSimpleProgress.
-  lc-op-simple-progress-begin-sub-op:
+  lc-op-simple-progress-begin-sub-op-2:
     lifecycle: single
     description: BeginSubOp method of LcOpSimpleProgress.
   lc-op-simple-progress-cancel:
@@ -10323,7 +10323,7 @@ commands:
   lc-op-simple-progress-end-sub-op:
     lifecycle: single
     description: EndSubOp method of LcOpSimpleProgress.
-  lc-op-simple-progress-end-sub-op:
+  lc-op-simple-progress-end-sub-op-2:
     lifecycle: single
     description: EndSubOp method of LcOpSimpleProgress.
   lc-op-simple-progress-get-current-progress-message:
@@ -10347,10 +10347,10 @@ commands:
   lc-op-simple-progress-progress-error:
     lifecycle: single
     description: ProgressError method of LcOpSimpleProgress.
-  lc-op-simple-progress-progress-error:
+  lc-op-simple-progress-progress-error-2:
     lifecycle: single
     description: ProgressError method of LcOpSimpleProgress.
-  lc-op-simple-progress-progress-error:
+  lc-op-simple-progress-progress-error-3:
     lifecycle: single
     description: ProgressError method of LcOpSimpleProgress.
   lc-op-simple-progress-progress-published:
@@ -10440,7 +10440,7 @@ commands:
   lc-op-smart-tags-format-smart-tags-for-path:
     lifecycle: single
     description: FormatSmartTagsForPath method of LcOpSmartTags.
-  lc-op-smart-tags-format-smart-tags-for-path:
+  lc-op-smart-tags-format-smart-tags-for-path-2:
     lifecycle: single
     description: FormatSmartTagsForPath method of LcOpSmartTags.
   lc-op-smart-tags-internal-creator:
@@ -10452,19 +10452,19 @@ commands:
   lc-op-state-begin-edit:
     lifecycle: single
     description: BeginEdit method of LcOpState.
-  lc-op-state-begin-edit:
+  lc-op-state-begin-edit-2:
     lifecycle: single
     description: BeginEdit method of LcOpState.
   lc-op-state-begin-progress:
     lifecycle: single
     description: BeginProgress method of LcOpState.
-  lc-op-state-begin-progress:
+  lc-op-state-begin-progress-2:
     lifecycle: single
     description: BeginProgress method of LcOpState.
-  lc-op-state-begin-progress:
+  lc-op-state-begin-progress-3:
     lifecycle: single
     description: BeginProgress method of LcOpState.
-  lc-op-state-begin-progress:
+  lc-op-state-begin-progress-4:
     lifecycle: single
     description: BeginProgress method of LcOpState.
   lc-op-state-can-resave-scene:
@@ -10539,13 +10539,13 @@ commands:
   lc-op-state-watcher-add-pre-write-watch:
     lifecycle: single
     description: AddPreWriteWatch method of LcOpStateWatcher.
-  lc-op-state-watcher-add-pre-write-watch:
+  lc-op-state-watcher-add-pre-write-watch-2:
     lifecycle: single
     description: AddPreWriteWatch method of LcOpStateWatcher.
   lc-op-state-watcher-add-watch:
     lifecycle: single
     description: AddWatch method of LcOpStateWatcher.
-  lc-op-state-watcher-add-watch:
+  lc-op-state-watcher-add-watch-2:
     lifecycle: single
     description: AddWatch method of LcOpStateWatcher.
   lc-op-state-watcher-begin-watch:
@@ -10560,7 +10560,7 @@ commands:
   lc-op-state-watcher-end-write:
     lifecycle: single
     description: EndWrite method of LcOpStateWatcher.
-  lc-op-state-watcher-end-write:
+  lc-op-state-watcher-end-write-2:
     lifecycle: single
     description: EndWrite method of LcOpStateWatcher.
   lc-op-state-watcher-internal-creator:
@@ -10710,7 +10710,7 @@ commands:
   lc-op-swig-progress-begin-sub-op:
     lifecycle: single
     description: BeginSubOp method of LcOpSwigProgress.
-  lc-op-swig-progress-begin-sub-op:
+  lc-op-swig-progress-begin-sub-op-2:
     lifecycle: single
     description: BeginSubOp method of LcOpSwigProgress.
   lc-op-swig-progress-cancel:
@@ -10719,7 +10719,7 @@ commands:
   lc-op-swig-progress-end-sub-op:
     lifecycle: single
     description: EndSubOp method of LcOpSwigProgress.
-  lc-op-swig-progress-end-sub-op:
+  lc-op-swig-progress-end-sub-op-2:
     lifecycle: single
     description: EndSubOp method of LcOpSwigProgress.
   lc-op-swig-progress-internal-creator:
@@ -10734,10 +10734,10 @@ commands:
   lc-op-swig-progress-progress-error:
     lifecycle: single
     description: ProgressError method of LcOpSwigProgress.
-  lc-op-swig-progress-progress-error:
+  lc-op-swig-progress-progress-error-2:
     lifecycle: single
     description: ProgressError method of LcOpSwigProgress.
-  lc-op-swig-progress-progress-error:
+  lc-op-swig-progress-progress-error-3:
     lifecycle: single
     description: ProgressError method of LcOpSwigProgress.
   lc-op-swig-progress-progress-published:
@@ -11283,7 +11283,7 @@ commands:
   lc-ow-document-shell-execute-cmd:
     lifecycle: single
     description: ShellExecuteCmd method of LcOwDocument.
-  lc-ow-document-shell-execute-cmd:
+  lc-ow-document-shell-execute-cmd-2:
     lifecycle: single
     description: ShellExecuteCmd method of LcOwDocument.
   lc-ow-document-show-resolve-xref-gui:
@@ -11352,61 +11352,61 @@ commands:
   lc-ow-net-api-input-handler-key-down:
     lifecycle: single
     description: KeyDown method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-key-down:
+  lc-ow-net-api-input-handler-key-down-2:
     lifecycle: single
     description: KeyDown method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-key-drag:
     lifecycle: single
     description: KeyDrag method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-key-drag:
+  lc-ow-net-api-input-handler-key-drag-2:
     lifecycle: single
     description: KeyDrag method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-key-up:
     lifecycle: single
     description: KeyUp method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-key-up:
+  lc-ow-net-api-input-handler-key-up-2:
     lifecycle: single
     description: KeyUp method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-modifier-key-down:
     lifecycle: single
     description: ModifierKeyDown method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-modifier-key-down:
+  lc-ow-net-api-input-handler-modifier-key-down-2:
     lifecycle: single
     description: ModifierKeyDown method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-modifier-key-up:
     lifecycle: single
     description: ModifierKeyUp method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-modifier-key-up:
+  lc-ow-net-api-input-handler-modifier-key-up-2:
     lifecycle: single
     description: ModifierKeyUp method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-mouse-down:
     lifecycle: single
     description: MouseDown method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-mouse-down:
+  lc-ow-net-api-input-handler-mouse-down-2:
     lifecycle: single
     description: MouseDown method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-mouse-drag:
     lifecycle: single
     description: MouseDrag method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-mouse-drag:
+  lc-ow-net-api-input-handler-mouse-drag-2:
     lifecycle: single
     description: MouseDrag method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-mouse-leave:
     lifecycle: single
     description: MouseLeave method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-mouse-leave:
+  lc-ow-net-api-input-handler-mouse-leave-2:
     lifecycle: single
     description: MouseLeave method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-mouse-move:
     lifecycle: single
     description: MouseMove method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-mouse-move:
+  lc-ow-net-api-input-handler-mouse-move-2:
     lifecycle: single
     description: MouseMove method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-mouse-up:
     lifecycle: single
     description: MouseUp method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-mouse-up:
+  lc-ow-net-api-input-handler-mouse-up-2:
     lifecycle: single
     description: MouseUp method of LcOwNetApiInputHandler.
   lc-ow-net-api-input-handler-on-context-menu:
@@ -11421,7 +11421,7 @@ commands:
   lc-ow-net-api-input-handler-wheel-drag:
     lifecycle: single
     description: WheelDrag method of LcOwNetApiInputHandler.
-  lc-ow-net-api-input-handler-wheel-drag:
+  lc-ow-net-api-input-handler-wheel-drag-2:
     lifecycle: single
     description: WheelDrag method of LcOwNetApiInputHandler.
   lc-ow-renderer-manager-get-prefer-hardware-acceleration:
@@ -11451,10 +11451,10 @@ commands:
   lc-ow-thumbnail-generator-generate-dib:
     lifecycle: single
     description: GenerateDIB method of LcOwThumbnailGenerator.
-  lc-ow-thumbnail-generator-generate-dib:
+  lc-ow-thumbnail-generator-generate-dib-2:
     lifecycle: single
     description: GenerateDIB method of LcOwThumbnailGenerator.
-  lc-ow-thumbnail-generator-generate-dib:
+  lc-ow-thumbnail-generator-generate-dib-3:
     lifecycle: single
     description: GenerateDIB method of LcOwThumbnailGenerator.
   lc-ow-thumbnail-generator-generate-rrt:
@@ -11472,7 +11472,7 @@ commands:
   lc-ow-thumbnail-generator-set-view:
     lifecycle: single
     description: SetView method of LcOwThumbnailGenerator.
-  lc-ow-thumbnail-generator-set-view:
+  lc-ow-thumbnail-generator-set-view-2:
     lifecycle: single
     description: SetView method of LcOwThumbnailGenerator.
   lc-ow-user-interface-options-get-theme-type:
@@ -11622,7 +11622,7 @@ commands:
   lc-rm-auto-cam-choose-flyout-item:
     lifecycle: single
     description: ChooseFlyoutItem method of LcRmAutoCAM.
-  lc-rm-auto-cam-choose-flyout-item:
+  lc-rm-auto-cam-choose-flyout-item-2:
     lifecycle: single
     description: ChooseFlyoutItem method of LcRmAutoCAM.
   lc-rm-auto-cam-click-view-cube:
@@ -11664,7 +11664,7 @@ commands:
   lc-rm-auto-cam-have-space-mouse:
     lifecycle: single
     description: HaveSpaceMouse method of LcRmAutoCAM.
-  lc-rm-auto-cam-have-space-mouse:
+  lc-rm-auto-cam-have-space-mouse-2:
     lifecycle: single
     description: HaveSpaceMouse method of LcRmAutoCAM.
   lc-rm-auto-cam-initialise:
@@ -11700,13 +11700,13 @@ commands:
   lc-rm-auto-cam-is-tool-group-hidden:
     lifecycle: single
     description: IsToolGroupHidden method of LcRmAutoCAM.
-  lc-rm-auto-cam-is-tool-group-hidden:
+  lc-rm-auto-cam-is-tool-group-hidden-2:
     lifecycle: single
     description: IsToolGroupHidden method of LcRmAutoCAM.
   lc-rm-auto-cam-is-view-cube-visible:
     lifecycle: single
     description: IsViewCubeVisible method of LcRmAutoCAM.
-  lc-rm-auto-cam-is-view-cube-visible:
+  lc-rm-auto-cam-is-view-cube-visible-2:
     lifecycle: single
     description: IsViewCubeVisible method of LcRmAutoCAM.
   lc-rm-auto-cam-is-zoom-reversed:
@@ -11715,7 +11715,7 @@ commands:
   lc-rm-auto-cam-lock-current-pivot-position:
     lifecycle: single
     description: LockCurrentPivotPosition method of LcRmAutoCAM.
-  lc-rm-auto-cam-lock-current-pivot-position:
+  lc-rm-auto-cam-lock-current-pivot-position-2:
     lifecycle: single
     description: LockCurrentPivotPosition method of LcRmAutoCAM.
   lc-rm-auto-cam-nav-bar-for-tool-group:
@@ -11730,175 +11730,175 @@ commands:
   lc-rm-auto-cam-on-decrease-walk-speed:
     lifecycle: single
     description: OnDecreaseWalkSpeed method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-decrease-walk-speed:
+  lc-rm-auto-cam-on-decrease-walk-speed-2:
     lifecycle: single
     description: OnDecreaseWalkSpeed method of LcRmAutoCAM.
   lc-rm-auto-cam-on-focus:
     lifecycle: single
     description: OnFocus method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-focus:
+  lc-rm-auto-cam-on-focus-2:
     lifecycle: single
     description: OnFocus method of LcRmAutoCAM.
   lc-rm-auto-cam-on-home:
     lifecycle: single
     description: OnHome method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-home:
+  lc-rm-auto-cam-on-home-2:
     lifecycle: single
     description: OnHome method of LcRmAutoCAM.
   lc-rm-auto-cam-on-increase-walk-speed:
     lifecycle: single
     description: OnIncreaseWalkSpeed method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-increase-walk-speed:
+  lc-rm-auto-cam-on-increase-walk-speed-2:
     lifecycle: single
     description: OnIncreaseWalkSpeed method of LcRmAutoCAM.
   lc-rm-auto-cam-on-item-excluded-if:
     lifecycle: single
     description: OnItemExcludedIf method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-item-excluded-if:
+  lc-rm-auto-cam-on-item-excluded-if-2:
     lifecycle: single
     description: OnItemExcludedIf method of LcRmAutoCAM.
   lc-rm-auto-cam-on-item-excluded-if-ui:
     lifecycle: single
     description: OnItemExcludedIfUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-item-excluded-if-ui:
+  lc-rm-auto-cam-on-item-excluded-if-ui-2:
     lifecycle: single
     description: OnItemExcludedIfUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-level-camera:
     lifecycle: single
     description: OnLevelCamera method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-level-camera:
+  lc-rm-auto-cam-on-level-camera-2:
     lifecycle: single
     description: OnLevelCamera method of LcRmAutoCAM.
   lc-rm-auto-cam-on-link-to-view-cube:
     lifecycle: single
     description: OnLinkToViewCube method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-link-to-view-cube:
+  lc-rm-auto-cam-on-link-to-view-cube-2:
     lifecycle: single
     description: OnLinkToViewCube method of LcRmAutoCAM.
   lc-rm-auto-cam-on-link-to-view-cube-ui:
     lifecycle: single
     description: OnLinkToViewCubeUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-link-to-view-cube-ui:
+  lc-rm-auto-cam-on-link-to-view-cube-ui-2:
     lifecycle: single
     description: OnLinkToViewCubeUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-lock-to-selection:
     lifecycle: single
     description: OnLockToSelection method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-lock-to-selection:
+  lc-rm-auto-cam-on-lock-to-selection-2:
     lifecycle: single
     description: OnLockToSelection method of LcRmAutoCAM.
   lc-rm-auto-cam-on-lock-to-selection-ui:
     lifecycle: single
     description: OnLockToSelectionUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-lock-to-selection-ui:
+  lc-rm-auto-cam-on-lock-to-selection-ui-2:
     lifecycle: single
     description: OnLockToSelectionUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-nav-bar-position:
     lifecycle: single
     description: OnNavBarPosition method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-nav-bar-position:
+  lc-rm-auto-cam-on-nav-bar-position-2:
     lifecycle: single
     description: OnNavBarPosition method of LcRmAutoCAM.
   lc-rm-auto-cam-on-nav-bar-position-ui:
     lifecycle: single
     description: OnNavBarPositionUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-nav-bar-position-ui:
+  lc-rm-auto-cam-on-nav-bar-position-ui-2:
     lifecycle: single
     description: OnNavBarPositionUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-reset-front:
     lifecycle: single
     description: OnResetFront method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-reset-front:
+  lc-rm-auto-cam-on-reset-front-2:
     lifecycle: single
     description: OnResetFront method of LcRmAutoCAM.
   lc-rm-auto-cam-on-reset-front-ui:
     lifecycle: single
     description: OnResetFrontUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-reset-front-ui:
+  lc-rm-auto-cam-on-reset-front-ui-2:
     lifecycle: single
     description: OnResetFrontUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-restore-center:
     lifecycle: single
     description: OnRestoreCenter method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-restore-center:
+  lc-rm-auto-cam-on-restore-center-2:
     lifecycle: single
     description: OnRestoreCenter method of LcRmAutoCAM.
   lc-rm-auto-cam-on-set-front-view:
     lifecycle: single
     description: OnSetFrontView method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-set-front-view:
+  lc-rm-auto-cam-on-set-front-view-2:
     lifecycle: single
     description: OnSetFrontView method of LcRmAutoCAM.
   lc-rm-auto-cam-on-set-home-view:
     lifecycle: single
     description: OnSetHomeView method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-set-home-view:
+  lc-rm-auto-cam-on-set-home-view-2:
     lifecycle: single
     description: OnSetHomeView method of LcRmAutoCAM.
   lc-rm-auto-cam-on-space-mouse-mode:
     lifecycle: single
     description: OnSpaceMouseMode method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-space-mouse-mode:
+  lc-rm-auto-cam-on-space-mouse-mode-2:
     lifecycle: single
     description: OnSpaceMouseMode method of LcRmAutoCAM.
   lc-rm-auto-cam-on-space-mouse-mode-ui:
     lifecycle: single
     description: OnSpaceMouseModeUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-space-mouse-mode-ui:
+  lc-rm-auto-cam-on-space-mouse-mode-ui-2:
     lifecycle: single
     description: OnSpaceMouseModeUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-tool:
     lifecycle: single
     description: OnTool method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-tool:
+  lc-rm-auto-cam-on-tool-2:
     lifecycle: single
     description: OnTool method of LcRmAutoCAM.
   lc-rm-auto-cam-on-tool-ui:
     lifecycle: single
     description: OnToolUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-tool-ui:
+  lc-rm-auto-cam-on-tool-ui-2:
     lifecycle: single
     description: OnToolUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-wheel:
     lifecycle: single
     description: OnWheel method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-wheel:
+  lc-rm-auto-cam-on-wheel-2:
     lifecycle: single
     description: OnWheel method of LcRmAutoCAM.
   lc-rm-auto-cam-on-wheel-close:
     lifecycle: single
     description: OnWheelClose method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-wheel-close:
+  lc-rm-auto-cam-on-wheel-close-2:
     lifecycle: single
     description: OnWheelClose method of LcRmAutoCAM.
   lc-rm-auto-cam-on-wheel-close-ui:
     lifecycle: single
     description: OnWheelCloseUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-wheel-close-ui:
+  lc-rm-auto-cam-on-wheel-close-ui-2:
     lifecycle: single
     description: OnWheelCloseUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-wheel-ui:
     lifecycle: single
     description: OnWheelUI method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-wheel-ui:
+  lc-rm-auto-cam-on-wheel-ui-2:
     lifecycle: single
     description: OnWheelUI method of LcRmAutoCAM.
   lc-rm-auto-cam-on-zoom-all:
     lifecycle: single
     description: OnZoomAll method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-zoom-all:
+  lc-rm-auto-cam-on-zoom-all-2:
     lifecycle: single
     description: OnZoomAll method of LcRmAutoCAM.
   lc-rm-auto-cam-on-zoom-selected:
     lifecycle: single
     description: OnZoomSelected method of LcRmAutoCAM.
-  lc-rm-auto-cam-on-zoom-selected:
+  lc-rm-auto-cam-on-zoom-selected-2:
     lifecycle: single
     description: OnZoomSelected method of LcRmAutoCAM.
   lc-rm-auto-cam-set-pivot:
     lifecycle: single
     description: SetPivot method of LcRmAutoCAM.
-  lc-rm-auto-cam-set-pivot:
+  lc-rm-auto-cam-set-pivot-2:
     lifecycle: single
     description: SetPivot method of LcRmAutoCAM.
   lc-rm-auto-cam-set-pivot-label-icon-id:
@@ -11922,7 +11922,7 @@ commands:
   lc-rm-auto-cam-tool-group-for-nav-bar-tag:
     lifecycle: single
     description: ToolGroupForNavBarTag method of LcRmAutoCAM.
-  lc-rm-auto-cam-tool-group-for-nav-bar-tag:
+  lc-rm-auto-cam-tool-group-for-nav-bar-tag-2:
     lifecycle: single
     description: ToolGroupForNavBarTag method of LcRmAutoCAM.
   lc-rm-framework-interface-clean-impl:
@@ -11940,7 +11940,7 @@ commands:
   lc-rm-framework-interface-execute-command:
     lifecycle: single
     description: ExecuteCommand method of LcRmFrameworkInterface.
-  lc-rm-framework-interface-execute-command:
+  lc-rm-framework-interface-execute-command-2:
     lifecycle: single
     description: ExecuteCommand method of LcRmFrameworkInterface.
   lc-rm-framework-interface-get-impl:
@@ -11958,7 +11958,7 @@ commands:
   lc-rm-framework-interface-show-context-menu:
     lifecycle: single
     description: ShowContextMenu method of LcRmFrameworkInterface.
-  lc-rm-framework-interface-show-context-menu:
+  lc-rm-framework-interface-show-context-menu-2:
     lifecycle: single
     description: ShowContextMenu method of LcRmFrameworkInterface.
   lc-rm-framework-interface-support-multiple-kernel:
@@ -11967,7 +11967,7 @@ commands:
   lc-rm-framework-interface-track-popup-menu:
     lifecycle: single
     description: TrackPopupMenu method of LcRmFrameworkInterface.
-  lc-rm-framework-interface-track-popup-menu:
+  lc-rm-framework-interface-track-popup-menu-2:
     lifecycle: single
     description: TrackPopupMenu method of LcRmFrameworkInterface.
   lc-uauto-cipaction-internal-creator:
@@ -12111,7 +12111,7 @@ commands:
   lc-ucsv-reader-open-file:
     lifecycle: single
     description: OpenFile method of LcUCsvReader.
-  lc-ucsv-reader-open-file:
+  lc-ucsv-reader-open-file-2:
     lifecycle: single
     description: OpenFile method of LcUCsvReader.
   lc-ucsv-reader-read-next-field:
@@ -12135,7 +12135,7 @@ commands:
   lc-ucsv-writer-open-file:
     lifecycle: single
     description: OpenFile method of LcUCsvWriter.
-  lc-ucsv-writer-open-file:
+  lc-ucsv-writer-open-file-2:
     lifecycle: single
     description: OpenFile method of LcUCsvWriter.
   lc-ucsv-writer-write-field:
@@ -12180,148 +12180,148 @@ commands:
   lc-uex-option-set-define-angular-float:
     lifecycle: single
     description: DefineAngularFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-angular-float:
+  lc-uex-option-set-define-angular-float-2:
     lifecycle: single
     description: DefineAngularFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-angular-float:
+  lc-uex-option-set-define-angular-float-3:
     lifecycle: single
     description: DefineAngularFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-angular-float:
+  lc-uex-option-set-define-angular-float-4:
     lifecycle: single
     description: DefineAngularFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-angular-float:
+  lc-uex-option-set-define-angular-float-5:
     lifecycle: single
     description: DefineAngularFloat method of LcUExOptionSet.
   lc-uex-option-set-define-boolean:
     lifecycle: single
     description: DefineBoolean method of LcUExOptionSet.
-  lc-uex-option-set-define-boolean:
+  lc-uex-option-set-define-boolean-2:
     lifecycle: single
     description: DefineBoolean method of LcUExOptionSet.
-  lc-uex-option-set-define-boolean:
+  lc-uex-option-set-define-boolean-3:
     lifecycle: single
     description: DefineBoolean method of LcUExOptionSet.
-  lc-uex-option-set-define-boolean:
+  lc-uex-option-set-define-boolean-4:
     lifecycle: single
     description: DefineBoolean method of LcUExOptionSet.
-  lc-uex-option-set-define-boolean:
+  lc-uex-option-set-define-boolean-5:
     lifecycle: single
     description: DefineBoolean method of LcUExOptionSet.
   lc-uex-option-set-define-data:
     lifecycle: single
     description: DefineData method of LcUExOptionSet.
-  lc-uex-option-set-define-data:
+  lc-uex-option-set-define-data-2:
     lifecycle: single
     description: DefineData method of LcUExOptionSet.
-  lc-uex-option-set-define-data:
+  lc-uex-option-set-define-data-3:
     lifecycle: single
     description: DefineData method of LcUExOptionSet.
-  lc-uex-option-set-define-data:
+  lc-uex-option-set-define-data-4:
     lifecycle: single
     description: DefineData method of LcUExOptionSet.
-  lc-uex-option-set-define-data:
+  lc-uex-option-set-define-data-5:
     lifecycle: single
     description: DefineData method of LcUExOptionSet.
   lc-uex-option-set-define-float:
     lifecycle: single
     description: DefineFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-float:
+  lc-uex-option-set-define-float-2:
     lifecycle: single
     description: DefineFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-float:
+  lc-uex-option-set-define-float-3:
     lifecycle: single
     description: DefineFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-float:
+  lc-uex-option-set-define-float-4:
     lifecycle: single
     description: DefineFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-float:
+  lc-uex-option-set-define-float-5:
     lifecycle: single
     description: DefineFloat method of LcUExOptionSet.
   lc-uex-option-set-define-int32:
     lifecycle: single
     description: DefineInt32 method of LcUExOptionSet.
-  lc-uex-option-set-define-int32:
+  lc-uex-option-set-define-int32-2:
     lifecycle: single
     description: DefineInt32 method of LcUExOptionSet.
-  lc-uex-option-set-define-int32:
+  lc-uex-option-set-define-int32-3:
     lifecycle: single
     description: DefineInt32 method of LcUExOptionSet.
-  lc-uex-option-set-define-int32:
+  lc-uex-option-set-define-int32-4:
     lifecycle: single
     description: DefineInt32 method of LcUExOptionSet.
-  lc-uex-option-set-define-int32:
+  lc-uex-option-set-define-int32-5:
     lifecycle: single
     description: DefineInt32 method of LcUExOptionSet.
   lc-uex-option-set-define-linear-float:
     lifecycle: single
     description: DefineLinearFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-linear-float:
+  lc-uex-option-set-define-linear-float-2:
     lifecycle: single
     description: DefineLinearFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-linear-float:
+  lc-uex-option-set-define-linear-float-3:
     lifecycle: single
     description: DefineLinearFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-linear-float:
+  lc-uex-option-set-define-linear-float-4:
     lifecycle: single
     description: DefineLinearFloat method of LcUExOptionSet.
-  lc-uex-option-set-define-linear-float:
+  lc-uex-option-set-define-linear-float-5:
     lifecycle: single
     description: DefineLinearFloat method of LcUExOptionSet.
   lc-uex-option-set-define-name:
     lifecycle: single
     description: DefineName method of LcUExOptionSet.
-  lc-uex-option-set-define-name:
+  lc-uex-option-set-define-name-2:
     lifecycle: single
     description: DefineName method of LcUExOptionSet.
-  lc-uex-option-set-define-name:
+  lc-uex-option-set-define-name-3:
     lifecycle: single
     description: DefineName method of LcUExOptionSet.
-  lc-uex-option-set-define-name:
+  lc-uex-option-set-define-name-4:
     lifecycle: single
     description: DefineName method of LcUExOptionSet.
-  lc-uex-option-set-define-name:
+  lc-uex-option-set-define-name-5:
     lifecycle: single
     description: DefineName method of LcUExOptionSet.
   lc-uex-option-set-define-set:
     lifecycle: single
     description: DefineSet method of LcUExOptionSet.
-  lc-uex-option-set-define-set:
+  lc-uex-option-set-define-set-2:
     lifecycle: single
     description: DefineSet method of LcUExOptionSet.
-  lc-uex-option-set-define-set:
+  lc-uex-option-set-define-set-3:
     lifecycle: single
     description: DefineSet method of LcUExOptionSet.
-  lc-uex-option-set-define-set:
+  lc-uex-option-set-define-set-4:
     lifecycle: single
     description: DefineSet method of LcUExOptionSet.
   lc-uex-option-set-define-time:
     lifecycle: single
     description: DefineTime method of LcUExOptionSet.
-  lc-uex-option-set-define-time:
+  lc-uex-option-set-define-time-2:
     lifecycle: single
     description: DefineTime method of LcUExOptionSet.
-  lc-uex-option-set-define-time:
+  lc-uex-option-set-define-time-3:
     lifecycle: single
     description: DefineTime method of LcUExOptionSet.
-  lc-uex-option-set-define-time:
+  lc-uex-option-set-define-time-4:
     lifecycle: single
     description: DefineTime method of LcUExOptionSet.
-  lc-uex-option-set-define-time:
+  lc-uex-option-set-define-time-5:
     lifecycle: single
     description: DefineTime method of LcUExOptionSet.
   lc-uex-option-set-define-wide-string:
     lifecycle: single
     description: DefineWideString method of LcUExOptionSet.
-  lc-uex-option-set-define-wide-string:
+  lc-uex-option-set-define-wide-string-2:
     lifecycle: single
     description: DefineWideString method of LcUExOptionSet.
-  lc-uex-option-set-define-wide-string:
+  lc-uex-option-set-define-wide-string-3:
     lifecycle: single
     description: DefineWideString method of LcUExOptionSet.
-  lc-uex-option-set-define-wide-string:
+  lc-uex-option-set-define-wide-string-4:
     lifecycle: single
     description: DefineWideString method of LcUExOptionSet.
-  lc-uex-option-set-define-wide-string:
+  lc-uex-option-set-define-wide-string-5:
     lifecycle: single
     description: DefineWideString method of LcUExOptionSet.
   lc-uex-option-set-insert-option-copy:
@@ -12447,10 +12447,10 @@ commands:
   lc-umessage-center-post:
     lifecycle: single
     description: Post method of LcUMessageCenter.
-  lc-umessage-center-post:
+  lc-umessage-center-post-2:
     lifecycle: single
     description: Post method of LcUMessageCenter.
-  lc-umessage-center-post:
+  lc-umessage-center-post-3:
     lifecycle: single
     description: Post method of LcUMessageCenter.
   lc-umessage-center-register-handler:
@@ -12588,163 +12588,163 @@ commands:
   lc-uoption-define-angular-float:
     lifecycle: single
     description: DefineAngularFloat method of LcUOption.
-  lc-uoption-define-angular-float:
+  lc-uoption-define-angular-float-2:
     lifecycle: single
     description: DefineAngularFloat method of LcUOption.
-  lc-uoption-define-angular-float:
+  lc-uoption-define-angular-float-3:
     lifecycle: single
     description: DefineAngularFloat method of LcUOption.
-  lc-uoption-define-angular-float:
+  lc-uoption-define-angular-float-4:
     lifecycle: single
     description: DefineAngularFloat method of LcUOption.
-  lc-uoption-define-angular-float:
+  lc-uoption-define-angular-float-5:
     lifecycle: single
     description: DefineAngularFloat method of LcUOption.
   lc-uoption-define-boolean:
     lifecycle: single
     description: DefineBoolean method of LcUOption.
-  lc-uoption-define-boolean:
+  lc-uoption-define-boolean-2:
     lifecycle: single
     description: DefineBoolean method of LcUOption.
-  lc-uoption-define-boolean:
+  lc-uoption-define-boolean-3:
     lifecycle: single
     description: DefineBoolean method of LcUOption.
-  lc-uoption-define-boolean:
+  lc-uoption-define-boolean-4:
     lifecycle: single
     description: DefineBoolean method of LcUOption.
-  lc-uoption-define-boolean:
+  lc-uoption-define-boolean-5:
     lifecycle: single
     description: DefineBoolean method of LcUOption.
   lc-uoption-define-data:
     lifecycle: single
     description: DefineData method of LcUOption.
-  lc-uoption-define-data:
+  lc-uoption-define-data-2:
     lifecycle: single
     description: DefineData method of LcUOption.
-  lc-uoption-define-data:
+  lc-uoption-define-data-3:
     lifecycle: single
     description: DefineData method of LcUOption.
-  lc-uoption-define-data:
+  lc-uoption-define-data-4:
     lifecycle: single
     description: DefineData method of LcUOption.
-  lc-uoption-define-data:
+  lc-uoption-define-data-5:
     lifecycle: single
     description: DefineData method of LcUOption.
   lc-uoption-define-float:
     lifecycle: single
     description: DefineFloat method of LcUOption.
-  lc-uoption-define-float:
+  lc-uoption-define-float-2:
     lifecycle: single
     description: DefineFloat method of LcUOption.
-  lc-uoption-define-float:
+  lc-uoption-define-float-3:
     lifecycle: single
     description: DefineFloat method of LcUOption.
-  lc-uoption-define-float:
+  lc-uoption-define-float-4:
     lifecycle: single
     description: DefineFloat method of LcUOption.
-  lc-uoption-define-float:
+  lc-uoption-define-float-5:
     lifecycle: single
     description: DefineFloat method of LcUOption.
   lc-uoption-define-get-boolean:
     lifecycle: single
     description: DefineGetBoolean method of LcUOption.
-  lc-uoption-define-get-boolean:
+  lc-uoption-define-get-boolean-2:
     lifecycle: single
     description: DefineGetBoolean method of LcUOption.
-  lc-uoption-define-get-boolean:
+  lc-uoption-define-get-boolean-3:
     lifecycle: single
     description: DefineGetBoolean method of LcUOption.
-  lc-uoption-define-get-boolean:
+  lc-uoption-define-get-boolean-4:
     lifecycle: single
     description: DefineGetBoolean method of LcUOption.
-  lc-uoption-define-get-boolean:
+  lc-uoption-define-get-boolean-5:
     lifecycle: single
     description: DefineGetBoolean method of LcUOption.
   lc-uoption-define-get-float:
     lifecycle: single
     description: DefineGetFloat method of LcUOption.
-  lc-uoption-define-get-float:
+  lc-uoption-define-get-float-2:
     lifecycle: single
     description: DefineGetFloat method of LcUOption.
-  lc-uoption-define-get-float:
+  lc-uoption-define-get-float-3:
     lifecycle: single
     description: DefineGetFloat method of LcUOption.
-  lc-uoption-define-get-float:
+  lc-uoption-define-get-float-4:
     lifecycle: single
     description: DefineGetFloat method of LcUOption.
-  lc-uoption-define-get-float:
+  lc-uoption-define-get-float-5:
     lifecycle: single
     description: DefineGetFloat method of LcUOption.
   lc-uoption-define-get-int32:
     lifecycle: single
     description: DefineGetInt32 method of LcUOption.
-  lc-uoption-define-get-int32:
+  lc-uoption-define-get-int32-2:
     lifecycle: single
     description: DefineGetInt32 method of LcUOption.
-  lc-uoption-define-get-int32:
+  lc-uoption-define-get-int32-3:
     lifecycle: single
     description: DefineGetInt32 method of LcUOption.
-  lc-uoption-define-get-int32:
+  lc-uoption-define-get-int32-4:
     lifecycle: single
     description: DefineGetInt32 method of LcUOption.
-  lc-uoption-define-get-int32:
+  lc-uoption-define-get-int32-5:
     lifecycle: single
     description: DefineGetInt32 method of LcUOption.
   lc-uoption-define-int32:
     lifecycle: single
     description: DefineInt32 method of LcUOption.
-  lc-uoption-define-int32:
+  lc-uoption-define-int32-2:
     lifecycle: single
     description: DefineInt32 method of LcUOption.
-  lc-uoption-define-int32:
+  lc-uoption-define-int32-3:
     lifecycle: single
     description: DefineInt32 method of LcUOption.
-  lc-uoption-define-int32:
+  lc-uoption-define-int32-4:
     lifecycle: single
     description: DefineInt32 method of LcUOption.
-  lc-uoption-define-int32:
+  lc-uoption-define-int32-5:
     lifecycle: single
     description: DefineInt32 method of LcUOption.
   lc-uoption-define-linear-float:
     lifecycle: single
     description: DefineLinearFloat method of LcUOption.
-  lc-uoption-define-linear-float:
+  lc-uoption-define-linear-float-2:
     lifecycle: single
     description: DefineLinearFloat method of LcUOption.
-  lc-uoption-define-linear-float:
+  lc-uoption-define-linear-float-3:
     lifecycle: single
     description: DefineLinearFloat method of LcUOption.
-  lc-uoption-define-linear-float:
+  lc-uoption-define-linear-float-4:
     lifecycle: single
     description: DefineLinearFloat method of LcUOption.
-  lc-uoption-define-linear-float:
+  lc-uoption-define-linear-float-5:
     lifecycle: single
     description: DefineLinearFloat method of LcUOption.
   lc-uoption-define-name:
     lifecycle: single
     description: DefineName method of LcUOption.
-  lc-uoption-define-name:
+  lc-uoption-define-name-2:
     lifecycle: single
     description: DefineName method of LcUOption.
-  lc-uoption-define-name:
+  lc-uoption-define-name-3:
     lifecycle: single
     description: DefineName method of LcUOption.
-  lc-uoption-define-name:
+  lc-uoption-define-name-4:
     lifecycle: single
     description: DefineName method of LcUOption.
-  lc-uoption-define-name:
+  lc-uoption-define-name-5:
     lifecycle: single
     description: DefineName method of LcUOption.
   lc-uoption-define-set:
     lifecycle: single
     description: DefineSet method of LcUOption.
-  lc-uoption-define-set:
+  lc-uoption-define-set-2:
     lifecycle: single
     description: DefineSet method of LcUOption.
-  lc-uoption-define-set:
+  lc-uoption-define-set-3:
     lifecycle: single
     description: DefineSet method of LcUOption.
-  lc-uoption-define-set:
+  lc-uoption-define-set-4:
     lifecycle: single
     description: DefineSet method of LcUOption.
   lc-uoption-define-set-flags:
@@ -12753,31 +12753,31 @@ commands:
   lc-uoption-define-time:
     lifecycle: single
     description: DefineTime method of LcUOption.
-  lc-uoption-define-time:
+  lc-uoption-define-time-2:
     lifecycle: single
     description: DefineTime method of LcUOption.
-  lc-uoption-define-time:
+  lc-uoption-define-time-3:
     lifecycle: single
     description: DefineTime method of LcUOption.
-  lc-uoption-define-time:
+  lc-uoption-define-time-4:
     lifecycle: single
     description: DefineTime method of LcUOption.
-  lc-uoption-define-time:
+  lc-uoption-define-time-5:
     lifecycle: single
     description: DefineTime method of LcUOption.
   lc-uoption-define-wide-string:
     lifecycle: single
     description: DefineWideString method of LcUOption.
-  lc-uoption-define-wide-string:
+  lc-uoption-define-wide-string-2:
     lifecycle: single
     description: DefineWideString method of LcUOption.
-  lc-uoption-define-wide-string:
+  lc-uoption-define-wide-string-3:
     lifecycle: single
     description: DefineWideString method of LcUOption.
-  lc-uoption-define-wide-string:
+  lc-uoption-define-wide-string-4:
     lifecycle: single
     description: DefineWideString method of LcUOption.
-  lc-uoption-define-wide-string:
+  lc-uoption-define-wide-string-5:
     lifecycle: single
     description: DefineWideString method of LcUOption.
   lc-uoption-disable-computed-options:
@@ -12981,7 +12981,7 @@ commands:
   lc-uoption-set-copy:
     lifecycle: single
     description: Copy method of LcUOptionSet.
-  lc-uoption-set-copy:
+  lc-uoption-set-copy-2:
     lifecycle: single
     description: Copy method of LcUOptionSet.
   lc-uoption-set-do-custom-option:
@@ -13014,7 +13014,7 @@ commands:
   lc-uoption-set-get-data-value:
     lifecycle: single
     description: GetDataValue method of LcUOptionSet.
-  lc-uoption-set-get-data-value:
+  lc-uoption-set-get-data-value-2:
     lifecycle: single
     description: GetDataValue method of LcUOptionSet.
   lc-uoption-set-get-flags:
@@ -13041,7 +13041,7 @@ commands:
   lc-uoption-set-get-name:
     lifecycle: single
     description: GetName method of LcUOptionSet.
-  lc-uoption-set-get-name:
+  lc-uoption-set-get-name-2:
     lifecycle: single
     description: GetName method of LcUOptionSet.
   lc-uoption-set-get-num-options:
@@ -13053,7 +13053,7 @@ commands:
   lc-uoption-set-get-path:
     lifecycle: single
     description: GetPath method of LcUOptionSet.
-  lc-uoption-set-get-path:
+  lc-uoption-set-get-path-2:
     lifecycle: single
     description: GetPath method of LcUOptionSet.
   lc-uoption-set-get-profile:
@@ -13065,7 +13065,7 @@ commands:
   lc-uoption-set-get-sub-options:
     lifecycle: single
     description: GetSubOptions method of LcUOptionSet.
-  lc-uoption-set-get-sub-options:
+  lc-uoption-set-get-sub-options-2:
     lifecycle: single
     description: GetSubOptions method of LcUOptionSet.
   lc-uoption-set-get-time:
@@ -13113,7 +13113,7 @@ commands:
   lc-uoption-set-read-registry:
     lifecycle: single
     description: ReadRegistry method of LcUOptionSet.
-  lc-uoption-set-read-registry:
+  lc-uoption-set-read-registry-2:
     lifecycle: single
     description: ReadRegistry method of LcUOptionSet.
   lc-uoption-set-reapply-name-overrides:
@@ -13158,25 +13158,25 @@ commands:
   lc-uoption-set-set-value:
     lifecycle: single
     description: SetValue method of LcUOptionSet.
-  lc-uoption-set-set-value:
+  lc-uoption-set-set-value-2:
     lifecycle: single
     description: SetValue method of LcUOptionSet.
-  lc-uoption-set-set-value:
+  lc-uoption-set-set-value-3:
     lifecycle: single
     description: SetValue method of LcUOptionSet.
-  lc-uoption-set-set-value:
+  lc-uoption-set-set-value-4:
     lifecycle: single
     description: SetValue method of LcUOptionSet.
-  lc-uoption-set-set-value:
+  lc-uoption-set-set-value-5:
     lifecycle: single
     description: SetValue method of LcUOptionSet.
-  lc-uoption-set-set-value:
+  lc-uoption-set-set-value-6:
     lifecycle: single
     description: SetValue method of LcUOptionSet.
   lc-uoption-set-set-values:
     lifecycle: single
     description: SetValues method of LcUOptionSet.
-  lc-uoption-set-set-values:
+  lc-uoption-set-set-values-2:
     lifecycle: single
     description: SetValues method of LcUOptionSet.
   lc-uoption-set-set-wide-string:
@@ -13209,19 +13209,19 @@ commands:
   lc-uoption-set-unite:
     lifecycle: single
     description: Unite method of LcUOptionSet.
-  lc-uoption-set-unite:
+  lc-uoption-set-unite-2:
     lifecycle: single
     description: Unite method of LcUOptionSet.
   lc-uoption-set-write-registry:
     lifecycle: single
     description: WriteRegistry method of LcUOptionSet.
-  lc-uoption-set-write-registry:
+  lc-uoption-set-write-registry-2:
     lifecycle: single
     description: WriteRegistry method of LcUOptionSet.
   lc-uoption-set-write-registry-from-root:
     lifecycle: single
     description: WriteRegistryFromRoot method of LcUOptionSet.
-  lc-uoption-set-write-registry-from-root:
+  lc-uoption-set-write-registry-from-root-2:
     lifecycle: single
     description: WriteRegistryFromRoot method of LcUOptionSet.
   lc-uoption-validator-get-range:
@@ -13272,13 +13272,13 @@ commands:
   lc-uregistry-get-boolean:
     lifecycle: single
     description: GetBoolean method of LcURegistry.
-  lc-uregistry-get-boolean:
+  lc-uregistry-get-boolean-2:
     lifecycle: single
     description: GetBoolean method of LcURegistry.
   lc-uregistry-get-float:
     lifecycle: single
     description: GetFloat method of LcURegistry.
-  lc-uregistry-get-float:
+  lc-uregistry-get-float-2:
     lifecycle: single
     description: GetFloat method of LcURegistry.
   lc-uregistry-get-install-root:
@@ -13287,25 +13287,25 @@ commands:
   lc-uregistry-get-int32:
     lifecycle: single
     description: GetInt32 method of LcURegistry.
-  lc-uregistry-get-int32:
+  lc-uregistry-get-int32-2:
     lifecycle: single
     description: GetInt32 method of LcURegistry.
   lc-uregistry-get-int64:
     lifecycle: single
     description: GetInt64 method of LcURegistry.
-  lc-uregistry-get-int64:
+  lc-uregistry-get-int64-2:
     lifecycle: single
     description: GetInt64 method of LcURegistry.
   lc-uregistry-get-string:
     lifecycle: single
     description: GetString method of LcURegistry.
-  lc-uregistry-get-string:
+  lc-uregistry-get-string-2:
     lifecycle: single
     description: GetString method of LcURegistry.
   lc-uregistry-get-time:
     lifecycle: single
     description: GetTime method of LcURegistry.
-  lc-uregistry-get-time:
+  lc-uregistry-get-time-2:
     lifecycle: single
     description: GetTime method of LcURegistry.
   lc-uregistry-get-user-root:
@@ -13323,37 +13323,37 @@ commands:
   lc-uregistry-set-boolean:
     lifecycle: single
     description: SetBoolean method of LcURegistry.
-  lc-uregistry-set-boolean:
+  lc-uregistry-set-boolean-2:
     lifecycle: single
     description: SetBoolean method of LcURegistry.
   lc-uregistry-set-float:
     lifecycle: single
     description: SetFloat method of LcURegistry.
-  lc-uregistry-set-float:
+  lc-uregistry-set-float-2:
     lifecycle: single
     description: SetFloat method of LcURegistry.
   lc-uregistry-set-int32:
     lifecycle: single
     description: SetInt32 method of LcURegistry.
-  lc-uregistry-set-int32:
+  lc-uregistry-set-int32-2:
     lifecycle: single
     description: SetInt32 method of LcURegistry.
   lc-uregistry-set-int64:
     lifecycle: single
     description: SetInt64 method of LcURegistry.
-  lc-uregistry-set-int64:
+  lc-uregistry-set-int64-2:
     lifecycle: single
     description: SetInt64 method of LcURegistry.
   lc-uregistry-set-string:
     lifecycle: single
     description: SetString method of LcURegistry.
-  lc-uregistry-set-string:
+  lc-uregistry-set-string-2:
     lifecycle: single
     description: SetString method of LcURegistry.
   lc-uregistry-set-time:
     lifecycle: single
     description: SetTime method of LcURegistry.
-  lc-uregistry-set-time:
+  lc-uregistry-set-time-2:
     lifecycle: single
     description: SetTime method of LcURegistry.
   lc-uregistry-option-set-garbage-collect-all:
@@ -13380,7 +13380,7 @@ commands:
   lc-uresource-find-data-file:
     lifecycle: single
     description: FindDataFile method of LcUResource.
-  lc-uresource-find-data-file:
+  lc-uresource-find-data-file-2:
     lifecycle: single
     description: FindDataFile method of LcUResource.
   lc-uresource-find-enum-string-required:
@@ -13389,7 +13389,7 @@ commands:
   lc-uresource-find-localised-data-file:
     lifecycle: single
     description: FindLocalisedDataFile method of LcUResource.
-  lc-uresource-find-localised-data-file:
+  lc-uresource-find-localised-data-file-2:
     lifecycle: single
     description: FindLocalisedDataFile method of LcUResource.
   lc-uresource-find-localised-file:
@@ -13401,7 +13401,7 @@ commands:
   lc-uresource-find-string:
     lifecycle: single
     description: FindString method of LcUResource.
-  lc-uresource-find-string:
+  lc-uresource-find-string-2:
     lifecycle: single
     description: FindString method of LcUResource.
   lc-uresource-find-string-required:
@@ -13437,19 +13437,19 @@ commands:
   lc-uresource-locale-info:
     lifecycle: single
     description: LocaleInfo method of LcUResource.
-  lc-uresource-locale-info:
+  lc-uresource-locale-info-2:
     lifecycle: single
     description: LocaleInfo method of LcUResource.
   lc-uresource-open-section:
     lifecycle: single
     description: OpenSection method of LcUResource.
-  lc-uresource-open-section:
+  lc-uresource-open-section-2:
     lifecycle: single
     description: OpenSection method of LcUResource.
   lc-uresource-read-all-name-files:
     lifecycle: single
     description: ReadAllNameFiles method of LcUResource.
-  lc-uresource-read-all-name-files:
+  lc-uresource-read-all-name-files-2:
     lifecycle: single
     description: ReadAllNameFiles method of LcUResource.
   lc-uresource-read-name-file:
@@ -13572,10 +13572,10 @@ commands:
   lc-usqlite-statement-bind-string:
     lifecycle: single
     description: BindString method of LcUSQLiteStatement.
-  lc-usqlite-statement-bind-string:
+  lc-usqlite-statement-bind-string-2:
     lifecycle: single
     description: BindString method of LcUSQLiteStatement.
-  lc-usqlite-statement-bind-string:
+  lc-usqlite-statement-bind-string-3:
     lifecycle: single
     description: BindString method of LcUSQLiteStatement.
   lc-usqlite-statement-column-blob:
@@ -13650,7 +13650,7 @@ commands:
   lc-usqlite-statement-prepare:
     lifecycle: single
     description: Prepare method of LcUSQLiteStatement.
-  lc-usqlite-statement-prepare:
+  lc-usqlite-statement-prepare-2:
     lifecycle: single
     description: Prepare method of LcUSQLiteStatement.
   lc-usqlite-statement-prepare-query:
@@ -13737,7 +13737,7 @@ commands:
   lc-ustring-buffer-format-format-localized-float:
     lifecycle: single
     description: FormatLocalizedFloat method of LcUStringBufferFormat.
-  lc-ustring-buffer-format-format-localized-float:
+  lc-ustring-buffer-format-format-localized-float-2:
     lifecycle: single
     description: FormatLocalizedFloat method of LcUStringBufferFormat.
   lc-ustring-buffer-format-get-localized-thousand-sep:
@@ -15291,9 +15291,9 @@ commands:
   concept-collection-copy-to:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
-  concept-collection-copy-to:
+  concept-collection-copy-to-2:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
   concept-collection-get-enumerator:
     lifecycle: single
     description: Returns an enumerator that can iterate through the collection.
@@ -15314,7 +15314,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   concept-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   double-field-get-value:
     lifecycle: single
     description: Gets a value from a given SchemaData via the associated ReadAccessor.
@@ -15342,7 +15342,7 @@ commands:
   field-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  field-value-equals:
+  field-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   field-collection-add:
@@ -15362,8 +15362,8 @@ commands:
     description: Sets the contents of the collection to the items in from
   field-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  field-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  field-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   field-collection-get-enumerator:
@@ -15386,7 +15386,7 @@ commands:
     description: Removes the first occurrence of a specific item from the collection.
   field-collection-remove-at:
     lifecycle: single
-    description: Removes the IList`1 item at the specified index.
+    description: "Removes the IList`1 item at the specified index."
   group-field-internal-creator:
     lifecycle: single
     description: InternalCreator method of GroupField.
@@ -15456,7 +15456,7 @@ commands:
   schema-data-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  schema-data-value-equals:
+  schema-data-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   schema-definition-create-data:
@@ -15477,7 +15477,7 @@ commands:
   schema-definition-value-equals:
     lifecycle: single
     description: Performs comparison 'By Value'
-  schema-definition-value-equals:
+  schema-definition-value-equals-2:
     lifecycle: single
     description: Compares the two references 'By Value'
   schema-definition-collection-contains:
@@ -15485,8 +15485,8 @@ commands:
     description: Determines whether the SavedItemCollection contains a specific value.
   schema-definition-collection-copy-to:
     lifecycle: single
-    description: Copies the elements of the ICollection`1 to an Array, starting at a particular Array index.
-  schema-definition-collection-copy-to:
+    description: "Copies the elements of the ICollection`1 to an Array, starting at a particular Array index."
+  schema-definition-collection-copy-to-2:
     lifecycle: single
     description: Enumerates over the collection and copies the items into to
   schema-definition-collection-get-enumerator:
@@ -15531,7 +15531,7 @@ commands:
   vector-field-get-index-accessor:
     lifecycle: single
     description: Obtains the appropriate accessor for a given index into the vector.
-  vector-field-get-index-accessor:
+  vector-field-get-index-accessor-2:
     lifecycle: single
     description: Obtains the appropriate accessor for a given index into the vector.
   vector-field-internal-creator:

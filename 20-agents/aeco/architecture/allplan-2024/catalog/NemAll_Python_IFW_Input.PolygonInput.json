@@ -10,7 +10,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolygonInput/",
   "constructors": [
     {
-      "name": "PolygonInput()",
+      "name": "PolygonInput",
       "signature": "PolygonInput(coordInput, bZCoord, multiPolygon)",
       "summary": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state multiPolygon: Multi polygon with openings, ...",
       "remarks": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state multiPolygon: Multi polygon with openings, ...",

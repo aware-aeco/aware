@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/",
   "constructors": [
     {
-      "name": "EndSymbolsProperties()",
-      "signature": "EndSymbolsProperties()",
+      "name": "EndSymbolsProperties",
+      "signature": "EndSymbolsProperties() | EndSymbolsProperties(startID: int, startSize: float, endID: int, endSize: float)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/EndSymbolsProperties/#NemAll_Python_BasisElements.EndSymbolsProperties.__init__"
-    },
-    {
-      "name": "EndSymbolsProperties(startID: int, startSize: float, endID: int, endSize: float)",
-      "signature": "EndSymbolsProperties(startID: int, startSize: float, endID: int, endSize: float)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "startID",
-          "type": "int",
-          "doc": "ID of the start symbol",
-          "optional": false
-        },
-        {
-          "name": "startSize",
-          "type": "float",
-          "doc": "Size of the start symbol",
-          "optional": false
-        },
-        {
-          "name": "endID",
-          "type": "int",
-          "doc": "ID of the end symbol",
-          "optional": false
-        },
-        {
-          "name": "endSize",
-          "type": "float",
-          "doc": "Size of the end symbol",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

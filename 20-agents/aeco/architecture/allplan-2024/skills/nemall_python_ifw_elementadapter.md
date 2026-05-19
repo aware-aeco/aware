@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_ifw_elementadapter
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_ElementAdapter namespace — 16 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AssocViewElementAdapter, AllplanElement, BaseElementAdapterChildElementsService, AxisElementAdapter, BaseElementAdapter, ArchElementType, BaseElementAdapterList, BaseElementAdapterParentElementService, and 8 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_ElementAdapter namespace — 16 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AssocViewElementAdapter, ArchElementType, BaseElementAdapter, AxisElementAdapter, BaseElementAdapterChildElementsService, BaseElementAdapterList, BaseElementAdapterParentElementService, and 8 more types.
 ---
 
 # NemAll_Python_IFW_ElementAdapter
@@ -158,9 +158,7 @@ get the item for a key
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/)
 
 ### Constructors
-- `AssocViewElementAdapter()` — Initialize
-- `AssocViewElementAdapter(object)` — Constructor
-- `AssocViewElementAdapter(ele)` — Constructor
+- `AssocViewElementAdapter() | AssocViewElementAdapter(object) | AssocViewElementAdapter(ele)` — Initialize
 
 ### Methods
 #### `GetTransformationMatrix()`
@@ -190,8 +188,7 @@ Implementation of the axis element adapter
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/)
 
 ### Constructors
-- `AxisElementAdapter()` — Initialize
-- `AxisElementAdapter(element)` — Constructor
+- `AxisElementAdapter() | AxisElementAdapter(element)` — Initialize
 
 ### Methods
 #### `GetAxis()`
@@ -247,8 +244,7 @@ Implementation of the base element adapter
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/)
 
 ### Constructors
-- `BaseElementAdapter()` — Initialize
-- `BaseElementAdapter(element)` — Copy constructor
+- `BaseElementAdapter() | BaseElementAdapter(element)` — Initialize
 
 ### Methods
 #### `FromGUID(guid, doc)`
@@ -553,18 +549,7 @@ Set the visibility state of the element
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.SetVisibilityState)
 
-#### `__eq__(eleTypeUUID)`
-
-Equal operator for checking the element adapter type UUID
-
-**Remarks:** Equal operator for checking the element adapter type UUID
-
-**Parameters:**
-- `eleTypeUUID` (GUID) — Element type UUID
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__)
-
-#### `__eq__(element)`
+#### `__eq__(element) | __eq__(eleTypeUUID)`
 
 Equal operator
 
@@ -577,7 +562,7 @@ Equal operator
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__)
 
-#### `__ne__(eleType)`
+#### `__ne__(eleType) | __ne__(eleType)`
 
 Not equal operator for checking the element type
 
@@ -585,17 +570,6 @@ Not equal operator for checking the element type
 
 **Parameters:**
 - `eleType` (BaseElementAdapter) — Element type
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__ne__)
-
-#### `__ne__(eleType)`
-
-Not equal operator for checking the element type
-
-**Remarks:** Not equal operator for checking the element type
-
-**Parameters:**
-- `eleType` (GUID) — Element type
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__ne__)
 
@@ -661,9 +635,7 @@ Implementation of the base element adapter list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterList/)
 
 ### Constructors
-- `BaseElementAdapterList()` — Initialize
-- `BaseElementAdapterList(elements)` — Constructor
-- `BaseElementAdapterList(eleList)` — Copy constructor
+- `BaseElementAdapterList() | BaseElementAdapterList(elements) | BaseElementAdapterList(eleList)` — Initialize
 
 ### Methods
 #### `__getitem__(index)`

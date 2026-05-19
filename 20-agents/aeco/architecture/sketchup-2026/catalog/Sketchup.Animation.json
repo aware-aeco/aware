@@ -1,0 +1,78 @@
+{
+  "name": "Animation",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. Implement the methods described in this class to create a an animation. You can not sub-class this class because it is not defined by the API. The Animation interface is implemented to create animations inside SketchUp. At any given time, a single animation can be active on a View. To make your own, build a Ruby class that contains the methods described below: Animation objects are activated by using the View#animation= method on a View object. To stop an animation set the view\u0027s animation object to nil, like so: Managing Multiple Animations: While only one animation object can be active on a View at any given time, you can create a composite animation class to manage multiple animations simultaneously. This approach allows you to animate different elements, such as objects and the camera, within a single animation framework. Example: Combining Animations",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Animation.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "nextFrame",
+      "signature": "nextFrame(view) =\u003E Boolean",
+      "summary": "The #nextFrame method is invoked by SketchUp to tell the animation to display its next frame.",
+      "remarks": "The #nextFrame method is invoked by SketchUp to tell the animation to display its next frame. This method should set up the camera and then call View#show_frame. The #nextFrame method is the only required method of the Sketchup::Animation interface that you must implement.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Sketchup::View",
+          "doc": "The view for the animation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "continue - true if you want the animation to continue on to the next frame, false if you want the animation to stop after this frame."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Animation.html#nextFrame-instance_method"
+    },
+    {
+      "name": "pause",
+      "signature": "pause =\u003E nil",
+      "summary": "Note: The user interface for pausing and resuming animations isn\u0027t integrated with the Ruby API in the current version, so this method is probably not useful to you.",
+      "remarks": "Note: The user interface for pausing and resuming animations isn\u0027t integrated with the Ruby API in the current version, so this method is probably not useful to you. The #pause method is invoked by SketchUp when the animation is paused. This method is optional (you do not need to implement this method unless you want to perform some specialized function when the animation is paused). You cannot call this method in your code explicitly and expect an animation to pause, only certain SketchUp events cause the method to be called.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Animation.html#pause-instance_method"
+    },
+    {
+      "name": "resume",
+      "signature": "resume =\u003E nil",
+      "summary": "Note: The user interface for pausing and resuming animations isn\u0027t integrated with the Ruby API in the current version, so this method is probably not useful to you.",
+      "remarks": "Note: The user interface for pausing and resuming animations isn\u0027t integrated with the Ruby API in the current version, so this method is probably not useful to you. The #resume method is invoked by SketchUp when the animation is resumed after being paused. This method is optional (you do not need to implement this method unless you want to perform some specialized function when the animation is resumed). You cannot call this method in your code explicitly and expect an animation to stop, only certain SketchUp events cause the method to be called.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Animation.html#resume-instance_method"
+    },
+    {
+      "name": "stop",
+      "signature": "stop =\u003E nil",
+      "summary": "Note: Do not call View#animation= from this method.",
+      "remarks": "Note: Do not call View#animation= from this method. This will cause a recursive loop and crash SketchUp 2017 and earlier versions. As of SketchUp 2018 this will raise a RunTimeError. The #stop method is invoked by SketchUp when the animation is stopped. This method is optional (you do not need to implement this method unless you want to perform some specialized function when the animation is stopped). You cannot call this method in your code explicitly and expect an animation to stop, only certain SketchUp events cause the method to be called. Perhaps the most common way for this method to be called is when your Ruby code sets View#animation= to nil. See the class comments for an example of this.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Animation.html#stop-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

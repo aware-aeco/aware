@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeIntegerVec/",
   "constructors": [
     {
-      "name": "AttributeIntegerVec()",
-      "signature": "AttributeIntegerVec()",
+      "name": "AttributeIntegerVec",
+      "signature": "AttributeIntegerVec() | AttributeIntegerVec(id: int, value: list[int] | AttributeIntegerVec() | AttributeIntegerVec(element: AttributeIntegerVec)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeIntegerVec/#NemAll_Python_BaseElements.AttributeIntegerVec.__init__"
-    },
-    {
-      "name": "AttributeIntegerVec(id: int, value: list[int] | VecIntList)",
-      "signature": "AttributeIntegerVec(id: int, value: list[int] | VecIntList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "list[int] | VecIntList",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeIntegerVec/#NemAll_Python_BaseElements.AttributeIntegerVec.__init__"
-    },
-    {
-      "name": "AttributeIntegerVec(element: AttributeIntegerVec)",
-      "signature": "AttributeIntegerVec(element: AttributeIntegerVec)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeIntegerVec",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

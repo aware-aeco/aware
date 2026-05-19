@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/",
   "constructors": [
     {
-      "name": "PythonPartTransaction()",
+      "name": "PythonPartTransaction",
       "signature": "PythonPartTransaction( doc: DocumentAdapter, connect_to_pyp: ConnectToPythonPart = ConnectToPythonPart(), connect_to_ele: ConnectToElements = ConnectToElements(), )",
       "summary": "Initialize",
       "remarks": "Initialize",

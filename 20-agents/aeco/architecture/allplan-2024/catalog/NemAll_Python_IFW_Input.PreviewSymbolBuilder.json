@@ -8,8 +8,8 @@
   "constructors": [],
   "methods": [
     {
-      "name": "ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle, allWindows=True)",
-      "signature": "ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle, allWindows=True)",
+      "name": "ArrowSymbol",
+      "signature": "ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle, allWindows=True) | ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, rotationAngle, allWindows=True)",
       "summary": "Create an arrow symbol",
       "remarks": "Create an arrow symbol",
       "params": [
@@ -63,57 +63,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.ArrowSymbol"
     },
     {
-      "name": "ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, rotationAngle, allWindows=True)",
-      "signature": "ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, rotationAngle, allWindows=True)",
-      "summary": "Create a small arrow symbol",
-      "remarks": "Create a small arrow symbol",
-      "params": [
-        {
-          "name": "pnt",
-          "type": "Point3D",
-          "doc": "Arrowhead point",
-          "optional": false
-        },
-        {
-          "name": "bDrawIso",
-          "type": "bool",
-          "doc": "Draw the arrow symbol inside the isometric view: true/false",
-          "optional": false
-        },
-        {
-          "name": "viewProj",
-          "type": "ViewWorldProjection",
-          "doc": "View world projection data",
-          "optional": false
-        },
-        {
-          "name": "colorVariant",
-          "type": "ARGB",
-          "doc": "Color of the preview",
-          "optional": false
-        },
-        {
-          "name": "rotationAngle",
-          "type": "float",
-          "doc": "Rotation angle of the rectangle",
-          "optional": false
-        },
-        {
-          "name": "allWindows",
-          "type": "bool",
-          "doc": "Show symbol in all windows",
-          "optional": true,
-          "default": "True"
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.ArrowSymbol"
-    },
-    {
-      "name": "CoordCrossSymbol(plane, armLength, viewProj)",
-      "signature": "CoordCrossSymbol(plane, armLength, viewProj)",
+      "name": "CoordCrossSymbol",
+      "signature": "CoordCrossSymbol(plane, armLength, viewProj) | CoordCrossSymbol(axisPlacement, armLength, viewProj)",
       "summary": "Draw the coordinate cross symbol",
       "remarks": "Draw the coordinate cross symbol",
       "params": [
@@ -142,38 +93,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CoordCrossSymbol"
     },
     {
-      "name": "CoordCrossSymbol(axisPlacement, armLength, viewProj)",
-      "signature": "CoordCrossSymbol(axisPlacement, armLength, viewProj)",
-      "summary": "Draw the coordinate cross symbol",
-      "remarks": "Draw the coordinate cross symbol",
-      "params": [
-        {
-          "name": "axisPlacement",
-          "type": "AxisPlacement3D",
-          "doc": "Axis placement",
-          "optional": false
-        },
-        {
-          "name": "armLength",
-          "type": "int",
-          "doc": "Length of the symbol arms",
-          "optional": false
-        },
-        {
-          "name": "viewProj",
-          "type": "ViewWorldProjection",
-          "doc": "View world projection",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CoordCrossSymbol"
-    },
-    {
-      "name": "Polyline3DSymbol(polyline, viewProj, colorVariant, linePattern)",
-      "signature": "Polyline3DSymbol(polyline, viewProj, colorVariant, linePattern)",
+      "name": "Polyline3DSymbol",
+      "signature": "Polyline3DSymbol(polyline, viewProj, colorVariant, linePattern) | Polyline3DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)",
       "summary": "Create a 3D polyline symbol preview",
       "remarks": "Create a 3D polyline symbol preview",
       "params": [
@@ -187,48 +108,6 @@
           "name": "viewProj",
           "type": "ViewWorldProjection",
           "doc": "View world projection data",
-          "optional": false
-        },
-        {
-          "name": "colorVariant",
-          "type": "ARGB",
-          "doc": "Color of the preview",
-          "optional": false
-        },
-        {
-          "name": "linePattern",
-          "type": "int",
-          "doc": "Line pattern",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Polyline3DSymbol"
-    },
-    {
-      "name": "Polyline3DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)",
-      "signature": "Polyline3DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)",
-      "summary": "Create a 3D polyline symbol preview",
-      "remarks": "Create a 3D polyline symbol preview",
-      "params": [
-        {
-          "name": "refPnt",
-          "type": "Point3D",
-          "doc": "Reference point",
-          "optional": false
-        },
-        {
-          "name": "polyline",
-          "type": "Polyline3D",
-          "doc": "Polyline",
-          "optional": false
-        },
-        {
-          "name": "viewProj",
-          "type": "ViewWorldProjection",
-          "doc": "View world projection",
           "optional": false
         },
         {

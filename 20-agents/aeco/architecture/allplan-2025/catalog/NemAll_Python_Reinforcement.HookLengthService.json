@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookLengthService/",
   "constructors": [
     {
-      "name": "HookLengthService()",
+      "name": "HookLengthService",
       "signature": "HookLengthService(norm: int, concreteGrade: int, steelGrade: int, bExactLength: bool)",
       "summary": "Constructor",
       "remarks": "Constructor",

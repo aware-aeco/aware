@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallTierProperties/",
   "constructors": [
     {
-      "name": "WallTierProperties()",
+      "name": "WallTierProperties",
       "signature": "WallTierProperties(tierProp: WallTierProperties)",
       "summary": "Copy constructor",
       "remarks": "Copy constructor",

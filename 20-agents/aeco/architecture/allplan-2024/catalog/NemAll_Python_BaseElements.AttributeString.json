@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeString/",
   "constructors": [
     {
-      "name": "AttributeString()",
-      "signature": "AttributeString()",
+      "name": "AttributeString",
+      "signature": "AttributeString() | AttributeString(id, value) | AttributeString(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeString/#NemAll_Python_BaseElements.AttributeString.__init__"
-    },
-    {
-      "name": "AttributeString(id, value)",
-      "signature": "AttributeString(id, value)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "str",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeString/#NemAll_Python_BaseElements.AttributeString.__init__"
-    },
-    {
-      "name": "AttributeString(element)",
-      "signature": "AttributeString(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeString",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

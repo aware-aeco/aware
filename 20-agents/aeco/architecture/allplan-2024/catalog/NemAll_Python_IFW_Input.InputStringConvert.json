@@ -7,21 +7,10 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/",
   "constructors": [
     {
-      "name": "InputStringConvert(arg2)",
-      "signature": "InputStringConvert(arg2)",
+      "name": "InputStringConvert",
+      "signature": "InputStringConvert(arg2) | InputStringConvert(arg2)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.__init__"
-    },
-    {
-      "name": "InputStringConvert(arg2)",
-      "signature": "InputStringConvert(arg2)",
-      "summary": "Construct the InputStringConvert by a std::wstring",
-      "remarks": "Construct the InputStringConvert by a std::wstring",
       "params": [],
       "returns": null,
       "throws": [],

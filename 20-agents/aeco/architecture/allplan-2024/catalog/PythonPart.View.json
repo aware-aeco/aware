@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/",
   "constructors": [
     {
-      "name": "View()",
+      "name": "View",
       "signature": "View(viewtype=eGeometry, visibility2d=True, visibility3d=True, start_scale=0.0, end_scale=9999.0, elements=None)",
       "summary": "initialization of view class",
       "remarks": "initialization of view class",

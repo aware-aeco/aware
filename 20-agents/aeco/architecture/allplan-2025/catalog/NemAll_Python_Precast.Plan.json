@@ -7,19 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/",
   "constructors": [
     {
-      "name": "Plan(doc: DocumentAdapter)",
-      "signature": "Plan(doc: DocumentAdapter)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.__init__"
-    },
-    {
-      "name": "Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)",
-      "signature": "Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)",
+      "name": "Plan",
+      "signature": "Plan(doc: DocumentAdapter) | Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [],
@@ -49,8 +38,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.add_page"
     },
     {
-      "name": "create(elemPlan: BaseElementAdapter) -\u003E bool",
-      "signature": "create(elemPlan: BaseElementAdapter) -\u003E bool",
+      "name": "create",
+      "signature": "create(elemPlan: BaseElementAdapter) -\u003E bool | create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -\u003E bool",
       "summary": "Creates the elementplan",
       "remarks": "Creates the elementplan",
       "params": [
@@ -58,30 +47,6 @@
           "name": "Allplan",
           "type": "object",
           "doc": ":IFW::ElementAdapter::BaseElementAdapter:-\u003E created elementplan",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.create"
-    },
-    {
-      "name": "create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -\u003E bool",
-      "signature": "create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -\u003E bool",
-      "summary": "Creates the elementplan",
-      "remarks": "Creates the elementplan",
-      "params": [
-        {
-          "name": "Allplan",
-          "type": "object",
-          "doc": ":IFW::ElementAdapter::BaseElementAdapter:-\u003E created elementplan",
-          "optional": false
-        },
-        {
-          "name": "Allplan",
-          "type": "object",
-          "doc": ":IFW::ElementAdapter::BaseElementAdapterList:-\u003E elements to create",
           "optional": false
         }
       ],

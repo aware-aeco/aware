@@ -8,71 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/",
   "constructors": [
     {
-      "name": "DivideBarsParameters()",
-      "signature": "DivideBarsParameters()",
+      "name": "DivideBarsParameters",
+      "signature": "DivideBarsParameters() | DivideBarsParameters( DivideMode: eDivideMode, OverlapPosition: eLengthPosition, OverlapLength: float, GapPosition: eLengthPosition, GapLength: float, ) | DivideBarsParameters(element: DivideBarsParameters)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.__init__"
-    },
-    {
-      "name": "DivideBarsParameters( DivideMode: eDivideMode, OverlapPosition: eLengthPosition, OverlapLength: float, GapPosition: eLengthPosition, GapLength: float, )",
-      "signature": "DivideBarsParameters( DivideMode: eDivideMode, OverlapPosition: eLengthPosition, OverlapLength: float, GapPosition: eLengthPosition, GapLength: float, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "DivideMode",
-          "type": "eDivideMode",
-          "doc": "Mode of division",
-          "optional": false
-        },
-        {
-          "name": "OverlapPosition",
-          "type": "eLengthPosition",
-          "doc": "Position of Overlap",
-          "optional": false
-        },
-        {
-          "name": "OverlapLength",
-          "type": "float",
-          "doc": "Overlap length",
-          "optional": false
-        },
-        {
-          "name": "GapPosition",
-          "type": "eLengthPosition",
-          "doc": "Position of Gap",
-          "optional": false
-        },
-        {
-          "name": "GapLength",
-          "type": "float",
-          "doc": "Gap length",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.__init__"
-    },
-    {
-      "name": "DivideBarsParameters(element: DivideBarsParameters)",
-      "signature": "DivideBarsParameters(element: DivideBarsParameters)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "DivideBarsParameters",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

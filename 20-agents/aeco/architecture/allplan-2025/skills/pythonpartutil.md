@@ -14,7 +14,7 @@ Implementation of the PythonPart utilities
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartUtil/)
 
 ### Constructors
-- `PythonPartUtil(common_props: CommonProperties | None = None)` — Initialize
+- `PythonPartUtil(common_props: CommonProperties | PythonPartUtil()` — Initialize
 
 ### Methods
 #### `add_architecture_elements(elements: Any)`

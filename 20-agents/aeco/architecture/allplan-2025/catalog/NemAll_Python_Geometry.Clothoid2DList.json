@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2DList/",
   "constructors": [
     {
-      "name": "Clothoid2DList()",
-      "signature": "Clothoid2DList()",
+      "name": "Clothoid2DList",
+      "signature": "Clothoid2DList() | Clothoid2DList(ele: Clothoid2D) | Clothoid2DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2DList/#NemAll_Python_Geometry.Clothoid2DList.__init__"
-    },
-    {
-      "name": "Clothoid2DList(ele: Clothoid2D)",
-      "signature": "Clothoid2DList(ele: Clothoid2D)",
-      "summary": "Constructor with a Clothoid2D",
-      "remarks": "Constructor with a Clothoid2D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Clothoid2D",
-          "doc": "Clothoid2D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2DList/#NemAll_Python_Geometry.Clothoid2DList.__init__"
-    },
-    {
-      "name": "Clothoid2DList(eleList: list)",
-      "signature": "Clothoid2DList(eleList: list)",
-      "summary": "Constructor with a list of Clothoid2D",
-      "remarks": "Constructor with a list of Clothoid2D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Clothoid2D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2DList/#NemAll_Python_Geometry.Clothoid2DList.append"
     },
     {
-      "name": "extend(iterable: Clothoid2DList)",
-      "signature": "extend(iterable: Clothoid2DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Clothoid2DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Clothoid2DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2DList/#NemAll_Python_Geometry.Clothoid2DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Clothoid2D list",
           "optional": false
         }
       ],

@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_ifw_input
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_Input namespace — 36 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AddMsgInfo, BuildingElementInputControls, CoordinateInput, CNOI_DocumentWrapper, CoordinateInputMode, CoordinateInputResult, ElementHandleType, ElementSelect, and 28 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_Input namespace — 36 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AddMsgInfo, CNOI_DocumentWrapper, BuildingElementInputControls, CoordinateInputMode, CoordinateInputResult, CoordinateInput, ElementHandleType, ElementSelect, and 28 more types.
 ---
 
 # NemAll_Python_IFW_Input
@@ -23,8 +23,7 @@ Implementation of the building element input controls
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/)
 
 ### Constructors
-- `BuildingElementInputControls()` — Initialize
-- `BuildingElementInputControls(element)` — Copy constructor
+- `BuildingElementInputControls() | BuildingElementInputControls(element)` — Initialize
 
 ### Methods
 #### `CloseControls()`
@@ -91,52 +90,11 @@ Explicit cancel of the input function
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetAssocViewFromPoint)
 
-#### `GetCurrentPoint()`
+#### `GetCurrentPoint() | GetCurrentPoint(startPnt) | GetCurrentPoint(startPnt, bStartPnt) | GetCurrentPoint(bStartPnt)`
 
 Get and mark the current input point
 
 **Remarks:** Get and mark the current input point
-
-**Returns:** `CoordinateInputResult` — Current input point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint)
-
-#### `GetCurrentPoint(bStartPnt)`
-
-Get and mark the current input point End point input is possible by a distance input to the input point of the last input step
-
-**Remarks:** Get and mark the current input point End point input is possible by a distance input to the input point of the last input step
-
-**Parameters:**
-- `bStartPnt` (bool) — Starting point is active true/false.
-- `End` (object) — point input is possible by a distance input to the input point of the last input step
-
-**Returns:** `CoordinateInputResult` — Current input point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint)
-
-#### `GetCurrentPoint(startPnt)`
-
-Get and mark the current input point
-
-**Remarks:** Get and mark the current input point
-
-**Parameters:**
-- `startPnt` (Point3D) — Starting point End point input is possible by a distance input to the start point
-
-**Returns:** `CoordinateInputResult` — Current input point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint)
-
-#### `GetCurrentPoint(startPnt, bStartPnt)`
-
-Get and mark the current input point
-
-**Remarks:** Get and mark the current input point
-
-**Parameters:**
-- `startPnt` (Point3D) — Starting point
-- `bStartPnt` (bool) — Starting point is active End point input is possible by a distance input to the start point
 
 **Returns:** `CoordinateInputResult` — Current input point
 
@@ -162,7 +120,7 @@ Get the double value from the value input control
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputControlValue)
 
-#### `GetInputPoint(mouseMsg, pnt, pMsgInfo)`
+#### `GetInputPoint(mouseMsg, pnt, pMsgInfo) | GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt) | GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)`
 
 Get the current input point
 
@@ -172,39 +130,6 @@ Get the current input point
 - `mouseMsg` (int) — Mouse message WM_xxx
 - `pnt` (Point2D) — Cursor point (view coordinate)
 - `pMsgInfo` (AddMsgInfo) — Additional message info
-
-**Returns:** `CoordinateInputResult` — Current input point result
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint)
-
-#### `GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt)`
-
-Get the current input point End point input is possible by a distance input to the input point of the last input step
-
-**Remarks:** Get the current input point End point input is possible by a distance input to the input point of the last input step
-
-**Parameters:**
-- `mouseMsg` (int) — Mouse message WM_xxx
-- `pnt` (Point2D) — Cursor point (view coordinate)
-- `pMsgInfo` (AddMsgInfo) — Additional message info
-- `bStartPnt` (bool) — Starting point is active End point input is possible by a distance input to the input point of the last input step
-
-**Returns:** `CoordinateInputResult` — Current input point result
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint)
-
-#### `GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)`
-
-Get the current input point End point input is possible by a distance input to the start point
-
-**Remarks:** Get the current input point End point input is possible by a distance input to the start point
-
-**Parameters:**
-- `mouseMsg` (int) — Mouse message WM_xxx
-- `pnt` (Point2D) — Cursor point (view coordinate)
-- `pMsgInfo` (AddMsgInfo) — Additional message info
-- `startPnt` (Point3D) — Starting point
-- `bStartPnt` (bool) — Starting point is active End point input is possible by a distance input to the start point
 
 **Returns:** `CoordinateInputResult` — Current input point result
 
@@ -361,17 +286,7 @@ Check on mouse move
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsMouseMove)
 
-#### `IsValueInputControl()`
-
-Check, whether a value input control exists
-
-**Remarks:** Check, whether a value input control exists
-
-**Returns:** `bool` — A value input control exists: true/false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControl)
-
-#### `IsValueInputControl(id)`
+#### `IsValueInputControl(id) | IsValueInputControl()`
 
 Check, whether the ID belongs to the value input control (from the coordinate input dialog)
 
@@ -397,7 +312,7 @@ Check, whether an input inside the value input control is done and the value sho
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControlInput)
 
-#### `SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter)`
+#### `SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter) | SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)`
 
 Select an element if no identification point exists. Use the filter set by SetElementFilter
 
@@ -410,25 +325,6 @@ Select an element if no identification point exists. Use the filter set by SetEl
 - `bHighlight` (bool) — Highlight the selected element
 - `bSelAlways` (bool) — true: Select always
 - `bAllowCenter` (bool) — Allow element identification by center point
-
-**Returns:** `bool` — Element is selected: true false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectElement)
-
-#### `SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)`
-
-Select an element if no identification point exists. Use the filter set by SetElementFilter
-
-**Remarks:** Select an element if no identification point exists. Use the filter set by SetElementFilter
-
-**Parameters:**
-- `mouseMsg` (int) — Mouse message WM_xxx
-- `pnt` (Point2D) — Cursor point (view coordinate)
-- `pMsgInfo` (AddMsgInfo) — Additional message info
-- `bHighlight` (bool) — Highlight the selected element
-- `bSelAlways` (bool) — true: Select always
-- `bAllowCenter` (bool) — Allow element identification by center point
-- `selectSetting` (ElementSelectFilterSetting) — Element selection filter
 
 **Returns:** `bool` — Element is selected: true false
 
@@ -532,8 +428,7 @@ Set the projection base of the coordinate selection
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/)
 
 ### Constructors
-- `CoordinateInputMode()` — Initialize
-- `CoordinateInputMode(identMode, drawPointSymbol)` — Constructor, sets the local coordinate input to false
+- `CoordinateInputMode() | CoordinateInputMode(identMode, drawPointSymbol)` — Initialize
 
 ## CoordinateInputResult (class)
 
@@ -600,11 +495,7 @@ Settings class to control the object selection
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/)
 
 ### Constructors
-- `ElementSelectFilterSetting()` — Initialize
-- `ElementSelectFilterSetting(bSnoopAllElements)` — Constructor default values: Query is empty
-- `ElementSelectFilterSetting(filter, bSnoopAllElements)` — Constructor default value for eObjectSelectType == SEL_ALL
-- `ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType)` — Constructor default value for eObjectSelectType == SEL_ALL
-- `ElementSelectFilterSetting(selectSetting)` — Copy Constructor
+- `ElementSelectFilterSetting() | ElementSelectFilterSetting(bSnoopAllElements) | ElementSelectFilterSetting(filter, bSnoopAllElements) | ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType) | ElementSelectFilterSetting(selectSetting)` — Initialize
 
 ### Methods
 #### `Clear()`
@@ -877,8 +768,7 @@ Start the element selection A standard element selection will be started as over
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/)
 
 ### Constructors
-- `InputStringConvert(arg2)` — Initialize
-- `InputStringConvert(arg2)` — Construct the InputStringConvert by a std::wstring
+- `InputStringConvert(arg2) | InputStringConvert(arg2)` — Initialize
 
 ### Methods
 #### `GetString()`
@@ -1124,23 +1014,7 @@ Implementation of the preview symbol builder
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/)
 
 ### Methods
-#### `ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, rotationAngle, allWindows=True)`
-
-Create a small arrow symbol
-
-**Remarks:** Create a small arrow symbol
-
-**Parameters:**
-- `pnt` (Point3D) — Arrowhead point
-- `bDrawIso` (bool) — Draw the arrow symbol inside the isometric view: true/false
-- `viewProj` (ViewWorldProjection) — View world projection data
-- `colorVariant` (ARGB) — Color of the preview
-- `rotationAngle` (float) — Rotation angle of the rectangle
-- `allWindows` (bool) — Show symbol in all windows
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.ArrowSymbol)
-
-#### `ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle, allWindows=True)`
+#### `ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, widthVariant, rotationAngle, allWindows=True) | ArrowSymbol(pnt, bDrawIso, viewProj, colorVariant, rotationAngle, allWindows=True)`
 
 Create an arrow symbol
 
@@ -1188,20 +1062,7 @@ Create a circle symbol
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CircleSymbol)
 
-#### `CoordCrossSymbol(axisPlacement, armLength, viewProj)`
-
-Draw the coordinate cross symbol
-
-**Remarks:** Draw the coordinate cross symbol
-
-**Parameters:**
-- `axisPlacement` (AxisPlacement3D) — Axis placement
-- `armLength` (int) — Length of the symbol arms
-- `viewProj` (ViewWorldProjection) — View world projection
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.CoordCrossSymbol)
-
-#### `CoordCrossSymbol(plane, armLength, viewProj)`
+#### `CoordCrossSymbol(plane, armLength, viewProj) | CoordCrossSymbol(axisPlacement, armLength, viewProj)`
 
 Draw the coordinate cross symbol
 
@@ -1352,7 +1213,7 @@ Create a 2D polyline symbol preview
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Polyline2DSymbol)
 
-#### `Polyline3DSymbol(polyline, viewProj, colorVariant, linePattern)`
+#### `Polyline3DSymbol(polyline, viewProj, colorVariant, linePattern) | Polyline3DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)`
 
 Create a 3D polyline symbol preview
 
@@ -1361,21 +1222,6 @@ Create a 3D polyline symbol preview
 **Parameters:**
 - `polyline` (Polyline3D) — 3D Polyline
 - `viewProj` (ViewWorldProjection) — View world projection data
-- `colorVariant` (ARGB) — Color of the preview
-- `linePattern` (int) — Line pattern
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PreviewSymbolBuilder/#NemAll_Python_IFW_Input.PreviewSymbolBuilder.Polyline3DSymbol)
-
-#### `Polyline3DSymbol(refPnt, polyline, viewProj, colorVariant, linePattern)`
-
-Create a 3D polyline symbol preview
-
-**Remarks:** Create a 3D polyline symbol preview
-
-**Parameters:**
-- `refPnt` (Point3D) — Reference point
-- `polyline` (Polyline3D) — Polyline
-- `viewProj` (ViewWorldProjection) — View world projection
 - `colorVariant` (ARGB) — Color of the preview
 - `linePattern` (int) — Line pattern
 
@@ -1418,9 +1264,7 @@ Implementation of the element type ID query
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/)
 
 ### Constructors
-- `QueryTypeID()` — Initialize
-- `QueryTypeID(typeID)` — Constructor
-- `QueryTypeID(element)` — Copy constructor
+- `QueryTypeID() | QueryTypeID(typeID) | QueryTypeID(element)` — Initialize
 
 ### Methods
 #### `GetQueryText()`
@@ -1536,9 +1380,7 @@ Implementation of the selection query
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/)
 
 ### Constructors
-- `SelectionQuery()` — Initialize
-- `SelectionQuery(query)` — Copy constructor
-- `SelectionQuery(query)` — Constructor
+- `SelectionQuery() | SelectionQuery(query) | SelectionQuery(query)` — Initialize
 
 ### Methods
 #### `Clear()`
@@ -1566,8 +1408,7 @@ Check for an empty query
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/)
 
 ### Constructors
-- `SnoopElementGeometryFilter()` — Initialize
-- `SnoopElementGeometryFilter(bFindBaseGeometry, bFindAreaGeometry, bPerpendicularOnElement, bFindNonPassiveOnly, bSplitAreaGeometries, bIdentifyEmbeddedElement, bFindCompleteFootprint, splitElement3D)` — Constructor Passive geometry is virtual geometry which is using for element snooping. Typical passive geometry is boundary area around text. This area has no edges like a Hatching, but if cursor is inside this area, then element must be snooped. Passive geometry has no points, perpendicular points, edges, etc. .
+- `SnoopElementGeometryFilter() | SnoopElementGeometryFilter(bFindBaseGeometry, bFindAreaGeometry, bPerpendicularOnElement, bFindNonPassiveOnly, bSplitAreaGeometries, bIdentifyEmbeddedElement, bFindCompleteFootprint, splitElement3D)` — Initialize
 
 ### Methods
 #### `AddElements(arg2)`
@@ -1583,8 +1424,7 @@ Implementation of the undo/redo service
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/)
 
 ### Constructors
-- `UndoRedoService(doc, isPassivateAll=False, isLockPreviewDraw=False, collectEleForMultipleTransactions=False)` — Constructor
-- `UndoRedoService(element)` — Copy constructor
+- `UndoRedoService(doc, isPassivateAll=False, isLockPreviewDraw=False, collectEleForMultipleTransactions=False) | UndoRedoService(element)` — Constructor
 
 ### Methods
 #### `ActivateCollectedElementsForFinishUpdate()`
@@ -1603,15 +1443,7 @@ Collect the elements for adding multiple transactions to one undo step
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.CollectElementsForMultipleTransactions)
 
-#### `CreateUndoStep()`
-
-Create an undo step
-
-**Remarks:** Create an undo step
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/UndoRedoService/#NemAll_Python_IFW_Input.UndoRedoService.CreateUndoStep)
-
-#### `CreateUndoStep(eventID)`
+#### `CreateUndoStep(eventID) | CreateUndoStep()`
 
 Create an undo step
 
@@ -1661,9 +1493,7 @@ Set the undo step event
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/)
 
 ### Constructors
-- `ValueInputControlData()` — Initialize
-- `ValueInputControlData(ctrlType, bSetFocus, bDisableCoord)` — Constructor to create a control with standard behavior defined by the control type
-- `ValueInputControlData(ctrlType, initValue, bSetFocus, bDisableCoord)` — Constructor to create a control with an init value. The value range is defined by the control type
+- `ValueInputControlData() | ValueInputControlData(ctrlType, bSetFocus, bDisableCoord) | ValueInputControlData(ctrlType, initValue, bSetFocus, bDisableCoord)` — Initialize
 
 ## ViewWorldProjection (class)
 
@@ -1988,20 +1818,7 @@ Transform the world point to a pixel point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToPixel)
 
-#### `WorldToProjection(line)`
-
-Get the projection 2D line from a world 3D line
-
-**Remarks:** Get the projection 2D line from a world 3D line
-
-**Parameters:**
-- `line` (Line3D) — World line
-
-**Returns:** `Line2D` — 2D projection line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjection)
-
-#### `WorldToProjection(pnt)`
+#### `WorldToProjection(pnt) | WorldToProjection(line)`
 
 Get the projection 2D point from a world 3D point
 
@@ -2014,20 +1831,7 @@ Get the projection 2D point from a world 3D point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjection)
 
-#### `WorldToProjectionBase0(line)`
-
-Get the world projection line with the base 0
-
-**Remarks:** Get the world projection line with the base 0
-
-**Parameters:**
-- `line` (Line3D) — World coordinate line
-
-**Returns:** `Line3D` — World projection point with the base 0
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjectionBase0)
-
-#### `WorldToProjectionBase0(pnt)`
+#### `WorldToProjectionBase0(pnt) | WorldToProjectionBase0(line)`
 
 Get the world projection point with the base 0
 
@@ -2040,33 +1844,7 @@ Get the world projection point with the base 0
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjectionBase0)
 
-#### `WorldToView(line)`
-
-Transform a 3D world line to a 2D view line
-
-**Remarks:** Transform a 3D world line to a 2D view line
-
-**Parameters:**
-- `line` (Line3D) — World line
-
-**Returns:** `Line2D` — View line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView)
-
-#### `WorldToView(line)`
-
-Transform a 2D world line to a 2D view line
-
-**Remarks:** Transform a 2D world line to a 2D view line
-
-**Parameters:**
-- `line` (Line2D) — World line
-
-**Returns:** `Line2D` — View line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView)
-
-#### `WorldToView(pnt)`
+#### `WorldToView(pnt) | WorldToView(pnt) | WorldToView(x, y, z) | WorldToView(line) | WorldToView(line) | WorldToView(polyline3D)`
 
 Transform a world point to a view point
 
@@ -2074,47 +1852,6 @@ Transform a world point to a view point
 
 **Parameters:**
 - `pnt` (Point3D) — World point
-
-**Returns:** `Point2D` — View point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView)
-
-#### `WorldToView(pnt)`
-
-Transform a world point to a view point
-
-**Remarks:** Transform a world point to a view point
-
-**Parameters:**
-- `pnt` (Point2D) — World point
-
-**Returns:** `Point2D` — View point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView)
-
-#### `WorldToView(polyline3D)`
-
-Transform a 3D world polyline to a 2D view polyline
-
-**Remarks:** Transform a 3D world polyline to a 2D view polyline
-
-**Parameters:**
-- `polyline3D` (Polyline3D) — World polyline
-
-**Returns:** `Polyline2D` — View polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView)
-
-#### `WorldToView(x, y, z)`
-
-Transform a world point to a view point
-
-**Remarks:** Transform a world point to a view point
-
-**Parameters:**
-- `x` (float) — X-coordinate world
-- `y` (float) — Y-coordinate world
-- `z` (float) — Z-coordinate world
 
 **Returns:** `Point2D` — View point
 
@@ -2133,21 +1870,7 @@ Transform a world point to a view 3D point If Z coordinate of returned view poin
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView3D)
 
-#### `WorldToWorldPlane(line, plane)`
-
-Transform a world line to a plane line
-
-**Remarks:** Transform a world line to a plane line
-
-**Parameters:**
-- `line` (Line3D) — World line
-- `plane` (Plane3D) — Plane
-
-**Returns:** `Line3D` — Plane line in world coordinates
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToWorldPlane)
-
-#### `WorldToWorldPlane(pnt, plane)`
+#### `WorldToWorldPlane(pnt, plane) | WorldToWorldPlane(line, plane)`
 
 Transform a world point to a plane point
 

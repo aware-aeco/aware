@@ -8,47 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/",
   "constructors": [
     {
-      "name": "ArchBaseProperties()",
-      "signature": "ArchBaseProperties()",
+      "name": "ArchBaseProperties",
+      "signature": "ArchBaseProperties() | ArchBaseProperties(macroType) | ArchBaseProperties(baseProp)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.__init__"
-    },
-    {
-      "name": "ArchBaseProperties(macroType)",
-      "signature": "ArchBaseProperties(macroType)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "macroType",
-          "type": "int",
-          "doc": "Macro type",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/#NemAll_Python_ArchElements.ArchBaseProperties.__init__"
-    },
-    {
-      "name": "ArchBaseProperties(baseProp)",
-      "signature": "ArchBaseProperties(baseProp)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "baseProp",
-          "type": "ArchBaseProperties",
-          "doc": "Properties to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

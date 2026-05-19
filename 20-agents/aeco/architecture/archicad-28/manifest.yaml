@@ -1,7 +1,7 @@
-agent:        archicad-28.0
+agent:        archicad-28
 version:      0.30.0
 sdk-target:   28.0
-display-name: archicad-28.0 (raw — 229 types, full coverage)
+display-name: archicad-28 (raw — 229 types, full coverage)
 
 description: |
   Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/command_definitions.js, https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/common_schema_definitions.js, https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/, https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/content/menutree.json)
@@ -17,7 +17,7 @@ stateful: false
 
 vendor:   graphisoft
 license:  Apache-2.0
-homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/archicad-28.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/archicad-28
 keywords: [aeco, architecture, archicad, graphisoft, generated, raw, v0.30, full-coverage]
 
 provenance:
@@ -282,7 +282,7 @@ commands:
   attribute-commands-create-surfaces:
     lifecycle: single
     description: Creates or overwrites Surface attributes based on the given parameters.
-  attribute-commands-get-attributes-by-type:
+  attribute-commands-get-attributes-by-type-2:
     lifecycle: single
     description: Returns the details of every attribute of the given type.
   attribute-commands-get-building-material-physical-properties:
@@ -603,13 +603,13 @@ commands:
   property-commands-get-property-values-of-attributes:
     lifecycle: single
     description: Returns the property values of the attributes for the given property.
-  property-commands-get-property-values-of-elements:
+  property-commands-get-property-values-of-elements-2:
     lifecycle: single
     description: Returns the property values of the elements for the given property. It works for subelements of hierarchal elements also.
   property-commands-set-property-values-of-attributes:
     lifecycle: single
     description: Sets the property values of attributes.
-  property-commands-set-property-values-of-elements:
+  property-commands-set-property-values-of-elements-2:
     lifecycle: single
     description: Sets the property values of elements. It works for subelements of hierarchal elements also.
   revision-management-commands-get-current-revision-changes-of-layouts:

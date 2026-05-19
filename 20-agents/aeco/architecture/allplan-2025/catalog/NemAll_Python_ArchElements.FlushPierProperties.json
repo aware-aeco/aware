@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/",
   "constructors": [
     {
-      "name": "FlushPierProperties()",
-      "signature": "FlushPierProperties()",
+      "name": "FlushPierProperties",
+      "signature": "FlushPierProperties() | FlushPierProperties(flushPierProp: FlushPierProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/#NemAll_Python_ArchElements.FlushPierProperties.__init__"
-    },
-    {
-      "name": "FlushPierProperties(flushPierProp: FlushPierProperties)",
-      "signature": "FlushPierProperties(flushPierProp: FlushPierProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "flushPierProp",
-          "type": "FlushPierProperties",
-          "doc": "Properties to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

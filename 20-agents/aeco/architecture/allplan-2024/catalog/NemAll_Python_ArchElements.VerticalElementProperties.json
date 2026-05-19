@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/",
   "constructors": [
     {
-      "name": "VerticalElementProperties()",
-      "signature": "VerticalElementProperties()",
+      "name": "VerticalElementProperties",
+      "signature": "VerticalElementProperties() | VerticalElementProperties(elementProp)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.__init__"
-    },
-    {
-      "name": "VerticalElementProperties(elementProp)",
-      "signature": "VerticalElementProperties(elementProp)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "elementProp",
-          "type": "VerticalElementProperties",
-          "doc": "Column properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

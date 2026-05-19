@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointProperties/",
   "constructors": [
     {
-      "name": "JointProperties()",
-      "signature": "JointProperties()",
+      "name": "JointProperties",
+      "signature": "JointProperties() | JointProperties(jointProp: JointProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/JointProperties/#NemAll_Python_ArchElements.JointProperties.__init__"
-    },
-    {
-      "name": "JointProperties(jointProp: JointProperties)",
-      "signature": "JointProperties(jointProp: JointProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "jointProp",
-          "type": "JointProperties",
-          "doc": "Properties to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

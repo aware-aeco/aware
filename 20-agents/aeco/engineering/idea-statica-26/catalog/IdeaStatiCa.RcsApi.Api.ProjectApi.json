@@ -1,0 +1,240 @@
+{
+  "name": "ProjectApi",
+  "namespace": "IdeaStatiCa.RcsApi.Api",
+  "kind": "class",
+  "summary": "RCS Rest API 1.0 \u2014 Project endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/1/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OpenProjectAsync",
+      "signature": "Task\u003CRcsProject\u003E OpenProjectAsync(OpenProject_request openProject_request)",
+      "summary": "Open Rcs project from rcsFile",
+      "params": [
+        {
+          "name": "openProject_request",
+          "type": "OpenProject_request",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "RcsProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "OpenAsync",
+      "signature": "Task\u003CGuid\u003E OpenAsync()",
+      "summary": "POST /api/1/projects/open",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "**Guid**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "ImportIOMFileAsync",
+      "signature": "Task\u003CRcsProject\u003E ImportIOMFileAsync(ImportIOMFile_request importIOMFile_request)",
+      "summary": "POST /api/1/projects/import-iom-file",
+      "params": [
+        {
+          "name": "importIOMFile_request",
+          "type": "ImportIOMFile_request",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "RcsProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "ImportIOMAsync",
+      "signature": "Task\u003CGuid\u003E ImportIOMAsync()",
+      "summary": "POST /api/1/projects/import-iom",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "**Guid**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "GetActiveProjectAsync",
+      "signature": "Task\u003CRcsProject\u003E GetActiveProjectAsync()",
+      "summary": "GET /api/1/projects/active-project",
+      "params": [],
+      "returns": {
+        "type": "RcsProject",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "DownloadProjectAsync",
+      "signature": "Task DownloadProjectAsync(Guid projectId)",
+      "summary": "Download the actual rcs project from the service. It includes all changes which were made by previous API calls.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project in the ConnectionRestApi service",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "GetCodeSettingsAsync",
+      "signature": "Task\u003Cstring\u003E GetCodeSettingsAsync(Guid projectId)",
+      "summary": "GET /api/1/projects/{projectId}/code-settings",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "UpdateCodeSettingsAsync",
+      "signature": "Task\u003Cbool\u003E UpdateCodeSettingsAsync(Guid projectId, List\u003CRcsSetting\u003E requestBody)",
+      "summary": "PUT /api/1/projects/{projectId}/code-settings",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003CRcsSetting\u003E",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "**bool**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "GetCodeSettingsJsonAsync",
+      "signature": "Task\u003Cstring\u003E GetCodeSettingsJsonAsync(Guid projectId)",
+      "summary": "GET /api/1/projects/{projectId}/code-settings-json",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    },
+    {
+      "name": "CloseProjectAsync",
+      "signature": "Task\u003Cstring\u003E CloseProjectAsync(Guid projectId)",
+      "summary": "PUT /api/1/projects/{projectId}/close",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/ProjectApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

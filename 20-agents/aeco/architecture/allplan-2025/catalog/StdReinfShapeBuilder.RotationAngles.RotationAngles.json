@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/RotationAngles/",
   "constructors": [
     {
-      "name": "RotationAngles()",
+      "name": "RotationAngles",
       "signature": "RotationAngles(angle_x: float, angle_y: float, angle_z: float)",
       "summary": "Construct the object by setting all three angles. The angles are given in degrees.",
       "remarks": "Construct the object by setting all three angles. The angles are given in degrees.",

@@ -7,32 +7,10 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/",
   "constructors": [
     {
-      "name": "DimensionProperties()",
-      "signature": "DimensionProperties()",
+      "name": "DimensionProperties",
+      "signature": "DimensionProperties() | DimensionProperties(arg2, arg3) | DimensionProperties(arg2)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.__init__"
-    },
-    {
-      "name": "DimensionProperties(arg2, arg3)",
-      "signature": "DimensionProperties(arg2, arg3)",
-      "summary": "Default constructor",
-      "remarks": "Default constructor",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.__init__"
-    },
-    {
-      "name": "DimensionProperties(arg2)",
-      "signature": "DimensionProperties(arg2)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
       "params": [],
       "returns": null,
       "throws": [],

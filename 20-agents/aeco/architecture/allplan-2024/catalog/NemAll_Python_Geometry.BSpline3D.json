@@ -8,66 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/",
   "constructors": [
     {
-      "name": "BSpline3D()",
-      "signature": "BSpline3D()",
+      "name": "BSpline3D",
+      "signature": "BSpline3D() | BSpline3D(points, weights, knots, degree, isPeriodic) | BSpline3D(spline)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
-    },
-    {
-      "name": "BSpline3D(points, weights, knots, degree, isPeriodic)",
-      "signature": "BSpline3D(points, weights, knots, degree, isPeriodic)",
-      "summary": "Default constructor. Creates invalid spline.",
-      "remarks": "Default constructor. Creates invalid spline.",
-      "params": [
-        {
-          "name": "points",
-          "type": "Point3DList",
-          "optional": false
-        },
-        {
-          "name": "weights",
-          "type": "VecDoubleList",
-          "optional": false
-        },
-        {
-          "name": "knots",
-          "type": "VecDoubleList",
-          "optional": false
-        },
-        {
-          "name": "degree",
-          "type": "int",
-          "optional": false
-        },
-        {
-          "name": "isPeriodic",
-          "type": "bool",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
-    },
-    {
-      "name": "BSpline3D(spline)",
-      "signature": "BSpline3D(spline)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "spline",
-          "type": "BSpline3D",
-          "doc": "Spline which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

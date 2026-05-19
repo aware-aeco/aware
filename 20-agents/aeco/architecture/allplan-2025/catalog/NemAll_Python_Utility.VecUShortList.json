@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecUShortList/",
   "constructors": [
     {
-      "name": "VecUShortList()",
-      "signature": "VecUShortList()",
+      "name": "VecUShortList",
+      "signature": "VecUShortList() | VecUShortList(valueList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecUShortList/#NemAll_Python_Utility.VecUShortList.__init__"
-    },
-    {
-      "name": "VecUShortList(valueList: list)",
-      "signature": "VecUShortList(valueList: list)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "valueList",
-          "type": "list",
-          "doc": "Value list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

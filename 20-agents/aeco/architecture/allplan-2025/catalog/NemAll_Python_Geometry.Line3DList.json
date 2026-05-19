@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3DList/",
   "constructors": [
     {
-      "name": "Line3DList()",
+      "name": "Line3DList",
       "signature": "Line3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

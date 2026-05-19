@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_palette
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Palette namespace — 9 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, FixtureProperties, Orientation, PaletteCtrlType, PaletteValueType, PythonWpfPalette, RefPointButtonType, RefPointPosition, and 1 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Palette namespace — 9 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, FixtureProperties, Orientation, PaletteValueType, PythonWpfPalette, PaletteCtrlType, PythonWpfPaletteBuilder, RefPointButtonType, and 1 more types.
 ---
 
 # NemAll_Python_Palette
@@ -14,9 +14,7 @@ Auto-generated from vendor docs for allplan 2025.0. 9 types in this namespace.
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/)
 
 ### Constructors
-- `FixtureProperties()` — Initialize
-- `FixtureProperties(pathShortcut: str, group: str, element: str)` — Constructor
-- `FixtureProperties(FixtureProperties: FixtureProperties)` — Copy Constructor
+- `FixtureProperties() | FixtureProperties(pathShortcut: str, group: str, element: str) | FixtureProperties(FixtureProperties: FixtureProperties)` — Initialize
 
 ### Methods
 #### `GetElement() -> str`

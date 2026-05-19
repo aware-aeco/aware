@@ -8,40 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/",
   "constructors": [
     {
-      "name": "AssocViewElementAdapter()",
-      "signature": "AssocViewElementAdapter()",
+      "name": "AssocViewElementAdapter",
+      "signature": "AssocViewElementAdapter() | AssocViewElementAdapter(object) | AssocViewElementAdapter(ele)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.__init__"
-    },
-    {
-      "name": "AssocViewElementAdapter(object)",
-      "signature": "AssocViewElementAdapter(object)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.__init__"
-    },
-    {
-      "name": "AssocViewElementAdapter(ele)",
-      "signature": "AssocViewElementAdapter(ele)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "ele",
-          "type": "BaseElementAdapter",
-          "doc": "Base element adapter",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

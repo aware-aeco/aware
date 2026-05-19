@@ -1,6 +1,6 @@
 ---
 name: allplan-scriptobjectinteractors-lineinteractor
-description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.LineInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, LineInteractor, LineInteractorResult.
+description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.LineInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, LineInteractorResult, LineInteractor.
 ---
 
 # ScriptObjectInteractors.LineInteractor
@@ -20,7 +20,7 @@ Implementation of the interactor for line input
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/)
 
 ### Constructors
-- `LineInteractor( interactor_result: LineInteractorResult, is_first_input: bool, prompt: str, allow_pick_up: bool = False, uvs_to_world: bool = False, preview_function: Callable[[Line3D], list] | None = None, default_input_value: float | None = None, abscissa_element: CURVES = None, )` — initialize
+- `LineInteractor( interactor_result: LineInteractorResult, is_first_input: bool, prompt: str, allow_pick_up: bool = False, uvs_to_world: bool = False, preview_function: Callable[[Line3D], list] | LineInteractor() | LineInteractor()` — initialize
 
 ### Methods
 #### `draw_preview(line: Line3D) -> None`
@@ -34,26 +34,11 @@ Draw the preview during the input. If a function generating preview elements fro
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.draw_preview)
 
-#### `get_input_line() -> Line3D`
+#### `get_input_line() -> Line3D | get_input_line(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -> Line3D`
 
 Construct the input line from the mouse message. This overload is meant to be used inside events, where no mouse message is available ().
 
 **Remarks:** Construct the input line from the mouse message. This overload is meant to be used inside events, where no mouse message is available ().
-
-**Returns:** `Line3D` — The input line as follows:
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.get_input_line)
-
-#### `get_input_line(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -> Line3D`
-
-Construct the input line from the mouse message. This overload is meant to be used inside process_mouse_msg event.
-
-**Remarks:** Construct the input line from the mouse message. This overload is meant to be used inside process_mouse_msg event.
-
-**Parameters:**
-- `mouse_msg` (int) — mouse message ID
-- `pnt` (Point2D) — input point in Allplan view coordinates
-- `msg_info` (AddMsgInfo) — additional mouse message info
 
 **Returns:** `Line3D` — The input line as follows:
 

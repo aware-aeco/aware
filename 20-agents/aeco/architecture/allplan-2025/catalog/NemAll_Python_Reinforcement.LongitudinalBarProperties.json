@@ -8,83 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/",
   "constructors": [
     {
-      "name": "LongitudinalBarProperties()",
-      "signature": "LongitudinalBarProperties()",
+      "name": "LongitudinalBarProperties",
+      "signature": "LongitudinalBarProperties() | LongitudinalBarProperties( shape: BendingShape, overlappingAtStartTurnedOn: bool, overlappingAtStart: float, overlappingAtEndTurnedOn: bool, overlappingAtEnd: float, overlappingLength: float, minBarDistance: float, deliveryShapeType: eDeliveryShapeType, insideBarsState: eInsideBarsState, startLength: float, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.__init__"
-    },
-    {
-      "name": "LongitudinalBarProperties( shape: BendingShape, overlappingAtStartTurnedOn: bool, overlappingAtStart: float, overlappingAtEndTurnedOn: bool, overlappingAtEnd: float, overlappingLength: float, minBarDistance: float, deliveryShapeType: eDeliveryShapeType, insideBarsState: eInsideBarsState, startLength: float, )",
-      "signature": "LongitudinalBarProperties( shape: BendingShape, overlappingAtStartTurnedOn: bool, overlappingAtStart: float, overlappingAtEndTurnedOn: bool, overlappingAtEnd: float, overlappingLength: float, minBarDistance: float, deliveryShapeType: eDeliveryShapeType, insideBarsState: eInsideBarsState, startLength: float, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "shape",
-          "type": "BendingShape",
-          "doc": "Bar shape",
-          "optional": false
-        },
-        {
-          "name": "overlappingAtStartTurnedOn",
-          "type": "bool",
-          "doc": "Overlapping at start start",
-          "optional": false
-        },
-        {
-          "name": "overlappingAtStart",
-          "type": "float",
-          "doc": "Overlapping at start",
-          "optional": false
-        },
-        {
-          "name": "overlappingAtEndTurnedOn",
-          "type": "bool",
-          "doc": "Overlapping at end state",
-          "optional": false
-        },
-        {
-          "name": "overlappingAtEnd",
-          "type": "float",
-          "doc": "Overlapping at end",
-          "optional": false
-        },
-        {
-          "name": "overlappingLength",
-          "type": "float",
-          "doc": "Overlapping length",
-          "optional": false
-        },
-        {
-          "name": "minBarDistance",
-          "type": "float",
-          "doc": "Minimal bar distance",
-          "optional": false
-        },
-        {
-          "name": "deliveryShapeType",
-          "type": "eDeliveryShapeType",
-          "doc": "Delivery shape type",
-          "optional": false
-        },
-        {
-          "name": "insideBarsState",
-          "type": "eInsideBarsState",
-          "doc": "Inside bars state",
-          "optional": false
-        },
-        {
-          "name": "startLength",
-          "type": "float",
-          "doc": "Start length",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

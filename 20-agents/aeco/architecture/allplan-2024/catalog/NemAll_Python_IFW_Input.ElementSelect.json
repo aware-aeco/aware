@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelect/",
   "constructors": [
     {
-      "name": "ElementSelect()",
+      "name": "ElementSelect",
       "signature": "ElementSelect()",
       "summary": "Initialize",
       "remarks": "Initialize",

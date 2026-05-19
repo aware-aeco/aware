@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_precast
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Precast namespace — 26 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, FixtureCombinationType, FixtureGroupElement, FixtureGroupProperties, FixtureElement, FixturePlacementElement, FixturePlacementProperties, FixtureSlideElement, and 18 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Precast namespace — 26 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, FixtureCombinationType, FixtureGroupElement, FixtureElement, FixtureGroupProperties, FixturePlacementProperties, FixturePlacementElement, FixtureSlideProperties, and 18 more types.
 ---
 
 # NemAll_Python_Precast
@@ -157,8 +157,7 @@ FixtureElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureElement/)
 
 ### Constructors
-- `FixtureElement()` — Initialize
-- `FixtureElement(fixProp, slideList)` — Constructor
+- `FixtureElement() | FixtureElement(fixProp, slideList)` — Initialize
 
 ### Methods
 #### `GetFixtureProperties()`
@@ -230,9 +229,7 @@ FixtureGroupElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/)
 
 ### Constructors
-- `FixtureGroupElement()` — Initialize
-- `FixtureGroupElement(FixtureGroupProp, slideList)` — Constructor
-- `FixtureGroupElement(commonProp, FixtureGroupProp, slideList)` — Constructor
+- `FixtureGroupElement() | FixtureGroupElement(FixtureGroupProp, slideList) | FixtureGroupElement(commonProp, FixtureGroupProp, slideList)` — Initialize
 
 ### Methods
 #### `GetFixtureGroupProperties()`
@@ -319,8 +316,7 @@ FixturePlacementElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/)
 
 ### Constructors
-- `FixturePlacementElement()` — Initialize
-- `FixturePlacementElement(commonProp, macroPlacementProp, macro)` — Constructor
+- `FixturePlacementElement() | FixturePlacementElement(commonProp, macroPlacementProp, macro)` — Initialize
 
 ### Methods
 #### `GetFixturePlacementProperties()`
@@ -479,8 +475,7 @@ FixtureSlideElement class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureSlideElement/)
 
 ### Constructors
-- `FixtureSlideElement()` — Initialize
-- `FixtureSlideElement(FixtureSlideProp, objectList)` — Constructor
+- `FixtureSlideElement() | FixtureSlideElement(FixtureSlideProp, objectList)` — Initialize
 
 ### Methods
 #### `GetFixtureSlideProperties()`
@@ -1067,8 +1062,7 @@ PrecastLayer class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayer/)
 
 ### Constructors
-- `PrecastLayer()` — Initialize
-- `PrecastLayer(Properties)` — Constructor
+- `PrecastLayer() | PrecastLayer(Properties)` — Initialize
 
 ### Methods
 #### `__repr__()`

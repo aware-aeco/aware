@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculus/",
   "constructors": [
     {
-      "name": "HiddenCalculus()",
+      "name": "HiddenCalculus",
       "signature": "HiddenCalculus()",
       "summary": "Initialize",
       "remarks": "Initialize",

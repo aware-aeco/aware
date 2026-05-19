@@ -10,7 +10,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/",
   "constructors": [
     {
-      "name": "PolylineInput()",
+      "name": "PolylineInput",
       "signature": "PolylineInput(coordInput: CoordinateInput, bZCoord: bool)",
       "summary": "Default constructor After constructing the object, the line input toolbar is shown in the Allplan UI",
       "remarks": "Default constructor After constructing the object, the line input toolbar is shown in the Allplan UI",

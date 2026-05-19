@@ -1,0 +1,144 @@
+{
+  "name": "AutoTextDefinitions",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "The AutoTextDefinitions class is a container class for all AutoTextDefinitions in a Document.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](index) =\u003E Layout::AutoTextDefinition | [](name) =\u003E Layout::AutoTextDefinition",
+      "summary": "The #[] method returns a value from the array of Layout::AutoTextDefinitions.",
+      "remarks": "The #[] method returns a value from the array of Layout::AutoTextDefinitions.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "doc": "The index of the Layout::AutoTextDefinition to return",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::AutoTextDefinition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html#[]-instance_method"
+    },
+    {
+      "name": "add",
+      "signature": "add(name, type) =\u003E Layout::AutoTextDefinition",
+      "summary": "The #add method adds an Layout::AutoTextDefinition to the Document.",
+      "remarks": "The #add method adds an Layout::AutoTextDefinition to the Document. The type can be one of the following values: Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition::TYPE_PAGE_NAME Layout::AutoTextDefinition::TYPE_PAGE_NUMBER Layout::AutoTextDefinition::TYPE_CUSTOM_TEXT Layout::AutoTextDefinition::TYPE_DATE_CURRENT Layout::AutoTextDefinition::TYPE_DATE_CREATED Layout::AutoTextDefinition::TYPE_DATE_MODIFIED Layout::AutoTextDefinition::TYPE_DATE_PUBLISHED Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinition::TYPE_SEQUENCE",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::AutoTextDefinition",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if type is not a valid auto-text type, or is mandatory."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html#add-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|auto_text| ... } =\u003E Object",
+      "summary": "Note: Don\u0027t remove content from this collection while iterating over it with #each.",
+      "remarks": "Note: Don\u0027t remove content from this collection while iterating over it with #each. This would change the size of the collection and cause elements to be skipped as the indices change. Instead copy the current collection to an array using to_a and then use each on the array, when removing content. The #each method iterates through all of the Layout::AutoTextDefinitions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html#each-instance_method"
+    },
+    {
+      "name": "index",
+      "signature": "index(auto_text) =\u003E Integer? | index(name) =\u003E Integer?",
+      "summary": "The #index method returns the index of the Layout::AutoTextDefinition, or nil if it doesn\u0027t exist in the Document.",
+      "remarks": "The #index method returns the index of the Layout::AutoTextDefinition, or nil if it doesn\u0027t exist in the Document.",
+      "params": [
+        {
+          "name": "auto_text",
+          "type": "Layout::AutoTextDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html#index-instance_method"
+    },
+    {
+      "name": "length",
+      "signature": "length =\u003E Integer Also known as: size",
+      "summary": "The #length method returns the number of Layout::AutoTextDefinitions.",
+      "remarks": "The #length method returns the number of Layout::AutoTextDefinitions.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html#length-instance_method"
+    },
+    {
+      "name": "remove",
+      "signature": "remove(definition, convert_tags_to_text = true) =\u003E Object | remove(name, convert_tags_to_text = true) =\u003E Object | remove(index, convert_tags_to_text = true) =\u003E Object",
+      "summary": "The #remove method removes an Layout::AutoTextDefinition from the Document.",
+      "remarks": "The #remove method removes an Layout::AutoTextDefinition from the Document. The Layout::AutoTextDefinition must be one of the following types: Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition::TYPE_PAGE_NAME Layout::AutoTextDefinition::TYPE_PAGE_NUMBER Layout::AutoTextDefinition::TYPE_CUSTOM_TEXT Layout::AutoTextDefinition::TYPE_DATE_CURRENT Layout::AutoTextDefinition::TYPE_DATE_CREATED Layout::AutoTextDefinition::TYPE_DATE_MODIFIED Layout::AutoTextDefinition::TYPE_DATE_PUBLISHED Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinition::TYPE_SEQUENCE",
+      "params": [
+        {
+          "name": "definition",
+          "type": "Layout::AutoTextDefinition",
+          "optional": false
+        },
+        {
+          "name": "convert_tags_to_text",
+          "type": "Boolean",
+          "optional": true,
+          "default": "true) =\u003E Object | remove(name, convert_tags_to_text = true) =\u003E Object | remove(index, convert_tags_to_text = true"
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the definition that is being removed is mandatory"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinitions.html#remove-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

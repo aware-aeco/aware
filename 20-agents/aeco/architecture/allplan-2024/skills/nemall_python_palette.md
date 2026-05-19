@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_palette
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Palette namespace — 5 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: PaletteValueType, FixtureProperties, PaletteCtrlType, PythonWpfPalette, PythonWpfPaletteBuilder.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Palette namespace — 5 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: PaletteCtrlType, FixtureProperties, PythonWpfPalette, PaletteValueType, PythonWpfPaletteBuilder.
 ---
 
 # NemAll_Python_Palette
@@ -14,9 +14,7 @@ Auto-generated from vendor docs for allplan 2024.0. 5 types in this namespace.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Palette/FixtureProperties/)
 
 ### Constructors
-- `FixtureProperties()` — Initialize
-- `FixtureProperties(pathShortcut, group, element)` — Constructor
-- `FixtureProperties(FixtureProperties)` — Copy Constructor
+- `FixtureProperties() | FixtureProperties(pathShortcut, group, element) | FixtureProperties(FixtureProperties)` — Initialize
 
 ### Methods
 #### `GetElement()`

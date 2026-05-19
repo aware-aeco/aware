@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/",
   "constructors": [
     {
-      "name": "BuildingElementInput()",
+      "name": "BuildingElementInput",
       "signature": "BuildingElementInput(coord_input: CoordinateInput, path: str)",
       "summary": "Initialization of class BuildingElementInput",
       "remarks": "Initialization of class BuildingElementInput",

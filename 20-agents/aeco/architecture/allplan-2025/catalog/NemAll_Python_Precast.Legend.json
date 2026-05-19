@@ -8,19 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Legend/",
   "constructors": [
     {
-      "name": "Legend(doc: DocumentAdapter, cellId: int, legendProps: LegendProperties)",
-      "signature": "Legend(doc: DocumentAdapter, cellId: int, legendProps: LegendProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Legend/#NemAll_Python_Precast.Legend.__init__"
-    },
-    {
-      "name": "Legend( doc: DocumentAdapter, cellId: int, legendProps: LegendProperties, conditionTemplate: str, )",
-      "signature": "Legend( doc: DocumentAdapter, cellId: int, legendProps: LegendProperties, conditionTemplate: str, )",
+      "name": "Legend",
+      "signature": "Legend(doc: DocumentAdapter, cellId: int, legendProps: LegendProperties) | Legend( doc: DocumentAdapter, cellId: int, legendProps: LegendProperties, conditionTemplate: str, )",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [],

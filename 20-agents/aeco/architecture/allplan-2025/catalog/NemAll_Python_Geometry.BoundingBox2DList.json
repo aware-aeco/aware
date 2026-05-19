@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2DList/",
   "constructors": [
     {
-      "name": "BoundingBox2DList()",
-      "signature": "BoundingBox2DList()",
+      "name": "BoundingBox2DList",
+      "signature": "BoundingBox2DList() | BoundingBox2DList(ele: BoundingBox2D) | BoundingBox2DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2DList/#NemAll_Python_Geometry.BoundingBox2DList.__init__"
-    },
-    {
-      "name": "BoundingBox2DList(ele: BoundingBox2D)",
-      "signature": "BoundingBox2DList(ele: BoundingBox2D)",
-      "summary": "Constructor with a BoundingBox2D",
-      "remarks": "Constructor with a BoundingBox2D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "BoundingBox2D",
-          "doc": "BoundingBox2D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2DList/#NemAll_Python_Geometry.BoundingBox2DList.__init__"
-    },
-    {
-      "name": "BoundingBox2DList(eleList: list)",
-      "signature": "BoundingBox2DList(eleList: list)",
-      "summary": "Constructor with a list of BoundingBox2D",
-      "remarks": "Constructor with a list of BoundingBox2D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "BoundingBox2D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2DList/#NemAll_Python_Geometry.BoundingBox2DList.append"
     },
     {
-      "name": "extend(iterable: BoundingBox2DList)",
-      "signature": "extend(iterable: BoundingBox2DList)",
+      "name": "extend",
+      "signature": "extend(iterable: BoundingBox2DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "BoundingBox2DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2DList/#NemAll_Python_Geometry.BoundingBox2DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "BoundingBox2D list",
           "optional": false
         }
       ],

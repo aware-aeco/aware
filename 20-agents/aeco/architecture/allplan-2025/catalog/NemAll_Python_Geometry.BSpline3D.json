@@ -8,40 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/",
   "constructors": [
     {
-      "name": "BSpline3D()",
-      "signature": "BSpline3D()",
+      "name": "BSpline3D",
+      "signature": "BSpline3D() | BSpline3D( points: Point3DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool = False, ) | BSpline3D(spline: BSpline3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
-    },
-    {
-      "name": "BSpline3D( points: Point3DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool = False, )",
-      "signature": "BSpline3D( points: Point3DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool = False, )",
-      "summary": "Default constructor. Creates invalid spline.",
-      "remarks": "Default constructor. Creates invalid spline.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
-    },
-    {
-      "name": "BSpline3D(spline: BSpline3D)",
-      "signature": "BSpline3D(spline: BSpline3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "spline",
-          "type": "BSpline3D",
-          "doc": "Spline which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

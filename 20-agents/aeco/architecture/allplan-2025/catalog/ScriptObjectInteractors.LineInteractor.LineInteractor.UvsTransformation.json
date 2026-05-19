@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.UvsTransformation",
   "constructors": [
     {
-      "name": "UvsTransformation()",
+      "name": "UvsTransformation",
       "signature": "UvsTransformation(uvs_adapter: AssocViewElementAdapter)",
       "summary": "Initialize from UVS",
       "remarks": "Initialize from UVS",

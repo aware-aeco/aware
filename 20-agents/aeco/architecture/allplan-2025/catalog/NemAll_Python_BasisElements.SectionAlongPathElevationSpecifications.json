@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/",
   "constructors": [
     {
-      "name": "SectionAlongPathElevationSpecifications(bInitFromSTW: bool = False)",
-      "signature": "SectionAlongPathElevationSpecifications(bInitFromSTW: bool = False)",
+      "name": "SectionAlongPathElevationSpecifications",
+      "signature": "SectionAlongPathElevationSpecifications(bInitFromSTW: bool = False) | SectionAlongPathElevationSpecifications(B: SectionAlongPathElevationSpecifications)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -16,24 +16,6 @@
           "name": "bInitFromSTW",
           "type": "bool",
           "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.__init__"
-    },
-    {
-      "name": "SectionAlongPathElevationSpecifications(B: SectionAlongPathElevationSpecifications)",
-      "signature": "SectionAlongPathElevationSpecifications(B: SectionAlongPathElevationSpecifications)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathElevationSpecifications",
-          "doc": "object to copy",
           "optional": false
         }
       ],

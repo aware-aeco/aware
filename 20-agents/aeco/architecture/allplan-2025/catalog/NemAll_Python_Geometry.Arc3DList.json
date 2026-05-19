@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3DList/",
   "constructors": [
     {
-      "name": "Arc3DList()",
-      "signature": "Arc3DList()",
+      "name": "Arc3DList",
+      "signature": "Arc3DList() | Arc3DList(ele: Arc3D) | Arc3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3DList/#NemAll_Python_Geometry.Arc3DList.__init__"
-    },
-    {
-      "name": "Arc3DList(ele: Arc3D)",
-      "signature": "Arc3DList(ele: Arc3D)",
-      "summary": "Constructor with a Arc3D",
-      "remarks": "Constructor with a Arc3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Arc3D",
-          "doc": "Arc3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3DList/#NemAll_Python_Geometry.Arc3DList.__init__"
-    },
-    {
-      "name": "Arc3DList(eleList: list)",
-      "signature": "Arc3DList(eleList: list)",
-      "summary": "Constructor with a list of Arc3D",
-      "remarks": "Constructor with a list of Arc3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Arc3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3DList/#NemAll_Python_Geometry.Arc3DList.append"
     },
     {
-      "name": "extend(iterable: Arc3DList)",
-      "signature": "extend(iterable: Arc3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Arc3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Arc3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3DList/#NemAll_Python_Geometry.Arc3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Arc3D list",
           "optional": false
         }
       ],

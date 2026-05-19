@@ -10,35 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureElement/",
   "constructors": [
     {
-      "name": "FixtureElement()",
-      "signature": "FixtureElement()",
+      "name": "FixtureElement",
+      "signature": "FixtureElement() | FixtureElement(fixProp, slideList)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureElement/#NemAll_Python_Precast.FixtureElement.__init__"
-    },
-    {
-      "name": "FixtureElement(fixProp, slideList)",
-      "signature": "FixtureElement(fixProp, slideList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "fixProp",
-          "type": "FixtureProperties",
-          "doc": "Fixture properties",
-          "optional": false
-        },
-        {
-          "name": "slideList",
-          "type": "list",
-          "doc": "Slide list of fixture definition",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

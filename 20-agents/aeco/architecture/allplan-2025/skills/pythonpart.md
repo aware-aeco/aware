@@ -1,6 +1,6 @@
 ---
 name: allplan-pythonpart
-description: This skill encodes the allplan 2025.0 surface of the PythonPart namespace — 9 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AttrBuilder, PythonPartGroup, View2D, PythonPart, View, View2D3D, ViewCode, and 1 more types.
+description: This skill encodes the allplan 2025.0 surface of the PythonPart namespace — 9 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AttrBuilder, PythonPartGroup, Functions, View, View2D, PythonPart, View2D3D, ViewCode, and 1 more types.
 ---
 
 # PythonPart
@@ -64,7 +64,7 @@ Definition of class PythonPart
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPart/)
 
 ### Constructors
-- `PythonPart( name: str, parameter_list: list[str], hash_value: str, python_file: str, views: list[View2D | View3D | View2D3D] | None = None, matrix: Matrix3D = Matrix3D(), common_props: CommonProperties | None = None, reinforcement: list[Any] | None = None, attribute_list: list[Any] | None = None, library_elements: list[Any] | None = None, architecture_elements: list[Any] | None = None, label_elements: list[Any] | None = None, fixture_elements: list[Any] | None = None, assembly_elements: list[Any] | None = None, mws_elements: list[Any] | None = None, placement_matrix: Matrix3D | None = None, type_uuid: str = "", type_display_name: str = "", structured_container_attributes: dict[ UUID, BuildingElementAttributeList ] = {}, )` — Initialization of class PythonPart
+- `PythonPart( name: str, parameter_list: list[str], hash_value: str, python_file: str, views: list[View2D | PythonPart() | PythonPart() | PythonPart(), common_props: CommonProperties | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart() | PythonPart()` — Initialization of class PythonPart
 
 ### Methods
 #### `__repr__() -> str`
@@ -143,7 +143,7 @@ Definition of a PythonPart group
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/)
 
 ### Constructors
-- `PythonPartGroup( name: str, parameter_list: list[str], hash_value: str, python_file: str, pythonparts: list[PythonPart] | None = None, type_uuid: str = "", type_display_name: str = "", )` — Initialize TypeError: When list of PythonParts to group contains a non-PythonPart object
+- `PythonPartGroup( name: str, parameter_list: list[str], hash_value: str, python_file: str, pythonparts: list[PythonPart] | PythonPartGroup()` — Initialize TypeError: When list of PythonParts to group contains a non-PythonPart object
 
 ### Methods
 #### `__str__() -> str`
@@ -215,7 +215,7 @@ Definition of a view class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View/)
 
 ### Constructors
-- `View( viewtype: MacroSlideType = eGeometry, visibility2d: bool = True, visibility3d: bool = True, start_scale: float = 0.0, end_scale: float = 9999.0, elements: list[Any] | None = None, )` — initialization of view class
+- `View( viewtype: MacroSlideType = eGeometry, visibility2d: bool = True, visibility3d: bool = True, start_scale: float = 0.0, end_scale: float = 9999.0, elements: list[Any] | View()` — initialization of view class
 
 ### Methods
 #### `__repr__() -> str`
@@ -278,7 +278,7 @@ Definition of a 2D view class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View2D/)
 
 ### Constructors
-- `View2D( elements: list[Any] | None = None, start_scale: float = 0.0, end_scale: float = 9999.0, )` — Initialization of 2D view class
+- `View2D( elements: list[Any] | View2D()` — Initialization of 2D view class
 
 ## View2D3D (class)
 
@@ -287,7 +287,7 @@ Definition of a 2D/3D view class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View2D3D/)
 
 ### Constructors
-- `View2D3D( elements: list[Any] | None = None, start_scale: float = 0.0, end_scale: float = 9999.0, )` — Initialization of 3D view class
+- `View2D3D( elements: list[Any] | View2D3D()` — Initialization of 3D view class
 
 ## View3D (class)
 
@@ -296,7 +296,7 @@ Definition of a 3D view class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/View3D/)
 
 ### Constructors
-- `View3D( elements: list[Any] | None = None, start_scale: float = 0.0, end_scale: float = 9999.0, )` — Initialization of 3D view class
+- `View3D( elements: list[Any] | View3D()` — Initialization of 3D view class
 
 ## ViewCode (class)
 

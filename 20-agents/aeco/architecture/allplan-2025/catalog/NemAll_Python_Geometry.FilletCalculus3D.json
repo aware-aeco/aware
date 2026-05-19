@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/",
   "constructors": [
     {
-      "name": "FilletCalculus3D()",
+      "name": "FilletCalculus3D",
       "signature": "FilletCalculus3D()",
       "summary": "Initialize",
       "remarks": "Initialize",
@@ -20,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Calculate( line1: Line3D, line2: Line3D, radius: float ) -\u003E tuple[eFilletErrorCode, Line3D, Line3D, Arc3D]",
-      "signature": "Calculate( line1: Line3D, line2: Line3D, radius: float ) -\u003E tuple[eFilletErrorCode, Line3D, Line3D, Arc3D]",
+      "name": "Calculate",
+      "signature": "Calculate( line1: Line3D, line2: Line3D, radius: float ) -\u003E tuple[eFilletErrorCode, Line3D, Line3D, Arc3D] | Calculate(line1: Line3D, line2: Line3D) -\u003E tuple[eFilletErrorCode, Arc3D] | Calculate( line1: Line3D, endPoint: eLinePointIdentification, polyline: Polyline3D, startLineIndex: int, endLineIndex: int, radius: float, ) -\u003E tuple[eFilletErrorCode, Line3D, Line3D, Arc3D] | Calculate( polyhedron: Polyhedron3D, edges: VecSizeTList, radius: float, propagation: bool, ) -\u003E tuple[eFilletErrorCode, BRep3D] | Calculate(brep: BRep3D, radius: float) -\u003E tuple[eFilletErrorCode, BRep3D] | Calculate( brep: BRep3D, edges: VecSizeTList, radius: float, propagation: bool ) -\u003E tuple[eFilletErrorCode, BRep3D]",
       "summary": "Calculate fillet between two coplanar 3d lines",
       "remarks": "Calculate fillet between two coplanar 3d lines",
       "params": [
@@ -47,189 +47,6 @@
       "returns": {
         "type": "tuple[eFilletErrorCode, Line3D, Line3D, Arc3D]",
         "doc": "tuple(error code, first line, second line, calculated fillet)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate"
-    },
-    {
-      "name": "Calculate(line1: Line3D, line2: Line3D) -\u003E tuple[eFilletErrorCode, Arc3D]",
-      "signature": "Calculate(line1: Line3D, line2: Line3D) -\u003E tuple[eFilletErrorCode, Arc3D]",
-      "summary": "Calculate fillet between two parallel non collinear 3d lines. The end point of the first line must lie on the same plane as start point of the second line and plane is perpendicular to both lines.",
-      "remarks": "Calculate fillet between two parallel non collinear 3d lines. The end point of the first line must lie on the same plane as start point of the second line and plane is perpendicular to both lines.",
-      "params": [
-        {
-          "name": "line1",
-          "type": "Line3D",
-          "doc": "first line",
-          "optional": false
-        },
-        {
-          "name": "line2",
-          "type": "Line3D",
-          "doc": "second line",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[eFilletErrorCode, Arc3D]",
-        "doc": "tuple(error code, calculated fillet)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate"
-    },
-    {
-      "name": "Calculate( line1: Line3D, endPoint: eLinePointIdentification, polyline: Polyline3D, startLineIndex: int, endLineIndex: int, radius: float, ) -\u003E tuple[eFilletErrorCode, Line3D, Line3D, Arc3D]",
-      "signature": "Calculate( line1: Line3D, endPoint: eLinePointIdentification, polyline: Polyline3D, startLineIndex: int, endLineIndex: int, radius: float, ) -\u003E tuple[eFilletErrorCode, Line3D, Line3D, Arc3D]",
-      "summary": "Calculate fillet between line1 and line2. Line2 is created as line between end point of line1 (by parameter \u0022endPoint\u0022) and point from polyline (limited with \u0022startPointIndex\u0022 and \u0022endPointIndex\u0022)",
-      "remarks": "Calculate fillet between line1 and line2. Line2 is created as line between end point of line1 (by parameter \u0022endPoint\u0022) and point from polyline (limited with \u0022startPointIndex\u0022 and \u0022endPointIndex\u0022)",
-      "params": [
-        {
-          "name": "line1",
-          "type": "Line3D",
-          "doc": "Line 1 for fillet",
-          "optional": false
-        },
-        {
-          "name": "endPoint",
-          "type": "eLinePointIdentification",
-          "doc": "Sign for line2 (from where point of line1 should be start line2)",
-          "optional": false
-        },
-        {
-          "name": "polyline",
-          "type": "Polyline3D",
-          "doc": "Polyline (buffer of end points for line2)",
-          "optional": false
-        },
-        {
-          "name": "startLineIndex",
-          "type": "int",
-          "doc": "Start point index for polyline",
-          "optional": false
-        },
-        {
-          "name": "endLineIndex",
-          "type": "int",
-          "doc": "End point index for polyline",
-          "optional": false
-        },
-        {
-          "name": "radius",
-          "type": "float",
-          "doc": "radius of fillet",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[eFilletErrorCode, Line3D, Line3D, Arc3D]",
-        "doc": "tuple(error code, Line 1 for fillet, Line 2 from fillet calculation, Calculated fillet)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate"
-    },
-    {
-      "name": "Calculate( polyhedron: Polyhedron3D, edges: VecSizeTList, radius: float, propagation: bool, ) -\u003E tuple[eFilletErrorCode, BRep3D]",
-      "signature": "Calculate( polyhedron: Polyhedron3D, edges: VecSizeTList, radius: float, propagation: bool, ) -\u003E tuple[eFilletErrorCode, BRep3D]",
-      "summary": "Calculate fillet on selected edges of given Polyhedron3D",
-      "remarks": "Calculate fillet on selected edges of given Polyhedron3D",
-      "params": [
-        {
-          "name": "polyhedron",
-          "type": "Polyhedron3D",
-          "doc": "polyhedron to fillet",
-          "optional": false
-        },
-        {
-          "name": "edges",
-          "type": "VecSizeTList",
-          "doc": "edges to fillet",
-          "optional": false
-        },
-        {
-          "name": "radius",
-          "type": "float",
-          "doc": "fillet sphere radius",
-          "optional": false
-        },
-        {
-          "name": "propagation",
-          "type": "bool",
-          "doc": "flag for propagation of neighboring edges",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[eFilletErrorCode, BRep3D]",
-        "doc": "tuple(error code, result BRep3D)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate"
-    },
-    {
-      "name": "Calculate(brep: BRep3D, radius: float) -\u003E tuple[eFilletErrorCode, BRep3D]",
-      "signature": "Calculate(brep: BRep3D, radius: float) -\u003E tuple[eFilletErrorCode, BRep3D]",
-      "summary": "Calculate fillet on all edges of given BRep3D",
-      "remarks": "Calculate fillet on all edges of given BRep3D",
-      "params": [
-        {
-          "name": "brep",
-          "type": "BRep3D",
-          "doc": "brep to fillet",
-          "optional": false
-        },
-        {
-          "name": "radius",
-          "type": "float",
-          "doc": "fillet sphere radius",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[eFilletErrorCode, BRep3D]",
-        "doc": "tuple(error code, brep to fillet)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate"
-    },
-    {
-      "name": "Calculate( brep: BRep3D, edges: VecSizeTList, radius: float, propagation: bool ) -\u003E tuple[eFilletErrorCode, BRep3D]",
-      "signature": "Calculate( brep: BRep3D, edges: VecSizeTList, radius: float, propagation: bool ) -\u003E tuple[eFilletErrorCode, BRep3D]",
-      "summary": "Calculate fillet on selected edges of given BRep3D",
-      "remarks": "Calculate fillet on selected edges of given BRep3D",
-      "params": [
-        {
-          "name": "brep",
-          "type": "BRep3D",
-          "doc": "brep to fillet",
-          "optional": false
-        },
-        {
-          "name": "edges",
-          "type": "VecSizeTList",
-          "doc": "edges to fillet",
-          "optional": false
-        },
-        {
-          "name": "radius",
-          "type": "float",
-          "doc": "fillet sphere radius",
-          "optional": false
-        },
-        {
-          "name": "propagation",
-          "type": "bool",
-          "doc": "flag for propagation of neighboring edges",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[eFilletErrorCode, BRep3D]",
-        "doc": "tuple(error code, brep to fillet)"
       },
       "throws": [],
       "events_related": [],

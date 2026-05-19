@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputViewDocumentData/",
   "constructors": [
     {
-      "name": "InputViewDocumentData()",
+      "name": "InputViewDocumentData",
       "signature": "InputViewDocumentData()",
       "summary": "Initialize",
       "remarks": "Initialize",

@@ -1,0 +1,348 @@
+{
+  "name": "Table",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "A Table is a series of rows and columns that holds data.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Table.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Table(bounds, rows, columns)",
+      "summary": "The #initialize method creates a Layout::Table with a specified size, and a specified number of rows and columns.",
+      "remarks": "The #initialize method creates a Layout::Table with a specified size, and a specified number of rows and columns.",
+      "params": [
+        {
+          "name": "bounds",
+          "type": "Geom::Bounds2d",
+          "optional": false
+        },
+        {
+          "name": "rows",
+          "type": "Integer",
+          "optional": false
+        },
+        {
+          "name": "columns",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if rows is less than 1"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if columns is less than 1"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if bounds is zero size"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "[]",
+      "signature": "[](row_index, column_index) =\u003E Layout::TableCell",
+      "summary": "The #[] method returns the Layout::TableCell at the specified row and column.",
+      "remarks": "The #[] method returns the Layout::TableCell at the specified row and column.",
+      "params": [
+        {
+          "name": "row_index",
+          "type": "Integer",
+          "optional": false
+        },
+        {
+          "name": "column_index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::TableCell",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if row_index or column_index are not a valid indices for the Layout::Table"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#[]-instance_method"
+    },
+    {
+      "name": "dimensions",
+      "signature": "dimensions =\u003E Array(Integer, Integer)",
+      "summary": "The #dimensions method returns the number of rows and columns in a Layout::Table.",
+      "remarks": "The #dimensions method returns the number of rows and columns in a Layout::Table.",
+      "params": [],
+      "returns": {
+        "type": "Array(Integer, Integer)",
+        "doc": "The first value is the number of rows; the second, the number of columns."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#dimensions-instance_method"
+    },
+    {
+      "name": "each",
+      "signature": "each {|cell| ... } =\u003E Object",
+      "summary": "The #each method iterates in column major order through all of the cells in the Layout::Table.",
+      "remarks": "The #each method iterates in column major order through all of the cells in the Layout::Table.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#each-instance_method"
+    },
+    {
+      "name": "entities",
+      "signature": "entities =\u003E Layout::Entities",
+      "summary": "The #entities method creates and returns the Entities that represent the Layout::Table in its exploded form.",
+      "remarks": "The #entities method creates and returns the Entities that represent the Layout::Table in its exploded form.",
+      "params": [],
+      "returns": {
+        "type": "Layout::Entities",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#entities-instance_method"
+    },
+    {
+      "name": "get_column",
+      "signature": "get_column(index) =\u003E Layout::TableColumn",
+      "summary": "The #get_column method returns the Layout::TableColumn at the specified index.",
+      "remarks": "The #get_column method returns the Layout::TableColumn at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::TableColumn",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is not a valid index for the Layout::Table"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#get_column-instance_method"
+    },
+    {
+      "name": "get_row",
+      "signature": "get_row(index) =\u003E Layout::TableRow",
+      "summary": "The #get_row method returns the Layout::TableRow at the specified index.",
+      "remarks": "The #get_row method returns the Layout::TableRow at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Layout::TableRow",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is not a valid index for the Layout::Table"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#get_row-instance_method"
+    },
+    {
+      "name": "insert_column",
+      "signature": "insert_column(index) =\u003E Object",
+      "summary": "The #insert_column method inserts a new column at the specified index.",
+      "remarks": "The #insert_column method inserts a new column at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is not a valid index for the Layout::Table"
+        },
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Table is on a locked Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Table is locked"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#insert_column-instance_method"
+    },
+    {
+      "name": "insert_row",
+      "signature": "insert_row(index) =\u003E Object",
+      "summary": "The #insert_row method inserts a new row at the specified index.",
+      "remarks": "The #insert_row method inserts a new row at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is not a valid index for the Layout::Table"
+        },
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Table is on a locked Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Table is locked"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#insert_row-instance_method"
+    },
+    {
+      "name": "merge",
+      "signature": "merge(start_row, start_column, end_row, end_column) =\u003E Object",
+      "summary": "The #merge method merges a range of cells within a Layout::Table.",
+      "remarks": "The #merge method merges a range of cells within a Layout::Table. Only cells which are not already merged can be merged.",
+      "params": [
+        {
+          "name": "start_row",
+          "type": "Integer",
+          "optional": false
+        },
+        {
+          "name": "start_column",
+          "type": "Integer",
+          "optional": false
+        },
+        {
+          "name": "end_row",
+          "type": "Integer",
+          "optional": false
+        },
+        {
+          "name": "end_column",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if the passed in indices are not a valid for the Layout::Table"
+        },
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Table is on a locked Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Table is locked"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if the specified range of cells only spans a single cell"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if the specified range of cells contains a merged cell"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#merge-instance_method"
+    },
+    {
+      "name": "remove_column",
+      "signature": "remove_column(index) =\u003E Object",
+      "summary": "The #remove_column method removes the column at the specified index.",
+      "remarks": "The #remove_column method removes the column at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is not a valid index for the Layout::Table"
+        },
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Table is on a locked Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Table is locked"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#remove_column-instance_method"
+    },
+    {
+      "name": "remove_row",
+      "signature": "remove_row(index) =\u003E Object",
+      "summary": "The #remove_row method removes the row at the specified index.",
+      "remarks": "The #remove_row method removes the row at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexError",
+          "when": "if index is not a valid index for the Layout::Table"
+        },
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Table is on a locked Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Table is locked"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Table.html#remove_row-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

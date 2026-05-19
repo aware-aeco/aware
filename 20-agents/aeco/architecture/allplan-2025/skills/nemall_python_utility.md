@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_utility
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Utility namespace — 20 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DateDialog, Functions, FileDialog, DefaultDirectories, GUID, InitTkinter, SizeTList, ProgressBar, and 12 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Utility namespace — 20 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, DateDialog, DefaultDirectories, FileDialog, GUID, ProgressBar, InitTkinter, SuppressLangDllErrorMessages, and 12 more types.
 ---
 
 # NemAll_Python_Utility
@@ -310,9 +310,7 @@ Representation of the progress bar
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/)
 
 ### Constructors
-- `ProgressBar()` — Shows the progress bar
-- `ProgressBar(element: ProgressBar)` — Shows the progress bar
-- `ProgressBar(countOfSteps: int, headerTextNumber: int, bWithCancel: bool)` — Shows the progress bar
+- `ProgressBar() | ProgressBar(element: ProgressBar) | ProgressBar(countOfSteps: int, headerTextNumber: int, bWithCancel: bool)` — Shows the progress bar
 
 ### Methods
 #### `CloseProgressbar() -> bool`
@@ -325,7 +323,7 @@ Closed progressbar dialog
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.CloseProgressbar)
 
-#### `MakeStep(step: int) -> bool`
+#### `MakeStep(step: int) -> bool | MakeStep(step: int, additionalInfoStrID: int) -> bool | MakeStep(step: int, additionalInfo: str) -> bool`
 
 Make a step
 
@@ -338,35 +336,7 @@ Make a step
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.MakeStep)
 
-#### `MakeStep(step: int, additionalInfo: str) -> bool`
-
-Make a step
-
-**Remarks:** Make a step
-
-**Parameters:**
-- `step` (int) — step count
-- `additionalInfo` (str) — additional info
-
-**Returns:** `bool` — true step is correctly executed
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.MakeStep)
-
-#### `MakeStep(step: int, additionalInfoStrID: int) -> bool`
-
-Make a step
-
-**Remarks:** Make a step
-
-**Parameters:**
-- `step` (int) — step count
-- `additionalInfoStrID` (int) — additional info ID
-
-**Returns:** `bool` — true step is correctly executed
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.MakeStep)
-
-#### `ResetProgressBar( numberOfSteps: int, progressBarTitle: str, additionalInfo: str, closable: bool, ) -> bool`
+#### `ResetProgressBar( numberOfSteps: int, progressBarTitle: str, additionalInfo: str, closable: bool, ) -> bool | ResetProgressBar( numberOfSteps: int, progressBarTitleStrID: int, additionalInfoStrID: int, closable: bool, ) -> bool`
 
 Reset progressbar dialog
 
@@ -382,36 +352,7 @@ Reset progressbar dialog
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.ResetProgressBar)
 
-#### `ResetProgressBar( numberOfSteps: int, progressBarTitleStrID: int, additionalInfoStrID: int, closable: bool, ) -> bool`
-
-Reset progressbar dialog
-
-**Remarks:** Reset progressbar dialog
-
-**Parameters:**
-- `numberOfSteps` (int) — number of steps/elements
-- `progressBarTitleStrID` (int) — title of progressbar ID
-- `additionalInfoStrID` (int) — additional info ID
-- `closable` (bool) — progressbar can be canceled
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.ResetProgressBar)
-
-#### `SetAditionalInfo(text: str) -> bool`
-
-Set the additional info
-
-**Remarks:** Set the additional info
-
-**Parameters:**
-- `text` (str) — additional info text
-
-**Returns:** `bool` — true if set correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetAditionalInfo)
-
-#### `SetAditionalInfo(textId: int) -> bool`
+#### `SetAditionalInfo(textId: int) -> bool | SetAditionalInfo(text: str) -> bool`
 
 Set the additional info
 
@@ -463,20 +404,7 @@ Set number of steps
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetNumberOfSteps)
 
-#### `SetTitle(text: str) -> bool`
-
-Set the title
-
-**Remarks:** Set the title
-
-**Parameters:**
-- `text` (str) — title text
-
-**Returns:** `bool` — true if set correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetTitle)
-
-#### `SetTitle(textId: int) -> bool`
+#### `SetTitle(textId: int) -> bool | SetTitle(text: str) -> bool`
 
 Set the title
 
@@ -489,7 +417,7 @@ Set the title
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.SetTitle)
 
-#### `StartInfiniteProgressbar( progressBarTitle: str, additionalInfo: str, closable: bool, startImmediately: bool = False, ) -> bool`
+#### `StartInfiniteProgressbar( progressBarTitle: str, additionalInfo: str, closable: bool, startImmediately: bool = False, ) -> bool | StartInfiniteProgressbar( progressBarTitleID: int, additionalInfoStrID: int, closable: bool, startImmediately: bool = False, ) -> bool | StartInfiniteProgressbar( progressBarTitle: str, closable: bool, startImmediately: bool = False ) -> bool | StartInfiniteProgressbar( progressBarTitleID: int, closable: bool, startImmediately: bool = False ) -> bool`
 
 Starts infinite progressbar dialog
 
@@ -505,53 +433,7 @@ Starts infinite progressbar dialog
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartInfiniteProgressbar)
 
-#### `StartInfiniteProgressbar( progressBarTitle: str, closable: bool, startImmediately: bool = False ) -> bool`
-
-Starts progressbar dialog
-
-**Remarks:** Starts progressbar dialog
-
-**Parameters:**
-- `progressBarTitle` (str) — title of progressbar
-- `closable` (bool) — progressbar can be canceled
-- `startImmediately` (bool) — start immediately
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartInfiniteProgressbar)
-
-#### `StartInfiniteProgressbar( progressBarTitleID: int, additionalInfoStrID: int, closable: bool, startImmediately: bool = False, ) -> bool`
-
-Starts infinite progressbar dialog
-
-**Remarks:** Starts infinite progressbar dialog
-
-**Parameters:**
-- `progressBarTitleID` (int) — title of progressbar ID
-- `additionalInfoStrID` (int) — additional info ID
-- `closable` (bool) — progressbar can be canceled
-- `startImmediately` (bool) — start immediately
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartInfiniteProgressbar)
-
-#### `StartInfiniteProgressbar( progressBarTitleID: int, closable: bool, startImmediately: bool = False ) -> bool`
-
-Starts progressbar dialog
-
-**Remarks:** Starts progressbar dialog
-
-**Parameters:**
-- `progressBarTitleID` (int) — title of progressbar ID
-- `closable` (bool) — progressbar can be canceled
-- `startImmediately` (bool) — start immediately
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartInfiniteProgressbar)
-
-#### `StartProgressbar( numberOfSteps: int, progressBarTitle: str, additionalInfo: str, closable: bool, startImmediately: bool = False, ) -> bool`
+#### `StartProgressbar( numberOfSteps: int, progressBarTitle: str, additionalInfo: str, closable: bool, startImmediately: bool = False, ) -> bool | StartProgressbar( numberOfSteps: int, progressBarTitleID: int, additionalInfoStrID: int, closable: bool, startImmediately: bool = False, ) -> bool | StartProgressbar( numberOfSteps: int, progressBarTitle: str, closable: bool, startImmediately: bool = False, ) -> bool | StartProgressbar( numberOfSteps: int, progressBarTitleID: int, closable: bool, startImmediately: bool = False, ) -> bool`
 
 Starts progressbar dialog
 
@@ -561,55 +443,6 @@ Starts progressbar dialog
 - `numberOfSteps` (int) — number of steps/elements
 - `progressBarTitle` (str) — title of progressbar
 - `additionalInfo` (str) — additional info
-- `closable` (bool) — progressbar can be canceled
-- `startImmediately` (bool) — start immediately
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartProgressbar)
-
-#### `StartProgressbar( numberOfSteps: int, progressBarTitle: str, closable: bool, startImmediately: bool = False, ) -> bool`
-
-Starts progressbar dialog
-
-**Remarks:** Starts progressbar dialog
-
-**Parameters:**
-- `numberOfSteps` (int) — number of steps/elements
-- `progressBarTitle` (str) — title of progressbar
-- `closable` (bool) — progressbar can be canceled
-- `startImmediately` (bool) — start immediately
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartProgressbar)
-
-#### `StartProgressbar( numberOfSteps: int, progressBarTitleID: int, additionalInfoStrID: int, closable: bool, startImmediately: bool = False, ) -> bool`
-
-Starts progressbar dialog
-
-**Remarks:** Starts progressbar dialog
-
-**Parameters:**
-- `numberOfSteps` (int) — number of steps/elements
-- `progressBarTitleID` (int) — title of progressbar ID
-- `additionalInfoStrID` (int) — additional info ID
-- `closable` (bool) — progressbar can be canceled
-- `startImmediately` (bool) — start immediately
-
-**Returns:** `bool` — true if progressbar started correctly
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/ProgressBar/#NemAll_Python_Utility.ProgressBar.StartProgressbar)
-
-#### `StartProgressbar( numberOfSteps: int, progressBarTitleID: int, closable: bool, startImmediately: bool = False, ) -> bool`
-
-Starts progressbar dialog
-
-**Remarks:** Starts progressbar dialog
-
-**Parameters:**
-- `numberOfSteps` (int) — number of steps/elements
-- `progressBarTitleID` (int) — title of progressbar ID
 - `closable` (bool) — progressbar can be canceled
 - `startImmediately` (bool) — start immediately
 
@@ -787,26 +620,13 @@ Insert an item in the list
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.insert)
 
-#### `pop() -> int`
+#### `pop() -> int | pop(index: int) -> int`
 
 Pop the last value from the list
 
 **Remarks:** Pop the last value from the list
 
 **Returns:** `int` — Last value from the list
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop)
-
-#### `pop(index: int) -> int`
-
-Pop an item from the list
-
-**Remarks:** Pop an item from the list
-
-**Parameters:**
-- `index` (int) — Index of the item
-
-**Returns:** `int` — Value of the item
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.pop)
 
@@ -829,19 +649,11 @@ Reverse the list
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.reverse)
 
-#### `sort()`
+#### `sort() | sort(cmp: object)`
 
 Sort the list
 
 **Remarks:** Sort the list
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.sort)
-
-#### `sort(cmp: object)`
-
-EXPERIMENTAL!
-
-**Remarks:** EXPERIMENTAL!
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SizeTList/#NemAll_Python_Utility.SizeTList.sort)
 
@@ -861,8 +673,7 @@ Timer
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/Timer/)
 
 ### Constructors
-- `Timer()` — Initialize
-- `Timer(timer: Timer)` — Copy constructor
+- `Timer() | Timer(timer: Timer)` — Initialize
 
 ### Methods
 #### `PrintTime(bReset: bool)`
@@ -883,8 +694,7 @@ Print the time
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecByteList/)
 
 ### Constructors
-- `VecByteList()` — Initialize
-- `VecByteList(valueList: list)` — Constructor with an initializer list
+- `VecByteList() | VecByteList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: int) -> bool`
@@ -1008,8 +818,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecDoubleList/)
 
 ### Constructors
-- `VecDoubleList()` — Initialize
-- `VecDoubleList(valueList: list)` — Constructor with an initializer list
+- `VecDoubleList() | VecDoubleList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: float) -> bool`
@@ -1247,8 +1056,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecIntList/)
 
 ### Constructors
-- `VecIntList()` — Initialize
-- `VecIntList(valueList: list)` — Constructor with an initializer list
+- `VecIntList() | VecIntList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: int) -> bool`
@@ -1372,8 +1180,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecSizeTList/)
 
 ### Constructors
-- `VecSizeTList()` — Initialize
-- `VecSizeTList(valueList: list)` — Constructor with an initializer list
+- `VecSizeTList() | VecSizeTList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: int) -> bool`
@@ -1497,8 +1304,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecStringList/)
 
 ### Constructors
-- `VecStringList()` — Initialize
-- `VecStringList(valueList: list)` — Constructor with an initializer list
+- `VecStringList() | VecStringList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: str) -> bool`
@@ -1622,8 +1428,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecUIntList/)
 
 ### Constructors
-- `VecUIntList()` — Initialize
-- `VecUIntList(valueList: list)` — Constructor with an initializer list
+- `VecUIntList() | VecUIntList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: int) -> bool`
@@ -1747,8 +1552,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecULongList/)
 
 ### Constructors
-- `VecULongList()` — Initialize
-- `VecULongList(valueList: list)` — Constructor with an initializer list
+- `VecULongList() | VecULongList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: int) -> bool`
@@ -1872,8 +1676,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecUShortList/)
 
 ### Constructors
-- `VecUShortList()` — Initialize
-- `VecUShortList(valueList: list)` — Constructor with an initializer list
+- `VecUShortList() | VecUShortList(valueList: list)` — Initialize
 
 ### Methods
 #### `__contains__(value: int) -> bool`

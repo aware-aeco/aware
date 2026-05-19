@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/",
   "constructors": [
     {
-      "name": "CoordinateInput()",
+      "name": "CoordinateInput",
       "signature": "CoordinateInput()",
       "summary": "Initialize",
       "remarks": "Initialize",
@@ -21,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "GetCurrentPoint()",
-      "signature": "GetCurrentPoint()",
+      "name": "GetCurrentPoint",
+      "signature": "GetCurrentPoint() | GetCurrentPoint(startPnt) | GetCurrentPoint(startPnt, bStartPnt) | GetCurrentPoint(bStartPnt)",
       "summary": "Get and mark the current input point",
       "remarks": "Get and mark the current input point",
       "params": [],
@@ -35,83 +35,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
     },
     {
-      "name": "GetCurrentPoint(startPnt)",
-      "signature": "GetCurrentPoint(startPnt)",
-      "summary": "Get and mark the current input point",
-      "remarks": "Get and mark the current input point",
-      "params": [
-        {
-          "name": "startPnt",
-          "type": "Point3D",
-          "doc": "Starting point End point input is possible by a distance input to the start point",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "CoordinateInputResult",
-        "doc": "Current input point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
-    },
-    {
-      "name": "GetCurrentPoint(startPnt, bStartPnt)",
-      "signature": "GetCurrentPoint(startPnt, bStartPnt)",
-      "summary": "Get and mark the current input point",
-      "remarks": "Get and mark the current input point",
-      "params": [
-        {
-          "name": "startPnt",
-          "type": "Point3D",
-          "doc": "Starting point",
-          "optional": false
-        },
-        {
-          "name": "bStartPnt",
-          "type": "bool",
-          "doc": "Starting point is active End point input is possible by a distance input to the start point",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "CoordinateInputResult",
-        "doc": "Current input point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
-    },
-    {
-      "name": "GetCurrentPoint(bStartPnt)",
-      "signature": "GetCurrentPoint(bStartPnt)",
-      "summary": "Get and mark the current input point End point input is possible by a distance input to the input point of the last input step",
-      "remarks": "Get and mark the current input point End point input is possible by a distance input to the input point of the last input step",
-      "params": [
-        {
-          "name": "bStartPnt",
-          "type": "bool",
-          "doc": "Starting point is active true/false.",
-          "optional": false
-        },
-        {
-          "name": "End",
-          "type": "object",
-          "doc": "point input is possible by a distance input to the input point of the last input step",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "CoordinateInputResult",
-        "doc": "Current input point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
-    },
-    {
-      "name": "GetInputPoint(mouseMsg, pnt, pMsgInfo)",
-      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo)",
+      "name": "GetInputPoint",
+      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo) | GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt) | GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)",
       "summary": "Get the current input point",
       "remarks": "Get the current input point",
       "params": [
@@ -143,92 +68,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint"
     },
     {
-      "name": "GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt)",
-      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt)",
-      "summary": "Get the current input point End point input is possible by a distance input to the input point of the last input step",
-      "remarks": "Get the current input point End point input is possible by a distance input to the input point of the last input step",
-      "params": [
-        {
-          "name": "mouseMsg",
-          "type": "int",
-          "doc": "Mouse message WM_xxx",
-          "optional": false
-        },
-        {
-          "name": "pnt",
-          "type": "Point2D",
-          "doc": "Cursor point (view coordinate)",
-          "optional": false
-        },
-        {
-          "name": "pMsgInfo",
-          "type": "AddMsgInfo",
-          "doc": "Additional message info",
-          "optional": false
-        },
-        {
-          "name": "bStartPnt",
-          "type": "bool",
-          "doc": "Starting point is active End point input is possible by a distance input to the input point of the last input step",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "CoordinateInputResult",
-        "doc": "Current input point result"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint"
-    },
-    {
-      "name": "GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)",
-      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)",
-      "summary": "Get the current input point End point input is possible by a distance input to the start point",
-      "remarks": "Get the current input point End point input is possible by a distance input to the start point",
-      "params": [
-        {
-          "name": "mouseMsg",
-          "type": "int",
-          "doc": "Mouse message WM_xxx",
-          "optional": false
-        },
-        {
-          "name": "pnt",
-          "type": "Point2D",
-          "doc": "Cursor point (view coordinate)",
-          "optional": false
-        },
-        {
-          "name": "pMsgInfo",
-          "type": "AddMsgInfo",
-          "doc": "Additional message info",
-          "optional": false
-        },
-        {
-          "name": "startPnt",
-          "type": "Point3D",
-          "doc": "Starting point",
-          "optional": false
-        },
-        {
-          "name": "bStartPnt",
-          "type": "bool",
-          "doc": "Starting point is active End point input is possible by a distance input to the start point",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "CoordinateInputResult",
-        "doc": "Current input point result"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint"
-    },
-    {
-      "name": "IsValueInputControl(id)",
-      "signature": "IsValueInputControl(id)",
+      "name": "IsValueInputControl",
+      "signature": "IsValueInputControl(id) | IsValueInputControl()",
       "summary": "Check, whether the ID belongs to the value input control (from the coordinate input dialog)",
       "remarks": "Check, whether the ID belongs to the value input control (from the coordinate input dialog)",
       "params": [
@@ -248,22 +89,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControl"
     },
     {
-      "name": "IsValueInputControl()",
-      "signature": "IsValueInputControl()",
-      "summary": "Check, whether a value input control exists",
-      "remarks": "Check, whether a value input control exists",
-      "params": [],
-      "returns": {
-        "type": "bool",
-        "doc": "A value input control exists: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControl"
-    },
-    {
-      "name": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter)",
-      "signature": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter)",
+      "name": "SelectElement",
+      "signature": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter) | SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)",
       "summary": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
       "remarks": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
       "params": [
@@ -301,63 +128,6 @@
           "name": "bAllowCenter",
           "type": "bool",
           "doc": "Allow element identification by center point",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "Element is selected: true false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectElement"
-    },
-    {
-      "name": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)",
-      "signature": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)",
-      "summary": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
-      "remarks": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
-      "params": [
-        {
-          "name": "mouseMsg",
-          "type": "int",
-          "doc": "Mouse message WM_xxx",
-          "optional": false
-        },
-        {
-          "name": "pnt",
-          "type": "Point2D",
-          "doc": "Cursor point (view coordinate)",
-          "optional": false
-        },
-        {
-          "name": "pMsgInfo",
-          "type": "AddMsgInfo",
-          "doc": "Additional message info",
-          "optional": false
-        },
-        {
-          "name": "bHighlight",
-          "type": "bool",
-          "doc": "Highlight the selected element",
-          "optional": false
-        },
-        {
-          "name": "bSelAlways",
-          "type": "bool",
-          "doc": "true: Select always",
-          "optional": false
-        },
-        {
-          "name": "bAllowCenter",
-          "type": "bool",
-          "doc": "Allow element identification by center point",
-          "optional": false
-        },
-        {
-          "name": "selectSetting",
-          "type": "ElementSelectFilterSetting",
-          "doc": "Element selection filter",
           "optional": false
         }
       ],

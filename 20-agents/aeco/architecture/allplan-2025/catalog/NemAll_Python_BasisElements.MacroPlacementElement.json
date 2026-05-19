@@ -10,95 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/",
   "constructors": [
     {
-      "name": "MacroPlacementElement()",
-      "signature": "MacroPlacementElement()",
+      "name": "MacroPlacementElement",
+      "signature": "MacroPlacementElement() | MacroPlacementElement( commonProp: CommonProperties, macroPlacementProp: MacroPlacementProperties, macro: object, reinforcementList: list, libraryElementList: list = [], architectureElementsList: list = [], fixtureElementsList: list = [], assemblyGroupList: list = [], precastMWSList: list = [], ) | MacroPlacementElement(placement: MacroPlacementElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.__init__"
-    },
-    {
-      "name": "MacroPlacementElement( commonProp: CommonProperties, macroPlacementProp: MacroPlacementProperties, macro: object, reinforcementList: list, libraryElementList: list = [], architectureElementsList: list = [], fixtureElementsList: list = [], assemblyGroupList: list = [], precastMWSList: list = [], )",
-      "signature": "MacroPlacementElement( commonProp: CommonProperties, macroPlacementProp: MacroPlacementProperties, macro: object, reinforcementList: list, libraryElementList: list = [], architectureElementsList: list = [], fixtureElementsList: list = [], assemblyGroupList: list = [], precastMWSList: list = [], )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "macroPlacementProp",
-          "type": "MacroPlacementProperties",
-          "doc": "MacroPlacement properties",
-          "optional": false
-        },
-        {
-          "name": "macro",
-          "type": "object",
-          "doc": "Macro definition element",
-          "optional": false
-        },
-        {
-          "name": "reinforcementList",
-          "type": "list",
-          "doc": "Reinforcement elements",
-          "optional": false
-        },
-        {
-          "name": "libraryElementList",
-          "type": "list",
-          "doc": "Library elements list",
-          "optional": false
-        },
-        {
-          "name": "architectureElementsList",
-          "type": "list",
-          "doc": "Architecture elements list",
-          "optional": false
-        },
-        {
-          "name": "fixtureElementsList",
-          "type": "list",
-          "doc": "Fixture elements list",
-          "optional": false
-        },
-        {
-          "name": "assemblyGroupList",
-          "type": "list",
-          "doc": "Assembly group list",
-          "optional": false
-        },
-        {
-          "name": "precastMWSList",
-          "type": "list",
-          "doc": "Precas MWS list",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroPlacementElement/#NemAll_Python_BasisElements.MacroPlacementElement.__init__"
-    },
-    {
-      "name": "MacroPlacementElement(placement: MacroPlacementElement)",
-      "signature": "MacroPlacementElement(placement: MacroPlacementElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "placement",
-          "type": "MacroPlacementElement",
-          "doc": "Placement to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/",
   "constructors": [
     {
-      "name": "PrecastLayerProperties()",
+      "name": "PrecastLayerProperties",
       "signature": "PrecastLayerProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

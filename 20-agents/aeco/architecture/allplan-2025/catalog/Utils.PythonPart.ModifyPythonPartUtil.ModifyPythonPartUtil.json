@@ -10,7 +10,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/",
   "constructors": [
     {
-      "name": "ModifyPythonPartUtil()",
+      "name": "ModifyPythonPartUtil",
       "signature": "ModifyPythonPartUtil(python_part: BaseElementAdapter)",
       "summary": "initialize",
       "remarks": "initialize",

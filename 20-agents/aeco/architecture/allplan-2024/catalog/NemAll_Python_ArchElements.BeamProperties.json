@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/",
   "constructors": [
     {
-      "name": "BeamProperties()",
-      "signature": "BeamProperties()",
+      "name": "BeamProperties",
+      "signature": "BeamProperties() | BeamProperties(beamProp)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.__init__"
-    },
-    {
-      "name": "BeamProperties(beamProp)",
-      "signature": "BeamProperties(beamProp)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "beamProp",
-          "type": "BeamProperties",
-          "doc": "Beam properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

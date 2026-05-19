@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/ViewCode/",
   "constructors": [
     {
-      "name": "ViewCode()",
+      "name": "ViewCode",
       "signature": "ViewCode(hash_value: str)",
       "summary": "Initialization of code view class",
       "remarks": "Initialization of code view class",

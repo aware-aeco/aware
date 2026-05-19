@@ -7,28 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/",
   "constructors": [
     {
-      "name": "SectionDrawingFilesProperties()",
-      "signature": "SectionDrawingFilesProperties()",
+      "name": "SectionDrawingFilesProperties",
+      "signature": "SectionDrawingFilesProperties() | SectionDrawingFilesProperties(A)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__init__"
-    },
-    {
-      "name": "SectionDrawingFilesProperties(A)",
-      "signature": "SectionDrawingFilesProperties(A)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "A",
-          "type": "SectionDrawingFilesProperties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

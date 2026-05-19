@@ -10,35 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/",
   "constructors": [
     {
-      "name": "MacroElement()",
-      "signature": "MacroElement()",
+      "name": "MacroElement",
+      "signature": "MacroElement() | MacroElement(macroProp: MacroProperties, slideList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroElement/#NemAll_Python_BasisElements.MacroElement.__init__"
-    },
-    {
-      "name": "MacroElement(macroProp: MacroProperties, slideList: list)",
-      "signature": "MacroElement(macroProp: MacroProperties, slideList: list)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "macroProp",
-          "type": "MacroProperties",
-          "doc": "Macro properties",
-          "optional": false
-        },
-        {
-          "name": "slideList",
-          "type": "list",
-          "doc": "Slide list of macro definition",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -1,6 +1,6 @@
 ---
 name: allplan-testhelper-profileutil
-description: This skill encodes the allplan 2024.0 surface of the TestHelper.ProfileUtil namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ProfileUtil, ProfilerType, Functions.
+description: This skill encodes the allplan 2024.0 surface of the TestHelper.ProfileUtil namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ProfilerType, ProfileUtil, Functions.
 ---
 
 # TestHelper.ProfileUtil

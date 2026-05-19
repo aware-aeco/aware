@@ -10,47 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/",
   "constructors": [
     {
-      "name": "StructuralBraceElement()",
-      "signature": "StructuralBraceElement()",
+      "name": "StructuralBraceElement",
+      "signature": "StructuralBraceElement() | StructuralBraceElement(properties: StructuralBraceProperties) | StructuralBraceElement(element: StructuralBraceElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
-    },
-    {
-      "name": "StructuralBraceElement(properties: StructuralBraceProperties)",
-      "signature": "StructuralBraceElement(properties: StructuralBraceProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "properties",
-          "type": "StructuralBraceProperties",
-          "doc": "StructuralBrace properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
-    },
-    {
-      "name": "StructuralBraceElement(element: StructuralBraceElement)",
-      "signature": "StructuralBraceElement(element: StructuralBraceElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "StructuralBraceElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

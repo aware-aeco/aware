@@ -10,7 +10,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/",
   "constructors": [
     {
-      "name": "PolylineInput()",
+      "name": "PolylineInput",
       "signature": "PolylineInput(coordInput, bZCoord)",
       "summary": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state",
       "remarks": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state",

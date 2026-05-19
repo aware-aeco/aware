@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/",
   "constructors": [
     {
-      "name": "Plane3D()",
-      "signature": "Plane3D()",
+      "name": "Plane3D",
+      "signature": "Plane3D() | Plane3D(plane: Plane3D) | Plane3D(point: Point3D, normalVector: Vector3D) | Plane3D(point1: Point3D, point2: Point3D, point3: Point3D) | Plane3D(axis: Axis3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__init__"
-    },
-    {
-      "name": "Plane3D(plane: Plane3D)",
-      "signature": "Plane3D(plane: Plane3D)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "plane",
-          "type": "Plane3D",
-          "doc": "Plane which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__init__"
-    },
-    {
-      "name": "Plane3D(point: Point3D, normalVector: Vector3D)",
-      "signature": "Plane3D(point: Point3D, normalVector: Vector3D)",
-      "summary": "Constructor Create 3D Plane with given point and vector",
-      "remarks": "Constructor Create 3D Plane with given point and vector",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "Init point of the plane.",
-          "optional": false
-        },
-        {
-          "name": "normalVector",
-          "type": "Vector3D",
-          "doc": "Init vector of the plane.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__init__"
-    },
-    {
-      "name": "Plane3D(point1: Point3D, point2: Point3D, point3: Point3D)",
-      "signature": "Plane3D(point1: Point3D, point2: Point3D, point3: Point3D)",
-      "summary": "Constructor Create 3D Plane from three points which lies on this plane. If plane can not be computed, then constructor throw geometry exception \u0027Incorrect parameters\u0027.",
-      "remarks": "Constructor Create 3D Plane from three points which lies on this plane. If plane can not be computed, then constructor throw geometry exception \u0027Incorrect parameters\u0027.",
-      "params": [
-        {
-          "name": "point1",
-          "type": "Point3D",
-          "doc": "1st point on the plane.",
-          "optional": false
-        },
-        {
-          "name": "point2",
-          "type": "Point3D",
-          "doc": "2nd point on the plane.",
-          "optional": false
-        },
-        {
-          "name": "point3",
-          "type": "Point3D",
-          "doc": "3rd point on the plane.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__init__"
-    },
-    {
-      "name": "Plane3D(axis: Axis3D)",
-      "signature": "Plane3D(axis: Axis3D)",
-      "summary": "Create a plane from a 3D axis",
-      "remarks": "Create a plane from a 3D axis",
-      "params": [
-        {
-          "name": "axis",
-          "type": "Axis3D",
-          "doc": "Axis",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -247,8 +157,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__eq__"
     },
     {
-      "name": "__mul__(matrix: Matrix2D) -\u003E Plane3D",
-      "signature": "__mul__(matrix: Matrix2D) -\u003E Plane3D",
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E Plane3D | __mul__(matrix: Matrix3D) -\u003E Plane3D",
       "summary": "2D matrix transformation.",
       "remarks": "2D matrix transformation.",
       "params": [
@@ -256,27 +166,6 @@
           "name": "matrix",
           "type": "Matrix2D",
           "doc": "2D transformation Matrix",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Plane3D",
-        "doc": "Copy of transformed 3D plane."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__mul__"
-    },
-    {
-      "name": "__mul__(matrix: Matrix3D) -\u003E Plane3D",
-      "signature": "__mul__(matrix: Matrix3D) -\u003E Plane3D",
-      "summary": "3D matrix transformation.",
-      "remarks": "3D matrix transformation.",
-      "params": [
-        {
-          "name": "matrix",
-          "type": "Matrix3D",
-          "doc": "3D transformation Matrix",
           "optional": false
         }
       ],

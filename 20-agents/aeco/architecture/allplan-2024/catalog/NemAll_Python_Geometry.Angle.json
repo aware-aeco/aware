@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/",
   "constructors": [
     {
-      "name": "Angle()",
-      "signature": "Angle()",
+      "name": "Angle",
+      "signature": "Angle() | Angle(angle) | Angle(angle)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__init__"
-    },
-    {
-      "name": "Angle(angle)",
-      "signature": "Angle(angle)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "angle which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__init__"
-    },
-    {
-      "name": "Angle(angle)",
-      "signature": "Angle(angle)",
-      "summary": "Constructor. Initialize angle from single value",
-      "remarks": "Constructor. Initialize angle from single value",
-      "params": [
-        {
-          "name": "angle",
-          "type": "float",
-          "doc": "Angle.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -56,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Set(angle)",
-      "signature": "Set(angle)",
+      "name": "Set",
+      "signature": "Set(angle) | Set(angle)",
       "summary": "Set angle as radian value.",
       "remarks": "Set angle as radian value.",
       "params": [
@@ -74,26 +38,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Set"
     },
     {
-      "name": "Set(angle)",
-      "signature": "Set(angle)",
-      "summary": "Set angle as radian value.",
-      "remarks": "Set angle as radian value.",
-      "params": [
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "angle which will be set.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Set"
-    },
-    {
-      "name": "__add__(angle)",
-      "signature": "__add__(angle)",
+      "name": "__add__",
+      "signature": "__add__(angle) | __add__(angle)",
       "summary": "Addition operator",
       "remarks": "Addition operator",
       "params": [
@@ -101,27 +47,6 @@
           "name": "angle",
           "type": "Angle",
           "doc": "Angle which will be added",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Angle",
-        "doc": "New angle"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__add__"
-    },
-    {
-      "name": "__add__(angle)",
-      "signature": "__add__(angle)",
-      "summary": "Addition operator",
-      "remarks": "Addition operator",
-      "params": [
-        {
-          "name": "angle",
-          "type": "float",
-          "doc": "Angle as double value which will be added",
           "optional": false
         }
       ],

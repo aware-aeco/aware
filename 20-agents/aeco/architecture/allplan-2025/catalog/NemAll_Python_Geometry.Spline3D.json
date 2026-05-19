@@ -8,64 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/",
   "constructors": [
     {
-      "name": "Spline3D()",
-      "signature": "Spline3D()",
+      "name": "Spline3D",
+      "signature": "Spline3D() | Spline3D(splinePoints: list) | Spline3D(spline: Spline3D) | Spline3D(spline: Spline2D, zPlane: float)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__init__"
-    },
-    {
-      "name": "Spline3D(splinePoints: list)",
-      "signature": "Spline3D(splinePoints: list)",
-      "summary": "constructor.",
-      "remarks": "constructor.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__init__"
-    },
-    {
-      "name": "Spline3D(spline: Spline3D)",
-      "signature": "Spline3D(spline: Spline3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "spline",
-          "type": "Spline3D",
-          "doc": "Spline which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.__init__"
-    },
-    {
-      "name": "Spline3D(spline: Spline2D, zPlane: float)",
-      "signature": "Spline3D(spline: Spline2D, zPlane: float)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "spline",
-          "type": "Spline2D",
-          "doc": "Spline which will be copied.",
-          "optional": false
-        },
-        {
-          "name": "zPlane",
-          "type": "float",
-          "doc": "Z plane for the spline",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -88,8 +35,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculateEndVector"
     },
     {
-      "name": "CalculatePoint(param: float) -\u003E Point3D",
-      "signature": "CalculatePoint(param: float) -\u003E Point3D",
+      "name": "CalculatePoint",
+      "signature": "CalculatePoint(param: float) -\u003E Point3D | CalculatePoint(param: float, cpoints: Point3DList) -\u003E Point3D",
       "summary": "Calculates point on spline",
       "remarks": "Calculates point on spline",
       "params": [
@@ -97,33 +44,6 @@
           "name": "param",
           "type": "float",
           "doc": "parameter of spline.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "Resulting point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculatePoint"
-    },
-    {
-      "name": "CalculatePoint(param: float, cpoints: Point3DList) -\u003E Point3D",
-      "signature": "CalculatePoint(param: float, cpoints: Point3DList) -\u003E Point3D",
-      "summary": "Calculates point on spline",
-      "remarks": "Calculates point on spline",
-      "params": [
-        {
-          "name": "param",
-          "type": "float",
-          "doc": "parameter of spline.",
-          "optional": false
-        },
-        {
-          "name": "cpoints",
-          "type": "Point3DList",
-          "doc": "control points of spline.",
           "optional": false
         }
       ],

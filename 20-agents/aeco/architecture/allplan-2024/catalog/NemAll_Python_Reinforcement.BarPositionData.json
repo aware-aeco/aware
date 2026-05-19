@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/",
   "constructors": [
     {
-      "name": "BarPositionData()",
+      "name": "BarPositionData",
       "signature": "BarPositionData(element)",
       "summary": "Copy constructor",
       "remarks": "Copy constructor",

@@ -8,113 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/",
   "constructors": [
     {
-      "name": "Polyline2D()",
-      "signature": "Polyline2D()",
+      "name": "Polyline2D",
+      "signature": "Polyline2D() | Polyline2D(pntList) | Polyline2D(polyline) | Polyline2D(points) | Polyline2D(polyline, skip, count) | Polyline2D(polygon)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__init__"
-    },
-    {
-      "name": "Polyline2D(pntList)",
-      "signature": "Polyline2D(pntList)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "pntList",
-          "type": "list",
-          "doc": "Point list",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__init__"
-    },
-    {
-      "name": "Polyline2D(polyline)",
-      "signature": "Polyline2D(polyline)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "polyline",
-          "type": "Polyline2D",
-          "doc": "Polyline which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__init__"
-    },
-    {
-      "name": "Polyline2D(points)",
-      "signature": "Polyline2D(points)",
-      "summary": "Vector points constructor.",
-      "remarks": "Vector points constructor.",
-      "params": [
-        {
-          "name": "points",
-          "type": "Point2DList",
-          "doc": "Vector of points which will be moved to polyline",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__init__"
-    },
-    {
-      "name": "Polyline2D(polyline, skip, count)",
-      "signature": "Polyline2D(polyline, skip, count)",
-      "summary": "Copy constructor with limited scope",
-      "remarks": "Copy constructor with limited scope",
-      "params": [
-        {
-          "name": "polyline",
-          "type": "Polyline2D",
-          "doc": "Polyline which will be copied",
-          "optional": false
-        },
-        {
-          "name": "skip",
-          "type": "int",
-          "doc": "count of points ignored at start.",
-          "optional": false
-        },
-        {
-          "name": "count",
-          "type": "int",
-          "doc": "count of points copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__init__"
-    },
-    {
-      "name": "Polyline2D(polygon)",
-      "signature": "Polyline2D(polygon)",
-      "summary": "Constructor. If polygon have two or more components, then constructor throw Geometry exception.",
-      "remarks": "Constructor. If polygon have two or more components, then constructor throw Geometry exception.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "Polygon2D",
-          "doc": "Polygon2D whose points and reference point will build the new polyline",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -123,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "__iadd__(polyline)",
-      "signature": "__iadd__(polyline)",
+      "name": "__iadd__",
+      "signature": "__iadd__(polyline) | __iadd__(point)",
       "summary": "Addition assignment operator",
       "remarks": "Addition assignment operator",
       "params": [
@@ -132,27 +30,6 @@
           "name": "polyline",
           "type": "Polyline2D",
           "doc": "Polyline which will be added",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polyline2D",
-        "doc": "Reference to polyline"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(point)",
-      "signature": "__iadd__(point)",
-      "summary": "Addition assignment operator",
-      "remarks": "Addition assignment operator",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "New Point2D which will be added to the polyline",
           "optional": false
         }
       ],

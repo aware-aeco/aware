@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2DList/",
   "constructors": [
     {
-      "name": "AxisPlacement2DList()",
-      "signature": "AxisPlacement2DList()",
+      "name": "AxisPlacement2DList",
+      "signature": "AxisPlacement2DList() | AxisPlacement2DList(ele: AxisPlacement2D) | AxisPlacement2DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2DList/#NemAll_Python_Geometry.AxisPlacement2DList.__init__"
-    },
-    {
-      "name": "AxisPlacement2DList(ele: AxisPlacement2D)",
-      "signature": "AxisPlacement2DList(ele: AxisPlacement2D)",
-      "summary": "Constructor with a AxisPlacement2D",
-      "remarks": "Constructor with a AxisPlacement2D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "AxisPlacement2D",
-          "doc": "AxisPlacement2D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2DList/#NemAll_Python_Geometry.AxisPlacement2DList.__init__"
-    },
-    {
-      "name": "AxisPlacement2DList(eleList: list)",
-      "signature": "AxisPlacement2DList(eleList: list)",
-      "summary": "Constructor with a list of AxisPlacement2D",
-      "remarks": "Constructor with a list of AxisPlacement2D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "AxisPlacement2D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2DList/#NemAll_Python_Geometry.AxisPlacement2DList.append"
     },
     {
-      "name": "extend(iterable: AxisPlacement2DList)",
-      "signature": "extend(iterable: AxisPlacement2DList)",
+      "name": "extend",
+      "signature": "extend(iterable: AxisPlacement2DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "AxisPlacement2DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2DList/#NemAll_Python_Geometry.AxisPlacement2DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "AxisPlacement2D list",
           "optional": false
         }
       ],

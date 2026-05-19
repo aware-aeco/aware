@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/StringTableService/StringTableService/",
   "constructors": [
     {
-      "name": "StringTableService()",
+      "name": "StringTableService",
       "signature": "StringTableService(path)",
       "summary": "Initialize the data",
       "remarks": "Initialize the data",

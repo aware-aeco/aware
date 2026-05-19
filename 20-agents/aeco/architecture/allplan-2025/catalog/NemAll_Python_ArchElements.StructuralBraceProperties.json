@@ -10,29 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/",
   "constructors": [
     {
-      "name": "StructuralBraceProperties()",
-      "signature": "StructuralBraceProperties()",
+      "name": "StructuralBraceProperties",
+      "signature": "StructuralBraceProperties() | StructuralBraceProperties(value: StructuralBraceProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.__init__"
-    },
-    {
-      "name": "StructuralBraceProperties(value: StructuralBraceProperties)",
-      "signature": "StructuralBraceProperties(value: StructuralBraceProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "value",
-          "type": "StructuralBraceProperties",
-          "doc": "Structural Beam properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

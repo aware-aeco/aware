@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/ConcreteCoverProperties/",
   "constructors": [
     {
-      "name": "ConcreteCoverProperties()",
+      "name": "ConcreteCoverProperties",
       "signature": "ConcreteCoverProperties(left=0, right=0, top=0, bottom=0)",
       "summary": "Set the properties of the concrete cover",
       "remarks": "Set the properties of the concrete cover",

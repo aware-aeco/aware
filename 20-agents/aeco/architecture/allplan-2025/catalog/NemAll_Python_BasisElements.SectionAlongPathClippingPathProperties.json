@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathClippingPathProperties(bInitFromSTW: bool = False)",
-      "signature": "SectionAlongPathClippingPathProperties(bInitFromSTW: bool = False)",
+      "name": "SectionAlongPathClippingPathProperties",
+      "signature": "SectionAlongPathClippingPathProperties(bInitFromSTW: bool = False) | SectionAlongPathClippingPathProperties(B: SectionAlongPathClippingPathProperties)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -16,24 +16,6 @@
           "name": "bInitFromSTW",
           "type": "bool",
           "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathClippingPathProperties(B: SectionAlongPathClippingPathProperties)",
-      "signature": "SectionAlongPathClippingPathProperties(B: SectionAlongPathClippingPathProperties)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathClippingPathProperties",
-          "doc": "object to copy",
           "optional": false
         }
       ],

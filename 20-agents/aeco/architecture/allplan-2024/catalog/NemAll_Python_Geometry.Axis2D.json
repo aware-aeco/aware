@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/",
   "constructors": [
     {
-      "name": "Axis2D()",
-      "signature": "Axis2D()",
+      "name": "Axis2D",
+      "signature": "Axis2D() | Axis2D(axisPoint, vector) | Axis2D(refPoint, axisPoint, vector) | Axis2D(line) | Axis2D(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
-    },
-    {
-      "name": "Axis2D(axisPoint, vector)",
-      "signature": "Axis2D(axisPoint, vector)",
-      "summary": "Constructor. Reference point is initialized to [0.,0.] Used world coordinate system for AxisPoint",
-      "remarks": "Constructor. Reference point is initialized to [0.,0.] Used world coordinate system for AxisPoint",
-      "params": [
-        {
-          "name": "axisPoint",
-          "type": "Point2D",
-          "doc": "Axis point",
-          "optional": false
-        },
-        {
-          "name": "vector",
-          "type": "Vector2D",
-          "doc": "Axis vector",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
-    },
-    {
-      "name": "Axis2D(refPoint, axisPoint, vector)",
-      "signature": "Axis2D(refPoint, axisPoint, vector)",
-      "summary": "Constructor. Used local coordinate system for AxisPoint",
-      "remarks": "Constructor. Used local coordinate system for AxisPoint",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point2D",
-          "doc": "Reference point",
-          "optional": false
-        },
-        {
-          "name": "axisPoint",
-          "type": "Point2D",
-          "doc": "Axis point",
-          "optional": false
-        },
-        {
-          "name": "vector",
-          "type": "Vector2D",
-          "doc": "Axis vector",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
-    },
-    {
-      "name": "Axis2D(line)",
-      "signature": "Axis2D(line)",
-      "summary": "Explicit constructor from Line2D",
-      "remarks": "Explicit constructor from Line2D",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line2D",
-          "doc": "2D line",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
-    },
-    {
-      "name": "Axis2D(element)",
-      "signature": "Axis2D(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "Axis2D",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -110,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Set(axis)",
-      "signature": "Set(axis)",
+      "name": "Set",
+      "signature": "Set(axis) | Set(refPoint, axisPoint, vector)",
       "summary": "Set axis",
       "remarks": "Set axis",
       "params": [
@@ -119,36 +29,6 @@
           "name": "axis",
           "type": "Axis2D",
           "doc": "Axis which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.Set"
-    },
-    {
-      "name": "Set(refPoint, axisPoint, vector)",
-      "signature": "Set(refPoint, axisPoint, vector)",
-      "summary": "Set axis Used local coordinate system for axisPoint",
-      "remarks": "Set axis Used local coordinate system for axisPoint",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point2D",
-          "doc": "Reference point",
-          "optional": false
-        },
-        {
-          "name": "axisPoint",
-          "type": "Point2D",
-          "doc": "Axis point",
-          "optional": false
-        },
-        {
-          "name": "vector",
-          "type": "Vector2D",
-          "doc": "Axis vector",
           "optional": false
         }
       ],

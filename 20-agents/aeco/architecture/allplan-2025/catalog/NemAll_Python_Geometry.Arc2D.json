@@ -7,113 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/",
   "constructors": [
     {
-      "name": "Arc2D()",
-      "signature": "Arc2D()",
+      "name": "Arc2D",
+      "signature": "Arc2D() | Arc2D(arc: Arc2D) | Arc2D( center: Point2D, minor: float, major: float, axisangle: float, startangle: float, endangle: float, counterClockwise: bool = True, ) | Arc2D(center: Point2D, radius: float, counterClockwise: bool = True)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
-    },
-    {
-      "name": "Arc2D(arc: Arc2D)",
-      "signature": "Arc2D(arc: Arc2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "arc",
-          "type": "Arc2D",
-          "doc": "Arc2D to be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
-    },
-    {
-      "name": "Arc2D( center: Point2D, minor: float, major: float, axisangle: float, startangle: float, endangle: float, counterClockwise: bool = True, )",
-      "signature": "Arc2D( center: Point2D, minor: float, major: float, axisangle: float, startangle: float, endangle: float, counterClockwise: bool = True, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "center",
-          "type": "Point2D",
-          "doc": "Center point",
-          "optional": false
-        },
-        {
-          "name": "minor",
-          "type": "float",
-          "doc": "Minor radius",
-          "optional": false
-        },
-        {
-          "name": "major",
-          "type": "float",
-          "doc": "Major radius",
-          "optional": false
-        },
-        {
-          "name": "axisangle",
-          "type": "float",
-          "doc": "Axis angle",
-          "optional": false
-        },
-        {
-          "name": "startangle",
-          "type": "float",
-          "doc": "Start angle",
-          "optional": false
-        },
-        {
-          "name": "endangle",
-          "type": "float",
-          "doc": "End angle",
-          "optional": false
-        },
-        {
-          "name": "counterClockwise",
-          "type": "bool",
-          "doc": "Direction is counter clockwise: true/false",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
-    },
-    {
-      "name": "Arc2D(center: Point2D, radius: float, counterClockwise: bool = True)",
-      "signature": "Arc2D(center: Point2D, radius: float, counterClockwise: bool = True)",
-      "summary": "Constructor for creating circle Create circle as arc with start angle 0 [rad] and end angle 2pi [rad]. Minor and major radii are equal.",
-      "remarks": "Constructor for creating circle Create circle as arc with start angle 0 [rad] and end angle 2pi [rad]. Minor and major radii are equal.",
-      "params": [
-        {
-          "name": "center",
-          "type": "Point2D",
-          "doc": "Center point",
-          "optional": false
-        },
-        {
-          "name": "radius",
-          "type": "float",
-          "doc": "Minor radius",
-          "optional": false
-        },
-        {
-          "name": "counterClockwise",
-          "type": "bool",
-          "doc": "Direction is counter clockwise: true/false",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

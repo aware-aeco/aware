@@ -10,47 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/",
   "constructors": [
     {
-      "name": "StructuralColumnElement()",
-      "signature": "StructuralColumnElement()",
+      "name": "StructuralColumnElement",
+      "signature": "StructuralColumnElement() | StructuralColumnElement(structuralColumnProperties) | StructuralColumnElement(structuralColumnElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
-    },
-    {
-      "name": "StructuralColumnElement(structuralColumnProperties)",
-      "signature": "StructuralColumnElement(structuralColumnProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "structuralColumnProp",
-          "type": "object",
-          "doc": "StructuralColumn properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
-    },
-    {
-      "name": "StructuralColumnElement(structuralColumnElement)",
-      "signature": "StructuralColumnElement(structuralColumnElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "structuralColumnElement",
-          "type": "StructuralColumnElement",
-          "doc": "Structural Column to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

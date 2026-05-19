@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/",
   "constructors": [
     {
-      "name": "Point3D()",
-      "signature": "Point3D()",
+      "name": "Point3D",
+      "signature": "Point3D() | Point3D(point: Point3D) | Point3D(point: Point2D) | Point3D(refPoint: Point3D, point: Point3D) | Point3D(x: float, y: float, z: float)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
-    },
-    {
-      "name": "Point3D(point: Point3D)",
-      "signature": "Point3D(point: Point3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "Point which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
-    },
-    {
-      "name": "Point3D(point: Point2D)",
-      "signature": "Point3D(point: Point2D)",
-      "summary": "Explicit copy constructor. Copy only X_COORD and Y_COORD from point, Z_COORD is set to zero.",
-      "remarks": "Explicit copy constructor. Copy only X_COORD and Y_COORD from point, Z_COORD is set to zero.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "2D Point which will be copied to the 3D point.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
-    },
-    {
-      "name": "Point3D(refPoint: Point3D, point: Point3D)",
-      "signature": "Point3D(refPoint: Point3D, point: Point3D)",
-      "summary": "Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint \u002B point",
-      "remarks": "Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint \u002B point",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "Reference point.",
-          "optional": false
-        },
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "Relative point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
-    },
-    {
-      "name": "Point3D(x: float, y: float, z: float)",
-      "signature": "Point3D(x: float, y: float, z: float)",
-      "summary": "Constructor Initialize point from single coordinates in world coordinate system.",
-      "remarks": "Constructor Initialize point from single coordinates in world coordinate system.",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "X coordinate of point",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "Y coordinate of point",
-          "optional": false
-        },
-        {
-          "name": "z",
-          "type": "float",
-          "doc": "Z coordinate of point",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -159,8 +69,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.IsZero"
     },
     {
-      "name": "Set(point: Point3D)",
-      "signature": "Set(point: Point3D)",
+      "name": "Set",
+      "signature": "Set(point: Point3D) | Set(x: float, y: float, z: float)",
       "summary": "Initialize from point 3D.",
       "remarks": "Initialize from point 3D.",
       "params": [
@@ -168,36 +78,6 @@
           "name": "point",
           "type": "Point3D",
           "doc": "Point.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Set"
-    },
-    {
-      "name": "Set(x: float, y: float, z: float)",
-      "signature": "Set(x: float, y: float, z: float)",
-      "summary": "Initialize from x,y,z coordinates.",
-      "remarks": "Initialize from x,y,z coordinates.",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "coordinate.",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "coordinate.",
-          "optional": false
-        },
-        {
-          "name": "z",
-          "type": "float",
-          "doc": "coordinate.",
           "optional": false
         }
       ],
@@ -221,8 +101,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Values"
     },
     {
-      "name": "__add__(vec: Vector3D) -\u003E Point3D",
-      "signature": "__add__(vec: Vector3D) -\u003E Point3D",
+      "name": "__add__",
+      "signature": "__add__(vec: Vector3D) -\u003E Point3D | __add__(vec: Vector2D) -\u003E Point3D | __add__(point: Point3D) -\u003E Point3D",
       "summary": "Move the point by vector 3D",
       "remarks": "Move the point by vector 3D",
       "params": [
@@ -236,48 +116,6 @@
       "returns": {
         "type": "Point3D",
         "doc": "New point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__"
-    },
-    {
-      "name": "__add__(vec: Vector2D) -\u003E Point3D",
-      "signature": "__add__(vec: Vector2D) -\u003E Point3D",
-      "summary": "Move the point by vector 2D. Z axis will be ignored",
-      "remarks": "Move the point by vector 2D. Z axis will be ignored",
-      "params": [
-        {
-          "name": "vec",
-          "type": "Vector2D",
-          "doc": "Vector",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "New point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__"
-    },
-    {
-      "name": "__add__(point: Point3D) -\u003E Point3D",
-      "signature": "__add__(point: Point3D) -\u003E Point3D",
-      "summary": "Point translation by point Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
-      "remarks": "Point translation by point Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "Point.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "Point."
       },
       "throws": [],
       "events_related": [],
@@ -368,8 +206,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__isub__"
     },
     {
-      "name": "__mul__(matrix: Matrix2D) -\u003E Point3D",
-      "signature": "__mul__(matrix: Matrix2D) -\u003E Point3D",
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E Point3D | __mul__(matrix: Matrix3D) -\u003E Point3D | __mul__(scale: float) -\u003E Point3D",
       "summary": "2D matrix transformation. Result = Point * matrix",
       "remarks": "2D matrix transformation. Result = Point * matrix",
       "params": [
@@ -383,48 +221,6 @@
       "returns": {
         "type": "Point3D",
         "doc": "Point."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__"
-    },
-    {
-      "name": "__mul__(matrix: Matrix3D) -\u003E Point3D",
-      "signature": "__mul__(matrix: Matrix3D) -\u003E Point3D",
-      "summary": "3D matrix transformation. Result = Point * matrix",
-      "remarks": "3D matrix transformation. Result = Point * matrix",
-      "params": [
-        {
-          "name": "matrix",
-          "type": "Matrix3D",
-          "doc": "3D transformation Matrix",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "Point."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__"
-    },
-    {
-      "name": "__mul__(scale: float) -\u003E Point3D",
-      "signature": "__mul__(scale: float) -\u003E Point3D",
-      "summary": "Scale point with constant Result = Point * scale",
-      "remarks": "Scale point with constant Result = Point * scale",
-      "params": [
-        {
-          "name": "scale",
-          "type": "float",
-          "doc": "scale factor",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "scaled Point"
       },
       "throws": [],
       "events_related": [],
@@ -463,8 +259,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__repr__"
     },
     {
-      "name": "__sub__(vec: Vector3D) -\u003E Point3D",
-      "signature": "__sub__(vec: Vector3D) -\u003E Point3D",
+      "name": "__sub__",
+      "signature": "__sub__(vec: Vector3D) -\u003E Point3D | __sub__(vec: Vector2D) -\u003E Point3D | __sub__(point: Point3D) -\u003E Point3D",
       "summary": "Move the point by reversed vector 3D",
       "remarks": "Move the point by reversed vector 3D",
       "params": [
@@ -478,48 +274,6 @@
       "returns": {
         "type": "Point3D",
         "doc": "New point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__"
-    },
-    {
-      "name": "__sub__(vec: Vector2D) -\u003E Point3D",
-      "signature": "__sub__(vec: Vector2D) -\u003E Point3D",
-      "summary": "Move the point by reversed vector 2D. Z coordinate stays unchanged.",
-      "remarks": "Move the point by reversed vector 2D. Z coordinate stays unchanged.",
-      "params": [
-        {
-          "name": "vec",
-          "type": "Vector2D",
-          "doc": "2D vector",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "New point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__"
-    },
-    {
-      "name": "__sub__(point: Point3D) -\u003E Point3D",
-      "signature": "__sub__(point: Point3D) -\u003E Point3D",
-      "summary": "Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
-      "remarks": "Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "Point3D.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point3D",
-        "doc": "Point."
       },
       "throws": [],
       "events_related": [],

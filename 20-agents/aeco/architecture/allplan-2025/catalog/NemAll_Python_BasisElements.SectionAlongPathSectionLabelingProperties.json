@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathSectionLabelingProperties(bInitFromSTW: bool = False)",
-      "signature": "SectionAlongPathSectionLabelingProperties(bInitFromSTW: bool = False)",
+      "name": "SectionAlongPathSectionLabelingProperties",
+      "signature": "SectionAlongPathSectionLabelingProperties(bInitFromSTW: bool = False) | SectionAlongPathSectionLabelingProperties(B: SectionAlongPathSectionLabelingProperties)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -17,24 +17,6 @@
           "name": "bInitFromSTW",
           "type": "bool",
           "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionLabelingProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionLabelingProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathSectionLabelingProperties(B: SectionAlongPathSectionLabelingProperties)",
-      "signature": "SectionAlongPathSectionLabelingProperties(B: SectionAlongPathSectionLabelingProperties)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathSectionLabelingProperties",
-          "doc": "object to copy",
           "optional": false
         }
       ],

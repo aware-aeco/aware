@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/",
   "constructors": [
     {
-      "name": "CommonProperties()",
-      "signature": "CommonProperties()",
+      "name": "CommonProperties",
+      "signature": "CommonProperties() | CommonProperties(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.__init__"
-    },
-    {
-      "name": "CommonProperties(element)",
-      "signature": "CommonProperties(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "CommonProperties",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

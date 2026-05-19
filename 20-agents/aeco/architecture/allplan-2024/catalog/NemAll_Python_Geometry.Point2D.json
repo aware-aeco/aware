@@ -7,95 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/",
   "constructors": [
     {
-      "name": "Point2D()",
-      "signature": "Point2D()",
+      "name": "Point2D",
+      "signature": "Point2D() | Point2D(point) | Point2D(point) | Point2D(refPoint, point) | Point2D(x, y)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__init__"
-    },
-    {
-      "name": "Point2D(point)",
-      "signature": "Point2D(point)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "Point which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__init__"
-    },
-    {
-      "name": "Point2D(point)",
-      "signature": "Point2D(point)",
-      "summary": "Explicit copy constructor. Copy only X_COORD and Y_COORD from point",
-      "remarks": "Explicit copy constructor. Copy only X_COORD and Y_COORD from point",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "3D Point which will be copied to the 2D point.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__init__"
-    },
-    {
-      "name": "Point2D(refPoint, point)",
-      "signature": "Point2D(refPoint, point)",
-      "summary": "Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint \u002B point",
-      "remarks": "Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint \u002B point",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point2D",
-          "doc": "Reference point.",
-          "optional": false
-        },
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "Relative point.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__init__"
-    },
-    {
-      "name": "Point2D(x, y)",
-      "signature": "Point2D(x, y)",
-      "summary": "Constructor. Initialize point from single coordinates in world coordinate system.",
-      "remarks": "Constructor. Initialize point from single coordinates in world coordinate system.",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "X coordinate of point.",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "Y coordinate of point.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -104,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Set(point)",
-      "signature": "Set(point)",
+      "name": "Set",
+      "signature": "Set(point) | Set(x, y)",
       "summary": "Set the coordinate.",
       "remarks": "Set the coordinate.",
       "params": [
@@ -122,32 +38,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Set"
     },
     {
-      "name": "Set(x, y)",
-      "signature": "Set(x, y)",
-      "summary": "Initialize from x,y coordinates.",
-      "remarks": "Initialize from x,y coordinates.",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "coordinate.",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "coordinate.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Set"
-    },
-    {
-      "name": "__add__(point)",
-      "signature": "__add__(point)",
+      "name": "__add__",
+      "signature": "__add__(point) | __add__(vec)",
       "summary": "Point translation by point. Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
       "remarks": "Point translation by point. Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
       "params": [
@@ -167,29 +59,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__add__"
     },
     {
-      "name": "__add__(vec)",
-      "signature": "__add__(vec)",
-      "summary": "Move the point by vector",
-      "remarks": "Move the point by vector",
-      "params": [
-        {
-          "name": "vec",
-          "type": "Vector2D",
-          "doc": "Vector",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point2D",
-        "doc": "New point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__add__"
-    },
-    {
-      "name": "__sub__(vec)",
-      "signature": "__sub__(vec)",
+      "name": "__sub__",
+      "signature": "__sub__(vec) | __sub__(point)",
       "summary": "Move the point by reversed vector",
       "remarks": "Move the point by reversed vector",
       "params": [
@@ -203,27 +74,6 @@
       "returns": {
         "type": "Point2D",
         "doc": "New point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__sub__"
-    },
-    {
-      "name": "__sub__(point)",
-      "signature": "__sub__(point)",
-      "summary": "Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
-      "remarks": "Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "Point.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point2D",
-        "doc": "Point."
       },
       "throws": [],
       "events_related": [],

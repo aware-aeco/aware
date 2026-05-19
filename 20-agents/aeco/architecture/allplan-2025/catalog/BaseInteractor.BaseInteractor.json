@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseInteractor/",
   "constructors": [
     {
-      "name": "BaseInteractor()",
+      "name": "BaseInteractor",
       "signature": "BaseInteractor( coord_input: CoordinateInput, pyp_path: str, global_str_table_service: StringTableService, build_ele_list: list[BuildingElement], build_ele_composite: BuildingElementComposite, control_props_list: list[BuildingElementControlProperties], modify_uuid_list: list[str], )",
       "summary": "Constructor",
       "remarks": "Constructor",

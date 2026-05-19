@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ControlProperties/ControlProperties/",
   "constructors": [
     {
-      "name": "ControlProperties()",
+      "name": "ControlProperties",
       "signature": "ControlProperties(text, value_name, enable_condition, visible_condition, page, expander_name, row_name, value_str, value_list, value_list_2, event_id, control_type=CONTROL, value_index_name=\u0027\u0027, value_list_start_row=0, value_dialog=\u0027\u0027, value_list_textids=\u0027\u0027, as_slider=False, height=22, width=DEFAULT_WIDTH, font_style=2, font_face_code=0, background_color=\u0027\u0027, row_state_key=\u0027\u0027, expander_state_key=\u0027\u0027)",
       "summary": "Set the properties of the control",
       "remarks": "Set the properties of the control",

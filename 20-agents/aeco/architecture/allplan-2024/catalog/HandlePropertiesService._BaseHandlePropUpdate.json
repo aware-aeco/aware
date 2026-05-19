@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/",
   "constructors": [
     {
-      "name": "_BaseHandlePropUpdate()",
+      "name": "_BaseHandlePropUpdate",
       "signature": "_BaseHandlePropUpdate(build_ele, handle_prop, input_pnt, param_data)",
       "summary": "initialize",
       "remarks": "initialize",

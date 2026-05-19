@@ -10,53 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/",
   "constructors": [
     {
-      "name": "ColumnElement()",
-      "signature": "ColumnElement()",
+      "name": "ColumnElement",
+      "signature": "ColumnElement() | ColumnElement(columnProp, placementPoint) | ColumnElement(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.__init__"
-    },
-    {
-      "name": "ColumnElement(columnProp, placementPoint)",
-      "signature": "ColumnElement(columnProp, placementPoint)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "columnProp",
-          "type": "ColumnProperties",
-          "doc": "Column properties",
-          "optional": false
-        },
-        {
-          "name": "placementPoint",
-          "type": "object",
-          "doc": "Placement point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.__init__"
-    },
-    {
-      "name": "ColumnElement(element)",
-      "signature": "ColumnElement(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "ColumnElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

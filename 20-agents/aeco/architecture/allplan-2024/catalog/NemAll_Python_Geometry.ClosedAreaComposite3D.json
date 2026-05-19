@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/",
   "constructors": [
     {
-      "name": "ClosedAreaComposite3D()",
-      "signature": "ClosedAreaComposite3D()",
+      "name": "ClosedAreaComposite3D",
+      "signature": "ClosedAreaComposite3D() | ClosedAreaComposite3D(composite)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.__init__"
-    },
-    {
-      "name": "ClosedAreaComposite3D(composite)",
-      "signature": "ClosedAreaComposite3D(composite)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "composite",
-          "type": "ClosedAreaComposite3D",
-          "doc": "Profile composite which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

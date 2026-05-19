@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2DList/",
   "constructors": [
     {
-      "name": "Point2DList()",
-      "signature": "Point2DList()",
+      "name": "Point2DList",
+      "signature": "Point2DList() | Point2DList(ele: Point2D) | Point2DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2DList/#NemAll_Python_Geometry.Point2DList.__init__"
-    },
-    {
-      "name": "Point2DList(ele: Point2D)",
-      "signature": "Point2DList(ele: Point2D)",
-      "summary": "Constructor with a Point2D",
-      "remarks": "Constructor with a Point2D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Point2D",
-          "doc": "Point2D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2DList/#NemAll_Python_Geometry.Point2DList.__init__"
-    },
-    {
-      "name": "Point2DList(eleList: list)",
-      "signature": "Point2DList(eleList: list)",
-      "summary": "Constructor with a list of Point2D",
-      "remarks": "Constructor with a list of Point2D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Point2D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2DList/#NemAll_Python_Geometry.Point2DList.append"
     },
     {
-      "name": "extend(iterable: Point2DList)",
-      "signature": "extend(iterable: Point2DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Point2DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Point2DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2DList/#NemAll_Python_Geometry.Point2DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Point2D list",
           "optional": false
         }
       ],

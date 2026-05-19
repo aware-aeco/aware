@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningProperties/",
   "constructors": [
     {
-      "name": "DoorOpeningProperties()",
-      "signature": "DoorOpeningProperties()",
+      "name": "DoorOpeningProperties",
+      "signature": "DoorOpeningProperties() | DoorOpeningProperties(doorProp: DoorOpeningProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningProperties/#NemAll_Python_ArchElements.DoorOpeningProperties.__init__"
-    },
-    {
-      "name": "DoorOpeningProperties(doorProp: DoorOpeningProperties)",
-      "signature": "DoorOpeningProperties(doorProp: DoorOpeningProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "doorProp",
-          "type": "DoorOpeningProperties",
-          "doc": "Properties to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

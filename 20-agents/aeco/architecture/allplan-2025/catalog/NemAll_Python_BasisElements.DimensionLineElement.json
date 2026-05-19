@@ -10,41 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/",
   "constructors": [
     {
-      "name": "DimensionLineElement()",
-      "signature": "DimensionLineElement()",
+      "name": "DimensionLineElement",
+      "signature": "DimensionLineElement() | DimensionLineElement( arg2: Point3DList, dimensionPoints: Vector2D, placementPoint: Vector2D, directionVector: DimensionProperties, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionLineElement/#NemAll_Python_BasisElements.DimensionLineElement.__init__"
-    },
-    {
-      "name": "DimensionLineElement( arg2: Point3DList, dimensionPoints: Vector2D, placementPoint: Vector2D, directionVector: DimensionProperties, )",
-      "signature": "DimensionLineElement( arg2: Point3DList, dimensionPoints: Vector2D, placementPoint: Vector2D, directionVector: DimensionProperties, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "dimensionPoints",
-          "type": "Vector2D",
-          "doc": "Dimension points",
-          "optional": false
-        },
-        {
-          "name": "placementVector",
-          "type": "object",
-          "doc": "Placement vector to the first dimension point",
-          "optional": false
-        },
-        {
-          "name": "directionVector",
-          "type": "DimensionProperties",
-          "doc": "Direction vector",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractor/",
   "constructors": [
     {
-      "name": "PolygonInteractor()",
-      "signature": "PolygonInteractor( interactor_result: PolygonInteractorResult, common_prop: CommonProperties = GetCurrentCommonProperties(), z_coord_input: bool = True, multi_polygon_input: bool = True, preview_function: Callable[[Polygon3D], list] | None = None, )",
+      "name": "PolygonInteractor",
+      "signature": "PolygonInteractor( interactor_result: PolygonInteractorResult, common_prop: CommonProperties = GetCurrentCommonProperties(), z_coord_input: bool = True, multi_polygon_input: bool = True, preview_function: Callable[[Polygon3D], list] | PolygonInteractor()",
       "summary": "Create the interactor",
       "remarks": "Create the interactor",
       "params": [

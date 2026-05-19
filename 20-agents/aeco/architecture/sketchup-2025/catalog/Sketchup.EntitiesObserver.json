@@ -1,0 +1,131 @@
+{
+  "name": "EntitiesObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the objects of interests. Note: The methods of this observer fire in such a way that making changes to the model while inside of them is dangerous. If you experience sudden crashes, it could be because of this observer. A potential workaround is to use a ToolsObserver to watch what the user is doing instead. This observer interface is implemented to react to Entities collection events.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/EntitiesObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "onActiveSectionPlaneChanged",
+      "signature": "onActiveSectionPlaneChanged(entities) =\u003E nil",
+      "summary": "The #onActiveSectionPlaneChanged method is invoked when a section plane within this entities is activated or the active one is deactivated.",
+      "remarks": "The #onActiveSectionPlaneChanged method is invoked when a section plane within this entities is activated or the active one is deactivated.",
+      "params": [
+        {
+          "name": "entities",
+          "type": "Sketchup::Entities",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EntitiesObserver.html#onActiveSectionPlaneChanged-instance_method"
+    },
+    {
+      "name": "onElementAdded",
+      "signature": "onElementAdded(entities, entity) =\u003E nil",
+      "summary": "The onElementAdded method is invoked when a single element is added to the Sketchup::Entities collection.",
+      "remarks": "The onElementAdded method is invoked when a single element is added to the Sketchup::Entities collection.",
+      "params": [
+        {
+          "name": "entities",
+          "type": "Sketchup::Entities",
+          "optional": false
+        },
+        {
+          "name": "entity",
+          "type": "Sketchup::Entity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EntitiesObserver.html#onElementAdded-instance_method"
+    },
+    {
+      "name": "onElementModified",
+      "signature": "onElementModified(entities, entity) =\u003E nil",
+      "summary": "The #onElementModified method is invoked whenever one or more elements in the collection are modified.",
+      "remarks": "The #onElementModified method is invoked whenever one or more elements in the collection are modified.",
+      "params": [
+        {
+          "name": "entities",
+          "type": "Sketchup::Entities",
+          "optional": false
+        },
+        {
+          "name": "entity",
+          "type": "Sketchup::Entity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EntitiesObserver.html#onElementModified-instance_method"
+    },
+    {
+      "name": "onElementRemoved",
+      "signature": "onElementRemoved(entities, entity_id) =\u003E nil",
+      "summary": "The #onElementRemoved method is invoked when a single element is removed from the Sketchup::Entities collection.",
+      "remarks": "The #onElementRemoved method is invoked when a single element is removed from the Sketchup::Entities collection. Note that the entity has been deleted and should not be used in anyway except to know that the entity has been deleted.",
+      "params": [
+        {
+          "name": "entities",
+          "type": "Sketchup::Entities",
+          "optional": false
+        },
+        {
+          "name": "entity_id",
+          "type": "Sketchup::Entity",
+          "doc": "The id of the entity that was deleted/removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EntitiesObserver.html#onElementRemoved-instance_method"
+    },
+    {
+      "name": "onEraseEntities",
+      "signature": "onEraseEntities(entities) =\u003E nil",
+      "summary": "The #onEraseEntities method is invoked when one or more entities are erased.",
+      "remarks": "The #onEraseEntities method is invoked when one or more entities are erased.",
+      "params": [
+        {
+          "name": "entities",
+          "type": "Sketchup::Entities",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/EntitiesObserver.html#onEraseEntities-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

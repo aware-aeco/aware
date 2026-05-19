@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPart/PythonPartGroup/",
   "constructors": [
     {
-      "name": "PythonPartGroup()",
-      "signature": "PythonPartGroup( name: str, parameter_list: list[str], hash_value: str, python_file: str, pythonparts: list[PythonPart] | None = None, type_uuid: str = \u0022\u0022, type_display_name: str = \u0022\u0022, )",
+      "name": "PythonPartGroup",
+      "signature": "PythonPartGroup( name: str, parameter_list: list[str], hash_value: str, python_file: str, pythonparts: list[PythonPart] | PythonPartGroup()",
       "summary": "Initialize TypeError: When list of PythonParts to group contains a non-PythonPart object",
       "remarks": "Initialize TypeError: When list of PythonParts to group contains a non-PythonPart object",
       "params": [],

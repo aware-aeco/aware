@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/",
   "constructors": [
     {
-      "name": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation )",
-      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation )",
+      "name": "View",
+      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation ) | View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, ) | View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/#NemAll_Python_Precast.View.__init__"
-    },
-    {
-      "name": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, )",
-      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "View",
-          "type": "object",
-          "doc": "properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/#NemAll_Python_Precast.View.__init__"
-    },
-    {
-      "name": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )",
-      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "View",
-          "type": "object",
-          "doc": "properties",
-          "optional": false
-        },
-        {
-          "name": "Condition",
-          "type": "object",
-          "doc": "template",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

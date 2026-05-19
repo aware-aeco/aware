@@ -1,0 +1,30 @@
+{
+  "name": "TemplateConversions",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.TemplateConversions.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/TemplateConversions.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Conversions",
+      "type": "List\u003CBaseTemplateConversion\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TemplateConversions.conversions.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/TemplateConversions.md"
+    },
+    {
+      "name": "CountryCode",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TemplateConversions.countryCode.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/TemplateConversions.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

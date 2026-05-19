@@ -1,0 +1,167 @@
+{
+  "name": "ConnectionLibraryApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 ConnectionLibrary endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConnectionLibraryApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDesignSetsAsync",
+      "signature": "Task\u003CList\u003CConDesignSet\u003E\u003E GetDesignSetsAsync()",
+      "summary": "Retrieves a list of design sets available for the user.",
+      "remarks": "This method returns a collection of design sets that are mappedand ready for use. It throws an exception if no design setsare available for the user.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CConDesignSet\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConnectionLibraryApi.md"
+    },
+    {
+      "name": "ProposeAsync",
+      "signature": "Task\u003CList\u003CConDesignItem\u003E\u003E ProposeAsync(Guid projectId, int connectionId, ConConnectionLibrarySearchParameters conConnectionLibrarySearchParameters)",
+      "summary": "Proposes a list of design items for a specified connection within a project.",
+      "remarks": "This method retrieves the connection model from the specifiedproject and classifies its typology. It then filters andproposes design items based on the connection\u0027s typology and design code.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the project containing the connection.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The identifier of the connection for which design items are proposed.",
+          "optional": false
+        },
+        {
+          "name": "conConnectionLibrarySearchParameters",
+          "type": "ConConnectionLibrarySearchParameters",
+          "doc": "Parameters used to filter and refine the search for proposed connection design items, such as set membership and required connection features.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "List\u003CConDesignItem\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConnectionLibraryApi.md"
+    },
+    {
+      "name": "GetTemplateAsync",
+      "signature": "Task\u003Cstring\u003E GetTemplateAsync(Guid designSetId, Guid designItemId)",
+      "summary": "Retrieves the template associated with the specified design set and design item.",
+      "remarks": "This method is mapped to API version 2 and produces a plain textresponse. It is intended to be used in scenarios where thetemplate of a design item needs to be retrieved for further processing or n display.",
+      "params": [
+        {
+          "name": "designSetId",
+          "type": "Guid",
+          "doc": "The unique identifier of the design set.",
+          "optional": true
+        },
+        {
+          "name": "designItemId",
+          "type": "Guid",
+          "doc": "The unique identifier of the design item for which the template is requested.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "**string**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConnectionLibraryApi.md"
+    },
+    {
+      "name": "GetDesignItemPictureAsync",
+      "signature": "Task GetDesignItemPictureAsync(Guid designSetId, Guid designItemId)",
+      "summary": "Retrieves the picture associated with the specified design item as a PNG image.",
+      "remarks": "This method is mapped to API version 2 and produces a PNG image.The image is returned as a file stream result with the filename set to the design item\u0027s ID.",
+      "params": [
+        {
+          "name": "designSetId",
+          "type": "Guid",
+          "doc": "The unique identifier of the design set.",
+          "optional": true
+        },
+        {
+          "name": "designItemId",
+          "type": "Guid",
+          "doc": "The unique identifier of the design item for which the template is requested.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConnectionLibraryApi.md"
+    },
+    {
+      "name": "PublishConnectionAsync",
+      "signature": "Task\u003Cbool\u003E PublishConnectionAsync(Guid projectId, int connectionId, ConTemplatePublishParam conTemplatePublishParam)",
+      "summary": "Publish template to Private or Company set",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "conTemplatePublishParam",
+          "type": "ConTemplatePublishParam",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "**bool**"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConnectionLibraryApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

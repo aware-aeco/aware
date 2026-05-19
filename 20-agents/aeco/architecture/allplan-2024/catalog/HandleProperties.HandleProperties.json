@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandleProperties/HandleProperties/",
   "constructors": [
     {
-      "name": "HandleProperties()",
+      "name": "HandleProperties",
       "signature": "HandleProperties(handle_id, handle_point, ref_point, handle_param_data, handle_move_dir, abs_value=True, distance_factor=1.0, plane=None, dir_vector=None, info_text=\u0027\u0027, angle_placement=None, show_handles=True)",
       "summary": "Set the properties of a handle",
       "remarks": "Set the properties of a handle",

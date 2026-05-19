@@ -10,7 +10,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/",
   "constructors": [
     {
-      "name": "BaseScriptObject()",
+      "name": "BaseScriptObject",
       "signature": "BaseScriptObject(script_object_data: BaseScriptObjectData)",
       "summary": "Initialization of class TextExample",
       "remarks": "Initialization of class TextExample",

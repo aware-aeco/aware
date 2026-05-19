@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3DList/",
   "constructors": [
     {
-      "name": "AxisPlacement3DList()",
-      "signature": "AxisPlacement3DList()",
+      "name": "AxisPlacement3DList",
+      "signature": "AxisPlacement3DList() | AxisPlacement3DList(ele: AxisPlacement3D) | AxisPlacement3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3DList/#NemAll_Python_Geometry.AxisPlacement3DList.__init__"
-    },
-    {
-      "name": "AxisPlacement3DList(ele: AxisPlacement3D)",
-      "signature": "AxisPlacement3DList(ele: AxisPlacement3D)",
-      "summary": "Constructor with a AxisPlacement3D",
-      "remarks": "Constructor with a AxisPlacement3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "AxisPlacement3D",
-          "doc": "AxisPlacement3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3DList/#NemAll_Python_Geometry.AxisPlacement3DList.__init__"
-    },
-    {
-      "name": "AxisPlacement3DList(eleList: list)",
-      "signature": "AxisPlacement3DList(eleList: list)",
-      "summary": "Constructor with a list of AxisPlacement3D",
-      "remarks": "Constructor with a list of AxisPlacement3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "AxisPlacement3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3DList/#NemAll_Python_Geometry.AxisPlacement3DList.append"
     },
     {
-      "name": "extend(iterable: AxisPlacement3DList)",
-      "signature": "extend(iterable: AxisPlacement3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: AxisPlacement3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "AxisPlacement3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3DList/#NemAll_Python_Geometry.AxisPlacement3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "AxisPlacement3D list",
           "optional": false
         }
       ],

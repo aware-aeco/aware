@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeList/",
   "constructors": [
     {
-      "name": "BendingShapeList()",
-      "signature": "BendingShapeList()",
+      "name": "BendingShapeList",
+      "signature": "BendingShapeList() | BendingShapeList(ele: BendingShape) | BendingShapeList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeList/#NemAll_Python_Reinforcement.BendingShapeList.__init__"
-    },
-    {
-      "name": "BendingShapeList(ele: BendingShape)",
-      "signature": "BendingShapeList(ele: BendingShape)",
-      "summary": "Constructor with a BendingShape",
-      "remarks": "Constructor with a BendingShape",
-      "params": [
-        {
-          "name": "ele",
-          "type": "BendingShape",
-          "doc": "BendingShape",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeList/#NemAll_Python_Reinforcement.BendingShapeList.__init__"
-    },
-    {
-      "name": "BendingShapeList(eleList: list)",
-      "signature": "BendingShapeList(eleList: list)",
-      "summary": "Constructor with a list of BendingShape",
-      "remarks": "Constructor with a list of BendingShape",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "BendingShape list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeList/#NemAll_Python_Reinforcement.BendingShapeList.append"
     },
     {
-      "name": "extend(iterable: BendingShapeList)",
-      "signature": "extend(iterable: BendingShapeList)",
+      "name": "extend",
+      "signature": "extend(iterable: BendingShapeList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "BendingShapeList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeList/#NemAll_Python_Reinforcement.BendingShapeList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "BendingShape list",
           "optional": false
         }
       ],

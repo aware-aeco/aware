@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3DList/",
   "constructors": [
     {
-      "name": "ClosedArea3DList()",
+      "name": "ClosedArea3DList",
       "signature": "ClosedArea3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextUtil/",
   "constructors": [
     {
-      "name": "LabelTextUtil()",
+      "name": "LabelTextUtil",
       "signature": "LabelTextUtil()",
       "summary": "initialize",
       "remarks": "initialize",

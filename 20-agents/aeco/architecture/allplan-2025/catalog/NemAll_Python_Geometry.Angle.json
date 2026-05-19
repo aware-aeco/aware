@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/",
   "constructors": [
     {
-      "name": "Angle()",
-      "signature": "Angle()",
+      "name": "Angle",
+      "signature": "Angle() | Angle(angle: Angle) | Angle(angle: float)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__init__"
-    },
-    {
-      "name": "Angle(angle: Angle)",
-      "signature": "Angle(angle: Angle)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "angle which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__init__"
-    },
-    {
-      "name": "Angle(angle: float)",
-      "signature": "Angle(angle: float)",
-      "summary": "Constructor. Initialize angle from single value",
-      "remarks": "Constructor. Initialize angle from single value",
-      "params": [
-        {
-          "name": "angle",
-          "type": "float",
-          "doc": "Angle.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -189,32 +153,14 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.RadToGrad"
     },
     {
-      "name": "Set(angle: float)",
-      "signature": "Set(angle: float)",
+      "name": "Set",
+      "signature": "Set(angle: float) | Set(angle: Angle)",
       "summary": "Set angle as radian value.",
       "remarks": "Set angle as radian value.",
       "params": [
         {
           "name": "angle",
           "type": "float",
-          "doc": "angle which will be set.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Set"
-    },
-    {
-      "name": "Set(angle: Angle)",
-      "signature": "Set(angle: Angle)",
-      "summary": "Set angle as radian value.",
-      "remarks": "Set angle as radian value.",
-      "params": [
-        {
-          "name": "angle",
-          "type": "Angle",
           "doc": "angle which will be set.",
           "optional": false
         }
@@ -243,8 +189,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.SetDeg"
     },
     {
-      "name": "__add__(angle: Angle) -\u003E Angle",
-      "signature": "__add__(angle: Angle) -\u003E Angle",
+      "name": "__add__",
+      "signature": "__add__(angle: Angle) -\u003E Angle | __add__(angle: float) -\u003E Angle",
       "summary": "Addition operator",
       "remarks": "Addition operator",
       "params": [
@@ -252,27 +198,6 @@
           "name": "angle",
           "type": "Angle",
           "doc": "Angle which will be added",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Angle",
-        "doc": "New angle"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__add__"
-    },
-    {
-      "name": "__add__(angle: float) -\u003E Angle",
-      "signature": "__add__(angle: float) -\u003E Angle",
-      "summary": "Addition operator",
-      "remarks": "Addition operator",
-      "params": [
-        {
-          "name": "angle",
-          "type": "float",
-          "doc": "Angle as double value which will be added",
           "optional": false
         }
       ],

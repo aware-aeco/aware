@@ -7,35 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/",
   "constructors": [
     {
-      "name": "GeometryExpansionUtil()",
-      "signature": "GeometryExpansionUtil()",
+      "name": "GeometryExpansionUtil",
+      "signature": "GeometryExpansionUtil() | GeometryExpansionUtil(pMsgInfo: AddMsgInfo, use3DGeometry: bool)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.__init__"
-    },
-    {
-      "name": "GeometryExpansionUtil(pMsgInfo: AddMsgInfo, use3DGeometry: bool)",
-      "signature": "GeometryExpansionUtil(pMsgInfo: AddMsgInfo, use3DGeometry: bool)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "pMsgInfo",
-          "type": "AddMsgInfo",
-          "doc": "Additional message info",
-          "optional": false
-        },
-        {
-          "name": "use3DGeometry",
-          "type": "bool",
-          "doc": "Use the 3D geometry for the expansione: true/false",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

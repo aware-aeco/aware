@@ -7,71 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/",
   "constructors": [
     {
-      "name": "Cuboid3D()",
-      "signature": "Cuboid3D()",
+      "name": "Cuboid3D",
+      "signature": "Cuboid3D() | Cuboid3D(cuboid) | Cuboid3D(refPoint, startPoint, vec1, vec2, vec3)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.__init__"
-    },
-    {
-      "name": "Cuboid3D(cuboid)",
-      "signature": "Cuboid3D(cuboid)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "cuboid",
-          "type": "Cuboid3D",
-          "doc": "Cuboid which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.__init__"
-    },
-    {
-      "name": "Cuboid3D(refPoint, startPoint, vec1, vec2, vec3)",
-      "signature": "Cuboid3D(refPoint, startPoint, vec1, vec2, vec3)",
-      "summary": "Constructor.",
-      "remarks": "Constructor.",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "Reference point.",
-          "optional": false
-        },
-        {
-          "name": "startPoint",
-          "type": "Point3D",
-          "doc": "Start point of cuboid.",
-          "optional": false
-        },
-        {
-          "name": "vec1",
-          "type": "Vector3D",
-          "doc": "X-vector.",
-          "optional": false
-        },
-        {
-          "name": "vec2",
-          "type": "Vector3D",
-          "doc": "Y-vector.",
-          "optional": false
-        },
-        {
-          "name": "vec3",
-          "type": "Vector3D",
-          "doc": "Z-vector",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -80,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Set(refPoint, startPoint, vec1, vec2, vec3)",
-      "signature": "Set(refPoint, startPoint, vec1, vec2, vec3)",
+      "name": "Set",
+      "signature": "Set(refPoint, startPoint, vec1, vec2, vec3) | Set(cuboid)",
       "summary": "Set the Cuboid.",
       "remarks": "Set the Cuboid.",
       "params": [
@@ -113,24 +53,6 @@
           "name": "vec3",
           "type": "Vector3D",
           "doc": "Z-vector.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.Set"
-    },
-    {
-      "name": "Set(cuboid)",
-      "signature": "Set(cuboid)",
-      "summary": "Initialize from cuboid.",
-      "remarks": "Initialize from cuboid.",
-      "params": [
-        {
-          "name": "cuboid",
-          "type": "Cuboid3D",
-          "doc": "Cuboid which will be copied.",
           "optional": false
         }
       ],

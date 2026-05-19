@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3DList/",
   "constructors": [
     {
-      "name": "Point3DList()",
-      "signature": "Point3DList()",
+      "name": "Point3DList",
+      "signature": "Point3DList() | Point3DList(ele: Point3D) | Point3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3DList/#NemAll_Python_Geometry.Point3DList.__init__"
-    },
-    {
-      "name": "Point3DList(ele: Point3D)",
-      "signature": "Point3DList(ele: Point3D)",
-      "summary": "Constructor with a Point3D",
-      "remarks": "Constructor with a Point3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Point3D",
-          "doc": "Point3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3DList/#NemAll_Python_Geometry.Point3DList.__init__"
-    },
-    {
-      "name": "Point3DList(eleList: list)",
-      "signature": "Point3DList(eleList: list)",
-      "summary": "Constructor with a list of Point3D",
-      "remarks": "Constructor with a list of Point3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Point3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3DList/#NemAll_Python_Geometry.Point3DList.append"
     },
     {
-      "name": "extend(iterable: Point3DList)",
-      "signature": "extend(iterable: Point3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Point3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Point3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3DList/#NemAll_Python_Geometry.Point3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Point3D list",
           "optional": false
         }
       ],

@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FaceStyleProperties/",
   "constructors": [
     {
-      "name": "FaceStyleProperties()",
+      "name": "FaceStyleProperties",
       "signature": "FaceStyleProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

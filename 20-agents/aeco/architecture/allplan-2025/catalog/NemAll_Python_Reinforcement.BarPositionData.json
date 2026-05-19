@@ -8,58 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/",
   "constructors": [
     {
-      "name": "BarPositionData()",
-      "signature": "BarPositionData()",
+      "name": "BarPositionData",
+      "signature": "BarPositionData() | BarPositionData(barElement: BaseElementAdapter) | BarPositionData(param: BarPositionData) | BarPositionData(bendingShape: BendingShape)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
-    },
-    {
-      "name": "BarPositionData(barElement: BaseElementAdapter)",
-      "signature": "BarPositionData(barElement: BaseElementAdapter)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "barElement",
-          "type": "BaseElementAdapter",
-          "doc": "Bar element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
-    },
-    {
-      "name": "BarPositionData(param: BarPositionData)",
-      "signature": "BarPositionData(param: BarPositionData)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
-    },
-    {
-      "name": "BarPositionData(bendingShape: BendingShape)",
-      "signature": "BarPositionData(bendingShape: BendingShape)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "bendingShape",
-          "type": "BendingShape",
-          "doc": "Bending shape",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

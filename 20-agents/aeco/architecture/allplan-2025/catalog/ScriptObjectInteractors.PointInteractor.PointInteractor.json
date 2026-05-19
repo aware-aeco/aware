@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/",
   "constructors": [
     {
-      "name": "PointInteractor()",
-      "signature": "PointInteractor( interactor_result: PointInteractorResult, is_first_input: bool, request_text: str, preview_function: Callable[[], None] | None = None, default_input_value: float | None = None, abscissa_element: CURVES = None, )",
+      "name": "PointInteractor",
+      "signature": "PointInteractor( interactor_result: PointInteractorResult, is_first_input: bool, request_text: str, preview_function: Callable[[], None] | PointInteractor() | PointInteractor()",
       "summary": "initialize",
       "remarks": "initialize",
       "params": [

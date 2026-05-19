@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/",
   "constructors": [
     {
-      "name": "HealingSettings(oPhedType=ePolyhedronHealingSettings.HSET_TRIANGULATE, oPgonType=ePolygonHealingSettings.PHSET_NOMODIFY, weldVertices=False)",
-      "signature": "HealingSettings(oPhedType=ePolyhedronHealingSettings.HSET_TRIANGULATE, oPgonType=ePolygonHealingSettings.PHSET_NOMODIFY, weldVertices=False)",
+      "name": "HealingSettings",
+      "signature": "HealingSettings(oPhedType=ePolyhedronHealingSettings.HSET_TRIANGULATE, oPgonType=ePolygonHealingSettings.PHSET_NOMODIFY, weldVertices=False) | HealingSettings(hSet)",
       "summary": "Default constructor. Types can be found in GeometryEnums.h",
       "remarks": "Default constructor. Types can be found in GeometryEnums.h",
       "params": [
@@ -32,24 +32,6 @@
           "doc": "Vertices welding option, if true weld vertices",
           "optional": true,
           "default": "False"
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.__init__"
-    },
-    {
-      "name": "HealingSettings(hSet)",
-      "signature": "HealingSettings(hSet)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "hSet",
-          "type": "HealingSettings",
-          "doc": "ApproximationSettings which will be copied.",
-          "optional": false
         }
       ],
       "returns": null,

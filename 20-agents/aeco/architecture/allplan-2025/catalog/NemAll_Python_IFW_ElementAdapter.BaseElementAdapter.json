@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/",
   "constructors": [
     {
-      "name": "BaseElementAdapter()",
-      "signature": "BaseElementAdapter()",
+      "name": "BaseElementAdapter",
+      "signature": "BaseElementAdapter() | BaseElementAdapter(element: BaseElementAdapter)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__init__"
-    },
-    {
-      "name": "BaseElementAdapter(element: BaseElementAdapter)",
-      "signature": "BaseElementAdapter(element: BaseElementAdapter)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BaseElementAdapter",
-          "doc": "Element",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -522,8 +504,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.SetVisibilityState"
     },
     {
-      "name": "__eq__(element: BaseElementAdapter) -\u003E bool",
-      "signature": "__eq__(element: BaseElementAdapter) -\u003E bool",
+      "name": "__eq__",
+      "signature": "__eq__(element: BaseElementAdapter) -\u003E bool | __eq__(eleTypeUUID: GUID) -\u003E bool",
       "summary": "Equal operator",
       "remarks": "Equal operator",
       "params": [
@@ -543,56 +525,14 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__"
     },
     {
-      "name": "__eq__(eleTypeUUID: GUID) -\u003E bool",
-      "signature": "__eq__(eleTypeUUID: GUID) -\u003E bool",
-      "summary": "Equal operator for checking the element adapter type UUID",
-      "remarks": "Equal operator for checking the element adapter type UUID",
-      "params": [
-        {
-          "name": "eleTypeUUID",
-          "type": "GUID",
-          "doc": "Element type UUID",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "Element has the type: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__eq__"
-    },
-    {
-      "name": "__ne__(eleType: BaseElementAdapter) -\u003E bool",
-      "signature": "__ne__(eleType: BaseElementAdapter) -\u003E bool",
+      "name": "__ne__",
+      "signature": "__ne__(eleType: BaseElementAdapter) -\u003E bool | __ne__(eleType: GUID) -\u003E bool",
       "summary": "Not equal operator for checking the element type",
       "remarks": "Not equal operator for checking the element type",
       "params": [
         {
           "name": "eleType",
           "type": "BaseElementAdapter",
-          "doc": "Element type",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "Element has not the type: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapter/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapter.__ne__"
-    },
-    {
-      "name": "__ne__(eleType: GUID) -\u003E bool",
-      "signature": "__ne__(eleType: GUID) -\u003E bool",
-      "summary": "Not equal operator for checking the element type",
-      "remarks": "Not equal operator for checking the element type",
-      "params": [
-        {
-          "name": "eleType",
-          "type": "GUID",
           "doc": "Element type",
           "optional": false
         }

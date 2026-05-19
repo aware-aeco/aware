@@ -1,0 +1,138 @@
+{
+  "name": "AppObserver",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This class is abstract. To implement this observer, create a Ruby class of this type, override the desired methods, and add an instance of the observer to the application class. This observer interface is implemented to react to application events. This interface is often used to attach other observers to models as they are opened or started. This ensures that your observers are watching all open models. For example, when one attaches a SelectionObserver, it is only attached to the Selection collection of a given model. If a 2nd model is opened, the new model\u0027s selection changes will not fire selection callbacks unless you\u0027ve attached a SelectionObserver to the new model as well. By watching for #onNewModel, you can be sure to do so.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "expectsStartupModelNotifications",
+      "signature": "expectsStartupModelNotifications =\u003E Boolean",
+      "summary": "Note: Prior to SketchUp 2014, #onNewModel and #onOpenModel were not being called for the startup models.",
+      "remarks": "Note: Prior to SketchUp 2014, #onNewModel and #onOpenModel were not being called for the startup models. This issue is now fixed but observers still need to express their intent to receive these calls. This is for back-compatibility with existing scripts which worked around these missing calls by other means. For new code, this method should be implemented and should return true. The #expectsStartupModelNotifications method is called to determine if the observer expects to receive #onNewModel and #onOpenModel calls for the models that are created or opened at SketchUp startup. This includes the empty initial model, a model opened via command line arguments, or auto-restored models on Mac OS X.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true to receive #onNewModel and #onOpenModel calls for startup models. Return false or simply not implement the method in order to not receive these calls (which was the behavior prior to SketchUp 2014)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#expectsStartupModelNotifications-instance_method"
+    },
+    {
+      "name": "onActivateModel",
+      "signature": "onActivateModel(model) =\u003E nil",
+      "summary": "The #onActivateModel method is called when an open model is activated.",
+      "remarks": "The #onActivateModel method is called when an open model is activated. This is relevant on Mac only which supports multiple documents to be opened simultaneously.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Sketchup::Model",
+          "doc": "The newly-activated model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#onActivateModel-instance_method"
+    },
+    {
+      "name": "onExtensionsLoaded",
+      "signature": "onExtensionsLoaded =\u003E Object",
+      "summary": "The #onExtensionsLoaded method is called when SketchUp has finished loading all extensions when the application starts.",
+      "remarks": "The #onExtensionsLoaded method is called when SketchUp has finished loading all extensions when the application starts.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#onExtensionsLoaded-instance_method"
+    },
+    {
+      "name": "onNewModel",
+      "signature": "onNewModel(model) =\u003E nil",
+      "summary": "The #onNewModel method is called when the application creates a new, empty model.",
+      "remarks": "The #onNewModel method is called when the application creates a new, empty model.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Sketchup::Model",
+          "doc": "The active model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#onNewModel-instance_method"
+    },
+    {
+      "name": "onOpenModel",
+      "signature": "onOpenModel(model) =\u003E nil",
+      "summary": "Note: If a skp file is loaded via the command line or double-clicking on a skp in explorer (which is also is the command line) then this observer will not be called.",
+      "remarks": "Note: If a skp file is loaded via the command line or double-clicking on a skp in explorer (which is also is the command line) then this observer will not be called. The Ruby interpreter in SketchUp is initialized after command line processing so the observer won\u0027t be added in time to get the notification. The #onOpenModel method is called when the application opens an existing model.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Sketchup::Model",
+          "doc": "The active model object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#onOpenModel-instance_method"
+    },
+    {
+      "name": "onQuit",
+      "signature": "onQuit =\u003E nil",
+      "summary": "The #onQuit method is called when SketchUp closes.",
+      "remarks": "The #onQuit method is called when SketchUp closes. This is useful if you need to clean up anything or store your application state upon close.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#onQuit-instance_method"
+    },
+    {
+      "name": "onUnloadExtension",
+      "signature": "onUnloadExtension(extension_name) =\u003E nil",
+      "summary": "The #onUnloadExtension method is called when the user turns off a Ruby extension.",
+      "remarks": "The #onUnloadExtension method is called when the user turns off a Ruby extension. This is useful for detecting if the user is deactivating some critical set of observers, for example, so you can warn them or cache your extension state.",
+      "params": [
+        {
+          "name": "extension_name",
+          "type": "String",
+          "doc": "The name of the extension just unloaded.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/AppObserver.html#onUnloadExtension-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

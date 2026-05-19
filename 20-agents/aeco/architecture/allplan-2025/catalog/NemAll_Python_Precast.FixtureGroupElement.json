@@ -10,65 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/",
   "constructors": [
     {
-      "name": "FixtureGroupElement()",
-      "signature": "FixtureGroupElement()",
+      "name": "FixtureGroupElement",
+      "signature": "FixtureGroupElement() | FixtureGroupElement(FixtureGroupProp: FixtureGroupProperties, slideList: list) | FixtureGroupElement( commonProp: CommonProperties, FixtureGroupProp: FixtureGroupProperties, slideList: list, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.__init__"
-    },
-    {
-      "name": "FixtureGroupElement(FixtureGroupProp: FixtureGroupProperties, slideList: list)",
-      "signature": "FixtureGroupElement(FixtureGroupProp: FixtureGroupProperties, slideList: list)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "FixtureGroupProp",
-          "type": "FixtureGroupProperties",
-          "doc": "FixtureGroup properties",
-          "optional": false
-        },
-        {
-          "name": "placementList",
-          "type": "object",
-          "doc": "Placement list of macro group",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureGroupElement/#NemAll_Python_Precast.FixtureGroupElement.__init__"
-    },
-    {
-      "name": "FixtureGroupElement( commonProp: CommonProperties, FixtureGroupProp: FixtureGroupProperties, slideList: list, )",
-      "signature": "FixtureGroupElement( commonProp: CommonProperties, FixtureGroupProp: FixtureGroupProperties, slideList: list, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "FixtureGroupProp",
-          "type": "FixtureGroupProperties",
-          "doc": "FixtureGroup properties",
-          "optional": false
-        },
-        {
-          "name": "placementList",
-          "type": "object",
-          "doc": "Placement list of macro group",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

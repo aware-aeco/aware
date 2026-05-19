@@ -10,8 +10,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElement/",
   "constructors": [
     {
-      "name": "SectionAlongPathElement( sectionAlongPathProperties: SectionAlongPathProperties, sectionPathElement: BaseElementAdapter, )",
-      "signature": "SectionAlongPathElement( sectionAlongPathProperties: SectionAlongPathProperties, sectionPathElement: BaseElementAdapter, )",
+      "name": "SectionAlongPathElement",
+      "signature": "SectionAlongPathElement( sectionAlongPathProperties: SectionAlongPathProperties, sectionPathElement: BaseElementAdapter, ) | SectionAlongPathElement( sectionAlongPathProperties: SectionAlongPathProperties, sectionPath: Path2D, comProp: CommonProperties, ) | SectionAlongPathElement(element: SectionAlongPathElement)",
       "summary": "Default constructor",
       "remarks": "Default constructor",
       "params": [
@@ -25,54 +25,6 @@
           "name": "sectionPathElement",
           "type": "BaseElementAdapter",
           "doc": "Section path element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElement/#NemAll_Python_BasisElements.SectionAlongPathElement.__init__"
-    },
-    {
-      "name": "SectionAlongPathElement( sectionAlongPathProperties: SectionAlongPathProperties, sectionPath: Path2D, comProp: CommonProperties, )",
-      "signature": "SectionAlongPathElement( sectionAlongPathProperties: SectionAlongPathProperties, sectionPath: Path2D, comProp: CommonProperties, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "sectionAlongPathProperties",
-          "type": "SectionAlongPathProperties",
-          "doc": "Section along path properties",
-          "optional": false
-        },
-        {
-          "name": "sectionPath",
-          "type": "Path2D",
-          "doc": "Section path",
-          "optional": false
-        },
-        {
-          "name": "comProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElement/#NemAll_Python_BasisElements.SectionAlongPathElement.__init__"
-    },
-    {
-      "name": "SectionAlongPathElement(element: SectionAlongPathElement)",
-      "signature": "SectionAlongPathElement(element: SectionAlongPathElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "SectionAlongPathElement",
-          "doc": "Element to copy",
           "optional": false
         }
       ],

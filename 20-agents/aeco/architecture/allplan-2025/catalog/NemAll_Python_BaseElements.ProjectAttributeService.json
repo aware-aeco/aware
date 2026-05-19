@@ -8,8 +8,8 @@
   "constructors": [],
   "methods": [
     {
-      "name": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: int, doc: DocumentAdapter )",
-      "signature": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: int, doc: DocumentAdapter )",
+      "name": "ChangeAttributeFromCurrentProject",
+      "signature": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: int, doc: DocumentAdapter ) | ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: float, doc: DocumentAdapter ) | ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: str, doc: DocumentAdapter )",
       "summary": "Change a project attribute from the current file",
       "remarks": "Change a project attribute from the current file",
       "params": [
@@ -22,66 +22,6 @@
         {
           "name": "newValue",
           "type": "int",
-          "doc": "Attribute value",
-          "optional": false
-        },
-        {
-          "name": "doc",
-          "type": "DocumentAdapter",
-          "doc": "Document",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject"
-    },
-    {
-      "name": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: float, doc: DocumentAdapter )",
-      "signature": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: float, doc: DocumentAdapter )",
-      "summary": "Change a project attribute from the current file",
-      "remarks": "Change a project attribute from the current file",
-      "params": [
-        {
-          "name": "attributeNumber",
-          "type": "int",
-          "doc": "Attribute number",
-          "optional": false
-        },
-        {
-          "name": "newValue",
-          "type": "float",
-          "doc": "Attribute value",
-          "optional": false
-        },
-        {
-          "name": "doc",
-          "type": "DocumentAdapter",
-          "doc": "Document",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject"
-    },
-    {
-      "name": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: str, doc: DocumentAdapter )",
-      "signature": "ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: str, doc: DocumentAdapter )",
-      "summary": "Change a project attribute from the current file",
-      "remarks": "Change a project attribute from the current file",
-      "params": [
-        {
-          "name": "attributeNumber",
-          "type": "int",
-          "doc": "Attribute number",
-          "optional": false
-        },
-        {
-          "name": "newValue",
-          "type": "str",
           "doc": "Attribute value",
           "optional": false
         },

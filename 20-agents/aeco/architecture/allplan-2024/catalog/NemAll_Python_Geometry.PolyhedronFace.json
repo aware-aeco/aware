@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/",
   "constructors": [
     {
-      "name": "PolyhedronFace()",
+      "name": "PolyhedronFace",
       "signature": "PolyhedronFace(face)",
       "summary": "Standard copy constructor",
       "remarks": "Standard copy constructor",
@@ -26,8 +26,8 @@
   ],
   "methods": [
     {
-      "name": "AppendEdge(edgeHandle, positiveOrientation)",
-      "signature": "AppendEdge(edgeHandle, positiveOrientation)",
+      "name": "AppendEdge",
+      "signature": "AppendEdge(edgeHandle, positiveOrientation) | AppendEdge(edge)",
       "summary": "Append edge into face",
       "remarks": "Append edge into face",
       "params": [
@@ -41,24 +41,6 @@
           "name": "positiveOrientation",
           "type": "bool",
           "doc": "True for positive, false for negative orientation.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.AppendEdge"
-    },
-    {
-      "name": "AppendEdge(edge)",
-      "signature": "AppendEdge(edge)",
-      "summary": "Append edge into face",
-      "remarks": "Append edge into face",
-      "params": [
-        {
-          "name": "edge",
-          "type": "OrientedEdge",
-          "doc": "Appended Edge.",
           "optional": false
         }
       ],

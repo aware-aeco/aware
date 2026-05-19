@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3DList/",
   "constructors": [
     {
-      "name": "AxisPlacement3DList()",
+      "name": "AxisPlacement3DList",
       "signature": "AxisPlacement3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

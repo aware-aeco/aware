@@ -10,59 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/",
   "constructors": [
     {
-      "name": "SlabOpeningElement()",
-      "signature": "SlabOpeningElement()",
+      "name": "SlabOpeningElement",
+      "signature": "SlabOpeningElement() | SlabOpeningElement(slabOpeningProp, placementPoint, slabConnectionUUID) | SlabOpeningElement(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__init__"
-    },
-    {
-      "name": "SlabOpeningElement(slabOpeningProp, placementPoint, slabConnectionUUID)",
-      "signature": "SlabOpeningElement(slabOpeningProp, placementPoint, slabConnectionUUID)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "slabOpeningProp",
-          "type": "SlabOpeningProperties",
-          "doc": "SlabOpening properties",
-          "optional": false
-        },
-        {
-          "name": "placementPoint",
-          "type": "object",
-          "doc": "Placement point",
-          "optional": false
-        },
-        {
-          "name": "slabConnectionUUID",
-          "type": "GUID",
-          "doc": "Connetion UUID of the slab",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/#NemAll_Python_ArchElements.SlabOpeningElement.__init__"
-    },
-    {
-      "name": "SlabOpeningElement(element)",
-      "signature": "SlabOpeningElement(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "SlabOpeningElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

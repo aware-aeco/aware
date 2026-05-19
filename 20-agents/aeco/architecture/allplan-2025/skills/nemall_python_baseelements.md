@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_baseelements
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_BaseElements namespace — 50 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllplanElement, AssociationService, Attribute, AttributeDataManager, AttributeByteVec, AttributeDate, AttributeDouble, and 42 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_BaseElements namespace — 50 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AssociationService, Functions, Attribute, AttributeByteVec, AttributeDate, AttributeDouble, AttributeDataManager, and 42 more types.
 ---
 
 # NemAll_Python_BaseElements
@@ -185,9 +185,7 @@ ByteVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeByteVec/)
 
 ### Constructors
-- `AttributeByteVec()` — Initialize
-- `AttributeByteVec(id: int, value: VecByteList)` — Constructor
-- `AttributeByteVec(element: AttributeByteVec)` — Copy constructor
+- `AttributeByteVec() | AttributeByteVec(id: int, value: VecByteList) | AttributeByteVec(element: AttributeByteVec)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeByteVec) -> bool`
@@ -254,9 +252,7 @@ Date attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/)
 
 ### Constructors
-- `AttributeDate()` — Initialize
-- `AttributeDate(id: int, day: int, month: int, year: int)` — Constructor
-- `AttributeDate(element: AttributeDate)` — Copy constructor
+- `AttributeDate() | AttributeDate(id: int, day: int, month: int, year: int) | AttributeDate(element: AttributeDate)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeDate) -> bool`
@@ -305,9 +301,7 @@ Double attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDouble/)
 
 ### Constructors
-- `AttributeDouble()` — Initialize
-- `AttributeDouble(id: int, value: float)` — Constructor
-- `AttributeDouble(element: AttributeDouble)` — Copy constructor
+- `AttributeDouble() | AttributeDouble(id: int, value: float) | AttributeDouble(element: AttributeDouble)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeDouble) -> bool`
@@ -354,9 +348,7 @@ DoubleVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDoubleVec/)
 
 ### Constructors
-- `AttributeDoubleVec()` — Initialize
-- `AttributeDoubleVec(id: int, value: VecDoubleList)` — Constructor
-- `AttributeDoubleVec(element: AttributeDoubleVec)` — Copy constructor
+- `AttributeDoubleVec() | AttributeDoubleVec(id: int, value: VecDoubleList) | AttributeDoubleVec(element: AttributeDoubleVec)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeDoubleVec) -> bool`
@@ -403,9 +395,7 @@ Enum attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/)
 
 ### Constructors
-- `AttributeEnum()` — Initialize
-- `AttributeEnum(id: int, value: int)` — Constructor
-- `AttributeEnum(element: AttributeEnum)` — Copy constructor
+- `AttributeEnum() | AttributeEnum(id: int, value: int) | AttributeEnum(element: AttributeEnum)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeEnum) -> bool`
@@ -452,9 +442,7 @@ Integer attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/)
 
 ### Constructors
-- `AttributeInteger()` — Initialize
-- `AttributeInteger(id: int, value: int)` — Constructor
-- `AttributeInteger(element: AttributeInteger)` — Copy constructor
+- `AttributeInteger() | AttributeInteger(id: int, value: int) | AttributeInteger(element: AttributeInteger)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeInteger) -> bool`
@@ -501,9 +489,7 @@ IntegerVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeIntegerVec/)
 
 ### Constructors
-- `AttributeIntegerVec()` — Initialize
-- `AttributeIntegerVec(id: int, value: list[int] | VecIntList)` — Constructor
-- `AttributeIntegerVec(element: AttributeIntegerVec)` — Copy constructor
+- `AttributeIntegerVec() | AttributeIntegerVec(id: int, value: list[int] | AttributeIntegerVec() | AttributeIntegerVec(element: AttributeIntegerVec)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeIntegerVec) -> bool`
@@ -747,9 +733,7 @@ Attribute set
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/)
 
 ### Constructors
-- `AttributeSet()` — Initialize
-- `AttributeSet(elements: list)` — Constructor
-- `AttributeSet(element: AttributeSet)` — Copy constructor
+- `AttributeSet() | AttributeSet(elements: list) | AttributeSet(element: AttributeSet)` — Initialize
 
 ### Methods
 #### `GetAttributes() -> ( list[ AttributeByteVec | AttributeDate | AttributeDouble | AttributeDoubleVec | AttributeEnum | AttributeInteger | AttributeIntegerVec | AttributeString | AttributeStringVec ] )`
@@ -817,9 +801,7 @@ String attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeString/)
 
 ### Constructors
-- `AttributeString()` — Initialize
-- `AttributeString(id: int, value: str)` — Constructor
-- `AttributeString(element: AttributeString)` — Copy constructor
+- `AttributeString() | AttributeString(id: int, value: str) | AttributeString(element: AttributeString)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeString) -> bool`
@@ -866,9 +848,7 @@ StringVec attribute
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeStringVec/)
 
 ### Constructors
-- `AttributeStringVec()` — Initialize
-- `AttributeStringVec(id: int, value: VecStringList)` — Constructor
-- `AttributeStringVec(element: AttributeStringVec)` — Copy constructor
+- `AttributeStringVec() | AttributeStringVec(id: int, value: VecStringList) | AttributeStringVec(element: AttributeStringVec)` — Initialize
 
 ### Methods
 #### `__eq__(element: AttributeStringVec) -> bool`
@@ -915,8 +895,7 @@ Attributes class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attributes/)
 
 ### Constructors
-- `Attributes()` — Initialize
-- `Attributes(elements: list)` — Constructor
+- `Attributes() | Attributes(elements: list)` — Initialize
 
 ### Methods
 #### `GetAttributeSets() -> list`
@@ -1022,8 +1001,7 @@ Representation of format properties, common for all kind of Allplan elements, su
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/)
 
 ### Constructors
-- `CommonProperties()` — Initialize
-- `CommonProperties(element: CommonProperties)` — Copy constructor
+- `CommonProperties() | CommonProperties(element: CommonProperties)` — Initialize
 
 ### Methods
 #### `GetColorPenStrokeByLayerFromLayerNumber( layernumber: int, ) -> list[int] | VecIntList`
@@ -1433,7 +1411,7 @@ Service for selecting elements in the current document based on the value of a s
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/)
 
 ### Methods
-#### `GetElements(attributeValue: float) -> BaseElementAdapterList`
+#### `GetElements(attributeValue: float) -> BaseElementAdapterList | GetElements(attributeValue: int) -> BaseElementAdapterList | GetElements(attributeValue: str) -> BaseElementAdapterList`
 
 Get the elements for the double attribute value
 
@@ -1441,32 +1419,6 @@ Get the elements for the double attribute value
 
 **Parameters:**
 - `attributeValue` (float) — Attribute value
-
-**Returns:** `BaseElementAdapterList` — Elements
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements)
-
-#### `GetElements(attributeValue: int) -> BaseElementAdapterList`
-
-Get the elements for the integer attribute value
-
-**Remarks:** Get the elements for the integer attribute value
-
-**Parameters:**
-- `attributeValue` (int) — Attribute value
-
-**Returns:** `BaseElementAdapterList` — Elements
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements)
-
-#### `GetElements(attributeValue: str) -> BaseElementAdapterList`
-
-Get the elements for the string attribute value
-
-**Remarks:** Get the elements for the string attribute value
-
-**Parameters:**
-- `attributeValue` (str) — Attribute value
 
 **Returns:** `BaseElementAdapterList` — Elements
 
@@ -1583,8 +1535,7 @@ Service for exporting/importing CAD data in common formats, like IFC or DWG.
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/)
 
 ### Constructors
-- `ExportImportService()` — Initialize
-- `ExportImportService(element: ExportImportService)` — Copy constructor
+- `ExportImportService() | ExportImportService(element: ExportImportService)` — Initialize
 
 ### Methods
 #### `ExportDWG( doc: DocumentAdapter, fileName: str, configFileName: str, version: int )`
@@ -1927,22 +1878,7 @@ Draw the preview of the elements
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/#NemAll_Python_BaseElements.DrawElementPreview)
 
-#### `ElementTransform( transVec: Vector3D, xAngle: float, yAngle: float, zAngle: float, modelEleList: list, )`
-
-Transform the model elements
-
-**Remarks:** Transform the model elements
-
-**Parameters:**
-- `transVec` (Vector3D) — Transformation vector
-- `xAngle` (float) — Rotation angle around the x-axis
-- `yAngle` (float) — Rotation angle around the y-axis
-- `zAngle` (float) — Rotation angle around the z-axis
-- `modelEleList` (list) — List with the model elements
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/#NemAll_Python_BaseElements.ElementTransform)
-
-#### `ElementTransform(transMat: Matrix3D, modelEleList: list)`
+#### `ElementTransform(transMat: Matrix3D, modelEleList: list) | ElementTransform( transVec: Vector3D, xAngle: float, yAngle: float, zAngle: float, modelEleList: list, )`
 
 Transform the model elements
 
@@ -2483,9 +2419,7 @@ Implementation of the plane service
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/)
 
 ### Constructors
-- `PlaneService()` — Initialize
-- `PlaneService(doc: DocumentAdapter)` — Constructor
-- `PlaneService(element: PlaneService)` — Copy constructor
+- `PlaneService() | PlaneService(doc: DocumentAdapter) | PlaneService(element: PlaneService)` — Initialize
 
 ### Methods
 #### `CreateBRepSurfacePlane( doc: DocumentAdapter, planeSurface: BRep3D, surfaceName: str, isVisible: bool, ) -> BaseElementAdapter`
@@ -2537,20 +2471,7 @@ Utility for processing the values of project-specific attributes
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/)
 
 ### Methods
-#### `ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: float, doc: DocumentAdapter )`
-
-Change a project attribute from the current file
-
-**Remarks:** Change a project attribute from the current file
-
-**Parameters:**
-- `attributeNumber` (int) — Attribute number
-- `newValue` (float) — Attribute value
-- `doc` (DocumentAdapter) — Document
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject)
-
-#### `ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: int, doc: DocumentAdapter )`
+#### `ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: int, doc: DocumentAdapter ) | ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: float, doc: DocumentAdapter ) | ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: str, doc: DocumentAdapter )`
 
 Change a project attribute from the current file
 
@@ -2559,19 +2480,6 @@ Change a project attribute from the current file
 **Parameters:**
 - `attributeNumber` (int) — Attribute number
 - `newValue` (int) — Attribute value
-- `doc` (DocumentAdapter) — Document
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject)
-
-#### `ChangeAttributeFromCurrentProject( attributeNumber: int, newValue: str, doc: DocumentAdapter )`
-
-Change a project attribute from the current file
-
-**Remarks:** Change a project attribute from the current file
-
-**Parameters:**
-- `attributeNumber` (int) — Attribute number
-- `newValue` (str) — Attribute value
 - `doc` (DocumentAdapter) — Document
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ProjectAttributeService/#NemAll_Python_BaseElements.ProjectAttributeService.ChangeAttributeFromCurrentProject)
@@ -2785,8 +2693,7 @@ Implementation of the zoom service
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/)
 
 ### Constructors
-- `ZoomService()` — Initialize
-- `ZoomService(element: ZoomService)` — Copy constructor
+- `ZoomService() | ZoomService(element: ZoomService)` — Initialize
 
 ### Methods
 #### `ZoomToElement( element: BaseElementAdapter, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, )`
@@ -2845,7 +2752,7 @@ Zoom to the elements
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToElementsWithFactor)
 
-#### `ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, )`
+#### `ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, ) | ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValueX: float, inflateValueY: float, inflateValueZ: float, bZoomAll: bool, )`
 
 Zoom to the min/max box
 
@@ -2855,22 +2762,6 @@ Zoom to the min/max box
 - `minMaxBox` (MinMax3D) — Zoom area
 - `viewProj` (ViewWorldProjection) — View world projection
 - `inflateValue` (float) — Inflate value for the min/max box
-- `bZoomAll` (bool) — Zoom in all views state
-
-[Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToMinMaxBox)
-
-#### `ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValueX: float, inflateValueY: float, inflateValueZ: float, bZoomAll: bool, )`
-
-Zoom to the min/max box
-
-**Remarks:** Zoom to the min/max box
-
-**Parameters:**
-- `minMaxBox` (MinMax3D) — Zoom area
-- `viewProj` (ViewWorldProjection) — View world projection
-- `inflateValueX` (float) — Inflate value for the min/max box in x direction
-- `inflateValueY` (float) — Inflate value for the min/max box in y direction
-- `inflateValueZ` (float) — Inflate value for the min/max box in z direction
 - `bZoomAll` (bool) — Zoom in all views state
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToMinMaxBox)

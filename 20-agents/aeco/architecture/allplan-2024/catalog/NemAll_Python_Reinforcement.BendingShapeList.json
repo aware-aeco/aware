@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeList/",
   "constructors": [
     {
-      "name": "BendingShapeList()",
+      "name": "BendingShapeList",
       "signature": "BendingShapeList()",
       "summary": "Initialize",
       "remarks": "Initialize",

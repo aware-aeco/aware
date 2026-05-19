@@ -8,51 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/",
   "constructors": [
     {
-      "name": "PolygonalArea2D()",
-      "signature": "PolygonalArea2D()",
+      "name": "PolygonalArea2D",
+      "signature": "PolygonalArea2D() | PolygonalArea2D(verticesCount, edgesCount) | PolygonalArea2D(refPoint, verticesCount, edgesCount) | PolygonalArea2D(polygon)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
-    },
-    {
-      "name": "PolygonalArea2D(verticesCount, edgesCount)",
-      "signature": "PolygonalArea2D(verticesCount, edgesCount)",
-      "summary": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "remarks": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
-    },
-    {
-      "name": "PolygonalArea2D(refPoint, verticesCount, edgesCount)",
-      "signature": "PolygonalArea2D(refPoint, verticesCount, edgesCount)",
-      "summary": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "remarks": "Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__init__"
-    },
-    {
-      "name": "PolygonalArea2D(polygon)",
-      "signature": "PolygonalArea2D(polygon)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "PolygonalArea2D",
-          "doc": "2D polygon which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -61,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "__iadd__(polygonalarea)",
-      "signature": "__iadd__(polygonalarea)",
+      "name": "__iadd__",
+      "signature": "__iadd__(polygonalarea) | __iadd__(polygon)",
       "summary": "Append polygon.",
       "remarks": "Append polygon.",
       "params": [
@@ -70,27 +30,6 @@
           "name": "polygonalarea",
           "type": "PolygonalArea2D",
           "doc": "polygonal area which will be appended.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "Reference to PolygonalArea2D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(polygon)",
-      "signature": "__iadd__(polygon)",
-      "summary": "Append loop.",
-      "remarks": "Append loop.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "Polygon2D",
-          "doc": "polygon which will be appended.",
           "optional": false
         }
       ],

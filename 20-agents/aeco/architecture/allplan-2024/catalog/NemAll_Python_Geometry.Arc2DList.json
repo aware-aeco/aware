@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2DList/",
   "constructors": [
     {
-      "name": "Arc2DList()",
+      "name": "Arc2DList",
       "signature": "Arc2DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

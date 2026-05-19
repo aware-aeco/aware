@@ -1,0 +1,102 @@
+{
+  "name": "ConMemberPosition",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConMemberPosition.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefinedBy",
+      "type": "ConMemberPlacementDefinitionTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.definedBy.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "AxisX",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.axisX.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "BetaDirection",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.betaDirection.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "GamaPitch",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.gamaPitch.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "AlphaRotation",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.alphaRotation.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "OffsetEx",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.offsetEx.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "OffsetEy",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.offsetEy.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "OffsetEz",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.offsetEz.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "Align",
+      "type": "ConMemberAlignmentTypeEnum",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.align.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "AlignedPlate",
+      "type": "ConAlignedPlate",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.alignedPlate.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    },
+    {
+      "name": "RelatedPlate",
+      "type": "ConAlignedPlate",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMemberPosition.relatedPlate.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPosition.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

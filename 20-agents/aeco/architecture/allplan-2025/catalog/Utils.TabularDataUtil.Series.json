@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/Series/",
   "constructors": [
     {
-      "name": "Series()",
+      "name": "Series",
       "signature": "Series( data: Optional[Union[List[int], List[str]]] = None, axis: Optional[Union[List[int], List[str]]] = None, name: Union[int, str] = 0, )",
       "summary": "Initialization of class Series",
       "remarks": "Initialization of class Series",

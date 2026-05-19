@@ -7,83 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/",
   "constructors": [
     {
-      "name": "ReinforcementShapeBuilder()",
-      "signature": "ReinforcementShapeBuilder()",
+      "name": "ReinforcementShapeBuilder",
+      "signature": "ReinforcementShapeBuilder() | ReinforcementShapeBuilder(shapePlaneMatrix: Matrix3D) | ReinforcementShapeBuilder( shapePlaneMatrix: Matrix3D, create3DShape: bool, localZCoverFront: float, localZCoverBack: float, ) | ReinforcementShapeBuilder(element: ReinforcementShapeBuilder)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.__init__"
-    },
-    {
-      "name": "ReinforcementShapeBuilder(shapePlaneMatrix: Matrix3D)",
-      "signature": "ReinforcementShapeBuilder(shapePlaneMatrix: Matrix3D)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "shapePlaneMatrix",
-          "type": "Matrix3D",
-          "doc": "Matrix of the plane for the real shape calculation",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.__init__"
-    },
-    {
-      "name": "ReinforcementShapeBuilder( shapePlaneMatrix: Matrix3D, create3DShape: bool, localZCoverFront: float, localZCoverBack: float, )",
-      "signature": "ReinforcementShapeBuilder( shapePlaneMatrix: Matrix3D, create3DShape: bool, localZCoverFront: float, localZCoverBack: float, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "shapePlaneMatrix",
-          "type": "Matrix3D",
-          "doc": "Matrix of the plane for the real shape calculation",
-          "optional": false
-        },
-        {
-          "name": "create3DShape",
-          "type": "bool",
-          "doc": "Create a 3D shape",
-          "optional": false
-        },
-        {
-          "name": "localZCoverFront",
-          "type": "float",
-          "doc": "Concrete cover in the front of the local z direction of the shape (needed for 3D shape)",
-          "optional": false
-        },
-        {
-          "name": "localZCoverBack",
-          "type": "float",
-          "doc": "Concrete cover in the back of the local z direction of the shape (needed for 3D shape)",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.__init__"
-    },
-    {
-      "name": "ReinforcementShapeBuilder(element: ReinforcementShapeBuilder)",
-      "signature": "ReinforcementShapeBuilder(element: ReinforcementShapeBuilder)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "ReinforcementShapeBuilder",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -92,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "AddPoint( pnt: Point2D, concreteCover: float, bendingRoller: float, zCoordBar: float = 0, )",
-      "signature": "AddPoint( pnt: Point2D, concreteCover: float, bendingRoller: float, zCoordBar: float = 0, )",
+      "name": "AddPoint",
+      "signature": "AddPoint( pnt: Point2D, concreteCover: float, bendingRoller: float, zCoordBar: float = 0, ) | AddPoint(pnt: Point3D, concreteCover: float, bendingRoller: float)",
       "summary": "Add an end point of a geometry side",
       "remarks": "Add an end point of a geometry side",
       "params": [
@@ -119,36 +47,6 @@
           "name": "zCoordBar",
           "type": "float",
           "doc": "Bar coordinate in z direction of the local shape coordinate system",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddPoint"
-    },
-    {
-      "name": "AddPoint(pnt: Point3D, concreteCover: float, bendingRoller: float)",
-      "signature": "AddPoint(pnt: Point3D, concreteCover: float, bendingRoller: float)",
-      "summary": "Add an end point of a geometry side",
-      "remarks": "Add an end point of a geometry side",
-      "params": [
-        {
-          "name": "pnt",
-          "type": "Point3D",
-          "doc": "End point of the side",
-          "optional": false
-        },
-        {
-          "name": "concreteCover",
-          "type": "float",
-          "doc": "Concrete cover",
-          "optional": false
-        },
-        {
-          "name": "bendingRoller",
-          "type": "float",
-          "doc": "Bending roller",
           "optional": false
         }
       ],
@@ -176,8 +74,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddPoints"
     },
     {
-      "name": "AddSide( startPnt: Point2D, endPnt: Point2D, concreteCover: float, bendingRoller: float, zCoordBar: float = 0, )",
-      "signature": "AddSide( startPnt: Point2D, endPnt: Point2D, concreteCover: float, bendingRoller: float, zCoordBar: float = 0, )",
+      "name": "AddSide",
+      "signature": "AddSide( startPnt: Point2D, endPnt: Point2D, concreteCover: float, bendingRoller: float, zCoordBar: float = 0, ) | AddSide( startPnt: Point3D, endPnt: Point3D, concreteCover: float, bendingRoller: float, )",
       "summary": "Add a geometry side of the shape",
       "remarks": "Add a geometry side of the shape",
       "params": [
@@ -218,42 +116,6 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddSide"
     },
     {
-      "name": "AddSide( startPnt: Point3D, endPnt: Point3D, concreteCover: float, bendingRoller: float, )",
-      "signature": "AddSide( startPnt: Point3D, endPnt: Point3D, concreteCover: float, bendingRoller: float, )",
-      "summary": "Add a geometry side of the shape",
-      "remarks": "Add a geometry side of the shape",
-      "params": [
-        {
-          "name": "startPnt",
-          "type": "Point3D",
-          "doc": "Start point of the geometry side",
-          "optional": false
-        },
-        {
-          "name": "endPnt",
-          "type": "Point3D",
-          "doc": "End point of the geometry side",
-          "optional": false
-        },
-        {
-          "name": "concreteCover",
-          "type": "float",
-          "doc": "Concrete cover",
-          "optional": false
-        },
-        {
-          "name": "bendingRoller",
-          "type": "float",
-          "doc": "Bending roller between the last and current side",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddSide"
-    },
-    {
       "name": "AddSides",
       "signature": "AddSides(sideList: object)",
       "summary": "Add the geometry sides of a shape",
@@ -272,8 +134,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddSides"
     },
     {
-      "name": "CreateShape( diameter: float, bendingRoller: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, ) -\u003E BendingShape",
-      "signature": "CreateShape( diameter: float, bendingRoller: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, ) -\u003E BendingShape",
+      "name": "CreateShape",
+      "signature": "CreateShape( diameter: float, bendingRoller: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, ) -\u003E BendingShape | CreateShape( meshType: str, meshBendingDirection: MeshBendingDirection, bendingRoller: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, ) -\u003E BendingShape | CreateShape(shapeProps: object) -\u003E BendingShape",
       "summary": "Create the shape",
       "remarks": "Create the shape",
       "params": [
@@ -317,80 +179,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateShape"
     },
     {
-      "name": "CreateShape( meshType: str, meshBendingDirection: MeshBendingDirection, bendingRoller: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, ) -\u003E BendingShape",
-      "signature": "CreateShape( meshType: str, meshBendingDirection: MeshBendingDirection, bendingRoller: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, ) -\u003E BendingShape",
-      "summary": "Create the shape",
-      "remarks": "Create the shape",
-      "params": [
-        {
-          "name": "meshType",
-          "type": "str",
-          "doc": "Mesh type",
-          "optional": false
-        },
-        {
-          "name": "meshBendingDirection",
-          "type": "MeshBendingDirection",
-          "doc": "Mesh bending direction",
-          "optional": false
-        },
-        {
-          "name": "bendingRoller",
-          "type": "float",
-          "doc": "Default bending roller",
-          "optional": false
-        },
-        {
-          "name": "steelGrade",
-          "type": "int",
-          "doc": "Steel grade",
-          "optional": false
-        },
-        {
-          "name": "concreteGrade",
-          "type": "int",
-          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
-          "optional": false
-        },
-        {
-          "name": "bendingShapeType",
-          "type": "BendingShapeType",
-          "doc": "Bending shape type",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BendingShape",
-        "doc": "Creation successful: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateShape"
-    },
-    {
-      "name": "CreateShape(shapeProps: object) -\u003E BendingShape",
-      "signature": "CreateShape(shapeProps: object) -\u003E BendingShape",
-      "summary": "Create the shape",
-      "remarks": "Create the shape",
-      "params": [
-        {
-          "name": "shapeProps",
-          "type": "object",
-          "doc": "Shape properties",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BendingShape",
-        "doc": "Creation successful: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateShape"
-    },
-    {
-      "name": "CreateStirrup( diameter: float, bendingRoller: float, steelGrade: int, concreteGrade: int, stirrupType: StirrupType, ) -\u003E BendingShape",
-      "signature": "CreateStirrup( diameter: float, bendingRoller: float, steelGrade: int, concreteGrade: int, stirrupType: StirrupType, ) -\u003E BendingShape",
+      "name": "CreateStirrup",
+      "signature": "CreateStirrup( diameter: float, bendingRoller: float, steelGrade: int, concreteGrade: int, stirrupType: StirrupType, ) -\u003E BendingShape | CreateStirrup( meshType: str, meshBendingDirection: MeshBendingDirection, bendingRoller: float, steelGrade: int, concreteGrade: int, stirrupType: StirrupType, ) -\u003E BendingShape | CreateStirrup(shapeProps: object, stirrupType: StirrupType) -\u003E BendingShape",
       "summary": "Create the stirrup shape",
       "remarks": "Create the stirrup shape",
       "params": [
@@ -416,84 +206,6 @@
           "name": "concreteGrade",
           "type": "int",
           "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
-          "optional": false
-        },
-        {
-          "name": "stirrupType",
-          "type": "StirrupType",
-          "doc": "Type of the stirrup",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BendingShape",
-        "doc": "Creation successful: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateStirrup"
-    },
-    {
-      "name": "CreateStirrup( meshType: str, meshBendingDirection: MeshBendingDirection, bendingRoller: float, steelGrade: int, concreteGrade: int, stirrupType: StirrupType, ) -\u003E BendingShape",
-      "signature": "CreateStirrup( meshType: str, meshBendingDirection: MeshBendingDirection, bendingRoller: float, steelGrade: int, concreteGrade: int, stirrupType: StirrupType, ) -\u003E BendingShape",
-      "summary": "Create the stirrup shape",
-      "remarks": "Create the stirrup shape",
-      "params": [
-        {
-          "name": "meshType",
-          "type": "str",
-          "doc": "Mesh type",
-          "optional": false
-        },
-        {
-          "name": "meshBendingDirection",
-          "type": "MeshBendingDirection",
-          "doc": "Mesh bending direction",
-          "optional": false
-        },
-        {
-          "name": "bendingRoller",
-          "type": "float",
-          "doc": "Default bending roller",
-          "optional": false
-        },
-        {
-          "name": "steelGrade",
-          "type": "int",
-          "doc": "Steel grade",
-          "optional": false
-        },
-        {
-          "name": "concreteGrade",
-          "type": "int",
-          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
-          "optional": false
-        },
-        {
-          "name": "stirrupType",
-          "type": "StirrupType",
-          "doc": "Type of the stirrup",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BendingShape",
-        "doc": "Creation successful: true/false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateStirrup"
-    },
-    {
-      "name": "CreateStirrup(shapeProps: object, stirrupType: StirrupType) -\u003E BendingShape",
-      "signature": "CreateStirrup(shapeProps: object, stirrupType: StirrupType) -\u003E BendingShape",
-      "summary": "Create the stirrup shape",
-      "remarks": "Create the stirrup shape",
-      "params": [
-        {
-          "name": "shapeProps",
-          "type": "object",
-          "doc": "Shape properties",
           "optional": false
         },
         {
@@ -645,8 +357,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverEnd"
     },
     {
-      "name": "SetConcreteCoverLineEnd( startPnt: Point2D, endPnt: Point2D, concreteCover: float )",
-      "signature": "SetConcreteCoverLineEnd( startPnt: Point2D, endPnt: Point2D, concreteCover: float )",
+      "name": "SetConcreteCoverLineEnd",
+      "signature": "SetConcreteCoverLineEnd( startPnt: Point2D, endPnt: Point2D, concreteCover: float ) | SetConcreteCoverLineEnd( startPnt: Point3D, endPnt: Point3D, concreteCover: float )",
       "summary": "Set the concrete cover line at the end of the shape",
       "remarks": "Set the concrete cover line at the end of the shape",
       "params": [
@@ -675,38 +387,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineEnd"
     },
     {
-      "name": "SetConcreteCoverLineEnd( startPnt: Point3D, endPnt: Point3D, concreteCover: float )",
-      "signature": "SetConcreteCoverLineEnd( startPnt: Point3D, endPnt: Point3D, concreteCover: float )",
-      "summary": "Set the concrete cover line at the end of the shape",
-      "remarks": "Set the concrete cover line at the end of the shape",
-      "params": [
-        {
-          "name": "startPnt",
-          "type": "Point3D",
-          "doc": "Start point of the concrete cover line at the end of the shape",
-          "optional": false
-        },
-        {
-          "name": "endPnt",
-          "type": "Point3D",
-          "doc": "Endpoint of the concrete cover line at the end of the shape",
-          "optional": false
-        },
-        {
-          "name": "concreteCover",
-          "type": "float",
-          "doc": "Concrete cover",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineEnd"
-    },
-    {
-      "name": "SetConcreteCoverLineStart( startPnt: Point2D, endPnt: Point2D, concreteCover: float )",
-      "signature": "SetConcreteCoverLineStart( startPnt: Point2D, endPnt: Point2D, concreteCover: float )",
+      "name": "SetConcreteCoverLineStart",
+      "signature": "SetConcreteCoverLineStart( startPnt: Point2D, endPnt: Point2D, concreteCover: float ) | SetConcreteCoverLineStart( startPnt: Point3D, endPnt: Point3D, concreteCover: float )",
       "summary": "Set the concrete cover line at the start of the shape",
       "remarks": "Set the concrete cover line at the start of the shape",
       "params": [
@@ -719,36 +401,6 @@
         {
           "name": "endPnt",
           "type": "Point2D",
-          "doc": "Endpoint of the concrete cover line at the start of the shape",
-          "optional": false
-        },
-        {
-          "name": "concreteCover",
-          "type": "float",
-          "doc": "Concrete cover",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineStart"
-    },
-    {
-      "name": "SetConcreteCoverLineStart( startPnt: Point3D, endPnt: Point3D, concreteCover: float )",
-      "signature": "SetConcreteCoverLineStart( startPnt: Point3D, endPnt: Point3D, concreteCover: float )",
-      "summary": "Set the concrete cover line at the start of the shape",
-      "remarks": "Set the concrete cover line at the start of the shape",
-      "params": [
-        {
-          "name": "startPnt",
-          "type": "Point3D",
-          "doc": "Start point of the concrete cover line at the start of the shape",
-          "optional": false
-        },
-        {
-          "name": "endPnt",
-          "type": "Point3D",
           "doc": "Endpoint of the concrete cover line at the start of the shape",
           "optional": false
         },
@@ -919,32 +571,14 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetSideLengthStart"
     },
     {
-      "name": "SetStartPoint(startPnt: Point2D)",
-      "signature": "SetStartPoint(startPnt: Point2D)",
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startPnt: Point2D) | SetStartPoint(startPnt: Point3D)",
       "summary": "Set a start point of a geometry side",
       "remarks": "Set a start point of a geometry side",
       "params": [
         {
           "name": "startPnt",
           "type": "Point2D",
-          "doc": "Start point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetStartPoint"
-    },
-    {
-      "name": "SetStartPoint(startPnt: Point3D)",
-      "signature": "SetStartPoint(startPnt: Point3D)",
-      "summary": "Set a start point of a geometry side",
-      "remarks": "Set a start point of a geometry side",
-      "params": [
-        {
-          "name": "startPnt",
-          "type": "Point3D",
           "doc": "Start point",
           "optional": false
         }

@@ -8,29 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabProperties/",
   "constructors": [
     {
-      "name": "SlabProperties()",
-      "signature": "SlabProperties()",
+      "name": "SlabProperties",
+      "signature": "SlabProperties() | SlabProperties(slabProp: SlabProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabProperties/#NemAll_Python_ArchElements.SlabProperties.__init__"
-    },
-    {
-      "name": "SlabProperties(slabProp: SlabProperties)",
-      "signature": "SlabProperties(slabProp: SlabProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "slabProp",
-          "type": "SlabProperties",
-          "doc": "Slab properties",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

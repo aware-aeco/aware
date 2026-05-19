@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/",
   "constructors": [
     {
-      "name": "Polyhedron3DList()",
-      "signature": "Polyhedron3DList()",
+      "name": "Polyhedron3DList",
+      "signature": "Polyhedron3DList() | Polyhedron3DList(ele: Polyhedron3D) | Polyhedron3DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__init__"
-    },
-    {
-      "name": "Polyhedron3DList(ele: Polyhedron3D)",
-      "signature": "Polyhedron3DList(ele: Polyhedron3D)",
-      "summary": "Constructor with a Polyhedron3D",
-      "remarks": "Constructor with a Polyhedron3D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Polyhedron3D",
-          "doc": "Polyhedron3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.__init__"
-    },
-    {
-      "name": "Polyhedron3DList(eleList: list)",
-      "signature": "Polyhedron3DList(eleList: list)",
-      "summary": "Constructor with a list of Polyhedron3D",
-      "remarks": "Constructor with a list of Polyhedron3D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Polyhedron3D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.append"
     },
     {
-      "name": "extend(iterable: Polyhedron3DList)",
-      "signature": "extend(iterable: Polyhedron3DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Polyhedron3DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Polyhedron3DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Polyhedron3D list",
           "optional": false
         }
       ],

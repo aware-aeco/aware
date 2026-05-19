@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attributes/",
   "constructors": [
     {
-      "name": "Attributes()",
-      "signature": "Attributes()",
+      "name": "Attributes",
+      "signature": "Attributes() | Attributes(elements)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attributes/#NemAll_Python_BaseElements.Attributes.__init__"
-    },
-    {
-      "name": "Attributes(elements)",
-      "signature": "Attributes(elements)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "elements",
-          "type": "list",
-          "doc": "Attribute set element list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

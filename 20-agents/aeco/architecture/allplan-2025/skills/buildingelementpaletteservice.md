@@ -14,7 +14,7 @@ Definition of class BuildingElementPaletteService
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementPaletteService/)
 
 ### Constructors
-- `BuildingElementPaletteService( build_ele_list: list[BuildingElement], build_ele_composite: BuildingElementComposite, build_ele_script: Any, build_ele_ctrl_props_list: list[BuildingElementControlProperties], picture_path: str, script_object: BaseScriptObject | None = None, )` — Initialize the data
+- `BuildingElementPaletteService( build_ele_list: list[BuildingElement], build_ele_composite: BuildingElementComposite, build_ele_script: Any, build_ele_ctrl_props_list: list[BuildingElementControlProperties], picture_path: str, script_object: BaseScriptObject | BuildingElementPaletteService()` — Initialize the data
 
 ### Methods
 #### `check_building_element_index()`

@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/",
   "constructors": [
     {
-      "name": "ArchBaseProperties()",
+      "name": "ArchBaseProperties",
       "signature": "ArchBaseProperties(element: ArchBaseProperties)",
       "summary": "Copy constructor",
       "remarks": "Copy constructor",

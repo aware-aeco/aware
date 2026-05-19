@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementMaterialStringTable/",
   "constructors": [
     {
-      "name": "BuildingElementMaterialStringTable()",
+      "name": "BuildingElementMaterialStringTable",
       "signature": "BuildingElementMaterialStringTable(path: str, numeric: bool, lang: str)",
       "summary": "Initialization of class StringTable",
       "remarks": "Initialization of class StringTable",

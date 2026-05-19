@@ -8,39 +8,10 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/",
   "constructors": [
     {
-      "name": "Spline2D()",
-      "signature": "Spline2D()",
+      "name": "Spline2D",
+      "signature": "Spline2D() | Spline2D(spline) | Spline2D(pntList)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.__init__"
-    },
-    {
-      "name": "Spline2D(spline)",
-      "signature": "Spline2D(spline)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "spline",
-          "type": "Spline2D",
-          "doc": "Spline which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/#NemAll_Python_Geometry.Spline2D.__init__"
-    },
-    {
-      "name": "Spline2D(pntList)",
-      "signature": "Spline2D(pntList)",
-      "summary": "Args: pntList:",
-      "remarks": "Args: pntList:",
       "params": [],
       "returns": null,
       "throws": [],

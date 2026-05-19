@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/PythonPartParameterUtil/PythonPartParameterUtil/",
   "constructors": [
     {
-      "name": "PythonPartParameterUtil()",
+      "name": "PythonPartParameterUtil",
       "signature": "PythonPartParameterUtil(python_part_ele, str_table_service)",
       "summary": "initialize",
       "remarks": "initialize",

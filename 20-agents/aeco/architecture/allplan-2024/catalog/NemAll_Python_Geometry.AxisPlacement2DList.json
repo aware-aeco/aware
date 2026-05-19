@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2DList/",
   "constructors": [
     {
-      "name": "AxisPlacement2DList()",
+      "name": "AxisPlacement2DList",
       "signature": "AxisPlacement2DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

@@ -10,71 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/",
   "constructors": [
     {
-      "name": "PlaneMeshPlacement()",
-      "signature": "PlaneMeshPlacement()",
+      "name": "PlaneMeshPlacement",
+      "signature": "PlaneMeshPlacement() | PlaneMeshPlacement(placement: PlaneMeshPlacement) | PlaneMeshPlacement( positionNumber: int, meshData: MeshData, meshLength: float, meshWidth: float, meshPolygon: Polygon3D, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.__init__"
-    },
-    {
-      "name": "PlaneMeshPlacement(placement: PlaneMeshPlacement)",
-      "signature": "PlaneMeshPlacement(placement: PlaneMeshPlacement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "placement",
-          "type": "PlaneMeshPlacement",
-          "doc": "Placement to copy",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/#NemAll_Python_Reinforcement.PlaneMeshPlacement.__init__"
-    },
-    {
-      "name": "PlaneMeshPlacement( positionNumber: int, meshData: MeshData, meshLength: float, meshWidth: float, meshPolygon: Polygon3D, )",
-      "signature": "PlaneMeshPlacement( positionNumber: int, meshData: MeshData, meshLength: float, meshWidth: float, meshPolygon: Polygon3D, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "positionNumber",
-          "type": "int",
-          "doc": "Position number",
-          "optional": false
-        },
-        {
-          "name": "meshData",
-          "type": "MeshData",
-          "doc": "Mesh data",
-          "optional": false
-        },
-        {
-          "name": "meshLength",
-          "type": "float",
-          "doc": "Mesh length",
-          "optional": false
-        },
-        {
-          "name": "meshWidth",
-          "type": "float",
-          "doc": "Mesh width",
-          "optional": false
-        },
-        {
-          "name": "meshPolygon",
-          "type": "Polygon3D",
-          "doc": "Mesh polygon",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CircularShape/",
   "constructors": [
     {
-      "name": "CircularShape()",
-      "signature": "CircularShape()",
+      "name": "CircularShape",
+      "signature": "CircularShape() | CircularShape(value: CircularShape)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CircularShape/#NemAll_Python_ArchElements.CircularShape.__init__"
-    },
-    {
-      "name": "CircularShape(value: CircularShape)",
-      "signature": "CircularShape(value: CircularShape)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "value",
-          "type": "CircularShape",
-          "doc": "Circular shape",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

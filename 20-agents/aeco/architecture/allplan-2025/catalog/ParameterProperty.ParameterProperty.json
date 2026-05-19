@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/",
   "constructors": [
     {
-      "name": "ParameterProperty()",
+      "name": "ParameterProperty",
       "signature": "ParameterProperty()",
       "summary": "initialize",
       "remarks": "initialize",

@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleModificationService/",
   "constructors": [
     {
-      "name": "HandleModificationService()",
-      "signature": "HandleModificationService( coord_input: CoordinateInput, build_ele_list: list[BuildingElement], control_props_list: list[BuildingElementControlProperties], asso_ref_ele: BaseElementAdapter | None = None, use_system_angle: bool = True, )",
+      "name": "HandleModificationService",
+      "signature": "HandleModificationService( coord_input: CoordinateInput, build_ele_list: list[BuildingElement], control_props_list: list[BuildingElementControlProperties], asso_ref_ele: BaseElementAdapter | HandleModificationService()",
       "summary": "initialize",
       "remarks": "initialize",
       "params": [

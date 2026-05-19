@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPart/",
   "constructors": [
     {
-      "name": "PythonPart()",
+      "name": "PythonPart",
       "signature": "PythonPart(name, parameter_list, hash_value, python_file, views=None, matrix=Matrix3D(), common_props=None, reinforcement=None, attribute_list=None, library_elements=None, architecture_elements=None, label_elements=None, fixture_elements=None, placement_matrix=None)",
       "summary": "Initialization of class PythonPart",
       "remarks": "Initialization of class PythonPart",

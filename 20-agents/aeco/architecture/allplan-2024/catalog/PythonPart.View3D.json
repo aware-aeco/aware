@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View3D/",
   "constructors": [
     {
-      "name": "View3D()",
+      "name": "View3D",
       "signature": "View3D(elements=None, start_scale=0.0, end_scale=9999.0)",
       "summary": "Initialization of 3D view class",
       "remarks": "Initialization of 3D view class",

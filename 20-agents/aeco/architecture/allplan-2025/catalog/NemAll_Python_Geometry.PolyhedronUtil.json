@@ -83,8 +83,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronUtil/#NemAll_Python_Geometry.PolyhedronUtil.GetFootprint"
     },
     {
-      "name": "GetNextEdge( elem: Polyhedron3D, face: PolyhedronFace ) -\u003E tuple[bool, VecSizeTList, Point3DList]",
-      "signature": "GetNextEdge( elem: Polyhedron3D, face: PolyhedronFace ) -\u003E tuple[bool, VecSizeTList, Point3DList]",
+      "name": "GetNextEdge",
+      "signature": "GetNextEdge( elem: Polyhedron3D, face: PolyhedronFace ) -\u003E tuple[bool, VecSizeTList, Point3DList] | GetNextEdge( elem: Polyhedron3D, edges: GeometryEdgeList, verticeHandle: int ) -\u003E tuple[bool, VecSizeTList, Point3DList]",
       "summary": "Get the next connected edge",
       "remarks": "Get the next connected edge",
       "params": [
@@ -110,39 +110,6 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronUtil/#NemAll_Python_Geometry.PolyhedronUtil.GetNextEdge"
     },
     {
-      "name": "GetNextEdge( elem: Polyhedron3D, edges: GeometryEdgeList, verticeHandle: int ) -\u003E tuple[bool, VecSizeTList, Point3DList]",
-      "signature": "GetNextEdge( elem: Polyhedron3D, edges: GeometryEdgeList, verticeHandle: int ) -\u003E tuple[bool, VecSizeTList, Point3DList]",
-      "summary": "Get the last connected edge",
-      "remarks": "Get the last connected edge",
-      "params": [
-        {
-          "name": "elem",
-          "type": "Polyhedron3D",
-          "doc": "Get the vertices for a face of this polyhedron",
-          "optional": false
-        },
-        {
-          "name": "edges",
-          "type": "GeometryEdgeList",
-          "doc": "All edges from the given polyhedron",
-          "optional": false
-        },
-        {
-          "name": "verticeHandle",
-          "type": "int",
-          "doc": "Vertice index of the last added point",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "tuple[bool, VecSizeTList, Point3DList]",
-        "doc": "tuple(true if returned values are valid, Vertices of the already added faces points, Already added polyhedron points)"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronUtil/#NemAll_Python_Geometry.PolyhedronUtil.GetNextEdge"
-    },
-    {
       "name": "MergePlanarFaces",
       "signature": "MergePlanarFaces(polyhedron: Polyhedron3D)",
       "summary": "Merge planar faces",
@@ -161,8 +128,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronUtil/#NemAll_Python_Geometry.PolyhedronUtil.MergePlanarFaces"
     },
     {
-      "name": "ReorderPolyhedronFaces( polyhedron: Polyhedron3D, bottomPlane: Plane3D, topPlane: Plane3D )",
-      "signature": "ReorderPolyhedronFaces( polyhedron: Polyhedron3D, bottomPlane: Plane3D, topPlane: Plane3D )",
+      "name": "ReorderPolyhedronFaces",
+      "signature": "ReorderPolyhedronFaces( polyhedron: Polyhedron3D, bottomPlane: Plane3D, topPlane: Plane3D ) | ReorderPolyhedronFaces(polyhedron: Polyhedron3D, direction: Vector3D)",
       "summary": "Reorder polyhedron faces according to planes. Reorders given polyhedron faces according to planes. The face laying in bottomPlane goes first and face laying in topPlane goes second. Order of other faces is not guaranteed. Old interface: normalizeArchitectural3d",
       "remarks": "Reorder polyhedron faces according to planes. Reorders given polyhedron faces according to planes. The face laying in bottomPlane goes first and face laying in topPlane goes second. Order of other faces is not guaranteed. Old interface: normalizeArchitectural3d",
       "params": [
@@ -182,30 +149,6 @@
           "name": "topPlane",
           "type": "Plane3D",
           "doc": "Top plane.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronUtil/#NemAll_Python_Geometry.PolyhedronUtil.ReorderPolyhedronFaces"
-    },
-    {
-      "name": "ReorderPolyhedronFaces(polyhedron: Polyhedron3D, direction: Vector3D)",
-      "signature": "ReorderPolyhedronFaces(polyhedron: Polyhedron3D, direction: Vector3D)",
-      "summary": "Reorder polyhedron faces according to direction. Reorders given polyhedron faces according to given direction. The face with normal most similar to the direction goes first and face with normal most opposite to the direction goes second. Order of other faces is not guaranteed.",
-      "remarks": "Reorder polyhedron faces according to direction. Reorders given polyhedron faces according to given direction. The face with normal most similar to the direction goes first and face with normal most opposite to the direction goes second. Order of other faces is not guaranteed.",
-      "params": [
-        {
-          "name": "polyhedron",
-          "type": "Polyhedron3D",
-          "doc": "Polyhedron.",
-          "optional": false
-        },
-        {
-          "name": "direction",
-          "type": "Vector3D",
-          "doc": "Direction vector for face ordering.",
           "optional": false
         }
       ],

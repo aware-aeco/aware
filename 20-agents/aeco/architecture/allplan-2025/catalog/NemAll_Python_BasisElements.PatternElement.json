@@ -10,59 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/",
   "constructors": [
     {
-      "name": "PatternElement()",
-      "signature": "PatternElement()",
+      "name": "PatternElement",
+      "signature": "PatternElement() | PatternElement( commonProp: CommonProperties, patternProp: PatternProperties, polygon: Polygon2D, ) | PatternElement(element: PatternElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.__init__"
-    },
-    {
-      "name": "PatternElement( commonProp: CommonProperties, patternProp: PatternProperties, polygon: Polygon2D, )",
-      "signature": "PatternElement( commonProp: CommonProperties, patternProp: PatternProperties, polygon: Polygon2D, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "patternProp",
-          "type": "PatternProperties",
-          "doc": "Pattern properties",
-          "optional": false
-        },
-        {
-          "name": "polygon",
-          "type": "Polygon2D",
-          "doc": "Geometry element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternElement/#NemAll_Python_BasisElements.PatternElement.__init__"
-    },
-    {
-      "name": "PatternElement(element: PatternElement)",
-      "signature": "PatternElement(element: PatternElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "PatternElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RectangularShape/",
   "constructors": [
     {
-      "name": "RectangularShape()",
-      "signature": "RectangularShape()",
+      "name": "RectangularShape",
+      "signature": "RectangularShape() | RectangularShape(value: RectangularShape)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RectangularShape/#NemAll_Python_ArchElements.RectangularShape.__init__"
-    },
-    {
-      "name": "RectangularShape(value: RectangularShape)",
-      "signature": "RectangularShape(value: RectangularShape)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "value",
-          "type": "RectangularShape",
-          "doc": "Rectangular shape",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

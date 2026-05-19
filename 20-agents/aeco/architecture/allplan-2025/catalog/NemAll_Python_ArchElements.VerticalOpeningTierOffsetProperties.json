@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetProperties/",
   "constructors": [
     {
-      "name": "VerticalOpeningTierOffsetProperties()",
+      "name": "VerticalOpeningTierOffsetProperties",
       "signature": "VerticalOpeningTierOffsetProperties(element: VerticalOpeningTierOffsetProperties)",
       "summary": "Copy constructor",
       "remarks": "Copy constructor",

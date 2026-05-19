@@ -1,0 +1,114 @@
+{
+  "name": "ConMemberPlatePartTypeEnum",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConMemberPlatePartTypeEnum.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConMemberPlatePartTypeEnum.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "notSpecified",
+      "value": "notSpecified"
+    },
+    {
+      "name": "topFlange",
+      "value": "topFlange"
+    },
+    {
+      "name": "bottomFlange",
+      "value": "bottomFlange"
+    },
+    {
+      "name": "bothFlanges",
+      "value": "bothFlanges"
+    },
+    {
+      "name": "web",
+      "value": "web"
+    },
+    {
+      "name": "allCssParts",
+      "value": "allCssParts"
+    },
+    {
+      "name": "basePlate",
+      "value": "basePlate"
+    },
+    {
+      "name": "endPlate",
+      "value": "endPlate"
+    },
+    {
+      "name": "plateWidener",
+      "value": "plateWidener"
+    },
+    {
+      "name": "stiffener",
+      "value": "stiffener"
+    },
+    {
+      "name": "rib",
+      "value": "rib"
+    },
+    {
+      "name": "gussetPlate",
+      "value": "gussetPlate"
+    },
+    {
+      "name": "finPlate",
+      "value": "finPlate"
+    },
+    {
+      "name": "flange",
+      "value": "flange"
+    },
+    {
+      "name": "cssArcSegment",
+      "value": "cssArcSegment"
+    },
+    {
+      "name": "isStub",
+      "value": "isStub"
+    },
+    {
+      "name": "splice",
+      "value": "splice"
+    },
+    {
+      "name": "tonguePlate",
+      "value": "tonguePlate"
+    },
+    {
+      "name": "lidPlate",
+      "value": "lidPlate"
+    },
+    {
+      "name": "generalPlate",
+      "value": "generalPlate"
+    },
+    {
+      "name": "doubler",
+      "value": "doubler"
+    },
+    {
+      "name": "endPlateOnFlanges",
+      "value": "endPlateOnFlanges"
+    },
+    {
+      "name": "backingPlate",
+      "value": "backingPlate"
+    },
+    {
+      "name": "insertedPlate",
+      "value": "insertedPlate"
+    },
+    {
+      "name": "isNegative",
+      "value": "isNegative"
+    }
+  ]
+}

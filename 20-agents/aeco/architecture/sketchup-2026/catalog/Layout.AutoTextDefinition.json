@@ -1,0 +1,526 @@
+{
+  "name": "AutoTextDefinition",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "References an auto-text definition. Some auto-text definitions are mandatory. Mandatory auto-text definitions may not be removed, added, or modified. A mandatory AutoTextDefinition is one of the following types: Layout::AutoTextDefinition::TYPE_MODEL_GROUP_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_INSTANCE_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_DEFINITION_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_DESCRIPTION Layout::AutoTextDefinition::TYPE_MODEL_VOLUME Layout::AutoTextDefinition::TYPE_MODEL_FACE_AREA Layout::AutoTextDefinition::TYPE_MODEL_EDGE_LENGTH Layout::AutoTextDefinition::TYPE_MODEL_COORDINATES Layout::AutoTextDefinition::TYPE_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE Layout::AutoTextDefinition::TYPE_MODEL_CLASSIFIER_ATTRIBUTE Layout::AutoTextDefinition::TYPE_MODEL_SCENE_NAME Layout::AutoTextDefinition::TYPE_MODEL_SCENE_DESCRIPTION Layout::AutoTextDefinition::TYPE_MODEL_SCALE Layout::AutoTextDefinition::TYPE_MODEL_SECTION_NAME Layout::AutoTextDefinition::TYPE_MODEL_SECTION_SYMBOL",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "display_file_extension?",
+      "signature": "display_file_extension? =\u003E Boolean",
+      "summary": "The #display_file_extension? method returns whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the file extension.",
+      "remarks": "The #display_file_extension? method returns whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the file extension.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the Layout::AutoTextDefinition\u0027s type is not Layout::AutoTextDefinition::TYPE_FILE."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#display_file_extension?-instance_method"
+    },
+    {
+      "name": "display_full_path?",
+      "signature": "display_full_path? =\u003E Boolean",
+      "summary": "The #display_full_path? method returns whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the full path.",
+      "remarks": "The #display_full_path? method returns whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the full path.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the Layout::AutoTextDefinition\u0027s type is not Layout::AutoTextDefinition::TYPE_FILE."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#display_full_path?-instance_method"
+    },
+    {
+      "name": "mandatory?",
+      "signature": "mandatory? =\u003E Boolean",
+      "summary": "The #mandatory? method returns whether the Layout::AutoTextDefinition is mandatory or not.",
+      "remarks": "The #mandatory? method returns whether the Layout::AutoTextDefinition is mandatory or not. A mandatory Layout::AutoTextDefinition is one of the following types: Layout::AutoTextDefinition::TYPE_MODEL_GROUP_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_INSTANCE_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_DEFINITION_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_DESCRIPTION Layout::AutoTextDefinition::TYPE_MODEL_VOLUME Layout::AutoTextDefinition::TYPE_MODEL_FACE_AREA Layout::AutoTextDefinition::TYPE_MODEL_EDGE_LENGTH Layout::AutoTextDefinition::TYPE_MODEL_COORDINATES Layout::AutoTextDefinition::TYPE_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE Layout::AutoTextDefinition::TYPE_MODEL_CLASSIFIER_ATTRIBUTE Layout::AutoTextDefinition::TYPE_MODEL_SCENE_NAME Layout::AutoTextDefinition::TYPE_MODEL_SCENE_DESCRIPTION Layout::AutoTextDefinition::TYPE_MODEL_SCALE Layout::AutoTextDefinition::TYPE_MODEL_SECTION_NAME Layout::AutoTextDefinition::TYPE_MODEL_SECTION_SYMBOL",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#mandatory?-instance_method"
+    },
+    {
+      "name": "renumber",
+      "signature": "renumber =\u003E Object",
+      "summary": "The #renumber method iterates through all uses of the Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinition and eliminates gaps and duplicates in the sequence.",
+      "remarks": "The #renumber method iterates through all uses of the Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinition and eliminates gaps and duplicates in the sequence.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the Layout::AutoTextDefinition\u0027s type is not Layout::AutoTextDefinition::TYPE_SEQUENCE."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#renumber-instance_method"
+    },
+    {
+      "name": "tag",
+      "signature": "tag =\u003E String",
+      "summary": "The #tag method returns the tag string of the Layout::AutoTextDefinition.",
+      "remarks": "The #tag method returns the tag string of the Layout::AutoTextDefinition.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#tag-instance_method"
+    },
+    {
+      "name": "type",
+      "signature": "type =\u003E Integer",
+      "summary": "The #type method returns the type of the Layout::AutoTextDefinition.",
+      "remarks": "The #type method returns the type of the Layout::AutoTextDefinition. The type can be one of the following values: Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition::TYPE_PAGE_NAME Layout::AutoTextDefinition::TYPE_PAGE_NUMBER Layout::AutoTextDefinition::TYPE_CUSTOM_TEXT Layout::AutoTextDefinition::TYPE_DATE_CURRENT Layout::AutoTextDefinition::TYPE_DATE_CREATED Layout::AutoTextDefinition::TYPE_DATE_MODIFIED Layout::AutoTextDefinition::TYPE_DATE_PUBLISHED Layout::AutoTextDefinition::TYPE_MODEL_GROUP_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_INSTANCE_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_DEFINITION_NAME Layout::AutoTextDefinition::TYPE_MODEL_COMPONENT_DESCRIPTION Layout::AutoTextDefinition::TYPE_MODEL_VOLUME Layout::AutoTextDefinition::TYPE_MODEL_FACE_AREA Layout::AutoTextDefinition::TYPE_MODEL_EDGE_LENGTH Layout::AutoTextDefinition::TYPE_MODEL_COORDINATES Layout::AutoTextDefinition::TYPE_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE Layout::AutoTextDefinition::TYPE_MODEL_CLASSIFIER_ATTRIBUTE Layout::AutoTextDefinition::TYPE_MODEL_SCENE_NAME Layout::AutoTextDefinition::TYPE_MODEL_SCENE_DESCRIPTION Layout::AutoTextDefinition::TYPE_MODEL_SCALE Layout::AutoTextDefinition::TYPE_MODEL_SECTION_NAME Layout::AutoTextDefinition::TYPE_MODEL_SECTION_SYMBOL Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinition::TYPE_SEQUENCE",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#type-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Layout::AutoTextDefinition",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method checks to see if the two Layout::AutoTextDefinitions are equal.",
+      "remarks": "The #== method checks to see if the two Layout::AutoTextDefinitions are equal. This checks whether the Ruby Objects are pointing to the same internal object.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#==-instance_method"
+    },
+    {
+      "name": "custom_text",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #custom_text method returns the custom text of the Layout::AutoTextDefinition::TYPE_CUSTOM_TEXT Layout::AutoTextDefinition.",
+      "remarks": "The #custom_text method returns the custom text of the Layout::AutoTextDefinition::TYPE_CUSTOM_TEXT Layout::AutoTextDefinition.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#custom_text-instance_method"
+    },
+    {
+      "name": "date_format",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #date_format method returns the date format of a Layout::AutoTextDefinition::TYPE_DATE_* Layout::AutoTextDefinition.",
+      "remarks": "The #date_format method returns the date format of a Layout::AutoTextDefinition::TYPE_DATE_* Layout::AutoTextDefinition.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#date_format-instance_method"
+    },
+    {
+      "name": "display_file_extension",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "The #display_file_extension= method sets whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the file extension.",
+      "remarks": "The #display_file_extension= method sets whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the file extension.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#display_file_extension=-instance_method"
+    },
+    {
+      "name": "display_full_path",
+      "type": "Boolean",
+      "getter": false,
+      "setter": true,
+      "summary": "The #display_full_path= method sets whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the full path.",
+      "remarks": "The #display_full_path= method sets whether the Layout::AutoTextDefinition::TYPE_FILE Layout::AutoTextDefinition displays the full path.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#display_full_path=-instance_method"
+    },
+    {
+      "name": "end_page",
+      "type": "Layout::Page, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #end_page method returns the end page for the Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinition.",
+      "remarks": "The #end_page method returns the end page for the Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinition.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#end_page-instance_method"
+    },
+    {
+      "name": "increment",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #increment method returns the increment value for Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions.",
+      "remarks": "The #increment method returns the increment value for Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#increment-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method returns the name of the Layout::AutoTextDefinition.",
+      "remarks": "The #name method returns the name of the Layout::AutoTextDefinition.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#name-instance_method"
+    },
+    {
+      "name": "number_style",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #number_style method returns the numbering style for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER, Layout::AutoTextDefinition::TYPE_PAGE_COUNT, and Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions.",
+      "remarks": "The #number_style method returns the numbering style for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER, Layout::AutoTextDefinition::TYPE_PAGE_COUNT, and Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions. The numbering style can be one of the following values: Layout::AutoTextDefinition::NUMBER_STYLE_ARABIC Layout::AutoTextDefinition::NUMBER_STYLE_ARABIC_PADDED Layout::AutoTextDefinition::NUMBER_STYLE_UC_ALPHA Layout::AutoTextDefinition::NUMBER_STYLE_LC_ALPHA Layout::AutoTextDefinition::NUMBER_STYLE_UC_ROMAN Layout::AutoTextDefinition::NUMBER_STYLE_LC_ROMAN",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#number_style-instance_method"
+    },
+    {
+      "name": "page_number_style",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "Deprecated.",
+      "remarks": "Deprecated. LayOut 2022.0 This method is deprecated in favor of the more generic #number_style method that also works on Layout::AutoTextDefinition::TYPE_PAGE_COUNT and Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions. The #page_number_style method returns the numbering style for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER Layout::AutoTextDefinitions. The numbering style can be one of the following values: Layout::AutoTextDefinition::NUMBER_STYLE_ARABIC Layout::AutoTextDefinition::NUMBER_STYLE_ARABIC_PADDED Layout::AutoTextDefinition::NUMBER_STYLE_UC_ALPHA Layout::AutoTextDefinition::NUMBER_STYLE_LC_ALPHA Layout::AutoTextDefinition::NUMBER_STYLE_UC_ROMAN Layout::AutoTextDefinition::NUMBER_STYLE_LC_ROMAN",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#page_number_style-instance_method"
+    },
+    {
+      "name": "sequence_format",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #sequence_format method returns the sequence format of a Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinition.",
+      "remarks": "The #sequence_format method returns the sequence format of a Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinition.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#sequence_format-instance_method"
+    },
+    {
+      "name": "sequence_type",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #sequence_type method returns how the Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinition operates over multiple pages in a document.",
+      "remarks": "The #sequence_type method returns how the Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinition operates over multiple pages in a document. The sequence type can be one of the following values: Layout::AutoTextDefinition::SEQUENCE_TYPE_PER_DOCUMENT Layout::AutoTextDefinition::SEQUENCE_TYPE_PER_PAGE",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#sequence_type-instance_method"
+    },
+    {
+      "name": "start_index",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #start_index method returns the start index for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER, Layout::AutoTextDefinition::TYPE_PAGE_COUNT, and Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions.",
+      "remarks": "The #start_index method returns the start index for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER, Layout::AutoTextDefinition::TYPE_PAGE_COUNT, and Layout::AutoTextDefinition::TYPE_SEQUENCE Layout::AutoTextDefinitions.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#start_index-instance_method"
+    },
+    {
+      "name": "start_page",
+      "type": "Layout::Page",
+      "getter": true,
+      "setter": true,
+      "summary": "The #start_page method returns the start page for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER and Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinitions.",
+      "remarks": "The #start_page method returns the start page for Layout::AutoTextDefinition::TYPE_PAGE_NUMBER and Layout::AutoTextDefinition::TYPE_PAGE_COUNT Layout::AutoTextDefinitions.",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#start_page-instance_method"
+    },
+    {
+      "name": "TYPE_FILE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_FILE-constant"
+    },
+    {
+      "name": "TYPE_PAGE_NAME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_PAGE_NAME-constant"
+    },
+    {
+      "name": "TYPE_PAGE_NUMBER",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_PAGE_NUMBER-constant"
+    },
+    {
+      "name": "TYPE_CUSTOM_TEXT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_CUSTOM_TEXT-constant"
+    },
+    {
+      "name": "TYPE_DATE_CURRENT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_DATE_CURRENT-constant"
+    },
+    {
+      "name": "TYPE_DATE_CREATED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_DATE_CREATED-constant"
+    },
+    {
+      "name": "TYPE_DATE_MODIFIED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_DATE_MODIFIED-constant"
+    },
+    {
+      "name": "TYPE_DATE_PUBLISHED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_DATE_PUBLISHED-constant"
+    },
+    {
+      "name": "TYPE_MODEL_GROUP_NAME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_GROUP_NAME-constant"
+    },
+    {
+      "name": "TYPE_MODEL_COMPONENT_INSTANCE_NAME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_COMPONENT_INSTANCE_NAME-constant"
+    },
+    {
+      "name": "TYPE_MODEL_COMPONENT_DEFINITION_NAME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_COMPONENT_DEFINITION_NAME-constant"
+    },
+    {
+      "name": "TYPE_MODEL_COMPONENT_DESCRIPTION",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_COMPONENT_DESCRIPTION-constant"
+    },
+    {
+      "name": "TYPE_MODEL_VOLUME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_VOLUME-constant"
+    },
+    {
+      "name": "TYPE_MODEL_FACE_AREA",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_FACE_AREA-constant"
+    },
+    {
+      "name": "TYPE_MODEL_EDGE_LENGTH",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_EDGE_LENGTH-constant"
+    },
+    {
+      "name": "TYPE_MODEL_COORDINATES",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_COORDINATES-constant"
+    },
+    {
+      "name": "TYPE_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_DYNAMIC_COMPONENT_ATTRIBUTE-constant"
+    },
+    {
+      "name": "TYPE_MODEL_CLASSIFIER_ATTRIBUTE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_CLASSIFIER_ATTRIBUTE-constant"
+    },
+    {
+      "name": "TYPE_MODEL_COMPONENT_INSTANCE_ATTRIBUTE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_COMPONENT_INSTANCE_ATTRIBUTE-constant"
+    },
+    {
+      "name": "TYPE_MODEL_COMPONENT_DEFINITION_ATTRIBUTE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_COMPONENT_DEFINITION_ATTRIBUTE-constant"
+    },
+    {
+      "name": "TYPE_MODEL_SCENE_NAME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_SCENE_NAME-constant"
+    },
+    {
+      "name": "TYPE_MODEL_SCENE_DESCRIPTION",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_SCENE_DESCRIPTION-constant"
+    },
+    {
+      "name": "TYPE_MODEL_SCALE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_SCALE-constant"
+    },
+    {
+      "name": "TYPE_MODEL_SECTION_NAME",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_SECTION_NAME-constant"
+    },
+    {
+      "name": "TYPE_MODEL_SECTION_SYMBOL",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_SECTION_SYMBOL-constant"
+    },
+    {
+      "name": "TYPE_PAGE_COUNT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_PAGE_COUNT-constant"
+    },
+    {
+      "name": "TYPE_SEQUENCE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_SEQUENCE-constant"
+    },
+    {
+      "name": "TYPE_MODEL_RATIO",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#TYPE_MODEL_RATIO-constant"
+    },
+    {
+      "name": "NUMBER_STYLE_ARABIC",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#NUMBER_STYLE_ARABIC-constant"
+    },
+    {
+      "name": "NUMBER_STYLE_ARABIC_PADDED",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#NUMBER_STYLE_ARABIC_PADDED-constant"
+    },
+    {
+      "name": "NUMBER_STYLE_UC_ALPHA",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#NUMBER_STYLE_UC_ALPHA-constant"
+    },
+    {
+      "name": "NUMBER_STYLE_LC_ALPHA",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#NUMBER_STYLE_LC_ALPHA-constant"
+    },
+    {
+      "name": "NUMBER_STYLE_UC_ROMAN",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#NUMBER_STYLE_UC_ROMAN-constant"
+    },
+    {
+      "name": "NUMBER_STYLE_LC_ROMAN",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#NUMBER_STYLE_LC_ROMAN-constant"
+    },
+    {
+      "name": "SEQUENCE_TYPE_PER_DOCUMENT",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#SEQUENCE_TYPE_PER_DOCUMENT-constant"
+    },
+    {
+      "name": "SEQUENCE_TYPE_PER_PAGE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/AutoTextDefinition.html#SEQUENCE_TYPE_PER_PAGE-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

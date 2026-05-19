@@ -7,21 +7,10 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/",
   "constructors": [
     {
-      "name": "HiddenCalculationParameters()",
-      "signature": "HiddenCalculationParameters()",
+      "name": "HiddenCalculationParameters",
+      "signature": "HiddenCalculationParameters() | HiddenCalculationParameters(param: HiddenCalculationParameters)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.__init__"
-    },
-    {
-      "name": "HiddenCalculationParameters(param: HiddenCalculationParameters)",
-      "signature": "HiddenCalculationParameters(param: HiddenCalculationParameters)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
       "params": [],
       "returns": null,
       "throws": [],

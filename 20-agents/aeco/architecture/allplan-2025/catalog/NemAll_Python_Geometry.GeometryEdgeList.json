@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdgeList/",
   "constructors": [
     {
-      "name": "GeometryEdgeList()",
+      "name": "GeometryEdgeList",
       "signature": "GeometryEdgeList()",
       "summary": "Initialize",
       "remarks": "Initialize",

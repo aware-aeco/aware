@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/VecGUIDList/",
   "constructors": [
     {
-      "name": "VecGUIDList()",
+      "name": "VecGUIDList",
       "signature": "VecGUIDList()",
       "summary": "Initialize",
       "remarks": "Initialize",

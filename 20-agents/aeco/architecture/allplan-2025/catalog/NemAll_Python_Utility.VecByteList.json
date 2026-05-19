@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecByteList/",
   "constructors": [
     {
-      "name": "VecByteList()",
-      "signature": "VecByteList()",
+      "name": "VecByteList",
+      "signature": "VecByteList() | VecByteList(valueList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/VecByteList/#NemAll_Python_Utility.VecByteList.__init__"
-    },
-    {
-      "name": "VecByteList(valueList: list)",
-      "signature": "VecByteList(valueList: list)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "valueList",
-          "type": "list",
-          "doc": "Value list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

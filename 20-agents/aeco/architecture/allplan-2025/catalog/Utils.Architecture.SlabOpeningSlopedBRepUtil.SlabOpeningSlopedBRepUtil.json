@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/SlabOpeningSlopedBRepUtil/",
   "constructors": [
     {
-      "name": "SlabOpeningSlopedBRepUtil()",
+      "name": "SlabOpeningSlopedBRepUtil",
       "signature": "SlabOpeningSlopedBRepUtil(document: DocumentAdapter)",
       "summary": "initialize",
       "remarks": "initialize",

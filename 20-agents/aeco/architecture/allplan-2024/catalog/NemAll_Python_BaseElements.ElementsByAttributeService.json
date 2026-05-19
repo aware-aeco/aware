@@ -8,56 +8,14 @@
   "constructors": [],
   "methods": [
     {
-      "name": "GetElements(attributeValue)",
-      "signature": "GetElements(attributeValue)",
+      "name": "GetElements",
+      "signature": "GetElements(attributeValue) | GetElements(attributeValue) | GetElements(attributeValue)",
       "summary": "Get the elements for the double attribute value",
       "remarks": "Get the elements for the double attribute value",
       "params": [
         {
           "name": "attributeValue",
           "type": "float",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BaseElementAdapterList",
-        "doc": "Elements"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
-    },
-    {
-      "name": "GetElements(attributeValue)",
-      "signature": "GetElements(attributeValue)",
-      "summary": "Get the elements for the integer attribute value",
-      "remarks": "Get the elements for the integer attribute value",
-      "params": [
-        {
-          "name": "attributeValue",
-          "type": "int",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BaseElementAdapterList",
-        "doc": "Elements"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
-    },
-    {
-      "name": "GetElements(attributeValue)",
-      "signature": "GetElements(attributeValue)",
-      "summary": "Get the elements for the string attribute value",
-      "remarks": "Get the elements for the string attribute value",
-      "params": [
-        {
-          "name": "attributeValue",
-          "type": "str",
           "doc": "Attribute value",
           "optional": false
         }

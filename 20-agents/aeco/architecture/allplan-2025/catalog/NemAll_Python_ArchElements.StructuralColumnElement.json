@@ -10,47 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/",
   "constructors": [
     {
-      "name": "StructuralColumnElement()",
-      "signature": "StructuralColumnElement()",
+      "name": "StructuralColumnElement",
+      "signature": "StructuralColumnElement() | StructuralColumnElement(structuralColumnProp: StructuralColumnProperties) | StructuralColumnElement(element: StructuralColumnElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
-    },
-    {
-      "name": "StructuralColumnElement(structuralColumnProp: StructuralColumnProperties)",
-      "signature": "StructuralColumnElement(structuralColumnProp: StructuralColumnProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "structuralColumnProp",
-          "type": "StructuralColumnProperties",
-          "doc": "StructuralColumn properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
-    },
-    {
-      "name": "StructuralColumnElement(element: StructuralColumnElement)",
-      "signature": "StructuralColumnElement(element: StructuralColumnElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "StructuralColumnElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

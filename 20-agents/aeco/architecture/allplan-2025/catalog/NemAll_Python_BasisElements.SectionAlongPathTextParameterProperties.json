@@ -8,63 +8,10 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathTextParameterProperties()",
-      "signature": "SectionAlongPathTextParameterProperties()",
+      "name": "SectionAlongPathTextParameterProperties",
+      "signature": "SectionAlongPathTextParameterProperties() | SectionAlongPathTextParameterProperties(iTextParameterID: int, bInitFromSTW: bool = False) | SectionAlongPathTextParameterProperties(bInitFromSTW: bool) | SectionAlongPathTextParameterProperties(A: SectionAlongPathTextParameterProperties)",
       "summary": "Initialize",
       "remarks": "Initialize",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathTextParameterProperties(iTextParameterID: int, bInitFromSTW: bool = False)",
-      "signature": "SectionAlongPathTextParameterProperties(iTextParameterID: int, bInitFromSTW: bool = False)",
-      "summary": "constructor",
-      "remarks": "constructor",
-      "params": [
-        {
-          "name": "iTextParameterID",
-          "type": "int",
-          "doc": "type of text parameter",
-          "optional": false
-        },
-        {
-          "name": "bInitFromSTW",
-          "type": "bool",
-          "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathTextParameterProperties(bInitFromSTW: bool)",
-      "signature": "SectionAlongPathTextParameterProperties(bInitFromSTW: bool)",
-      "summary": "constructor",
-      "remarks": "constructor",
-      "params": [
-        {
-          "name": "bInitFromSTW",
-          "type": "bool",
-          "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathTextParameterProperties(A: SectionAlongPathTextParameterProperties)",
-      "signature": "SectionAlongPathTextParameterProperties(A: SectionAlongPathTextParameterProperties)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
       "params": [],
       "returns": null,
       "throws": [],

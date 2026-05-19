@@ -82,8 +82,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.FontTwipsToMM"
     },
     {
-      "name": "GetCharsetList(nFontID: int) -\u003E tuple[bool, list[int]]",
-      "signature": "GetCharsetList(nFontID: int) -\u003E tuple[bool, list[int]]",
+      "name": "GetCharsetList",
+      "signature": "GetCharsetList(nFontID: int) -\u003E tuple[bool, list[int]] | GetCharsetList(fontName: str) -\u003E tuple[bool, list[int]]",
       "summary": "Returns the list of available charsets for the given font",
       "remarks": "Returns the list of available charsets for the given font",
       "params": [
@@ -97,27 +97,6 @@
       "returns": {
         "type": "bool",
         "doc": "True if at least one Charset for the given font ID exists"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetCharsetList"
-    },
-    {
-      "name": "GetCharsetList(fontName: str) -\u003E tuple[bool, list[int]]",
-      "signature": "GetCharsetList(fontName: str) -\u003E tuple[bool, list[int]]",
-      "summary": "Returns the list of available charsets for the given font",
-      "remarks": "Returns the list of available charsets for the given font",
-      "params": [
-        {
-          "name": "fontName",
-          "type": "str",
-          "doc": "Font name",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "True if at least one Charset for the given font name exists"
       },
       "throws": [],
       "events_related": [],

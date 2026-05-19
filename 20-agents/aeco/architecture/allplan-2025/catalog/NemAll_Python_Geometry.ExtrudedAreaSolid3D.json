@@ -7,53 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/",
   "constructors": [
     {
-      "name": "ExtrudedAreaSolid3D()",
-      "signature": "ExtrudedAreaSolid3D()",
+      "name": "ExtrudedAreaSolid3D",
+      "signature": "ExtrudedAreaSolid3D() | ExtrudedAreaSolid3D(solid: ExtrudedAreaSolid3D) | ExtrudedAreaSolid3D(solid: Point3D, refPoint: ExtrudedAreaSolid3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.__init__"
-    },
-    {
-      "name": "ExtrudedAreaSolid3D(solid: ExtrudedAreaSolid3D)",
-      "signature": "ExtrudedAreaSolid3D(solid: ExtrudedAreaSolid3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "solid",
-          "type": "ExtrudedAreaSolid3D",
-          "doc": "Extruded area solid which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/#NemAll_Python_Geometry.ExtrudedAreaSolid3D.__init__"
-    },
-    {
-      "name": "ExtrudedAreaSolid3D(solid: Point3D, refPoint: ExtrudedAreaSolid3D)",
-      "signature": "ExtrudedAreaSolid3D(solid: Point3D, refPoint: ExtrudedAreaSolid3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "solid",
-          "type": "Point3D",
-          "doc": "Solid which will be copied",
-          "optional": false
-        },
-        {
-          "name": "refPoint",
-          "type": "ExtrudedAreaSolid3D",
-          "doc": "reference point",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

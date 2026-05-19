@@ -8,161 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/",
   "constructors": [
     {
-      "name": "Path3D()",
-      "signature": "Path3D()",
+      "name": "Path3D",
+      "signature": "Path3D() | Path3D(path: Path3D) | Path3D(point1: Point3D, point2: Point3D) | Path3D(point1: Point3D, point2: Point3D, point3: Point3D) | Path3D(point1: Point3D, point2: Point3D, point3: Point3D, point4: Point3D) | Path3D( point1: Point3D, point2: Point3D, point3: Point3D, point4: Point3D, point5: Point3D, )",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__init__"
-    },
-    {
-      "name": "Path3D(path: Path3D)",
-      "signature": "Path3D(path: Path3D)",
-      "summary": "Copy constructor Copy constructor is expensive because all data are cloned in new path.",
-      "remarks": "Copy constructor Copy constructor is expensive because all data are cloned in new path.",
-      "params": [
-        {
-          "name": "path",
-          "type": "Path3D",
-          "doc": "Path which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__init__"
-    },
-    {
-      "name": "Path3D(point1: Point3D, point2: Point3D)",
-      "signature": "Path3D(point1: Point3D, point2: Point3D)",
-      "summary": "Constructor defines a polyline of 2 points as path.",
-      "remarks": "Constructor defines a polyline of 2 points as path.",
-      "params": [
-        {
-          "name": "point1",
-          "type": "Point3D",
-          "doc": "First point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point2",
-          "type": "Point3D",
-          "doc": "Second point of the polyline path",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__init__"
-    },
-    {
-      "name": "Path3D(point1: Point3D, point2: Point3D, point3: Point3D)",
-      "signature": "Path3D(point1: Point3D, point2: Point3D, point3: Point3D)",
-      "summary": "Constructor defines a polyline of 3 points as path.",
-      "remarks": "Constructor defines a polyline of 3 points as path.",
-      "params": [
-        {
-          "name": "point1",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point2",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point3",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__init__"
-    },
-    {
-      "name": "Path3D(point1: Point3D, point2: Point3D, point3: Point3D, point4: Point3D)",
-      "signature": "Path3D(point1: Point3D, point2: Point3D, point3: Point3D, point4: Point3D)",
-      "summary": "Constructor defines a polyline of 4 points as path.",
-      "remarks": "Constructor defines a polyline of 4 points as path.",
-      "params": [
-        {
-          "name": "point1",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point2",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point3",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point4",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__init__"
-    },
-    {
-      "name": "Path3D( point1: Point3D, point2: Point3D, point3: Point3D, point4: Point3D, point5: Point3D, )",
-      "signature": "Path3D( point1: Point3D, point2: Point3D, point3: Point3D, point4: Point3D, point5: Point3D, )",
-      "summary": "Constructor defines a polyline of 5 points as path.",
-      "remarks": "Constructor defines a polyline of 5 points as path.",
-      "params": [
-        {
-          "name": "point1",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point2",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point3",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point4",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        },
-        {
-          "name": "point5",
-          "type": "Point3D",
-          "doc": "point of the polyline path",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -171,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "Add(element: Path3D) -\u003E eGeometryErrorCode",
-      "signature": "Add(element: Path3D) -\u003E eGeometryErrorCode",
+      "name": "Add",
+      "signature": "Add(element: Path3D) -\u003E eGeometryErrorCode | Add(element_object: object) -\u003E eGeometryErrorCode",
       "summary": "Add element into path Path3D",
       "remarks": "Add element into path Path3D",
       "params": [
@@ -180,27 +30,6 @@
           "name": "element",
           "type": "Path3D",
           "doc": "Path element to add",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "eGeometryErrorCode",
-        "doc": "error code"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.Add"
-    },
-    {
-      "name": "Add(element_object: object) -\u003E eGeometryErrorCode",
-      "signature": "Add(element_object: object) -\u003E eGeometryErrorCode",
-      "summary": "Add element into path Path3D",
-      "remarks": "Add element into path Path3D",
-      "params": [
-        {
-          "name": "element_object",
-          "type": "object",
-          "doc": "Pointer to element to add",
           "optional": false
         }
       ],
@@ -311,8 +140,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsClosed"
     },
     {
-      "name": "IsItPossibleToAddElement(pGeometry_object: object) -\u003E bool",
-      "signature": "IsItPossibleToAddElement(pGeometry_object: object) -\u003E bool",
+      "name": "IsItPossibleToAddElement",
+      "signature": "IsItPossibleToAddElement(pGeometry_object: object) -\u003E bool | IsItPossibleToAddElement(pGeometry_object: object, tolerance: float) -\u003E bool",
       "summary": "Check if the geometry can be added into path Path3D",
       "remarks": "Check if the geometry can be added into path Path3D",
       "params": [
@@ -324,33 +153,6 @@
         }
       ],
       "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsItPossibleToAddElement"
-    },
-    {
-      "name": "IsItPossibleToAddElement(pGeometry_object: object, tolerance: float) -\u003E bool",
-      "signature": "IsItPossibleToAddElement(pGeometry_object: object, tolerance: float) -\u003E bool",
-      "summary": "Check if the geometry can be added into path Path3D (with possible noncontinuous)",
-      "remarks": "Check if the geometry can be added into path Path3D (with possible noncontinuous)",
-      "params": [
-        {
-          "name": "pGeometry_object",
-          "type": "object",
-          "doc": "Geometries (are modified in case of non continuos geometries!)",
-          "optional": false
-        },
-        {
-          "name": "tolerance",
-          "type": "float",
-          "doc": "Tolerance for non continuous geometries",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "Yes / no"
-      },
       "throws": [],
       "events_related": [],
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsItPossibleToAddElement"
@@ -448,8 +250,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__eq__"
     },
     {
-      "name": "__iadd__(element: Path3D) -\u003E Path3D",
-      "signature": "__iadd__(element: Path3D) -\u003E Path3D",
+      "name": "__iadd__",
+      "signature": "__iadd__(element: Path3D) -\u003E Path3D | __iadd__(element: Line3D) -\u003E Path3D | __iadd__(element: Polyline3D) -\u003E Path3D | __iadd__(element: Arc3D) -\u003E Path3D | __iadd__(element: Spline3D) -\u003E Path3D | __iadd__(element: BSpline3D) -\u003E Path3D",
       "summary": "Append operator",
       "remarks": "Append operator",
       "params": [
@@ -464,96 +266,6 @@
         "type": "Path3D",
         "doc": "Reference to path."
       },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Line3D) -\u003E Path3D",
-      "signature": "__iadd__(element: Line3D) -\u003E Path3D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Line3D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Polyline3D) -\u003E Path3D",
-      "signature": "__iadd__(element: Polyline3D) -\u003E Path3D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Polyline3D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Arc3D) -\u003E Path3D",
-      "signature": "__iadd__(element: Arc3D) -\u003E Path3D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Arc3D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: Spline3D) -\u003E Path3D",
-      "signature": "__iadd__(element: Spline3D) -\u003E Path3D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "Spline3D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(element: BSpline3D) -\u003E Path3D",
-      "signature": "__iadd__(element: BSpline3D) -\u003E Path3D",
-      "summary": "Append operator",
-      "remarks": "Append operator",
-      "params": [
-        {
-          "name": "element",
-          "type": "BSpline3D",
-          "doc": "Element which will be appended",
-          "optional": false
-        }
-      ],
-      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__"

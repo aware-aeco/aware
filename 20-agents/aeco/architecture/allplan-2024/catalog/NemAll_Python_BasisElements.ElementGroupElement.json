@@ -10,41 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/",
   "constructors": [
     {
-      "name": "ElementGroupElement()",
-      "signature": "ElementGroupElement()",
+      "name": "ElementGroupElement",
+      "signature": "ElementGroupElement() | ElementGroupElement(commonProp, elementGroupProp, elementGroupObjectList)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.__init__"
-    },
-    {
-      "name": "ElementGroupElement(commonProp, elementGroupProp, elementGroupObjectList)",
-      "signature": "ElementGroupElement(commonProp, elementGroupProp, elementGroupObjectList)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "elementGroupProp",
-          "type": "ElementGroupProperties",
-          "doc": "ElementGroup properties",
-          "optional": false
-        },
-        {
-          "name": "elementGroupObjectList",
-          "type": "list",
-          "doc": "ElementGroup object list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2DList/",
   "constructors": [
     {
-      "name": "Vector2DList()",
-      "signature": "Vector2DList()",
+      "name": "Vector2DList",
+      "signature": "Vector2DList() | Vector2DList(ele: Vector2D) | Vector2DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2DList/#NemAll_Python_Geometry.Vector2DList.__init__"
-    },
-    {
-      "name": "Vector2DList(ele: Vector2D)",
-      "signature": "Vector2DList(ele: Vector2D)",
-      "summary": "Constructor with a Vector2D",
-      "remarks": "Constructor with a Vector2D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Vector2D",
-          "doc": "Vector2D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2DList/#NemAll_Python_Geometry.Vector2DList.__init__"
-    },
-    {
-      "name": "Vector2DList(eleList: list)",
-      "signature": "Vector2DList(eleList: list)",
-      "summary": "Constructor with a list of Vector2D",
-      "remarks": "Constructor with a list of Vector2D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Vector2D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2DList/#NemAll_Python_Geometry.Vector2DList.append"
     },
     {
-      "name": "extend(iterable: Vector2DList)",
-      "signature": "extend(iterable: Vector2DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Vector2DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Vector2DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2DList/#NemAll_Python_Geometry.Vector2DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Vector2D list",
           "optional": false
         }
       ],

@@ -8,95 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/",
   "constructors": [
     {
-      "name": "Polyline3D()",
-      "signature": "Polyline3D()",
+      "name": "Polyline3D",
+      "signature": "Polyline3D() | Polyline3D(pntList) | Polyline3D(polyline) | Polyline3D(polyline, skip, count) | Polyline3D(points)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__init__"
-    },
-    {
-      "name": "Polyline3D(pntList)",
-      "signature": "Polyline3D(pntList)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "pntList",
-          "type": "list",
-          "doc": "Point list",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__init__"
-    },
-    {
-      "name": "Polyline3D(polyline)",
-      "signature": "Polyline3D(polyline)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "polyline",
-          "type": "Polyline3D",
-          "doc": "Polyline which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__init__"
-    },
-    {
-      "name": "Polyline3D(polyline, skip, count)",
-      "signature": "Polyline3D(polyline, skip, count)",
-      "summary": "Copy constructor with limited scope",
-      "remarks": "Copy constructor with limited scope",
-      "params": [
-        {
-          "name": "polyline",
-          "type": "Polyline3D",
-          "doc": "Polyline which will be copied",
-          "optional": false
-        },
-        {
-          "name": "skip",
-          "type": "int",
-          "doc": "count of points ignored at start.",
-          "optional": false
-        },
-        {
-          "name": "count",
-          "type": "int",
-          "doc": "count of points copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__init__"
-    },
-    {
-      "name": "Polyline3D(points)",
-      "signature": "Polyline3D(points)",
-      "summary": "Vector points constructor.",
-      "remarks": "Vector points constructor.",
-      "params": [
-        {
-          "name": "points",
-          "type": "Point3DList",
-          "doc": "Vector of points which will be moved to polyline",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -105,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "__iadd__(polyline)",
-      "signature": "__iadd__(polyline)",
+      "name": "__iadd__",
+      "signature": "__iadd__(polyline) | __iadd__(point) | __iadd__(line)",
       "summary": "Additional assignment operator",
       "remarks": "Additional assignment operator",
       "params": [
@@ -114,48 +30,6 @@
           "name": "polyline",
           "type": "Polyline3D",
           "doc": "Polyline which will be added to current polyline",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polyline3D",
-        "doc": "Reference to polyline"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(point)",
-      "signature": "__iadd__(point)",
-      "summary": "Addition assignment operator",
-      "remarks": "Addition assignment operator",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "New Point3D which will be added to the polyline",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polyline3D",
-        "doc": "Reference to polyline"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(line)",
-      "signature": "__iadd__(line)",
-      "summary": "Addition assignment operator",
-      "remarks": "Addition assignment operator",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "Line3D which will be added to the polyline",
           "optional": false
         }
       ],

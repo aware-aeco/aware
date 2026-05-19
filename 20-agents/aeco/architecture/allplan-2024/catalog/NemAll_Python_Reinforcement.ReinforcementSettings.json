@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementSettings/",
   "constructors": [
     {
-      "name": "ReinforcementSettings()",
+      "name": "ReinforcementSettings",
       "signature": "ReinforcementSettings()",
       "summary": "Initialize",
       "remarks": "Initialize",

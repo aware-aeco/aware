@@ -7,69 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/",
   "constructors": [
     {
-      "name": "ConicalSurface3D()",
-      "signature": "ConicalSurface3D()",
+      "name": "ConicalSurface3D",
+      "signature": "ConicalSurface3D() | ConicalSurface3D(placement, radius, angle) | ConicalSurface3D(surface)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__init__"
-    },
-    {
-      "name": "ConicalSurface3D(placement, radius, angle)",
-      "signature": "ConicalSurface3D(placement, radius, angle)",
-      "summary": "Constructor.",
-      "remarks": "Constructor.",
-      "params": [
-        {
-          "name": "placement",
-          "type": "AxisPlacement3D",
-          "doc": "placement of conical surface",
-          "optional": false
-        },
-        {
-          "name": "radius",
-          "type": "float",
-          "doc": "radius at a placement",
-          "optional": false
-        },
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "angle between placement axis and some axis on surface",
-          "optional": false
-        },
-        {
-          "name": "-----------------------------------------------------------------------------",
-          "type": "object",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__init__"
-    },
-    {
-      "name": "ConicalSurface3D(surface)",
-      "signature": "ConicalSurface3D(surface)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "surface",
-          "type": "ConicalSurface3D",
-          "doc": "Surface which will be copied.",
-          "optional": false
-        },
-        {
-          "name": "-----------------------------------------------------------------------------",
-          "type": "object",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

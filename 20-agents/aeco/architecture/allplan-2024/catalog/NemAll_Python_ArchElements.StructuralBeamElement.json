@@ -10,47 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/",
   "constructors": [
     {
-      "name": "StructuralBeamElement()",
-      "signature": "StructuralBeamElement()",
+      "name": "StructuralBeamElement",
+      "signature": "StructuralBeamElement() | StructuralBeamElement(structuralBeamProperties) | StructuralBeamElement(structuralBeamElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.__init__"
-    },
-    {
-      "name": "StructuralBeamElement(structuralBeamProperties)",
-      "signature": "StructuralBeamElement(structuralBeamProperties)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "structuralBeamProp",
-          "type": "object",
-          "doc": "StructuralBeam properties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/#NemAll_Python_ArchElements.StructuralBeamElement.__init__"
-    },
-    {
-      "name": "StructuralBeamElement(structuralBeamElement)",
-      "signature": "StructuralBeamElement(structuralBeamElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "structuralBeamElement",
-          "type": "StructuralBeamElement",
-          "doc": "Structural Beam to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

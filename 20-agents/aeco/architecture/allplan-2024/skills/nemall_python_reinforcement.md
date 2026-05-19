@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_reinforcement
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Reinforcement namespace — 44 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AnchorageType, AnchorageLengthService, BarAreaPlacementProperties, BarAreaPlacementService, BarPlacementSection, BarPlacement, BarPositionData, and 36 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Reinforcement namespace — 44 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AnchorageLengthService, AllplanElement, AnchorageType, BarAreaPlacementService, BarAreaPlacementProperties, BarPlacementSection, BarPlacement, BarPositionData, and 36 more types.
 ---
 
 # NemAll_Python_Reinforcement
@@ -378,8 +378,7 @@ get the item for a key
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/)
 
 ### Constructors
-- `BarAreaPlacementProperties()` — Initialize
-- `BarAreaPlacementProperties(diameter, distance, overlapping, isMoveOverlapping, maxBarLength, startBarLength, maxPlacementLength, firstBarEdgeDistance, placementStrategy, benching, benchingLength, isPolygonalPlacement)` — Constructor
+- `BarAreaPlacementProperties() | BarAreaPlacementProperties(diameter, distance, overlapping, isMoveOverlapping, maxBarLength, startBarLength, maxPlacementLength, firstBarEdgeDistance, placementStrategy, benching, benchingLength, isPolygonalPlacement)` — Initialize
 
 ## BarAreaPlacementService (class)
 
@@ -434,11 +433,7 @@ Implementation of the bar placement element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacement/)
 
 ### Constructors
-- `BarPlacement()` — Initialize
-- `BarPlacement(placement)` — Copy constructor
-- `BarPlacement(positionNumber, barCount, distVec, startPnt, endPnt, bendingShape)` — Constructor
-- `BarPlacement(positionNumber, barCount, startBendingShape, endBendingShape)` — Constructor
-- `BarPlacement(positionNumber, barCount, rotationAxis, rotationAngle, bendingShape)` — Constructor for the rotational placement
+- `BarPlacement() | BarPlacement(placement) | BarPlacement(positionNumber, barCount, distVec, startPnt, endPnt, bendingShape) | BarPlacement(positionNumber, barCount, startBendingShape, endBendingShape) | BarPlacement(positionNumber, barCount, rotationAxis, rotationAngle, bendingShape)` — Initialize
 
 ### Methods
 #### `GetBarCount()`
@@ -760,8 +755,7 @@ Implementation of the bar placement section class
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/)
 
 ### Constructors
-- `BarPlacementSection(isEnabled, length, distance)` — Constructor
-- `BarPlacementSection(element)` — Copy constructor
+- `BarPlacementSection(isEnabled, length, distance) | BarPlacementSection(element)` — Constructor
 
 ### Methods
 #### `GetDistance()`
@@ -1037,13 +1031,7 @@ Implementation of the reinforcement shape
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/)
 
 ### Constructors
-- `BendingShape()` — Initialize
-- `BendingShape(shapePol, bendingRoller, diameter, steelGrade, concreteGrade, bendingShapeType)` — Constructor
-- `BendingShape(shapePoint, diameter, steelGrade, concreteGrade)` — Constructor for a point placement
-- `BendingShape(shapePol, bendingRoller, meshType, meshBendingDirection, steelGrade, concreteGrade, bendingShapeType)` — Constructor
-- `BendingShape(shapePol, bendingRoller, diameter, steelGrade, concreteGrade, bendingShapeType, hookLengthStart, hookAngleStart, hookTypeStart, hookLengthEnd, hookAngleEnd, hookTypeEnd)` — Constructor
-- `BendingShape(shapePol, bendingRoller, meshType, meshBendingDirection, steelGrade, concreteGrade, bendingShapeType, hookLengthStart, hookAngleStart, hookTypeStart, hookLengthEnd, hookAngleEnd, hookTypeEnd)` — Constructor
-- `BendingShape(element)` — Copy constructor
+- `BendingShape() | BendingShape(shapePol, bendingRoller, diameter, steelGrade, concreteGrade, bendingShapeType) | BendingShape(shapePoint, diameter, steelGrade, concreteGrade) | BendingShape(shapePol, bendingRoller, meshType, meshBendingDirection, steelGrade, concreteGrade, bendingShapeType) | BendingShape(shapePol, bendingRoller, diameter, steelGrade, concreteGrade, bendingShapeType, hookLengthStart, hookAngleStart, hookTypeStart, hookLengthEnd, hookAngleEnd, hookTypeEnd) | BendingShape(shapePol, bendingRoller, meshType, meshBendingDirection, steelGrade, concreteGrade, bendingShapeType, hookLengthStart, hookAngleStart, hookTypeStart, hookLengthEnd, hookAngleEnd, hookTypeEnd) | BendingShape(element)` — Initialize
 
 ### Methods
 #### `GetBendingRoller()`
@@ -1199,18 +1187,7 @@ Move the shape
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Move)
 
-#### `Rotate(modelAngles)`
-
-Rotate the shape
-
-**Remarks:** Rotate the shape
-
-**Parameters:**
-- `modelAngles` (object) — Model angles
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Rotate)
-
-#### `Rotate(modelAngles, refPnt)`
+#### `Rotate(modelAngles, refPnt) | Rotate(modelAngles)`
 
 Rotate the shape
 
@@ -1464,9 +1441,7 @@ Implementation of the bar placement element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/)
 
 ### Constructors
-- `CircularAreaElement()` — Initialize
-- `CircularAreaElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, outerAngleStart, outerAngleEnd, innerAngleStart, innerAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)` — Constructor
-- `CircularAreaElement(element)` — Copy constructor
+- `CircularAreaElement() | CircularAreaElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, outerAngleStart, outerAngleEnd, innerAngleStart, innerAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour) | CircularAreaElement(element)` — Initialize
 
 ### Methods
 #### `GetConcreteCoverContour()`
@@ -1845,9 +1820,7 @@ Parameters for dividing engineering geometry
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/)
 
 ### Constructors
-- `DivideBarsParameters()` — Initialize
-- `DivideBarsParameters(DivideMode, OverlapPosition, OverlapLength, GapPosition, GapLength)` — Constructor
-- `DivideBarsParameters(element)` — Copy constructor
+- `DivideBarsParameters() | DivideBarsParameters(DivideMode, OverlapPosition, OverlapLength, GapPosition, GapLength) | DivideBarsParameters(element)` — Initialize
 
 ### Methods
 #### `GetTrimLens()`
@@ -1884,9 +1857,7 @@ Implementation of the extrude bar placement element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ExtrudeBarPlacement/)
 
 ### Constructors
-- `ExtrudeBarPlacement()` — Initialize
-- `ExtrudeBarPlacement(placement)` — Copy constructor
-- `ExtrudeBarPlacement(positionNumber, path, profileRotation, breakElimination, maxBreakAngle, crossBarDistance, concreteCoverStart, concreteCoverEnd, edgeOffsetType, edgeOffsetStart, edgeOffsetEnd, barOffset, bendingShapeViewVector)` — Constructor for cross bars
+- `ExtrudeBarPlacement() | ExtrudeBarPlacement(placement) | ExtrudeBarPlacement(positionNumber, path, profileRotation, breakElimination, maxBreakAngle, crossBarDistance, concreteCoverStart, concreteCoverEnd, edgeOffsetType, edgeOffsetStart, edgeOffsetEnd, barOffset, bendingShapeViewVector)` — Initialize
 
 ### Methods
 #### `AddCrossBendingShape(shape)`
@@ -2152,21 +2123,7 @@ Module-level functions of NemAll_Python_Reinforcement
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/)
 
 ### Methods
-#### `CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)`
-
-Create the reinforcement labels
-
-**Remarks:** Create the reinforcement labels
-
-**Parameters:**
-- `doc` (DocumentAdapter) — Document
-- `insertionMat` (Matrix3D) — Insertion matrix
-- `labelList` (ReinforcementLabelList) — List with the labels
-- `viewProj` (ViewWorldProjection) — View projection
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/#NemAll_Python_Reinforcement.CreateReinforcementLabeling)
-
-#### `CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None)`
+#### `CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None) | CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)`
 
 Create the reinforcement labels
 
@@ -2200,8 +2157,7 @@ Create the reinforcement labels
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/)
 
 ### Constructors
-- `GeometryExpansionUtil()` — Initialize
-- `GeometryExpansionUtil(pMsgInfo, use3DGeometry)` — Constructor
+- `GeometryExpansionUtil() | GeometryExpansionUtil(pMsgInfo, use3DGeometry)` — Initialize
 
 ### Methods
 #### `GetLineAbove(arg2, arg3, arg4, arg5)`
@@ -2366,8 +2322,7 @@ Implementation of the longitudinal bar properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/)
 
 ### Constructors
-- `LongitudinalBarProperties()` — Initialize
-- `LongitudinalBarProperties(shape, overlappingAtStartTurnedOn, overlappingAtStart, overlappingAtEndTurnedOn, overlappingAtEnd, overlappingLength, minBarDistance, deliveryShapeType, insideBarsState, startLength)` — Constructor
+- `LongitudinalBarProperties() | LongitudinalBarProperties(shape, overlappingAtStartTurnedOn, overlappingAtStart, overlappingAtEndTurnedOn, overlappingAtEnd, overlappingLength, minBarDistance, deliveryShapeType, insideBarsState, startLength)` — Initialize
 
 ### Methods
 #### `GetBendingShape()`
@@ -2712,9 +2667,7 @@ Implementation of the mesh data
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshData/)
 
 ### Constructors
-- `MeshData()` — Initialize
-- `MeshData(type, length, width, diameterLongitudinal, diameterCross, asLongitudinal, asCross, distanceLongitudinal, distanceCross, bDoubleBarLongitudinal, bDoubleBarCross, overlapLongitudinal, overlapCross, weight)` — Constructor
-- `MeshData(element)` — Copy constructor
+- `MeshData() | MeshData(type, length, width, diameterLongitudinal, diameterCross, asLongitudinal, asCross, distanceLongitudinal, distanceCross, bDoubleBarLongitudinal, bDoubleBarCross, overlapLongitudinal, overlapCross, weight) | MeshData(element)` — Initialize
 
 ### Methods
 #### `CreateLabel()`
@@ -2864,8 +2817,7 @@ Divide the bars placement
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/)
 
 ### Constructors
-- `MeshPlacement()` — Initialize
-- `MeshPlacement(positionNumber, widthVec, bendingShape)` — Constructor
+- `MeshPlacement() | MeshPlacement(positionNumber, widthVec, bendingShape)` — Initialize
 
 ### Methods
 #### `GetBendingShape()`
@@ -3006,9 +2958,7 @@ Implementation of the mesh placement element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/PlaneMeshPlacement/)
 
 ### Constructors
-- `PlaneMeshPlacement()` — Initialize
-- `PlaneMeshPlacement(placement)` — Copy constructor
-- `PlaneMeshPlacement(positionNumber, meshData, meshLength, meshWidth, meshPolygon)` — Constructor
+- `PlaneMeshPlacement() | PlaneMeshPlacement(placement) | PlaneMeshPlacement(positionNumber, meshData, meshLength, meshWidth, meshPolygon)` — Initialize
 
 ### Methods
 #### `GetCommonProperties()`
@@ -3162,11 +3112,7 @@ Convert to string
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabel/)
 
 ### Constructors
-- `ReinforcementLabel()` — Initialize
-- `ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, labelPoint, angle)` — Constructor
-- `ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, shapeSide, shapeSideFactor, labelOffset, angle)` — Constructor
-- `ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, bDimLineAtShapeStart, dimLineOffset)` — Constructor
-- `ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, pointerProp, bDimLineAtShapeStart, dimLineOffset)` — Constructor
+- `ReinforcementLabel() | ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, labelPoint, angle) | ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, shapeSide, shapeSideFactor, labelOffset, angle) | ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, bDimLineAtShapeStart, dimLineOffset) | ReinforcementLabel(reinforcementType, type, positionNumber, labelProp, pointerProp, bDimLineAtShapeStart, dimLineOffset)` — Initialize
 
 ### Methods
 #### `SetAdditionalText(additionalText)`
@@ -3375,8 +3321,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelPointerProperties/)
 
 ### Constructors
-- `ReinforcementLabelPointerProperties()` — Initialize
-- `ReinforcementLabelPointerProperties(combLineAngle, bCombLineByLength, combLineValue)` — Constructor
+- `ReinforcementLabelPointerProperties() | ReinforcementLabelPointerProperties(combLineAngle, bCombLineByLength, combLineValue)` — Initialize
 
 ## ReinforcementLabelProperties (class)
 
@@ -3385,8 +3330,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/)
 
 ### Constructors
-- `ReinforcementLabelProperties()` — Initialize
-- `ReinforcementLabelProperties(prop)` — Copy constructor
+- `ReinforcementLabelProperties() | ReinforcementLabelProperties(prop)` — Initialize
 
 ### Methods
 #### `__repr__()`
@@ -3609,26 +3553,10 @@ Implementation of the reinforcement shape builder
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/)
 
 ### Constructors
-- `ReinforcementShapeBuilder()` — Initialize
-- `ReinforcementShapeBuilder(shapePlaneMatrix)` — Constructor
-- `ReinforcementShapeBuilder(shapePlaneMatrix, create3DShape, localZCoverFront, localZCoverBack)` — Constructor
-- `ReinforcementShapeBuilder(element)` — Copy constructor
+- `ReinforcementShapeBuilder() | ReinforcementShapeBuilder(shapePlaneMatrix) | ReinforcementShapeBuilder(shapePlaneMatrix, create3DShape, localZCoverFront, localZCoverBack) | ReinforcementShapeBuilder(element)` — Initialize
 
 ### Methods
-#### `AddPoint(pnt, concreteCover, bendingRoller)`
-
-Add an end point of a geometry side
-
-**Remarks:** Add an end point of a geometry side
-
-**Parameters:**
-- `pnt` (Point3D) — End point of the side
-- `concreteCover` (float) — Concrete cover
-- `bendingRoller` (float) — Bending roller
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddPoint)
-
-#### `AddPoint(pnt, concreteCover, bendingRoller, zCoordBar=0)`
+#### `AddPoint(pnt, concreteCover, bendingRoller, zCoordBar=0) | AddPoint(pnt, concreteCover, bendingRoller)`
 
 Add an end point of a geometry side
 
@@ -3653,21 +3581,7 @@ Add the shape geometry points
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddPoints)
 
-#### `AddSide(startPnt, endPnt, concreteCover, bendingRoller)`
-
-Add a geometry side of the shape
-
-**Remarks:** Add a geometry side of the shape
-
-**Parameters:**
-- `startPnt` (Point3D) — Start point of the geometry side
-- `endPnt` (Point3D) — End point of the geometry side
-- `concreteCover` (float) — Concrete cover
-- `bendingRoller` (float) — Bending roller between the last and current side
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddSide)
-
-#### `AddSide(startPnt, endPnt, concreteCover, bendingRoller, zCoordBar=0)`
+#### `AddSide(startPnt, endPnt, concreteCover, bendingRoller, zCoordBar=0) | AddSide(startPnt, endPnt, concreteCover, bendingRoller)`
 
 Add a geometry side of the shape
 
@@ -3693,7 +3607,7 @@ Add the geometry sides of a shape
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.AddSides)
 
-#### `CreateShape(diameter, bendingRoller, steelGrade, concreteGrade, bendingShapeType)`
+#### `CreateShape(diameter, bendingRoller, steelGrade, concreteGrade, bendingShapeType) | CreateShape(meshType, meshBendingDirection, bendingRoller, steelGrade, concreteGrade, bendingShapeType) | CreateShape(shapeProps)`
 
 Create the shape
 
@@ -3710,38 +3624,7 @@ Create the shape
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateShape)
 
-#### `CreateShape(meshType, meshBendingDirection, bendingRoller, steelGrade, concreteGrade, bendingShapeType)`
-
-Create the shape
-
-**Remarks:** Create the shape
-
-**Parameters:**
-- `meshType` (str) — Mesh type
-- `meshBendingDirection` (MeshBendingDirection) — Mesh bending direction
-- `bendingRoller` (float) — Default bending roller
-- `steelGrade` (int) — Steel grade
-- `concreteGrade` (int) — Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)
-- `bendingShapeType` (BendingShapeType) — Bending shape type
-
-**Returns:** `BendingShape` — Creation successful: true/false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateShape)
-
-#### `CreateShape(shapeProps)`
-
-Create the shape
-
-**Remarks:** Create the shape
-
-**Parameters:**
-- `shapeProps` (object) — Shape properties
-
-**Returns:** `BendingShape` — Creation successful: true/false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateShape)
-
-#### `CreateStirrup(diameter, bendingRoller, steelGrade, concreteGrade, stirrupType)`
+#### `CreateStirrup(diameter, bendingRoller, steelGrade, concreteGrade, stirrupType) | CreateStirrup(meshType, meshBendingDirection, bendingRoller, steelGrade, concreteGrade, stirrupType) | CreateStirrup(shapeProps, stirrupType)`
 
 Create the stirrup shape
 
@@ -3752,38 +3635,6 @@ Create the stirrup shape
 - `bendingRoller` (float) — Default bending roller
 - `steelGrade` (int) — Steel grade
 - `concreteGrade` (int) — Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)
-- `stirrupType` (StirrupType) — Type of the stirrup
-
-**Returns:** `BendingShape` — Creation successful: true/false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateStirrup)
-
-#### `CreateStirrup(meshType, meshBendingDirection, bendingRoller, steelGrade, concreteGrade, stirrupType)`
-
-Create the stirrup shape
-
-**Remarks:** Create the stirrup shape
-
-**Parameters:**
-- `meshType` (str) — Mesh type
-- `meshBendingDirection` (MeshBendingDirection) — Mesh bending direction
-- `bendingRoller` (float) — Default bending roller
-- `steelGrade` (int) — Steel grade
-- `concreteGrade` (int) — Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)
-- `stirrupType` (StirrupType) — Type of the stirrup
-
-**Returns:** `BendingShape` — Creation successful: true/false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.CreateStirrup)
-
-#### `CreateStirrup(shapeProps, stirrupType)`
-
-Create the stirrup shape
-
-**Remarks:** Create the stirrup shape
-
-**Parameters:**
-- `shapeProps` (object) — Shape properties
 - `stirrupType` (StirrupType) — Type of the stirrup
 
 **Returns:** `BendingShape` — Creation successful: true/false
@@ -3874,7 +3725,7 @@ Set the concrete cover at the end of the shape
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverEnd)
 
-#### `SetConcreteCoverLineEnd(startPnt, endPnt, concreteCover)`
+#### `SetConcreteCoverLineEnd(startPnt, endPnt, concreteCover) | SetConcreteCoverLineEnd(startPnt, endPnt, concreteCover)`
 
 Set the concrete cover line at the end of the shape
 
@@ -3887,20 +3738,7 @@ Set the concrete cover line at the end of the shape
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineEnd)
 
-#### `SetConcreteCoverLineEnd(startPnt, endPnt, concreteCover)`
-
-Set the concrete cover line at the end of the shape
-
-**Remarks:** Set the concrete cover line at the end of the shape
-
-**Parameters:**
-- `startPnt` (Point3D) — Start point of the concrete cover line at the end of the shape
-- `endPnt` (Point3D) — Endpoint of the concrete cover line at the end of the shape
-- `concreteCover` (float) — Concrete cover
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineEnd)
-
-#### `SetConcreteCoverLineStart(startPnt, endPnt, concreteCover)`
+#### `SetConcreteCoverLineStart(startPnt, endPnt, concreteCover) | SetConcreteCoverLineStart(startPnt, endPnt, concreteCover)`
 
 Set the concrete cover line at the start of the shape
 
@@ -3909,19 +3747,6 @@ Set the concrete cover line at the start of the shape
 **Parameters:**
 - `startPnt` (Point2D) — Start point of the concrete cover line at the start of the shape
 - `endPnt` (Point2D) — Endpoint of the concrete cover line at the start of the shape
-- `concreteCover` (float) — Concrete cover
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineStart)
-
-#### `SetConcreteCoverLineStart(startPnt, endPnt, concreteCover)`
-
-Set the concrete cover line at the start of the shape
-
-**Remarks:** Set the concrete cover line at the start of the shape
-
-**Parameters:**
-- `startPnt` (Point3D) — Start point of the concrete cover line at the start of the shape
-- `endPnt` (Point3D) — Endpoint of the concrete cover line at the start of the shape
 - `concreteCover` (float) — Concrete cover
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetConcreteCoverLineStart)
@@ -4012,7 +3837,7 @@ Set the side length at the start of the shape
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetSideLengthStart)
 
-#### `SetStartPoint(startPnt)`
+#### `SetStartPoint(startPnt) | SetStartPoint(startPnt)`
 
 Set a start point of a geometry side
 
@@ -4020,17 +3845,6 @@ Set a start point of a geometry side
 
 **Parameters:**
 - `startPnt` (Point2D) — Start point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetStartPoint)
-
-#### `SetStartPoint(startPnt)`
-
-Set a start point of a geometry side
-
-**Remarks:** Set a start point of a geometry side
-
-**Parameters:**
-- `startPnt` (Point3D) — Start point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementShapeBuilder/#NemAll_Python_Reinforcement.ReinforcementShapeBuilder.SetStartPoint)
 
@@ -4117,8 +3931,7 @@ Rearrange the reinforcement
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SpiralElement/)
 
 ### Constructors
-- `SpiralElement()` — Initialize
-- `SpiralElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, pitch, hookLengthStart, hookAngleStart, hookLengthEnd, hookAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)` — Constructor
+- `SpiralElement() | SpiralElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, pitch, hookLengthStart, hookAngleStart, hookLengthEnd, hookAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)` — Initialize
 
 ### Methods
 #### `SetLengthFactor(arg2)`
@@ -4210,9 +4023,7 @@ Implementation of the sweep bar placement element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/)
 
 ### Constructors
-- `SweepBarPlacement()` — Initialize
-- `SweepBarPlacement(placement)` — Copy constructor
-- `SweepBarPlacement(positionNumber, sweepPaths, rotation, firstPathIsSweepPath, interpolation, interpolationOfAllPoints, crossBarDistance, concreteCoverStart, concreteCoverEnd, edgeOffsetType, edgeOffsetStart, edgeOffsetEnd, barOffset, benchingLength, benchingAngle)` — Constructor for cross bars
+- `SweepBarPlacement() | SweepBarPlacement(placement) | SweepBarPlacement(positionNumber, sweepPaths, rotation, firstPathIsSweepPath, interpolation, interpolationOfAllPoints, crossBarDistance, concreteCoverStart, concreteCoverEnd, edgeOffsetType, edgeOffsetStart, edgeOffsetEnd, barOffset, benchingLength, benchingAngle)` — Initialize
 
 ### Methods
 #### `AddPlacementSection(placementSection)`

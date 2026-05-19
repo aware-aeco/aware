@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/",
   "constructors": [
     {
-      "name": "ZoomService()",
-      "signature": "ZoomService()",
+      "name": "ZoomService",
+      "signature": "ZoomService() | ZoomService(element: ZoomService)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.__init__"
-    },
-    {
-      "name": "ZoomService(element: ZoomService)",
-      "signature": "ZoomService(element: ZoomService)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "ZoomService",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -182,8 +164,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToElementsWithFactor"
     },
     {
-      "name": "ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, )",
-      "signature": "ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, )",
+      "name": "ZoomToMinMaxBox",
+      "signature": "ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValue: float, bZoomAll: bool, ) | ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValueX: float, inflateValueY: float, inflateValueZ: float, bZoomAll: bool, )",
       "summary": "Zoom to the min/max box",
       "remarks": "Zoom to the min/max box",
       "params": [
@@ -203,54 +185,6 @@
           "name": "inflateValue",
           "type": "float",
           "doc": "Inflate value for the min/max box",
-          "optional": false
-        },
-        {
-          "name": "bZoomAll",
-          "type": "bool",
-          "doc": "Zoom in all views state",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ZoomService/#NemAll_Python_BaseElements.ZoomService.ZoomToMinMaxBox"
-    },
-    {
-      "name": "ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValueX: float, inflateValueY: float, inflateValueZ: float, bZoomAll: bool, )",
-      "signature": "ZoomToMinMaxBox( minMaxBox: MinMax3D, viewProj: ViewWorldProjection, inflateValueX: float, inflateValueY: float, inflateValueZ: float, bZoomAll: bool, )",
-      "summary": "Zoom to the min/max box",
-      "remarks": "Zoom to the min/max box",
-      "params": [
-        {
-          "name": "minMaxBox",
-          "type": "MinMax3D",
-          "doc": "Zoom area",
-          "optional": false
-        },
-        {
-          "name": "viewProj",
-          "type": "ViewWorldProjection",
-          "doc": "View world projection",
-          "optional": false
-        },
-        {
-          "name": "inflateValueX",
-          "type": "float",
-          "doc": "Inflate value for the min/max box in x direction",
-          "optional": false
-        },
-        {
-          "name": "inflateValueY",
-          "type": "float",
-          "doc": "Inflate value for the min/max box in y direction",
-          "optional": false
-        },
-        {
-          "name": "inflateValueZ",
-          "type": "float",
-          "doc": "Inflate value for the min/max box in z direction",
           "optional": false
         },
         {

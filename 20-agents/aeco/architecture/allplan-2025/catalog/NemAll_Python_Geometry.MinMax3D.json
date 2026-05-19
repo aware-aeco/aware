@@ -7,71 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/",
   "constructors": [
     {
-      "name": "MinMax3D()",
-      "signature": "MinMax3D()",
+      "name": "MinMax3D",
+      "signature": "MinMax3D() | MinMax3D(min: Point3D, max: Point3D) | MinMax3D(point: Point3D) | MinMax3D(minmax: MinMax3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__init__"
-    },
-    {
-      "name": "MinMax3D(min: Point3D, max: Point3D)",
-      "signature": "MinMax3D(min: Point3D, max: Point3D)",
-      "summary": "Set constructor Initialize MinMax box with given MIN and MAX points.",
-      "remarks": "Set constructor Initialize MinMax box with given MIN and MAX points.",
-      "params": [
-        {
-          "name": "min",
-          "type": "Point3D",
-          "doc": "minimum point",
-          "optional": false
-        },
-        {
-          "name": "max",
-          "type": "Point3D",
-          "doc": "maximum point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__init__"
-    },
-    {
-      "name": "MinMax3D(point: Point3D)",
-      "signature": "MinMax3D(point: Point3D)",
-      "summary": "Set constructor Initialize MinMax box with given point.",
-      "remarks": "Set constructor Initialize MinMax box with given point.",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__init__"
-    },
-    {
-      "name": "MinMax3D(minmax: MinMax3D)",
-      "signature": "MinMax3D(minmax: MinMax3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "minmax",
-          "type": "MinMax3D",
-          "doc": "MinMax3D to be copied",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -80,21 +20,10 @@
   ],
   "methods": [
     {
-      "name": "Deflate(size: float)",
-      "signature": "Deflate(size: float)",
+      "name": "Deflate",
+      "signature": "Deflate(size: float) | Deflate(x: float, y: float, z: float)",
       "summary": "Deflate in x,y,z axis concurrently.",
       "remarks": "Deflate in x,y,z axis concurrently.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Deflate"
-    },
-    {
-      "name": "Deflate(x: float, y: float, z: float)",
-      "signature": "Deflate(x: float, y: float, z: float)",
-      "summary": "Deflate in x, y and z axis.",
-      "remarks": "Deflate in x, y and z axis.",
       "params": [],
       "returns": null,
       "throws": [],
@@ -200,21 +129,10 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetSizeZ"
     },
     {
-      "name": "Inflate(x: float, y: float, z: float)",
-      "signature": "Inflate(x: float, y: float, z: float)",
+      "name": "Inflate",
+      "signature": "Inflate(x: float, y: float, z: float) | Inflate(size: float)",
       "summary": "ame Inflate and deflate minmax box Inflate in x, y and z axis.",
       "remarks": "ame Inflate and deflate minmax box Inflate in x, y and z axis.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Inflate"
-    },
-    {
-      "name": "Inflate(size: float)",
-      "signature": "Inflate(size: float)",
-      "summary": "Inflate in x,y,z axis concurrently.",
-      "remarks": "Inflate in x,y,z axis concurrently.",
       "params": [],
       "returns": null,
       "throws": [],
@@ -391,8 +309,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__eq__"
     },
     {
-      "name": "__iadd__(minmax: MinMax3D) -\u003E MinMax3D",
-      "signature": "__iadd__(minmax: MinMax3D) -\u003E MinMax3D",
+      "name": "__iadd__",
+      "signature": "__iadd__(minmax: MinMax3D) -\u003E MinMax3D | __iadd__(point: Point3D) -\u003E MinMax3D",
       "summary": "Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax",
       "remarks": "Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax",
       "params": [
@@ -400,27 +318,6 @@
           "name": "minmax",
           "type": "MinMax3D",
           "doc": "MinMax3D to be added",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "MinMax3D",
-        "doc": "minmax box."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(point: Point3D) -\u003E MinMax3D",
-      "signature": "__iadd__(point: Point3D) -\u003E MinMax3D",
-      "summary": "Expand MinMax3D box. Expands the MinMax3D box by the Point3D given in parameter point",
-      "remarks": "Expand MinMax3D box. Expands the MinMax3D box by the Point3D given in parameter point",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "Point3D to be added",
           "optional": false
         }
       ],

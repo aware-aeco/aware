@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/",
   "constructors": [
     {
-      "name": "ClosedAreaComposite2D()",
-      "signature": "ClosedAreaComposite2D()",
+      "name": "ClosedAreaComposite2D",
+      "signature": "ClosedAreaComposite2D() | ClosedAreaComposite2D(composite: ClosedAreaComposite2D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/#NemAll_Python_Geometry.ClosedAreaComposite2D.__init__"
-    },
-    {
-      "name": "ClosedAreaComposite2D(composite: ClosedAreaComposite2D)",
-      "signature": "ClosedAreaComposite2D(composite: ClosedAreaComposite2D)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "composite",
-          "type": "ClosedAreaComposite2D",
-          "doc": "Area composite which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

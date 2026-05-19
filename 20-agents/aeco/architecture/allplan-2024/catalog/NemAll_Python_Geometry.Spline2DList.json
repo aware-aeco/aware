@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2DList/",
   "constructors": [
     {
-      "name": "Spline2DList()",
+      "name": "Spline2DList",
       "signature": "Spline2DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/",
   "constructors": [
     {
-      "name": "TextElementList()",
-      "signature": "TextElementList()",
+      "name": "TextElementList",
+      "signature": "TextElementList() | TextElementList(ele: TextElement) | TextElementList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/#NemAll_Python_BasisElements.TextElementList.__init__"
-    },
-    {
-      "name": "TextElementList(ele: TextElement)",
-      "signature": "TextElementList(ele: TextElement)",
-      "summary": "Constructor with a TextElement",
-      "remarks": "Constructor with a TextElement",
-      "params": [
-        {
-          "name": "ele",
-          "type": "TextElement",
-          "doc": "TextElement",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/#NemAll_Python_BasisElements.TextElementList.__init__"
-    },
-    {
-      "name": "TextElementList(eleList: list)",
-      "signature": "TextElementList(eleList: list)",
-      "summary": "Constructor with a list of TextElement",
-      "remarks": "Constructor with a list of TextElement",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "TextElement list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/#NemAll_Python_BasisElements.TextElementList.append"
     },
     {
-      "name": "extend(iterable: TextElementList)",
-      "signature": "extend(iterable: TextElementList)",
+      "name": "extend",
+      "signature": "extend(iterable: TextElementList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "TextElementList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElementList/#NemAll_Python_BasisElements.TextElementList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "TextElement list",
           "optional": false
         }
       ],

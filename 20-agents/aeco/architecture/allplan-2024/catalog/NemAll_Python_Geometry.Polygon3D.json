@@ -8,47 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/",
   "constructors": [
     {
-      "name": "Polygon3D()",
-      "signature": "Polygon3D()",
+      "name": "Polygon3D",
+      "signature": "Polygon3D() | Polygon3D(pntList) | Polygon3D(polygon)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__init__"
-    },
-    {
-      "name": "Polygon3D(pntList)",
-      "signature": "Polygon3D(pntList)",
-      "summary": "Constructor with an initializer list",
-      "remarks": "Constructor with an initializer list",
-      "params": [
-        {
-          "name": "pntList",
-          "type": "list",
-          "doc": "Point list",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__init__"
-    },
-    {
-      "name": "Polygon3D(polygon)",
-      "signature": "Polygon3D(polygon)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "Polygon3D",
-          "doc": "Polygon which will be copied",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -57,8 +21,8 @@
   ],
   "methods": [
     {
-      "name": "__iadd__(polygon)",
-      "signature": "__iadd__(polygon)",
+      "name": "__iadd__",
+      "signature": "__iadd__(polygon) | __iadd__(point)",
       "summary": "Addition assignment operator",
       "remarks": "Addition assignment operator",
       "params": [
@@ -66,27 +30,6 @@
           "name": "polygon",
           "type": "Polygon3D",
           "doc": "Polygon which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polygon3D",
-        "doc": "Reference to polygon"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__iadd__"
-    },
-    {
-      "name": "__iadd__(point)",
-      "signature": "__iadd__(point)",
-      "summary": "Addition assignment operator",
-      "remarks": "Addition assignment operator",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point3D",
-          "doc": "New Point3D which will be added to the polygon",
           "optional": false
         }
       ],

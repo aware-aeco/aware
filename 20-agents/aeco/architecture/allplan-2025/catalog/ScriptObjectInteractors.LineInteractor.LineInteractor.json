@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/",
   "constructors": [
     {
-      "name": "LineInteractor()",
-      "signature": "LineInteractor( interactor_result: LineInteractorResult, is_first_input: bool, prompt: str, allow_pick_up: bool = False, uvs_to_world: bool = False, preview_function: Callable[[Line3D], list] | None = None, default_input_value: float | None = None, abscissa_element: CURVES = None, )",
+      "name": "LineInteractor",
+      "signature": "LineInteractor( interactor_result: LineInteractorResult, is_first_input: bool, prompt: str, allow_pick_up: bool = False, uvs_to_world: bool = False, preview_function: Callable[[Line3D], list] | LineInteractor() | LineInteractor()",
       "summary": "initialize",
       "remarks": "initialize",
       "params": [
@@ -88,44 +88,11 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.draw_preview"
     },
     {
-      "name": "get_input_line() -\u003E Line3D",
-      "signature": "get_input_line() -\u003E Line3D",
+      "name": "get_input_line",
+      "signature": "get_input_line() -\u003E Line3D | get_input_line(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E Line3D",
       "summary": "Construct the input line from the mouse message. This overload is meant to be used inside events, where no mouse message is available ().",
       "remarks": "Construct the input line from the mouse message. This overload is meant to be used inside events, where no mouse message is available ().",
       "params": [],
-      "returns": {
-        "type": "Line3D",
-        "doc": "The input line as follows:"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.get_input_line"
-    },
-    {
-      "name": "get_input_line(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E Line3D",
-      "signature": "get_input_line(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E Line3D",
-      "summary": "Construct the input line from the mouse message. This overload is meant to be used inside process_mouse_msg event.",
-      "remarks": "Construct the input line from the mouse message. This overload is meant to be used inside process_mouse_msg event.",
-      "params": [
-        {
-          "name": "mouse_msg",
-          "type": "int",
-          "doc": "mouse message ID",
-          "optional": false
-        },
-        {
-          "name": "pnt",
-          "type": "Point2D",
-          "doc": "input point in Allplan view coordinates",
-          "optional": false
-        },
-        {
-          "name": "msg_info",
-          "type": "AddMsgInfo",
-          "doc": "additional mouse message info",
-          "optional": false
-        }
-      ],
       "returns": {
         "type": "Line3D",
         "doc": "The input line as follows:"

@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/",
   "constructors": [
     {
-      "name": "PagePropertiesList()",
-      "signature": "PagePropertiesList()",
+      "name": "PagePropertiesList",
+      "signature": "PagePropertiesList() | PagePropertiesList(ele: PageProperties) | PagePropertiesList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/#NemAll_Python_Precast.PagePropertiesList.__init__"
-    },
-    {
-      "name": "PagePropertiesList(ele: PageProperties)",
-      "signature": "PagePropertiesList(ele: PageProperties)",
-      "summary": "Constructor with a PageProperties",
-      "remarks": "Constructor with a PageProperties",
-      "params": [
-        {
-          "name": "ele",
-          "type": "PageProperties",
-          "doc": "PageProperties",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/#NemAll_Python_Precast.PagePropertiesList.__init__"
-    },
-    {
-      "name": "PagePropertiesList(eleList: list)",
-      "signature": "PagePropertiesList(eleList: list)",
-      "summary": "Constructor with a list of PageProperties",
-      "remarks": "Constructor with a list of PageProperties",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "PageProperties list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -228,8 +192,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/#NemAll_Python_Precast.PagePropertiesList.append"
     },
     {
-      "name": "extend(iterable: PagePropertiesList)",
-      "signature": "extend(iterable: PagePropertiesList)",
+      "name": "extend",
+      "signature": "extend(iterable: PagePropertiesList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -237,24 +201,6 @@
           "name": "iterable",
           "type": "PagePropertiesList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PagePropertiesList/#NemAll_Python_Precast.PagePropertiesList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "PageProperties list",
           "optional": false
         }
       ],

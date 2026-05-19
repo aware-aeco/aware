@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2DList/",
   "constructors": [
     {
-      "name": "Arc2DList()",
-      "signature": "Arc2DList()",
+      "name": "Arc2DList",
+      "signature": "Arc2DList() | Arc2DList(ele: Arc2D) | Arc2DList(eleList: list)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2DList/#NemAll_Python_Geometry.Arc2DList.__init__"
-    },
-    {
-      "name": "Arc2DList(ele: Arc2D)",
-      "signature": "Arc2DList(ele: Arc2D)",
-      "summary": "Constructor with a Arc2D",
-      "remarks": "Constructor with a Arc2D",
-      "params": [
-        {
-          "name": "ele",
-          "type": "Arc2D",
-          "doc": "Arc2D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2DList/#NemAll_Python_Geometry.Arc2DList.__init__"
-    },
-    {
-      "name": "Arc2DList(eleList: list)",
-      "signature": "Arc2DList(eleList: list)",
-      "summary": "Constructor with a list of Arc2D",
-      "remarks": "Constructor with a list of Arc2D",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Arc2D list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -239,8 +203,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2DList/#NemAll_Python_Geometry.Arc2DList.append"
     },
     {
-      "name": "extend(iterable: Arc2DList)",
-      "signature": "extend(iterable: Arc2DList)",
+      "name": "extend",
+      "signature": "extend(iterable: Arc2DList) | extend(eleList: list)",
       "summary": "Add the items from an iterable to the end of the list",
       "remarks": "Add the items from an iterable to the end of the list",
       "params": [
@@ -248,24 +212,6 @@
           "name": "iterable",
           "type": "Arc2DList",
           "doc": "Iterable to add",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2DList/#NemAll_Python_Geometry.Arc2DList.extend"
-    },
-    {
-      "name": "extend(eleList: list)",
-      "signature": "extend(eleList: list)",
-      "summary": "Extend the list",
-      "remarks": "Extend the list",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "list",
-          "doc": "Arc2D list",
           "optional": false
         }
       ],

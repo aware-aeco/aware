@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPaletteBuilder/",
   "constructors": [
     {
-      "name": "PythonWpfPaletteBuilder()",
+      "name": "PythonWpfPaletteBuilder",
       "signature": "PythonWpfPaletteBuilder(element)",
       "summary": "Copy constructor",
       "remarks": "Copy constructor",

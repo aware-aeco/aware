@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/ReinforcementShapeProperties/ReinforcementShapeProperties/",
   "constructors": [
     {
-      "name": "ReinforcementShapeProperties()",
+      "name": "ReinforcementShapeProperties",
       "signature": "ReinforcementShapeProperties(diameter, bending_roller, steel_grade, concrete_grade, bending_shape_type, mesh_type, mesh_bending_direction)",
       "summary": "Set the properties of a reinforcement bar",
       "remarks": "Set the properties of a reinforcement bar",

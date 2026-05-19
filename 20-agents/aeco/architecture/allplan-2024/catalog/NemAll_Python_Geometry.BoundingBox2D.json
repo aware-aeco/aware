@@ -7,95 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/",
   "constructors": [
     {
-      "name": "BoundingBox2D()",
-      "signature": "BoundingBox2D()",
+      "name": "BoundingBox2D",
+      "signature": "BoundingBox2D() | BoundingBox2D(angle) | BoundingBox2D(min, max, angle) | BoundingBox2D(boundingBox2D) | BoundingBox2D(minMax2D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__init__"
-    },
-    {
-      "name": "BoundingBox2D(angle)",
-      "signature": "BoundingBox2D(angle)",
-      "summary": "Default constructor. min point is initialized to [DBL_MAX,DBL_MAX], max point to [-DBL_MAX,-DBL_MAX],",
-      "remarks": "Default constructor. min point is initialized to [DBL_MAX,DBL_MAX], max point to [-DBL_MAX,-DBL_MAX],",
-      "params": [
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "Angle of new initialized bounding box.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__init__"
-    },
-    {
-      "name": "BoundingBox2D(min, max, angle)",
-      "signature": "BoundingBox2D(min, max, angle)",
-      "summary": "Set constructor Initialize bounding box with given MIN, MAX points and slew of local coordinate system.",
-      "remarks": "Set constructor Initialize bounding box with given MIN, MAX points and slew of local coordinate system.",
-      "params": [
-        {
-          "name": "min",
-          "type": "Point2D",
-          "doc": "minimum point in local coordinate system",
-          "optional": false
-        },
-        {
-          "name": "max",
-          "type": "Point2D",
-          "doc": "maximum point in local coordinate system",
-          "optional": false
-        },
-        {
-          "name": "angle",
-          "type": "Angle",
-          "doc": "direction of X axis of local coordinate system",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__init__"
-    },
-    {
-      "name": "BoundingBox2D(boundingBox2D)",
-      "signature": "BoundingBox2D(boundingBox2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "boundingBox2D",
-          "type": "BoundingBox2D",
-          "doc": "BoundingBox2D to be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__init__"
-    },
-    {
-      "name": "BoundingBox2D(minMax2D)",
-      "signature": "BoundingBox2D(minMax2D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "minMax2D",
-          "type": "MinMax2D",
-          "doc": "MinMax2D to be copied",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -104,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "Deflate(x, y)",
-      "signature": "Deflate(x, y)",
+      "name": "Deflate",
+      "signature": "Deflate(x, y) | Deflate(size)",
       "summary": "Deflate in x and y axis",
       "remarks": "Deflate in x and y axis",
       "params": [
@@ -128,26 +44,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Deflate"
     },
     {
-      "name": "Deflate(size)",
-      "signature": "Deflate(size)",
-      "summary": "Deflate in x,y axis concurrently.",
-      "remarks": "Deflate in x,y axis concurrently.",
-      "params": [
-        {
-          "name": "size",
-          "type": "float",
-          "doc": "deflate in x and y axis concurrently.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Deflate"
-    },
-    {
-      "name": "Inflate(x, y)",
-      "signature": "Inflate(x, y)",
+      "name": "Inflate",
+      "signature": "Inflate(x, y) | Inflate(size)",
       "summary": "Inflate in x and y axis",
       "remarks": "Inflate in x and y axis",
       "params": [
@@ -170,26 +68,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Inflate"
     },
     {
-      "name": "Inflate(size)",
-      "signature": "Inflate(size)",
-      "summary": "Inflate in x,y axis concurrently.",
-      "remarks": "Inflate in x,y axis concurrently.",
-      "params": [
-        {
-          "name": "size",
-          "type": "float",
-          "doc": "inflate in x and y axis concurrently.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Inflate"
-    },
-    {
-      "name": "IsContaining(point)",
-      "signature": "IsContaining(point)",
+      "name": "IsContaining",
+      "signature": "IsContaining(point) | IsContaining(box) | IsContaining(minmax)",
       "summary": "Is point inside this box",
       "remarks": "Is point inside this box",
       "params": [
@@ -209,50 +89,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsContaining"
     },
     {
-      "name": "IsContaining(box)",
-      "signature": "IsContaining(box)",
-      "summary": "Is box inside this box",
-      "remarks": "Is box inside this box",
-      "params": [
-        {
-          "name": "box",
-          "type": "BoundingBox2D",
-          "doc": "bounding box",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "true, if is inside, otherwise false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsContaining"
-    },
-    {
-      "name": "IsContaining(minmax)",
-      "signature": "IsContaining(minmax)",
-      "summary": "Is minmax box inside this box",
-      "remarks": "Is minmax box inside this box",
-      "params": [
-        {
-          "name": "minmax",
-          "type": "MinMax2D",
-          "doc": "minmax box",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "true, if is inside, otherwise false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsContaining"
-    },
-    {
-      "name": "Overlaps(box)",
-      "signature": "Overlaps(box)",
+      "name": "Overlaps",
+      "signature": "Overlaps(box) | Overlaps(minmax)",
       "summary": "Does box overlap this box",
       "remarks": "Does box overlap this box",
       "params": [
@@ -272,29 +110,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Overlaps"
     },
     {
-      "name": "Overlaps(minmax)",
-      "signature": "Overlaps(minmax)",
-      "summary": "Does minmax box overlap this box",
-      "remarks": "Does minmax box overlap this box",
-      "params": [
-        {
-          "name": "minmax",
-          "type": "MinMax2D",
-          "doc": "MinMax2D box",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "true, if boxes overlap, otherwise false"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Overlaps"
-    },
-    {
-      "name": "__add__(boundingBox)",
-      "signature": "__add__(boundingBox)",
+      "name": "__add__",
+      "signature": "__add__(boundingBox) | __add__(minMax)",
       "summary": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
       "remarks": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
       "params": [
@@ -314,29 +131,8 @@
       "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__add__"
     },
     {
-      "name": "__add__(minMax)",
-      "signature": "__add__(minMax)",
-      "summary": "Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax",
-      "remarks": "Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax",
-      "params": [
-        {
-          "name": "minMax",
-          "type": "MinMax2D",
-          "doc": "MinMax2D to be added",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "BoundingBox2D box."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__add__"
-    },
-    {
-      "name": "__iadd__(boundingBox)",
-      "signature": "__iadd__(boundingBox)",
+      "name": "__iadd__",
+      "signature": "__iadd__(boundingBox) | __iadd__(minmax) | __iadd__(point)",
       "summary": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
       "remarks": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax",
       "params": [
@@ -350,48 +146,6 @@
       "returns": {
         "type": "object",
         "doc": "reference to BoundingBox2D box."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(minmax)",
-      "signature": "__iadd__(minmax)",
-      "summary": "Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax",
-      "remarks": "Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax",
-      "params": [
-        {
-          "name": "minmax",
-          "type": "MinMax2D",
-          "doc": "MinMax2D to be added",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "reference to BoundingBox2D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__iadd__"
-    },
-    {
-      "name": "__iadd__(point)",
-      "signature": "__iadd__(point)",
-      "summary": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the Point2D given in parameter point",
-      "remarks": "Expand BoundingBox2D box. Expands the BoundingBox2D box by the Point2D given in parameter point",
-      "params": [
-        {
-          "name": "point",
-          "type": "Point2D",
-          "doc": "Point2D to be added in world coordinate system",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "reference to bounding box."
       },
       "throws": [],
       "events_related": [],

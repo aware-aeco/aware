@@ -10,41 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/",
   "constructors": [
     {
-      "name": "MeshPlacement()",
-      "signature": "MeshPlacement()",
+      "name": "MeshPlacement",
+      "signature": "MeshPlacement() | MeshPlacement(positionNumber, widthVec, bendingShape)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.__init__"
-    },
-    {
-      "name": "MeshPlacement(positionNumber, widthVec, bendingShape)",
-      "signature": "MeshPlacement(positionNumber, widthVec, bendingShape)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "positionNumber",
-          "type": "int",
-          "doc": "Position number",
-          "optional": false
-        },
-        {
-          "name": "widthVec",
-          "type": "Vector3D",
-          "doc": "Width vector of the mesh",
-          "optional": false
-        },
-        {
-          "name": "bendingShape",
-          "type": "BendingShape",
-          "doc": "Mesh shape",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathSectionViewProperties(bInitFromSTW: bool = False)",
-      "signature": "SectionAlongPathSectionViewProperties(bInitFromSTW: bool = False)",
+      "name": "SectionAlongPathSectionViewProperties",
+      "signature": "SectionAlongPathSectionViewProperties(bInitFromSTW: bool = False) | SectionAlongPathSectionViewProperties(B: SectionAlongPathSectionViewProperties)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -16,24 +16,6 @@
           "name": "bInitFromSTW",
           "type": "bool",
           "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathSectionViewProperties/#NemAll_Python_BasisElements.SectionAlongPathSectionViewProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathSectionViewProperties(B: SectionAlongPathSectionViewProperties)",
-      "signature": "SectionAlongPathSectionViewProperties(B: SectionAlongPathSectionViewProperties)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathSectionViewProperties",
-          "doc": "object to copy",
           "optional": false
         }
       ],

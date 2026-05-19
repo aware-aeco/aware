@@ -7,29 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/",
   "constructors": [
     {
-      "name": "ViewWorldProjection()",
-      "signature": "ViewWorldProjection()",
+      "name": "ViewWorldProjection",
+      "signature": "ViewWorldProjection() | ViewWorldProjection(element: ViewWorldProjection)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.__init__"
-    },
-    {
-      "name": "ViewWorldProjection(element: ViewWorldProjection)",
-      "signature": "ViewWorldProjection(element: ViewWorldProjection)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "ViewWorldProjection",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -691,8 +673,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToPixel"
     },
     {
-      "name": "WorldToProjection(pnt: Point3D) -\u003E Point2D",
-      "signature": "WorldToProjection(pnt: Point3D) -\u003E Point2D",
+      "name": "WorldToProjection",
+      "signature": "WorldToProjection(pnt: Point3D) -\u003E Point2D | WorldToProjection(line: Line3D) -\u003E Line2D",
       "summary": "Get the projection 2D point from a world 3D point",
       "remarks": "Get the projection 2D point from a world 3D point",
       "params": [
@@ -712,29 +694,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjection"
     },
     {
-      "name": "WorldToProjection(line: Line3D) -\u003E Line2D",
-      "signature": "WorldToProjection(line: Line3D) -\u003E Line2D",
-      "summary": "Get the projection 2D line from a world 3D line",
-      "remarks": "Get the projection 2D line from a world 3D line",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "World line",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Line2D",
-        "doc": "2D projection line"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjection"
-    },
-    {
-      "name": "WorldToProjectionBase0(pnt: Point3D) -\u003E Point3D",
-      "signature": "WorldToProjectionBase0(pnt: Point3D) -\u003E Point3D",
+      "name": "WorldToProjectionBase0",
+      "signature": "WorldToProjectionBase0(pnt: Point3D) -\u003E Point3D | WorldToProjectionBase0(line: Line3D) -\u003E Line3D",
       "summary": "Get the world projection point with the base 0",
       "remarks": "Get the world projection point with the base 0",
       "params": [
@@ -754,29 +715,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjectionBase0"
     },
     {
-      "name": "WorldToProjectionBase0(line: Line3D) -\u003E Line3D",
-      "signature": "WorldToProjectionBase0(line: Line3D) -\u003E Line3D",
-      "summary": "Get the world projection line with the base 0",
-      "remarks": "Get the world projection line with the base 0",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "World coordinate line",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Line3D",
-        "doc": "World projection point with the base 0"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToProjectionBase0"
-    },
-    {
-      "name": "WorldToView(pnt: Point3D) -\u003E Point2D",
-      "signature": "WorldToView(pnt: Point3D) -\u003E Point2D",
+      "name": "WorldToView",
+      "signature": "WorldToView(pnt: Point3D) -\u003E Point2D | WorldToView(pnt: Point2D) -\u003E Point2D | WorldToView(x: float, y: float, z: float) -\u003E Point2D | WorldToView(line: Line3D) -\u003E Line2D | WorldToView(line: Line2D) -\u003E Line2D | WorldToView(polyline3D: Polyline3D) -\u003E Polyline2D",
       "summary": "Transform a world point to a view point",
       "remarks": "Transform a world point to a view point",
       "params": [
@@ -790,123 +730,6 @@
       "returns": {
         "type": "Point2D",
         "doc": "View point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView"
-    },
-    {
-      "name": "WorldToView(pnt: Point2D) -\u003E Point2D",
-      "signature": "WorldToView(pnt: Point2D) -\u003E Point2D",
-      "summary": "Transform a world point to a view point",
-      "remarks": "Transform a world point to a view point",
-      "params": [
-        {
-          "name": "pnt",
-          "type": "Point2D",
-          "doc": "World point",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point2D",
-        "doc": "View point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView"
-    },
-    {
-      "name": "WorldToView(x: float, y: float, z: float) -\u003E Point2D",
-      "signature": "WorldToView(x: float, y: float, z: float) -\u003E Point2D",
-      "summary": "Transform a world point to a view point",
-      "remarks": "Transform a world point to a view point",
-      "params": [
-        {
-          "name": "x",
-          "type": "float",
-          "doc": "X-coordinate world",
-          "optional": false
-        },
-        {
-          "name": "y",
-          "type": "float",
-          "doc": "Y-coordinate world",
-          "optional": false
-        },
-        {
-          "name": "z",
-          "type": "float",
-          "doc": "Z-coordinate world",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Point2D",
-        "doc": "View point"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView"
-    },
-    {
-      "name": "WorldToView(line: Line3D) -\u003E Line2D",
-      "signature": "WorldToView(line: Line3D) -\u003E Line2D",
-      "summary": "Transform a 3D world line to a 2D view line",
-      "remarks": "Transform a 3D world line to a 2D view line",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "World line",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Line2D",
-        "doc": "View line"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView"
-    },
-    {
-      "name": "WorldToView(line: Line2D) -\u003E Line2D",
-      "signature": "WorldToView(line: Line2D) -\u003E Line2D",
-      "summary": "Transform a 2D world line to a 2D view line",
-      "remarks": "Transform a 2D world line to a 2D view line",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line2D",
-          "doc": "World line",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Line2D",
-        "doc": "View line"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView"
-    },
-    {
-      "name": "WorldToView(polyline3D: Polyline3D) -\u003E Polyline2D",
-      "signature": "WorldToView(polyline3D: Polyline3D) -\u003E Polyline2D",
-      "summary": "Transform a 3D world polyline to a 2D view polyline",
-      "remarks": "Transform a 3D world polyline to a 2D view polyline",
-      "params": [
-        {
-          "name": "polyline3D",
-          "type": "Polyline3D",
-          "doc": "World polyline",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Polyline2D",
-        "doc": "View polyline"
       },
       "throws": [],
       "events_related": [],
@@ -934,8 +757,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToView3D"
     },
     {
-      "name": "WorldToWorldPlane(pnt: Point3D, plane: Plane3D) -\u003E Point3D",
-      "signature": "WorldToWorldPlane(pnt: Point3D, plane: Plane3D) -\u003E Point3D",
+      "name": "WorldToWorldPlane",
+      "signature": "WorldToWorldPlane(pnt: Point3D, plane: Plane3D) -\u003E Point3D | WorldToWorldPlane(line: Line3D, plane: Plane3D) -\u003E Line3D",
       "summary": "Transform a world point to a plane point",
       "remarks": "Transform a world point to a plane point",
       "params": [
@@ -955,33 +778,6 @@
       "returns": {
         "type": "Point3D",
         "doc": "Plane point in world coordinates"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ViewWorldProjection/#NemAll_Python_IFW_Input.ViewWorldProjection.WorldToWorldPlane"
-    },
-    {
-      "name": "WorldToWorldPlane(line: Line3D, plane: Plane3D) -\u003E Line3D",
-      "signature": "WorldToWorldPlane(line: Line3D, plane: Plane3D) -\u003E Line3D",
-      "summary": "Transform a world line to a plane line",
-      "remarks": "Transform a world line to a plane line",
-      "params": [
-        {
-          "name": "line",
-          "type": "Line3D",
-          "doc": "World line",
-          "optional": false
-        },
-        {
-          "name": "plane",
-          "type": "Plane3D",
-          "doc": "Plane",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "Line3D",
-        "doc": "Plane line in world coordinates"
       },
       "throws": [],
       "events_related": [],

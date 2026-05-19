@@ -7,173 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/",
   "constructors": [
     {
-      "name": "Matrix3D()",
-      "signature": "Matrix3D()",
+      "name": "Matrix3D",
+      "signature": "Matrix3D() | Matrix3D(proj) | Matrix3D(matrix) | Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33) | Matrix3D(valuesinrows)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
-    },
-    {
-      "name": "Matrix3D(proj)",
-      "signature": "Matrix3D(proj)",
-      "summary": "Constructor Create a matrix for the required projection.",
-      "remarks": "Constructor Create a matrix for the required projection.",
-      "params": [
-        {
-          "name": "proj",
-          "type": "eProjectionMatrixType",
-          "doc": "The required projection",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
-    },
-    {
-      "name": "Matrix3D(matrix)",
-      "signature": "Matrix3D(matrix)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "matrix",
-          "type": "Matrix3D",
-          "doc": "Matrix which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
-    },
-    {
-      "name": "Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33)",
-      "signature": "Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33)",
-      "summary": "Constructor setting each matrix-element",
-      "remarks": "Constructor setting each matrix-element",
-      "params": [
-        {
-          "name": "v00",
-          "type": "float",
-          "doc": "first row, first element",
-          "optional": false
-        },
-        {
-          "name": "v01",
-          "type": "float",
-          "doc": "first row, second element",
-          "optional": false
-        },
-        {
-          "name": "v02",
-          "type": "float",
-          "doc": "first row, third element",
-          "optional": false
-        },
-        {
-          "name": "v03",
-          "type": "float",
-          "doc": "first row, fourth element",
-          "optional": false
-        },
-        {
-          "name": "v10",
-          "type": "float",
-          "doc": "second row, first element",
-          "optional": false
-        },
-        {
-          "name": "v11",
-          "type": "float",
-          "doc": "second row, second element",
-          "optional": false
-        },
-        {
-          "name": "v12",
-          "type": "float",
-          "doc": "second row, third element",
-          "optional": false
-        },
-        {
-          "name": "v13",
-          "type": "float",
-          "doc": "second row, fourth element",
-          "optional": false
-        },
-        {
-          "name": "v20",
-          "type": "float",
-          "doc": "third row, first element",
-          "optional": false
-        },
-        {
-          "name": "v21",
-          "type": "float",
-          "doc": "third row, second element",
-          "optional": false
-        },
-        {
-          "name": "v22",
-          "type": "float",
-          "doc": "third row, third element",
-          "optional": false
-        },
-        {
-          "name": "v23",
-          "type": "float",
-          "doc": "third row, fourth element",
-          "optional": false
-        },
-        {
-          "name": "v30",
-          "type": "float",
-          "doc": "fourth row, first element",
-          "optional": false
-        },
-        {
-          "name": "v31",
-          "type": "float",
-          "doc": "fourth row, second element",
-          "optional": false
-        },
-        {
-          "name": "v32",
-          "type": "float",
-          "doc": "fourth row, third element",
-          "optional": false
-        },
-        {
-          "name": "v33",
-          "type": "float",
-          "doc": "fourth row, fourth element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
-    },
-    {
-      "name": "Matrix3D(valuesinrows)",
-      "signature": "Matrix3D(valuesinrows)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "valuesinrows",
-          "type": "list",
-          "doc": "matrix values by rows as Python list",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -182,8 +20,8 @@
   ],
   "methods": [
     {
-      "name": "SetRotation(axis, angle)",
-      "signature": "SetRotation(axis, angle)",
+      "name": "SetRotation",
+      "signature": "SetRotation(axis, angle) | SetRotation(startDirection, endDirection)",
       "summary": "Initialize matrix only with rotation",
       "remarks": "Initialize matrix only with rotation",
       "params": [
@@ -197,33 +35,6 @@
           "name": "angle",
           "type": "Angle",
           "doc": "Angle of rotation.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "bool",
-        "doc": "True when successful, otherwise false."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetRotation"
-    },
-    {
-      "name": "SetRotation(startDirection, endDirection)",
-      "signature": "SetRotation(startDirection, endDirection)",
-      "summary": "Initialize matrix only with rotation defined by start and end direction vectors",
-      "remarks": "Initialize matrix only with rotation defined by start and end direction vectors",
-      "params": [
-        {
-          "name": "startDirection",
-          "type": "Vector3D",
-          "doc": "direction vector for start of rotation.",
-          "optional": false
-        },
-        {
-          "name": "endDirection",
-          "type": "Vector3D",
-          "doc": "direction vector for end of rotation.",
           "optional": false
         }
       ],

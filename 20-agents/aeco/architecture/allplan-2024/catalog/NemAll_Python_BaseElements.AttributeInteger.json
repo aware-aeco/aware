@@ -8,53 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/",
   "constructors": [
     {
-      "name": "AttributeInteger()",
-      "signature": "AttributeInteger()",
+      "name": "AttributeInteger",
+      "signature": "AttributeInteger() | AttributeInteger(id, value) | AttributeInteger(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.__init__"
-    },
-    {
-      "name": "AttributeInteger(id, value)",
-      "signature": "AttributeInteger(id, value)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "id",
-          "type": "int",
-          "doc": "Attribute id",
-          "optional": false
-        },
-        {
-          "name": "value",
-          "type": "int",
-          "doc": "Attribute value",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeInteger/#NemAll_Python_BaseElements.AttributeInteger.__init__"
-    },
-    {
-      "name": "AttributeInteger(element)",
-      "signature": "AttributeInteger(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AttributeInteger",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

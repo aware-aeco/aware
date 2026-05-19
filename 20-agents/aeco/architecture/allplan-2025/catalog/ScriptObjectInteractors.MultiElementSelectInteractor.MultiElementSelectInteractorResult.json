@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractorResult/",
   "constructors": [
     {
-      "name": "MultiElementSelectInteractorResult()",
+      "name": "MultiElementSelectInteractorResult",
       "signature": "MultiElementSelectInteractorResult()",
       "summary": "initialize",
       "remarks": "initialize",

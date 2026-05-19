@@ -8,51 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/",
   "constructors": [
     {
-      "name": "PolygonalArea3D()",
-      "signature": "PolygonalArea3D()",
+      "name": "PolygonalArea3D",
+      "signature": "PolygonalArea3D() | PolygonalArea3D(verticesCount: int, edgesCount: int) | PolygonalArea3D(refPoint: Point3D, verticesCount: int, edgesCount: int) | PolygonalArea3D(polygon: PolygonalArea3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__init__"
-    },
-    {
-      "name": "PolygonalArea3D(verticesCount: int, edgesCount: int)",
-      "signature": "PolygonalArea3D(verticesCount: int, edgesCount: int)",
-      "summary": "Default constructor. Create initialized 3D polygonal area with expected vertices and edges count.",
-      "remarks": "Default constructor. Create initialized 3D polygonal area with expected vertices and edges count.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__init__"
-    },
-    {
-      "name": "PolygonalArea3D(refPoint: Point3D, verticesCount: int, edgesCount: int)",
-      "signature": "PolygonalArea3D(refPoint: Point3D, verticesCount: int, edgesCount: int)",
-      "summary": "Default constructor. Create initialized 3D polygonal area with expected vertices and edges count.",
-      "remarks": "Default constructor. Create initialized 3D polygonal area with expected vertices and edges count.",
-      "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__init__"
-    },
-    {
-      "name": "PolygonalArea3D(polygon: PolygonalArea3D)",
-      "signature": "PolygonalArea3D(polygon: PolygonalArea3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "PolygonalArea3D",
-          "doc": "3D polygonal area which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],
@@ -295,8 +255,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__getitem__"
     },
     {
-      "name": "__iadd__(polygonalarea: PolygonalArea3D) -\u003E object",
-      "signature": "__iadd__(polygonalarea: PolygonalArea3D) -\u003E object",
+      "name": "__iadd__",
+      "signature": "__iadd__(polygonalarea: PolygonalArea3D) -\u003E object | __iadd__(polygon: Polygon3D) -\u003E object",
       "summary": "Append polygon.",
       "remarks": "Append polygon.",
       "params": [
@@ -316,29 +276,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__iadd__"
     },
     {
-      "name": "__iadd__(polygon: Polygon3D) -\u003E object",
-      "signature": "__iadd__(polygon: Polygon3D) -\u003E object",
-      "summary": "Append loop.",
-      "remarks": "Append loop.",
-      "params": [
-        {
-          "name": "polygon",
-          "type": "Polygon3D",
-          "doc": "polygonal area which will be appended.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "Reference to PolygonalArea3D."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__iadd__"
-    },
-    {
-      "name": "__mul__(matrix: Matrix2D) -\u003E object",
-      "signature": "__mul__(matrix: Matrix2D) -\u003E object",
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E object | __mul__(matrix: Matrix3D) -\u003E object",
       "summary": "2D matrix transformation.",
       "remarks": "2D matrix transformation.",
       "params": [
@@ -346,27 +285,6 @@
           "name": "matrix",
           "type": "Matrix2D",
           "doc": "2D transformation matrix.",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "object",
-        "doc": "Transformed 3D polygon area."
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__mul__"
-    },
-    {
-      "name": "__mul__(matrix: Matrix3D) -\u003E object",
-      "signature": "__mul__(matrix: Matrix3D) -\u003E object",
-      "summary": "3D matrix transformation.",
-      "remarks": "3D matrix transformation.",
-      "params": [
-        {
-          "name": "matrix",
-          "type": "Matrix3D",
-          "doc": "3D transformation matrix.",
           "optional": false
         }
       ],

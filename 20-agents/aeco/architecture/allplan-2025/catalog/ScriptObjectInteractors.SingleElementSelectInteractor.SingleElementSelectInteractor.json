@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectInteractor/",
   "constructors": [
     {
-      "name": "SingleElementSelectInteractor()",
-      "signature": "SingleElementSelectInteractor( interactor_result: SingleElementSelectResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, prompt_msg: str = \u0022Select the element\u0022, )",
+      "name": "SingleElementSelectInteractor",
+      "signature": "SingleElementSelectInteractor( interactor_result: SingleElementSelectResult, ele_filter: list[GUID] | SingleElementSelectInteractor() | SingleElementSelectInteractor() | SingleElementSelectInteractor()",
       "summary": "initialize",
       "remarks": "initialize",
       "params": [

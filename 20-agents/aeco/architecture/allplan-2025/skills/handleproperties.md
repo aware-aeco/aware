@@ -14,7 +14,7 @@ Implementation of the handle properties class
 [Vendor docs](https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/)
 
 ### Constructors
-- `HandleProperties( handle_id: str | tuple[int, str], handle_point: Point3D, ref_point: Point3D, handle_param_data: list[HandleParameterData], handle_move_dir: HandleDirection, abs_value: bool = True, distance_factor: float = 1.0, plane: Plane3D | None = None, dir_vector: Vector3D | None = None, info_text: str = "", angle_placement: AxisPlacement3D | None = None, show_handles: bool = True, center_point: Point3D | None = None, )` — Set the properties of a handle
+- `HandleProperties( handle_id: str | HandleProperties() | HandleProperties() | HandleProperties() | HandleProperties() | HandleProperties()` — Set the properties of a handle
 
 ### Methods
 #### `__repr__() -> str`

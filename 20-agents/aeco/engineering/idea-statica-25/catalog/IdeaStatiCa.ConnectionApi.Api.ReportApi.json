@@ -1,0 +1,155 @@
+{
+  "name": "ReportApi",
+  "namespace": "IdeaStatiCa.ConnectionApi.Api",
+  "kind": "class",
+  "summary": "Connection Rest API 3.0 \u2014 Report endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/3/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ReportApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GeneratePdfForMutlipleAsync",
+      "signature": "Task GeneratePdfForMutlipleAsync(Guid projectId, List\u003Cint\u003E requestBody)",
+      "summary": "Generates a report for multiple connections in PDF or Word format.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003Cint\u003E",
+          "doc": "List of connection IDs to include in the report.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ReportApi.md"
+    },
+    {
+      "name": "GenerateWordForMultipleAsync",
+      "signature": "Task GenerateWordForMultipleAsync(Guid projectId, List\u003Cint\u003E requestBody)",
+      "summary": "Generates a report for multiple connections in PDF or Word format.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "requestBody",
+          "type": "List\u003Cint\u003E",
+          "doc": "List of connection IDs to include in the report.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ReportApi.md"
+    },
+    {
+      "name": "GeneratePdfAsync",
+      "signature": "Task GeneratePdfAsync(Guid projectId, int connectionId)",
+      "summary": "Generates a report for the specified connection in PDF, Word, or HTMLzip format.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection to report.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ReportApi.md"
+    },
+    {
+      "name": "GenerateWordAsync",
+      "signature": "Task GenerateWordAsync(Guid projectId, int connectionId)",
+      "summary": "Generates a report for the specified connection in PDF, Word, or HTMLzip format.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection to report.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ReportApi.md"
+    },
+    {
+      "name": "GenerateHtmlZipAsync",
+      "signature": "Task GenerateHtmlZipAsync(Guid projectId, int connectionId)",
+      "summary": "Generates a report for the specified connection in PDF, Word, or HTMLzip format.",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "The unique identifier of the opened project.",
+          "optional": false
+        },
+        {
+          "name": "connectionId",
+          "type": "int",
+          "doc": "The ID of the connection to report.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ReportApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

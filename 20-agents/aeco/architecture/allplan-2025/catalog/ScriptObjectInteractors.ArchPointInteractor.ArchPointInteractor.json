@@ -8,8 +8,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/",
   "constructors": [
     {
-      "name": "ArchPointInteractor()",
-      "signature": "ArchPointInteractor( interactor_result: ArchPointInteractorResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, request_text: str = \u0022Select the element\u0022, preview_function: Callable[[], None] | None = None, )",
+      "name": "ArchPointInteractor",
+      "signature": "ArchPointInteractor( interactor_result: ArchPointInteractorResult, ele_filter: list[GUID] | ArchPointInteractor() | ArchPointInteractor() | ArchPointInteractor() | ArchPointInteractor()",
       "summary": "initialize",
       "remarks": "initialize",
       "params": [

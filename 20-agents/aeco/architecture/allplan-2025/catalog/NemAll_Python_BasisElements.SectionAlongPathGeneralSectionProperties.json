@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathGeneralSectionProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathGeneralSectionProperties(bInitFromSTW: bool = False)",
-      "signature": "SectionAlongPathGeneralSectionProperties(bInitFromSTW: bool = False)",
+      "name": "SectionAlongPathGeneralSectionProperties",
+      "signature": "SectionAlongPathGeneralSectionProperties(bInitFromSTW: bool = False) | SectionAlongPathGeneralSectionProperties(B: SectionAlongPathGeneralSectionProperties)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -16,24 +16,6 @@
           "name": "bInitFromSTW",
           "type": "bool",
           "doc": "is structure initialized from standard values",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathGeneralSectionProperties/#NemAll_Python_BasisElements.SectionAlongPathGeneralSectionProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathGeneralSectionProperties(B: SectionAlongPathGeneralSectionProperties)",
-      "signature": "SectionAlongPathGeneralSectionProperties(B: SectionAlongPathGeneralSectionProperties)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathGeneralSectionProperties",
-          "doc": "object to copy",
           "optional": false
         }
       ],

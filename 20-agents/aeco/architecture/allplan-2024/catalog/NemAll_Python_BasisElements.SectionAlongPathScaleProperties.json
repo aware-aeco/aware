@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/",
   "constructors": [
     {
-      "name": "SectionAlongPathScaleProperties(bInitFromSTW=False)",
-      "signature": "SectionAlongPathScaleProperties(bInitFromSTW=False)",
+      "name": "SectionAlongPathScaleProperties",
+      "signature": "SectionAlongPathScaleProperties(bInitFromSTW=False) | SectionAlongPathScaleProperties(B)",
       "summary": "constructor",
       "remarks": "constructor",
       "params": [
@@ -18,24 +18,6 @@
           "doc": "is structure initialized from standard values",
           "optional": true,
           "default": "False"
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathScaleProperties/#NemAll_Python_BasisElements.SectionAlongPathScaleProperties.__init__"
-    },
-    {
-      "name": "SectionAlongPathScaleProperties(B)",
-      "signature": "SectionAlongPathScaleProperties(B)",
-      "summary": "copy constructor",
-      "remarks": "copy constructor",
-      "params": [
-        {
-          "name": "B",
-          "type": "SectionAlongPathScaleProperties",
-          "doc": "object to copy",
-          "optional": false
         }
       ],
       "returns": null,

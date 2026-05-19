@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3DList/",
   "constructors": [
     {
-      "name": "Cylinder3DList()",
+      "name": "Cylinder3DList",
       "signature": "Cylinder3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

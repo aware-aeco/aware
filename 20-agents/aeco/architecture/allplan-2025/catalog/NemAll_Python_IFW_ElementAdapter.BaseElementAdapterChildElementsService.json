@@ -35,8 +35,8 @@
       "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildElements"
     },
     {
-      "name": "GetChildModelElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterList",
-      "signature": "GetChildModelElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterList",
+      "name": "GetChildModelElements",
+      "signature": "GetChildModelElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterList | GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -\u003E BaseElementAdapterList",
       "summary": "Get the child model elements of the element",
       "remarks": "Get the child model elements of the element",
       "params": [
@@ -50,33 +50,6 @@
       "returns": {
         "type": "BaseElementAdapterList",
         "doc": "True, if element pass and can be selected"
-      },
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildModelElements"
-    },
-    {
-      "name": "GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -\u003E BaseElementAdapterList",
-      "signature": "GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -\u003E BaseElementAdapterList",
-      "summary": "Get the child model elements of the element",
-      "remarks": "Get the child model elements of the element",
-      "params": [
-        {
-          "name": "ele",
-          "type": "BaseElementAdapter",
-          "doc": "Element",
-          "optional": false
-        },
-        {
-          "name": "hiddenElements",
-          "type": "bool",
-          "doc": "Include hidden elements: true/false",
-          "optional": false
-        }
-      ],
-      "returns": {
-        "type": "BaseElementAdapterList",
-        "doc": "Child elements including hidden elements of the element"
       },
       "throws": [],
       "events_related": [],

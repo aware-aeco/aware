@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/",
   "constructors": [
     {
-      "name": "VerticalOpeningFacingProperties()",
+      "name": "VerticalOpeningFacingProperties",
       "signature": "VerticalOpeningFacingProperties(element: VerticalOpeningFacingProperties)",
       "summary": "Copy constructor",
       "remarks": "Copy constructor",

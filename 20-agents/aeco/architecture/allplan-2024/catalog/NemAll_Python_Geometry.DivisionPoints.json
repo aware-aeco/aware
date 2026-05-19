@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/",
   "constructors": [
     {
-      "name": "DivisionPoints(path, sectionLength, eps)",
-      "signature": "DivisionPoints(path, sectionLength, eps)",
+      "name": "DivisionPoints",
+      "signature": "DivisionPoints(path, sectionLength, eps) | DivisionPoints(geoObject, number, eps) | DivisionPoints(path, number, eps) | DivisionPoints(geoObject, sectionLength, eps)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [
@@ -16,96 +16,6 @@
           "name": "path",
           "type": "Path2D",
           "doc": "Path to divide",
-          "optional": false
-        },
-        {
-          "name": "sectionLength",
-          "type": "float",
-          "doc": "length of one division section",
-          "optional": false
-        },
-        {
-          "name": "eps",
-          "type": "float",
-          "doc": "tolerance",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.__init__"
-    },
-    {
-      "name": "DivisionPoints(geoObject, number, eps)",
-      "signature": "DivisionPoints(geoObject, number, eps)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "geoObject",
-          "type": "object",
-          "doc": "object to divide",
-          "optional": false
-        },
-        {
-          "name": "number",
-          "type": "int",
-          "doc": "number of division points",
-          "optional": false
-        },
-        {
-          "name": "eps",
-          "type": "float",
-          "doc": "tolerance",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.__init__"
-    },
-    {
-      "name": "DivisionPoints(path, number, eps)",
-      "signature": "DivisionPoints(path, number, eps)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "path",
-          "type": "Path2D",
-          "doc": "Path to divide",
-          "optional": false
-        },
-        {
-          "name": "number",
-          "type": "int",
-          "doc": "number of division points",
-          "optional": false
-        },
-        {
-          "name": "eps",
-          "type": "float",
-          "doc": "tolerance",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/#NemAll_Python_Geometry.DivisionPoints.__init__"
-    },
-    {
-      "name": "DivisionPoints(geoObject, sectionLength, eps)",
-      "signature": "DivisionPoints(geoObject, sectionLength, eps)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "geoObject",
-          "type": "object",
-          "doc": "object to divide",
           "optional": false
         },
         {

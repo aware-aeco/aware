@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/",
   "constructors": [
     {
-      "name": "QueryTypeID()",
-      "signature": "QueryTypeID()",
+      "name": "QueryTypeID",
+      "signature": "QueryTypeID() | QueryTypeID(typeID) | QueryTypeID(element)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__init__"
-    },
-    {
-      "name": "QueryTypeID(typeID)",
-      "signature": "QueryTypeID(typeID)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "typeID",
-          "type": "GUID",
-          "doc": "Element type ID of the filter",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__init__"
-    },
-    {
-      "name": "QueryTypeID(element)",
-      "signature": "QueryTypeID(element)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "QueryTypeID",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

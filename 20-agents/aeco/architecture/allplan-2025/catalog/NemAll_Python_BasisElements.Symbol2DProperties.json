@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/",
   "constructors": [
     {
-      "name": "Symbol2DProperties()",
+      "name": "Symbol2DProperties",
       "signature": "Symbol2DProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

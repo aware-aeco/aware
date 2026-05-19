@@ -8,47 +8,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/",
   "constructors": [
     {
-      "name": "AxisElementAdapter()",
-      "signature": "AxisElementAdapter()",
+      "name": "AxisElementAdapter",
+      "signature": "AxisElementAdapter() | AxisElementAdapter(element: BaseElementAdapter) | AxisElementAdapter(element: AxisElementAdapter)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.__init__"
-    },
-    {
-      "name": "AxisElementAdapter(element: BaseElementAdapter)",
-      "signature": "AxisElementAdapter(element: BaseElementAdapter)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "BaseElementAdapter",
-          "doc": "Element",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AxisElementAdapter/#NemAll_Python_IFW_ElementAdapter.AxisElementAdapter.__init__"
-    },
-    {
-      "name": "AxisElementAdapter(element: AxisElementAdapter)",
-      "signature": "AxisElementAdapter(element: AxisElementAdapter)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "AxisElementAdapter",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -7,101 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3D/",
   "constructors": [
     {
-      "name": "BSplineSurface3D()",
-      "signature": "BSplineSurface3D()",
+      "name": "BSplineSurface3D",
+      "signature": "BSplineSurface3D() | BSplineSurface3D( points: Point3DList, weights: VecDoubleList, uknots: VecDoubleList, vknots: VecDoubleList, udegree: int, vdegree: int, isUPeriodic: bool, isVPeriodic: bool, isUClosed: bool, isVClosed: bool, ) | BSplineSurface3D(surface: BSplineSurface3D)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3D/#NemAll_Python_Geometry.BSplineSurface3D.__init__"
-    },
-    {
-      "name": "BSplineSurface3D( points: Point3DList, weights: VecDoubleList, uknots: VecDoubleList, vknots: VecDoubleList, udegree: int, vdegree: int, isUPeriodic: bool, isVPeriodic: bool, isUClosed: bool, isVClosed: bool, )",
-      "signature": "BSplineSurface3D( points: Point3DList, weights: VecDoubleList, uknots: VecDoubleList, vknots: VecDoubleList, udegree: int, vdegree: int, isUPeriodic: bool, isVPeriodic: bool, isUClosed: bool, isVClosed: bool, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "points",
-          "type": "Point3DList",
-          "doc": "all control points",
-          "optional": false
-        },
-        {
-          "name": "weights",
-          "type": "VecDoubleList",
-          "doc": "all control points weights",
-          "optional": false
-        },
-        {
-          "name": "uknots",
-          "type": "VecDoubleList",
-          "doc": "knots in u direction",
-          "optional": false
-        },
-        {
-          "name": "vknots",
-          "type": "VecDoubleList",
-          "doc": "knots in v direction",
-          "optional": false
-        },
-        {
-          "name": "udegree",
-          "type": "int",
-          "doc": "degree in u direction",
-          "optional": false
-        },
-        {
-          "name": "vdegree",
-          "type": "int",
-          "doc": "degree in v direction",
-          "optional": false
-        },
-        {
-          "name": "isUPeriodic",
-          "type": "bool",
-          "doc": "periodic in u direction",
-          "optional": false
-        },
-        {
-          "name": "isVPeriodic",
-          "type": "bool",
-          "doc": "periodic in v direction",
-          "optional": false
-        },
-        {
-          "name": "isUClosed",
-          "type": "bool",
-          "doc": "closed in u direction",
-          "optional": false
-        },
-        {
-          "name": "isVClosed",
-          "type": "bool",
-          "doc": "closed in v direction",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3D/#NemAll_Python_Geometry.BSplineSurface3D.__init__"
-    },
-    {
-      "name": "BSplineSurface3D(surface: BSplineSurface3D)",
-      "signature": "BSplineSurface3D(surface: BSplineSurface3D)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "surface",
-          "type": "BSplineSurface3D",
-          "doc": "Surface which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

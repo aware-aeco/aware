@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3DList/",
   "constructors": [
     {
-      "name": "ClippedSweptSolid3DList()",
+      "name": "ClippedSweptSolid3DList",
       "signature": "ClippedSweptSolid3DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

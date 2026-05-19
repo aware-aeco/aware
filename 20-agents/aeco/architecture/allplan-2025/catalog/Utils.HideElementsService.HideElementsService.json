@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HideElementsService/",
   "constructors": [
     {
-      "name": "HideElementsService()",
+      "name": "HideElementsService",
       "signature": "HideElementsService()",
       "summary": "initialize",
       "remarks": "initialize",

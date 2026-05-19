@@ -8,7 +8,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDefinitionProperties/",
   "constructors": [
     {
-      "name": "SectionDefinitionProperties()",
+      "name": "SectionDefinitionProperties",
       "signature": "SectionDefinitionProperties()",
       "summary": "Initialize",
       "remarks": "Initialize",

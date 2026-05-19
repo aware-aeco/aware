@@ -7,83 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/",
   "constructors": [
     {
-      "name": "ClippedSweptSolid3D()",
-      "signature": "ClippedSweptSolid3D()",
+      "name": "ClippedSweptSolid3D",
+      "signature": "ClippedSweptSolid3D() | ClippedSweptSolid3D(area, bottom, top) | ClippedSweptSolid3D(solid) | ClippedSweptSolid3D(refPoint, solid)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__init__"
-    },
-    {
-      "name": "ClippedSweptSolid3D(area, bottom, top)",
-      "signature": "ClippedSweptSolid3D(area, bottom, top)",
-      "summary": "Constructor which sets swept area, bottom and top planes.",
-      "remarks": "Constructor which sets swept area, bottom and top planes.",
-      "params": [
-        {
-          "name": "area",
-          "type": "PolygonalArea2D",
-          "doc": "PolygonalArea3D",
-          "optional": false
-        },
-        {
-          "name": "bottom",
-          "type": "Plane3D",
-          "doc": "Bottom Plane3D",
-          "optional": false
-        },
-        {
-          "name": "top",
-          "type": "Plane3D",
-          "doc": "Top Plane3D",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__init__"
-    },
-    {
-      "name": "ClippedSweptSolid3D(solid)",
-      "signature": "ClippedSweptSolid3D(solid)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "solid",
-          "type": "ClippedSweptSolid3D",
-          "doc": "Clipped swept area solid which will be copied",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/#NemAll_Python_Geometry.ClippedSweptSolid3D.__init__"
-    },
-    {
-      "name": "ClippedSweptSolid3D(refPoint, solid)",
-      "signature": "ClippedSweptSolid3D(refPoint, solid)",
-      "summary": "Copy constructor.",
-      "remarks": "Copy constructor.",
-      "params": [
-        {
-          "name": "refPoint",
-          "type": "Point3D",
-          "doc": "reference point",
-          "optional": false
-        },
-        {
-          "name": "solid",
-          "type": "ClippedSweptSolid3D",
-          "doc": "Solid which will be copied",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

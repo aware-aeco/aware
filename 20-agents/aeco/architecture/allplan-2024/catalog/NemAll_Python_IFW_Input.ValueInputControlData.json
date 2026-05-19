@@ -7,77 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/",
   "constructors": [
     {
-      "name": "ValueInputControlData()",
-      "signature": "ValueInputControlData()",
+      "name": "ValueInputControlData",
+      "signature": "ValueInputControlData() | ValueInputControlData(ctrlType, bSetFocus, bDisableCoord) | ValueInputControlData(ctrlType, initValue, bSetFocus, bDisableCoord)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.__init__"
-    },
-    {
-      "name": "ValueInputControlData(ctrlType, bSetFocus, bDisableCoord)",
-      "signature": "ValueInputControlData(ctrlType, bSetFocus, bDisableCoord)",
-      "summary": "Constructor to create a control with standard behavior defined by the control type",
-      "remarks": "Constructor to create a control with standard behavior defined by the control type",
-      "params": [
-        {
-          "name": "ctrlType",
-          "type": "eValueInputControlType",
-          "doc": "Control type",
-          "optional": false
-        },
-        {
-          "name": "bSetFocus",
-          "type": "bool",
-          "doc": "Set the input focus to the control: true/false",
-          "optional": false
-        },
-        {
-          "name": "bDisableCoord",
-          "type": "bool",
-          "doc": "Input inside the external control disables the coordinate controls: true/false",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ValueInputControlData/#NemAll_Python_IFW_Input.ValueInputControlData.__init__"
-    },
-    {
-      "name": "ValueInputControlData(ctrlType, initValue, bSetFocus, bDisableCoord)",
-      "signature": "ValueInputControlData(ctrlType, initValue, bSetFocus, bDisableCoord)",
-      "summary": "Constructor to create a control with an init value. The value range is defined by the control type",
-      "remarks": "Constructor to create a control with an init value. The value range is defined by the control type",
-      "params": [
-        {
-          "name": "ctrlType",
-          "type": "eValueInputControlType",
-          "doc": "Control type",
-          "optional": false
-        },
-        {
-          "name": "initValue",
-          "type": "float",
-          "doc": "Initialize input value",
-          "optional": false
-        },
-        {
-          "name": "bSetFocus",
-          "type": "bool",
-          "doc": "Set the input focus to the control: true/false",
-          "optional": false
-        },
-        {
-          "name": "bDisableCoord",
-          "type": "bool",
-          "doc": "Input inside the external control disables the coordinate controls: true/false",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

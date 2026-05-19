@@ -7,71 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/",
   "constructors": [
     {
-      "name": "GeometryEdge()",
-      "signature": "GeometryEdge()",
+      "name": "GeometryEdge",
+      "signature": "GeometryEdge() | GeometryEdge(startIndex, endIndex) | GeometryEdge(edge) | GeometryEdge(edge)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.__init__"
-    },
-    {
-      "name": "GeometryEdge(startIndex, endIndex)",
-      "signature": "GeometryEdge(startIndex, endIndex)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "startIndex",
-          "type": "int",
-          "doc": "Start index of vertex.",
-          "optional": false
-        },
-        {
-          "name": "endIndex",
-          "type": "int",
-          "doc": "End index of vertex.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.__init__"
-    },
-    {
-      "name": "GeometryEdge(edge)",
-      "signature": "GeometryEdge(edge)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "edge",
-          "type": "GeometryEdge",
-          "doc": "Edge which will be copied.",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/#NemAll_Python_Geometry.GeometryEdge.__init__"
-    },
-    {
-      "name": "GeometryEdge(edge)",
-      "signature": "GeometryEdge(edge)",
-      "summary": "Copy constructor from old Allplan structure",
-      "remarks": "Copy constructor from old Allplan structure",
-      "params": [
-        {
-          "name": "edge",
-          "type": "Kanten_t",
-          "doc": "Edge which will be copied.",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

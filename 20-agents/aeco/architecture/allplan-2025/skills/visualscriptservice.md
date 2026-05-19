@@ -1,6 +1,6 @@
 ---
 name: allplan-visualscriptservice
-description: This skill encodes the allplan 2025.0 surface of the VisualScriptService namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: DefaultValue, Functions, VisualScriptService.
+description: This skill encodes the allplan 2025.0 surface of the VisualScriptService namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, VisualScriptService, DefaultValue.
 ---
 
 # VisualScriptService

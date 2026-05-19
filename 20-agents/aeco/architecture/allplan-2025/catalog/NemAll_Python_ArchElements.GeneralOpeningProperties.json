@@ -7,8 +7,8 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/",
   "constructors": [
     {
-      "name": "GeneralOpeningProperties(openingType: OpeningType)",
-      "signature": "GeneralOpeningProperties(openingType: OpeningType)",
+      "name": "GeneralOpeningProperties",
+      "signature": "GeneralOpeningProperties(openingType: OpeningType) | GeneralOpeningProperties(openingProp: GeneralOpeningProperties)",
       "summary": "Constructor",
       "remarks": "Constructor",
       "params": [
@@ -16,24 +16,6 @@
           "name": "openingType",
           "type": "OpeningType",
           "doc": "Opening type",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningProperties/#NemAll_Python_ArchElements.GeneralOpeningProperties.__init__"
-    },
-    {
-      "name": "GeneralOpeningProperties(openingProp: GeneralOpeningProperties)",
-      "signature": "GeneralOpeningProperties(openingProp: GeneralOpeningProperties)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "openingProp",
-          "type": "GeneralOpeningProperties",
-          "doc": "Properties to copy",
           "optional": false
         }
       ],

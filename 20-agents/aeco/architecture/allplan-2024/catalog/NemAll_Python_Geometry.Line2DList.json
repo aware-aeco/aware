@@ -7,7 +7,7 @@
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2DList/",
   "constructors": [
     {
-      "name": "Line2DList()",
+      "name": "Line2DList",
       "signature": "Line2DList()",
       "summary": "Initialize",
       "remarks": "Initialize",

@@ -10,53 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/",
   "constructors": [
     {
-      "name": "WallElement()",
-      "signature": "WallElement()",
+      "name": "WallElement",
+      "signature": "WallElement() | WallElement(wallProp: WallProperties, axis: object) | WallElement(element: WallElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.__init__"
-    },
-    {
-      "name": "WallElement(wallProp: WallProperties, axis: object)",
-      "signature": "WallElement(wallProp: WallProperties, axis: object)",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "wallProp",
-          "type": "WallProperties",
-          "doc": "Wall properties",
-          "optional": false
-        },
-        {
-          "name": "axis",
-          "type": "object",
-          "doc": "Axis",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.__init__"
-    },
-    {
-      "name": "WallElement(element: WallElement)",
-      "signature": "WallElement(element: WallElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "WallElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

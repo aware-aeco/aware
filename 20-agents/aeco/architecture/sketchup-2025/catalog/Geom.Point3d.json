@@ -1,0 +1,543 @@
+{
+  "name": "Point3d",
+  "namespace": "Geom",
+  "kind": "class",
+  "summary": "The Point3d class allows you to work with a point in 3D space. The point is basically just a series of values representing x, y and z coordinates. The values are specified as [x,y,z]. For example [100,200,300]. To create a point call Geom::Point3d.new, where the creation method can take a variety of arguments: In addition to the methods below, there are a series of geometry related methods that are on the Array class, since Point3d objects can also be represented as a 3-element Array. These Array-level methods are for operations such as determining if a point is on a line, on a plane, etc. See the Array class for details.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Point3d(x, y, z = 0.0)",
+      "summary": "The new method is used to create a new 3D point.",
+      "remarks": "The new method is used to create a new 3D point.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Numeric",
+          "doc": "The location along the x axis.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Numeric",
+          "doc": "The location along the y axis.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Numeric",
+          "doc": "The location along the z axis.",
+          "optional": true,
+          "default": "0.0) =\u003E Geom::Point3d | initialize(point3d) =\u003E Geom::Point3d | initialize(array3d) =\u003E Geom::Point3d | initialize(array2d) =\u003E Geom::Point3d | initialize(input_point) =\u003E Geom::Point3d | initialize(vertex"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "linear_combination",
+      "signature": "linear_combination(weight1, point1, weight2, point2) =\u003E Geom::Point3d",
+      "summary": "The linear_combination method is used to create a new point as a linear combination of two points.",
+      "remarks": "The linear_combination method is used to create a new point as a linear combination of two points. This method is generally used to get a point at some percentage along a line connecting the two points. A linear combination is a standard term for vector math. It is defined as point = weight1 * point1 \u002B weight2 * point2.",
+      "params": [
+        {
+          "name": "weight1",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "point1",
+          "type": "Geom::Point3d",
+          "optional": false
+        },
+        {
+          "name": "weight2",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Geom::Point3d",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#linear_combination-class_method"
+    },
+    {
+      "name": "\u002B",
+      "signature": "\u002B(vector) =\u003E Geom::Point3d",
+      "summary": "The #\u002B operator is a fast way to add to the current x, y and z values of a vector.",
+      "remarks": "The #\u002B operator is a fast way to add to the current x, y and z values of a vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d, Array(Numeric, Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#\u002B-instance_method"
+    },
+    {
+      "name": "-",
+      "signature": "-(array3d) =\u003E Geom::Vector3d | -(point3d) =\u003E Geom::Vector3d | -(vector3d) =\u003E Geom::Point3d",
+      "summary": "The \u0027-\u0027 operator is a fast way to subtract from the current x, y and z values of a point.",
+      "remarks": "The \u0027-\u0027 operator is a fast way to subtract from the current x, y and z values of a point.",
+      "params": [
+        {
+          "name": "array3d",
+          "type": "Array(Numeric, Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#--instance_method"
+    },
+    {
+      "name": "\u003C",
+      "signature": "\u003C(point2) =\u003E Boolean",
+      "summary": "Note: The comparison is performed in the order x, y and z coordinates.",
+      "remarks": "Note: The comparison is performed in the order x, y and z coordinates. The #\u003C compare method is used to compare two points to determine if the left-hand point is less than the right-hand point.",
+      "params": [
+        {
+          "name": "point2",
+          "type": "Geom::Point3d, Array(Numeric, Numeric, Numeric)",
+          "doc": "A Point3d object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the point1 is smaller than point2"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#\u003C-instance_method"
+    },
+    {
+      "name": "clone",
+      "signature": "clone =\u003E Geom::Point3d",
+      "summary": "The clone method is used to create another point identical to the point being cloned.",
+      "remarks": "The clone method is used to create another point identical to the point being cloned.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "the cloned Point3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#clone-instance_method"
+    },
+    {
+      "name": "distance",
+      "signature": "distance(point2) =\u003E Length",
+      "summary": "The distance method is used to compute the distance from a point to another point.",
+      "remarks": "The distance method is used to compute the distance from a point to another point.",
+      "params": [
+        {
+          "name": "point2",
+          "type": "Geom::Point3d",
+          "doc": "The Point3d object to compute the distance to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Length",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#distance-instance_method"
+    },
+    {
+      "name": "distance_to_line",
+      "signature": "distance_to_line(line) =\u003E Float",
+      "summary": "Note: This function returns a \u0060Float\u0060 value, not a \u0060Length\u0060.",
+      "remarks": "Note: This function returns a \u0060Float\u0060 value, not a \u0060Length\u0060. The distance_to_line method is used to compute the distance from a point to a line. See Geom module for how to specify a line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Object",
+          "doc": "A line (see Geom for information on creating lines).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": "the distance between a point and line in internal units if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#distance_to_line-instance_method"
+    },
+    {
+      "name": "distance_to_plane",
+      "signature": "distance_to_plane(plane) =\u003E Float",
+      "summary": "Note: This function returns a \u0060Float\u0060 value, not a \u0060Length\u0060.",
+      "remarks": "Note: This function returns a \u0060Float\u0060 value, not a \u0060Length\u0060. The distance_to_plane method is used to compute the distance from the point to a plane. See module Geom for how to specify a plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Object",
+          "doc": "A plane (see Geom for how to create a plane).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": "a distance between a point and a plane in internal units if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#distance_to_plane-instance_method"
+    },
+    {
+      "name": "inspect",
+      "signature": "inspect =\u003E String",
+      "summary": "The inspect method is used to format a 3D point as a string.",
+      "remarks": "The inspect method is used to format a 3D point as a string. You will not often use these function directly. Instead, they are called automatically when an object is output using a print command like \u0027puts\u0027, which writes to the Ruby console.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a string point representation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#inspect-instance_method"
+    },
+    {
+      "name": "offset",
+      "signature": "offset(vector, length = vector.length) =\u003E Geom::Point3d",
+      "summary": "The offset method is used to offset a point by a vector and return a new point.",
+      "remarks": "The offset method is used to offset a point by a vector and return a new point. The length of the vector must not be zero.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "doc": "A Vector3d object to offset the point by.",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "Numeric",
+          "doc": "the distance to offset. If not provided, the offset is my a distance equal to the vector length.",
+          "optional": true,
+          "default": "vector.length"
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "a new Point3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#offset-instance_method"
+    },
+    {
+      "name": "offset!",
+      "signature": "offset!(vector, length = vector.length) =\u003E Geom::Point3d",
+      "summary": "The offset! method is used to offset a point by a vector.",
+      "remarks": "The offset! method is used to offset a point by a vector. The point itself is modified. Unlike offset, the point itself is modified.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector3d",
+          "doc": "A Vector3d object to offset the point by.",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "Numeric",
+          "doc": "the distance to offset. If not provided, the offset is my a distance equal to the vector length.",
+          "optional": true,
+          "default": "vector.length"
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "a new Point3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#offset!-instance_method"
+    },
+    {
+      "name": "on_line?",
+      "signature": "on_line?(line) =\u003E Boolean",
+      "summary": "The on_line? method is used to determine if the point is on a line.",
+      "remarks": "The on_line? method is used to determine if the point is on a line. See module Geom for the various ways to specify a line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Object",
+          "doc": "A line (see Geom for how to create a line).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#on_line?-instance_method"
+    },
+    {
+      "name": "on_plane?",
+      "signature": "on_plane?(plane) =\u003E Boolean",
+      "summary": "The on_plane? method is used to determine if the point is on a plane.",
+      "remarks": "The on_plane? method is used to determine if the point is on a plane. See module Geom for the various ways to specify a plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#on_plane?-instance_method"
+    },
+    {
+      "name": "project_to_line",
+      "signature": "project_to_line(line) =\u003E Geom::Point3d",
+      "summary": "The project_to_line method is used to retrieve the point on a line that is closest to this point.",
+      "remarks": "The project_to_line method is used to retrieve the point on a line that is closest to this point. The line may be defined by either a point and a vector or by two points.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Object",
+          "doc": "see Geom for how to specify a line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "the Point3d that is on a line closest to the point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#project_to_line-instance_method"
+    },
+    {
+      "name": "project_to_plane",
+      "signature": "project_to_plane(plane) =\u003E Geom::Point3d",
+      "summary": "The project_to_plane method is used to retrieve the point on a plane that is closest to the point.",
+      "remarks": "The project_to_plane method is used to retrieve the point on a plane that is closest to the point. The plane may be defined by either a point on the plane and a vector perpendicular to the plane or by the coeficients to the plane equation AX \u002B BY \u002B CZ \u002B D = 0. See Geom for details.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Object",
+          "doc": "A plane (see Geom for how to create a plane).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "the Point3d that is on a plane closest to the point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#project_to_plane-instance_method"
+    },
+    {
+      "name": "set!",
+      "signature": "set!(x, y, z) =\u003E Geom::Point3d | set!(array3d) =\u003E Geom::Point3d | set!(point3d) =\u003E Geom::Point3d",
+      "summary": "The #set! method is used to set the values of the Point3d.",
+      "remarks": "The #set! method is used to set the values of the Point3d.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Numeric",
+          "doc": "The x value for the point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Numeric",
+          "doc": "The y value for the point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Numeric",
+          "doc": "The z value for the point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "The newly set Point3d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#set!-instance_method"
+    },
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Array(Length, Length, Length)",
+      "summary": "The to_a method is used to convert the point to an array of 3 numbers",
+      "remarks": "The to_a method is used to convert the point to an array of 3 numbers",
+      "params": [],
+      "returns": {
+        "type": "Array(Length, Length, Length)",
+        "doc": "an array of three numbers representing x, y, z of the Point3d"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#to_a-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The to_s method is used to retrieve a string representation of a point.",
+      "remarks": "The to_s method is used to retrieve a string representation of a point.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the string representation of the Point3d"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#to_s-instance_method"
+    },
+    {
+      "name": "transform",
+      "signature": "transform(transform) =\u003E Geom::Point3d",
+      "summary": "Apply a Transformation to a point, returning a new point.",
+      "remarks": "Apply a Transformation to a point, returning a new point. The original vector is unchanged by this method.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation",
+          "doc": "A Transformation object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "the newly transformed point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#transform-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transform) =\u003E Geom::Point3d",
+      "summary": "Apply a Transformation to a point.",
+      "remarks": "Apply a Transformation to a point. The point itself is modified.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation",
+          "doc": "A Transformation object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point3d",
+        "doc": "the transformed point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#transform!-instance_method"
+    },
+    {
+      "name": "vector_to",
+      "signature": "vector_to(point3d) =\u003E Geom::Vector3d",
+      "summary": "The vector_to team method retrieves the vector between points.",
+      "remarks": "The vector_to team method retrieves the vector between points.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d, Array(Numeric, Numeric, Numeric)",
+          "doc": "A Point3d object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector3d",
+        "doc": "a Vector object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#vector_to-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Geom::Point3d, Array(Numeric, Numeric, Numeric)",
+      "getter": false,
+      "setter": true,
+      "summary": "The == method is used to compare two points for equality.",
+      "remarks": "The == method is used to compare two points for equality. This uses the standard SketchUp tolerance to determine if two points are the same. Points can be compared to one another or to an array representing x, y and z coordinates, as in the following examples:",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#==-instance_method"
+    },
+    {
+      "name": "[]",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The [] method is used to retrieve the value of the point at the specified index.",
+      "remarks": "The [] method is used to retrieve the value of the point at the specified index.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#[]-instance_method"
+    },
+    {
+      "name": "x",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #x method retrieves the x value of the 3D point.",
+      "remarks": "The #x method retrieves the x value of the 3D point.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#x-instance_method"
+    },
+    {
+      "name": "y",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #y method retrieves the y value of the 3D point.",
+      "remarks": "The #y method retrieves the y value of the 3D point.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#y-instance_method"
+    },
+    {
+      "name": "z",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #z method retrieves the z value of the 3D point.",
+      "remarks": "The #z method retrieves the z value of the 3D point.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point3d.html#z-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

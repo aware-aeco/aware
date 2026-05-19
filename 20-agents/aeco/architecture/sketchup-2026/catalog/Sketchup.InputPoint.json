@@ -1,0 +1,286 @@
+{
+  "name": "InputPoint",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The InputPoint class is used to pick 3d points and/or entities that reside under the current cursor location, similar to native Line tool and other drawing tools. Unlike PickHelper, InputPoint uses inference, i.e. \u201Csnaps\u201D to vertices and other entities when the cursor is close to them. Only Tools react to cursor location and most of these methods are only useful in the context of a tool. For example, if you want to determine the 3d point you just moved the cursor over, you would use #pick from within your Tool#onMouseMove method. InputPoints are best picked from mouse move, as you want them to draw them to the view. For an example, see Tool Example. To lock inference similar to native SketchUp tools, see View#lock_inference.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "InputPoint(pt_or_vertex)",
+      "summary": "Note: Prior to SketchUp 2019 it was not possible to sub-class Sketchup::InputPoint due to a bug in how SketchUp initialized the class. The new method is used to create a new InputPoint object.",
+      "remarks": "Note: Prior to SketchUp 2019 it was not possible to sub-class Sketchup::InputPoint due to a bug in how SketchUp initialized the class. The new method is used to create a new InputPoint object.",
+      "params": [
+        {
+          "name": "pt_or_vertex",
+          "type": "Geom::Point3d, Sketchup::Vertex",
+          "doc": "An optional Point3d or Vertex where the new InputPoint should be created.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "clear",
+      "signature": "clear =\u003E Object",
+      "summary": "The clear method is used to clear the input point.",
+      "remarks": "The clear method is used to clear the input point. This sets it to an empty state. After calling this, valid? will return false.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "inputpoint - the cleared (empty) input point if this successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#clear-instance_method"
+    },
+    {
+      "name": "copy!",
+      "signature": "copy!(inputpoint) =\u003E Object",
+      "summary": "The copy! method is used to copy the data from a second input point into this input point.",
+      "remarks": "The copy! method is used to copy the data from a second input point into this input point.",
+      "params": [
+        {
+          "name": "inputpoint",
+          "type": "Object",
+          "doc": "The second input point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "inputpoint - the new input point that received the copy if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#copy!-instance_method"
+    },
+    {
+      "name": "degrees_of_freedom",
+      "signature": "degrees_of_freedom =\u003E Object",
+      "summary": "The degrees_of_freedom method retrieves the number of degrees of freedom there are for an input point.",
+      "remarks": "The degrees_of_freedom method retrieves the number of degrees of freedom there are for an input point. If you are just getting a point in space, then the degrees_of_freedom will be 3 - meaning that there is nothing about the point that would constrain its position. If you are on a face, then the degrees_of_freedom will be 2 meaning that you can only move on the plane of the face. If you are on an Edge or an axis, then the degrees_of_freedom will be 1 meaning that you can only move in the direction of the edge or axis. If you get an end point of an Edge, or an intersection point, then the degrees_of_freedom will be 0.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "degrees_of_freedom - see comments."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#degrees_of_freedom-instance_method"
+    },
+    {
+      "name": "depth",
+      "signature": "depth =\u003E Object",
+      "summary": "The depth method retrieves the depth of an inference if it is coming from a component.",
+      "remarks": "The depth method retrieves the depth of an inference if it is coming from a component. If the InputPoint is not getting a position from inside a component, this method will return 0. Otherwise it returns the depth of the entity in a nested component that is providing the position.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "depth - a number representing the depth of the inputpoint (inside groups and components) if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#depth-instance_method"
+    },
+    {
+      "name": "display?",
+      "signature": "display? =\u003E Boolean",
+      "summary": "The display? method is used to determine if the input point has anything to draw.",
+      "remarks": "The display? method is used to determine if the input point has anything to draw. If the method returns true, then the draw method will draw something.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "status - true if the draw method will draw something, false if the draw method has nothing to draw"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#display?-instance_method"
+    },
+    {
+      "name": "draw",
+      "signature": "draw(view) =\u003E Object",
+      "summary": "The draw method is used to draw the input point.",
+      "remarks": "The draw method is used to draw the input point. This is useful for showing an InputPoint from within the draw method of a tool that you have implemented in Ruby. Additional examples are available in the Plugins/examples directory.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Object",
+          "doc": "The current view.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#draw-instance_method"
+    },
+    {
+      "name": "edge",
+      "signature": "edge =\u003E Object",
+      "summary": "The edge method is used to retrieve the edge if the input point is getting its position from a point on an Edge.",
+      "remarks": "The edge method is used to retrieve the edge if the input point is getting its position from a point on an Edge.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "edge - an Edge object if successful, or nil if unsuccessful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#edge-instance_method"
+    },
+    {
+      "name": "face",
+      "signature": "face =\u003E Sketchup::Face?",
+      "summary": "Note: The InputPoint doesn\u0027t necessarily lie on the face, but can be e.",
+      "remarks": "Note: The InputPoint doesn\u0027t necessarily lie on the face, but can be e.g. on an edge in front of the face. The face method retrieves the face at or behind the input point. This can be used to determine a plane, similar to what native Rotate tool does.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Face, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#face-instance_method"
+    },
+    {
+      "name": "instance_path",
+      "signature": "instance_path =\u003E Sketchup::InstancePath?",
+      "summary": "The #instance_path method retrieves the instance path for the picked point.",
+      "remarks": "The #instance_path method retrieves the instance path for the picked point. The returned instance_path is a copy of what the input point is holding on to at the moment you access it. Your copy will not update if you make new picks with the input point. If there has been no valid pick it will return \u0060nil\u0060.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::InstancePath, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#instance_path-instance_method"
+    },
+    {
+      "name": "pick",
+      "signature": "pick(view, x, y) =\u003E Boolean | pick(view, x, y, inputpoint) =\u003E Boolean | pick(view, x, y) =\u003E Boolean | pick(view, x, y, inputpoint) =\u003E Boolean",
+      "summary": "The #pick method is used to get a input point at a specific screen position.",
+      "remarks": "The #pick method is used to get a input point at a specific screen position.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Sketchup::View",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "Integer",
+          "doc": "Screen coordinate in physical pixels.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Integer",
+          "doc": "Screen coordinate in physical pixels.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a valid input point was picked and it is different than it was before."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#pick-instance_method"
+    },
+    {
+      "name": "position",
+      "signature": "position =\u003E Object",
+      "summary": "The position method is used to get the 3D point from the input point.",
+      "remarks": "The position method is used to get the 3D point from the input point.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "point - a Point3d object position for the input point if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#position-instance_method"
+    },
+    {
+      "name": "tooltip",
+      "signature": "tooltip =\u003E Object",
+      "summary": "The tooltip method is used to retrieve the string that is the tool tip to display for the input point.",
+      "remarks": "The tooltip method is used to retrieve the string that is the tool tip to display for the input point.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "tip - a string tooltip or an empty string (if the input point doesn\u0027t provide a tooltip)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#tooltip-instance_method"
+    },
+    {
+      "name": "transformation",
+      "signature": "transformation =\u003E Object",
+      "summary": "The transformation method retrieves the Transformation object for the input point.",
+      "remarks": "The transformation method retrieves the Transformation object for the input point. If the InputPoint object is getting its position from something inside of a component instance, this method returns the Transformation of the component instance. Otherwise it returns the identity Transformation. Note that the position method on a input point always returns a point that is transformed into model space. If you are using the edge, face or vertex method on the InputPoint though, you will probably need to use the transformation method to transform the data that you get back from the selected entity.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "transformation - the Transformation for the input point if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#transformation-instance_method"
+    },
+    {
+      "name": "valid?",
+      "signature": "valid? =\u003E Boolean",
+      "summary": "The valid? method is used to determine if an input point has valid data.",
+      "remarks": "The valid? method is used to determine if an input point has valid data. You must have called the pick method to set the data before it is valid.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "status - true if the input point has valid data, false if it does not have valid data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#valid?-instance_method"
+    },
+    {
+      "name": "vertex",
+      "signature": "vertex =\u003E Object",
+      "summary": "The vertex method returns a Vertex associated with the InputPoint.",
+      "remarks": "The vertex method returns a Vertex associated with the InputPoint. If the InputPoint is on the end of a line, then it will return the Vertex. If the InputPoint does not select any vertices this method returns nil.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "vertex - The associated vertex"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#vertex-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Object",
+      "getter": false,
+      "setter": true,
+      "summary": "The == method is used to determine if two input points are the same.",
+      "remarks": "The == method is used to determine if two input points are the same.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/InputPoint.html#==-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

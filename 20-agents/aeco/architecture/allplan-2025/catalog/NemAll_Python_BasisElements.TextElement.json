@@ -10,65 +10,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/",
   "constructors": [
     {
-      "name": "TextElement()",
-      "signature": "TextElement()",
+      "name": "TextElement",
+      "signature": "TextElement() | TextElement( commonProp: CommonProperties, textProp: TextProperties, text: str, textPnt: Point2D, ) | TextElement(element: TextElement)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__init__"
-    },
-    {
-      "name": "TextElement( commonProp: CommonProperties, textProp: TextProperties, text: str, textPnt: Point2D, )",
-      "signature": "TextElement( commonProp: CommonProperties, textProp: TextProperties, text: str, textPnt: Point2D, )",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "commonProp",
-          "type": "CommonProperties",
-          "doc": "Common properties",
-          "optional": false
-        },
-        {
-          "name": "textProp",
-          "type": "TextProperties",
-          "doc": "Text properties",
-          "optional": false
-        },
-        {
-          "name": "text",
-          "type": "str",
-          "doc": "Text string",
-          "optional": false
-        },
-        {
-          "name": "textPnt",
-          "type": "Point2D",
-          "doc": "Text point",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__init__"
-    },
-    {
-      "name": "TextElement(element: TextElement)",
-      "signature": "TextElement(element: TextElement)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "element",
-          "type": "TextElement",
-          "doc": "Element to copy",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

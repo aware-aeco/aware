@@ -7,47 +7,11 @@
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterList/",
   "constructors": [
     {
-      "name": "BaseElementAdapterList()",
-      "signature": "BaseElementAdapterList()",
+      "name": "BaseElementAdapterList",
+      "signature": "BaseElementAdapterList() | BaseElementAdapterList(elements: List[BaseElementAdapter]) | BaseElementAdapterList(eleList: BaseElementAdapterList)",
       "summary": "Initialize",
       "remarks": "Initialize",
       "params": [],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterList/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterList.__init__"
-    },
-    {
-      "name": "BaseElementAdapterList(elements: List[BaseElementAdapter])",
-      "signature": "BaseElementAdapterList(elements: List[BaseElementAdapter])",
-      "summary": "Constructor",
-      "remarks": "Constructor",
-      "params": [
-        {
-          "name": "elements",
-          "type": "List[BaseElementAdapter]",
-          "doc": "Initializer list with the elements",
-          "optional": false
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterList/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterList.__init__"
-    },
-    {
-      "name": "BaseElementAdapterList(eleList: BaseElementAdapterList)",
-      "signature": "BaseElementAdapterList(eleList: BaseElementAdapterList)",
-      "summary": "Copy constructor",
-      "remarks": "Copy constructor",
-      "params": [
-        {
-          "name": "eleList",
-          "type": "BaseElementAdapterList",
-          "doc": "List to move",
-          "optional": false
-        }
-      ],
       "returns": null,
       "throws": [],
       "events_related": [],

@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_archelements
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_ArchElements namespace — 37 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, ArchElement, BasePlaneReferences, ArchBaseProperties, BeamProperties, BeamElement, AxisProperties, CircularShape, and 29 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_ArchElements namespace — 37 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, ArchBaseProperties, AxisProperties, BeamElement, ArchElement, BasePlaneReferences, BeamProperties, BottomTopPlaneService, and 29 more types.
 ---
 
 # NemAll_Python_ArchElements
@@ -132,9 +132,7 @@ Implementation of the architecture base properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchBaseProperties/)
 
 ### Constructors
-- `ArchBaseProperties()` — Initialize
-- `ArchBaseProperties(macroType)` — Constructor
-- `ArchBaseProperties(baseProp)` — Copy constructor
+- `ArchBaseProperties() | ArchBaseProperties(macroType) | ArchBaseProperties(baseProp)` — Initialize
 
 ### Methods
 #### `GetAreaPresentationID()`
@@ -714,9 +712,7 @@ Implementation of the beam element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamElement/)
 
 ### Constructors
-- `BeamElement()` — Initialize
-- `BeamElement(beamProp, axis)` — Constructor
-- `BeamElement(element)` — Copy constructor
+- `BeamElement() | BeamElement(beamProp, axis) | BeamElement(element)` — Initialize
 
 ### Methods
 #### `GetProperties()`
@@ -769,8 +765,7 @@ Implementation of the beam properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/)
 
 ### Constructors
-- `BeamProperties()` — Initialize
-- `BeamProperties(beamProp)` — Copy constructor
+- `BeamProperties() | BeamProperties(beamProp)` — Initialize
 
 ### Methods
 #### `GetWidth()`
@@ -919,9 +914,7 @@ Implementation of the Column element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/)
 
 ### Constructors
-- `ColumnElement()` — Initialize
-- `ColumnElement(columnProp, placementPoint)` — Constructor
-- `ColumnElement(element)` — Copy constructor
+- `ColumnElement() | ColumnElement(columnProp, placementPoint) | ColumnElement(element)` — Initialize
 
 ### Methods
 #### `GetProperties()`
@@ -974,8 +967,7 @@ Implementation of the Column properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/)
 
 ### Constructors
-- `ColumnProperties()` — Initialize
-- `ColumnProperties(columnProp)` — Copy constructor
+- `ColumnProperties() | ColumnProperties(columnProp)` — Initialize
 
 ### Methods
 #### `ToString()`
@@ -1048,8 +1040,7 @@ Implementation of the plane references
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/)
 
 ### Constructors
-- `PlaneReferences(doc, refElement)` — Constructor
-- `PlaneReferences(element)` — Copy constructor
+- `PlaneReferences(doc, refElement) | PlaneReferences(element)` — Constructor
 
 ### Methods
 #### `GetAbsBottomElevation()`
@@ -1528,9 +1519,7 @@ struct for handling reference plane IDs
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ReferencePlaneID/)
 
 ### Constructors
-- `ReferencePlaneID()` — Initialize
-- `ReferencePlaneID(modelGuid, planeId)` — Constructor
-- `ReferencePlaneID(element)` — Copy constructor
+- `ReferencePlaneID() | ReferencePlaneID(modelGuid, planeId) | ReferencePlaneID(element)` — Initialize
 
 ### Methods
 #### `ChangeModel(inputModelGuid)`
@@ -1661,9 +1650,7 @@ Implementation of the Room element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/)
 
 ### Constructors
-- `RoomElement()` — Initialize
-- `RoomElement(RoomProp, RoomPolygon)` — Constructor
-- `RoomElement(element)` — Copy constructor
+- `RoomElement() | RoomElement(RoomProp, RoomPolygon) | RoomElement(element)` — Initialize
 
 ### Methods
 #### `GetProperties()`
@@ -1716,8 +1703,7 @@ Implementation of the Room properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomProperties/)
 
 ### Constructors
-- `RoomProperties()` — Initialize
-- `RoomProperties(RoomProp)` — Copy constructor
+- `RoomProperties() | RoomProperties(RoomProp)` — Initialize
 
 ### Methods
 #### `GetAttributes(doc, onlyModifiable)`
@@ -1817,9 +1803,7 @@ Implementation of the Slab element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabElement/)
 
 ### Constructors
-- `SlabElement()` — Initialize
-- `SlabElement(slabProp, slabPolygon)` — Constructor
-- `SlabElement(element)` — Copy constructor
+- `SlabElement() | SlabElement(slabProp, slabPolygon) | SlabElement(element)` — Initialize
 
 ### Methods
 #### `GetProperties()`
@@ -1872,9 +1856,7 @@ Implementation of the slab opening element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningElement/)
 
 ### Constructors
-- `SlabOpeningElement()` — Initialize
-- `SlabOpeningElement(slabOpeningProp, placementPoint, slabConnectionUUID)` — Constructor
-- `SlabOpeningElement(element)` — Copy constructor
+- `SlabOpeningElement() | SlabOpeningElement(slabOpeningProp, placementPoint, slabConnectionUUID) | SlabOpeningElement(element)` — Initialize
 
 ### Methods
 #### `GetProperties()`
@@ -1927,8 +1909,7 @@ Implementation of the slab opening properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabOpeningProperties/)
 
 ### Constructors
-- `SlabOpeningProperties()` — Initialize
-- `SlabOpeningProperties(SlabOpeningProperties)` — Copy constructor Args:
+- `SlabOpeningProperties() | SlabOpeningProperties(SlabOpeningProperties)` — Initialize
 
 ## SlabProperties (class)
 
@@ -1937,8 +1918,7 @@ Implementation of the Slab properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/SlabProperties/)
 
 ### Constructors
-- `SlabProperties()` — Initialize
-- `SlabProperties(slabProp)` — Copy constructor
+- `SlabProperties() | SlabProperties(slabProp)` — Initialize
 
 ### Methods
 #### `SetAttribute(attrib)`
@@ -1985,9 +1965,7 @@ get the item for a key
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamElement/)
 
 ### Constructors
-- `StructuralBeamElement()` — Initialize
-- `StructuralBeamElement(structuralBeamProperties)` — Constructor
-- `StructuralBeamElement(structuralBeamElement)` — Copy constructor
+- `StructuralBeamElement() | StructuralBeamElement(structuralBeamProperties) | StructuralBeamElement(structuralBeamElement)` — Initialize
 
 ### Methods
 #### `GetStructuralBeamProperties()`
@@ -2039,8 +2017,7 @@ Convert the list to a string
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/)
 
 ### Constructors
-- `StructuralBeamProperties()` — Initialize
-- `StructuralBeamProperties(structuralBeamProps)` — Copy constructor
+- `StructuralBeamProperties() | StructuralBeamProperties(structuralBeamProps)` — Initialize
 
 ### Methods
 #### `GetEndPoint()`
@@ -2112,9 +2089,7 @@ Set the start point of the element in world coordinate system
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/)
 
 ### Constructors
-- `StructuralBraceElement()` — Initialize
-- `StructuralBraceElement(structuralBraceProperties)` — Constructor
-- `StructuralBraceElement(structuralBraceElement)` — Copy constructor
+- `StructuralBraceElement() | StructuralBraceElement(structuralBraceProperties) | StructuralBraceElement(structuralBraceElement)` — Initialize
 
 ### Methods
 #### `GetStructuralBraceProperties()`
@@ -2166,8 +2141,7 @@ Convert the list to a string
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/)
 
 ### Constructors
-- `StructuralBraceProperties()` — Initialize
-- `StructuralBraceProperties(structuralBraceProps)` — Copy constructor
+- `StructuralBraceProperties() | StructuralBraceProperties(structuralBraceProps)` — Initialize
 
 ### Methods
 #### `GetEndPoint()`
@@ -2239,9 +2213,7 @@ Set the start point of the element in world coordinate system
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/)
 
 ### Constructors
-- `StructuralColumnElement()` — Initialize
-- `StructuralColumnElement(structuralColumnProperties)` — Constructor
-- `StructuralColumnElement(structuralColumnElement)` — Copy constructor
+- `StructuralColumnElement() | StructuralColumnElement(structuralColumnProperties) | StructuralColumnElement(structuralColumnElement)` — Initialize
 
 ### Methods
 #### `GetStructuralColumnProperties()`
@@ -2293,8 +2265,7 @@ Convert the list to a string
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnProperties/)
 
 ### Constructors
-- `StructuralColumnProperties()` — Initialize
-- `StructuralColumnProperties(structuralColumnProps)` — Copy constructor
+- `StructuralColumnProperties() | StructuralColumnProperties(structuralColumnProps)` — Initialize
 
 ### Methods
 #### `GetHeight()`
@@ -2376,8 +2347,7 @@ Set the Column position in world coordinate system
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/)
 
 ### Constructors
-- `StructuralElementProperties()` — Initialize
-- `StructuralElementProperties(structuralElementProperties)` — Copy constructor
+- `StructuralElementProperties() | StructuralElementProperties(structuralElementProperties)` — Initialize
 
 ### Methods
 #### `AddHole(holeGeometry)`
@@ -2697,8 +2667,7 @@ Implementation of the vertical element properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/)
 
 ### Constructors
-- `VerticalElementProperties()` — Initialize
-- `VerticalElementProperties(elementProp)` — Copy constructor
+- `VerticalElementProperties() | VerticalElementProperties(elementProp)` — Initialize
 
 ### Methods
 #### `GetAngle()`
@@ -2869,9 +2838,7 @@ Implementation of the wall element
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/)
 
 ### Constructors
-- `WallElement()` — Initialize
-- `WallElement(wallProp, axis)` — Constructor
-- `WallElement(element)` — Copy constructor
+- `WallElement() | WallElement(wallProp, axis) | WallElement(element)` — Initialize
 
 ### Methods
 #### `GetProperties()`
@@ -2924,8 +2891,7 @@ Implementation of the wall properties
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallProperties/)
 
 ### Constructors
-- `WallProperties()` — Initialize
-- `WallProperties(wallProp)` — Copy constructor
+- `WallProperties() | WallProperties(wallProp)` — Initialize
 
 ### Methods
 #### `GetAxis()`

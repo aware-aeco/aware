@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_geometry
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Geometry namespace — 142 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Angle, AngleList, ApproximationSettings, Arc3D, Arc2DList, Arc2D, Arc3DList, Axis2D, and 134 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_Geometry namespace — 142 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AngleList, ApproximationSettings, Angle, Arc2D, Arc3D, Arc3DList, Arc2DList, Axis2D, and 134 more types.
 ---
 
 # NemAll_Python_Geometry
@@ -14,9 +14,7 @@ Representation class for angle in [rad].
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/)
 
 ### Constructors
-- `Angle()` — Initialize
-- `Angle(angle)` — Copy constructor.
-- `Angle(angle)` — Constructor. Initialize angle from single value
+- `Angle() | Angle(angle) | Angle(angle)` — Initialize
 
 ### Methods
 #### `DegToRad(angleDeg)`
@@ -105,7 +103,7 @@ Convert angle from rad to grad
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.RadToGrad)
 
-#### `Set(angle)`
+#### `Set(angle) | Set(angle)`
 
 Set angle as radian value.
 
@@ -113,17 +111,6 @@ Set angle as radian value.
 
 **Parameters:**
 - `angle` (float) — angle which will be set.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Set)
-
-#### `Set(angle)`
-
-Set angle as radian value.
-
-**Remarks:** Set angle as radian value.
-
-**Parameters:**
-- `angle` (Angle) — angle which will be set.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.Set)
 
@@ -138,7 +125,7 @@ Set angle as degree value.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.SetDeg)
 
-#### `__add__(angle)`
+#### `__add__(angle) | __add__(angle)`
 
 Addition operator
 
@@ -146,19 +133,6 @@ Addition operator
 
 **Parameters:**
 - `angle` (Angle) — Angle which will be added
-
-**Returns:** `Angle` — New angle
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Angle/#NemAll_Python_Geometry.Angle.__add__)
-
-#### `__add__(angle)`
-
-Addition operator
-
-**Remarks:** Addition operator
-
-**Parameters:**
-- `angle` (float) — Angle as double value which will be added
 
 **Returns:** `Angle` — New angle
 
@@ -367,8 +341,7 @@ Class holding approximation options.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ApproximationSettings/)
 
 ### Constructors
-- `ApproximationSettings(oType=eApproximationSettingsType.ASET_SEGMENTATION, value=30.0)` — Default constructor. Other members will be set to 0. Types can be found in GeometryEnums.h
-- `ApproximationSettings(options)` — Copy constructor.
+- `ApproximationSettings(oType=eApproximationSettingsType.ASET_SEGMENTATION, value=30.0) | ApproximationSettings(options)` — Default constructor. Other members will be set to 0. Types can be found in GeometryEnums.h
 
 ### Methods
 #### `GetDensity()`
@@ -559,10 +532,7 @@ Representation class for 2D arc.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/)
 
 ### Constructors
-- `Arc2D()` — Initialize
-- `Arc2D(center, minor, major, axisangle, startangle, endangle, counterClockwise=True)` — Constructor
-- `Arc2D(center, radius, counterClockwise=True)` — Constructor for creating circle Create circle as arc with start angle 0 [rad] and end angle 2pi [rad]. Minor and major radii are equal.
-- `Arc2D(element)` — Copy constructor
+- `Arc2D() | Arc2D(center, minor, major, axisangle, startangle, endangle, counterClockwise=True) | Arc2D(center, radius, counterClockwise=True) | Arc2D(element)` — Initialize
 
 ### Methods
 #### `Close()`
@@ -1108,15 +1078,7 @@ Representation class for 3D arc.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/)
 
 ### Constructors
-- `Arc3D()` — Initialize
-- `Arc3D(center, xDir, normVector, minor, major, startAngle, deltaAngle)` — Constructor
-- `Arc3D(center, xDir, normVector, minor, major, startAngle, endAngle, counterClockwise)` — Constructor
-- `Arc3D(center, minor, major, startAngle, deltaAngle)` — Constructor
-- `Arc3D(center, minor, major, startAngle, endAngle, counterClockwise)` — Constructor
-- `Arc3D(placement, minor, major, startAngle, deltaAngle)` — Constructor
-- `Arc3D(placement, minor, major, startAngle, endAngle, counterClockwise)` — Constructor
-- `Arc3D(arc2D)` — Constructor
-- `Arc3D(element)` — Copy constructor
+- `Arc3D() | Arc3D(center, xDir, normVector, minor, major, startAngle, deltaAngle) | Arc3D(center, xDir, normVector, minor, major, startAngle, endAngle, counterClockwise) | Arc3D(center, minor, major, startAngle, deltaAngle) | Arc3D(center, minor, major, startAngle, endAngle, counterClockwise) | Arc3D(placement, minor, major, startAngle, deltaAngle) | Arc3D(placement, minor, major, startAngle, endAngle, counterClockwise) | Arc3D(arc2D) | Arc3D(element)` — Initialize
 
 ### Methods
 #### `Close()`
@@ -1506,15 +1468,7 @@ Set center point in local coordinate system
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetCenterRel)
 
-#### `SetClockwise()`
-
-Set the winding direction of the arc to CW
-
-**Remarks:** Set the winding direction of the arc to CW
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetClockwise)
-
-#### `SetClockwise(cw)`
+#### `SetClockwise(cw) | SetClockwise()`
 
 Set the winding direction of the arc
 
@@ -1525,15 +1479,7 @@ Set the winding direction of the arc
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetClockwise)
 
-#### `SetCounterClockwise()`
-
-Set the winding direction of the arc to CCW
-
-**Remarks:** Set the winding direction of the arc to CCW
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetCounterClockwise)
-
-#### `SetCounterClockwise(ccw)`
+#### `SetCounterClockwise(ccw) | SetCounterClockwise()`
 
 Set the winding direction of the arc
 
@@ -1555,7 +1501,7 @@ Set the delta angle. Set the delta angle
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetDeltaAngle)
 
-#### `SetEndAngle(angle)`
+#### `SetEndAngle(angle) | SetEndAngle(angle, ccw)`
 
 Set end angle. Set the end angle and normalize it to [0,2PI[
 
@@ -1563,18 +1509,6 @@ Set end angle. Set the end angle and normalize it to [0,2PI[
 
 **Parameters:**
 - `angle` (Angle) — angle which will be set.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetEndAngle)
-
-#### `SetEndAngle(angle, ccw)`
-
-Set end angle. Set the end angle and normalize it to [0,2PI[
-
-**Remarks:** Set end angle. Set the end angle and normalize it to [0,2PI[
-
-**Parameters:**
-- `angle` (Angle) — angle which will be set.
-- `ccw` (bool) — in counterclockwise winding
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetEndAngle)
 
@@ -1633,20 +1567,7 @@ Set Origin
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetOrigin)
 
-#### `SetRefPlacement(center, xAxis, normalVec)`
-
-Set the reference placement
-
-**Remarks:** Set the reference placement
-
-**Parameters:**
-- `center` (Point3D) — center point
-- `xAxis` (Vector3D) — X-axis of the arc
-- `normalVec` (Vector3D) — normal vector (Z-axis) of the arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetRefPlacement)
-
-#### `SetRefPlacement(refPlacement)`
+#### `SetRefPlacement(refPlacement) | SetRefPlacement(center, xAxis, normalVec)`
 
 Set the reference placement
 
@@ -1679,7 +1600,7 @@ Set the reference point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetRefPoint)
 
-#### `SetStartAngle(angle)`
+#### `SetStartAngle(angle) | SetStartAngle(angle, ccw)`
 
 Set start angle Set the start angle and normalize it to [0,2PI[
 
@@ -1687,18 +1608,6 @@ Set start angle Set the start angle and normalize it to [0,2PI[
 
 **Parameters:**
 - `angle` (Angle) — angle which will be set.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetStartAngle)
-
-#### `SetStartAngle(angle, ccw)`
-
-Set start angle. Set the start angle and normalize it to [0,2PI[
-
-**Remarks:** Set start angle. Set the start angle and normalize it to [0,2PI[
-
-**Parameters:**
-- `angle` (Angle) — angle which will be set.
-- `ccw` (bool) — in counterclockwise winding
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetStartAngle)
 
@@ -1882,11 +1791,7 @@ Representation class for 2D Axis
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/)
 
 ### Constructors
-- `Axis2D()` — Initialize
-- `Axis2D(axisPoint, vector)` — Constructor. Reference point is initialized to [0.,0.] Used world coordinate system for AxisPoint
-- `Axis2D(refPoint, axisPoint, vector)` — Constructor. Used local coordinate system for AxisPoint
-- `Axis2D(line)` — Explicit constructor from Line2D
-- `Axis2D(element)` — Copy constructor
+- `Axis2D() | Axis2D(axisPoint, vector) | Axis2D(refPoint, axisPoint, vector) | Axis2D(line) | Axis2D(element)` — Initialize
 
 ### Methods
 #### `GetAxisPoint()`
@@ -1949,7 +1854,7 @@ Get axis vector
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetVector)
 
-#### `Set(axis)`
+#### `Set(axis) | Set(refPoint, axisPoint, vector)`
 
 Set axis
 
@@ -1957,19 +1862,6 @@ Set axis
 
 **Parameters:**
 - `axis` (Axis2D) — Axis which will be copied
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.Set)
-
-#### `Set(refPoint, axisPoint, vector)`
-
-Set axis Used local coordinate system for axisPoint
-
-**Remarks:** Set axis Used local coordinate system for axisPoint
-
-**Parameters:**
-- `refPoint` (Point2D) — Reference point
-- `axisPoint` (Point2D) — Axis point
-- `vector` (Vector2D) — Axis vector
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.Set)
 
@@ -2051,11 +1943,7 @@ Representation class for 3D Axis
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/)
 
 ### Constructors
-- `Axis3D()` — Initialize
-- `Axis3D(axisPoint, vector)` — Constructor. Reference point is initialized to [0.,0.,0.] Used world coordinate system for AxisPoint
-- `Axis3D(refPoint, axisPoint, vector)` — Constructor. Used local coordinate system for AxisPoint
-- `Axis3D(line)` — Constructor
-- `Axis3D(element)` — Copy constructor
+- `Axis3D() | Axis3D(axisPoint, vector) | Axis3D(refPoint, axisPoint, vector) | Axis3D(line) | Axis3D(element)` — Initialize
 
 ### Methods
 #### `GetAxisPoint()`
@@ -2118,7 +2006,7 @@ Get axis vector
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.GetVector)
 
-#### `Set(axis)`
+#### `Set(axis) | Set(refPoint, axisPoint, vector)`
 
 Set axis
 
@@ -2126,19 +2014,6 @@ Set axis
 
 **Parameters:**
 - `axis` (Axis3D) — Axis which will be copied
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.Set)
-
-#### `Set(refPoint, axisPoint, vector)`
-
-Set axis Used local coordinate system for axisPoint
-
-**Remarks:** Set axis Used local coordinate system for axisPoint
-
-**Parameters:**
-- `refPoint` (Point3D) — Reference point
-- `axisPoint` (Point3D) — Axis point
-- `vector` (Vector3D) — Axis vector
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis3D/#NemAll_Python_Geometry.Axis3D.Set)
 
@@ -2220,9 +2095,7 @@ Representation class for orthogonal axis placement
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement2D/)
 
 ### Constructors
-- `AxisPlacement2D()` — Initialize
-- `AxisPlacement2D(refPoint, dirvector)` — Constructor which fully constructs the element.
-- `AxisPlacement2D(element)` — Copy constructor
+- `AxisPlacement2D() | AxisPlacement2D(refPoint, dirvector) | AxisPlacement2D(element)` — Initialize
 
 ### Methods
 #### `GetDirection()`
@@ -2441,12 +2314,7 @@ Representation class for orthogonal axis placement in 3D space
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/AxisPlacement3D/)
 
 ### Constructors
-- `AxisPlacement3D()` — Initialize
-- `AxisPlacement3D(refPoint)` — Constructor with only reference point
-- `AxisPlacement3D(refPoint, xvector, zvector)` — Constructor which fully constructs the element.
-- `AxisPlacement3D(rotationAxis, rotationStart)` — Constructor from rotation axis and start point of rotation.
-- `AxisPlacement3D(matrix)` — Constructor from Matrix3D
-- `AxisPlacement3D(element)` — Copy constructor
+- `AxisPlacement3D() | AxisPlacement3D(refPoint) | AxisPlacement3D(refPoint, xvector, zvector) | AxisPlacement3D(rotationAxis, rotationStart) | AxisPlacement3D(matrix) | AxisPlacement3D(element)` — Initialize
 
 ### Methods
 #### `CalcGlobalPoint(point)`
@@ -2757,8 +2625,7 @@ Representation class for 3D boundary representation.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/)
 
 ### Constructors
-- `BRep3D()` — Initialize
-- `BRep3D(brep)` — Copy constructor
+- `BRep3D() | BRep3D(brep)` — Initialize
 
 ### Methods
 #### `AreFacesNaturallyTrimmed()`
@@ -3455,24 +3322,7 @@ Pick the vertex under cursor
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.PickVertex)
 
-#### `ReadFromStream(sstream_str, scale, translation, spaceminmax, visibleminmax)`
-
-Read BRep3D from the string
-
-**Remarks:** Read BRep3D from the string
-
-**Parameters:**
-- `sstream_str` (str) — string to read brep data from
-- `scale` (float) — transformation scale
-- `translation` (Vector3D) — translation vector
-- `spaceminmax` (MinMax3D) — space minmax (including control points
-- `visibleminmax` (MinMax3D) — visible minmax of the body
-
-**Returns:** `object` — error code
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.ReadFromStream)
-
-#### `ReadFromStream(sstream_str, transformationMatrix)`
+#### `ReadFromStream(sstream_str, transformationMatrix) | ReadFromStream(sstream_str, scale, translation, spaceminmax, visibleminmax)`
 
 Read BRep3D from string
 
@@ -3582,28 +3432,10 @@ Builder for BRep3D
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/)
 
 ### Constructors
-- `BRep3DBuilder()` — Initialize
-- `BRep3DBuilder(element)` — Copy constructor
+- `BRep3DBuilder() | BRep3DBuilder(element)` — Initialize
 
 ### Methods
-#### `AddEdge(curve_object, curveSense, edgeSense, loopIdx, precision)`
-
-Add edge to loop
-
-**Remarks:** Add edge to loop
-
-**Parameters:**
-- `curve_object` (object) — Geometry of curve
-- `curveSense` (bool) — Sense of curve
-- `edgeSense` (bool) — Sense of edge
-- `loopIdx` (int) — Index of loop to which edge will be added
-- `precision` (float) — Precision of edge
-
-**Returns:** `int` — Index of edge
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddEdge)
-
-#### `AddEdge(edgeIdx, edgeSense, loopIdx)`
+#### `AddEdge(edgeIdx, edgeSense, loopIdx) | AddEdge(curve_object, curveSense, edgeSense, loopIdx, precision)`
 
 Add edge to loop
 
@@ -3643,7 +3475,7 @@ Add loop
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddLoop)
 
-#### `AddVertex(point, edgeIdx, precision)`
+#### `AddVertex(point, edgeIdx, precision) | AddVertex(vertexIdx, edgeIdx)`
 
 Add vertex to edge
 
@@ -3655,18 +3487,6 @@ Add vertex to edge
 - `precision` (float) — Vertex precision
 
 **Returns:** `int` — Index of vertex
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddVertex)
-
-#### `AddVertex(vertexIdx, edgeIdx)`
-
-Add vertex to edge
-
-**Remarks:** Add vertex to edge
-
-**Parameters:**
-- `vertexIdx` (int) — Index of already added vertex
-- `edgeIdx` (int) — Index of edge to which vertex will be added
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3DBuilder/#NemAll_Python_Geometry.BRep3DBuilder.AddVertex)
 
@@ -3828,9 +3648,7 @@ class for 2D (non uniform, rational) B-spline geometry
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline2D/)
 
 ### Constructors
-- `BSpline2D()` — Initialize
-- `BSpline2D(points, weights, knots, degree, isPeriodic)` — Constructor from b-spline data. Creates b-spline using provided data.
-- `BSpline2D(spline)` — Copy constructor.
+- `BSpline2D() | BSpline2D(points, weights, knots, degree, isPeriodic) | BSpline2D(spline)` — Initialize
 
 ### Methods
 #### `Clear()`
@@ -4140,9 +3958,7 @@ class for 3D (non uniform, rational) B-spline geometry
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/)
 
 ### Constructors
-- `BSpline3D()` — Initialize
-- `BSpline3D(points, weights, knots, degree, isPeriodic)` — Default constructor. Creates invalid spline.
-- `BSpline3D(spline)` — Copy constructor.
+- `BSpline3D() | BSpline3D(points, weights, knots, degree, isPeriodic) | BSpline3D(spline)` — Initialize
 
 ### Methods
 #### `Clear()`
@@ -4901,9 +4717,7 @@ set/unset periodic property of B-Spline
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSplineSurface3D/)
 
 ### Constructors
-- `BSplineSurface3D()` — Initialize
-- `BSplineSurface3D(points, weights, uknots, vknots, udegree, vdegree, isUPeriodic, isVPeriodic, isUClosed, isVClosed)` — Constructor.
-- `BSplineSurface3D(surface)` — Copy constructor.
+- `BSplineSurface3D() | BSplineSurface3D(points, weights, uknots, vknots, udegree, vdegree, isUPeriodic, isVPeriodic, isUClosed, isVClosed) | BSplineSurface3D(surface)` — Initialize
 
 ### Methods
 #### `Clear()`
@@ -5325,25 +5139,10 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/)
 
 ### Constructors
-- `BoundingBox2D()` — Initialize
-- `BoundingBox2D(angle)` — Default constructor. min point is initialized to [DBL_MAX,DBL_MAX], max point to [-DBL_MAX,-DBL_MAX],
-- `BoundingBox2D(min, max, angle)` — Set constructor Initialize bounding box with given MIN, MAX points and slew of local coordinate system.
-- `BoundingBox2D(boundingBox2D)` — Copy constructor.
-- `BoundingBox2D(minMax2D)` — Copy constructor.
+- `BoundingBox2D() | BoundingBox2D(angle) | BoundingBox2D(min, max, angle) | BoundingBox2D(boundingBox2D) | BoundingBox2D(minMax2D)` — Initialize
 
 ### Methods
-#### `Deflate(size)`
-
-Deflate in x,y axis concurrently.
-
-**Remarks:** Deflate in x,y axis concurrently.
-
-**Parameters:**
-- `size` (float) — deflate in x and y axis concurrently.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Deflate)
-
-#### `Deflate(x, y)`
+#### `Deflate(x, y) | Deflate(size)`
 
 Deflate in x and y axis
 
@@ -5465,18 +5264,7 @@ Get width of box in local system
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.GetWidth)
 
-#### `Inflate(size)`
-
-Inflate in x,y axis concurrently.
-
-**Remarks:** Inflate in x,y axis concurrently.
-
-**Parameters:**
-- `size` (float) — inflate in x and y axis concurrently.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Inflate)
-
-#### `Inflate(x, y)`
+#### `Inflate(x, y) | Inflate(size)`
 
 Inflate in x and y axis
 
@@ -5488,33 +5276,7 @@ Inflate in x and y axis
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Inflate)
 
-#### `IsContaining(box)`
-
-Is box inside this box
-
-**Remarks:** Is box inside this box
-
-**Parameters:**
-- `box` (BoundingBox2D) — bounding box
-
-**Returns:** `bool` — true, if is inside, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsContaining)
-
-#### `IsContaining(minmax)`
-
-Is minmax box inside this box
-
-**Remarks:** Is minmax box inside this box
-
-**Parameters:**
-- `minmax` (MinMax2D) — minmax box
-
-**Returns:** `bool` — true, if is inside, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsContaining)
-
-#### `IsContaining(point)`
+#### `IsContaining(point) | IsContaining(box) | IsContaining(minmax)`
 
 Is point inside this box
 
@@ -5537,7 +5299,7 @@ Test if box is valid
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.IsValid)
 
-#### `Overlaps(box)`
+#### `Overlaps(box) | Overlaps(minmax)`
 
 Does box overlap this box
 
@@ -5545,19 +5307,6 @@ Does box overlap this box
 
 **Parameters:**
 - `box` (BoundingBox2D) — bounding box
-
-**Returns:** `bool` — true, if boxes overlap, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.Overlaps)
-
-#### `Overlaps(minmax)`
-
-Does minmax box overlap this box
-
-**Remarks:** Does minmax box overlap this box
-
-**Parameters:**
-- `minmax` (MinMax2D) — MinMax2D box
 
 **Returns:** `bool` — true, if boxes overlap, otherwise false
 
@@ -5643,7 +5392,7 @@ Set width of box in local system. Computed from Min point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.SetWidth)
 
-#### `__add__(boundingBox)`
+#### `__add__(boundingBox) | __add__(minMax)`
 
 Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax
 
@@ -5651,19 +5400,6 @@ Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in para
 
 **Parameters:**
 - `boundingBox` (BoundingBox2D) — BoundingBox2D to be added
-
-**Returns:** `object` — BoundingBox2D box.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__add__)
-
-#### `__add__(minMax)`
-
-Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax
-
-**Remarks:** Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax
-
-**Parameters:**
-- `minMax` (MinMax2D) — MinMax2D to be added
 
 **Returns:** `object` — BoundingBox2D box.
 
@@ -5695,7 +5431,7 @@ Get the corners of bounding box. This method is checked and throwing Geometry::E
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__getitem__)
 
-#### `__iadd__(boundingBox)`
+#### `__iadd__(boundingBox) | __iadd__(minmax) | __iadd__(point)`
 
 Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in parameter minmax
 
@@ -5705,32 +5441,6 @@ Expand BoundingBox2D box. Expands the BoundingBox2D box by the box given in para
 - `boundingBox` (BoundingBox2D) — BoundingBox2D to be added
 
 **Returns:** `object` — reference to BoundingBox2D box.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__iadd__)
-
-#### `__iadd__(minmax)`
-
-Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax
-
-**Remarks:** Expand BoundingBox2D box by given MinMax2D. Expands the BoundingBox2D box by the minmax box given in parameter minmax
-
-**Parameters:**
-- `minmax` (MinMax2D) — MinMax2D to be added
-
-**Returns:** `object` — reference to BoundingBox2D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__iadd__)
-
-#### `__iadd__(point)`
-
-Expand BoundingBox2D box. Expands the BoundingBox2D box by the Point2D given in parameter point
-
-**Remarks:** Expand BoundingBox2D box. Expands the BoundingBox2D box by the Point2D given in parameter point
-
-**Parameters:**
-- `point` (Point2D) — Point2D to be added in world coordinate system
-
-**Returns:** `object` — reference to bounding box.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/BoundingBox2D/#NemAll_Python_Geometry.BoundingBox2D.__iadd__)
 
@@ -5867,66 +5577,7 @@ Class to calculate the center of an object
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/)
 
 ### Methods
-#### `Calculate(arc, center)`
-
-Calculates the center of an Arc2D
-
-**Remarks:** Calculates the center of an Arc2D
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D on which to calculate the center
-- `center` (bool) — Center of the object
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(arc, center)`
-
-Calculates the center of an Arc3D
-
-**Remarks:** Calculates the center of an Arc3D
-
-**Parameters:**
-- `arc` (Arc3D) — Arc2D on which to calculate the center
-- `center` (bool) — Center of the object
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(clothoid, eps)`
-
-Calculates the center of a Clothoid2D
-
-**Remarks:** Calculates the center of a Clothoid2D
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — Clothoid on which to calculate the center
-- `eps` (float) — Precision for kurve2
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(geoObject, eps, bArcCenter, edge)`
-
-Calculates center of an object
-
-**Remarks:** Calculates center of an object
-
-**Parameters:**
-- `geoObject` (object) — object on which to calculate the center
-- `eps` (float) — Precision for splines and clothoids
-- `bArcCenter` (bool) — For arcs to distinguish between the center inside the arc and on the arc.
-- `edge` (int) — For polyline and polygon to calculate the center on edge
-- `=` (object) — 0 whole geo, > 0 concrete edge
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(line)`
+#### `Calculate(line) | Calculate(line) | Calculate(polyline, edge) | Calculate(polyline, edge) | Calculate(polygon, bPlaneCenter, edge) | Calculate(polygon, bPlaneCenter, edge) | Calculate(arc, center) | Calculate(arc, center) | Calculate(spline, eps) | Calculate(spline, eps) | Calculate(spline, eps, bAreaCenter) | Calculate(spline, eps) | Calculate(clothoid, eps) | Calculate(path, eps, bAreaCenter) | Calculate(path, eps, bAreaCenter) | Calculate(geoObject, eps, bArcCenter, edge)`
 
 Calculates the center of a Line2D
 
@@ -5939,168 +5590,6 @@ Calculates the center of a Line2D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
 
-#### `Calculate(line)`
-
-Calculates the center of a Line3D
-
-**Remarks:** Calculates the center of a Line3D
-
-**Parameters:**
-- `line` (Line3D) — line on which to calculate the center
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(path, eps, bAreaCenter)`
-
-Calculates the center of a Path2D
-
-**Remarks:** Calculates the center of a Path2D
-
-**Parameters:**
-- `path` (Path2D) — Path on which to calculate the center
-- `eps` (float) — Precision for splines and clothoids
-- `bAreaCenter` (bool) — True if path is boundary of area and you want to 'gravity' point, false for center on boundary.
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(path, eps, bAreaCenter)`
-
-Calculates the center of a Path3D
-
-**Remarks:** Calculates the center of a Path3D
-
-**Parameters:**
-- `path` (Path3D) — Path on which to calculate the center
-- `eps` (float) — Precision for splines and clothoids
-- `bAreaCenter` (bool) — True if path is boundary of area and you want to 'gravity' point, false for center on boundary.
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(polygon, bPlaneCenter, edge)`
-
-Calculates the center of a Polygon2D = 0 whole geo, > 0 concrete edge
-
-**Remarks:** Calculates the center of a Polygon2D = 0 whole geo, > 0 concrete edge
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon on which to calculate the center
-- `bPlaneCenter` (bool) — To distinguish between the center of the area and on the line.
-- `edge` (int) — calculate the center on edge of first component
-- `=` (object) — 0 whole geo, > 0 concrete edge
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(polygon, bPlaneCenter, edge)`
-
-Calculates the center of an Polygon3D = 0 whole geo, > 0 concrete edge
-
-**Remarks:** Calculates the center of an Polygon3D = 0 whole geo, > 0 concrete edge
-
-**Parameters:**
-- `polygon` (Polygon3D) — Polygon on which to calculate the center
-- `bPlaneCenter` (bool) — To distinguish between the center of the area and on the line.
-- `edge` (int) — calculate the center on edge of first component
-- `=` (object) — 0 whole geo, > 0 concrete edge
-
-**Returns:** `tuple` — True if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(polyline, edge)`
-
-Calculates the center of a Polyline2D = 0 whole geo, > 0 concrete edge
-
-**Remarks:** Calculates the center of a Polyline2D = 0 whole geo, > 0 concrete edge
-
-**Parameters:**
-- `polyline` (Polyline2D) — Polyline on which to calculate the center
-- `edge` (int) — calculate the center on edge
-- `=` (object) — 0 whole geo, > 0 concrete edge
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(polyline, edge)`
-
-Calculates the center of a Polyline2D = 0 whole geo, > 0 concrete edge
-
-**Remarks:** Calculates the center of a Polyline2D = 0 whole geo, > 0 concrete edge
-
-**Parameters:**
-- `polyline` (Polyline3D) — Polyline on which to calculate the center
-- `edge` (int) — calculate the center on edge
-- `=` (object) — 0 whole geo, > 0 concrete edge
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(spline, eps)`
-
-Calculates the center of a Spline2D
-
-**Remarks:** Calculates the center of a Spline2D
-
-**Parameters:**
-- `spline` (Spline2D) — Spline on which to calculate the center
-- `eps` (float) — Precision for kurve2
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(spline, eps)`
-
-Calculates the center of a Spline3D
-
-**Remarks:** Calculates the center of a Spline3D
-
-**Parameters:**
-- `spline` (Spline3D) — Spline on which to calculate the center
-- `eps` (float) — Precision for calculation
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(spline, eps)`
-
-Calculates the center of a BSpline2D
-
-**Remarks:** Calculates the center of a BSpline2D
-
-**Parameters:**
-- `spline` (BSpline2D) — Spline on which to calculate the center
-- `eps` (float) — Precision for kurve2
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
-#### `Calculate(spline, eps, bAreaCenter)`
-
-Calculates the center of a BSpline3D
-
-**Remarks:** Calculates the center of a BSpline3D
-
-**Parameters:**
-- `spline` (BSpline3D) — Spline on which to calculate the center
-- `eps` (float) — Precision for kurve2
-- `bAreaCenter` (bool) — if this is true and BSpline3D is closed boundary of area and you get 'gravity' point, false for center on boundary.
-
-**Returns:** `tuple` — center calculated,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate)
-
 ## ChamferCalculus (class)
 
 Class for chamfer calculation between two objects
@@ -6108,37 +5597,7 @@ Class for chamfer calculation between two objects
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/)
 
 ### Methods
-#### `Calculate(brep, chamferWidth)`
-
-Calculate chamfer on all edges of given BRep3D
-
-**Remarks:** Calculate chamfer on all edges of given BRep3D
-
-**Parameters:**
-- `brep` (BRep3D) — BRep to chamfer
-- `chamferWidth` (float) — chamfer width
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.Calculate)
-
-#### `Calculate(brep, edges, chamferWidth, propagation)`
-
-Calculate chamfer on selected edges of given BRep3D
-
-**Remarks:** Calculate chamfer on selected edges of given BRep3D
-
-**Parameters:**
-- `brep` (BRep3D) — BRep to chamfer
-- `edges` (VecSizeTList) — edges to chamfer
-- `chamferWidth` (float) — chamfer width
-- `propagation` (bool) — flag for propagation of neighboring edges
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.Calculate)
-
-#### `Calculate(polyhedron, chamferWidth)`
+#### `Calculate(polyhedron, chamferWidth) | Calculate(polyhedron, edges, chamferWidth, propagation) | Calculate(brep, chamferWidth) | Calculate(brep, edges, chamferWidth, propagation)`
 
 Calculate chamfer on all edges of given Polyhedron3D
 
@@ -6152,71 +5611,7 @@ Calculate chamfer on all edges of given Polyhedron3D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.Calculate)
 
-#### `Calculate(polyhedron, edges, chamferWidth, propagation)`
-
-Calculate chamfer on selected edges of given Polyhedron3D
-
-**Remarks:** Calculate chamfer on selected edges of given Polyhedron3D
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — polyhedron to chamfer
-- `edges` (VecSizeTList) — edges to chamfer
-- `chamferWidth` (float) — chamfer width
-- `propagation` (bool) — flag for propagation of neighboring edges
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.Calculate)
-
-#### `CalculateApplicableChamfers(arc1, arc2, chamferArc)`
-
-Calculates applicable chamfer lines between two 3D arcs
-
-**Remarks:** Calculates applicable chamfer lines between two 3D arcs
-
-**Parameters:**
-- `arc1` (Arc3D) — Geometry of the first arc
-- `arc2` (Arc3D) — Geometry of the second arc
-- `chamferArc` (Arc3D) — Geometry of chamfer arc
-
-**Returns:** `Line3DList` — Calculated 4 applicable chamfer lines
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateApplicableChamfers)
-
-#### `CalculateApplicableChamfers(igeo1, igeo2, plane3D, intersectionPoint, chamferWidth)`
-
-Calculates four applicable chamfer lines
-
-**Remarks:** Calculates four applicable chamfer lines
-
-**Parameters:**
-- `igeo1` (object) — Geometry of first object
-- `igeo2` (object) — Geometry of second object
-- `plane3D` (Plane3D) — 3D plane in which objects lie
-- `intersectionPoint` (Point3D) — Intersection point of 2 chamfered objects
-- `chamferWidth` (float) — Chamfer width
-
-**Returns:** `Line3DList` — Calculated 4 applicable chamfer lines
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateApplicableChamfers)
-
-#### `CalculateApplicableChamfers(line, arc, chamferArc, bFirstElementIsLine)`
-
-Calculates applicable chamfer lines between 3D line and 3D arc
-
-**Remarks:** Calculates applicable chamfer lines between 3D line and 3D arc
-
-**Parameters:**
-- `line` (Line3D) — Geometry of 3D line
-- `arc` (Arc3D) — Geometry of 3D arc
-- `chamferArc` (Arc3D) — Geometry of chamfer arc
-- `bFirstElementIsLine` (bool) — Flag for order of element's intersection calculation
-
-**Returns:** `Line3DList` — Calculated 4 applicable chamfer lines
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateApplicableChamfers)
-
-#### `CalculateApplicableChamfers(line1, line2, intersectionPoint, chamferWidth)`
+#### `CalculateApplicableChamfers(line1, line2, intersectionPoint, chamferWidth) | CalculateApplicableChamfers(igeo1, igeo2, plane3D, intersectionPoint, chamferWidth) | CalculateApplicableChamfers(line1, line2, plane3D, intersectionPoint, chamferWidth) | CalculateApplicableChamfers(line, arc, chamferArc, bFirstElementIsLine) | CalculateApplicableChamfers(arc1, arc2, chamferArc)`
 
 Calculates four applicable chamfer lines
 
@@ -6229,23 +5624,6 @@ Calculates four applicable chamfer lines
 - `chamferWidth` (float) — Chamfer width
 
 **Returns:** `Line2DList` — Calculated 4 applicable chamfer lines
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateApplicableChamfers)
-
-#### `CalculateApplicableChamfers(line1, line2, plane3D, intersectionPoint, chamferWidth)`
-
-Calculates applicable chamfer lines between two 3D lines
-
-**Remarks:** Calculates applicable chamfer lines between two 3D lines
-
-**Parameters:**
-- `line1` (Line3D) — Geometry of the first line
-- `line2` (Line3D) — Geometry of the second line
-- `plane3D` (Plane3D) — 3D plane in which line lies
-- `intersectionPoint` (Point3D) — Intersection point of 2 chamfered lines
-- `chamferWidth` (float) — Chamfer width
-
-**Returns:** `Line3DList` — Calculated 4 applicable chamfer lines
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateApplicableChamfers)
 
@@ -6265,59 +5643,7 @@ Calculate chamfer inside one polyline - 2 different segments of a polyline are t
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferInsideOnePolyline)
 
-#### `CalculateChamferLine(arc1, arc2, plane3D, intersectionPoint, inputPoint)`
-
-Calculates chamfer line between two 3D arcs
-
-**Remarks:** Calculates chamfer line between two 3D arcs
-
-**Parameters:**
-- `arc1` (Arc3D) — Geometry of the first 3D arc
-- `arc2` (Arc3D) — Geometry of the second 3D arc
-- `plane3D` (Plane3D) — 3D plane of the objects
-- `intersectionPoint` (Point3D) — Intersection point of objects for chamfering
-- `inputPoint` (Point3D) — Point of click (through which the chamfer should run)
-
-**Returns:** `Line3D` — Calculated chamfer line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferLine)
-
-#### `CalculateChamferLine(igeo1, igeo2, plane3D, intersectionPoint, inputPoint)`
-
-Calculates chamfer line
-
-**Remarks:** Calculates chamfer line
-
-**Parameters:**
-- `igeo1` (object) — Geometry of first object
-- `igeo2` (object) — Geometry of second object
-- `plane3D` (Plane3D) — 3D plane of the objects
-- `intersectionPoint` (Point3D) — Intersection point of objects for chamfering
-- `inputPoint` (Point3D) — Point of click (through which the chamfer should run)
-
-**Returns:** `Line3D` — Calculated chamfer line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferLine)
-
-#### `CalculateChamferLine(line, arc, plane3D, intersectionPoint, inputPoint, bFirstElementIsLine)`
-
-Calculates chamfer line between 3D line and 3D arc
-
-**Remarks:** Calculates chamfer line between 3D line and 3D arc
-
-**Parameters:**
-- `line` (Line3D) — Geometry of 3D line
-- `arc` (Arc3D) — Geometry of 3D arc
-- `plane3D` (Plane3D) — 3D plane of the objects
-- `intersectionPoint` (Point3D) — Intersection point of objects for chamfering
-- `inputPoint` (Point3D) — Point of click (through which the chamfer should run)
-- `bFirstElementIsLine` (bool) — Flag for order of element's intersection calculation
-
-**Returns:** `Line3D` — Calculated chamfer line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferLine)
-
-#### `CalculateChamferLine(line1, line2, inputPoint)`
+#### `CalculateChamferLine(line1, line2, inputPoint) | CalculateChamferLine(igeo1, igeo2, plane3D, intersectionPoint, inputPoint) | CalculateChamferLine(line1, line2, plane3D, intersectionPoint, inputPoint) | CalculateChamferLine(line, arc, plane3D, intersectionPoint, inputPoint, bFirstElementIsLine) | CalculateChamferLine(arc1, arc2, plane3D, intersectionPoint, inputPoint)`
 
 Calculates chamfer line
 
@@ -6332,24 +5658,7 @@ Calculates chamfer line
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferLine)
 
-#### `CalculateChamferLine(line1, line2, plane3D, intersectionPoint, inputPoint)`
-
-Calculates chamfer line between two 3D lines
-
-**Remarks:** Calculates chamfer line between two 3D lines
-
-**Parameters:**
-- `line1` (Line3D) — Geometry of first 3D line
-- `line2` (Line3D) — Geometry of second 3D line
-- `plane3D` (Plane3D) — 3D plane of the objects
-- `intersectionPoint` (Point3D) — Intersection point of objects for chamfering
-- `inputPoint` (Point3D) — Point of click (through which the chamfer should run)
-
-**Returns:** `Line3D` — Calculated chamfer line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferLine)
-
-#### `CalculateChamferedLine(originalLine, intersectionPoint, chamferPoint)`
+#### `CalculateChamferedLine(originalLine, intersectionPoint, chamferPoint) | CalculateChamferedLine(originalLine, plane3D, intersectionPoint, chamferPoint)`
 
 Calculates chamfered line
 
@@ -6361,22 +5670,6 @@ Calculates chamfered line
 - `chamferPoint` (Point2D) — Intersection point of chamfer line and (original) chamfered line
 
 **Returns:** `Line2D` — Calculated chamfered line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferedLine)
-
-#### `CalculateChamferedLine(originalLine, plane3D, intersectionPoint, chamferPoint)`
-
-Calculates chamfered line
-
-**Remarks:** Calculates chamfered line
-
-**Parameters:**
-- `originalLine` (Line3D) — Line which is being chamfered
-- `plane3D` (Plane3D) — 3D plane in which line lies
-- `intersectionPoint` (Point3D) — Intersection point of 2 chamfered lines
-- `chamferPoint` (Point3D) — Intersection point of chamfer line and (original) chamfered line
-
-**Returns:** `Line3D` — Calculated chamfered line
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateChamferedLine)
 
@@ -6395,7 +5688,7 @@ Calculates halving angle of 2 given lines in the global coordinate system
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.CalculateHalvingAngle)
 
-#### `SwapLinePoints(line, point)`
+#### `SwapLinePoints(line, point) | SwapLinePoints(line, point)`
 
 Changes line orientation if given point lies on line's left side.
 
@@ -6409,20 +5702,6 @@ Changes line orientation if given point lies on line's left side.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.SwapLinePoints)
 
-#### `SwapLinePoints(line, point)`
-
-Changes line orientation if given point lies on line's left side
-
-**Remarks:** Changes line orientation if given point lies on line's left side
-
-**Parameters:**
-- `line` (Line3D) — line to be changed
-- `point` (Point3D) — point to be evaluated
-
-**Returns:** `tuple` — True if line orientation was changed, false if orientation was left intact,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ChamferCalculus/#NemAll_Python_Geometry.ChamferCalculus.SwapLinePoints)
-
 ## ClippedSweptSolid3D (class)
 
 Representation class for solid created by extrusion of area with borders of a plane at the bottom and a plane at the top in world z - axis direction
@@ -6430,10 +5709,7 @@ Representation class for solid created by extrusion of area with borders of a pl
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClippedSweptSolid3D/)
 
 ### Constructors
-- `ClippedSweptSolid3D()` — Initialize
-- `ClippedSweptSolid3D(area, bottom, top)` — Constructor which sets swept area, bottom and top planes.
-- `ClippedSweptSolid3D(solid)` — Copy constructor.
-- `ClippedSweptSolid3D(refPoint, solid)` — Copy constructor.
+- `ClippedSweptSolid3D() | ClippedSweptSolid3D(area, bottom, top) | ClippedSweptSolid3D(solid) | ClippedSweptSolid3D(refPoint, solid)` — Initialize
 
 ### Methods
 #### `GetBottomPlane()`
@@ -6690,8 +5966,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea2D/)
 
 ### Constructors
-- `ClosedArea2D()` — Initialize
-- `ClosedArea2D(area)` — Copy constructor
+- `ClosedArea2D() | ClosedArea2D(area)` — Initialize
 
 ### Methods
 #### `AddInnerCurve(innerpath)`
@@ -6924,8 +6199,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedArea3D/)
 
 ### Constructors
-- `ClosedArea3D()` — Initialize
-- `ClosedArea3D(closedArea)` — Copy constructor.
+- `ClosedArea3D() | ClosedArea3D(closedArea)` — Initialize
 
 ### Methods
 #### `AddInnerCurve(innerpath)`
@@ -7178,8 +6452,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite2D/)
 
 ### Constructors
-- `ClosedAreaComposite2D()` — Initialize
-- `ClosedAreaComposite2D(composite)` — Copy constructor
+- `ClosedAreaComposite2D() | ClosedAreaComposite2D(composite)` — Initialize
 
 ### Methods
 #### `Add(area)`
@@ -7390,8 +6663,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/)
 
 ### Constructors
-- `ClosedAreaComposite3D()` — Initialize
-- `ClosedAreaComposite3D(composite)` — Copy constructor
+- `ClosedAreaComposite3D() | ClosedAreaComposite3D(composite)` — Initialize
 
 ### Methods
 #### `Add(profile)`
@@ -7601,8 +6873,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/)
 
 ### Constructors
-- `Clothoid2D()` — Initialize
-- `Clothoid2D(clothoid)` — Copy constructor.
+- `Clothoid2D() | Clothoid2D(clothoid)` — Initialize
 
 ### Methods
 #### `GetEndCurvature()`
@@ -8054,21 +7325,7 @@ Check if all points of polyline are on one straight line
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.AllPointsAreOneAxis)
 
-#### `Congruent(l1, l2)`
-
-compare 2D lines if are congruent
-
-**Remarks:** compare 2D lines if are congruent
-
-**Parameters:**
-- `l1` (Line2D) — the 1. line
-- `l2` (Line2D) — the 2. line
-
-**Returns:** `bool` — true if lines are congruent, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Congruent)
-
-#### `Congruent(l1p1, l1p2, l2p1, l2p2)`
+#### `Congruent(l1p1, l1p2, l2p1, l2p2) | Congruent(l1, l2)`
 
 compare 2D points of two 2D lines if are congruent
 
@@ -8084,82 +7341,7 @@ compare 2D points of two 2D lines if are congruent
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Congruent)
 
-#### `DeterminePosition(arc, point, tolerance)`
-
-Determine the relative position of a point to a 2D arc.
-
-**Remarks:** Determine the relative position of a point to a 2D arc.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D arc
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(arc, point, tolerance)`
-
-Determine the relative position of a point to a 3D arc.
-
-**Remarks:** Determine the relative position of a point to a 3D arc.
-
-**Parameters:**
-- `arc` (Arc3D) — 3D arc
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(axis, point, tolerance)`
-
-Determine the relative position of a point to a 2D axis.
-
-**Remarks:** Determine the relative position of a point to a 2D axis.
-
-**Parameters:**
-- `axis` (Axis2D) — 2D axis
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(b, point, tolerance)`
-
-Determine the relative position of a point to a 3D BRep
-
-**Remarks:** Determine the relative position of a point to a 3D BRep
-
-**Parameters:**
-- `b` (BRep3D) — BRep3D
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(identical to a vertes of the BRep), eInside (inside the BRep)
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(clothoid, point, tolerance)`
-
-Determine the relative position of a point to a 2D clothoid.
-
-**Remarks:** Determine the relative position of a point to a 2D clothoid.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D clothoid
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(geoObject_object, point, tolerance)`
+#### `DeterminePosition(geoObject_object, point, tolerance) | DeterminePosition(line, point, tolerance) | DeterminePosition(axis, point, tolerance) | DeterminePosition(polyline, point, tolerance) | DeterminePosition(polyline, point, tolerance, segment) | DeterminePosition(arc, point, tolerance) | DeterminePosition(arc, point, tolerance) | DeterminePosition(clothoid, point, tolerance) | DeterminePosition(spline, point, tolerance) | DeterminePosition(polygon, point, tolerance) | DeterminePosition(polygon, line) | DeterminePosition(line, point, tolerance) | DeterminePosition(polyline, point, tolerance) | DeterminePosition(phed, point) | DeterminePosition(spline, point, tolerance) | DeterminePosition(spline, point, tolerance) | DeterminePosition(path, point, tolerance) | DeterminePosition(b, point, tolerance) | DeterminePosition(polygon1, polygon2) | DeterminePosition(line, minMax) | DeterminePosition(lines, minMax) | DeterminePosition(igeo_object, point, tolerance)`
 
 Determine the relative position of a point to an object.
 
@@ -8174,243 +7356,7 @@ Determine the relative position of a point to an object.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
 
-#### `DeterminePosition(igeo_object, point, tolerance)`
-
-Determine the relative position of a point to a 3D geometry
-
-**Remarks:** Determine the relative position of a point to a 3D geometry
-
-**Parameters:**
-- `igeo_object` (object) — 3D geometry
-- `point` (Point3D) — Point3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eInside,eOutside
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(line, minMax)`
-
-Determine the relative position of minMax to line
-
-**Remarks:** Determine the relative position of minMax to line
-
-**Parameters:**
-- `line` (Line2D) — line
-- `minMax` (MinMax2D) — minmax
-
-**Returns:** `eComparisionResult` — eOutside,eCrossing,eUnknown
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(line, point, tolerance)`
-
-Determine the relative position of a point to a 2D line.
-
-**Remarks:** Determine the relative position of a point to a 2D line.
-
-**Parameters:**
-- `line` (Line2D) — 2D line
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(line, point, tolerance)`
-
-Determine the relative position of a point to a 3D line
-
-**Remarks:** Determine the relative position of a point to a 3D line
-
-**Parameters:**
-- `line` (Line3D) — 3D line
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(lines, minMax)`
-
-Determine the relative position of the minMax to lines
-
-**Remarks:** Determine the relative position of the minMax to lines
-
-**Parameters:**
-- `lines` (Line2DList) — lines
-- `minMax` (MinMax2D) — minmax
-
-**Returns:** `eComparisionResult` — eOutside,eCrossing,eUnknown
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(path, point, tolerance)`
-
-Determine the relative position of a point to a Path3D
-
-**Remarks:** Determine the relative position of a point to a Path3D
-
-**Parameters:**
-- `path` (Path3D) — Path3D
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eOutside
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(phed, point)`
-
-Determine the relative position of a point to a Polyhedron
-
-**Remarks:** Determine the relative position of a point to a Polyhedron
-
-**Parameters:**
-- `phed` (Polyhedron3D) — Polyhedron
-- `point` (Point3D) — Point
-
-**Returns:** `eComparisionResult` — eInside,eOutside
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(polygon, line)`
-
-Determine the relative position of a line to a polygon 2D.
-
-**Remarks:** Determine the relative position of a line to a polygon 2D.
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon2D
-- `line` (Line2D) — Line
-
-**Returns:** `eComparisionResult` — eInside(inside the polygon), eOutside, eNotParallel(the line crosses the polygon), eOnElement (on one of the edges), or Unknown
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(polygon, point, tolerance)`
-
-Determine the relative position of a point to a polygon 2D.
-
-**Remarks:** Determine the relative position of a point to a polygon 2D.
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon2D
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eInside(inside the polygon), eOutside, eOnElement (on one of the edges), eEqualToEndPoint or Unknown
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(polygon1, polygon2)`
-
-Determine the relative position of the second polygon to the first polygon
-
-**Remarks:** Determine the relative position of the second polygon to the first polygon
-
-**Parameters:**
-- `polygon1` (Polygon2D) — the first polygon
-- `polygon2` (Polygon2D) — the second polygon
-
-**Returns:** `eComparisionResult` — eInside,eOutside,eCrossing
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(polyline, point, tolerance)`
-
-Determine the relative position of a point to a 2D polyline. Returns position of point to the closest line of poly line
-
-**Remarks:** Determine the relative position of a point to a 2D polyline. Returns position of point to the closest line of poly line
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D polyline
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(polyline, point, tolerance)`
-
-Determine the relative position of a point to a 3D polyline
-
-**Remarks:** Determine the relative position of a point to a 3D polyline
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D polyline
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(polyline, point, tolerance, segment)`
-
-Determine the relative position of a point to a 2D polyline.
-
-**Remarks:** Determine the relative position of a point to a 2D polyline.
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D polyline
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-- `segment` (VecSizeTList) — number of the segment of polyline in which was the point found (-1 - is not on polyline, 0 - first segm., ...)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(spline, point, tolerance)`
-
-Determine the relative position of a point to a 2D spline.
-
-**Remarks:** Determine the relative position of a point to a 2D spline.
-
-**Parameters:**
-- `spline` (Spline2D) — 2D spline
-- `point` (Point2D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eLeft, eRight, eAbove, eBelow
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(spline, point, tolerance)`
-
-Determine the relative position of a point to a Spline3D
-
-**Remarks:** Determine the relative position of a point to a Spline3D
-
-**Parameters:**
-- `spline` (Spline3D) — Spline3D
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eOutside
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `DeterminePosition(spline, point, tolerance)`
-
-Determine the relative position of a point to a BSpline3D
-
-**Remarks:** Determine the relative position of a point to a BSpline3D
-
-**Parameters:**
-- `spline` (BSpline3D) — BSpline3D
-- `point` (Point3D) — Point
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `eComparisionResult` — eOnElement(between start and end points), eEqualToStartPoint, eEqualToEndPoint, eOutside
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.DeterminePosition)
-
-#### `Equal(el1, el2)`
+#### `Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(el1, el2, tol) | Equal(path1, path2, tol) | Equal(igeo1_object, igeo2_object, tol)`
 
 Compare 2 doubles
 
@@ -8424,318 +7370,7 @@ Compare 2 doubles
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
 
-#### `Equal(el1, el2)`
-
-compare 2 2D points
-
-**Remarks:** compare 2 2D points
-
-**Parameters:**
-- `el1` (Point2D) — element
-- `el2` (Point2D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2)`
-
-compare 2 3D points
-
-**Remarks:** compare 2 3D points
-
-**Parameters:**
-- `el1` (Point3D) — element
-- `el2` (Point3D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2)`
-
-compare 2 2D vectors
-
-**Remarks:** compare 2 2D vectors
-
-**Parameters:**
-- `el1` (Vector2D) — element
-- `el2` (Vector2D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2)`
-
-compare 2 3D vectors
-
-**Remarks:** compare 2 3D vectors
-
-**Parameters:**
-- `el1` (Vector3D) — element
-- `el2` (Vector3D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 doubles with given tolerance
-
-**Remarks:** compare 2 doubles with given tolerance
-
-**Parameters:**
-- `el1` (float) — element
-- `el2` (float) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 2D points with given tolerance
-
-**Remarks:** compare 2 2D points with given tolerance
-
-**Parameters:**
-- `el1` (Point2D) — element
-- `el2` (Point2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 3D points with given tolerance
-
-**Remarks:** compare 2 3D points with given tolerance
-
-**Parameters:**
-- `el1` (Point3D) — element
-- `el2` (Point3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 2D vectors with given tolerance
-
-**Remarks:** compare 2 2D vectors with given tolerance
-
-**Parameters:**
-- `el1` (Vector2D) — element
-- `el2` (Vector2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 3D vectors with given tolerance
-
-**Remarks:** compare 2 3D vectors with given tolerance
-
-**Parameters:**
-- `el1` (Vector3D) — element
-- `el2` (Vector3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 line 2D with given tolerance
-
-**Remarks:** compare 2 line 2D with given tolerance
-
-**Parameters:**
-- `el1` (Line2D) — element
-- `el2` (Line2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 line 3D with given tolerance
-
-**Remarks:** compare 2 line 3D with given tolerance
-
-**Parameters:**
-- `el1` (Line3D) — element
-- `el2` (Line3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 splines with given tolerance
-
-**Remarks:** compare 2 splines with given tolerance
-
-**Parameters:**
-- `el1` (Spline2D) — element
-- `el2` (Spline2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 clothoides with given tolerance
-
-**Remarks:** compare 2 clothoides with given tolerance
-
-**Parameters:**
-- `el1` (Clothoid2D) — element
-- `el2` (Clothoid2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 arcs with given tolerance
-
-**Remarks:** compare 2 arcs with given tolerance
-
-**Parameters:**
-- `el1` (Arc2D) — element
-- `el2` (Arc2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-compare 2 3D arcs with given tolerance
-
-**Remarks:** compare 2 3D arcs with given tolerance
-
-**Parameters:**
-- `el1` (Arc3D) — element
-- `el2` (Arc3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-Compare 2 BSplines with given tolerance
-
-**Remarks:** Compare 2 BSplines with given tolerance
-
-**Parameters:**
-- `el1` (BSpline3D) — element
-- `el2` (BSpline3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-Compare 2 Splines with given tolerance
-
-**Remarks:** Compare 2 Splines with given tolerance
-
-**Parameters:**
-- `el1` (Spline3D) — element
-- `el2` (Spline3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-Compare 2 Polylines with given tolerance
-
-**Remarks:** Compare 2 Polylines with given tolerance
-
-**Parameters:**
-- `el1` (Polyline3D) — element
-- `el2` (Polyline3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(el1, el2, tol)`
-
-Compare 2 BSplines with given tolerance
-
-**Remarks:** Compare 2 BSplines with given tolerance
-
-**Parameters:**
-- `el1` (BSpline2D) — element
-- `el2` (BSpline2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(igeo1_object, igeo2_object, tol)`
-
-Compare 2 geometries with given tolerance
-
-**Remarks:** Compare 2 geometries with given tolerance
-
-**Parameters:**
-- `igeo1_object` (object) — element
-- `igeo2_object` (object) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `Equal(path1, path2, tol)`
-
-Compare 2 Paths with given tolerance
-
-**Remarks:** Compare 2 Paths with given tolerance
-
-**Parameters:**
-- `path1` (Path3D) — element
-- `path2` (Path3D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Equal)
-
-#### `EqualCoordsRel(el1, el2)`
+#### `EqualCoordsRel(el1, el2) | EqualCoordsRel(el1, el2)`
 
 compare 2 2D points using iqrkor
 
@@ -8749,21 +7384,7 @@ compare 2 2D points using iqrkor
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualCoordsRel)
 
-#### `EqualCoordsRel(el1, el2)`
-
-compare 2 3D points using iqrkor
-
-**Remarks:** compare 2 3D points using iqrkor
-
-**Parameters:**
-- `el1` (Point3D) — element
-- `el2` (Point3D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualCoordsRel)
-
-#### `EqualDistance(el1, el2, tol)`
+#### `EqualDistance(el1, el2, tol) | EqualDistance(el1, el2, tol)`
 
 compare 2 2D points using their distance with given tolerance
 
@@ -8778,22 +7399,7 @@ compare 2 2D points using their distance with given tolerance
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualDistance)
 
-#### `EqualDistance(el1, el2, tol)`
-
-compare 2 2D points using their distance with given tolerance
-
-**Remarks:** compare 2 2D points using their distance with given tolerance
-
-**Parameters:**
-- `el1` (Point3D) — point
-- `el2` (Point3D) — point
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualDistance)
-
-#### `EqualRel(el1, el2)`
+#### `EqualRel(el1, el2) | EqualRel(el1, el2, tol) | EqualRel(el1, el2) | EqualRel(el1, el2) | EqualRel(el1, el2) | EqualRel(el1, el2)`
 
 compare 2 doubles using built-in relative tolerance
 
@@ -8807,108 +7413,7 @@ compare 2 doubles using built-in relative tolerance
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel)
 
-#### `EqualRel(el1, el2)`
-
-compare 2 2D points using built-in relative tolerance
-
-**Remarks:** compare 2 2D points using built-in relative tolerance
-
-**Parameters:**
-- `el1` (Point2D) — element
-- `el2` (Point2D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel)
-
-#### `EqualRel(el1, el2)`
-
-compare 2 3D points using built-in relative tolerance
-
-**Remarks:** compare 2 3D points using built-in relative tolerance
-
-**Parameters:**
-- `el1` (Point3D) — element
-- `el2` (Point3D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel)
-
-#### `EqualRel(el1, el2)`
-
-compare 2 2D vectors using built-in relative tolerance
-
-**Remarks:** compare 2 2D vectors using built-in relative tolerance
-
-**Parameters:**
-- `el1` (Vector2D) — element
-- `el2` (Vector2D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel)
-
-#### `EqualRel(el1, el2)`
-
-compare 2 3D vectors using built-in relative tolerance
-
-**Remarks:** compare 2 3D vectors using built-in relative tolerance
-
-**Parameters:**
-- `el1` (Vector3D) — element
-- `el2` (Vector3D) — element
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel)
-
-#### `EqualRel(el1, el2, tol)`
-
-compare 2 doubles using given relative tolerance
-
-**Remarks:** compare 2 doubles using given relative tolerance
-
-**Parameters:**
-- `el1` (float) — element
-- `el2` (float) — element
-- `tol` (float) — relative tolerance
-
-**Returns:** `bool` — true when equal, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.EqualRel)
-
-#### `GetSegmentNumber(geoObject_object, point, tolerance)`
-
-Determine the segment position of a point to a geometry object
-
-**Remarks:** Determine the segment position of a point to a geometry object
-
-**Parameters:**
-- `geoObject_object` (object) — IGeometry
-- `point` (Point3D) — Point3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(geoObject_object, point, tolerance)`
-
-Determine the segment position of a point to a 2D geometry object
-
-**Remarks:** Determine the segment position of a point to a 2D geometry object
-
-**Parameters:**
-- `geoObject_object` (object) — IGeometry
-- `point` (Point2D) — Point2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(geoObject_object, segment, tolerance)`
+#### `GetSegmentNumber(geoObject_object, segment, tolerance) | GetSegmentNumber(geoObject_object, point, tolerance) | GetSegmentNumber(geoObject_object, point, tolerance) | GetSegmentNumber(line, point, tolerance) | GetSegmentNumber(line, point, tolerance) | GetSegmentNumber(polyPoints, point, tolerance) | GetSegmentNumber(polygon, point, tolerance) | GetSegmentNumber(polyPoints, point, tolerance) | GetSegmentNumber(spline, point, tolerance) | GetSegmentNumber(line, segment, tolerance) | GetSegmentNumber(line, segment, tolerance) | GetSegmentNumber(polyPoints, segment, tolerance) | GetSegmentNumber(polyPoints, segment, tolerance) | GetSegmentNumber(geoObject_object, segment, tolerance)`
 
 Determine the segment position of a point to a 2D geometry object
 
@@ -8917,171 +7422,6 @@ Determine the segment position of a point to a 2D geometry object
 **Parameters:**
 - `geoObject_object` (object) — IGeometry
 - `segment` (Line2D) — Line2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(geoObject_object, segment, tolerance)`
-
-Determine the segment position of a point to a geometry object
-
-**Remarks:** Determine the segment position of a point to a geometry object
-
-**Parameters:**
-- `geoObject_object` (object) — IGeometry
-- `segment` (Line3D) — Line3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(line, point, tolerance)`
-
-Determine the segment position of a point to a Line2D
-
-**Remarks:** Determine the segment position of a point to a Line2D
-
-**Parameters:**
-- `line` (Line2D) — Line2D
-- `point` (Point2D) — Point2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(line, point, tolerance)`
-
-Determine the segment position of a point to a Line3D
-
-**Remarks:** Determine the segment position of a point to a Line3D
-
-**Parameters:**
-- `line` (Line3D) — Line3D
-- `point` (Point3D) — Point3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(line, segment, tolerance)`
-
-Determine the segment position of a point to a Line2D
-
-**Remarks:** Determine the segment position of a point to a Line2D
-
-**Parameters:**
-- `line` (Line2D) — Line2D
-- `segment` (Line2D) — Line2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(line, segment, tolerance)`
-
-Determine the segment position of a point to a Line3D
-
-**Remarks:** Determine the segment position of a point to a Line3D
-
-**Parameters:**
-- `line` (Line3D) — Line3D
-- `segment` (Line3D) — Line3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(polyPoints, point, tolerance)`
-
-Determine the segment position of a point to a PolyPoints
-
-**Remarks:** Determine the segment position of a point to a PolyPoints
-
-**Parameters:**
-- `polyPoints` (PolyPoints2D) — PolyPoints
-- `point` (Point2D) — Point2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(polyPoints, point, tolerance)`
-
-Determine the segment position of a point to a PolyPoints
-
-**Remarks:** Determine the segment position of a point to a PolyPoints
-
-**Parameters:**
-- `polyPoints` (PolyPoints3D) — PolyPoints
-- `point` (Point3D) — Point3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(polyPoints, segment, tolerance)`
-
-Determine the segment position of a point to a PolyPoints
-
-**Remarks:** Determine the segment position of a point to a PolyPoints
-
-**Parameters:**
-- `polyPoints` (PolyPoints2D) — PolyPoints
-- `segment` (Line2D) — Line2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(polyPoints, segment, tolerance)`
-
-Determine the segment position of a point to a PolyPoints
-
-**Remarks:** Determine the segment position of a point to a PolyPoints
-
-**Parameters:**
-- `polyPoints` (PolyPoints3D) — PolyPoints
-- `segment` (Line3D) — Line3D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(polygon, point, tolerance)`
-
-Determine the segment position of a point to a Polygon2D
-
-**Remarks:** Determine the segment position of a point to a Polygon2D
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon2D
-- `point` (Point2D) — Point2D
-- `tolerance` (float) — tolerance (if distance < tolerance, point on object)
-
-**Returns:** `int` — segment number 0 is first element
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.GetSegmentNumber)
-
-#### `GetSegmentNumber(spline, point, tolerance)`
-
-Determine the segment position of a point to a Spline2d
-
-**Remarks:** Determine the segment position of a point to a Spline2d
-
-**Parameters:**
-- `spline` (Spline2D) — spline geo
-- `point` (Point2D) — point on spline
 - `tolerance` (float) — tolerance (if distance < tolerance, point on object)
 
 **Returns:** `int` — segment number 0 is first element
@@ -9101,13 +7441,7 @@ Check if comparison result hits element in some way
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.HitsElement)
 
-#### `IsInside(line, lineToCheck)`
-
-
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsInside)
-
-#### `IsInside(polygon, line)`
+#### `IsInside(polygon, line) | IsInside(line, lineToCheck)`
 
 Determine if the line is inside the polygon
 
@@ -9121,7 +7455,7 @@ Determine if the line is inside the polygon
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsInside)
 
-#### `IsParallel(el1, el2)`
+#### `IsParallel(el1, el2) | IsParallel(lines) | IsParallel(el1, el2) | IsParallel(el1_object, el2_object)`
 
 test 2 2D lines for parallel
 
@@ -9135,76 +7469,7 @@ test 2 2D lines for parallel
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsParallel)
 
-#### `IsParallel(el1, el2)`
-
-test 2 3D lines for parallel
-
-**Remarks:** test 2 3D lines for parallel
-
-**Parameters:**
-- `el1` (Line3D) — element
-- `el2` (Line3D) — element
-
-**Returns:** `eComparisionResult` — tuple(eParallel, eAntiParallel, eNotParallel,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsParallel)
-
-#### `IsParallel(el1_object, el2_object)`
-
-test 2 Geometry object for parallel
-
-**Remarks:** test 2 Geometry object for parallel
-
-**Parameters:**
-- `el1_object` (object) — element
-- `el2_object` (object) — element
-
-**Returns:** `eComparisionResult` — tuple(eParallel, eAntiParallel, eNotParallel,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsParallel)
-
-#### `IsParallel(lines)`
-
-Check of parallelism for vector of 2D lines Return eAntiParallel if at least one line is antiparallel and all rest are parallel Return eNotParallel if at least one line is not parallel In all rest cases return eParallel
-
-**Remarks:** Check of parallelism for vector of 2D lines Return eAntiParallel if at least one line is antiparallel and all rest are parallel Return eNotParallel if at least one line is not parallel In all rest cases return eParallel
-
-**Parameters:**
-- `lines` (Line2DList) — vector of 2D lines
-
-**Returns:** `eComparisionResult` — eParallel, eAntiParallel, eNotParallel
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.IsParallel)
-
-#### `Overlapped(arc1, arc2)`
-
-compare of 2 2D arcs
-
-**Remarks:** compare of 2 2D arcs
-
-**Parameters:**
-- `arc1` (Arc2D) — Arc2D
-- `arc2` (Arc2D) — Arc2D
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(arc1, arc2)`
-
-compare of 2 3D arcs
-
-**Remarks:** compare of 2 3D arcs
-
-**Parameters:**
-- `arc1` (Arc3D) — Arc3D
-- `arc2` (Arc3D) — Arc3D
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(el1, el2)`
+#### `Overlapped(el1, el2) | Overlapped(el1, el2, partiallyToo=False) | Overlapped(pp1, pp2) | Overlapped(pp1, pp2) | Overlapped(line1, line2) | Overlapped(line1, line2, partiallyToo=False) | Overlapped(arc1, arc2) | Overlapped(arc1, arc2) | Overlapped(phed1, phed2) | Overlapped(el1, el2) | Overlapped(geo1_object, geo2_object)`
 
 compare of 2 Polyline 2D
 
@@ -9213,120 +7478,6 @@ compare of 2 Polyline 2D
 **Parameters:**
 - `el1` (Polyline2D) — Polyline2D
 - `el2` (Polyline2D) — Polyline2D
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(el1, el2)`
-
-compare of 2 Spline 2D
-
-**Remarks:** compare of 2 Spline 2D
-
-**Parameters:**
-- `el1` (Spline2D) — Spline2D
-- `el2` (Spline2D) — Spline2D
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(el1, el2, partiallyToo=False)`
-
-compare of 2 Polyline 3D
-
-**Remarks:** compare of 2 Polyline 3D
-
-**Parameters:**
-- `el1` (Polyline3D) — Polyline3D
-- `el2` (Polyline3D) — Polyline3D
-- `partiallyToo` (bool) — First and last segment of polyline have not be identical but is enough that lies on the second polyline segments
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(geo1_object, geo2_object)`
-
-compare of 2 Geometries
-
-**Remarks:** compare of 2 Geometries
-
-**Parameters:**
-- `geo1_object` (object) — IGeometry
-- `geo2_object` (object) — IGeometry
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(line1, line2)`
-
-compare of 2 2D lines
-
-**Remarks:** compare of 2 2D lines
-
-**Parameters:**
-- `line1` (Line2D) — Line2D
-- `line2` (Line2D) — Line2D
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(line1, line2, partiallyToo=False)`
-
-compare of 2 3D lines
-
-**Remarks:** compare of 2 3D lines
-
-**Parameters:**
-- `line1` (Line3D) — Line3D
-- `line2` (Line3D) — Line3D
-- `partiallyToo` (bool) — Lines have not be identical but is enough that one lies on the second
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(phed1, phed2)`
-
-compare of 2 3D Polyhedra
-
-**Remarks:** compare of 2 3D Polyhedra
-
-**Parameters:**
-- `phed1` (Polyhedron3D) — Polyhedron3D
-- `phed2` (Polyhedron3D) — Polyhedron3D
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(pp1, pp2)`
-
-compare of PolyPoints
-
-**Remarks:** compare of PolyPoints
-
-**Parameters:**
-- `pp1` (PolyPoints2D) — PolyPoints
-- `pp2` (PolyPoints2D) — PolyPoints
-
-**Returns:** `bool` — true when overlapped, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Comparison/#NemAll_Python_Geometry.Comparison.Overlapped)
-
-#### `Overlapped(pp1, pp2)`
-
-compare of PolyPoints
-
-**Remarks:** compare of PolyPoints
-
-**Parameters:**
-- `pp1` (PolyPoints3D) — PolyPoints
-- `pp2` (PolyPoints3D) — PolyPoints
 
 **Returns:** `bool` — true when overlapped, otherwise false
 
@@ -9353,10 +7504,7 @@ sgn function
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cone3D/)
 
 ### Constructors
-- `Cone3D()` — Initialize
-- `Cone3D(cone)` — Copy constructor.
-- `Cone3D(refPlacement, radiusMajor, radiusMinor, apex)` — Constructor. Height of the Cone is z-coordinate of the Apex.
-- `Cone3D(radiusMajor, radiusMinor, apex)` — Constructor. Height of the Cone is z-coordinate of the Apex.
+- `Cone3D() | Cone3D(cone) | Cone3D(refPlacement, radiusMajor, radiusMinor, apex) | Cone3D(radiusMajor, radiusMinor, apex)` — Initialize
 
 ### Methods
 #### `GetApex()`
@@ -9713,9 +7861,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/)
 
 ### Constructors
-- `ConicalSurface3D()` — Initialize
-- `ConicalSurface3D(placement, radius, angle)` — Constructor.
-- `ConicalSurface3D(surface)` — Copy constructor.
+- `ConicalSurface3D() | ConicalSurface3D(placement, radius, angle) | ConicalSurface3D(surface)` — Initialize
 
 ### Methods
 #### `Get()`
@@ -9960,9 +8106,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/)
 
 ### Constructors
-- `Cuboid3D()` — Initialize
-- `Cuboid3D(cuboid)` — Copy constructor.
-- `Cuboid3D(refPoint, startPoint, vec1, vec2, vec3)` — Constructor.
+- `Cuboid3D() | Cuboid3D(cuboid) | Cuboid3D(refPoint, startPoint, vec1, vec2, vec3)` — Initialize
 
 ### Methods
 #### `GetBottomFacePolygon()`
@@ -10068,18 +8212,7 @@ Get width.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.GetWidth)
 
-#### `Set(cuboid)`
-
-Initialize from cuboid.
-
-**Remarks:** Initialize from cuboid.
-
-**Parameters:**
-- `cuboid` (Cuboid3D) — Cuboid which will be copied.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cuboid3D/#NemAll_Python_Geometry.Cuboid3D.Set)
-
-#### `Set(refPoint, startPoint, vec1, vec2, vec3)`
+#### `Set(refPoint, startPoint, vec1, vec2, vec3) | Set(cuboid)`
 
 Set the Cuboid.
 
@@ -10309,10 +8442,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/)
 
 ### Constructors
-- `Cylinder3D()` — Initialize
-- `Cylinder3D(cylinder)` — Copy constructor.
-- `Cylinder3D(refPlacement, radiusMajor, radiusMinor, apex)` — Constructor. Height of the cylinder is z-coordinate of the Apex.
-- `Cylinder3D(radiusMajor, radiusMinor, apex)` — Constructor. Height of the cylinder is z-coordinate of the Apex.
+- `Cylinder3D() | Cylinder3D(cylinder) | Cylinder3D(refPlacement, radiusMajor, radiusMinor, apex) | Cylinder3D(radiusMajor, radiusMinor, apex)` — Initialize
 
 ### Methods
 #### `GetApex()`
@@ -10533,20 +8663,7 @@ Set Height of the Cylinder
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetHeight)
 
-#### `SetLocalPlacement(center, xAxis, zAxis)`
-
-Set Local Placement.
-
-**Remarks:** Set Local Placement.
-
-**Parameters:**
-- `center` (Point3D) — Center point of the placement
-- `xAxis` (Vector3D) — X-axis of the placement
-- `zAxis` (Vector3D) — Z-axis of the placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetLocalPlacement)
-
-#### `SetLocalPlacement(placement)`
+#### `SetLocalPlacement(placement) | SetLocalPlacement(center, xAxis, zAxis)`
 
 Set Local Placement.
 
@@ -10726,10 +8843,7 @@ Class for DivisionPoints
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/DivisionPoints/)
 
 ### Constructors
-- `DivisionPoints(path, sectionLength, eps)` — Constructor
-- `DivisionPoints(geoObject, number, eps)` — Constructor
-- `DivisionPoints(path, number, eps)` — Constructor
-- `DivisionPoints(geoObject, sectionLength, eps)` — Constructor
+- `DivisionPoints(path, sectionLength, eps) | DivisionPoints(geoObject, number, eps) | DivisionPoints(path, number, eps) | DivisionPoints(geoObject, sectionLength, eps)` — Constructor
 
 ### Methods
 #### `Count()`
@@ -10845,10 +8959,7 @@ Get the result of the computation
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/)
 
 ### Constructors
-- `Ellipsoid3D()` — Initialize
-- `Ellipsoid3D(ellipsoid)` — Copy constructor.
-- `Ellipsoid3D(refPlacement, radiusX, radiusY, radiusZ)` — Constructor.
-- `Ellipsoid3D(radiusX, radiusY, radiusZ)` — Constructor.
+- `Ellipsoid3D() | Ellipsoid3D(ellipsoid) | Ellipsoid3D(refPlacement, radiusX, radiusY, radiusZ) | Ellipsoid3D(radiusX, radiusY, radiusZ)` — Initialize
 
 ### Methods
 #### `GetCenter()`
@@ -10990,20 +9101,7 @@ Set center
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetCenter)
 
-#### `SetLocalPlacement(center, xAxis, zAxis)`
-
-Set Local Placement.
-
-**Remarks:** Set Local Placement.
-
-**Parameters:**
-- `center` (Point3D) — Center point of the placement
-- `xAxis` (Vector3D) — X-axis of the placement
-- `zAxis` (Vector3D) — Z-axis of the placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetLocalPlacement)
-
-#### `SetLocalPlacement(placement)`
+#### `SetLocalPlacement(placement) | SetLocalPlacement(center, xAxis, zAxis)`
 
 Set Local Placement.
 
@@ -11196,9 +9294,7 @@ Solid created by extrusion of area by given direction vector
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ExtrudedAreaSolid3D/)
 
 ### Constructors
-- `ExtrudedAreaSolid3D()` — Initialize
-- `ExtrudedAreaSolid3D(solid)` — Copy constructor.
-- `ExtrudedAreaSolid3D(solid, refPoint)` — Copy constructor.
+- `ExtrudedAreaSolid3D() | ExtrudedAreaSolid3D(solid) | ExtrudedAreaSolid3D(solid, refPoint)` — Initialize
 
 ### Methods
 #### `GetDirection()`
@@ -11431,10 +9527,7 @@ Face offset
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/)
 
 ### Constructors
-- `FaceOffset(inputPolyhedron)` — Constructor with polyhedron input geometry
-- `FaceOffset(inputPolyhedron, faceIndices)` — Constructor with polyhedron element
-- `FaceOffset(inputBRep)` — Constructor with brep element
-- `FaceOffset(inputBRep, faceIndices)` — Constructor with brep element
+- `FaceOffset(inputPolyhedron) | FaceOffset(inputPolyhedron, faceIndices) | FaceOffset(inputBRep) | FaceOffset(inputBRep, faceIndices)` — Constructor with polyhedron input geometry
 
 ### Methods
 #### `IsResultBrep()`
@@ -11488,30 +9581,10 @@ Class for fillet calculation between two 2D objects
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/)
 
 ### Constructors
-- `FilletCalculus2D(line1, line2, r)` — constructor
-- `FilletCalculus2D(line, arc, r)` — constructor
-- `FilletCalculus2D(arc1, arc2, r)` — constructor
-- `FilletCalculus2D(arc, point)` — constructor
-- `FilletCalculus2D(line, point)` — constructor
-- `FilletCalculus2D(geoObj1, geoObj2, r)` — constructor
+- `FilletCalculus2D(line1, line2, r) | FilletCalculus2D(line, arc, r) | FilletCalculus2D(arc1, arc2, r) | FilletCalculus2D(arc, point) | FilletCalculus2D(line, point) | FilletCalculus2D(geoObj1, geoObj2, r)` — constructor
 
 ### Methods
-#### `ClickedOnObject(arc, clickedPoint, searchRadius)`
-
-Check if click point is a point located on given arc
-
-**Remarks:** Check if click point is a point located on given arc
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D which will be checked
-- `clickedPoint` (Point2D) — clicked point
-- `searchRadius` (float) — search radius
-
-**Returns:** `bool` — true if point is on the arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.ClickedOnObject)
-
-#### `ClickedOnObject(line, clickedPoint, searchRadius)`
+#### `ClickedOnObject(line, clickedPoint, searchRadius) | ClickedOnObject(arc, clickedPoint, searchRadius)`
 
 Check if click point is a point located on given line
 
@@ -11536,49 +9609,7 @@ Get all arc help constructions
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetArcHelpConstructions)
 
-#### `GetFilletType(arc1, arc2)`
-
-Get fillet type for two arcs
-
-**Remarks:** Get fillet type for two arcs
-
-**Parameters:**
-- `arc1` (Arc2D) — first arc
-- `arc2` (Arc2D) — second arc
-
-**Returns:** `eFilletType` — eFilletType
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType)
-
-#### `GetFilletType(geometry1, geometry2)`
-
-Get fillet type for two geometry objects
-
-**Remarks:** Get fillet type for two geometry objects
-
-**Parameters:**
-- `geometry1` (object) — first geometry element
-- `geometry2` (object) — second geometry element
-
-**Returns:** `eFilletType` — eFilletType
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType)
-
-#### `GetFilletType(line, arc)`
-
-Get fillet type for line and arc
-
-**Remarks:** Get fillet type for line and arc
-
-**Parameters:**
-- `line` (Line2D) — line
-- `arc` (Arc2D) — arc
-
-**Returns:** `eFilletType` — eFilletType
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType)
-
-#### `GetFilletType(line1, line2)`
+#### `GetFilletType(line1, line2) | GetFilletType(line, arc) | GetFilletType(arc1, arc2) | GetFilletType(geometry1, geometry2)`
 
 Get fillet type for two lines
 
@@ -11639,22 +9670,7 @@ Split polyline by given segment
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.SplitPolylineBySegment)
 
-#### `TrimByHelpConstruction(arc, hcArc, intersections)`
-
-Trim arc by given help construction
-
-**Remarks:** Trim arc by given help construction
-
-**Parameters:**
-- `arc` (Arc2D) — arc which will be trimmed
-- `hcArc` (Arc2D) — arc help construction
-- `intersections` (Point3DList) — intersection points
-
-**Returns:** `Arc2D` — arc which will be trimmed
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.TrimByHelpConstruction)
-
-#### `TrimByHelpConstruction(line, hcLine, intersections)`
+#### `TrimByHelpConstruction(line, hcLine, intersections) | TrimByHelpConstruction(polyline, segment, hcLine, intersections) | TrimByHelpConstruction(arc, hcArc, intersections)`
 
 Trim line by given help construction
 
@@ -11669,38 +9685,7 @@ Trim line by given help construction
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.TrimByHelpConstruction)
 
-#### `TrimByHelpConstruction(polyline, segment, hcLine, intersections)`
-
-Trim polyline by given help construction
-
-**Remarks:** Trim polyline by given help construction
-
-**Parameters:**
-- `polyline` (Polyline2D) — polyline which will be trimmed
-- `segment` (Line2D) — selected segment
-- `hcLine` (Line2D) — line help construction
-- `intersections` (Point3DList) — intersection points
-
-**Returns:** `Polyline2D` — polyline which will be trimmed
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.TrimByHelpConstruction)
-
-#### `UpdateBySelectedHelpConstruction(line, trimHelpConstruction, intersection)`
-
-Update line by selected help construction
-
-**Remarks:** Update line by selected help construction
-
-**Parameters:**
-- `line` (Line2D) — line which will be updated by help construction
-- `trimHelpConstruction` (object) — help construction data
-- `intersection` (Point2D) — intersection
-
-**Returns:** `Line2D` — line which will be updated by help construction
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateBySelectedHelpConstruction)
-
-#### `UpdateBySelectedHelpConstruction(polyline, segment, trimHelpConstruction, intersection)`
+#### `UpdateBySelectedHelpConstruction(polyline, segment, trimHelpConstruction, intersection) | UpdateBySelectedHelpConstruction(line, trimHelpConstruction, intersection)`
 
 Update polyline by selected help construction
 
@@ -11716,7 +9701,7 @@ Update polyline by selected help construction
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateBySelectedHelpConstruction)
 
-#### `UpdateGeometry(geoArc, fillet, selectedGeometry)`
+#### `UpdateGeometry(geoArc, fillet, selectedGeometry) | UpdateGeometry(geoPolyline, fillet, selectedGeometry1, selectedGeometry2) | UpdateGeometry(geoPolyline, fillet, selectedGeometry) | UpdateGeometry(geoPolyline, fillet, selectedGeometry1, selectedGeometry2, segmentCount) | UpdateGeometry(geoPolygon, fillet, segment1, segment2, segmentCount) | UpdateGeometry(geoSpline, fillet) | UpdateGeometry(geoLine, fillet, selectedGeometry)`
 
 Update arc geometry
 
@@ -11731,100 +9716,6 @@ Update arc geometry
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
 
-#### `UpdateGeometry(geoLine, fillet, selectedGeometry)`
-
-Update lien geometry
-
-**Remarks:** Update lien geometry
-
-**Parameters:**
-- `geoLine` (Line2D) — line which will be updated
-- `fillet` (Arc2D) — Arc2D
-- `selectedGeometry` (object) — selected geometry
-
-**Returns:** `Line2D` — line which will be updated
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
-
-#### `UpdateGeometry(geoPolygon, fillet, segment1, segment2, segmentCount)`
-
-Update polyline geometry
-
-**Remarks:** Update polyline geometry
-
-**Parameters:**
-- `geoPolygon` (Polygon2D) — polygon which will be updated
-- `fillet` (Arc2D) — Arc2D
-- `segment1` (Line2D) — first selected geometry
-- `segment2` (Line2D) — second selected geometry
-- `segmentCount` (int) — required count of segments of the polygonized fillet
-
-**Returns:** `Polygon2D` — geoPolygon which will be updated
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
-
-#### `UpdateGeometry(geoPolyline, fillet, selectedGeometry)`
-
-Update polyline geometry
-
-**Remarks:** Update polyline geometry
-
-**Parameters:**
-- `geoPolyline` (Polyline2D) — polyline which will be updated
-- `fillet` (Arc2D) — Arc2D
-- `selectedGeometry` (object) — selected geometry
-
-**Returns:** `Polyline2D` — polyline which will be updated
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
-
-#### `UpdateGeometry(geoPolyline, fillet, selectedGeometry1, selectedGeometry2)`
-
-Update polyline geometry
-
-**Remarks:** Update polyline geometry
-
-**Parameters:**
-- `geoPolyline` (Polyline2D) — polyline which will be updated
-- `fillet` (Arc2D) — Arc2D
-- `selectedGeometry1` (object) — First selected segment
-- `selectedGeometry2` (object) — Second selected segment
-
-**Returns:** `Polyline2DList` — Result polylines
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
-
-#### `UpdateGeometry(geoPolyline, fillet, selectedGeometry1, selectedGeometry2, segmentCount)`
-
-Update polyline geometry
-
-**Remarks:** Update polyline geometry
-
-**Parameters:**
-- `geoPolyline` (Polyline2D) — polyline which will be updated
-- `fillet` (Arc2D) — Arc2D
-- `selectedGeometry1` (object) — the first selected geometry
-- `selectedGeometry2` (object) — the second selected geometry
-- `segmentCount` (int) — required count of segments of the polygonized fillet
-
-**Returns:** `Polyline2D` — polyline which will be updated
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
-
-#### `UpdateGeometry(geoSpline, fillet)`
-
-Update spline geometry
-
-**Remarks:** Update spline geometry
-
-**Parameters:**
-- `geoSpline` (Spline2D) — spline which will be updated
-- `fillet` (Arc2D) — Arc2D
-
-**Returns:** `Spline2D` — spline which will be updated
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry)
-
 ## FilletCalculus3D (class)
 
 Class for 3D fillet calculation
@@ -11832,69 +9723,7 @@ Class for 3D fillet calculation
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/)
 
 ### Methods
-#### `Calculate(brep, edges, radius, propagation)`
-
-Calculate fillet on selected edges of given BRep3D
-
-**Remarks:** Calculate fillet on selected edges of given BRep3D
-
-**Parameters:**
-- `brep` (BRep3D) — brep to fillet
-- `edges` (VecSizeTList) — edges to fillet
-- `radius` (float) — fillet sphere radius
-- `propagation` (bool) — flag for propagation of neighboring edges
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate)
-
-#### `Calculate(brep, radius)`
-
-Calculate fillet on all edges of given BRep3D
-
-**Remarks:** Calculate fillet on all edges of given BRep3D
-
-**Parameters:**
-- `brep` (BRep3D) — brep to fillet
-- `radius` (float) — fillet sphere radius
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate)
-
-#### `Calculate(line1, endPoint, polyline, startLineIndex, endLineIndex, radius)`
-
-Calculate fillet between line1 and line2. Line2 is created as line between end point of line1 (by parameter endPoint) and point from polyline (limited with startPointIndex and endPointIndex)
-
-**Remarks:** Calculate fillet between line1 and line2. Line2 is created as line between end point of line1 (by parameter endPoint) and point from polyline (limited with startPointIndex and endPointIndex)
-
-**Parameters:**
-- `line1` (Line3D) — Line 1 for fillet
-- `endPoint` (eLinePointIdentification) — Sign for line2 (from where point of line1 should be start line2)
-- `polyline` (Polyline3D) — Polyline (buffer of end points for line2)
-- `startLineIndex` (int) — Start point index for polyline
-- `endLineIndex` (int) — End point index for polyline
-- `radius` (float) — radius of fillet
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate)
-
-#### `Calculate(line1, line2)`
-
-Calculate fillet between two parallel non collinear 3d lines. The end point of the first line must lie on the same plane as start point of the second line and plane is perpendicular to both lines.
-
-**Remarks:** Calculate fillet between two parallel non collinear 3d lines. The end point of the first line must lie on the same plane as start point of the second line and plane is perpendicular to both lines.
-
-**Parameters:**
-- `line1` (Line3D) — first Line3D
-- `line2` (Line3D) — second Line3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate)
-
-#### `Calculate(line1, line2, radius)`
+#### `Calculate(line1, line2, radius) | Calculate(line1, line2) | Calculate(line1, endPoint, polyline, startLineIndex, endLineIndex, radius) | Calculate(polyhedron, edges, radius, propagation) | Calculate(brep, radius) | Calculate(brep, edges, radius, propagation)`
 
 Calculate fillet between two coplanar 3d lines
 
@@ -11909,22 +9738,6 @@ Calculate fillet between two coplanar 3d lines
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate)
 
-#### `Calculate(polyhedron, edges, radius, propagation)`
-
-Calculate fillet on selected edges of given Polyhedron3D
-
-**Remarks:** Calculate fillet on selected edges of given Polyhedron3D
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — polyhedron to fillet
-- `edges` (VecSizeTList) — edges to fillet
-- `radius` (float) — fillet sphere radius
-- `propagation` (bool) — flag for propagation of neighboring edges
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus3D/#NemAll_Python_Geometry.FilletCalculus3D.Calculate)
-
 ## Functions (static-class)
 
 Module-level functions of NemAll_Python_Geometry
@@ -11932,7 +9745,7 @@ Module-level functions of NemAll_Python_Geometry
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/)
 
 ### Methods
-#### `AddToMinMax(minMax, point)`
+#### `AddToMinMax(minMax, point) | AddToMinMax(minMax, point) | AddToMinMax(minMax, point) | AddToMinMax(minMax, point)`
 
 Calculate 2D-Min- and Max Point of an 2D point Calculates the MinMax2D volume by the Point2D given in parameter point.
 
@@ -11944,43 +9757,7 @@ Calculate 2D-Min- and Max Point of an 2D point Calculates the MinMax2D volume by
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.AddToMinMax)
 
-#### `AddToMinMax(minMax, point)`
-
-Calculate 2D-Min- and Max Point of an 3D point Calculates the MinMax2D volume by the Point3D given in parameter point.
-
-**Remarks:** Calculate 2D-Min- and Max Point of an 3D point Calculates the MinMax2D volume by the Point3D given in parameter point.
-
-**Parameters:**
-- `minMax` (MinMax2D) — where to ad min max box
-- `point` (Point3D) — Point3D to be added
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.AddToMinMax)
-
-#### `AddToMinMax(minMax, point)`
-
-Calculate 3D-Min- and Max Point of an 3D point Calculates the MinMax3D volume by the Point3D given in parameter point.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an 3D point Calculates the MinMax3D volume by the Point3D given in parameter point.
-
-**Parameters:**
-- `minMax` (MinMax3D) — where to ad min max box
-- `point` (Point3D) — Point3D to be added
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.AddToMinMax)
-
-#### `AddToMinMax(minMax, point)`
-
-Calculate 3D-Min- and Max Point of an 2D point Calculates the MinMax3D volume by the Point2D given in parameter point.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an 2D point Calculates the MinMax3D volume by the Point2D given in parameter point.
-
-**Parameters:**
-- `minMax` (MinMax3D) — where to ad min max box
-- `point` (Point2D) — Point2D to be added
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.AddToMinMax)
-
-#### `CalcAngle(l1)`
+#### `CalcAngle(l1) | CalcAngle(point1, point2)`
 
 compute angle of 2D line and x axis
 
@@ -11993,55 +9770,7 @@ compute angle of 2D line and x axis
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcAngle)
 
-#### `CalcAngle(point1, point2)`
-
-compute angle of 2D points
-
-**Remarks:** compute angle of 2D points
-
-**Parameters:**
-- `point1` (Point2D) — 1st point
-- `point2` (Point2D) — 2nd point
-
-**Returns:** `Angle` — result angle (normalized 2pi)
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcAngle)
-
-#### `CalcArea(areaGeo, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Get the area of a 2D path bounded closed area NEGATIVE_ORIENTATION for a CW orientated area boundary, INVALID_POLYGON on error
-
-**Remarks:** Get the area of a 2D path bounded closed area NEGATIVE_ORIENTATION for a CW orientated area boundary, INVALID_POLYGON on error
-
-**Parameters:**
-- `areaGeo` (ClosedArea2D) — The path bounded closed area those area is requested
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-
-**Returns:** `tuple` — The area of the given geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea)
-
-#### `CalcArea(areaGeo, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Get the area of a 2D path bounded closed area composite NEGATIVE_ORIENTATION for a CW orientated area boundary, INVALID_POLYGON on error
-
-**Remarks:** Get the area of a 2D path bounded closed area composite NEGATIVE_ORIENTATION for a CW orientated area boundary, INVALID_POLYGON on error
-
-**Parameters:**
-- `areaGeo` (ClosedAreaComposite2D) — The path bounded closed area composite those area is requested
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-
-**Returns:** `tuple` — The area of the given geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea)
-
-#### `CalcArea(p1, p2, p3)`
+#### `CalcArea(p1, p2, p3) | CalcArea(polygon) | CalcArea(polygon) | CalcArea(polygonalArea) | CalcArea(areaGeo, arcSegmentation, useArcSegmentation, armLength, riseValue) | CalcArea(areaGeo, arcSegmentation, useArcSegmentation, armLength, riseValue)`
 
 compute area of a triangle
 
@@ -12056,85 +9785,7 @@ compute area of a triangle
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea)
 
-#### `CalcArea(polygon)`
-
-Get the area of a 2D Polygon NEGATIVE_ORIENTATION for a CW orientated polygon, INVALID_POLYGON on error If an instance denotes an incorrect polygon (e.g. not enough points), the method will return INVALID_POLYGON. us, one can distinguish between a collapsed polygon with area = 0.0 and a wrong shape. The polygon must not be self-intersecting. In case of self intersection the area result is currently defined and the return value indicates no error. interface: age
-
-**Remarks:** Get the area of a 2D Polygon NEGATIVE_ORIENTATION for a CW orientated polygon, INVALID_POLYGON on error If an instance denotes an incorrect polygon (e.g. not enough points), the method will return INVALID_POLYGON. us, one can distinguish between a collapsed polygon with area = 0.0 and a wrong shape. The polygon must not be self-intersecting. In case of self intersection the area result is currently defined and the return value indicates no error. interface: age
-
-**Parameters:**
-- `polygon` (Polygon2D) — The polygon those area is requested
-
-**Returns:** `tuple` — The area of the polygon,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea)
-
-#### `CalcArea(polygon)`
-
-Get the area of a Polygon3D
-
-**Remarks:** Get the area of a Polygon3D
-
-**Parameters:**
-- `polygon` (Polygon3D) — polygon to measure
-
-**Returns:** `tuple` — area of the polygon,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea)
-
-#### `CalcArea(polygonalArea)`
-
-Get the area of a PolygonalArea or INVALID_POLYGON on error e: berechnePolygonFlaeche
-
-**Remarks:** Get the area of a PolygonalArea or INVALID_POLYGON on error e: berechnePolygonFlaeche
-
-**Parameters:**
-- `polygonalArea` (PolygonalArea3D)
-
-**Returns:** `tuple` — The area of the PolygonalArea,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcArea)
-
-#### `CalcLength(arc)`
-
-Calculate the Length of a 2D arc.
-
-**Remarks:** Calculate the Length of a 2D arc.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-
-**Returns:** `float` — Length of the given arc.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(arc)`
-
-calculate length of a 3D Arc.
-
-**Remarks:** calculate length of a 3D Arc.
-
-**Parameters:**
-- `arc` (Arc3D) — 3D arc.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(clothoid)`
-
-Calculate the Length of a 2D clothoid.
-
-**Remarks:** Calculate the Length of a 2D clothoid.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D Clothoid
-
-**Returns:** `float` — Length of the given clothoid.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(el)`
+#### `CalcLength(el) | CalcLength(vec) | CalcLength(polyline) | CalcLength(polygon) | CalcLength(polygon) | CalcLength(arc) | CalcLength(clothoid) | CalcLength(spline) | CalcLength(path) | CalcLength(line) | CalcLength(vec) | CalcLength(polyline) | CalcLength(arc) | CalcLength(path) | CalcLength(poly) | CalcLength(spline) | CalcLength(spline) | CalcLength(spline)`
 
 calculate length of a 2D line.
 
@@ -12147,189 +9798,7 @@ calculate length of a 2D line.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
 
-#### `CalcLength(line)`
-
-calculate length of a 3D line.
-
-**Remarks:** calculate length of a 3D line.
-
-**Parameters:**
-- `line` (Line3D) — 3D line.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(path)`
-
-Calculate the Length of a Path 2D.
-
-**Remarks:** Calculate the Length of a Path 2D.
-
-**Parameters:**
-- `path` (Path2D) — Path2D
-
-**Returns:** `float` — Length of the given Path2D
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(path)`
-
-calculate length of a 3D path.
-
-**Remarks:** calculate length of a 3D path.
-
-**Parameters:**
-- `path` (Path3D) — 3D path.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(poly)`
-
-calculate length of a polyhedron of edge type.
-
-**Remarks:** calculate length of a polyhedron of edge type.
-
-**Parameters:**
-- `poly` (Polyhedron3D) — Polyhedron3D.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(polygon)`
-
-Calculate the Length of a 2D Polygon. Result is length from all components, doesn't matter if it's solid or hole.
-
-**Remarks:** Calculate the Length of a 2D Polygon. Result is length from all components, doesn't matter if it's solid or hole.
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `float` — Length of the given polygon.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(polygon)`
-
-Calculate the Length of a 3D Polygon. Result is length from all components, doesn't matter if it's solid or hole.
-
-**Remarks:** Calculate the Length of a 3D Polygon. Result is length from all components, doesn't matter if it's solid or hole.
-
-**Parameters:**
-- `polygon` (Polygon3D) — 3D Polygon
-
-**Returns:** `float` — Length of the given polygon.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(polyline)`
-
-Calculate the Length of a 2D Polyline.
-
-**Remarks:** Calculate the Length of a 2D Polyline.
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `float` — Length of the given polyline.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(polyline)`
-
-calculate length of a 3D polyline.
-
-**Remarks:** calculate length of a 3D polyline.
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D polyline.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(spline)`
-
-Calculate the Length of a 2D spline.
-
-**Remarks:** Calculate the Length of a 2D spline.
-
-**Parameters:**
-- `spline` (Spline2D) — 2D Spline
-
-**Returns:** `float` — Length of the given spline.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(spline)`
-
-Calculate the Length of a 3D spline.
-
-**Remarks:** Calculate the Length of a 3D spline.
-
-**Parameters:**
-- `spline` (Spline3D) — 3D Spline
-
-**Returns:** `float` — Length of the given spline.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(spline)`
-
-Calculate the Length of a 3D spline.
-
-**Remarks:** Calculate the Length of a 3D spline.
-
-**Parameters:**
-- `spline` (Spline3D) — 3D Spline
-
-**Returns:** `float` — Length of the given spline.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(spline)`
-
-Calculate the Length of a 3D bspline.
-
-**Remarks:** Calculate the Length of a 3D bspline.
-
-**Parameters:**
-- `spline` (BSpline3D) — 3D BSpline
-
-**Returns:** `float` — Length of the given spline.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(vec)`
-
-calculate length of a 2D vector.
-
-**Remarks:** calculate length of a 2D vector.
-
-**Parameters:**
-- `vec` (Vector2D) — 2D vector.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcLength(vec)`
-
-calculate length of a 3D vector.
-
-**Remarks:** calculate length of a 3D vector.
-
-**Parameters:**
-- `vec` (Vector3D) — 3D vector.
-
-**Returns:** `float` — double result.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcLength)
-
-#### `CalcMass(elem)`
+#### `CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem) | CalcMass(elem)`
 
 Calculate mass values
 
@@ -12342,293 +9811,7 @@ Calculate mass values
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
 
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (Cuboid3D) — Cuboid3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (Cylinder3D) — Cylinder3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (Ellipsoid3D) — Ellipsoid3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (Cone3D) — Cone3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (ClippedSweptSolid3D) — ClippedSweptSolid3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (ExtrudedAreaSolid3D) — ExtrudedAreaSolid3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMass(elem)`
-
-Calculate mass values
-
-**Remarks:** Calculate mass values
-
-**Parameters:**
-- `elem` (BRep3D) — BRep3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMass)
-
-#### `CalcMinMax(arc)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Arc2D given in parameter arc.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Arc2D given in parameter arc.
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(arc)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Arc3D given in parameter arc.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Arc3D given in parameter arc.
-
-**Parameters:**
-- `arc` (Arc3D) — Arc3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(area)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the ClosedArea2D.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the ClosedArea2D.
-
-**Parameters:**
-- `area` (ClosedArea2D) — ClosedArea2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(area)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the ClosedAreaComposite2D.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the ClosedAreaComposite2D.
-
-**Parameters:**
-- `area` (ClosedAreaComposite2D) — ClosedAreaComposite2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(area)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the PolygonalArea3D given in parameter area.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the PolygonalArea3D given in parameter area.
-
-**Parameters:**
-- `area` (PolygonalArea3D) — PolygonalArea3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(clothoid)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Clothoid2D given in parameter clothoid.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Clothoid2D given in parameter clothoid.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — Clothoid to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(cone)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Cone3D given in parameter cylinder.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Cone3D given in parameter cylinder.
-
-**Parameters:**
-- `cone` (Cone3D) — Cone3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(cuboid)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Cuboid3D given in parameter cuboid.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Cuboid3D given in parameter cuboid.
-
-**Parameters:**
-- `cuboid` (Cuboid3D) — Cuboid3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(cylinder)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Cylinder3D given in parameter cylinder.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Cylinder3D given in parameter cylinder.
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — Cylinder3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(ellipsoid)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Ellipsoid3D given in parameter ellpsoid.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Ellipsoid3D given in parameter ellpsoid.
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — Ellipsoid3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(geo)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume for the Path3D element.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume for the Path3D element.
-
-**Parameters:**
-- `geo` (Path3D) — Path3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(geo)`
-
-Calculate 3D minmax of the B-rep body
-
-**Remarks:** Calculate 3D minmax of the B-rep body
-
-**Parameters:**
-- `geo` (BRep3D) — BRep3D geometry
-
-**Returns:** `MinMax3D` — tuple(calculated MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(line)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Line2D given in parameter line.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Line2D given in parameter line.
-
-**Parameters:**
-- `line` (Line2D) — Line2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(line)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Line3D given in parameter line.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Line3D given in parameter line.
-
-**Parameters:**
-- `line` (Line3D) — Line3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(path)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the Path2D.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the Path2D.
-
-**Parameters:**
-- `path` (Path2D) — Path2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(point)`
+#### `CalcMinMax(point) | CalcMinMax(line) | CalcMinMax(polyline) | CalcMinMax(polygon) | CalcMinMax(arc) | CalcMinMax(spline) | CalcMinMax(spline) | CalcMinMax(spline) | CalcMinMax(spline) | CalcMinMax(clothoid) | CalcMinMax(path) | CalcMinMax(area) | CalcMinMax(area) | CalcMinMax(point) | CalcMinMax(line) | CalcMinMax(polyline) | CalcMinMax(pointCloud) | CalcMinMax(polygon) | CalcMinMax(arc) | CalcMinMax(polyhedron) | CalcMinMax(cuboid) | CalcMinMax(cylinder) | CalcMinMax(cone) | CalcMinMax(ellipsoid) | CalcMinMax(area) | CalcMinMax(solid) | CalcMinMax(solid) | CalcMinMax(geo) | CalcMinMax(geo)`
 
 Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Point2D given in parameter point
 
@@ -12636,175 +9819,6 @@ Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the P
 
 **Parameters:**
 - `point` (Point2D) — Point2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(point)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Point3D given in parameter point.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Point3D given in parameter point.
-
-**Parameters:**
-- `point` (Point3D) — Point3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(pointCloud)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the PointCloud3D given in parameter point cloud.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the PointCloud3D given in parameter point cloud.
-
-**Parameters:**
-- `pointCloud` (object) — PointCloud3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(polygon)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Polygon2D given in parameter polygon.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Polygon2D given in parameter polygon.
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(polygon)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Polygon3D given in parameter polygon.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Polygon3D given in parameter polygon.
-
-**Parameters:**
-- `polygon` (Polygon3D) — Polygon3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(polyhedron)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Polyhedron3D given in parameter polyhedron.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Polyhedron3D given in parameter polyhedron.
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — Polyhedron3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(polyline)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Polyline2D given in parameter polyline.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Polyline2D given in parameter polyline.
-
-**Parameters:**
-- `polyline` (Polyline2D) — Polyline2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(polyline)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Polyline3D given in parameter polyline.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the Polyline3D given in parameter polyline.
-
-**Parameters:**
-- `polyline` (Polyline3D) — Polyline3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(solid)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the ExtrudedAreaSolid3D given in parameter solid.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the ExtrudedAreaSolid3D given in parameter solid.
-
-**Parameters:**
-- `solid` (ExtrudedAreaSolid3D) — ExtrudedAreaSolid3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(solid)`
-
-Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the ClippedSweptSolid3D given in parameter solid.
-
-**Remarks:** Calculate 3D-Min- and Max Point of an element. Calculates the MinMax3D volume by the ClippedSweptSolid3D given in parameter solid.
-
-**Parameters:**
-- `solid` (ClippedSweptSolid3D) — ClippedSweptSolid3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(spline)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Spline2D given in parameter spline.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box by the Spline2D given in parameter spline.
-
-**Parameters:**
-- `spline` (Spline2D) — Spline2D to be calculated
-
-**Returns:** `MinMax2D` — tuple(MinMax2D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(spline)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax3D box of the Spline3D given in parameter spline.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax3D box of the Spline3D given in parameter spline.
-
-**Parameters:**
-- `spline` (Spline3D) — Spline3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(spline)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax3D box of the BSpline3D given in parameter spline.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax3D box of the BSpline3D given in parameter spline.
-
-**Parameters:**
-- `spline` (BSpline3D) — BSpline3D to be calculated
-
-**Returns:** `MinMax3D` — tuple(MinMax3D,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CalcMinMax)
-
-#### `CalcMinMax(spline)`
-
-Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the BSpline2D given in parameter spline.
-
-**Remarks:** Calculate Min- and Max Point of an element. Calculates the MinMax2D box of the BSpline2D given in parameter spline.
-
-**Parameters:**
-- `spline` (BSpline2D) — BSpline2D to be calculated
 
 **Returns:** `MinMax2D` — tuple(MinMax2D,
 
@@ -12892,49 +9906,7 @@ test 2D line and minmax box for clipping
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Clipping)
 
-#### `Colliding(brep1, brep2)`
-
-Test for collision between 2 breps (touch is not collision)
-
-**Remarks:** Test for collision between 2 breps (touch is not collision)
-
-**Parameters:**
-- `brep1` (BRep3D) — 1-st brep element
-- `brep2` (BRep3D) — 2-nd brep element
-
-**Returns:** `bool` — true when colliding, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Colliding)
-
-#### `Colliding(minMax, polygon)`
-
-Test for collision between 2 geometry objects
-
-**Remarks:** Test for collision between 2 geometry objects
-
-**Parameters:**
-- `minMax` (MinMax2D) — MinMax
-- `polygon` (Polygon2D) — polygon
-
-**Returns:** `bool` — true when colliding, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Colliding)
-
-#### `Colliding(polygon, line)`
-
-Test for collision between 2 geometry objects
-
-**Remarks:** Test for collision between 2 geometry objects
-
-**Parameters:**
-- `polygon` (Polygon2D) — polygon
-- `line` (Line2D) — line
-
-**Returns:** `bool` — true when colliding, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Colliding)
-
-#### `Colliding(polygon1, polygon2)`
+#### `Colliding(polygon1, polygon2) | Colliding(polygon, line) | Colliding(minMax, polygon) | Colliding(brep1, brep2)`
 
 Test for collision between 2 geometry objects
 
@@ -12962,59 +9934,7 @@ Convert a 3D Rotation to series of 2D operations: scale, rotation, scale, rotati
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Convert3DRotation)
 
-#### `ConvertTo2D(arc3D)`
-
-Converts Arc3D to Arc2D function converts successfully only 3D circle and 3D ellipse which are parallel to standard plane
-
-**Remarks:** Converts Arc3D to Arc2D function converts successfully only 3D circle and 3D ellipse which are parallel to standard plane
-
-**Parameters:**
-- `arc3D` (Arc3D) — Arc3D to convert
-
-**Returns:** `bool` — tuple(Arc3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(axis3D)`
-
-Converts Axis3D to Axis2D
-
-**Remarks:** Converts Axis3D to Axis2D
-
-**Parameters:**
-- `axis3D` (Axis3D) — Axis3D to convert
-
-**Returns:** `bool` — tuple(axis2D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(bspline3D)`
-
-Converts BSpline3D to BSpline2D function converts successfully only 3D bspline which is parallel to standard plane
-
-**Remarks:** Converts BSpline3D to BSpline2D function converts successfully only 3D bspline which is parallel to standard plane
-
-**Parameters:**
-- `bspline3D` (BSpline3D) — BSpline3D to convert
-
-**Returns:** `bool` — tuple(BSpline3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(geo_object)`
-
-Converts geometry to 2D geometry Currently works on Line3D, Polyline3D, Axis3D, Arc3D, Point3D and Polygon3D. 2D geometries are cloned without modification.
-
-**Remarks:** Converts geometry to 2D geometry Currently works on Line3D, Polyline3D, Axis3D, Arc3D, Point3D and Polygon3D. 2D geometries are cloned without modification.
-
-**Parameters:**
-- `geo_object` (object) — geometry to convert
-
-**Returns:** `object` — nullptr if conversion is not possible, otherwise converted geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(line3D)`
+#### `ConvertTo2D(line3D) | ConvertTo2D(polyline3D) | ConvertTo2D(axis3D) | ConvertTo2D(point3D) | ConvertTo2D(polygon3D) | ConvertTo2D(arc3D) | ConvertTo2D(spline3D) | ConvertTo2D(bspline3D) | ConvertTo2D(points3D) | ConvertTo2D(path3D) | ConvertTo2D(geo_object)`
 
 Converts Line3D to Line2D
 
@@ -13027,141 +9947,7 @@ Converts Line3D to Line2D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
 
-#### `ConvertTo2D(path3D)`
-
-Converts Path3D to Path2D
-
-**Remarks:** Converts Path3D to Path2D
-
-**Parameters:**
-- `path3D` (Path3D) — source path 2D
-
-**Returns:** `bool` — tuple(if success true,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(point3D)`
-
-Converts Point3D to Point2D
-
-**Remarks:** Converts Point3D to Point2D
-
-**Parameters:**
-- `point3D` (Point3D) — Point3D to convert
-
-**Returns:** `bool` — tuple(point3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(points3D)`
-
-Converts vector of Point3D to vector of Point2D
-
-**Remarks:** Converts vector of Point3D to vector of Point2D
-
-**Parameters:**
-- `points3D` (Point3DList) — points to convert
-
-**Returns:** `bool` — tuple(if success true,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(polygon3D)`
-
-Converts Polygon3D to Polygon2D
-
-**Remarks:** Converts Polygon3D to Polygon2D
-
-**Parameters:**
-- `polygon3D` (Polygon3D) — Polygon3D to convert
-
-**Returns:** `bool` — tuple(polygon3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(polyline3D)`
-
-Converts Polyline3D to Polyline2D
-
-**Remarks:** Converts Polyline3D to Polyline2D
-
-**Parameters:**
-- `polyline3D` (Polyline3D) — Polyline3D to convert
-
-**Returns:** `bool` — tuple(polyline2D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo2D(spline3D)`
-
-Converts Spline3D to Spline2D function converts successfully only 3D spline which is parallel to standard plane
-
-**Remarks:** Converts Spline3D to Spline2D function converts successfully only 3D spline which is parallel to standard plane
-
-**Parameters:**
-- `spline3D` (Spline3D) — Spline3D to convert
-
-**Returns:** `bool` — tuple(Spline3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo2D)
-
-#### `ConvertTo3D(arc2D, zPlane=0)`
-
-Converts Arc2D to Arc3D
-
-**Remarks:** Converts Arc2D to Arc3D
-
-**Parameters:**
-- `arc2D` (Arc2D) — Arc2D to convert
-- `zPlane` (float) — Z value
-
-**Returns:** `bool` — tuple(arc3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(axis2D, zPlane=0)`
-
-Converts Axis2D to Axis3D
-
-**Remarks:** Converts Axis2D to Axis3D
-
-**Parameters:**
-- `axis2D` (Axis2D) — Axis2D to convert
-- `zPlane` (float) — Z value
-
-**Returns:** `bool` — tuple(axis3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(bspline2D, zPlane=0)`
-
-Create an elevated 3D bspline from a 2D bspline
-
-**Remarks:** Create an elevated 3D bspline from a 2D bspline
-
-**Parameters:**
-- `bspline2D` (BSpline2D) — BSpline2D to convert
-- `zPlane` (float) — Z plane for the spline
-
-**Returns:** `bool` — tuple(BSpline3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(clothoid2D, zPlane=0)`
-
-Convert 2D clothoid to a 3D bspline
-
-**Remarks:** Convert 2D clothoid to a 3D bspline
-
-**Parameters:**
-- `clothoid2D` (Clothoid2D) — 2D clothoid
-- `zPlane` (float) — Z coordinate to be set by conversion
-
-**Returns:** `bool` — tuple(true if success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(line2D, zPlane=0)`
+#### `ConvertTo3D(line2D, zPlane=0) | ConvertTo3D(polyline2D, zPlane=0) | ConvertTo3D(axis2D, zPlane=0) | ConvertTo3D(spline2D, zPlane=0) | ConvertTo3D(arc2D, zPlane=0) | ConvertTo3D(bspline2D, zPlane=0) | ConvertTo3D(path2D, zPlane=0) | ConvertTo3D(points2D, zPlane=0) | ConvertTo3D(polygon, zPlane=0) | ConvertTo3D(clothoid2D, zPlane=0)`
 
 Converts Line2D to Line3D
 
@@ -13175,77 +9961,7 @@ Converts Line2D to Line3D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
 
-#### `ConvertTo3D(path2D, zPlane=0)`
-
-Convert Path2D to Path3D
-
-**Remarks:** Convert Path2D to Path3D
-
-**Parameters:**
-- `path2D` (Path2D) — Path2D to convert
-- `zPlane` (float) — Z plane for the curve
-
-**Returns:** `bool` — tuple(bool (true = success),
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(points2D, zPlane=0)`
-
-Convert vector of 2D points to a vector of 3D points
-
-**Remarks:** Convert vector of 2D points to a vector of 3D points
-
-**Parameters:**
-- `points2D` (Point2DList) — vector of 2D points
-- `zPlane` (float) — Z coordinate to be set by conversion
-
-**Returns:** `bool` — tuple(true if success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(polygon, zPlane=0)`
-
-Convert 2D polygon to a 3D polygon
-
-**Remarks:** Convert 2D polygon to a 3D polygon
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D polygon
-- `zPlane` (float) — Z coordinate to be set by conversion
-
-**Returns:** `bool` — tuple(true if success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(polyline2D, zPlane=0)`
-
-Converts Polyline2D to Polyline3D
-
-**Remarks:** Converts Polyline2D to Polyline3D
-
-**Parameters:**
-- `polyline2D` (Polyline2D) — Polyline2D to convert
-- `zPlane` (float) — Z value
-
-**Returns:** `bool` — tuple(polyline3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertTo3D(spline2D, zPlane=0)`
-
-Create an elevated 3D spline from a 2D spline
-
-**Remarks:** Create an elevated 3D spline from a 2D spline
-
-**Parameters:**
-- `spline2D` (Spline2D) — Spline to convert
-- `zPlane` (float) — Z plane for the spline
-
-**Returns:** `bool` — tuple(spline3D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertTo3D)
-
-#### `ConvertToBSpline2D(arc3D)`
+#### `ConvertToBSpline2D(arc3D) | ConvertToBSpline2D(spline3D)`
 
 Converts Arc3D to BSpline2D
 
@@ -13258,34 +9974,7 @@ Converts Arc3D to BSpline2D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertToBSpline2D)
 
-#### `ConvertToBSpline2D(spline3D)`
-
-Converts Spline3D to BSpline2D
-
-**Remarks:** Converts Spline3D to BSpline2D
-
-**Parameters:**
-- `spline3D` (Spline3D) — Spline3D to convert
-
-**Returns:** `bool` — tuple(bspline2D is valid: true/false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ConvertToBSpline2D)
-
-#### `CreateBRep3D(brep, faceindex)`
-
-Create brep from brep face
-
-**Remarks:** Create brep from brep face
-
-**Parameters:**
-- `brep` (BRep3D) — brep to copy face from
-- `faceindex` (int) — face index
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateBRep3D)
-
-#### `CreateBRep3D(polyhedron)`
+#### `CreateBRep3D(polyhedron) | CreateBRep3D(brep, faceindex)`
 
 Create BRep3D by converting a polyhedron
 
@@ -13346,20 +10035,7 @@ Create breps as patch from given closed 3D-curves
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePatchBRep3D)
 
-#### `CreatePlanarBRep3D(icurve_object)`
-
-Create brep as planar surface
-
-**Remarks:** Create brep as planar surface
-
-**Parameters:**
-- `icurve_object` (object) — border of planar surface ( must be closed )
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePlanarBRep3D)
-
-#### `CreatePlanarBRep3D(profiles_object)`
+#### `CreatePlanarBRep3D(profiles_object) | CreatePlanarBRep3D(icurve_object)`
 
 Create brep as planar surface
 
@@ -13385,21 +10061,7 @@ create planar brep
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePlanarSurface)
 
-#### `CreatePolygon3D(polygon2D, plane)`
-
-Creates a Polygon3D element as a projection of 2D polygon onto given plane
-
-**Remarks:** Creates a Polygon3D element as a projection of 2D polygon onto given plane
-
-**Parameters:**
-- `polygon2D` (Polygon2D) — 2D polygon
-- `plane` (Plane3D) — plane to project 2D polygon to
-
-**Returns:** `tuple` — eOK if successful, else eError,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolygon3D)
-
-#### `CreatePolygon3D(polyhedron, faceIndex)`
+#### `CreatePolygon3D(polyhedron, faceIndex) | CreatePolygon3D(polygon2D, plane) | CreatePolygon3D(polyline)`
 
 Creates a Polygon3D element from a Polyhedron face
 
@@ -13413,19 +10075,6 @@ Creates a Polygon3D element from a Polyhedron face
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolygon3D)
 
-#### `CreatePolygon3D(polyline)`
-
-Creates a Polygon3D from Polyline3D
-
-**Remarks:** Creates a Polygon3D from Polyline3D
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D polygline
-
-**Returns:** `tuple` — eOK if successful, else eError,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolygon3D)
-
 #### `CreatePolygon3DFromIndex(arg2, arg3, arg4)`
 
 Create a 3D polygon from a start and end polygon, an index and a division count
@@ -13434,151 +10083,7 @@ Create a 3D polygon from a start and end polygon, an index and a division count
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolygon3DFromIndex)
 
-#### `CreatePolyhedron(base, path)`
-
-Create translation polyhedron from base polygon and path
-
-**Remarks:** Create translation polyhedron from base polygon and path
-
-**Parameters:**
-- `base` (Polygon3D) — base polygon
-- `path` (Polyline3D) — translation path
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(base, refPoint, path)`
-
-Create translation polyhedron from base polygon and path
-
-**Remarks:** Create translation polyhedron from base polygon and path
-
-**Parameters:**
-- `base` (Polygon2D) — base polygon 2D
-- `refPoint` (Point2D) — reference point used for transformation
-- `path` (Polyline3D) — translation path
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(baseOutline, leftOffset, rightOffset, frontOffset, backOffset, bottomPlane, topPlane)`
-
-Create conical polyhedron from 2D polygon, given offsets, bottom and top plane
-
-**Remarks:** Create conical polyhedron from 2D polygon, given offsets, bottom and top plane
-
-**Parameters:**
-- `baseOutline` (Polygon2D) — base outline polygon 2D (rectangle of 4 points)
-- `leftOffset` (float) — offset from base outline on the left side
-- `rightOffset` (float) — offset from base outline on the right side
-- `frontOffset` (float) — offset from base outline on the front side
-- `backOffset` (float) — offset from base outline on the back side
-- `bottomPlane` (Plane3D) — element's bottom plane
-- `topPlane` (Plane3D) — element's top plane
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(brep, options)`
-
-Create polyhedron as approximation of arbitrary BRep3D
-
-**Remarks:** Create polyhedron as approximation of arbitrary BRep3D
-
-**Parameters:**
-- `brep` (BRep3D) — arbitrary BRep3D
-- `options` (ApproximationSettings) — approximation settings
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(cylinder, countOfSegments)`
-
-Create polyhedron from input Cylinder
-
-**Remarks:** Create polyhedron from input Cylinder
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — Cylinder to convert
-- `countOfSegments` (int) — Count of segments
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(igeo, options)`
-
-Create polyhedron from arbitrary solid
-
-**Remarks:** Create polyhedron from arbitrary solid
-
-**Parameters:**
-- `geoObject` (object) — Geometry object
-- `options` (ApproximationSettings) — ApproximationSettings structure holding options for approximation
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(line)`
-
-Create polyhedron from Line3D
-
-**Remarks:** Create polyhedron from Line3D
-
-**Parameters:**
-- `line` (Line3D) — Reference to Line3D
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(lines)`
-
-Create polyhedron from vector of 3D lines
-
-**Remarks:** Create polyhedron from vector of 3D lines
-
-**Parameters:**
-- `lines` (Line3DList) — vector of lines
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(polygon)`
-
-Create polyhedron from Polygon3D
-
-**Remarks:** Create polyhedron from Polygon3D
-
-**Parameters:**
-- `polygon` (Polygon3D) — Reference to Polygon3D
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(polygon, bottomPlane, topPlane)`
-
-Create translation polyhedron from 2D polygon, bottom and top plane
-
-**Remarks:** Create translation polyhedron from 2D polygon, bottom and top plane
-
-**Parameters:**
-- `polygon` (Polygon2D) — polygon 2D
-- `bottomPlane` (Plane3D) — the bottom plane
-- `topPlane` (Plane3D) — the top plane
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(polyhedronType, verticesCount, edgeCount, faceCount, negativeOrientation)`
+#### `CreatePolyhedron(polyhedronType, verticesCount, edgeCount, faceCount, negativeOrientation) | CreatePolyhedron(solid) | CreatePolyhedron(solid) | CreatePolyhedron(cylinder, countOfSegments) | CreatePolyhedron(igeo, options) | CreatePolyhedron(brep, options) | CreatePolyhedron(polygon) | CreatePolyhedron(line) | CreatePolyhedron(lines) | CreatePolyhedron(polyline) | CreatePolyhedron(base, path) | CreatePolyhedron(base, refPoint, path) | CreatePolyhedron(polygon, bottomPlane, topPlane) | CreatePolyhedron(baseOutline, leftOffset, rightOffset, frontOffset, backOffset, bottomPlane, topPlane) | CreatePolyhedron(startPolygon, endPolygon)`
 
 Create and initialize new Polyhedron3D
 
@@ -13595,73 +10100,7 @@ Create and initialize new Polyhedron3D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
 
-#### `CreatePolyhedron(polyline)`
-
-Create polyhedron from Polyline3D
-
-**Remarks:** Create polyhedron from Polyline3D
-
-**Parameters:**
-- `polyline` (Polyline3D) — Reference to Polyline3D
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(solid)`
-
-Create polyhedron from input parametric solid
-
-**Remarks:** Create polyhedron from input parametric solid
-
-**Parameters:**
-- `solid` (ClippedSweptSolid3D) — clipped swept solid
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(solid)`
-
-Create polyhedron from input parametric solid
-
-**Remarks:** Create polyhedron from input parametric solid
-
-**Parameters:**
-- `solid` (ExtrudedAreaSolid3D) — extruded area solid
-
-**Returns:** `tuple` — Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyhedron(startPolygon, endPolygon)`
-
-Create a polyhedron from a 3D start and end polygon
-
-**Remarks:** Create a polyhedron from a 3D start and end polygon
-
-**Parameters:**
-- `startPolygon` (Polygon3D) — Start polygon
-- `endPolygon` (Polygon3D) — End polygon
-
-**Returns:** `tuple` — Error code
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyhedron)
-
-#### `CreatePolyline3D(polygon)`
-
-Creates a Polyline3D from Polygon3D
-
-**Remarks:** Creates a Polyline3D from Polygon3D
-
-**Parameters:**
-- `polygon` (Polygon3D) — 3D polygon
-
-**Returns:** `tuple` — eOK if successful, else eError,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyline3D)
-
-#### `CreatePolyline3D(polyhedron)`
+#### `CreatePolyline3D(polyhedron) | CreatePolyline3D(polyline2D) | CreatePolyline3D(polygon)`
 
 Creates a Polyline3D element from a Polyhedron
 
@@ -13671,19 +10110,6 @@ Creates a Polyline3D element from a Polyhedron
 - `polyhedron` (Polyhedron3D) — Polyhedron to create line from
 
 **Returns:** `tuple` — eOK if converted successful, else eError,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyline3D)
-
-#### `CreatePolyline3D(polyline2D)`
-
-Create Polyline3D from Polyline2D
-
-**Remarks:** Create Polyline3D from Polyline2D
-
-**Parameters:**
-- `polyline2D` (Polyline2D) — Reference to Polyline2D
-
-**Returns:** `tuple` — eOK if created successful, else eError,
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyline3D)
 
@@ -13697,7 +10123,7 @@ Create a 3D polyline from a start and end polyline, an index and a division coun
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreatePolyline3DFromIndex)
 
-#### `CreateRailSweptBRep3D(profiles_object, rails_object, closecaps, uniformScaling, railrotation)`
+#### `CreateRailSweptBRep3D(profiles_object, rails_object, closecaps, uniformScaling, railrotation) | CreateRailSweptBRep3D(profiles_object, rails_object, path_object, closecaps, uniformScaling, railrotation, proportionalVertexMatch)`
 
 Create BRep3D by rail sweeping of profiles. Rails must start/ends on profiles start/end points
 
@@ -13709,25 +10135,6 @@ Create BRep3D by rail sweeping of profiles. Rails must start/ends on profiles st
 - `closecaps` (bool) — if true, create closed solid if possible, if false just surface(s) will be created
 - `uniformScaling` (bool) — use uniform scaling for profiles along the rails
 - `railrotation` (bool) — use rotation the shape to maintain a constant angle with the rail
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateRailSweptBRep3D)
-
-#### `CreateRailSweptBRep3D(profiles_object, rails_object, path_object, closecaps, uniformScaling, railrotation, proportionalVertexMatch)`
-
-Create BRep3D by rail sweeping of profiles. Rails must start/ends on profiles start/end points
-
-**Remarks:** Create BRep3D by rail sweeping of profiles. Rails must start/ends on profiles start/end points
-
-**Parameters:**
-- `profiles_object` (list) — profiles to sweep
-- `rails_object` (list) — rails to control sweeping
-- `path_object` (object) — user defined path
-- `closecaps` (bool) — if true, create closed solid if possible, if false just surface(s) will be created
-- `uniformScaling` (bool) — use uniform scaling for profiles along the rails
-- `railrotation` (bool) — use rotation the shape to maintain a constant angle with the rail
-- `proportionalVertexMatch` (bool) — Flag whether to use proportional vertex matching
 
 **Returns:** `eGeometryErrorCode` — tuple(error code,
 
@@ -13750,23 +10157,7 @@ Create brep as revolved body.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateRevolvedBRep3D)
 
-#### `CreateSweptBRep3D(profile_object, path_object, railrotation, rotAxis=None)`
-
-Create BRep3D by means of a profile extrusion along a path
-
-**Remarks:** Create BRep3D by means of a profile extrusion along a path
-
-**Parameters:**
-- `profile_object` (object) — profile to extrude, if closed solid will be created, otherwise a surface only
-- `path_object` (object) — path to extrude along
-- `railrotation` (bool) — if true, rotate profile along the path
-- `rotAxis` (Optional[Vector3D]) — if set, profile will be rotated along this axis along the path
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateSweptBRep3D)
-
-#### `CreateSweptBRep3D(profiles_object, path_object, closecaps, railrotation, rotAxis=None, numprofiles=0)`
+#### `CreateSweptBRep3D(profiles_object, path_object, closecaps, railrotation, rotAxis=None, numprofiles=0) | CreateSweptBRep3D(profiles_object, path_object, closecaps, railrotation, rotAxis=None, numprofiles=0) | CreateSweptBRep3D(profile_object, path_object, railrotation, rotAxis=None)`
 
 Create BRep3D by means of a vector of profiles extrusion along a path
 
@@ -13777,24 +10168,6 @@ Create BRep3D by means of a vector of profiles extrusion along a path
 - `path_object` (object) — path to extrude along
 - `closecaps` (bool) — if true, create closed solid if possible, if false just surface(s) will be created
 - `railrotation` (SweepRotationType) — if true, rotate profile along the path
-- `rotAxis` (Optional[Vector3D]) — if set, profile will be rotated along this axis along the path
-- `numprofiles` (int) — number of control profiles created along the created surfaces (divisionn of surface parameter)
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.CreateSweptBRep3D)
-
-#### `CreateSweptBRep3D(profiles_object, path_object, closecaps, railrotation, rotAxis=None, numprofiles=0)`
-
-Create BRep3D by means of a vector of profiles extrusion along a path
-
-**Remarks:** Create BRep3D by means of a vector of profiles extrusion along a path
-
-**Parameters:**
-- `profiles_object` (list) — profiles to extrude, if closed solid will be created, otherwise a surface only
-- `path_object` (object) — path to extrude along
-- `closecaps` (bool) — if true, create closed solid if possible, if false just surface(s) will be created
-- `railrotation` (bool) — if true, rotate profile along the path
 - `rotAxis` (Optional[Vector3D]) — if set, profile will be rotated along this axis along the path
 - `numprofiles` (int) — number of control profiles created along the created surfaces (divisionn of surface parameter)
 
@@ -13860,21 +10233,7 @@ Delete the last face of given polyhedron
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.DeletePolyhedronLastFace)
 
-#### `FindMinDistancePoint(point, brep)`
-
-Find minimal distance point between Point3D and BSpline3D
-
-**Remarks:** Find minimal distance point between Point3D and BSpline3D
-
-**Parameters:**
-- `point` (Point3D) — Point3D
-- `brep` (BRep3D) — BRep3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.FindMinDistancePoint)
-
-#### `FindMinDistancePoint(point, bspline)`
+#### `FindMinDistancePoint(point, bspline) | FindMinDistancePoint(point, brep)`
 
 Find minimal distance point between Point3D and BSpline3D
 
@@ -13986,35 +10345,7 @@ get relative tolerance
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetRelativeTolerance)
 
-#### `GetRotationMatrix(axis, angle)`
-
-Creates 3D rotation matrix
-
-**Remarks:** Creates 3D rotation matrix
-
-**Parameters:**
-- `axis` (Axis3D) — Rotation axis
-- `angle` (Angle) — Rotation angle
-
-**Returns:** `Matrix3D` — 3D rotation Matrix
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetRotationMatrix)
-
-#### `GetRotationMatrix(line, angle)`
-
-Creates 3D rotation matrix
-
-**Remarks:** Creates 3D rotation matrix
-
-**Parameters:**
-- `line` (Line3D) — Rotation line, extended to axis
-- `angle` (Angle) — Rotation angle
-
-**Returns:** `Matrix3D` — 3D rotation Matrix
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetRotationMatrix)
-
-#### `GetRotationMatrix(zeroPoint, angle)`
+#### `GetRotationMatrix(zeroPoint, angle) | GetRotationMatrix(axis, angle) | GetRotationMatrix(line, angle)`
 
 Creates 2D rotation matrix
 
@@ -14028,7 +10359,7 @@ Creates 2D rotation matrix
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GetRotationMatrix)
 
-#### `GroundViewHiddenCalculation(brep)`
+#### `GroundViewHiddenCalculation(brep) | GroundViewHiddenCalculation(poly)`
 
 Hidden calculation with ground view of BRep
 
@@ -14036,19 +10367,6 @@ Hidden calculation with ground view of BRep
 
 **Parameters:**
 - `brep` (BRep3D) — BRep
-
-**Returns:** `eGeometryErrorCode` — tuple(Error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.GroundViewHiddenCalculation)
-
-#### `GroundViewHiddenCalculation(poly)`
-
-Hidden calculation with ground view of polyhedron.
-
-**Remarks:** Hidden calculation with ground view of polyhedron.
-
-**Parameters:**
-- `poly` (Polyhedron3D) — polyhedron
 
 **Returns:** `eGeometryErrorCode` — tuple(Error code,
 
@@ -14069,7 +10387,7 @@ Imprint edges on brep
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.ImprintProfileOnFaces)
 
-#### `Intersect(bodies1_list, bodies2_list)`
+#### `Intersect(bodies1_list, bodies2_list) | Intersect(el1, el2) | Intersect(el1, el2) | Intersect(brep1, brep2) | Intersect(brep, polyhedron)`
 
 compute intersection of set of bodies
 
@@ -14078,62 +10396,6 @@ compute intersection of set of bodies
 **Parameters:**
 - `bodies1_list` (PolyhedronTypesList) — list of bodies
 - `bodies2_list` (PolyhedronTypesList) — list of bodies
-
-**Returns:** `bool` — tuple(true when intersecting, otherwise false.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersect)
-
-#### `Intersect(brep, polyhedron)`
-
-Compute intersection of 2 bodies
-
-**Remarks:** Compute intersection of 2 bodies
-
-**Parameters:**
-- `brep` (BRep3D) — first element - BRep3D
-- `polyhedron` (Polyhedron3D) — second element - Polyhedron3D
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersect)
-
-#### `Intersect(brep1, brep2)`
-
-Compute intersection of 2 breps
-
-**Remarks:** Compute intersection of 2 breps
-
-**Parameters:**
-- `brep1` (BRep3D) — first brep
-- `brep2` (BRep3D) — second brep
-
-**Returns:** `eGeometryErrorCode` — tuple(true when intersecting, otherwise false.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersect)
-
-#### `Intersect(el1, el2)`
-
-calculate intersection between 2 3D planes
-
-**Remarks:** calculate intersection between 2 3D planes
-
-**Parameters:**
-- `el1` (Plane3D) — the first plane
-- `el2` (Plane3D) — the second plane
-
-**Returns:** `bool` — tuple(true when intersecting, otherwise false.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersect)
-
-#### `Intersect(el1, el2)`
-
-compute intersection of 2 3D polyhedron
-
-**Remarks:** compute intersection of 2 3D polyhedron
-
-**Parameters:**
-- `el1` (Polyhedron3D) — element
-- `el2` (Polyhedron3D) — element
 
 **Returns:** `bool` — tuple(true when intersecting, otherwise false.,
 
@@ -14172,7 +10434,7 @@ Intersection of Ray and Polyhedron
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectRayPolyhedron)
 
-#### `Intersecting(el1, el2)`
+#### `Intersecting(el1, el2) | Intersecting(el1, el2, tol) | Intersecting(el1, el2, tol) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2) | Intersecting(el1, el2)`
 
 test 2 2D minmaxes for intersection
 
@@ -14186,149 +10448,7 @@ test 2 2D minmaxes for intersection
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
 
-#### `Intersecting(el1, el2)`
-
-test 2 breps for intersection
-
-**Remarks:** test 2 breps for intersection
-
-**Parameters:**
-- `el1` (BRep3D) — element
-- `el2` (BRep3D) — element
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test brep and polyhedron for intersection
-
-**Remarks:** test brep and polyhedron for intersection
-
-**Parameters:**
-- `el1` (BRep3D) — brep to check
-- `el2` (Polyhedron3D) — polyhedron to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test 3D arc and polyhedron for intersection
-
-**Remarks:** test 3D arc and polyhedron for intersection
-
-**Parameters:**
-- `el1` (Arc3D) — arc to check
-- `el2` (Polyhedron3D) — polyhedron to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test 3D arc and brep for intersection
-
-**Remarks:** test 3D arc and brep for intersection
-
-**Parameters:**
-- `el1` (Arc3D) — arc to check
-- `el2` (BRep3D) — brep to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test 3D spline and polyhedron for intersection
-
-**Remarks:** test 3D spline and polyhedron for intersection
-
-**Parameters:**
-- `el1` (Spline3D) — spline to check
-- `el2` (Polyhedron3D) — polyhedron to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test 3D spline and brep for intersection
-
-**Remarks:** test 3D spline and brep for intersection
-
-**Parameters:**
-- `el1` (Spline3D) — spline to check
-- `el2` (BRep3D) — brep to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test 3D bspline and polyhedron for intersection
-
-**Remarks:** test 3D bspline and polyhedron for intersection
-
-**Parameters:**
-- `el1` (BSpline3D) — bspline to check
-- `el2` (Polyhedron3D) — polyhedron to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2)`
-
-test 3D bspline and brep for intersection
-
-**Remarks:** test 3D bspline and brep for intersection
-
-**Parameters:**
-- `el1` (BSpline3D) — bspline to check
-- `el2` (BRep3D) — brep to check
-
-**Returns:** `bool` — bool true when intersecting
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2, tol)`
-
-test 2 2D lines for intersection
-
-**Remarks:** test 2 2D lines for intersection
-
-**Parameters:**
-- `el1` (Line2D) — element
-- `el2` (Line2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when intersecting, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `Intersecting(el1, el2, tol)`
-
-test 2 2D polygons for intersection hrow Exception in case of internal error.
-
-**Remarks:** test 2 2D polygons for intersection hrow Exception in case of internal error.
-
-**Parameters:**
-- `el1` (Polygon2D) — element
-- `el2` (Polygon2D) — element
-- `tol` (float) — tolerance
-
-**Returns:** `bool` — true when intersecting, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Intersecting)
-
-#### `IntersectingRel(el1, el2)`
+#### `IntersectingRel(el1, el2) | IntersectingRel(el1, el2)`
 
 test 2 geo 2D minmaxes for intersection using built-in relative tolerance
 
@@ -14342,369 +10462,7 @@ test 2 geo 2D minmaxes for intersection using built-in relative tolerance
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectingRel)
 
-#### `IntersectingRel(el1, el2)`
-
-test 2 2D lines for intersection
-
-**Remarks:** test 2 2D lines for intersection
-
-**Parameters:**
-- `el1` (Line2D) — element
-- `el2` (Line2D) — element
-
-**Returns:** `bool` — true when intersecting, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectingRel)
-
-#### `IntersectionCalculus(arc, arc2, eps, maxSolutions)`
-
-Calculate the intersection between a 3D arc and a 3D B-spline
-
-**Remarks:** Calculate the intersection between a 3D arc and a 3D B-spline
-
-**Parameters:**
-- `arc` (Arc3D) — First 3D Arc
-- `arc2` (Arc3D) — Second 3D Arc
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc, bspline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D arc and a 2D spline
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D spline
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `bspline` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc, bspline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D arc and a 3D B-spline
-
-**Remarks:** Calculate the intersection between a 3D arc and a 3D B-spline
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `bspline` (BSpline3D) — 3D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc, polygon, intersectionPnts)`
-
-Calculate the intersection between a 2D arc and a 2D polygon emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D polygon emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc, polyline, eps)`
-
-Calculate the intersection between a 2D arc and a 2D polyline emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D polyline emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D arc and a 2D spline
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D spline
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D arc and a 3D spline
-
-**Remarks:** Calculate the intersection between a 3D arc and a 3D spline
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(arc1, arc2)`
-
-Calculate the intersection between two arcs
-
-**Remarks:** Calculate the intersection between two arcs
-
-**Parameters:**
-- `arc1` (Arc2D) — 2D Arc
-- `arc2` (Arc2D) — 2D Arc
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, arc, eps)`
-
-Calculate the intersection between a 3D axis and a 2D arc emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D arc emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, arc, eps)`
-
-Calculate the intersection between a 3D axis and a 3D arc
-
-**Remarks:** Calculate the intersection between a 3D axis and a 3D arc
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `arc` (Arc3D) — 3D Arc
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, line)`
-
-compute intersection between 2D axis and 2D line
-
-**Remarks:** compute intersection between 2D axis and 2D line
-
-**Parameters:**
-- `axis` (Axis2D) — 2D Axis
-- `line` (Line2D) — 2D line
-
-**Returns:** `tuple` — true when intersecting, otherwise false.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, line)`
-
-Calculate the intersection between 3D axis and 2D line
-
-**Remarks:** Calculate the intersection between 3D axis and 2D line
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `line` (Line2D) — 2D line
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, plane, eps)`
-
-Calculate the intersection between a 3D axis and a 3D plane
-
-**Remarks:** Calculate the intersection between a 3D axis and a 3D plane
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `plane` (Plane3D) — 3D Plane
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, polygon)`
-
-Calculate the intersection between a 3D axis and a 2D polygon
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D polygon
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, polyline)`
-
-Calculate the intersection between a 3D axis and a 2D polyline
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D polyline
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D axis and a 2D spline
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D spline
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D axis and a 3D spline
-
-**Remarks:** Calculate the intersection between a 3D axis and a 3D spline
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D axis and a 3D B-spline
-
-**Remarks:** Calculate the intersection between a 3D axis and a 3D B-spline
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `spline` (BSpline3D) — 3D B-Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis1, axis2)`
-
-Calculate the intersection between two 3D axis
-
-**Remarks:** Calculate the intersection between two 3D axis
-
-**Parameters:**
-- `axis1` (Axis3D) — First 3D Axis
-- `axis2` (Axis3D) — Second 3D Axis
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis2D, arc2D, eps)`
-
-Calculate the intersection between a 2D axis and a 2D arc emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D arc emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis2D, axis3D)`
-
-Calculate the intersection between a 2D and a 3D axis
-
-**Remarks:** Calculate the intersection between a 2D and a 3D axis
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `axis3D` (Axis3D) — 3D Axis
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis2D, bspline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D axis and a 2D bspline
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D bspline
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `bspline` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis2D, polygon)`
-
-Calculate the intersection between a 2D axis and a 2D polygon
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D polygon
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis2D, polyline)`
-
-Calculate the intersection between a 2D axis and a 2D polyline
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D polyline
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(axis2D, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D axis and a 2D spline
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D spline
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(el1, el2)`
+#### `IntersectionCalculus(el1, el2) | IntersectionCalculus(axis, line) | IntersectionCalculus(axis2D, axis3D) | IntersectionCalculus(axis2D, arc2D, eps) | IntersectionCalculus(axis2D, polyline) | IntersectionCalculus(axis2D, polygon) | IntersectionCalculus(axis2D, spline, eps, maxSolutions) | IntersectionCalculus(axis2D, bspline, eps, maxSolutions) | IntersectionCalculus(axis1, axis2) | IntersectionCalculus(axis, line) | IntersectionCalculus(axis, arc, eps) | IntersectionCalculus(axis, polyline) | IntersectionCalculus(axis, polygon) | IntersectionCalculus(axis, spline, eps, maxSolutions) | IntersectionCalculus(axis, spline, eps, maxSolutions) | IntersectionCalculus(axis, spline, eps, maxSolutions) | IntersectionCalculus(axis, plane, eps) | IntersectionCalculus(line, plane, eps) | IntersectionCalculus(axis, arc, eps) | IntersectionCalculus(line, arc, eps) | IntersectionCalculus(el1, el2) | IntersectionCalculus(line2D, line3D) | IntersectionCalculus(line2D, arc2D, eps) | IntersectionCalculus(line2D, polyline) | IntersectionCalculus(line2D, polygon) | IntersectionCalculus(line, bspline, eps, maxSolutions) | IntersectionCalculus(line2D, spline, eps, maxSolutions) | IntersectionCalculus(line1, line2) | IntersectionCalculus(line, arc, eps) | IntersectionCalculus(line, polyline) | IntersectionCalculus(line, polygon) | IntersectionCalculus(line, spline, eps, maxSolutions) | IntersectionCalculus(line, spline, eps, maxSolutions) | IntersectionCalculus(line, bspline, eps, maxSolutions) | IntersectionCalculus(arc1, arc2) | IntersectionCalculus(arc, polyline, eps) | IntersectionCalculus(arc, polygon, intersectionPnts) | IntersectionCalculus(arc, spline, eps, maxSolutions) | IntersectionCalculus(arc, bspline, eps, maxSolutions) | IntersectionCalculus(arc, arc2, eps, maxSolutions) | IntersectionCalculus(arc, spline, eps, maxSolutions) | IntersectionCalculus(arc, bspline, eps, maxSolutions) | IntersectionCalculus(polyline1, polyline2) | IntersectionCalculus(polyline, polygon) | IntersectionCalculus(polygon1, polygon2) | IntersectionCalculus(polyline, spline, eps, maxSolutions) | IntersectionCalculus(polyline, spline, eps, maxSolutions) | IntersectionCalculus(polyline, spline, eps, maxSolutions) | IntersectionCalculus(polygon, spline, eps, maxSolutions) | IntersectionCalculus(plane, line, eps) | IntersectionCalculus(plane, line, eps) | IntersectionCalculus(plane, arc, eps) | IntersectionCalculus(plane, spline, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(spline1, spline2, eps, maxSolutions) | IntersectionCalculus(ele1, ele2, eps, maxSolutions)`
 
 compute intersection of 2 2D axis
 
@@ -14718,680 +10476,7 @@ compute intersection of 2 2D axis
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
 
-#### `IntersectionCalculus(el1, el2)`
-
-compute intersection of 2 2D line
-
-**Remarks:** compute intersection of 2 2D line
-
-**Parameters:**
-- `el1` (Line2D) — element
-- `el2` (Line2D) — element
-
-**Returns:** `tuple` — true when intersecting, otherwise false.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(ele1, ele2, eps, maxSolutions)`
-
-Calculate the intersection between a 3D axis and a 3D spline
-
-**Remarks:** Calculate the intersection between a 3D axis and a 3D spline
-
-**Parameters:**
-- `ele1` (object) — First element
-- `ele2` (object) — Second element
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, arc, eps)`
-
-Calculate the intersection between a 3D line and a 3D arc
-
-**Remarks:** Calculate the intersection between a 3D line and a 3D arc
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `arc` (Arc3D) — 3D Arc
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, arc, eps)`
-
-Calculate the intersection between a 3D line and a 2D arc emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D arc emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, bspline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D line and a 2D bspline
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D bspline
-
-**Parameters:**
-- `line` (Line2D) — 2D Line
-- `bspline` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, bspline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 3D bspline
-
-**Remarks:** Calculate the intersection between a 3D line and a 3D bspline
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `bspline` (BSpline3D) — 3D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, plane, eps)`
-
-Calculate the intersection between a 3D axis and a 3D plane
-
-**Remarks:** Calculate the intersection between a 3D axis and a 3D plane
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `plane` (Plane3D) — 3D Plane
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, polygon)`
-
-Calculate the intersection between a 3D line and a 2D polygon
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D polygon
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, polyline)`
-
-Calculate the intersection between a 3D line and a 2D polyline
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D polyline
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 2D spline
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D spline
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 3D spline
-
-**Remarks:** Calculate the intersection between a 3D line and a 3D spline
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line1, line2)`
-
-Calculate the intersection between two 3D line
-
-**Remarks:** Calculate the intersection between two 3D line
-
-**Parameters:**
-- `line1` (Line3D) — First 3D Line
-- `line2` (Line3D) — Second 3D Line
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line2D, arc2D, eps)`
-
-Calculate the intersection between a 2D line and a 2D arc emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D arc emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line2D, line3D)`
-
-Calculate the intersection between a 2D and a 3D line
-
-**Remarks:** Calculate the intersection between a 2D and a 3D line
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `line3D` (Line3D) — 3D Line
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line2D, polygon)`
-
-Calculate the intersection between a 2D line and a 2D polygon
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D polygon
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line2D, polyline)`
-
-Calculate the intersection between a 2D line and a 2D polyline
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D polyline
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(line2D, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D line and a 2D spline
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D spline
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(plane, arc, eps)`
-
-Calculate the intersection between 3D plane and 3D arc
-
-**Remarks:** Calculate the intersection between 3D plane and 3D arc
-
-**Parameters:**
-- `plane` (Plane3D) — 3D plane
-- `arc` (Arc3D) — 3D arc
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(plane, line, eps)`
-
-Calculate the intersection between 3D plane and 3D line
-
-**Remarks:** Calculate the intersection between 3D plane and 3D line
-
-**Parameters:**
-- `plane` (Plane3D) — 3D plane
-- `line` (Line3D) — 3D line
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(plane, line, eps)`
-
-Calculate the intersection between 3D plane and 3D polyline
-
-**Remarks:** Calculate the intersection between 3D plane and 3D polyline
-
-**Parameters:**
-- `plane` (Plane3D) — 3D plane
-- `line` (Polyline3D) — 3D polyline
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(plane, spline, eps, maxSolutions)`
-
-Calculate the intersection between 3D plane and 3D arc
-
-**Remarks:** Calculate the intersection between 3D plane and 3D arc
-
-**Parameters:**
-- `plane` (Plane3D) — 3D plane
-- `spline` (Spline3D) — 3D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polygon, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D polygon and a 2D spline
-
-**Remarks:** Calculate the intersection between a 2D polygon and a 2D spline
-
-**Parameters:**
-- `polygon` (Polygon2D) — First 2D polygon
-- `spline` (Spline2D) — Second 2D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polygon1, polygon2)`
-
-Calculate the intersection between two polygons
-
-**Remarks:** Calculate the intersection between two polygons
-
-**Parameters:**
-- `polygon1` (Polygon2D) — 2D polygon
-- `polygon2` (Polygon2D) — 2D polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polyline, polygon)`
-
-Calculate the intersection between polyline and polygon
-
-**Remarks:** Calculate the intersection between polyline and polygon
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D polyline
-- `polygon` (Polygon2D) — 2D polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polyline, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D polyline and a 2D spline
-
-**Remarks:** Calculate the intersection between a 2D polyline and a 2D spline
-
-**Parameters:**
-- `polyline` (Polyline2D) — First 2D polyline
-- `spline` (Spline2D) — Second 2D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polyline, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D polyline and a 2D bspline
-
-**Remarks:** Calculate the intersection between a 2D polyline and a 2D bspline
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D Polyline
-- `spline` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polyline, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D polyline and a 3D bspline
-
-**Remarks:** Calculate the intersection between a 3D polyline and a 3D bspline
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D Polyline
-- `spline` (BSpline3D) — 3D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(polyline1, polyline2)`
-
-Calculate the intersection between two polylines
-
-**Remarks:** Calculate the intersection between two polylines
-
-**Parameters:**
-- `polyline1` (Polyline2D) — 2D polyline
-- `polyline2` (Polyline2D) — 2D polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between two 2D splines
-
-**Remarks:** Calculate the intersection between two 2D splines
-
-**Parameters:**
-- `spline1` (Spline2D) — First 2D spline
-- `spline2` (Spline2D) — Second 2D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between 2D spline and 3D spline ote 2D spline is converted to 3D spline and calculation between 3D splines is called
-
-**Remarks:** Calculate the intersection between 2D spline and 3D spline ote 2D spline is converted to 3D spline and calculation between 3D splines is called
-
-**Parameters:**
-- `spline1` (Spline2D) — First 2D spline
-- `spline2` (Spline3D) — Second 3D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between a 3D Spline and a 3D Spline
-
-**Remarks:** Calculate the intersection between a 3D Spline and a 3D Spline
-
-**Parameters:**
-- `spline1` (Spline3D) — 3D Spline
-- `spline2` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between a 2D Spline and a 2D BSpline
-
-**Remarks:** Calculate the intersection between a 2D Spline and a 2D BSpline
-
-**Parameters:**
-- `spline1` (Spline2D) — 2D Spline
-- `spline2` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between a 3D BSpline and a 3D Spline
-
-**Remarks:** Calculate the intersection between a 3D BSpline and a 3D Spline
-
-**Parameters:**
-- `spline1` (Spline3D) — 3D Spline
-- `spline2` (BSpline3D) — 3D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between a 2D BSpline and a 2D BSpline
-
-**Remarks:** Calculate the intersection between a 2D BSpline and a 2D BSpline
-
-**Parameters:**
-- `spline1` (BSpline2D) — 2D BSpline
-- `spline2` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculus(spline1, spline2, eps, maxSolutions)`
-
-Calculate the intersection between a 3D BSpline and a 3D BSpline
-
-**Remarks:** Calculate the intersection between a 3D BSpline and a 3D BSpline
-
-**Parameters:**
-- `spline1` (BSpline3D) — 3D BSpline
-- `spline2` (BSpline3D) — 3D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculus)
-
-#### `IntersectionCalculusEx(arc, clothoid, eps, maxSolutions)`
-
-Calculate the intersection between a 2D arc and a 2D clothoid Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function kurve6 which is only correct for circles
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D clothoid Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function kurve6 which is only correct for circles
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc, polygon, intersectionPnts)`
-
-Calculate the intersection between a 2D arc and a 2D polygon Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D polygon Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc, polyline, eps)`
-
-Calculate the intersection between a 2D arc and a 2D polyline Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D polyline Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D arc and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D arc and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D arc and a 3D spline Intersection point must not be located on the elements, it can be outside ote 2D arc is converted to 3D arc and calculation between 3D arc and 3D spline is called
-
-**Remarks:** Calculate the intersection between a 2D arc and a 3D spline Intersection point must not be located on the elements, it can be outside ote 2D arc is converted to 3D arc and calculation between 3D arc and 3D spline is called
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D arc and a 3D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D arc and a 3D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D arc and a 3D bspline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D arc and a 3D bspline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `spline` (BSpline3D) — 3D bSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc1, arc2)`
-
-Calculate the intersection between two arcs Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between two arcs Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `arc1` (Arc2D) — 2D Arc
-- `arc2` (Arc2D) — 2D Arc
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(arc1, arc2, eps, maxSolutions)`
-
-Calculate the intersection between two arcs Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between two arcs Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `arc1` (Arc3D) — 3D Arc
-- `arc2` (Arc3D) — 3D Arc
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(axis, arc, eps)`
-
-Calculate the intersection between a 3D axis and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(axis, polygon)`
-
-Calculate the intersection between a 3D axis and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(axis, polyline)`
-
-Calculate the intersection between a 3D axis and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D axis and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `axis` (Axis3D) — 3D Axis
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(axis2D, arc2D, eps)`
+#### `IntersectionCalculusEx(axis2D, arc2D, eps) | IntersectionCalculusEx(axis2D, polyline) | IntersectionCalculusEx(axis2D, polygon) | IntersectionCalculusEx(axis2D, clothoid2D, eps, maxSolutions) | IntersectionCalculusEx(axis, arc, eps) | IntersectionCalculusEx(axis, polyline) | IntersectionCalculusEx(axis, polygon) | IntersectionCalculusEx(line1, line2) | IntersectionCalculusEx(line2D, line3D) | IntersectionCalculusEx(line2D, arc2D, eps) | IntersectionCalculusEx(line2D, clothoid2D, eps, maxSolutions) | IntersectionCalculusEx(line2D, polyline) | IntersectionCalculusEx(line2D, polygon) | IntersectionCalculusEx(line2D, spline, eps, maxSolutions) | IntersectionCalculusEx(line2D, spline, eps, maxSolutions) | IntersectionCalculusEx(line2D, bspline, eps, maxSolutions) | IntersectionCalculusEx(line1, line2) | IntersectionCalculusEx(line, arc, eps) | IntersectionCalculusEx(line, arc, eps) | IntersectionCalculusEx(line, clothoid, eps, maxSolutions) | IntersectionCalculusEx(line, polyline) | IntersectionCalculusEx(line, polygon) | IntersectionCalculusEx(line, spline, eps, maxSolutions) | IntersectionCalculusEx(line, spline, eps, maxSolutions) | IntersectionCalculusEx(line, spline, eps, maxSolutions) | IntersectionCalculusEx(arc1, arc2) | IntersectionCalculusEx(arc, clothoid, eps, maxSolutions) | IntersectionCalculusEx(arc, polyline, eps) | IntersectionCalculusEx(arc, polygon, intersectionPnts) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(arc1, arc2, eps, maxSolutions) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(arc, spline, eps, maxSolutions) | IntersectionCalculusEx(clothoid, polyline, eps, maxSolutions) | IntersectionCalculusEx(clothoid, polygon, eps, maxSolutions) | IntersectionCalculusEx(polyline1, polyline2) | IntersectionCalculusEx(polygon1, polygon2) | IntersectionCalculusEx(polyline, spline, eps, maxSolutions) | IntersectionCalculusEx(polygon, spline, eps, maxSolutions) | IntersectionCalculusEx(geoObject1, geoObject2, eps, maxSolutions, bOnlyInsidePoints)`
 
 Calculate the intersection between a 2D axis and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
 
@@ -15399,417 +10484,7 @@ Calculate the intersection between a 2D axis and a 2D arc Intersection point mus
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
 
-#### `IntersectionCalculusEx(axis2D, clothoid2D, eps, maxSolutions)`
-
-Calculate the intersection between a 2D axis and a 2D clothoid Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D clothoid Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D axis
-- `clothoid2D` (Clothoid2D) — 2D Clothoid
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(axis2D, polygon)`
-
-Calculate the intersection between a 2D axis and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(axis2D, polyline)`
-
-Calculate the intersection between a 2D axis and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D axis and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `axis2D` (Axis2D) — 2D Axis
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(clothoid, polygon, eps, maxSolutions)`
-
-Calculate the intersection between a clothoid and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a clothoid and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D clothoid
-- `polygon` (Polygon2D) — 2D polygon
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(clothoid, polyline, eps, maxSolutions)`
-
-Calculate the intersection between a clothoid and a polyline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a clothoid and a polyline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D clothoid
-- `polyline` (Polyline2D) — 2D polyline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(geoObject1, geoObject2, eps, maxSolutions, bOnlyInsidePoints)`
-
-Calculate intersections between two geometry objects Intersection points must not be located on the elements, it can be outside
-
-**Remarks:** Calculate intersections between two geometry objects Intersection points must not be located on the elements, it can be outside
-
-**Parameters:**
-- `geoObject1` (object) — First object
-- `geoObject2` (object) — Second object
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-- `bOnlyInsidePoints` (bool) — Intersection points must be on both objects
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, arc, eps)`
-
-Calculate the intersection between a 3D line and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, arc, eps)`
-
-Calculate the intersection between a 3D line and a 3D arc Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 3D arc Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `arc` (Arc3D) — 3D Arc
-- `eps` (float) — precision
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, clothoid, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 2D clothoid Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D clothoid Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `clothoid` (Clothoid2D) — 2D Clothoid
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solutions (Defines the maximum size of the solution vector)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, polygon)`
-
-Calculate the intersection between a 3D line and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, polyline)`
-
-Calculate the intersection between a 3D line and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 3D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 3D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 3D line and a 3D bspline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 3D line and a 3D bspline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `spline` (BSpline3D) — 3D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line1, line2)`
-
-Calculate the intersection between two 2D lines. Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between two 2D lines. Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line1` (Line2D) — First 2D Line
-- `line2` (Line2D) — Second 2D Line
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line1, line2)`
-
-Calculate the intersection between two 3D line Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between two 3D line Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line1` (Line3D) — First 3D Line
-- `line2` (Line3D) — Second 3D Line
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, arc2D, eps)`
-
-Calculate the intersection between a 2D line and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D arc Intersection point must not be located on the elements, it can be outside emarks There are known precision issues with the background function lksplk
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, bspline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D line and a 2D bspline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D bspline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `bspline` (BSpline2D) — 2D BSpline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, clothoid2D, eps, maxSolutions)`
-
-Calculate the intersection between a 2D line and a 2D clothoid Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D clothoid Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `clothoid2D` (Clothoid2D) — 2D Clothoid
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, line3D)`
-
-Calculate the intersection between a 2D and a 3D line Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D and a 3D line Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `line3D` (Line3D) — 3D Line
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, polygon)`
-
-Calculate the intersection between a 2D line and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D polygon Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `polygon` (Polygon2D) — 2D Polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, polyline)`
-
-Calculate the intersection between a 2D line and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D polyline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `polyline` (Polyline2D) — 2D Polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D line and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D line and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `spline` (Spline2D) — 2D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(line2D, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D line and a 3D spline Intersection point must not be located on the elements, it can be outside ote 2D line is converted to 3D line and calculation between 3D line and 3D spline is called
-
-**Remarks:** Calculate the intersection between a 2D line and a 3D spline Intersection point must not be located on the elements, it can be outside ote 2D line is converted to 3D line and calculation between 3D line and 3D spline is called
-
-**Parameters:**
-- `line2D` (Line2D) — 2D Line
-- `spline` (Spline3D) — 3D Spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(polygon, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D polygon and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D polygon and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `polygon` (Polygon2D) — First 2D polygon
-- `spline` (Spline2D) — Second 2D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(polygon1, polygon2)`
-
-Calculate the intersection between two 2D polygons Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between two 2D polygons Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `polygon1` (Polygon2D) — 2D polygon
-- `polygon2` (Polygon2D) — 2D polygon
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(polyline, spline, eps, maxSolutions)`
-
-Calculate the intersection between a 2D polyline and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between a 2D polyline and a 2D spline Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `polyline` (Polyline2D) — First 2D polyline
-- `spline` (Spline2D) — Second 2D spline
-- `eps` (float) — Tolerance
-- `maxSolutions` (int) — Maximum number of solution (especially for splines and clothoids)
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IntersectionCalculusEx(polyline1, polyline2)`
-
-Calculate the intersection between two 2D polylines Intersection point must not be located on the elements, it can be outside
-
-**Remarks:** Calculate the intersection between two 2D polylines Intersection point must not be located on the elements, it can be outside
-
-**Parameters:**
-- `polyline1` (Polyline2D) — 2D polyline
-- `polyline2` (Polyline2D) — 2D polyline
-
-**Returns:** `tuple` — true, if an intersection was found, otherwise false,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IntersectionCalculusEx)
-
-#### `IsCoplanar(geoVector_object)`
+#### `IsCoplanar(geoVector_object) | IsCoplanar(igeo1_object, igeo2_object) | IsCoplanar(plane, geo_object) | IsCoplanar(plane, point) | IsCoplanar(plane, line) | IsCoplanar(plane1, plane2) | IsCoplanar(point1, point2, point3, point4) | IsCoplanar(line1, line2) | IsCoplanar(line1, line2)`
 
 Check if the 3D geometry objects are coplanar and calculate plane
 
@@ -15822,121 +10497,7 @@ Check if the 3D geometry objects are coplanar and calculate plane
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
 
-#### `IsCoplanar(igeo1_object, igeo2_object)`
-
-Check if two 3D curved geometry objects are coplanar and calculate plane
-
-**Remarks:** Check if two 3D curved geometry objects are coplanar and calculate plane
-
-**Parameters:**
-- `igeo1_object` (object) — first object geometry
-- `igeo2_object` (object) — second object geometry
-
-**Returns:** `bool` — tuple(True if objects are coplanar, false otherwise.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(line1, line2)`
-
-Find out if two lines are coplanar
-
-**Remarks:** Find out if two lines are coplanar
-
-**Parameters:**
-- `line1` (Line3D) — Line3D
-- `line2` (Line3D) — Line3D
-
-**Returns:** `bool` — True, if lines are coplanar otherwise return false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(line1, line2)`
-
-Check if lines are coplanar and calculate plane
-
-**Remarks:** Check if lines are coplanar and calculate plane
-
-**Parameters:**
-- `line1` (Line3D) — Line3D
-- `line2` (Line3D) — Line3D]
-
-**Returns:** `bool` — tuple(True, if lines are coplanar.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(plane, geo_object)`
-
-Find out if plane and geometry are coplanar
-
-**Remarks:** Find out if plane and geometry are coplanar
-
-**Parameters:**
-- `plane` (Plane3D) — Plane3D
-- `geo_object` (object) — objects geometry
-
-**Returns:** `bool` — True, if geometry is lying in the plane otherwise return false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(plane, line)`
-
-Find out if line lies on plane
-
-**Remarks:** Find out if line lies on plane
-
-**Parameters:**
-- `plane` (Plane3D) — Plane3D
-- `line` (Line3D) — Line3D
-
-**Returns:** `bool` — True, if line lies on plane otherwise return false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(plane, point)`
-
-Find out if point lies on plane
-
-**Remarks:** Find out if point lies on plane
-
-**Parameters:**
-- `plane` (Plane3D) — Plane3D
-- `point` (Point3D) — Point3D
-
-**Returns:** `bool` — True, if point lies on plane otherwise return false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(plane1, plane2)`
-
-Find out if planes are coplanar
-
-**Remarks:** Find out if planes are coplanar
-
-**Parameters:**
-- `plane1` (Plane3D) — Plane3D
-- `plane2` (Plane3D) — Plane3D
-
-**Returns:** `bool` — True, if planes are coplanar otherwise return false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `IsCoplanar(point1, point2, point3, point4)`
-
-Find out if four points are coplanar
-
-**Remarks:** Find out if four points are coplanar
-
-**Parameters:**
-- `point1` (Point3D) — Point3D
-- `point2` (Point3D) — Point3D
-- `point3` (Point3D) — Point3D
-- `point4` (Point3D) — Point3D
-
-**Returns:** `bool` — True, if points are coplanar otherwise return false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.IsCoplanar)
-
-#### `MakeBoolean(el1, el2)`
+#### `MakeBoolean(el1, el2) | MakeBoolean(el1, el2) | MakeBoolean(el1, el2)`
 
 make boolean operation between line and polygon
 
@@ -15950,63 +10511,7 @@ make boolean operation between line and polygon
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeBoolean)
 
-#### `MakeBoolean(el1, el2)`
-
-make boolean operation between two 2D profile elements Now it is done for Polygon2D, later with new Profile element.
-
-**Remarks:** make boolean operation between two 2D profile elements Now it is done for Polygon2D, later with new Profile element.
-
-**Parameters:**
-- `el1` (Polygon2D) — first element geometry
-- `el2` (Polygon2D) — second element geometry
-
-**Returns:** `eGeometryErrorCode` — tuple(GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeBoolean)
-
-#### `MakeBoolean(el1, el2)`
-
-make boolean operation between two 3D bodies As input arbitrary element which represents 3D is possible. Throws exception when element is not suitable for booleans
-
-**Remarks:** make boolean operation between two 3D bodies As input arbitrary element which represents 3D is possible. Throws exception when element is not suitable for booleans
-
-**Parameters:**
-- `el1` (Polyhedron3D) — first element geometry
-- `el2` (Polyhedron3D) — second element geometry
-
-**Returns:** `eGeometryErrorCode` — tuple(GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeBoolean)
-
-#### `MakeIntersection(brep, polyhedron)`
-
-Deprecated: use Intersect(...)
-
-**Remarks:** Deprecated: use Intersect(...)
-
-**Parameters:**
-- `brep` (BRep3D) — first element - BRep3D
-- `polyhedron` (Polyhedron3D) — second element - Polyhedron3D
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeIntersection)
-
-#### `MakeIntersection(brep1, brep2)`
-
-Deprecated: use Intersect(...)
-
-**Remarks:** Deprecated: use Intersect(...)
-
-**Parameters:**
-- `brep1` (BRep3D) — first brep
-- `brep2` (BRep3D) — second brep
-
-**Returns:** `tuple` — error code, eOK if intersection was successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeIntersection)
-
-#### `MakeIntersection(brep1, breps)`
+#### `MakeIntersection(brep1, breps) | MakeIntersection(brep1, brep2) | MakeIntersection(brep, polyhedron) | MakeIntersection(el1, el2)`
 
 Compute intersection of 2 breps
 
@@ -16017,20 +10522,6 @@ Compute intersection of 2 breps
 - `breps` (BRep3DList) — second brep
 
 **Returns:** `eGeometryErrorCode` — tuple(eOK if intersection was successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeIntersection)
-
-#### `MakeIntersection(el1, el2)`
-
-Deprecated: use Intersect(...)
-
-**Remarks:** Deprecated: use Intersect(...)
-
-**Parameters:**
-- `el1` (Polyhedron3D) — element
-- `el2` (Polyhedron3D) — element
-
-**Returns:** `tuple` — error code, eOK if intersection was successful,
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeIntersection)
 
@@ -16048,7 +10539,7 @@ Compute section of brep and surface brep
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSectionWithSurfaces)
 
-#### `MakeSubtraction(body_object, voidbodies_list)`
+#### `MakeSubtraction(body_object, voidbodies_list) | MakeSubtraction(poly1, poly2) | MakeSubtraction(polyhed1, polyhed2) | MakeSubtraction(brep1, brep2) | MakeSubtraction(brep1, breps) | MakeSubtraction(poly1, poly2, intersection)`
 
 make subtraction of 3D bodies from given body
 
@@ -16062,91 +10553,7 @@ make subtraction of 3D bodies from given body
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction)
 
-#### `MakeSubtraction(brep1, brep2)`
-
-Compute subtraction of 2 breps
-
-**Remarks:** Compute subtraction of 2 breps
-
-**Parameters:**
-- `brep1` (BRep3D) — first brep
-- `brep2` (BRep3D) — second brep to be subtracted from the first brep
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction)
-
-#### `MakeSubtraction(brep1, breps)`
-
-Compute subtraction of brep and vector of breps
-
-**Remarks:** Compute subtraction of brep and vector of breps
-
-**Parameters:**
-- `brep1` (BRep3D) — first brep
-- `breps` (BRep3DList) — vector of brep to be subtracted from the first brep
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction)
-
-#### `MakeSubtraction(poly1, poly2)`
-
-make subtraction of 2D polygons, if wished intersection is computed too.
-
-**Remarks:** make subtraction of 2D polygons, if wished intersection is computed too.
-
-**Parameters:**
-- `poly1` (Polygon2D) — first polygon
-- `poly2` (Polygon2D) — second polygon
-
-**Returns:** `eGeometryErrorCode` — tuple(GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction)
-
-#### `MakeSubtraction(poly1, poly2, intersection)`
-
-Deprecated: use MakeSubtraction(const Polygon2D& poly1, const Polygon2D& poly2) make subtraction of 2D polygons, if wished intersection is computed too.
-
-**Remarks:** Deprecated: use MakeSubtraction(const Polygon2D& poly1, const Polygon2D& poly2) make subtraction of 2D polygons, if wished intersection is computed too.
-
-**Parameters:**
-- `poly1` (Polygon2D) — first polygon
-- `poly2` (Polygon2D) — second polygon
-- `intersection` (Polygon2D) — output 2D polygon of intersection, as input NULL if not required
-
-**Returns:** `tuple` — GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction)
-
-#### `MakeSubtraction(polyhed1, polyhed2)`
-
-make subtraction of polyhed1 - polyhed2
-
-**Remarks:** make subtraction of polyhed1 - polyhed2
-
-**Parameters:**
-- `polyhed1` (Polyhedron3D) — first polyhedron
-- `polyhed2` (Polyhedron3D) — second polyhedron
-
-**Returns:** `eGeometryErrorCode` — tuple(GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeSubtraction)
-
-#### `MakeUnion(bodies)`
-
-Compute bulk union of more polyhedra at once
-
-**Remarks:** Compute bulk union of more polyhedra at once
-
-**Parameters:**
-- `bodies` (Polyhedron3DList) — polyhedra to unite
-
-**Returns:** `tuple[bool, Polyhedron3D]` — if success result polyhedron otherwise nullopt
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
-
-#### `MakeUnion(bodies_list, voidbodies_list)`
+#### `MakeUnion(bodies_list, voidbodies_list) | MakeUnion(poly1, poly2) | MakeUnion(polyhed1, polyhed2) | MakeUnion(bodies) | MakeUnion(brep1, brep2) | MakeUnion(brep1, breps) | MakeUnion(breps)`
 
 make union of 3D bodies As input arbitrary elements which represents 3D is possible.
 
@@ -16160,622 +10567,7 @@ make union of 3D bodies As input arbitrary elements which represents 3D is possi
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
 
-#### `MakeUnion(brep1, brep2)`
-
-Compute union of 2 breps
-
-**Remarks:** Compute union of 2 breps
-
-**Parameters:**
-- `brep1` (BRep3D) — first brep
-- `brep2` (BRep3D) — second brep
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
-
-#### `MakeUnion(brep1, breps)`
-
-Compute union of brep and a list of breps
-
-**Remarks:** Compute union of brep and a list of breps
-
-**Parameters:**
-- `brep1` (BRep3D) — first brep
-- `breps` (BRep3DList) — list of breps
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
-
-#### `MakeUnion(breps)`
-
-Compute union of more breps at once (using paralelism if possible)
-
-**Remarks:** Compute union of more breps at once (using paralelism if possible)
-
-**Parameters:**
-- `breps` (BRep3DList) — breps to unite
-
-**Returns:** `eGeometryErrorCode` — tuple(error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
-
-#### `MakeUnion(poly1, poly2)`
-
-make union of 2D polygons
-
-**Remarks:** make union of 2D polygons
-
-**Parameters:**
-- `poly1` (Polygon2D) — first polygon
-- `poly2` (Polygon2D) — second polygon
-
-**Returns:** `eGeometryErrorCode` — tuple(GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
-
-#### `MakeUnion(polyhed1, polyhed2)`
-
-make union of 3D polyhedrons
-
-**Remarks:** make union of 3D polyhedrons
-
-**Parameters:**
-- `polyhed1` (Polyhedron3D) — first polyhedron
-- `polyhed2` (Polyhedron3D) — second polyhedron
-
-**Returns:** `eGeometryErrorCode` — tuple(GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MakeUnion)
-
-#### `Mirror(angle, axis)`
-
-Mirror angle
-
-**Remarks:** Mirror angle
-
-**Parameters:**
-- `angle` (Angle) — mirroring angle
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Angle` — mirrored angle
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(angle, plane)`
-
-Mirror angle
-
-**Remarks:** Mirror angle
-
-**Parameters:**
-- `angle` (Angle) — mirroring angle
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Angle` — mirrored angle
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(arc, axis)`
-
-Mirror arc 2D
-
-**Remarks:** Mirror arc 2D
-
-**Parameters:**
-- `arc` (Arc2D) — mirroring arc 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Arc2D` — mirrored arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(arc, axis)`
-
-Mirror arc 3D
-
-**Remarks:** Mirror arc 3D
-
-**Parameters:**
-- `arc` (Arc3D) — mirroring arc 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Arc3D` — mirrored arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(arc, plane)`
-
-Mirror arc 2D
-
-**Remarks:** Mirror arc 2D
-
-**Parameters:**
-- `arc` (Arc2D) — mirroring arc 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Arc2D` — mirrored arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(arc, plane)`
-
-Mirror arc 3D
-
-**Remarks:** Mirror arc 3D
-
-**Parameters:**
-- `arc` (Arc3D) — mirroring arc 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Arc3D` — mirrored arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(area, axis)`
-
-Mirror path bounded area 2D
-
-**Remarks:** Mirror path bounded area 2D
-
-**Parameters:**
-- `area` (ClosedArea2D) — mirroring path bounded area 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `ClosedArea2D` — mirrored path bounded area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(area, axis)`
-
-Mirror path bounded area composite 2D
-
-**Remarks:** Mirror path bounded area composite 2D
-
-**Parameters:**
-- `area` (ClosedAreaComposite2D) — mirroring path bounded area composite 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `ClosedAreaComposite2D` — mirrored path bounded area composite
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(area, plane)`
-
-Mirror path bounded area 2D
-
-**Remarks:** Mirror path bounded area 2D
-
-**Parameters:**
-- `area` (ClosedArea2D) — mirroring path bounded area 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `ClosedArea2D` — mirrored path bounded area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(area, plane)`
-
-Mirror path bounded area composite 2D
-
-**Remarks:** Mirror path bounded area composite 2D
-
-**Parameters:**
-- `area` (ClosedAreaComposite2D) — mirroring path bounded area composite 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `ClosedAreaComposite2D` — mirrored path bounded area composite
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(bSpline, axis)`
-
-Mirror BSpline 2D
-
-**Remarks:** Mirror BSpline 2D
-
-**Parameters:**
-- `bSpline` (BSpline2D) — mirroring bSpline 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `BSpline2D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(bSpline, axis)`
-
-Mirror BSpline 3D
-
-**Remarks:** Mirror BSpline 3D
-
-**Parameters:**
-- `bSpline` (BSpline3D) — mirroring bSpline 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `BSpline3D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(bSpline, plane)`
-
-Mirror BSpline 2D
-
-**Remarks:** Mirror BSpline 2D
-
-**Parameters:**
-- `bSpline` (BSpline2D) — mirroring bSpline 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `BSpline2D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(bSpline, plane)`
-
-Mirror BSpline 3D
-
-**Remarks:** Mirror BSpline 3D
-
-**Parameters:**
-- `bSpline` (BSpline3D) — mirroring bSpline 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `BSpline3D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(brep, plane)`
-
-3D Mirror brep3D
-
-**Remarks:** 3D Mirror brep3D
-
-**Parameters:**
-- `brep` (BRep3D) — brep
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `BRep3D` — mirrored placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(clothoid, axis)`
-
-2D Mirror of Clothoid2D
-
-**Remarks:** 2D Mirror of Clothoid2D
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — clothoid to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Clothoid2D` — mirrored solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(clothoid, plane)`
-
-Mirror of Clothoid2D
-
-**Remarks:** Mirror of Clothoid2D
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — clothoid to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Clothoid2D` — mirrored solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(cone, axis)`
-
-Mirror Cone3D
-
-**Remarks:** Mirror Cone3D
-
-**Parameters:**
-- `cone` (Cone3D) — Cone to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Cone3D` — mirrored Cone
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(cone, plane)`
-
-Mirror Cone3D
-
-**Remarks:** Mirror Cone3D
-
-**Parameters:**
-- `cone` (Cone3D) — Cone to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Cone3D` — mirrored Cone
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(cylinder, axis)`
-
-Mirror Cylinder3D
-
-**Remarks:** Mirror Cylinder3D
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — Cylinder to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Cylinder3D` — mirrored cylinder
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(cylinder, plane)`
-
-Mirror Cylinder3D
-
-**Remarks:** Mirror Cylinder3D
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — Cylinder to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Cylinder3D` — mirrored cylinder
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(ellipsoid, axis)`
-
-Mirror Ellipsoid3D
-
-**Remarks:** Mirror Ellipsoid3D
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — Ellipsoid to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Ellipsoid3D` — mirrored Ellipsoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(ellipsoid, plane)`
-
-Mirror Ellipsoid3D
-
-**Remarks:** Mirror Ellipsoid3D
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — Ellipsoid to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Ellipsoid3D` — mirrored Ellipsoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(line, axis)`
-
-Mirror line 2D
-
-**Remarks:** Mirror line 2D
-
-**Parameters:**
-- `line` (Line2D) — mirroring line 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Line2D` — mirrored line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(line, axis)`
-
-2D mirror of 3D line
-
-**Remarks:** 2D mirror of 3D line
-
-**Parameters:**
-- `line` (Line3D) — mirroring line 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Line3D` — mirrored line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(line, plane)`
-
-Mirror line 2D
-
-**Remarks:** Mirror line 2D
-
-**Parameters:**
-- `line` (Line2D) — mirroring line 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Line2D` — mirrored line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(line, plane)`
-
-Mirror line 3D
-
-**Remarks:** Mirror line 3D
-
-**Parameters:**
-- `line` (Line3D) — mirroring line 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Line3D` — mirrored line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(path, axis)`
-
-Mirror path 3D
-
-**Remarks:** Mirror path 3D
-
-**Parameters:**
-- `path` (Path3D) — mirroring path 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Path3D` — mirrored path
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(path, axis)`
-
-Mirror path 2D
-
-**Remarks:** Mirror path 2D
-
-**Parameters:**
-- `path` (Path2D) — mirroring path 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Path2D` — mirrored path
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(path, plane)`
-
-Mirror path 3D
-
-**Remarks:** Mirror path 3D
-
-**Parameters:**
-- `path` (Path3D) — mirroring path 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Path3D` — mirrored path
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(path, plane)`
-
-Mirror path 2D
-
-**Remarks:** Mirror path 2D
-
-**Parameters:**
-- `path` (Path2D) — mirroring path 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Path2D` — mirrored path
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(pla, plane)`
-
-Mirror plane
-
-**Remarks:** Mirror plane
-
-**Parameters:**
-- `pla` (Plane3D) — plane to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Plane3D` — mirrored polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(placement, axis)`
-
-2D Mirror AxisPlacement2D
-
-**Remarks:** 2D Mirror AxisPlacement2D
-
-**Parameters:**
-- `placement` (AxisPlacement2D) — axis placement to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `AxisPlacement2D` — mirrored placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(placement, axis)`
-
-2D Mirror AxisPlacement3D
-
-**Remarks:** 2D Mirror AxisPlacement3D
-
-**Parameters:**
-- `placement` (AxisPlacement3D) — axis placement to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `AxisPlacement3D` — mirrored placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(placement, plane)`
-
-3D Mirror AxisPlacement2D
-
-**Remarks:** 3D Mirror AxisPlacement2D
-
-**Parameters:**
-- `placement` (AxisPlacement2D) — axis placement to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `AxisPlacement2D` — mirrored placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(placement, plane)`
-
-3D Mirror AxisPlacement3D
-
-**Remarks:** 3D Mirror AxisPlacement3D
-
-**Parameters:**
-- `placement` (AxisPlacement3D) — axis placement to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `AxisPlacement3D` — mirrored placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(plane, axis)`
-
-Mirror plane
-
-**Remarks:** Mirror plane
-
-**Parameters:**
-- `plane` (Plane3D) — plane to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Plane3D` — mirrored polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(point, axis)`
-
-2D Mirror of 3D point
-
-**Remarks:** 2D Mirror of 3D point
-
-**Parameters:**
-- `point` (Point3D) — mirroring point
-- `axis` (Axis2D) — mirror plane
-
-**Returns:** `Point3D` — mirrored point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(point, axis)`
-
-2D Mirror of 3D point
-
-**Remarks:** 2D Mirror of 3D point
-
-**Parameters:**
-- `point` (Point2D) — mirroring point 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Point2D` — mirrored point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(point, plane)`
+#### `Mirror(point, plane) | Mirror(point, axis) | Mirror(vec, plane) | Mirror(vec, axis) | Mirror(point, plane) | Mirror(point, axis) | Mirror(vec, plane) | Mirror(vec, axis) | Mirror(line, plane) | Mirror(line, axis) | Mirror(line, plane) | Mirror(line, axis) | Mirror(polyline, plane) | Mirror(polyline, axis) | Mirror(polygon, plane) | Mirror(polygon, axis) | Mirror(plane, axis) | Mirror(pla, plane) | Mirror(polygon, axis) | Mirror(polygon, axis) | Mirror(polygon, plane) | Mirror(polyline, plane) | Mirror(polyline, axis) | Mirror(polygon, plane) | Mirror(polygon, axis) | Mirror(spline, plane) | Mirror(spline, axis) | Mirror(spline, plane) | Mirror(spline, axis) | Mirror(bSpline, plane) | Mirror(bSpline, axis) | Mirror(bSpline, plane) | Mirror(bSpline, axis) | Mirror(arc, plane) | Mirror(arc, axis) | Mirror(arc, plane) | Mirror(arc, axis) | Mirror(path, plane) | Mirror(path, axis) | Mirror(path, plane) | Mirror(path, axis) | Mirror(area, plane) | Mirror(area, axis) | Mirror(area, plane) | Mirror(area, axis) | Mirror(angle, plane) | Mirror(angle, axis) | Mirror(polyhedron, plane) | Mirror(polyhedron, axis) | Mirror(solid, axis) | Mirror(solid, plane) | Mirror(solid, axis) | Mirror(clothoid, plane) | Mirror(clothoid, axis) | Mirror(placement, axis) | Mirror(placement, plane) | Mirror(placement, axis) | Mirror(placement, plane) | Mirror(cylinder, plane) | Mirror(cylinder, axis) | Mirror(cone, plane) | Mirror(cone, axis) | Mirror(ellipsoid, plane) | Mirror(ellipsoid, axis) | Mirror(brep, plane)`
 
 Mirror point 3D
 
@@ -16789,483 +10581,7 @@ Mirror point 3D
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
 
-#### `Mirror(point, plane)`
-
-Mirror point 2D
-
-**Remarks:** Mirror point 2D
-
-**Parameters:**
-- `point` (Point2D) — mirroring point 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Point2D` — mirrored point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, axis)`
-
-Mirror polygon 2d
-
-**Remarks:** Mirror polygon 2d
-
-**Parameters:**
-- `polygon` (Polygon2D) — polygon to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Polygon2D` — mirrored polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, axis)`
-
-Mirror polygonal area 2D
-
-**Remarks:** Mirror polygonal area 2D
-
-**Parameters:**
-- `polygon` (PolygonalArea2D) — polygon to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `PolygonalArea2D` — mirrored polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, axis)`
-
-Mirror polygonal area 2D
-
-**Remarks:** Mirror polygonal area 2D
-
-**Parameters:**
-- `polygon` (PolygonalArea3D) — polygon to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `PolygonalArea3D` — mirrored polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, axis)`
-
-Mirror polygon 3D
-
-**Remarks:** Mirror polygon 3D
-
-**Parameters:**
-- `polygon` (Polygon3D) — mirroring polygon 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Polygon3D` — mirrored polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, plane)`
-
-Mirror polygon 2d
-
-**Remarks:** Mirror polygon 2d
-
-**Parameters:**
-- `polygon` (Polygon2D) — polygon to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Polygon2D` — mirrored polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, plane)`
-
-Mirror polygonal area 3D
-
-**Remarks:** Mirror polygonal area 3D
-
-**Parameters:**
-- `polygon` (PolygonalArea3D) — polygon to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `PolygonalArea3D` — mirrored polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polygon, plane)`
-
-Mirror polygon 3D
-
-**Remarks:** Mirror polygon 3D
-
-**Parameters:**
-- `polygon` (Polygon3D) — mirroring polygon 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Polygon3D` — mirrored polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polyhedron, axis)`
-
-2D mirror of 3D Polyhedron
-
-**Remarks:** 2D mirror of 3D Polyhedron
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — mirroring polyhedron
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Polyhedron3D` — mirrored polyhedron
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polyhedron, plane)`
-
-Mirror Polyhedron3D
-
-**Remarks:** Mirror Polyhedron3D
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — mirroring polyhedron
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Polyhedron3D` — mirrored polyhedron
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polyline, axis)`
-
-2D mirror of 2D polyline
-
-**Remarks:** 2D mirror of 2D polyline
-
-**Parameters:**
-- `polyline` (Polyline2D) — mirroring polyline 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Polyline2D` — mirrored polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polyline, axis)`
-
-Mirror polyline 3D
-
-**Remarks:** Mirror polyline 3D
-
-**Parameters:**
-- `polyline` (Polyline3D) — mirroring polyline 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Polyline3D` — mirrored polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polyline, plane)`
-
-Mirror polyline 2D
-
-**Remarks:** Mirror polyline 2D
-
-**Parameters:**
-- `polyline` (Polyline2D) — mirroring polyline 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Polyline2D` — mirrored polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(polyline, plane)`
-
-Mirror polyline 3D
-
-**Remarks:** Mirror polyline 3D
-
-**Parameters:**
-- `polyline` (Polyline3D) — mirroring polyline 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Polyline3D` — mirrored polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(solid, axis)`
-
-2D Mirror ClippedSweptSolid3D
-
-**Remarks:** 2D Mirror ClippedSweptSolid3D
-
-**Parameters:**
-- `solid` (ClippedSweptSolid3D) — solid to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `ClippedSweptSolid3D` — mirrored solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(solid, axis)`
-
-2D Mirror of ExtrudedAreaSolid3D
-
-**Remarks:** 2D Mirror of ExtrudedAreaSolid3D
-
-**Parameters:**
-- `solid` (ExtrudedAreaSolid3D) — solid to mirror
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `ExtrudedAreaSolid3D` — mirrored solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(solid, plane)`
-
-Mirror ExtrudedAreaSolid3D
-
-**Remarks:** Mirror ExtrudedAreaSolid3D
-
-**Parameters:**
-- `solid` (ExtrudedAreaSolid3D) — solid to mirror
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `ExtrudedAreaSolid3D` — mirrored solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(spline, axis)`
-
-Mirror spline 2D
-
-**Remarks:** Mirror spline 2D
-
-**Parameters:**
-- `spline` (Spline2D) — mirroring spline 2D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Spline2D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(spline, axis)`
-
-Mirror spline 3D
-
-**Remarks:** Mirror spline 3D
-
-**Parameters:**
-- `spline` (Spline3D) — mirroring spline 3D
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Spline3D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(spline, plane)`
-
-Mirror spline 2D
-
-**Remarks:** Mirror spline 2D
-
-**Parameters:**
-- `spline` (Spline2D) — mirroring spline 2D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Spline2D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(spline, plane)`
-
-Mirror spline 3D
-
-**Remarks:** Mirror spline 3D
-
-**Parameters:**
-- `spline` (Spline3D) — mirroring spline 3D
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Spline3D` — mirrored spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(vec, axis)`
-
-2D mirror of 3D vector
-
-**Remarks:** 2D mirror of 3D vector
-
-**Parameters:**
-- `vec` (Vector3D) — mirroring vector
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Vector3D` — mirrored vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(vec, axis)`
-
-2D mirror of 2D vector
-
-**Remarks:** 2D mirror of 2D vector
-
-**Parameters:**
-- `vec` (Vector2D) — mirroring vector
-- `axis` (Axis2D) — mirror axis
-
-**Returns:** `Vector2D` — mirrored vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(vec, plane)`
-
-Mirror vector 3D
-
-**Remarks:** Mirror vector 3D
-
-**Parameters:**
-- `vec` (Vector3D) — mirroring vector
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Vector3D` — mirrored vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Mirror(vec, plane)`
-
-Mirror vector 2D
-
-**Remarks:** Mirror vector 2D
-
-**Parameters:**
-- `vec` (Vector2D) — mirroring point
-- `plane` (Plane3D) — mirror plane
-
-**Returns:** `Vector2D` — mirrored vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Mirror)
-
-#### `Move(arc2D, moveVector)`
-
-Move Arc2D by given vector
-
-**Remarks:** Move Arc2D by given vector
-
-**Parameters:**
-- `arc2D` (Arc2D) — Arc2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Arc2D` — Arc2D Moved arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(arc3D, moveVector)`
-
-Move Arc3D by given vector
-
-**Remarks:** Move Arc3D by given vector
-
-**Parameters:**
-- `arc3D` (Arc3D) — Arc3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Arc3D` — Arc3D Moved Arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(area, moveVector)`
-
-Move ClosedArea2D by given vector
-
-**Remarks:** Move ClosedArea2D by given vector
-
-**Parameters:**
-- `area` (ClosedArea2D) — ClosedArea2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `ClosedArea2D` — ClosedArea2D Moved area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(area, moveVector)`
-
-Move ClosedAreaComposite2D by given vector
-
-**Remarks:** Move ClosedAreaComposite2D by given vector
-
-**Parameters:**
-- `area` (ClosedAreaComposite2D) — ClosedAreaComposite2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `ClosedAreaComposite2D` — ClosedAreaComposite2D Moved area composite
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(area, translation)`
-
-Move polygonal area
-
-**Remarks:** Move polygonal area
-
-**Parameters:**
-- `area` (PolygonalArea2D) — PolygonalArea2D to move
-- `translation` (Vector2D) — Vector of translation
-
-**Returns:** `PolygonalArea2D` — PolygonalArea2D Moved area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(axis2D, moveVector)`
-
-Move Axis2D by given vector
-
-**Remarks:** Move Axis2D by given vector
-
-**Parameters:**
-- `axis2D` (Axis2D) — Axis2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Axis2D` — Axis2D Moved Axis
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(axis3D, moveVector)`
-
-Move Axis3D by given vector
-
-**Remarks:** Move Axis3D by given vector
-
-**Parameters:**
-- `axis3D` (Axis3D) — Axis3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Axis3D` — Axis3D Moved axis
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(axisPlacement2D, moveVector)`
-
-Move AxisPlacement2D by given vector
-
-**Remarks:** Move AxisPlacement2D by given vector
-
-**Parameters:**
-- `axisPlacement2D` (AxisPlacement2D) — AxisPlacement2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `AxisPlacement2D` — AxisPlacement2D Moved axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(axisPlacement3D, moveVector)`
-
-Move AxisPlacement3D by given vector
-
-**Remarks:** Move AxisPlacement3D by given vector
-
-**Parameters:**
-- `axisPlacement3D` (AxisPlacement3D) — AxisPlacement3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `AxisPlacement3D` — AxisPlacement3D Moved placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(box, translation)`
+#### `Move(box, translation) | Move(area, translation) | Move(plane, translation) | Move(arc2D, moveVector) | Move(arc3D, moveVector) | Move(axis2D, moveVector) | Move(axis3D, moveVector) | Move(axisPlacement2D, moveVector) | Move(axisPlacement3D, moveVector) | Move(clippedSweptSolid3D, vec) | Move(clothoid2D, moveVector) | Move(cuboid3D, moveVector) | Move(extrudedAreaSolid3D, moveVector) | Move(line2D, moveVector) | Move(line3D, moveVector) | Move(path2D, moveVector) | Move(path3D, moveVector) | Move(point2D, moveVector) | Move(point3D, moveVector) | Move(polygon2D, moveVector) | Move(polygon3D, moveVector) | Move(polygonalArea3D, moveVector) | Move(polyhedron3D, moveVector) | Move(polyline2D, moveVector) | Move(polyline3D, moveVector) | Move(area, moveVector) | Move(area, moveVector) | Move(cylinder3D, moveVector) | Move(ellipsoid3D, moveVector) | Move(cone3D, moveVector) | Move(spline2D, moveVector) | Move(spline3D, moveVector) | Move(bspline3D, moveVector) | Move(brep, moveVector)`
 
 Move bounding box
 
@@ -17276,342 +10592,6 @@ Move bounding box
 - `translation` (Vector2D) — Vector of translation
 
 **Returns:** `BoundingBox2D` — Moved bounding box
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(brep, moveVector)`
-
-Move BRep3D by given vector
-
-**Remarks:** Move BRep3D by given vector
-
-**Parameters:**
-- `brep` (BRep3D) — BRep3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `BRep3D` — BRep3D Moved spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(bspline3D, moveVector)`
-
-Move BSpline3D by given vector
-
-**Remarks:** Move BSpline3D by given vector
-
-**Parameters:**
-- `bspline3D` (BSpline3D) — BSpline3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `BSpline3D` — BSpline3D Moved spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(clippedSweptSolid3D, vec)`
-
-Move ClippedSweptSolid3D by given vector
-
-**Remarks:** Move ClippedSweptSolid3D by given vector
-
-**Parameters:**
-- `clippedSweptSolid3D` (ClippedSweptSolid3D) — ClippedSweptSolid3D to move
-- `vec` (Vector3D) — Vector of translation
-
-**Returns:** `ClippedSweptSolid3D` — ClippedSweptSolid3D Moved solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(clothoid2D, moveVector)`
-
-Move Clothoid2D by given vector
-
-**Remarks:** Move Clothoid2D by given vector
-
-**Parameters:**
-- `clothoid2D` (Clothoid2D) — Clothoid2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Clothoid2D` — Clothoid2D Moved clothoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(cone3D, moveVector)`
-
-Move Cone3D by given vector
-
-**Remarks:** Move Cone3D by given vector
-
-**Parameters:**
-- `cone3D` (Cone3D) — Cone3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Cone3D` — Cone3D Moved Cone
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(cuboid3D, moveVector)`
-
-Move Cuboid3D by given vector
-
-**Remarks:** Move Cuboid3D by given vector
-
-**Parameters:**
-- `cuboid3D` (Cuboid3D) — Cuboid3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Cuboid3D` — Cuboid3D Moved cuboid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(cylinder3D, moveVector)`
-
-Move Cylinder3D by given vector
-
-**Remarks:** Move Cylinder3D by given vector
-
-**Parameters:**
-- `cylinder3D` (Cylinder3D) — Cylinder3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Cylinder3D` — Cylinder3D Moved Cylinder
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(ellipsoid3D, moveVector)`
-
-Move Ellipsoid3D by given vector
-
-**Remarks:** Move Ellipsoid3D by given vector
-
-**Parameters:**
-- `ellipsoid3D` (Ellipsoid3D) — Ellipsoid3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Ellipsoid3D` — Ellipsoid3D Moved Ellipsoid3D
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(extrudedAreaSolid3D, moveVector)`
-
-Move ExtrudedAreaSolid3D by given vector
-
-**Remarks:** Move ExtrudedAreaSolid3D by given vector
-
-**Parameters:**
-- `extrudedAreaSolid3D` (ExtrudedAreaSolid3D) — ExtrudedAreaSolid3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `ExtrudedAreaSolid3D` — ExtrudedAreaSolid3D Moved solid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(line2D, moveVector)`
-
-Move Line2D by given vector
-
-**Remarks:** Move Line2D by given vector
-
-**Parameters:**
-- `line2D` (Line2D) — Line2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Line2D` — Line2D Moved line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(line3D, moveVector)`
-
-Move Line3D by given vector
-
-**Remarks:** Move Line3D by given vector
-
-**Parameters:**
-- `line3D` (Line3D) — Line3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Line3D` — Line3D Moved line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(path2D, moveVector)`
-
-Move Path2D by given vector
-
-**Remarks:** Move Path2D by given vector
-
-**Parameters:**
-- `path2D` (Path2D) — Path2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Path2D` — Path2D Moved path
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(path3D, moveVector)`
-
-Move Path3D by given vector
-
-**Remarks:** Move Path3D by given vector
-
-**Parameters:**
-- `path3D` (Path3D) — Path3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Path3D` — Path3D Moved path
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(plane, translation)`
-
-Move plane
-
-**Remarks:** Move plane
-
-**Parameters:**
-- `plane` (Plane3D) — Plane3D to move
-- `translation` (Vector3D) — Vector of translation
-
-**Returns:** `Plane3D` — Plane3D Moved plane
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(point2D, moveVector)`
-
-Move Point2D by given vector
-
-**Remarks:** Move Point2D by given vector
-
-**Parameters:**
-- `point2D` (Point2D) — Point2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Point2D` — Point2D Moved point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(point3D, moveVector)`
-
-Move Point3D by given vector
-
-**Remarks:** Move Point3D by given vector
-
-**Parameters:**
-- `point3D` (Point3D) — Point3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Point3D` — Point3D Moved point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(polygon2D, moveVector)`
-
-Move Polygon2D by given vector
-
-**Remarks:** Move Polygon2D by given vector
-
-**Parameters:**
-- `polygon2D` (Polygon2D) — Polygon2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Polygon2D` — Polygon2D Moved polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(polygon3D, moveVector)`
-
-Move Polygon3D by given vector
-
-**Remarks:** Move Polygon3D by given vector
-
-**Parameters:**
-- `polygon3D` (Polygon3D) — Polygon3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Polygon3D` — Polygon3D Moved polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(polygonalArea3D, moveVector)`
-
-Move PolygonalArea3D by given vector
-
-**Remarks:** Move PolygonalArea3D by given vector
-
-**Parameters:**
-- `polygonalArea3D` (PolygonalArea3D) — PolygonalArea3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `PolygonalArea3D` — PolygonalArea3D Moved polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(polyhedron3D, moveVector)`
-
-Move Polyhedron3D by given vector Throw exception in case of error
-
-**Remarks:** Move Polyhedron3D by given vector Throw exception in case of error
-
-**Parameters:**
-- `polyhedron3D` (Polyhedron3D) — Polyhedron3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Polyhedron3D` — Polyhedron3D Moved polyhedron
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(polyline2D, moveVector)`
-
-Move Polyline2D by given vector
-
-**Remarks:** Move Polyline2D by given vector
-
-**Parameters:**
-- `polyline2D` (Polyline2D) — Polyline2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Polyline2D` — Polyline2D Moved polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(polyline3D, moveVector)`
-
-Move Polyline3D by given vector
-
-**Remarks:** Move Polyline3D by given vector
-
-**Parameters:**
-- `polyline3D` (Polyline3D) — Polyline3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Polyline3D` — Polyline3D Moved polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(spline2D, moveVector)`
-
-Move Spline2D by given vector
-
-**Remarks:** Move Spline2D by given vector
-
-**Parameters:**
-- `spline2D` (Spline2D) — Spline2D to move
-- `moveVector` (Vector2D) — Vector of translation
-
-**Returns:** `Spline2D` — Spline2D Moved spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
-
-#### `Move(spline3D, moveVector)`
-
-Move Spline3D by given vector
-
-**Remarks:** Move Spline3D by given vector
-
-**Parameters:**
-- `spline3D` (Spline3D) — Spline3D to move
-- `moveVector` (Vector3D) — Vector of translation
-
-**Returns:** `Spline3D` — Spline3D Moved spline
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Move)
 
@@ -17641,35 +10621,7 @@ Move the given 3D arc on the z = 0 plane and create a 2D from it
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.MoveSpline3DToZ0Plane)
 
-#### `Offset(dist, arc2DSrc)`
-
-Calculate parallel to Arc2D
-
-**Remarks:** Calculate parallel to Arc2D
-
-**Parameters:**
-- `dist` (float) — Distance from the source
-- `arc2DSrc` (Arc2D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(dist, arc3DSrc)`
-
-Calculates parallel to Arc3D
-
-**Remarks:** Calculates parallel to Arc3D
-
-**Parameters:**
-- `dist` (float) — Distance from the source
-- `arc3DSrc` (Arc3D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(dist, lineSrc)`
+#### `Offset(dist, lineSrc) | Offset(point, lineSrc) | Offset(point, pathSrc) | Offset(dist, pathSrc, checkSegmentsOrientation) | Offset(point, arc2DSrc) | Offset(dist, arc2DSrc) | Offset(dist, spline2DSrc, checkSegmentsOrientation) | Offset(point, spline2DSrc) | Offset(rDistance, polyline2D, checkSegmentsOrientation) | Offset(point, polyline2DSrc) | Offset(point, dist, lineSrc, offsetPlane) | Offset(dist, offsetPlane, parallelsCount, polySrc) | Offset(point, offsetPlane, parallelsCount, polySrc) | Offset(point, arc3DSrc) | Offset(dist, arc3DSrc) | Offset(dist, spline3DSrc, plane, checkSegmentsOrientation) | Offset(point, spline3DSrc, plane) | Offset(inputPath, normVector, offsetDistance) | Offset(inputPath, inputPoint, rayVector, plane)`
 
 Counts parallel to 2D-Line
 
@@ -17678,245 +10630,6 @@ Counts parallel to 2D-Line
 **Parameters:**
 - `dist` (float) — Distance from the source
 - `lineSrc` (Line2D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(dist, offsetPlane, parallelsCount, polySrc)`
-
-Counts parallels to 3D Polyline
-
-**Remarks:** Counts parallels to 3D Polyline
-
-**Parameters:**
-- `dist` (float) — Distance from the source
-- `offsetPlane` (Plane3D) — Plane on which offsets will be calculated
-- `parallelsCount` (int) — Count of parallels to calculate
-- `polySrc` (Polyline3D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(dist, pathSrc, checkSegmentsOrientation)`
-
-Calculate parallel to Path2D ote If checkSegmentsOrientation is true, new polyline must have same count of points as original
-
-**Remarks:** Calculate parallel to Path2D ote If checkSegmentsOrientation is true, new polyline must have same count of points as original
-
-**Parameters:**
-- `dist` (float) — parallel defined by distance
-- `pathSrc` (Path2D) — source path
-- `checkSegmentsOrientation` (bool) — check, if segments in parallel geometry has same orientation as in original
-
-**Returns:** `tuple` — GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(dist, spline2DSrc, checkSegmentsOrientation)`
-
-Calculate parallel to Spline2D ote If checkSegmentsOrientation is true, new parallel must have same count of points as original
-
-**Remarks:** Calculate parallel to Spline2D ote If checkSegmentsOrientation is true, new parallel must have same count of points as original
-
-**Parameters:**
-- `dist` (float) — Distance from the source
-- `spline2DSrc` (Spline2D) — Source element
-- `checkSegmentsOrientation` (bool) — check, if segments in parallel geometry has same orientation as in original
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(dist, spline3DSrc, plane, checkSegmentsOrientation)`
-
-Calculates parallel to Spline3D - only for planar 3D splines !!! ote If checkSegmentsOrientation is true, new spline must have same count of points as original
-
-**Remarks:** Calculates parallel to Spline3D - only for planar 3D splines !!! ote If checkSegmentsOrientation is true, new spline must have same count of points as original
-
-**Parameters:**
-- `dist` (float) — Distance from the source
-- `spline3DSrc` (Spline3D) — Source element
-- `plane` (Plane3D) — plane to offset in
-- `checkSegmentsOrientation` (bool) — check, if segments in parallel geometry has same orientation as in original
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(inputPath, inputPoint, rayVector, plane)`
-
-Offset Path3D in distance given with cursor point
-
-**Remarks:** Offset Path3D in distance given with cursor point
-
-**Parameters:**
-- `inputPath` (Path3D) — input path
-- `inputPoint` (Point3D) — cursor point (ray point)
-- `rayVector` (Vector3D) — ray vector
-- `plane` (Plane3D) — plane of the planar face (of given boundary curves)
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(inputPath, normVector, offsetDistance)`
-
-Create offset of Path3D
-
-**Remarks:** Create offset of Path3D
-
-**Parameters:**
-- `inputPath` (Path3D) — input path
-- `normVector` (Vector3D) — normal vector of plane in that the offset will be calculated
-- `offsetDistance` (float) — offset distance
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, arc2DSrc)`
-
-Calculate parallel to Arc2D
-
-**Remarks:** Calculate parallel to Arc2D
-
-**Parameters:**
-- `point` (Point2D) — Parallel to this point
-- `arc2DSrc` (Arc2D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, arc3DSrc)`
-
-Calculates parallel to Arc3D
-
-**Remarks:** Calculates parallel to Arc3D
-
-**Parameters:**
-- `point` (Point3D) — Parallel to this point
-- `arc3DSrc` (Arc3D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, dist, lineSrc, offsetPlane)`
-
-Counts parallel to 3D-Line ote If the 'dist' value is zero, the 'point' arg is used as a base to parallel. In other case, the 'dist' would be the distance from the source and the point represents the orientation.
-
-**Remarks:** Counts parallel to 3D-Line ote If the 'dist' value is zero, the 'point' arg is used as a base to parallel. In other case, the 'dist' would be the distance from the source and the point represents the orientation.
-
-**Parameters:**
-- `point` (Point3D) — Parallel to this point
-- `dist` (float) — Distance from the source
-- `lineSrc` (Line3D) — Source element
-- `offsetPlane` (Offset3DPlane) — Plane on which parallel line will be calculated
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, lineSrc)`
-
-Counts parallel to 2D-Line
-
-**Remarks:** Counts parallel to 2D-Line
-
-**Parameters:**
-- `point` (Point2D) — Parallel to this point
-- `lineSrc` (Line2D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, offsetPlane, parallelsCount, polySrc)`
-
-Counts parallels to 3D Polyline
-
-**Remarks:** Counts parallels to 3D Polyline
-
-**Parameters:**
-- `point` (Point3D) — Parallel to this point
-- `offsetPlane` (Plane3D) — Plane on which offsets will be calculated
-- `parallelsCount` (int) — Count of parallels to calculate
-- `polySrc` (Polyline3D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, pathSrc)`
-
-Calculate parallel to Path2D
-
-**Remarks:** Calculate parallel to Path2D
-
-**Parameters:**
-- `point` (Point2D) — parallel defined by the point
-- `pathSrc` (Path2D) — source path
-
-**Returns:** `tuple` — GeoErrorCode,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, polyline2DSrc)`
-
-Calculate parallel to Polyline2D
-
-**Remarks:** Calculate parallel to Polyline2D
-
-**Parameters:**
-- `point` (Point2D) — Parallel to this point
-- `polyline2DSrc` (Polyline2D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, spline2DSrc)`
-
-Calculate parallel to Spline2D
-
-**Remarks:** Calculate parallel to Spline2D
-
-**Parameters:**
-- `point` (Point2D) — Parallel to this point
-- `spline2DSrc` (Spline2D) — Source element
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(point, spline3DSrc, plane)`
-
-Calculates parallel to Spline3D - only for planar 3D splines !!!
-
-**Remarks:** Calculates parallel to Spline3D - only for planar 3D splines !!!
-
-**Parameters:**
-- `point` (Point3D) — Parallel to this point
-- `spline3DSrc` (Spline3D) — Source element
-- `plane` (Plane3D) — plane to offset in
-
-**Returns:** `tuple` — eOK if successful,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Offset)
-
-#### `Offset(rDistance, polyline2D, checkSegmentsOrientation)`
-
-Calculate parallel to Polyline2D ote If checkSegmentsOrientation is true, new polyline must have same count of points as original
-
-**Remarks:** Calculate parallel to Polyline2D ote If checkSegmentsOrientation is true, new polyline must have same count of points as original
-
-**Parameters:**
-- `rDistance` (float) — Distance from the source
-- `polyline2D` (Polyline2D) — Source element
-- `checkSegmentsOrientation` (bool) — check, if segments in parallel geometry has same orientation as in original
 
 **Returns:** `tuple` — eOK if successful,
 
@@ -17938,178 +10651,7 @@ Offset 3D curves with given distance
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.OffsetCurve)
 
-#### `Polygonize(arc, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize a Arc3D geometry object
-
-**Remarks:** Polygonize a Arc3D geometry object
-
-**Parameters:**
-- `arc` (Arc3D) — Arc3D which will be polygonized
-- `arcSegmentation` (int) — Count of segments
-- `useArcSegmentation` (int) — if use segment polygonization, set to 0
-- `armLength` (float) — max length of calculated segment, for rise value polygonization only
-- `riseValue` (float) — rise value
-
-**Returns:** `bool` — tuple(bool true = success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(arc, countOfSegments)`
-
-Polygonize a Arc2D geometry object
-
-**Remarks:** Polygonize a Arc2D geometry object
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D which will be polygonized
-- `countOfSegments` (int) — Count of segments
-
-**Returns:** `Polyline2D` — Polyline2D The polyline will be filled with the points of the polygonization
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(arc, countOfSegments)`
-
-Polygonize a Arc3D geometry object
-
-**Remarks:** Polygonize a Arc3D geometry object
-
-**Parameters:**
-- `arc` (Arc3D) — Arc3D which will be polygonized
-- `countOfSegments` (int) — Count of segments
-
-**Returns:** `Polyline3D` — Polyline3D the polyline will be filled with the points of the polygonization
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(arc, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(arc, fromOffset, toOffset, count, bInscribed)`
-
-Polygonize Arc2D with given division
-
-**Remarks:** Polygonize Arc2D with given division
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D
-- `fromOffset` (float) — the offset from the elements start point, where polygonization will begin
-- `toOffset` (float) — the offset from the elements start point, where polygonization will end
-- `count` (int) — Count of segments
-- `bInscribed` (bool) — in case of inscribed circle there is additional segment (one segment divided to 2 parts)
-
-**Returns:** `bool` — tuple(bool (true = polygonization possible),
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(arc, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `arc` (Arc2D) — Arc which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(arc, fromPoint, toPoint, count, bInscribed)`
-
-Polygonize Arc2D with given division
-
-**Remarks:** Polygonize Arc2D with given division
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D
-- `fromPoint` (Point2D) — Start point for polygonization
-- `toPoint` (Point2D) — End point for polygonization
-- `count` (int) — Count of segments
-- `bInscribed` (bool) — in case of inscribed circle there is additional segment (one segment divided to 2 parts)
-
-**Returns:** `bool` — tuple(bool (true = polygonization possible),
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(area, eps, arcSegmentation=360, useArcSegmentation=0, armLength=0.0, riseValue=0.0)`
-
-Polygonizes path bounded area
-
-**Remarks:** Polygonizes path bounded area
-
-**Parameters:**
-- `area` (ClosedAreaComposite2D) — path bounded area to be polygonized
-- `eps` (float) — Number of segments the arc will be divided
-- `arcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `useArcSegmentation` (int) — maximum length of a segment for polygonized arc
-- `armLength` (float) — is the maximum distance from the actual arc and the polyline
-- `riseValue` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(bspline, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize a BSpline2D geometry object
-
-**Remarks:** Polygonize a BSpline2D geometry object
-
-**Parameters:**
-- `bspline` (BSpline2D) — BSpline2D which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization
-- `toPoint` (Point3D) — where to end the polygonization
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(clothoid, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(clothoid, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — Clothoid which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-- `eps` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(geometry_object, arcSegmentation, useArcSegmentation, armLength, riseValue)`
+#### `Polygonize(geometry_object, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(geometry_object, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(path, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(line, fromPoint, toPoint, eps) | Polygonize(polyline, fromPoint, toPoint, eps) | Polygonize(polygon, fromPoint, toPoint, eps) | Polygonize(arc, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(arc, fromPoint, toPoint, count, bInscribed) | Polygonize(arc, countOfSegments) | Polygonize(spline, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(bspline, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(clothoid, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(arc, countOfSegments) | Polygonize(arc, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(path, countOfSegments) | Polygonize(path, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(spline, linesPerSegment) | Polygonize(spline, minmaxRadius, pixelSize) | Polygonize(spline, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(spline, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(line) | Polygonize(line, fromOffset, toOffset) | Polygonize(clothoid, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(polyline, fromOffset, toOffset, eps) | Polygonize(polygon, fromOffset, toOffset, eps) | Polygonize(arc, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue) | Polygonize(arc, fromOffset, toOffset, count, bInscribed) | Polygonize(spline, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(path, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps) | Polygonize(area, eps, arcSegmentation=360, useArcSegmentation=0, armLength=0.0, riseValue=0.0) | Polygonize(geometry_object, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
 
 Polygonize whole curve
 
@@ -18123,257 +10665,6 @@ Polygonize whole curve
 - `riseValue` (float) — rise value
 
 **Returns:** `bool` — tuple(bool true = success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(geometry_object, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(geometry_object, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `geometry_object` (object) — Geometry object which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-- `eps` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(line)`
-
-Create polyline from line
-
-**Remarks:** Create polyline from line
-
-**Parameters:**
-- `line` (Line3D) — Line to polygonize
-
-**Returns:** `bool` — tuple(bool true = success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(line, fromOffset, toOffset)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(line, fromPoint, toPoint, eps)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `line` (Line2D) — Line which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `eps` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(path, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize a Arc3D geometry object
-
-**Remarks:** Polygonize a Arc3D geometry object
-
-**Parameters:**
-- `path` (Path3D) — Path3D which will be polygonized
-- `arcSegmentation` (int) — Count of segments
-- `useArcSegmentation` (int) — if use segment polygonization, set to 0
-- `armLength` (float) — max length of calculated segment, for rise value polygonization only
-- `riseValue` (float) — rise value
-
-**Returns:** `Polyline3D` — the result polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(path, countOfSegments)`
-
-Polygonize a Path3D geometry object
-
-**Remarks:** Polygonize a Path3D geometry object
-
-**Parameters:**
-- `path` (Path3D) — Path3D which will be polygonized
-- `countOfSegments` (int) — Count of segments
-
-**Returns:** `Polyline3D` — Polyline3D the polyline will be filled with non repeated points of the polygonization
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(path, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonizes multiple geometry objects, if they if they follow directly one another emark The objects in the path must follow directly one another. This means, the start- or endpoint of one object has to be the start- or endpoint of the next object in the path and the other point of the object has to be the start- or endpoint of the previous object in the path. eg.: Start1-End1, End2-Start2, End3-Start3, Start4-End4 and so on. where, End1 == End2, Start2 == End3, Start3 == Start4
-
-**Remarks:** Polygonizes multiple geometry objects, if they if they follow directly one another emark The objects in the path must follow directly one another. This means, the start- or endpoint of one object has to be the start- or endpoint of the next object in the path and the other point of the object has to be the start- or endpoint of the previous object in the path. eg.: Start1-End1, End2-Start2, End3-Start3, Start4-End4 and so on. where, End1 == End2, Start2 == End3, Start3 == Start4
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(path, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonizes multiple geometry objects, if they if they follow directly one another emark The objects in the path must follow directly one another. This means, the start- or endpoint of one object has to be the start- or endpoint of the next object in the path and the other point of the object has to be the start- or endpoint of the previous object in the path. eg.: Start1-End1, End2-Start2, End3-Start3, Start4-End4 and so on. where, End1 == End2, Start2 == End3, Start3 == Start4
-
-**Remarks:** Polygonizes multiple geometry objects, if they if they follow directly one another emark The objects in the path must follow directly one another. This means, the start- or endpoint of one object has to be the start- or endpoint of the next object in the path and the other point of the object has to be the start- or endpoint of the previous object in the path. eg.: Start1-End1, End2-Start2, End3-Start3, Start4-End4 and so on. where, End1 == End2, Start2 == End3, Start3 == Start4
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(polygon, fromOffset, toOffset, eps)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(polygon, fromPoint, toPoint, eps)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `eps` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(polyline, fromOffset, toOffset, eps)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(polyline, fromPoint, toPoint, eps)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `polyline` (Polyline2D) — Polyline which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `eps` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(spline, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize B-spline curve
-
-**Remarks:** Polygonize B-spline curve
-
-**Parameters:**
-- `spline` (BSpline3D) — spline to tesselate
-- `arcSegmentation` (int) — segment number
-- `useArcSegmentation` (int) — if use segment polygonization, set to 0
-- `armLength` (float) — max length of calculated segment, for rise value polygonization only
-- `riseValue` (float) — rise value
-
-**Returns:** `bool` — tuple(bool true = success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(spline, arcSegmentation, useArcSegmentation, armLength, riseValue)`
-
-Polygonize whole spline curve
-
-**Remarks:** Polygonize whole spline curve
-
-**Parameters:**
-- `spline` (Spline3D) — spline to tesselate
-- `arcSegmentation` (int) — segment number
-- `useArcSegmentation` (int) — if use segment polygonization, set to 0
-- `armLength` (float) — max length of calculated segment, for rise value polygonization only
-- `riseValue` (float) — rise value
-
-**Returns:** `bool` — tuple(bool true = success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(spline, fromOffset, toOffset, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-**Remarks:** Polygonize a single geometry object emark The polygonization is always done in the direction of the element and therefor for non-cyclic elements the fromOffset must be smaller than the toOffset
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(spline, fromPoint, toPoint, arcSegmentation, useArcSegmentation, armLength, riseValue, eps)`
-
-Polygonize a single geometry object
-
-**Remarks:** Polygonize a single geometry object
-
-**Parameters:**
-- `spline` (Spline2D) — Spline which will be polygonized
-- `fromPoint` (Point3D) — where to begin the polygonization; The point has to be on one of the Objects
-- `toPoint` (Point3D) — where to end the polygonization; The point has to be on one of the Objects
-- `arcSegmentation` (int) — Number of segments the arc will be divided
-- `useArcSegmentation` (int) — type of the polygonization (if 0 use the arcSegmentation otherwise use the riseValue)
-- `armLength` (float) — maximum length of a segment for polygonized arc
-- `riseValue` (float) — is the maximum distance from the actual arc and the polyline
-- `eps` (float) — stw[295-1]
-
-**Returns:** `bool` — tuple(true, if calculation completes, false: if something went wrong during the calculation,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(spline, linesPerSegment)`
-
-Polygonize a Spline3D geometry object
-
-**Remarks:** Polygonize a Spline3D geometry object
-
-**Parameters:**
-- `spline` (Spline3D) — Spline3D which will be polygonized
-- `linesPerSegment` (int) — Count of lines per segment
-
-**Returns:** `Polyline3D` — Polyline3D the polyline will be filled with the points of the polygonization
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
-
-#### `Polygonize(spline, minmaxRadius, pixelSize)`
-
-Polygonize Spline3D
-
-**Remarks:** Polygonize Spline3D
-
-**Parameters:**
-- `spline` (Spline3D) — Spline3D
-- `minmaxRadius` (float) — radius of minmax
-- `pixelSize` (float) — size of pixel
-
-**Returns:** `bool` — tuple(bool (true = polygonization possible),
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Polygonize)
 
@@ -18393,399 +10684,7 @@ Polygonize given arc always equally
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.PolygonizeEqually)
 
-#### `Rotate(arc, angle)`
-
-Rotate a arc around zero point by an angle. This function rotate center point and start and end angles.
-
-**Remarks:** Rotate a arc around zero point by an angle. This function rotate center point and start and end angles.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D arc
-- `angle` (Angle) — Angle
-
-**Returns:** `Arc2D` — Resulting 2D arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(arc, zeroPoint, angle)`
-
-Rotate a arc around given point by an angle. This function rotate center point start and end angles.
-
-**Remarks:** Rotate a arc around given point by an angle. This function rotate center point start and end angles.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D arc
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Arc2D` — Resulting 2D arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(area, angle)`
-
-Rotate a polygonal area around origin by an angle.
-
-**Remarks:** Rotate a polygonal area around origin by an angle.
-
-**Parameters:**
-- `area` (PolygonalArea2D) — 2D polygonal area
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `PolygonalArea2D` — Resulting 2D polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(area, zeroPoint, angle)`
-
-Rotate a polygonal area around given point by an angle.
-
-**Remarks:** Rotate a polygonal area around given point by an angle.
-
-**Parameters:**
-- `area` (PolygonalArea2D) — 2D polygonal area
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `PolygonalArea2D` — Resulting 2D polygonal area
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(axis, angle)`
-
-Rotate a axis around origin by an angle.
-
-**Remarks:** Rotate a axis around origin by an angle.
-
-**Parameters:**
-- `axis` (Axis2D) — 2D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Axis2D` — Resulting 2D axis
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(axis, angle)`
-
-Rotate a axis placement around origin by an angle.
-
-**Remarks:** Rotate a axis placement around origin by an angle.
-
-**Parameters:**
-- `placement` (object) — 2D axis placement
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `AxisPlacement2D` — Resulting 2D axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(axis, zeroPoint, angle)`
-
-Rotate a axis around given point by an angle.
-
-**Remarks:** Rotate a axis around given point by an angle.
-
-**Parameters:**
-- `axis` (Axis2D) — 2D axis
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Axis2D` — Resulting 2D axis
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(axis, zeroPoint, angle)`
-
-Rotate a axis placement around given point by an angle.
-
-**Remarks:** Rotate a axis placement around given point by an angle.
-
-**Parameters:**
-- `placement` (object) — 2D axis placement
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `AxisPlacement2D` — Resulting 2D axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(brep, axis, angle)`
-
-Rotate a brep around given 3D axis by an angle.
-
-**Remarks:** Rotate a brep around given 3D axis by an angle.
-
-**Parameters:**
-- `brep` (BRep3D) — brep
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `BRep3D` — brep
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(clothoid, angle)`
-
-Rotate a clothoid around origin by an angle.
-
-**Remarks:** Rotate a clothoid around origin by an angle.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D clothoid
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Clothoid2D` — Resulting 2D clothoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(clothoid, zeroPoint, angle)`
-
-Rotate a clothoid around given point by an angle.
-
-**Remarks:** Rotate a clothoid around given point by an angle.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D clothoid
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Clothoid2D` — Resulting 2D clothoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(cone, angle)`
-
-Rotate a 3D Cone around origin by an angle.
-
-**Remarks:** Rotate a 3D Cone around origin by an angle.
-
-**Parameters:**
-- `cone` (Cone3D) — 3D Cone
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Cone3D` — Resulting 3D Cone
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(cone, axis, angle)`
-
-Rotate a 3D Cone around given 3D axis by an angle.
-
-**Remarks:** Rotate a 3D Cone around given 3D axis by an angle.
-
-**Parameters:**
-- `cone` (Cone3D) — 3D Cone
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Cone3D` — Resulting 3D Cone
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(cone, zeroPoint, angle)`
-
-Rotate a 3D Cone around given 2D point by an angle.
-
-**Remarks:** Rotate a 3D Cone around given 2D point by an angle.
-
-**Parameters:**
-- `cone` (Cone3D) — 3D Cone
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Cone3D` — Resulting 3D Cone
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(cylinder, angle)`
-
-Rotate a 3D Cylinder around origin by an angle.
-
-**Remarks:** Rotate a 3D Cylinder around origin by an angle.
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — 3D Cylinder
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Cylinder3D` — Resulting 3D Cylinder
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(cylinder, axis, angle)`
-
-Rotate a 3D Cylinder around given 3D axis by an angle.
-
-**Remarks:** Rotate a 3D Cylinder around given 3D axis by an angle.
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — 3D Cylinder
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Cylinder3D` — Resulting 3D Cylinder
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(cylinder, zeroPoint, angle)`
-
-Rotate a 3D Cylinder around given 2D point by an angle.
-
-**Remarks:** Rotate a 3D Cylinder around given 2D point by an angle.
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — 3D Cylinder
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Cylinder3D` — Resulting 3D Cylinder
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(ellipsoid, angle)`
-
-
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — 3D Ellipsoid
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Ellipsoid3D` — Resulting 3D Ellipsoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(ellipsoid, axis, angle)`
-
-Rotate a 3D Ellipsoid around given 3D axis by an angle.
-
-**Remarks:** Rotate a 3D Ellipsoid around given 3D axis by an angle.
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — 3D Ellipsoid
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Ellipsoid3D` — Resulting 3D Ellipsoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(ellipsoid, zeroPoint, angle)`
-
-Rotate a 3D Ellipsoid around given 2D point by an angle.
-
-**Remarks:** Rotate a 3D Ellipsoid around given 2D point by an angle.
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — 3D Ellipsoid
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Ellipsoid3D` — Resulting 3D Ellipsoid
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(line, angle)`
-
-Rotate a line around zero point by an angle.
-
-**Remarks:** Rotate a line around zero point by an angle.
-
-**Parameters:**
-- `line` (Line2D) — 2D line
-- `angle` (Angle) — Angle
-
-**Returns:** `Line2D` — Resulting 2D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(line, zeroPoint, angle)`
-
-Rotate a line around given point by an angle.
-
-**Remarks:** Rotate a line around given point by an angle.
-
-**Parameters:**
-- `line` (Line2D) — 2D line
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Line2D` — Resulting 2D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(line, zeroPoint, angle)`
-
-Rotate a 3D line around given 2D point by an angle.
-
-**Remarks:** Rotate a 3D line around given 2D point by an angle.
-
-**Parameters:**
-- `line` (Line3D) — 3D line
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Line3D` — Resulting 3D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(minmax, angle)`
-
-Rotate a MinMax2D by an angle.
-
-**Remarks:** Rotate a MinMax2D by an angle.
-
-**Parameters:**
-- `minmax` (MinMax2D) — 2D MinMax
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `MinMax2D` — Resulting 2D MinMax
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(placement, angle)`
-
-Rotate a axis placement3D around origin(z-axis) by an angle.
-
-**Remarks:** Rotate a axis placement3D around origin(z-axis) by an angle.
-
-**Parameters:**
-- `placement` (AxisPlacement3D) — 3D axis placement
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `AxisPlacement3D` — Resulting 3D axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(placement, rotAxis, angle)`
-
-Rotate a axis placement 3D around origin(z-axis) by an angle.
-
-**Remarks:** Rotate a axis placement 3D around origin(z-axis) by an angle.
-
-**Parameters:**
-- `placement` (AxisPlacement3D) — 3D axis placement
-- `rotAxis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `AxisPlacement3D` — Resulting 3D Axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(placement, zeroPoint, angle)`
-
-Rotate a axis placement around given point (z-axis) by an angle.
-
-**Remarks:** Rotate a axis placement around given point (z-axis) by an angle.
-
-**Parameters:**
-- `placement` (AxisPlacement3D) — 3D axis placement
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `AxisPlacement3D` — Resulting 3D axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(point, angle)`
+#### `Rotate(point, angle) | Rotate(point, zeroPoint, angle) | Rotate(line, angle) | Rotate(line, zeroPoint, angle) | Rotate(arc, angle) | Rotate(arc, zeroPoint, angle) | Rotate(vec, angle) | Rotate(vec, axis, angle) | Rotate(polyline, zeroPoint, angle) | Rotate(polyline, angle) | Rotate(axis, angle) | Rotate(axis, zeroPoint, angle) | Rotate(axis, angle) | Rotate(axis, zeroPoint, angle) | Rotate(placement, angle) | Rotate(placement, rotAxis, angle) | Rotate(placement, zeroPoint, angle) | Rotate(clothoid, angle) | Rotate(clothoid, zeroPoint, angle) | Rotate(polygon, angle) | Rotate(polygon, zeroPoint, angle) | Rotate(area, angle) | Rotate(area, zeroPoint, angle) | Rotate(spline, angle) | Rotate(spline, zeroPoint, angle) | Rotate(point, angle) | Rotate(point, zeroPoint, angle) | Rotate(point, axis, angle) | Rotate(line, zeroPoint, angle) | Rotate(cylinder, angle) | Rotate(cylinder, zeroPoint, angle) | Rotate(cylinder, axis, angle) | Rotate(ellipsoid, angle) | Rotate(ellipsoid, zeroPoint, angle) | Rotate(ellipsoid, axis, angle) | Rotate(cone, angle) | Rotate(cone, zeroPoint, angle) | Rotate(cone, axis, angle) | Rotate(minmax, angle) | Rotate(brep, axis, angle) | Rotate(polyhedron, axis, angle)`
 
 Rotate a point around zero point by an angle.
 
@@ -18796,196 +10695,6 @@ Rotate a point around zero point by an angle.
 - `angle` (Angle) — Angle
 
 **Returns:** `Point2D` — Resulting 2D Point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(point, angle)`
-
-Rotate a 3D point around origin by an angle.
-
-**Remarks:** Rotate a 3D point around origin by an angle.
-
-**Parameters:**
-- `point` (Point3D) — 3D point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Point3D` — Resulting 3D point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(point, axis, angle)`
-
-Rotate a 3D point around given 3D axis by an angle.
-
-**Remarks:** Rotate a 3D point around given 3D axis by an angle.
-
-**Parameters:**
-- `point` (Point3D) — 3D point
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Point3D` — Resulting 3D point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(point, zeroPoint, angle)`
-
-Rotate a point around given point by an angle.
-
-**Remarks:** Rotate a point around given point by an angle.
-
-**Parameters:**
-- `point` (Point2D) — 2D Point
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Point2D` — Resulting 2D point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(point, zeroPoint, angle)`
-
-Rotate a 3D point around given 2D point by an angle.
-
-**Remarks:** Rotate a 3D point around given 2D point by an angle.
-
-**Parameters:**
-- `point` (Point3D) — 3D point
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Point3D` — Resulting 3D point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(polygon, angle)`
-
-Rotate a polygon around origin by an angle.
-
-**Remarks:** Rotate a polygon around origin by an angle.
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D polygon
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Polygon2D` — Resulting 2D polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(polygon, zeroPoint, angle)`
-
-Rotate a polygon around given point by an angle.
-
-**Remarks:** Rotate a polygon around given point by an angle.
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D polygon
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Polygon2D` — Resulting 2D polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(polyhedron, axis, angle)`
-
-Rotate a polyhedron around given 3D axis by an angle.
-
-**Remarks:** Rotate a polyhedron around given 3D axis by an angle.
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — polyhedron
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Polyhedron3D` — polyhedron
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(polyline, angle)`
-
-Rotate a polyline around origin by an angle.
-
-**Remarks:** Rotate a polyline around origin by an angle.
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D polyline
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Polyline2D` — Resulting 2D polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(polyline, zeroPoint, angle)`
-
-Rotate a polyline around given point by an angle.
-
-**Remarks:** Rotate a polyline around given point by an angle.
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D polyline
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Polyline2D` — Resulting 2D polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(spline, angle)`
-
-Rotate a spline around origin by an angle.
-
-**Remarks:** Rotate a spline around origin by an angle.
-
-**Parameters:**
-- `spline` (Spline2D) — 2D spline
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Spline2D` — Resulting 2D spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(spline, zeroPoint, angle)`
-
-Rotate a spline around given point by an angle.
-
-**Remarks:** Rotate a spline around given point by an angle.
-
-**Parameters:**
-- `spline` (Spline2D) — 2D spline
-- `zeroPoint` (Point2D) — 2D zero point
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Spline2D` — Resulting 2D spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(vec, angle)`
-
-Rotate a vector by an angle.
-
-**Remarks:** Rotate a vector by an angle.
-
-**Parameters:**
-- `vec` (Vector2D) — 2D vector
-- `angle` (Angle) — Angle
-
-**Returns:** `Vector2D` — Resulting 2D vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
-
-#### `Rotate(vec, axis, angle)`
-
-Rotate a vector by an angle.
-
-**Remarks:** Rotate a vector by an angle.
-
-**Parameters:**
-- `vec` (Vector3D) — 3D vector
-- `axis` (Axis3D) — 3D axis
-- `angle` (Angle) — Angle of rotation
-
-**Returns:** `Vector3D` — Resulting 3D vector
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Rotate)
 
@@ -19058,67 +10767,7 @@ Set the the z value of a line
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SetZValue)
 
-#### `Split(arc2D, splitPoints, posTol)`
-
-Split a Arc2D into multiple Arc2D geometries by given split points
-
-**Remarks:** Split a Arc2D into multiple Arc2D geometries by given split points
-
-**Parameters:**
-- `arc2D` (Arc2D) — The arc to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the arc)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(arc3D, splitPoints, posTol)`
-
-Split a Arc3D into multiple Arc3D geometries by given split points
-
-**Remarks:** Split a Arc3D into multiple Arc3D geometries by given split points
-
-**Parameters:**
-- `arc3D` (Arc3D) — The arc to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the line)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(bspline2D, splitPoints, posTol)`
-
-Split a BSpline2D into multiple BSpline2D geometries by given split points
-
-**Remarks:** Split a BSpline2D into multiple BSpline2D geometries by given split points
-
-**Parameters:**
-- `bspline2D` (BSpline2D) — The spline to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the spline)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(bspline3D, splitPoints, posTol)`
-
-Split a BSpline3D into multiple BSpline3D geometries by given split points
-
-**Remarks:** Split a BSpline3D into multiple BSpline3D geometries by given split points
-
-**Parameters:**
-- `bspline3D` (BSpline3D) — The spline to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the spline)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(line2D, splitPoints, posTol)`
+#### `Split(line2D, splitPoints, posTol) | Split(line3D, splitPoints, posTol) | Split(polyline2D, splitPoints, posTol) | Split(polyline3D, splitPoints, posTol) | Split(arc2D, splitPoints, posTol) | Split(arc3D, splitPoints, posTol) | Split(spline2D, splitPoints, posTol) | Split(spline3D, splitPoints, posTol) | Split(bspline2D, splitPoints, posTol) | Split(bspline3D, splitPoints, posTol) | Split(polyline2D, polygon2D, posTol) | Split(polygon, polyline, posTol, divideComponents) | Split(polygon, axis, posTol, divideComponents)`
 
 Split a Line2D into multiple Line2D geometries by given split points
 
@@ -19127,128 +10776,6 @@ Split a Line2D into multiple Line2D geometries by given split points
 **Parameters:**
 - `line2D` (Line2D) — The line to split
 - `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the line)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(line3D, splitPoints, posTol)`
-
-Split a Line3D into multiple Line3D geometries by given split points
-
-**Remarks:** Split a Line3D into multiple Line3D geometries by given split points
-
-**Parameters:**
-- `line3D` (Line3D) — The line to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the line)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(polygon, axis, posTol, divideComponents)`
-
-Split Polygon2D into 3 polygons by given Axis2D
-
-**Remarks:** Split Polygon2D into 3 polygons by given Axis2D
-
-**Parameters:**
-- `polygon` (Polygon2D) — The polygon to split
-- `axis` (Axis2D) — The given axis
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-- `divideComponents` (bool) — If true, polygon will be split by intersection points of polyline and connection lines between components
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(polygon, polyline, posTol, divideComponents)`
-
-Split Polygon2D into 3 polygons by given Polyline2D
-
-**Remarks:** Split Polygon2D into 3 polygons by given Polyline2D
-
-**Parameters:**
-- `polygon` (Polygon2D) — The polygon to split
-- `polyline` (Polyline2D) — The given polyline
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-- `divideComponents` (bool) — If true, polygon will be split by intersection points of polyline and connection lines between components
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(polyline2D, polygon2D, posTol)`
-
-Split a Polyline2D into multiple Polyline2D geometries by given split polygon
-
-**Remarks:** Split a Polyline2D into multiple Polyline2D geometries by given split polygon
-
-**Parameters:**
-- `polyline2D` (Polyline2D) — The polyline to split
-- `polygon2D` (Polygon2D) — The given polygon
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(polyline2D, splitPoints, posTol)`
-
-Split a Polyline2D into multiple Polyline2D geometries by given split points
-
-**Remarks:** Split a Polyline2D into multiple Polyline2D geometries by given split points
-
-**Parameters:**
-- `polyline2D` (Polyline2D) — The polyline to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the polyline)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(polyline3D, splitPoints, posTol)`
-
-Split a Polyline3D into multiple Polyline3D geometries by given split points
-
-**Remarks:** Split a Polyline3D into multiple Polyline3D geometries by given split points
-
-**Parameters:**
-- `polyline3D` (Polyline3D) — The polyline to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the line)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(spline2D, splitPoints, posTol)`
-
-Split a Spline2D into multiple Spline2D geometries by given split points
-
-**Remarks:** Split a Spline2D into multiple Spline2D geometries by given split points
-
-**Parameters:**
-- `spline2D` (Spline2D) — The spline to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the spline)
-- `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
-
-**Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Split)
-
-#### `Split(spline3D, splitPoints, posTol)`
-
-Split a Spline3D into multiple Spline3D geometries by given split points
-
-**Remarks:** Split a Spline3D into multiple Spline3D geometries by given split points
-
-**Parameters:**
-- `spline3D` (Spline3D) — The spline to split
-- `splitPoints` (Point3DList) — The given split points (e.g. intersection points onto the spline)
 - `posTol` (float) — Tolerance being used to determine the position of split points on the input curve
 
 **Returns:** `tuple` — eSplitResult, SPLIT_OK on success,
@@ -19268,25 +10795,7 @@ Splits normalized Polygon3D into parts
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.SplitPolygon3DToParts)
 
-#### `Tesselate(brep, density, chord, maxAngle, minEdge, maxEdge)`
-
-Tesselate b-rep with mesh triangles
-
-**Remarks:** Tesselate b-rep with mesh triangles
-
-**Parameters:**
-- `brep` (BRep3D) — brep to be tesselated
-- `density` (float) — density of resulting mesh (when 0, not used)
-- `chord` (float) — curve/surface chord tolerance (when 0, not used)
-- `maxAngle` (float) — maximal angle between neighbor triangles in degrees (when 0, not used)
-- `minEdge` (float) — minimal edge length (when 0, not used)
-- `maxEdge` (float) — maximal edge length (when 0, not used)
-
-**Returns:** `tuple` — error code,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Tesselate)
-
-#### `Tesselate(brep, density, maxAngle, minEdge, maxEdge)`
+#### `Tesselate(brep, density, maxAngle, minEdge, maxEdge) | Tesselate(brep, density, chord, maxAngle, minEdge, maxEdge)`
 
 Tesselate b-rep with mesh triangles
 
@@ -19303,7 +10812,7 @@ Tesselate b-rep with mesh triangles
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Tesselate)
 
-#### `Touching(line1, line2)`
+#### `Touching(line1, line2) | Touching(polygon1, polygon2) | Touching(polygon, polyline)`
 
 Test for collision between 2 line2D objects
 
@@ -19317,395 +10826,7 @@ Test for collision between 2 line2D objects
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Touching)
 
-#### `Touching(polygon, polyline)`
-
-Test for collision between polygon2D and polyline2D
-
-**Remarks:** Test for collision between polygon2D and polyline2D
-
-**Parameters:**
-- `polygon` (Polygon2D) — the first geometry object
-- `polyline` (Polyline2D) — the second geometry object
-
-**Returns:** `bool` — true when 1 or more lines in touch, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Touching)
-
-#### `Touching(polygon1, polygon2)`
-
-Test for collision between 2 polygon2D objects
-
-**Remarks:** Test for collision between 2 polygon2D objects
-
-**Parameters:**
-- `polygon1` (Polygon2D) — the first geometry object
-- `polygon2` (Polygon2D) — the second geometry object
-
-**Returns:** `bool` — true when 1 or more lines in touch, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Touching)
-
-#### `Transform(arc, matrix)`
-
-Arc2D matrix transformation.
-
-**Remarks:** Arc2D matrix transformation.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D arc to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(arc, matrix)`
-
-Arc3D matrix3D transformation.
-
-**Remarks:** Arc3D matrix3D transformation.
-
-**Parameters:**
-- `arc` (Arc3D) — 3D arc to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(arc, matrix)`
-
-Arc3D matrix2D transformation.
-
-**Remarks:** Arc3D matrix2D transformation.
-
-**Parameters:**
-- `arc` (Arc3D) — 3D arc to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(area, matrix)`
-
-PolygonalArea2D matrix transformation.
-
-**Remarks:** PolygonalArea2D matrix transformation.
-
-**Parameters:**
-- `area` (PolygonalArea2D) — 2D polygonal area which will be transformed
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(area, matrix)`
-
-ClosedArea2D matrix transformation.
-
-**Remarks:** ClosedArea2D matrix transformation.
-
-**Parameters:**
-- `area` (ClosedArea2D) — 2D path bounded area which will be transformed
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(area, matrix)`
-
-ClosedAreaComposite2D matrix transformation.
-
-**Remarks:** ClosedAreaComposite2D matrix transformation.
-
-**Parameters:**
-- `area` (ClosedAreaComposite2D) — 2D path bounded area composite which will be transformed
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(area, matrix)`
-
-PolygonalArea3D matrix2D transformation.
-
-**Remarks:** PolygonalArea3D matrix2D transformation.
-
-**Parameters:**
-- `area` (PolygonalArea3D) — 3D polygonal area which will be transformed
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(area, matrix)`
-
-PolygonalArea3D matrix3D transformation.
-
-**Remarks:** PolygonalArea3D matrix3D transformation.
-
-**Parameters:**
-- `area` (PolygonalArea3D) — 3D polygonal area which will be transformed
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(axis, matrix)`
-
-Axis2D matrix transformation.
-
-**Remarks:** Axis2D matrix transformation.
-
-**Parameters:**
-- `axis` (Axis2D) — 2D axis to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(axis, matrix)`
-
-Axis3D matrix2D transformation.
-
-**Remarks:** Axis3D matrix2D transformation.
-
-**Parameters:**
-- `axis` (Axis3D) — 3D axis to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(axis, matrix)`
-
-Axis3D matrix3D transformation.
-
-**Remarks:** Axis3D matrix3D transformation.
-
-**Parameters:**
-- `axis` (Axis3D) — 3D axis to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(brep, matrix)`
-
-BRep3D matrix3D transformation.
-
-**Remarks:** BRep3D matrix3D transformation.
-
-**Parameters:**
-- `brep` (BRep3D) — Brep3D to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(brep, matrix)`
-
-BRep3D matrix2D transformation.
-
-**Remarks:** BRep3D matrix2D transformation.
-
-**Parameters:**
-- `brep` (BRep3D) — Brep3D to transform.
-- `matrix` (Matrix2D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(clothoid, matrix)`
-
-Clothoid2D matrix transformation.
-
-**Remarks:** Clothoid2D matrix transformation.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D clothoid to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(cone, matrix)`
-
-Cone3D matrix transformation
-
-**Remarks:** Cone3D matrix transformation
-
-**Parameters:**
-- `cone` (Cone3D) — Cone3D to transform
-- `matrix` (Matrix3D) — Transformation 3D matrix
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(cone, matrix)`
-
-Cone3D matrix transformation
-
-**Remarks:** Cone3D matrix transformation
-
-**Parameters:**
-- `cone` (Cone3D) — Cone3D to transform
-- `matrix` (Matrix2D) — Transformation 2D matrix
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(cuboid, matrix)`
-
-Cuboid3D matrix3D transformation.
-
-**Remarks:** Cuboid3D matrix3D transformation.
-
-**Parameters:**
-- `cuboid` (Cuboid3D) — 3D cuboid to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(cuboid, matrix)`
-
-Cuboid3D matrix2D transformation.
-
-**Remarks:** Cuboid3D matrix2D transformation.
-
-**Parameters:**
-- `cuboid` (Cuboid3D) — 3D cuboid to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(cylinder, matrix)`
-
-Cylinder3D matrix2D transformation.
-
-**Remarks:** Cylinder3D matrix2D transformation.
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — Cylinder3D which will be transformed
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(cylinder, matrix)`
-
-Cylinder3D matrix3D transformation.
-
-**Remarks:** Cylinder3D matrix3D transformation.
-
-**Parameters:**
-- `cylinder` (Cylinder3D) — Cylinder3D which will be transformed
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(el, matrix)`
-
-Line3D matrix3D transformation.
-
-**Remarks:** Line3D matrix3D transformation.
-
-**Parameters:**
-- `el` (Line3D) — 3D line to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(el, matrix)`
-
-Line3D matrix2D transformation.
-
-**Remarks:** Line3D matrix2D transformation.
-
-**Parameters:**
-- `el` (Line3D) — 3D line to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(ellipsoid, matrix)`
-
-Ellipsoid3D matrix2D transformation.
-
-**Remarks:** Ellipsoid3D matrix2D transformation.
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — Ellipsoid3D which will be transformed
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(ellipsoid, matrix)`
-
-Ellipsoid3D matrix3D transformation.
-
-**Remarks:** Ellipsoid3D matrix3D transformation.
-
-**Parameters:**
-- `ellipsoid` (Ellipsoid3D) — Ellipsoid3D which will be transformed
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(line, matrix)`
-
-Line2D matrix transformation.
-
-**Remarks:** Line2D matrix transformation.
-
-**Parameters:**
-- `line` (Line2D) — 2D line to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(path, matrix)`
-
-Path2D matrix transformation.
-
-**Remarks:** Path2D matrix transformation.
-
-**Parameters:**
-- `path` (Path2D) — 2D path to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(path, matrix)`
-
-Path3D matrix3D transformation.
-
-**Remarks:** Path3D matrix3D transformation.
-
-**Parameters:**
-- `path` (Path3D) — 3D path to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(path, matrix)`
-
-Path3D matrix2D transformation.
-
-**Remarks:** Path3D matrix2D transformation.
-
-**Parameters:**
-- `path` (Path3D) — 3D path to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(plane, matrix)`
-
-Plane3D matrix3D transformation.
-
-**Remarks:** Plane3D matrix3D transformation.
-
-**Parameters:**
-- `plane` (Plane3D) — 3D plane to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(plane, matrix)`
-
-Plane3D matrix2D transformation.
-
-**Remarks:** Plane3D matrix2D transformation.
-
-**Parameters:**
-- `plane` (Plane3D) — 2D plane to transform.
-- `matrix` (Matrix2D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(point, matrix)`
+#### `Transform(point, matrix) | Transform(line, matrix) | Transform(vec, matrix) | Transform(arc, matrix) | Transform(clothoid, matrix) | Transform(spline, matrix) | Transform(axis, matrix) | Transform(polyline, matrix) | Transform(path, matrix) | Transform(area, matrix) | Transform(area, matrix) | Transform(area, matrix) | Transform(point, matrix) | Transform(point, matrix) | Transform(el, matrix) | Transform(el, matrix) | Transform(vec, matrix) | Transform(vec, matrix) | Transform(arc, matrix) | Transform(arc, matrix) | Transform(cuboid, matrix) | Transform(cuboid, matrix) | Transform(plane, matrix) | Transform(plane, matrix) | Transform(polygon, matrix) | Transform(polygon, matrix) | Transform(polygon, matrix) | Transform(polyline, matrix) | Transform(polyline, matrix) | Transform(spline, matrix) | Transform(polyhedron, matrix) | Transform(polyhedron, matrix) | Transform(axis, matrix) | Transform(axis, matrix) | Transform(path, matrix) | Transform(path, matrix) | Transform(area, matrix) | Transform(area, matrix) | Transform(solid, matrix) | Transform(solid, matrix) | Transform(cylinder, matrix) | Transform(cylinder, matrix) | Transform(ellipsoid, matrix) | Transform(ellipsoid, matrix) | Transform(brep, matrix) | Transform(brep, matrix) | Transform(spline, matrix) | Transform(spline, matrix) | Transform(cone, matrix) | Transform(cone, matrix)`
 
 Point2D matrix transformation.
 
@@ -19717,234 +10838,6 @@ Point2D matrix transformation.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
 
-#### `Transform(point, matrix)`
-
-Point3D matrix3D transformation.
-
-**Remarks:** Point3D matrix3D transformation.
-
-**Parameters:**
-- `point` (Point3D) — 3D point to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(point, matrix)`
-
-Point3D matrix2D transformation.
-
-**Remarks:** Point3D matrix2D transformation.
-
-**Parameters:**
-- `point` (Point3D) — 3D point to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polygon, matrix)`
-
-Polyline2D matrix transformation.
-
-**Remarks:** Polyline2D matrix transformation.
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D polygon to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polygon, matrix)`
-
-Polygon3D matrix transformation.
-
-**Remarks:** Polygon3D matrix transformation.
-
-**Parameters:**
-- `polygon` (Polygon3D) — 3D polygon to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polygon, matrix)`
-
-Polygon3D matrix transformation.
-
-**Remarks:** Polygon3D matrix transformation.
-
-**Parameters:**
-- `polygon` (Polygon3D) — 3D polygon to transform.
-- `matrix` (Matrix3D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polyhedron, matrix)`
-
-Polyhedron3D matrix3D transformation.
-
-**Remarks:** Polyhedron3D matrix3D transformation.
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — 3D polyhedron to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polyhedron, matrix)`
-
-Polyhedron3D matrix2D transformation.
-
-**Remarks:** Polyhedron3D matrix2D transformation.
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — 3D polyhedron to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polyline, matrix)`
-
-Polyline2D matrix transformation.
-
-**Remarks:** Polyline2D matrix transformation.
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D polyline to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polyline, matrix)`
-
-Polyline3D matrix transformation.
-
-**Remarks:** Polyline3D matrix transformation.
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D polyline to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(polyline, matrix)`
-
-Polyline3D matrix transformation.
-
-**Remarks:** Polyline3D matrix transformation.
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D polyline to transform.
-- `matrix` (Matrix3D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(solid, matrix)`
-
-ClippedSweptSolid3D matrix2D transformation.
-
-**Remarks:** ClippedSweptSolid3D matrix2D transformation.
-
-**Parameters:**
-- `solid` (ClippedSweptSolid3D) — ClippedSweptSolid3D which will be transformed
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(solid, matrix)`
-
-ClippedSweptSolid3D matrix3D transformation. This body is transformed by 2D transformations only to keep vertical extrusion of the profile.
-
-**Remarks:** ClippedSweptSolid3D matrix3D transformation. This body is transformed by 2D transformations only to keep vertical extrusion of the profile.
-
-**Parameters:**
-- `solid` (ClippedSweptSolid3D) — ClippedSweptSolid3D which will be transformed
-- `matrix` (Matrix3D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(spline, matrix)`
-
-Spline2D matrix transformation.
-
-**Remarks:** Spline2D matrix transformation.
-
-**Parameters:**
-- `spline` (Spline2D) — 2D spline to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(spline, matrix)`
-
-Spline3D matrix transformation.
-
-**Remarks:** Spline3D matrix transformation.
-
-**Parameters:**
-- `spline` (Spline3D) — 3D spline to transform.
-- `matrix` (Matrix3D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(spline, matrix)`
-
-BSpline3D matrix transformation
-
-**Remarks:** BSpline3D matrix transformation
-
-**Parameters:**
-- `spline` (BSpline3D) — Bspline3D to transform
-- `matrix` (Matrix3D) — Transformation 3D matrix
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(spline, matrix)`
-
-BSpline3D matrix transformation
-
-**Remarks:** BSpline3D matrix transformation
-
-**Parameters:**
-- `spline` (BSpline3D) — Bspline3D to transform
-- `matrix` (Matrix2D) — Transformation 2D matrix
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(vec, matrix)`
-
-Vector2D matrix transformation.
-
-**Remarks:** Vector2D matrix transformation.
-
-**Parameters:**
-- `vec` (Vector2D) — 2D vector to transform.
-- `matrix` (Matrix2D) — Transformation Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(vec, matrix)`
-
-Vector3D matrix3D transformation.
-
-**Remarks:** Vector3D matrix3D transformation.
-
-**Parameters:**
-- `vec` (Vector3D) — 3D vector to transform.
-- `matrix` (Matrix3D) — Transformation 3D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
-#### `Transform(vec, matrix)`
-
-Vector3D matrix2D transformation.
-
-**Remarks:** Vector3D matrix2D transformation.
-
-**Parameters:**
-- `vec` (Vector3D) — 3D vector to transform.
-- `matrix` (Matrix2D) — Transformation 2D Matrix.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/_functions/#NemAll_Python_Geometry.Transform)
-
 ## GeometryEdge (class)
 
 Geometry edge Identification of any edge via point indices, not via point coordinates.
@@ -19952,10 +10845,7 @@ Geometry edge Identification of any edge via point indices, not via point coordi
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/GeometryEdge/)
 
 ### Constructors
-- `GeometryEdge()` — Initialize
-- `GeometryEdge(startIndex, endIndex)` — Constructor
-- `GeometryEdge(edge)` — Copy constructor
-- `GeometryEdge(edge)` — Copy constructor from old Allplan structure
+- `GeometryEdge() | GeometryEdge(startIndex, endIndex) | GeometryEdge(edge) | GeometryEdge(edge)` — Initialize
 
 ### Methods
 #### `GetEndIndex()`
@@ -20156,8 +11046,7 @@ Class holding Healing settings for elements.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/)
 
 ### Constructors
-- `HealingSettings(oPhedType=ePolyhedronHealingSettings.HSET_TRIANGULATE, oPgonType=ePolygonHealingSettings.PHSET_NOMODIFY, weldVertices=False)` — Default constructor. Types can be found in GeometryEnums.h
-- `HealingSettings(hSet)` — Copy constructor.
+- `HealingSettings(oPhedType=ePolyhedronHealingSettings.HSET_TRIANGULATE, oPgonType=ePolygonHealingSettings.PHSET_NOMODIFY, weldVertices=False) | HealingSettings(hSet)` — Default constructor. Types can be found in GeometryEnums.h
 
 ### Methods
 #### `GetPolygonHealingSettings()`
@@ -20290,8 +11179,7 @@ Parameters of hidden calculation.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/)
 
 ### Constructors
-- `HiddenCalculationParameters()` — Initialize
-- `HiddenCalculationParameters(param)` — Copy constructor.
+- `HiddenCalculationParameters() | HiddenCalculationParameters(param)` — Initialize
 
 ### Methods
 #### `SetObserverMatrix(eyePoint, viewPoint)`
@@ -20409,8 +11297,7 @@ Input element settings used by hidden calculation.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/)
 
 ### Constructors
-- `HiddenMaterial()` — Initialize
-- `HiddenMaterial(source)` — Copy constructor.
+- `HiddenMaterial() | HiddenMaterial(source)` — Initialize
 
 ### Properties
 - `ExtraSmooth` (bool, get/set) — Extra smooth flag for entry. Flag is usual for elements like round column. Adjacent edges of such element are optimized with constant angle (20 deg) ignoring angle set in hidden options (usual about 1deg).
@@ -20510,13 +11397,7 @@ Representation class for 2D line.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2D/)
 
 ### Constructors
-- `Line2D()` — Initialize
-- `Line2D(line)` — Copy constructor.
-- `Line2D(line3D)` — Copy constructor to convert a 3D line
-- `Line2D(point1, point2)` — Constructor. Initialize line from two points. Reference point is initialized to [0.0, 0.0]. Used world coordinates.
-- `Line2D(startPoint, vec)` — Constructor. Initialize line from point and relative vector to point. Reference point is initialized to [0.0, 0.0]. Used world coordinates.
-- `Line2D(x1, y1, x2, y2)` — Constructor. Reference point is initialized to [0.0, 0.0]. Used world coordinates.
-- `Line2D(refPoint, point1, point2)` — Constructor. Used local coordinate system for point1 and point2. refPoint used global coordinate system.
+- `Line2D() | Line2D(line) | Line2D(line3D) | Line2D(point1, point2) | Line2D(startPoint, vec) | Line2D(x1, y1, x2, y2) | Line2D(refPoint, point1, point2)` — Initialize
 
 ### Methods
 #### `EqualRef(line)`
@@ -20651,7 +11532,7 @@ Reverse orientation of the line
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2D/#NemAll_Python_Geometry.Line2D.Reverse)
 
-#### `Set(line)`
+#### `Set(line) | Set(x1, y1, x2, y2) | Set(point1, point2) | Set(refPoint, point1, point2)`
 
 Initialize line from line.
 
@@ -20659,45 +11540,6 @@ Initialize line from line.
 
 **Parameters:**
 - `line` (Line2D) — Line2D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2D/#NemAll_Python_Geometry.Line2D.Set)
-
-#### `Set(point1, point2)`
-
-Set line points in world coordinate system. Set line from two points. Used world coordinates.
-
-**Remarks:** Set line points in world coordinate system. Set line from two points. Used world coordinates.
-
-**Parameters:**
-- `point1` (Point2D) — Point2D start point of line.
-- `point2` (Point2D) — Point2D end point of line.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2D/#NemAll_Python_Geometry.Line2D.Set)
-
-#### `Set(refPoint, point1, point2)`
-
-Set line points. Used local coordinate system for point1 and point2. refPoint used global coordinate system.
-
-**Remarks:** Set line points. Used local coordinate system for point1 and point2. refPoint used global coordinate system.
-
-**Parameters:**
-- `refPoint` (Point2D) — refPoint point of line.
-- `point1` (Point2D) — Point2D start point of line.
-- `point2` (Point2D) — Point2D end point of line.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2D/#NemAll_Python_Geometry.Line2D.Set)
-
-#### `Set(x1, y1, x2, y2)`
-
-Set line points in world coordinate system. Used world coordinates.
-
-**Remarks:** Set line points in world coordinate system. Used world coordinates.
-
-**Parameters:**
-- `x1` (float) — X coordinate of start point.
-- `y1` (float) — Y coordinate of start point.
-- `x2` (float) — X coordinate of end point.
-- `y2` (float) — Y coordinate of end point.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line2D/#NemAll_Python_Geometry.Line2D.Set)
 
@@ -20949,13 +11791,7 @@ Representation class for 3D line.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/)
 
 ### Constructors
-- `Line3D()` — Initialize
-- `Line3D(line2D)` — Copy constructor. Copy Line2D to Line3D at z=0.0
-- `Line3D(line)` — Copy constructor. Copy Line3D
-- `Line3D(point1, point2)` — Constructor. Constructs a Line3D from point1 to point2 in world coordinates.
-- `Line3D(startPoint, vec)` — Constructor. Constructs a Line3D from point1 to point1+vec in world coordinates.
-- `Line3D(x1, y1, z1, x2, y2, z2)` — Constructor. Constructs a Line3D from 6 doubles in world coordinates.
-- `Line3D(refPoint, startPoint, endPoint)` — Constructor. Constructs a Line3D in local coordinate system.
+- `Line3D() | Line3D(line2D) | Line3D(line) | Line3D(point1, point2) | Line3D(startPoint, vec) | Line3D(x1, y1, z1, x2, y2, z2) | Line3D(refPoint, startPoint, endPoint)` — Initialize
 
 ### Methods
 #### `EqualRef(line)`
@@ -21079,43 +11915,7 @@ Reverse orientation of the Line
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Reverse)
 
-#### `Set(line)`
-
-Initialize line from line.
-
-**Remarks:** Initialize line from line.
-
-**Parameters:**
-- `line` (Line3D) — Line3D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set)
-
-#### `Set(refPoint, startPoint, endPoint)`
-
-Initialize from 3 points. Set line points in local coordinate system.
-
-**Remarks:** Initialize from 3 points. Set line points in local coordinate system.
-
-**Parameters:**
-- `refPoint` (Point3D) — Reference point.
-- `startPoint` (Point3D) — relative start point.
-- `endPoint` (Point3D) — relative end point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set)
-
-#### `Set(startPoint, endPoint)`
-
-Initialize from two points. Set line points in world coordinate system.
-
-**Remarks:** Initialize from two points. Set line points in world coordinate system.
-
-**Parameters:**
-- `startPoint` (Point3D) — start point.
-- `endPoint` (Point3D) — end point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set)
-
-#### `Set(x1, y1, z1, x2, y2, z2)`
+#### `Set(x1, y1, z1, x2, y2, z2) | Set(line) | Set(startPoint, endPoint) | Set(refPoint, startPoint, endPoint)`
 
 Initialize from 6 doubles Set line points in world coordinate system
 
@@ -21227,7 +12027,7 @@ Comparison of lines without tolerance. Be careful, this method work without tole
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__eq__)
 
-#### `__mul__(matrix)`
+#### `__mul__(matrix) | __mul__(matrix)`
 
 2D matrix transformation. Multiplies line start and end point with matrix.
 
@@ -21235,19 +12035,6 @@ Comparison of lines without tolerance. Be careful, this method work without tole
 
 **Parameters:**
 - `matrix` (Matrix2D) — 2D transformation Matrix
-
-**Returns:** `object` — Line3D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__mul__)
-
-#### `__mul__(matrix)`
-
-3D matrix transformation. Multiplies line start and end point with matrix.
-
-**Remarks:** 3D matrix transformation. Multiplies line start and end point with matrix.
-
-**Parameters:**
-- `matrix` (Matrix3D) — 3D transformation Matrix
 
 **Returns:** `object` — Line3D.
 
@@ -21392,8 +12179,7 @@ Representation class for 2D matrix
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/)
 
 ### Constructors
-- `Matrix2D()` — Initialize
-- `Matrix2D(matrix)` — Copy constructor
+- `Matrix2D() | Matrix2D(matrix)` — Initialize
 
 ### Methods
 #### `AddDimension()`
@@ -21669,11 +12455,7 @@ Representation class for 3D matrix
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/)
 
 ### Constructors
-- `Matrix3D()` — Initialize
-- `Matrix3D(proj)` — Constructor Create a matrix for the required projection.
-- `Matrix3D(matrix)` — Copy constructor
-- `Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33)` — Constructor setting each matrix-element
-- `Matrix3D(valuesinrows)` — Constructor
+- `Matrix3D() | Matrix3D(proj) | Matrix3D(matrix) | Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33) | Matrix3D(valuesinrows)` — Initialize
 
 ### Methods
 #### `Determinant()`
@@ -21895,7 +12677,7 @@ Initialize matrix only with reflection
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetReflection)
 
-#### `SetRotation(axis, angle)`
+#### `SetRotation(axis, angle) | SetRotation(startDirection, endDirection)`
 
 Initialize matrix only with rotation
 
@@ -21904,20 +12686,6 @@ Initialize matrix only with rotation
 **Parameters:**
 - `axis` (Line3D) — Axis of rotation.
 - `angle` (Angle) — Angle of rotation.
-
-**Returns:** `bool` — True when successful, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetRotation)
-
-#### `SetRotation(startDirection, endDirection)`
-
-Initialize matrix only with rotation defined by start and end direction vectors
-
-**Remarks:** Initialize matrix only with rotation defined by start and end direction vectors
-
-**Parameters:**
-- `startDirection` (Vector3D) — direction vector for start of rotation.
-- `endDirection` (Vector3D) — direction vector for end of rotation.
 
 **Returns:** `bool` — True when successful, otherwise false.
 
@@ -22242,25 +13010,10 @@ Representation class for 2D MinMax box.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/)
 
 ### Constructors
-- `MinMax2D()` — Initialize
-- `MinMax2D(min, max)` — Set constructor Initialize MinMax box with given MIN and MAX points.
-- `MinMax2D(point)` — Set constructor Initialize MinMax box with given point.
-- `MinMax2D(minmax)` — Copy constructor.
-- `MinMax2D(minmax)` — Copy constructor.
+- `MinMax2D() | MinMax2D(min, max) | MinMax2D(point) | MinMax2D(minmax) | MinMax2D(minmax)` — Initialize
 
 ### Methods
-#### `Deflate(size)`
-
-Deflate in x,y axis concurrently.
-
-**Remarks:** Deflate in x,y axis concurrently.
-
-**Parameters:**
-- `size` (float)
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Deflate)
-
-#### `Deflate(x, y)`
+#### `Deflate(x, y) | Deflate(size)`
 
 Deflate in x and y axis.
 
@@ -22332,18 +13085,7 @@ Get the size of the box in the Y direction
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.GetSizeY)
 
-#### `Inflate(size)`
-
-Inflate in x,y axis concurrently.
-
-**Remarks:** Inflate in x,y axis concurrently.
-
-**Parameters:**
-- `size` (float)
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Inflate)
-
-#### `Inflate(x, y)`
+#### `Inflate(x, y) | Inflate(size)`
 
 ame Inflate and deflate minmax box Inflate in x and y axis.
 
@@ -22355,7 +13097,7 @@ ame Inflate and deflate minmax box Inflate in x and y axis.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.Inflate)
 
-#### `IsContaining(box)`
+#### `IsContaining(box) | IsContaining(point)`
 
 Is box inside this box
 
@@ -22363,19 +13105,6 @@ Is box inside this box
 
 **Parameters:**
 - `box` (MinMax2D) — Potentially contained box
-
-**Returns:** `bool` — true, if is inside, otherwise false
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.IsContaining)
-
-#### `IsContaining(point)`
-
-Is point inside this box
-
-**Remarks:** Is point inside this box
-
-**Parameters:**
-- `point` (Point2D) — point in world coordinate system
 
 **Returns:** `bool` — true, if is inside, otherwise false
 
@@ -22495,20 +13224,7 @@ Get the corners of MinMax. Corner index (0-left bottom, 1-right bottom, 2-right 
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__getitem__)
 
-#### `__iadd__(box)`
-
-Expand MinMax2D box. Expands the MinMax2D box by the bounding box given in parameter box
-
-**Remarks:** Expand MinMax2D box. Expands the MinMax2D box by the bounding box given in parameter box
-
-**Parameters:**
-- `box` (BoundingBox2D) — Bounding box to be added
-
-**Returns:** `MinMax2D` — minmax box.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__iadd__)
-
-#### `__iadd__(minmax)`
+#### `__iadd__(minmax) | __iadd__(point) | __iadd__(box)`
 
 Expand MinMax2D box. Expands the MinMax2D box by the box given in parameter minmax
 
@@ -22516,19 +13232,6 @@ Expand MinMax2D box. Expands the MinMax2D box by the box given in parameter minm
 
 **Parameters:**
 - `minmax` (MinMax2D) — MinMax2D to be added
-
-**Returns:** `MinMax2D` — minmax box.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax2D/#NemAll_Python_Geometry.MinMax2D.__iadd__)
-
-#### `__iadd__(point)`
-
-Expand MinMax2D box. Expands the MinMax2D box by the Point2D given in parameter point
-
-**Remarks:** Expand MinMax2D box. Expands the MinMax2D box by the Point2D given in parameter point
-
-**Parameters:**
-- `point` (Point2D) — Point2D to be added
 
 **Returns:** `MinMax2D` — minmax box.
 
@@ -22672,13 +13375,10 @@ Representation class for 3D MinMax box.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/)
 
 ### Constructors
-- `MinMax3D()` — Initialize
-- `MinMax3D(min, max)` — Set constructor Initialize MinMax box with given MIN and MAX points.
-- `MinMax3D(point)` — Set constructor Initialize MinMax box with given point.
-- `MinMax3D(minmax)` — Copy constructor.
+- `MinMax3D() | MinMax3D(min, max) | MinMax3D(point) | MinMax3D(minmax)` — Initialize
 
 ### Methods
-#### `Deflate(size)`
+#### `Deflate(size) | Deflate(x, y, z)`
 
 Deflate in x,y,z axis concurrently.
 
@@ -22686,19 +13386,6 @@ Deflate in x,y,z axis concurrently.
 
 **Parameters:**
 - `size` (float)
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Deflate)
-
-#### `Deflate(x, y, z)`
-
-Deflate in x, y and z axis.
-
-**Remarks:** Deflate in x, y and z axis.
-
-**Parameters:**
-- `x` (float)
-- `y` (float)
-- `z` (float)
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Deflate)
 
@@ -22772,18 +13459,7 @@ Get the size of the box in the Y direction
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.GetSizeZ)
 
-#### `Inflate(size)`
-
-Inflate in x,y,z axis concurrently.
-
-**Remarks:** Inflate in x,y,z axis concurrently.
-
-**Parameters:**
-- `size` (float)
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.Inflate)
-
-#### `Inflate(x, y, z)`
+#### `Inflate(x, y, z) | Inflate(size)`
 
 ame Inflate and deflate minmax box Inflate in x, y and z axis.
 
@@ -22900,7 +13576,7 @@ Comparison of minmax objects without tolerance. Be careful, this method work wit
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__eq__)
 
-#### `__iadd__(minmax)`
+#### `__iadd__(minmax) | __iadd__(point)`
 
 Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minmax
 
@@ -22908,19 +13584,6 @@ Expand MinMax3D box. Expands the MinMax3D box by the box given in parameter minm
 
 **Parameters:**
 - `minmax` (MinMax3D) — MinMax3D to be added
-
-**Returns:** `MinMax3D` — minmax box.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/MinMax3D/#NemAll_Python_Geometry.MinMax3D.__iadd__)
-
-#### `__iadd__(point)`
-
-Expand MinMax3D box. Expands the MinMax3D box by the Point3D given in parameter point
-
-**Remarks:** Expand MinMax3D box. Expands the MinMax3D box by the Point3D given in parameter point
-
-**Parameters:**
-- `point` (Point3D) — Point3D to be added
 
 **Returns:** `MinMax3D` — minmax box.
 
@@ -22974,9 +13637,7 @@ Oriented edge Identification of any edge via edge handle and orientation (positi
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/)
 
 ### Constructors
-- `OrientedEdge()` — Initialize
-- `OrientedEdge(edgeHandle, positiveOrientation)` — Constructor
-- `OrientedEdge(orientedEdge)` — Copy constructor
+- `OrientedEdge() | OrientedEdge(edgeHandle, positiveOrientation) | OrientedEdge(orientedEdge)` — Initialize
 
 ### Methods
 #### `GetEdgeHandle()`
@@ -22999,19 +13660,7 @@ Get the flag of positive orientation.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.HasPositiveOrientation)
 
-#### `Set(edgeHandle, positiveOrientation)`
-
-Set edge handle and orientation Handle is not checked, you set anything.
-
-**Remarks:** Set edge handle and orientation Handle is not checked, you set anything.
-
-**Parameters:**
-- `edgeHandle` (int) — Handle to the edge which will be set.
-- `positiveOrientation` (bool) — Set true when orientation is positive, otherwise false.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.Set)
-
-#### `Set(orientedEdge)`
+#### `Set(orientedEdge) | Set(edgeHandle, positiveOrientation)`
 
 Initialize edge from old Allplan structure
 
@@ -23266,11 +13915,10 @@ Representation class for 2D path.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/)
 
 ### Constructors
-- `Path2D()` — Initialize
-- `Path2D(path)` — Copy constructor Copy constructor is expensive because all data are cloned in new path.
+- `Path2D() | Path2D(path)` — Initialize
 
 ### Methods
-#### `Add(element)`
+#### `Add(element) | Add(element_object)`
 
 Add element into path Path2D
 
@@ -23278,19 +13926,6 @@ Add element into path Path2D
 
 **Parameters:**
 - `element` (Path2D) — Path element to add
-
-**Returns:** `eGeometryErrorCode` — error code
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.Add)
-
-#### `Add(element_object)`
-
-Add element into path Path2D
-
-**Remarks:** Add element into path Path2D
-
-**Parameters:**
-- `element_object` (object) — Pointer to element to add
 
 **Returns:** `eGeometryErrorCode` — error code
 
@@ -23415,7 +14050,7 @@ Comparison of paths without tolerance. Be careful, this method work without tole
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__eq__)
 
-#### `__iadd__(element)`
+#### `__iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element)`
 
 Append operator
 
@@ -23425,61 +14060,6 @@ Append operator
 - `element` (Path2D) — Element which will be appended
 
 **Returns:** `Path2D` — Reference to path.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Line2D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Polyline2D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Spline2D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Clothoid2D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Arc2D) — Element which will be appended
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__)
 
@@ -23619,15 +14199,10 @@ Representation class for 3D path.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/)
 
 ### Constructors
-- `Path3D()` — Initialize
-- `Path3D(path)` — Copy constructor Copy constructor is expensive because all data are cloned in new path.
-- `Path3D(point1, point2)` — Constructor defines a polyline of 2 points as path.
-- `Path3D(point1, point2, point3)` — Constructor defines a polyline of 3 points as path.
-- `Path3D(point1, point2, point3, point4)` — Constructor defines a polyline of 4 points as path.
-- `Path3D(point1, point2, point3, point4, point5)` — Constructor defines a polyline of 5 points as path.
+- `Path3D() | Path3D(path) | Path3D(point1, point2) | Path3D(point1, point2, point3) | Path3D(point1, point2, point3, point4) | Path3D(point1, point2, point3, point4, point5)` — Initialize
 
 ### Methods
-#### `Add(element)`
+#### `Add(element) | Add(element_object)`
 
 Add element into path Path3D
 
@@ -23635,19 +14210,6 @@ Add element into path Path3D
 
 **Parameters:**
 - `element` (Path3D) — Path element to add
-
-**Returns:** `eGeometryErrorCode` — error code
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.Add)
-
-#### `Add(element_object)`
-
-Add element into path Path3D
-
-**Remarks:** Add element into path Path3D
-
-**Parameters:**
-- `element_object` (object) — Pointer to element to add
 
 **Returns:** `eGeometryErrorCode` — error code
 
@@ -23723,7 +14285,7 @@ Check for closed path, it mean that first point is same as last point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsClosed)
 
-#### `IsItPossibleToAddElement(pGeometry_object)`
+#### `IsItPossibleToAddElement(pGeometry_object) | IsItPossibleToAddElement(pGeometry_object, tolerance)`
 
 Check if the geometry can be added into path Path3D
 
@@ -23731,20 +14293,6 @@ Check if the geometry can be added into path Path3D
 
 **Parameters:**
 - `pGeometry_object` (object) — Pointer to geometry to check
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsItPossibleToAddElement)
-
-#### `IsItPossibleToAddElement(pGeometry_object, tolerance)`
-
-Check if the geometry can be added into path Path3D (with possible noncontinuous)
-
-**Remarks:** Check if the geometry can be added into path Path3D (with possible noncontinuous)
-
-**Parameters:**
-- `pGeometry_object` (object) — Geometries (are modified in case of non continuos geometries!)
-- `tolerance` (float) — Tolerance for non continuous geometries
-
-**Returns:** `bool` — Yes / no
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.IsItPossibleToAddElement)
 
@@ -23806,7 +14354,7 @@ Comparison of paths without tolerance. Be careful, this method work without tole
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__eq__)
 
-#### `__iadd__(element)`
+#### `__iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element) | __iadd__(element)`
 
 Append operator
 
@@ -23816,61 +14364,6 @@ Append operator
 - `element` (Path3D) — Element which will be appended
 
 **Returns:** `Path3D` — Reference to path.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Line3D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Polyline3D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Arc3D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (Spline3D) — Element which will be appended
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__)
-
-#### `__iadd__(element)`
-
-Append operator
-
-**Remarks:** Append operator
-
-**Parameters:**
-- `element` (BSpline3D) — Element which will be appended
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path3D/#NemAll_Python_Geometry.Path3D.__iadd__)
 
@@ -24025,11 +14518,7 @@ Representation class for 3D plane.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/)
 
 ### Constructors
-- `Plane3D()` — Initialize
-- `Plane3D(plane)` — Copy constructor
-- `Plane3D(point, normalVector)` — Constructor Create 3D Plane with given point and vector
-- `Plane3D(point1, point2, point3)` — Constructor Create 3D Plane from three points which lies on this plane. If plane can not be computed, then constructor throw geometry exception 'Incorrect parameters'.
-- `Plane3D(axis)` — Create a plane from a 3D axis
+- `Plane3D() | Plane3D(plane) | Plane3D(point, normalVector) | Plane3D(point1, point2, point3) | Plane3D(axis)` — Initialize
 
 ### Methods
 #### `CalcPlaneVectors()`
@@ -24119,7 +14608,7 @@ Comparison of planes without tolerance. Be careful, this method work without tol
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__eq__)
 
-#### `__mul__(matrix)`
+#### `__mul__(matrix) | __mul__(matrix)`
 
 2D matrix transformation.
 
@@ -24127,19 +14616,6 @@ Comparison of planes without tolerance. Be careful, this method work without tol
 
 **Parameters:**
 - `matrix` (Matrix2D) — 2D transformation Matrix
-
-**Returns:** `Plane3D` — Copy of transformed 3D plane.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Plane3D/#NemAll_Python_Geometry.Plane3D.__mul__)
-
-#### `__mul__(matrix)`
-
-3D matrix transformation.
-
-**Remarks:** 3D matrix transformation.
-
-**Parameters:**
-- `matrix` (Matrix3D) — 3D transformation Matrix
 
 **Returns:** `Plane3D` — Copy of transformed 3D plane.
 
@@ -24164,11 +14640,7 @@ Representation class for 2D point
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/)
 
 ### Constructors
-- `Point2D()` — Initialize
-- `Point2D(point)` — Copy constructor.
-- `Point2D(point)` — Explicit copy constructor. Copy only X_COORD and Y_COORD from point
-- `Point2D(refPoint, point)` — Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint + point
-- `Point2D(x, y)` — Constructor. Initialize point from single coordinates in world coordinate system.
+- `Point2D() | Point2D(point) | Point2D(point) | Point2D(refPoint, point) | Point2D(x, y)` — Initialize
 
 ### Methods
 #### `GetCoords()`
@@ -24204,7 +14676,7 @@ Check the coords [0.0,0.0]. If the coords are zero, the return value is true. If
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.IsZero)
 
-#### `Set(point)`
+#### `Set(point) | Set(x, y)`
 
 Set the coordinate.
 
@@ -24212,18 +14684,6 @@ Set the coordinate.
 
 **Parameters:**
 - `point` (Point2D) — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Set)
-
-#### `Set(x, y)`
-
-Initialize from x,y coordinates.
-
-**Remarks:** Initialize from x,y coordinates.
-
-**Parameters:**
-- `x` (float) — coordinate.
-- `y` (float) — coordinate.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Set)
 
@@ -24259,7 +14719,7 @@ Get copy of X,Y coordinates as python list.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.Values)
 
-#### `__add__(point)`
+#### `__add__(point) | __add__(vec)`
 
 Point translation by point. Formula: Point(new) = Point(this) + Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.
 
@@ -24269,19 +14729,6 @@ Point translation by point. Formula: Point(new) = Point(this) + Point This is no
 - `point` (Point2D) — Point.
 
 **Returns:** `Point2D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__add__)
-
-#### `__add__(vec)`
-
-Move the point by vector
-
-**Remarks:** Move the point by vector
-
-**Parameters:**
-- `vec` (Vector2D) — Vector
-
-**Returns:** `Point2D` — New point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__add__)
 
@@ -24371,20 +14818,7 @@ Convert to string
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__repr__)
 
-#### `__sub__(point)`
-
-Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.
-
-**Remarks:** Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector2D operand.
-
-**Parameters:**
-- `point` (Point2D) — Point.
-
-**Returns:** `Point2D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/#NemAll_Python_Geometry.Point2D.__sub__)
-
-#### `__sub__(vec)`
+#### `__sub__(vec) | __sub__(point)`
 
 Move the point by reversed vector
 
@@ -24538,11 +14972,7 @@ Representation class for 3D point
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/)
 
 ### Constructors
-- `Point3D()` — Initialize
-- `Point3D(point)` — Copy constructor.
-- `Point3D(point)` — Explicit copy constructor. Copy only X_COORD and Y_COORD from point, Z_COORD is set to zero.
-- `Point3D(refPoint, point)` — Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint + point
-- `Point3D(x, y, z)` — Constructor Initialize point from single coordinates in world coordinate system.
+- `Point3D() | Point3D(point) | Point3D(point) | Point3D(refPoint, point) | Point3D(x, y, z)` — Initialize
 
 ### Methods
 #### `GetCoords()`
@@ -24578,7 +15008,7 @@ Check the coords [0.0, 0.0, 0.0] If the coords are zero, the return value is tru
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.IsZero)
 
-#### `Set(point)`
+#### `Set(point) | Set(x, y, z)`
 
 Initialize from point 3D.
 
@@ -24586,19 +15016,6 @@ Initialize from point 3D.
 
 **Parameters:**
 - `point` (Point3D) — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Set)
-
-#### `Set(x, y, z)`
-
-Initialize from x,y,z coordinates.
-
-**Remarks:** Initialize from x,y,z coordinates.
-
-**Parameters:**
-- `x` (float) — coordinate.
-- `y` (float) — coordinate.
-- `z` (float) — coordinate.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Set)
 
@@ -24612,20 +15029,7 @@ Get copy of X,Y,Z coordinates as python list
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Values)
 
-#### `__add__(point)`
-
-Point translation by point Formula: Point(new) = Point(this) + Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.
-
-**Remarks:** Point translation by point Formula: Point(new) = Point(this) + Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.
-
-**Parameters:**
-- `point` (Point3D) — Point.
-
-**Returns:** `Point3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__)
-
-#### `__add__(vec)`
+#### `__add__(vec) | __add__(vec) | __add__(point)`
 
 Move the point by vector 3D
 
@@ -24633,19 +15037,6 @@ Move the point by vector 3D
 
 **Parameters:**
 - `vec` (Vector3D) — Vector
-
-**Returns:** `Point3D` — New point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__)
-
-#### `__add__(vec)`
-
-Move the point by vector 2D. Z axis will be ignored
-
-**Remarks:** Move the point by vector 2D. Z axis will be ignored
-
-**Parameters:**
-- `vec` (Vector2D) — Vector
 
 **Returns:** `Point3D` — New point
 
@@ -24703,7 +15094,7 @@ Point translation by negative point Formula: Point(this) = Point(this) - Point T
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__isub__)
 
-#### `__mul__(matrix)`
+#### `__mul__(matrix) | __mul__(matrix) | __mul__(scale)`
 
 2D matrix transformation. Result = Point * matrix
 
@@ -24713,32 +15104,6 @@ Point translation by negative point Formula: Point(this) = Point(this) - Point T
 - `matrix` (Matrix2D) — 2D transformation Matrix
 
 **Returns:** `Point3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__)
-
-#### `__mul__(matrix)`
-
-3D matrix transformation. Result = Point * matrix
-
-**Remarks:** 3D matrix transformation. Result = Point * matrix
-
-**Parameters:**
-- `matrix` (Matrix3D) — 3D transformation Matrix
-
-**Returns:** `Point3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__)
-
-#### `__mul__(scale)`
-
-Scale point with constant Result = Point * scale
-
-**Remarks:** Scale point with constant Result = Point * scale
-
-**Parameters:**
-- `scale` (float) — scale factor
-
-**Returns:** `Point3D` — scaled Point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__)
 
@@ -24763,20 +15128,7 @@ Convert to string
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__repr__)
 
-#### `__sub__(point)`
-
-Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.
-
-**Remarks:** Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.
-
-**Parameters:**
-- `point` (Point3D) — Point3D.
-
-**Returns:** `Point3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__)
-
-#### `__sub__(vec)`
+#### `__sub__(vec) | __sub__(vec) | __sub__(point)`
 
 Move the point by reversed vector 3D
 
@@ -24784,19 +15136,6 @@ Move the point by reversed vector 3D
 
 **Parameters:**
 - `vec` (Vector3D) — 3D vector
-
-**Returns:** `Point3D` — New point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__)
-
-#### `__sub__(vec)`
-
-Move the point by reversed vector 2D. Z coordinate stays unchanged.
-
-**Remarks:** Move the point by reversed vector 2D. Z coordinate stays unchanged.
-
-**Parameters:**
-- `vec` (Vector2D) — 2D vector
 
 **Returns:** `Point3D` — New point
 
@@ -25097,21 +15436,7 @@ Get the start point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetStartRelPoint)
 
-#### `Insert(point, position=18446744073709551615)`
-
-Insert point at specific position. Used world coordinates. If return false then points weren't Inserted.
-
-**Remarks:** Insert point at specific position. Used world coordinates. If return false then points weren't Inserted.
-
-**Parameters:**
-- `point` (Point2D) — constant the Point.
-- `position` (int) — position where points will be inserted.
-
-**Returns:** `bool` — bool true if successful.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Insert)
-
-#### `Insert(polyPoints, position=18446744073709551615)`
+#### `Insert(polyPoints, position=18446744073709551615) | Insert(point, position=18446744073709551615)`
 
 Insert vector of points at specific position. If return false then points weren't inserted.
 
@@ -25474,21 +15799,7 @@ Get the start point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints3D/#NemAll_Python_Geometry.PolyPoints3D.GetStartRelPoint)
 
-#### `Insert(point, position=18446744073709551615)`
-
-Insert point at specific position. Used world coordinates. If return false then points weren't Inserted.
-
-**Remarks:** Insert point at specific position. Used world coordinates. If return false then points weren't Inserted.
-
-**Parameters:**
-- `point` (Point3D) — constant the Point.
-- `position` (int) — position where points will be inserted.
-
-**Returns:** `bool` — bool true if successful.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints3D/#NemAll_Python_Geometry.PolyPoints3D.Insert)
-
-#### `Insert(polyPoints, position=18446744073709551615)`
+#### `Insert(polyPoints, position=18446744073709551615) | Insert(point, position=18446744073709551615)`
 
 Insert vector of points at specific position. If return false then points weren't inserted.
 
@@ -25698,9 +16009,7 @@ Representation class for 2D Polygon
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/)
 
 ### Constructors
-- `Polygon2D()` — Initialize
-- `Polygon2D(pntList)` — Constructor with an initializer list
-- `Polygon2D(polygon)` — Copy constructor.
+- `Polygon2D() | Polygon2D(pntList) | Polygon2D(polygon)` — Initialize
 
 ### Methods
 #### `CreateRectangle(leftBottom, rightTop)`
@@ -25942,9 +16251,7 @@ Representation class for 3D Polygon
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/)
 
 ### Constructors
-- `Polygon3D()` — Initialize
-- `Polygon3D(pntList)` — Constructor with an initializer list
-- `Polygon3D(polygon)` — Copy constructor.
+- `Polygon3D() | Polygon3D(pntList) | Polygon3D(polygon)` — Initialize
 
 ### Methods
 #### `GetLines()`
@@ -26058,20 +16365,7 @@ Equal operator
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__eq__)
 
-#### `__iadd__(point)`
-
-Addition assignment operator
-
-**Remarks:** Addition assignment operator
-
-**Parameters:**
-- `point` (Point3D) — New Point3D which will be added to the polygon
-
-**Returns:** `Polygon3D` — Reference to polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__iadd__)
-
-#### `__iadd__(polygon)`
+#### `__iadd__(polygon) | __iadd__(point)`
 
 Addition assignment operator
 
@@ -26421,10 +16715,7 @@ Set normal vector.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/)
 
 ### Constructors
-- `PolygonalArea2D()` — Initialize
-- `PolygonalArea2D(verticesCount, edgesCount)` — Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.
-- `PolygonalArea2D(refPoint, verticesCount, edgesCount)` — Default constructor. Create initialized 2D polygonal area with expected vertices and edges count.
-- `PolygonalArea2D(polygon)` — Copy constructor.
+- `PolygonalArea2D() | PolygonalArea2D(verticesCount, edgesCount) | PolygonalArea2D(refPoint, verticesCount, edgesCount) | PolygonalArea2D(polygon)` — Initialize
 
 ### Methods
 #### `AppendRelVertex(vertex)`
@@ -26564,20 +16855,7 @@ Get point at position from index. Used world coordinates.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__getitem__)
 
-#### `__iadd__(polygon)`
-
-Append loop.
-
-**Remarks:** Append loop.
-
-**Parameters:**
-- `polygon` (Polygon2D) — polygon which will be appended.
-
-**Returns:** `object` — Reference to PolygonalArea2D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea2D/#NemAll_Python_Geometry.PolygonalArea2D.__iadd__)
-
-#### `__iadd__(polygonalarea)`
+#### `__iadd__(polygonalarea) | __iadd__(polygon)`
 
 Append polygon.
 
@@ -26734,10 +17012,7 @@ Add the items from an iterable to the end of the list
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/)
 
 ### Constructors
-- `PolygonalArea3D()` — Initialize
-- `PolygonalArea3D(verticesCount, edgesCount)` — Default constructor. Create initialized 3D polygonal area with expected vertices and edges count.
-- `PolygonalArea3D(refPoint, verticesCount, edgesCount)` — Default constructor. Create initialized 3D polygonal area with expected vertices and edges count.
-- `PolygonalArea3D(polygon)` — Copy constructor.
+- `PolygonalArea3D() | PolygonalArea3D(verticesCount, edgesCount) | PolygonalArea3D(refPoint, verticesCount, edgesCount) | PolygonalArea3D(polygon)` — Initialize
 
 ### Methods
 #### `AppendRelVertex(vertex)`
@@ -26885,20 +17160,7 @@ Get point at position from index. Used world coordinates.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__getitem__)
 
-#### `__iadd__(polygon)`
-
-Append loop.
-
-**Remarks:** Append loop.
-
-**Parameters:**
-- `polygon` (Polygon3D) — polygonal area which will be appended.
-
-**Returns:** `object` — Reference to PolygonalArea3D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__iadd__)
-
-#### `__iadd__(polygonalarea)`
+#### `__iadd__(polygonalarea) | __iadd__(polygon)`
 
 Append polygon.
 
@@ -26911,7 +17173,7 @@ Append polygon.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__iadd__)
 
-#### `__mul__(matrix)`
+#### `__mul__(matrix) | __mul__(matrix)`
 
 2D matrix transformation.
 
@@ -26919,19 +17181,6 @@ Append polygon.
 
 **Parameters:**
 - `matrix` (Matrix2D) — 2D transformation matrix.
-
-**Returns:** `object` — Transformed 3D polygon area.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea3D/#NemAll_Python_Geometry.PolygonalArea3D.__mul__)
-
-#### `__mul__(matrix)`
-
-3D matrix transformation.
-
-**Remarks:** 3D matrix transformation.
-
-**Parameters:**
-- `matrix` (Matrix3D) — 3D transformation matrix.
 
 **Returns:** `object` — Transformed 3D polygon area.
 
@@ -27068,9 +17317,7 @@ Representation class for 3D polyhedron.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/)
 
 ### Constructors
-- `Polyhedron3D()` — Initialize
-- `Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation)` — Constructor The "Count" parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.
-- `Polyhedron3D(polyhedron)` — Copy constructor
+- `Polyhedron3D() | Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation) | Polyhedron3D(polyhedron)` — Initialize
 
 ### Methods
 #### `AppendEdge(edge)`
@@ -27086,7 +17333,7 @@ Append edge Method throw exception if object is not initialized. Old interface: 
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.AppendEdge)
 
-#### `Clear()`
+#### `Clear() | Clear(verticesCount, edgesCount, facesCount, negativeOrientation)`
 
 Clear all vertices, edges and faces Type and vertices,edges,faces preallocation size of polyhedron will be preserved
 
@@ -27094,47 +17341,7 @@ Clear all vertices, edges and faces Type and vertices,edges,faces preallocation 
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Clear)
 
-#### `Clear(verticesCount, edgesCount, facesCount, negativeOrientation)`
-
-Clear all vertices, edges and faces The "Count" parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.
-
-**Remarks:** Clear all vertices, edges and faces The "Count" parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.
-
-**Parameters:**
-- `verticesCount` (int) — Count of expected vertices.
-- `edgesCount` (int) — Count of expected edges.
-- `facesCount` (int) — Count of expected faces.
-- `negativeOrientation` (bool) — True for negative orientation.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Clear)
-
-#### `CreateCuboid(box)`
-
-static constructor for cuboid
-
-**Remarks:** static constructor for cuboid
-
-**Parameters:**
-- `box` (MinMax3D) — min/max box that states the cuboid's size
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid)
-
-#### `CreateCuboid(length, width, height)`
-
-Create a cuboid
-
-**Remarks:** Create a cuboid
-
-**Parameters:**
-- `length` (float) — Length
-- `width` (float) — Width
-- `height` (float) — Height
-
-**Returns:** `Polyhedron3D` — Polyhedron3D
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid)
-
-#### `CreateCuboid(p1, p2)`
+#### `CreateCuboid(p1, p2) | CreateCuboid(box) | CreateCuboid(placement, length, width, height) | CreateCuboid(length, width, height)`
 
 static constructor for cuboid
 
@@ -27143,22 +17350,6 @@ static constructor for cuboid
 **Parameters:**
 - `p1` (Point3D) — lower point of min/max box that states the cuboid's size
 - `p2` (Point3D) — lower point of min/max box that states the cuboid's size
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid)
-
-#### `CreateCuboid(placement, length, width, height)`
-
-Create Polyhedron3D as cuboid
-
-**Remarks:** Create Polyhedron3D as cuboid
-
-**Parameters:**
-- `placement` (AxisPlacement3D) — cuboid origin
-- `length` (float) — length in its x axis
-- `width` (float) — width in its y axis
-- `height` (float) — height in its z axis
-
-**Returns:** `Polyhedron3D` — created geometry
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid)
 
@@ -27227,7 +17418,7 @@ Test for equal reference point
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.EqualRef)
 
-#### `GetEdge(edgeHandle)`
+#### `GetEdge(edgeHandle) | GetEdge(orientedEdge)`
 
 Get edge at the specified position
 
@@ -27235,19 +17426,6 @@ Get edge at the specified position
 
 **Parameters:**
 - `edgeHandle` (int) — Specified position of the edge.
-
-**Returns:** `eGeometryErrorCode` — tuple(Error code.,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdge)
-
-#### `GetEdge(orientedEdge)`
-
-Get edge at the specified position with orientation
-
-**Remarks:** Get edge at the specified position with orientation
-
-**Parameters:**
-- `orientedEdge` (OrientedEdge) — Specified position and orientation of the edge.
 
 **Returns:** `eGeometryErrorCode` — tuple(Error code.,
 
@@ -27667,9 +17845,7 @@ List for Polyhedron3D objects
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/)
 
 ### Constructors
-- `Polyhedron3DList()` — Initialize
-- `Polyhedron3DList(ele)` — Constructor with a Polyhedron3D
-- `Polyhedron3DList(eleList)` — Constructor with a list of Polyhedron3D
+- `Polyhedron3DList() | Polyhedron3DList(ele) | Polyhedron3DList(eleList)` — Initialize
 
 ### Methods
 #### `__contains__(value)`
@@ -27786,18 +17962,7 @@ Append a list item
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.append)
 
-#### `extend(eleList)`
-
-Extend the list
-
-**Remarks:** Extend the list
-
-**Parameters:**
-- `eleList` (list) — Polyhedron3D list
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3DList/#NemAll_Python_Geometry.Polyhedron3DList.extend)
-
-#### `extend(iterable)`
+#### `extend(iterable) | extend(eleList)`
 
 Add the items from an iterable to the end of the list
 
@@ -27818,18 +17983,7 @@ Polyhedron face All constructors are prohibited, only Polyhedron3D can instantia
 - `PolyhedronFace(face)` — Standard copy constructor
 
 ### Methods
-#### `AppendEdge(edge)`
-
-Append edge into face
-
-**Remarks:** Append edge into face
-
-**Parameters:**
-- `edge` (OrientedEdge) — Appended Edge.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyhedronFace/#NemAll_Python_Geometry.PolyhedronFace.AppendEdge)
-
-#### `AppendEdge(edgeHandle, positiveOrientation)`
+#### `AppendEdge(edgeHandle, positiveOrientation) | AppendEdge(edge)`
 
 Append edge into face
 
@@ -27962,12 +18116,7 @@ Representation class for 2D Polyline.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/)
 
 ### Constructors
-- `Polyline2D()` — Initialize
-- `Polyline2D(pntList)` — Constructor with an initializer list
-- `Polyline2D(polyline)` — Copy constructor.
-- `Polyline2D(points)` — Vector points constructor.
-- `Polyline2D(polyline, skip, count)` — Copy constructor with limited scope
-- `Polyline2D(polygon)` — Constructor. If polygon have two or more components, then constructor throw Geometry exception.
+- `Polyline2D() | Polyline2D(pntList) | Polyline2D(polyline) | Polyline2D(points) | Polyline2D(polyline, skip, count) | Polyline2D(polygon)` — Initialize
 
 ### Methods
 #### `GetLine(index)`
@@ -28034,20 +18183,7 @@ Equal operator
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__eq__)
 
-#### `__iadd__(point)`
-
-Addition assignment operator
-
-**Remarks:** Addition assignment operator
-
-**Parameters:**
-- `point` (Point2D) — New Point2D which will be added to the polyline
-
-**Returns:** `Polyline2D` — Reference to polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2D/#NemAll_Python_Geometry.Polyline2D.__iadd__)
-
-#### `__iadd__(polyline)`
+#### `__iadd__(polyline) | __iadd__(point)`
 
 Addition assignment operator
 
@@ -28205,11 +18341,7 @@ Representation class for 3D Polyline.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/)
 
 ### Constructors
-- `Polyline3D()` — Initialize
-- `Polyline3D(pntList)` — Constructor with an initializer list
-- `Polyline3D(polyline)` — Copy constructor
-- `Polyline3D(polyline, skip, count)` — Copy constructor with limited scope
-- `Polyline3D(points)` — Vector points constructor.
+- `Polyline3D() | Polyline3D(pntList) | Polyline3D(polyline) | Polyline3D(polyline, skip, count) | Polyline3D(points)` — Initialize
 
 ### Methods
 #### `GetLine(index)`
@@ -28300,33 +18432,7 @@ Equal operator
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__eq__)
 
-#### `__iadd__(line)`
-
-Addition assignment operator
-
-**Remarks:** Addition assignment operator
-
-**Parameters:**
-- `line` (Line3D) — Line3D which will be added to the polyline
-
-**Returns:** `Polyline3D` — Reference to polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__iadd__)
-
-#### `__iadd__(point)`
-
-Addition assignment operator
-
-**Remarks:** Addition assignment operator
-
-**Parameters:**
-- `point` (Point3D) — New Point3D which will be added to the polyline
-
-**Returns:** `Polyline3D` — Reference to polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline3D/#NemAll_Python_Geometry.Polyline3D.__iadd__)
-
-#### `__iadd__(polyline)`
+#### `__iadd__(polyline) | __iadd__(point) | __iadd__(line)`
 
 Additional assignment operator
 
@@ -28497,9 +18603,7 @@ Representation class for 2D spline.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline2D/)
 
 ### Constructors
-- `Spline2D()` — Initialize
-- `Spline2D(spline)` — Copy constructor.
-- `Spline2D(pntList)` — Args: pntList:
+- `Spline2D() | Spline2D(spline) | Spline2D(pntList)` — Initialize
 
 ### Methods
 #### `GetEndVector()`
@@ -28724,10 +18828,7 @@ class for 3D spline geometry
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/)
 
 ### Constructors
-- `Spline3D()` — Initialize
-- `Spline3D(splinePoints)` — constructor.
-- `Spline3D(spline)` — Copy constructor.
-- `Spline3D(spline, zPlane)` — Copy constructor.
+- `Spline3D() | Spline3D(splinePoints) | Spline3D(spline) | Spline3D(spline, zPlane)` — Initialize
 
 ### Methods
 #### `CalculateEndVector()`
@@ -28740,7 +18841,7 @@ Calculates end vector
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculateEndVector)
 
-#### `CalculatePoint(param)`
+#### `CalculatePoint(param) | CalculatePoint(param, cpoints)`
 
 Calculates point on spline
 
@@ -28748,20 +18849,6 @@ Calculates point on spline
 
 **Parameters:**
 - `param` (float) — parameter of spline.
-
-**Returns:** `Point3D` — Resulting point
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Spline3D/#NemAll_Python_Geometry.Spline3D.CalculatePoint)
-
-#### `CalculatePoint(param, cpoints)`
-
-Calculates point on spline
-
-**Remarks:** Calculates point on spline
-
-**Parameters:**
-- `param` (float) — parameter of spline.
-- `cpoints` (Point3DList) — control points of spline.
 
 **Returns:** `Point3D` — Resulting point
 
@@ -29068,105 +19155,7 @@ Tangent calculation at an element point
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/)
 
 ### Methods
-#### `Calculate(arc, inputPnt)`
-
-Calculates tangent vector of Arc2D at given point
-
-**Remarks:** Calculates tangent vector of Arc2D at given point
-
-**Parameters:**
-- `arc` (Arc2D) — Arc2D on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(arc, inputPnt)`
-
-Calculates tangent vector of Arc3D at given point
-
-**Remarks:** Calculates tangent vector of Arc3D at given point
-
-**Parameters:**
-- `arc` (Arc3D) — Arc3D on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(brep, inputPnt)`
-
-Calculates tangent vector of BRep3D at given point
-
-**Remarks:** Calculates tangent vector of BRep3D at given point
-
-**Parameters:**
-- `brep` (BRep3D) — Brep body
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3DList` — tangent vectors
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(bspline, inputPnt)`
-
-Calculates tangent vector of BSpline2D at given point
-
-**Remarks:** Calculates tangent vector of BSpline2D at given point
-
-**Parameters:**
-- `bspline` (BSpline2D) — BSpline on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(bspline, inputPnt)`
-
-Calculates tangent vector of BSpline3D at given point
-
-**Remarks:** Calculates tangent vector of BSpline3D at given point
-
-**Parameters:**
-- `bspline` (BSpline3D) — BSpline on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(clothoid, inputPnt)`
-
-Calculates tangent vector of Clothoid2D at given point
-
-**Remarks:** Calculates tangent vector of Clothoid2D at given point
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — Clothoid on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(geoObject, inputPnt)`
-
-Calculates tangent vector from object at given point
-
-**Remarks:** Calculates tangent vector from object at given point
-
-**Parameters:**
-- `geoObject` (object) — object on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(line)`
+#### `Calculate(line) | Calculate(line) | Calculate(polyline, inputPnt) | Calculate(polyline, inputPnt) | Calculate(polygon, inputPnt) | Calculate(arc, inputPnt) | Calculate(arc, inputPnt) | Calculate(spline, inputPnt) | Calculate(spline, inputPnt) | Calculate(bspline, inputPnt) | Calculate(bspline, inputPnt) | Calculate(clothoid, inputPnt) | Calculate(path, inputPnt) | Calculate(brep, inputPnt) | Calculate(geoObject, inputPnt)`
 
 Calculates tangent vector of Line2D
 
@@ -29174,103 +19163,6 @@ Calculates tangent vector of Line2D
 
 **Parameters:**
 - `line` (Line2D) — Line2D on which to calculate tangent vector
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(line)`
-
-Calculates tangent vector of Line3D
-
-**Remarks:** Calculates tangent vector of Line3D
-
-**Parameters:**
-- `line` (Line3D) — line on which to calculate tangent vector
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(path, inputPnt)`
-
-Calculates tangent vector of Path2D at given point
-
-**Remarks:** Calculates tangent vector of Path2D at given point
-
-**Parameters:**
-- `path` (Path2D) — Path on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(polygon, inputPnt)`
-
-Calculates tangent vector of Polygon2D at given point
-
-**Remarks:** Calculates tangent vector of Polygon2D at given point
-
-**Parameters:**
-- `polygon` (Polygon2D) — Polygon on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(polyline, inputPnt)`
-
-Calculates tangent vector of Polyline2D at given point
-
-**Remarks:** Calculates tangent vector of Polyline2D at given point
-
-**Parameters:**
-- `polyline` (Polyline2D) — Polyline on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(polyline, inputPnt)`
-
-Calculates tangent vector of Polyline2D at given point
-
-**Remarks:** Calculates tangent vector of Polyline2D at given point
-
-**Parameters:**
-- `polyline` (Polyline3D) — Polyline on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(spline, inputPnt)`
-
-Calculates tangent vector of Spline2D at given point
-
-**Remarks:** Calculates tangent vector of Spline2D at given point
-
-**Parameters:**
-- `spline` (Spline2D) — Spline on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
-
-**Returns:** `Vector3D` — tangent vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate)
-
-#### `Calculate(spline, inputPnt)`
-
-Calculates tangent vector of Spline2D at given point
-
-**Remarks:** Calculates tangent vector of Spline2D at given point
-
-**Parameters:**
-- `spline` (Spline3D) — Spline on which to calculate tangent vector
-- `inputPnt` (Point3D) — point on object for tangent calculation
 
 **Returns:** `Vector3D` — tangent vector
 
@@ -29297,159 +19189,7 @@ This class offers functions to transform a world point into the local coordinate
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/)
 
 ### Methods
-#### `PointGlobal(arc, localPoint)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `localPoint` (Point2D) — Local point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(arc, localPoint)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `localPoint` (Point2D) — Local point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(arc, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(arc, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(clothoid, localPoint, eps)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D Clothoid
-- `localPoint` (Point2D) — Local point
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(clothoid, offset, eps)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D Clothoid
-- `offset` (float) — Distance from start point
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(geoObject, localPoint, eps)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `geoObject` (object) — Geometry object
-- `localPoint` (Point2D) — Local point with offset as x and distance as y
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(geoObject, offset, eps)`
-
-Transform the local offset to world coordinates.
-
-**Remarks:** Transform the local offset to world coordinates.
-
-**Parameters:**
-- `geoObject` (object) — First IGeometry object
-- `offset` (float) — Distance from start point
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(line, localPoint)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `line` (Line2D) — Line 2D
-- `localPoint` (Point2D) — Local point
-
-**Returns:** `Point3D` — Global point on the 2D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(line, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `line` (Line2D) — Line 2D
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the 2D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(line, offset)`
-
-Transform the local coordinates to world coordinates. emarks If the object is a 3D line, the correct result would be a 3D circle around the line. In this case this function returns the intersection point between the circle and a plane. Where the plane is defined by the xy axis and the same z value as the circles center point.
-
-**Remarks:** Transform the local coordinates to world coordinates. emarks If the object is a 3D line, the correct result would be a 3D circle around the line. In this case this function returns the intersection point between the circle and a plane. Where the plane is defined by the xy axis and the same z value as the circles center point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(path, localPoint, eps)`
+#### `PointGlobal(path, localPoint, eps) | PointGlobal(geoObject, offset, eps) | PointGlobal(path, offset, eps) | PointGlobal(path, offset, eps) | PointGlobal(line, offset) | PointGlobal(line, localPoint) | PointGlobal(line, offset) | PointGlobal(polygon, offset) | PointGlobal(polyline, offset) | PointGlobal(polyline, offset) | PointGlobal(polygon, offset) | PointGlobal(arc, offset) | PointGlobal(arc, localPoint) | PointGlobal(arc, offset) | PointGlobal(arc, localPoint) | PointGlobal(clothoid, offset, eps) | PointGlobal(clothoid, localPoint, eps) | PointGlobal(spline, offset, eps) | PointGlobal(spline, localPoint, eps) | PointGlobal(spline, offset, eps) | PointGlobal(spline, localPoint, eps) | PointGlobal(spline, offset) | PointGlobal(geoObject, localPoint, eps)`
 
 Transform the local coordinates to world coordinates.
 
@@ -29461,138 +19201,6 @@ Transform the local coordinates to world coordinates.
 - `eps` (float) — Tolerance for clothoids and splines
 
 **Returns:** `tuple` — Global point on the path,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(path, offset, eps)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `path` (Path2D) — Path of 2D IGeometry objects
-- `offset` (float) — Distance from start point
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(path, offset, eps)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `path` (Path3D) — Path of 2D IGeometry objects
-- `offset` (float) — Distance from start point
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(polygon, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `polygon` (Polygon3D) — 3D Polygon
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(polygon, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D Polygon
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(polyline, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D Polyline
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(polyline, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D Polyline
-- `offset` (float) — Distance from start point
-
-**Returns:** `Point3D` — Global point on the geometry
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(spline, localPoint, eps)`
-
-Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-**Remarks:** Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(spline, localPoint, eps)`
-
-Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-**Remarks:** Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(spline, offset)`
-
-Transform the local coordinates to world coordinates.
-
-**Remarks:** Transform the local coordinates to world coordinates.
-
-**Parameters:**
-- `spline` (BSpline3D) — 3D Spline
-- `offset` (float) — Distance from start point
-
-**Returns:** `tuple` — Global point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(spline, offset, eps)`
-
-Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-**Remarks:** Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
-
-#### `PointGlobal(spline, offset, eps)`
-
-Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
-
-**Remarks:** Transform the local coordinates to world coordinates. emarks Due to restrictions in the old functions (splin7, splin2) local points with a x value smaller than 0 are treated as x=0. If the x value of the local point is bigger than the splines length, the length of the spline is uses as x value.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobal)
 
@@ -29611,150 +19219,7 @@ Transform the local coordinates to world coordinates. This method compute global
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointGlobalEx)
 
-#### `PointLocal(arc, inputPnt)`
-
-Calculate the local coordinates on a 2D arc
-
-**Remarks:** Calculate the local coordinates on a 2D arc
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `inputPnt` (Point3D) — 3D Projection point
-
-**Returns:** `Point2D` — Local point on the 2D arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(arc, inputPnt)`
-
-Calculate the local coordinates on a 2D arc
-
-**Remarks:** Calculate the local coordinates on a 2D arc
-
-**Parameters:**
-- `arc` (Arc2D) — 2D Arc
-- `inputPnt` (Point2D) — 2D Projection point
-
-**Returns:** `Point2D` — Local point on the 2D arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(arc, inputPnt)`
-
-Calculate the local coordinates on a 3D arc
-
-**Remarks:** Calculate the local coordinates on a 3D arc
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `inputPnt` (Point3D) — 3D Projection point
-
-**Returns:** `Point2D` — Local point on the 3D arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(arc, inputPnt)`
-
-Calculate the local coordinates on a 3D arc
-
-**Remarks:** Calculate the local coordinates on a 3D arc
-
-**Parameters:**
-- `arc` (Arc3D) — 3D Arc
-- `inputPnt` (Point2D) — 3D Projection point
-
-**Returns:** `Point2D` — Local point on the 3D arc
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(clothoid, inputPnt, eps)`
-
-Calculate the local coordinates on a 2D clothoid
-
-**Remarks:** Calculate the local coordinates on a 2D clothoid
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D Clothoid
-- `inputPnt` (Point2D) — Projection point as Point2D
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — Local point on the 2D clothoid,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(clothoid, inputPnt, eps)`
-
-Calculate the local coordinates on a 2D clothoid
-
-**Remarks:** Calculate the local coordinates on a 2D clothoid
-
-**Parameters:**
-- `clothoid` (Clothoid2D) — 2D Clothoid
-- `inputPnt` (Point3D) — Projection point as Point3D
-- `eps` (float) — Tolerance
-
-**Returns:** `tuple` — Local point on the 2D clothoid,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(geoObject, inputPnt, eps)`
-
-Calculate the local coordinates on a 2D geometry object.
-
-**Remarks:** Calculate the local coordinates on a 2D geometry object.
-
-**Parameters:**
-- `geoObject` (object) — First IGeometry object
-- `inputPnt` (Point3D) — Projection point
-- `eps` (float) — Tolerance for clothoids and splines
-
-**Returns:** `tuple` — Local point on the geometry,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(line, inputPnt)`
-
-Calculate the local coordinates on a 2D line
-
-**Remarks:** Calculate the local coordinates on a 2D line
-
-**Parameters:**
-- `line` (Line2D) — 2D Line
-- `inputPnt` (Point3D) — 3D Projection point
-
-**Returns:** `Point2D` — Local point on the 2D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(line, inputPnt)`
-
-Calculate the local coordinates on a 2D line
-
-**Remarks:** Calculate the local coordinates on a 2D line
-
-**Parameters:**
-- `line` (Line2D) — 2D Line
-- `inputPnt` (Point2D) — 2D Projection point
-
-**Returns:** `Point2D` — Local point on the 2D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(line, inputPnt)`
-
-Calculate the local coordinates on a 3D line
-
-**Remarks:** Calculate the local coordinates on a 3D line
-
-**Parameters:**
-- `line` (Line3D) — 3D Line
-- `inputPnt` (Point3D) — Projection point
-
-**Returns:** `Point2D` — Local point on the 3D line
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(path, inputPnt, eps)`
+#### `PointLocal(path, inputPnt, eps) | PointLocal(line, inputPnt) | PointLocal(line, inputPnt) | PointLocal(placement, inputPnt) | PointLocal(placement, inputPnt) | PointLocal(line, inputPnt) | PointLocal(polyhedron, inputPnt) | PointLocal(polyline, inputPnt) | PointLocal(polyline, inputPnt) | PointLocal(polyline, inputPnt) | PointLocal(polygon, inputPnt) | PointLocal(arc, inputPnt) | PointLocal(arc, inputPnt) | PointLocal(arc, inputPnt) | PointLocal(arc, inputPnt) | PointLocal(clothoid, inputPnt, eps) | PointLocal(clothoid, inputPnt, eps) | PointLocal(spline, inputPnt, eps) | PointLocal(spline, inputPnt, eps) | PointLocal(spline, inputPnt, eps) | PointLocal(spline, inputPnt, eps) | PointLocal(geoObject, inputPnt, eps)`
 
 Transform the local coordinates to world coordinates.
 
@@ -29766,136 +19231,6 @@ Transform the local coordinates to world coordinates.
 - `eps` (float) — Tolerance for clothoids and splines
 
 **Returns:** `tuple` — Local point on the path,
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(placement, inputPnt)`
-
-Calculate the local coordinates on a 2D axis placement
-
-**Remarks:** Calculate the local coordinates on a 2D axis placement
-
-**Parameters:**
-- `placement` (AxisPlacement2D) — 2D axis placement
-- `inputPnt` (Point3D) — 2D Projection point
-
-**Returns:** `Point2D` — Local point on 2D axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(placement, inputPnt)`
-
-Calculate the local coordinates on a 2D axis placement
-
-**Remarks:** Calculate the local coordinates on a 2D axis placement
-
-**Parameters:**
-- `placement` (AxisPlacement2D) — 2D axis placement
-- `inputPnt` (Point2D) — 2D Projection point
-
-**Returns:** `Point2D` — Local point on 2D axis placement
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(polygon, inputPnt)`
-
-Calculate the local coordinates on a 2D polygon
-
-**Remarks:** Calculate the local coordinates on a 2D polygon
-
-**Parameters:**
-- `polygon` (Polygon2D) — 2D Polygon
-- `inputPnt` (Point3D) — Projection point
-
-**Returns:** `Point2D` — Local point on the polygon
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(polyhedron, inputPnt)`
-
-Calculate the local coordinates on a 3D polyhedron
-
-**Remarks:** Calculate the local coordinates on a 3D polyhedron
-
-**Parameters:**
-- `polyhedron` (Polyhedron3D) — 3D Polyhedron
-- `inputPnt` (Point3D) — Projection point
-
-**Returns:** `Point2D` — Local point on the 3D polyhedron
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(polyline, inputPnt)`
-
-Calculate the local coordinates on a 3D polyline
-
-**Remarks:** Calculate the local coordinates on a 3D polyline
-
-**Parameters:**
-- `polyline` (Polyline3D) — 3D Polyline
-- `inputPnt` (Point3D) — Projection point
-
-**Returns:** `Point2D` — Local point on the 3D polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(polyline, inputPnt)`
-
-Calculate the local coordinates on a 2D polyline
-
-**Remarks:** Calculate the local coordinates on a 2D polyline
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D Polyline
-- `inputPnt` (Point3D) — Projection point
-
-**Returns:** `Point2D` — Local point on the polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(polyline, inputPnt)`
-
-Calculate the local coordinates on a 2D polyline
-
-**Remarks:** Calculate the local coordinates on a 2D polyline
-
-**Parameters:**
-- `polyline` (Polyline2D) — 2D Polyline
-- `inputPnt` (Point2D) — Projection point
-
-**Returns:** `Point2D` — Local point on the polyline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(spline, inputPnt, eps)`
-
-Calculate the local coordinates on a 2D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-**Remarks:** Calculate the local coordinates on a 2D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(spline, inputPnt, eps)`
-
-Calculate the local coordinates on a 2D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-**Remarks:** Calculate the local coordinates on a 2D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(spline, inputPnt, eps)`
-
-Calculate the local coordinates on a 3D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-**Remarks:** Calculate the local coordinates on a 3D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
-
-#### `PointLocal(spline, inputPnt, eps)`
-
-Calculate the local coordinates on a 3D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
-
-**Remarks:** Calculate the local coordinates on a 3D spline emarks The old functions (splin7, splin2) can't process points which have no perpendicular point on the spline
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TransformCoord/#NemAll_Python_Geometry.TransformCoord.PointLocal)
 
@@ -29936,13 +19271,7 @@ Representation class for 2D Vector.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/)
 
 ### Constructors
-- `Vector2D()` — Initialize
-- `Vector2D(vec)` — Copy constructor.
-- `Vector2D(angle, length)` — Constructor. Create vector from the angle and from the length. Formula: [X_COORD, Y_COORD] = [lengthcos(angle), lengthsin(angle)]
-- `Vector2D(x, y)` — Constructor. Initialize vector from single coordinates.
-- `Vector2D(startPoint, endPoint)` — Constructor. Initialize vector from two points.
-- `Vector2D(endPoint)` — Create a vector from a 2D point
-- `Vector2D(vec)` — Copy constructor. Copy only X_COORD and Y_COORD from vector.
+- `Vector2D() | Vector2D(vec) | Vector2D(angle, length) | Vector2D(x, y) | Vector2D(startPoint, endPoint) | Vector2D(endPoint) | Vector2D(vec)` — Initialize
 
 ### Methods
 #### `CrossProduct(vec)`
@@ -30021,22 +19350,11 @@ Check the coords [0.0, 0.0] (binary comparison)
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.IsZero)
 
-#### `Normalize()`
+#### `Normalize() | Normalize(length)`
 
 Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
 
 **Remarks:** Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Normalize)
-
-#### `Normalize(length)`
-
-Normalize vector to new length. Formula: Vn(a1 * length / ||Va||, a2 * length / ||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
-
-**Remarks:** Normalize vector to new length. Formula: Vn(a1 * length / ||Va||, a2 * length / ||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
-
-**Parameters:**
-- `length` (float) — new length of vector.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Normalize)
 
@@ -30063,19 +19381,7 @@ Compute reversed vector Method calculate vector with reversed orientation.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Reverse)
 
-#### `Set(startPoint, endPoint)`
-
-Initialize vector from two points.
-
-**Remarks:** Initialize vector from two points.
-
-**Parameters:**
-- `startPoint` (Point2D) — start point of vector.
-- `endPoint` (Point2D) — end point of vector.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Set)
-
-#### `Set(vec)`
+#### `Set(vec) | Set(x, y) | Set(startPoint, endPoint)`
 
 Initialize from vector 2D.
 
@@ -30083,18 +19389,6 @@ Initialize from vector 2D.
 
 **Parameters:**
 - `vec` (Vector2D) — Vector.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Set)
-
-#### `Set(x, y)`
-
-Initialize from x,y coordinates.
-
-**Remarks:** Initialize from x,y coordinates.
-
-**Parameters:**
-- `x` (float) — coordinate.
-- `y` (float) — coordinate.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.Set)
 
@@ -30160,20 +19454,7 @@ Multiply the vector by a factor (scalar multiplication)
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__idiv__)
 
-#### `__imul__(factor)`
-
-Multiply the vector by a factor (scalar multiplication)
-
-**Remarks:** Multiply the vector by a factor (scalar multiplication)
-
-**Parameters:**
-- `factor` (float) — Scale factor
-
-**Returns:** `Vector2D` — New vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__imul__)
-
-#### `__imul__(matrix)`
+#### `__imul__(matrix) | __imul__(factor)`
 
 Matrix transformation. Formula: Vector(this) = Vector(this) * matrix
 
@@ -30199,33 +19480,7 @@ Subtraction assignment operator. Formula: Va = Va - Vb Va is this Vector.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__isub__)
 
-#### `__mul__(factor)`
-
-Multiply the vector by a factor (scalar multiplication)
-
-**Remarks:** Multiply the vector by a factor (scalar multiplication)
-
-**Parameters:**
-- `factor` (float) — Scale factor
-
-**Returns:** `Vector2D` — New vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__mul__)
-
-#### `__mul__(matrix)`
-
-Matrix transformation. Formula: Result = Vector(this) * matrix
-
-**Remarks:** Matrix transformation. Formula: Result = Vector(this) * matrix
-
-**Parameters:**
-- `matrix` (Matrix2D) — Transformation matrix.
-
-**Returns:** `Vector2D` — Vector2D.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector2D/#NemAll_Python_Geometry.Vector2D.__mul__)
-
-#### `__mul__(vec)`
+#### `__mul__(vec) | __mul__(matrix) | __mul__(factor)`
 
 Cross(vector) product operator. Formula: Vc = Va x Vb Va is this Vector
 
@@ -30413,12 +19668,7 @@ Representation class for 3D Vector.
 [Vendor docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/)
 
 ### Constructors
-- `Vector3D()` — Initialize
-- `Vector3D(vec)` — Copy constructor. Copy only X_COORD and Y_COORD from vector, Z_COORD is set to zero.
-- `Vector3D(vec)` — Copy constructor.
-- `Vector3D(x, y, z)` — Constructor. Initialize vector from single coordinates.
-- `Vector3D(startPoint, endPoint)` — Constructor. Initialize vector from two points.
-- `Vector3D(endPoint)` — Create a vector from a 3D point
+- `Vector3D() | Vector3D(vec) | Vector3D(vec) | Vector3D(x, y, z) | Vector3D(startPoint, endPoint) | Vector3D(endPoint)` — Initialize
 
 ### Methods
 #### `CrossProduct(vec)`
@@ -30496,24 +19746,11 @@ Does the same as Cross(vector) product but does not change the operands. Formula
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.Normal)
 
-#### `Normalize()`
+#### `Normalize() | Normalize(length)`
 
 Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
 
 **Remarks:** Normalize vector. Formula: Vn(a1/||Va||, a2/||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
-
-**Returns:** `object` — Geometry error code
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.Normalize)
-
-#### `Normalize(length)`
-
-Normalize vector to new length. Formula: Vn(a1 * length / ||Va||, a2 * length / ||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
-
-**Remarks:** Normalize vector to new length. Formula: Vn(a1 * length / ||Va||, a2 * length / ||Va||) Va is this vector This method is checked and throwing a geometry exception when vector is zero.
-
-**Parameters:**
-- `length` (float) — new length of vector.
 
 **Returns:** `object` — Geometry error code
 
@@ -30542,19 +19779,7 @@ Compute reversed vector Method calculate vector with reversed orientation.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.Reverse)
 
-#### `Set(startPoint, endPoint)`
-
-Initialize vector from two points.
-
-**Remarks:** Initialize vector from two points.
-
-**Parameters:**
-- `startPoint` (Point3D) — start point of vector.
-- `endPoint` (Point3D) — end point of vector.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.Set)
-
-#### `Set(vec)`
+#### `Set(vec) | Set(x, y, z) | Set(startPoint, endPoint)`
 
 Initialize from vector 3D.
 
@@ -30562,19 +19787,6 @@ Initialize from vector 3D.
 
 **Parameters:**
 - `vec` (Vector3D) — Vector.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.Set)
-
-#### `Set(x, y, z)`
-
-Initialize from x,y,z coordinates.
-
-**Remarks:** Initialize from x,y,z coordinates.
-
-**Parameters:**
-- `x` (float) — coordinate.
-- `y` (float) — coordinate.
-- `z` (float) — coordinate.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.Set)
 
@@ -30640,46 +19852,7 @@ Multiply the vector by a factor (scalar multiplication)
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__idiv__)
 
-#### `__imul__(factor)`
-
-Multiply the vector by a factor (scalar multiplication)
-
-**Remarks:** Multiply the vector by a factor (scalar multiplication)
-
-**Parameters:**
-- `factor` (float) — Scale factor
-
-**Returns:** `Vector3D` — New vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__imul__)
-
-#### `__imul__(matrix)`
-
-2D matrix transformation. Formula: Vector(this) = Vector(this) * matrix
-
-**Remarks:** 2D matrix transformation. Formula: Vector(this) = Vector(this) * matrix
-
-**Parameters:**
-- `matrix` (Matrix2D) — 2D transformation matrix.
-
-**Returns:** `Vector3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__imul__)
-
-#### `__imul__(matrix)`
-
-3D matrix transformation. Formula: Vector(this) = Vector(this) * matrix
-
-**Remarks:** 3D matrix transformation. Formula: Vector(this) = Vector(this) * matrix
-
-**Parameters:**
-- `matrix` (Matrix3D) — 3D transformation matrix.
-
-**Returns:** `Vector3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__imul__)
-
-#### `__imul__(vec)`
+#### `__imul__(vec) | __imul__(factor) | __imul__(matrix) | __imul__(matrix)`
 
 Cross(vector) product operator. Formula: Va = Va x Vb Va is this Vector
 
@@ -30705,46 +19878,7 @@ Subtraction assignment operator. Formula: Va = Va - Vb Va is this Vector.
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__isub__)
 
-#### `__mul__(factor)`
-
-Multiply the vector by a factor (scalar multiplication)
-
-**Remarks:** Multiply the vector by a factor (scalar multiplication)
-
-**Parameters:**
-- `factor` (float) — Scale factor
-
-**Returns:** `Vector3D` — New vector
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__mul__)
-
-#### `__mul__(matrix)`
-
-2D matrix transformation. Formula: Result = Vector(this) * matrix
-
-**Remarks:** 2D matrix transformation. Formula: Result = Vector(this) * matrix
-
-**Parameters:**
-- `matrix` (Matrix2D) — 2D transformation matrix.
-
-**Returns:** `Vector3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__mul__)
-
-#### `__mul__(matrix)`
-
-3D matrix transformation. Formula: Result = Vector(this) * matrix
-
-**Remarks:** 3D matrix transformation. Formula: Result = Vector(this) * matrix
-
-**Parameters:**
-- `matrix` (Matrix3D) — 3D transformation matrix.
-
-**Returns:** `Vector3D` — Point.
-
-[Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Vector3D/#NemAll_Python_Geometry.Vector3D.__mul__)
-
-#### `__mul__(vec)`
+#### `__mul__(vec) | __mul__(factor) | __mul__(matrix) | __mul__(matrix)`
 
 Cross(vector) product operator. Formula: Vc = Va x Vb Va is this Vector
 

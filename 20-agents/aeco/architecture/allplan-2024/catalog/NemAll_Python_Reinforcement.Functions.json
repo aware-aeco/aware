@@ -8,8 +8,8 @@
   "constructors": [],
   "methods": [
     {
-      "name": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None)",
-      "signature": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None)",
+      "name": "CreateReinforcementLabeling",
+      "signature": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None) | CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)",
       "summary": "Create the reinforcement labels",
       "remarks": "Create the reinforcement labels",
       "params": [
@@ -43,42 +43,6 @@
           "doc": "Undo redo service",
           "optional": true,
           "default": "None"
-        }
-      ],
-      "returns": null,
-      "throws": [],
-      "events_related": [],
-      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/#NemAll_Python_Reinforcement.CreateReinforcementLabeling"
-    },
-    {
-      "name": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)",
-      "signature": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)",
-      "summary": "Create the reinforcement labels",
-      "remarks": "Create the reinforcement labels",
-      "params": [
-        {
-          "name": "doc",
-          "type": "DocumentAdapter",
-          "doc": "Document",
-          "optional": false
-        },
-        {
-          "name": "insertionMat",
-          "type": "Matrix3D",
-          "doc": "Insertion matrix",
-          "optional": false
-        },
-        {
-          "name": "labelList",
-          "type": "ReinforcementLabelList",
-          "doc": "List with the labels",
-          "optional": false
-        },
-        {
-          "name": "viewProj",
-          "type": "ViewWorldProjection",
-          "doc": "View projection",
-          "optional": false
         }
       ],
       "returns": null,
