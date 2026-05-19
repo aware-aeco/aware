@@ -1,0 +1,189 @@
+{
+  "name": "Image",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "An Image object represents a raster image placed in the Model.",
+  "base": "Drawingelement",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "explode",
+      "signature": "explode =\u003E Object",
+      "summary": "The explode method is used to explode an image into a face with a texture on it.",
+      "remarks": "The explode method is used to explode an image into a face with a texture on it. Note that current versions of SketchUp will return an empty array here. To work around this limitation you can iterate over your entities collection to determine which new entities were created. Versions prior to SketchUp 2015 returned an empty array due to a bug.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "entitiesarray - an Array object of entities if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#explode-instance_method"
+    },
+    {
+      "name": "image_rep",
+      "signature": "image_rep =\u003E Sketchup::ImageRep",
+      "summary": "The #image_rep method returns a copy of a Sketchup::ImageRep object representing the pixel data.",
+      "remarks": "The #image_rep method returns a copy of a Sketchup::ImageRep object representing the pixel data.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ImageRep",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#image_rep-instance_method"
+    },
+    {
+      "name": "normal",
+      "signature": "normal =\u003E Object",
+      "summary": "The normal method is used to retrieve the 3D Vector that is perpendicular to the plane of the image.",
+      "remarks": "The normal method is used to retrieve the 3D Vector that is perpendicular to the plane of the image.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "vector - a Vector3d object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#normal-instance_method"
+    },
+    {
+      "name": "path",
+      "signature": "path =\u003E Object",
+      "summary": "The path method is used to retrieve the path of the file defining the image.",
+      "remarks": "The path method is used to retrieve the path of the file defining the image.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "path - the path for the image file if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#path-instance_method"
+    },
+    {
+      "name": "pixelheight",
+      "signature": "pixelheight =\u003E Object",
+      "summary": "The pixelheight method is used to retrieve the height of the image file in pixels.",
+      "remarks": "The pixelheight method is used to retrieve the height of the image file in pixels.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "height - the height of the image in pixels if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#pixelheight-instance_method"
+    },
+    {
+      "name": "pixelwidth",
+      "signature": "pixelwidth =\u003E Object",
+      "summary": "The pixelwidth method is used to retrieve the width of the image file in pixels.",
+      "remarks": "The pixelwidth method is used to retrieve the width of the image file in pixels.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "width - the width of the image in pixels if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#pixelwidth-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transform) =\u003E Object",
+      "summary": "The transform! method is used to apply a transformation to the image.",
+      "remarks": "The transform! method is used to apply a transformation to the image.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Object",
+          "doc": "A Transformation object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "image - the transformed Image object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#transform!-instance_method"
+    },
+    {
+      "name": "zrotation",
+      "signature": "zrotation =\u003E Object",
+      "summary": "The zrotation method is used to get the angle that the image is rotated about the normal vector from an arbitrary X axis.",
+      "remarks": "The zrotation method is used to get the angle that the image is rotated about the normal vector from an arbitrary X axis.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "vector - a Vector3d object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#zrotation-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "glued_to",
+      "type": "Sketchup::Face, Sketchup::Group, Sketchup::ComponentInstance, Sketchup::Image, nil",
+      "getter": true,
+      "setter": true,
+      "summary": "The #glued_to method is used to retrieve the entity that this image is glued to.",
+      "remarks": "The #glued_to method is used to retrieve the entity that this image is glued to.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#glued_to-instance_method"
+    },
+    {
+      "name": "height",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The height method is used to retrieve the height of the image.",
+      "remarks": "The height method is used to retrieve the height of the image. The height is given in inches.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#height-instance_method"
+    },
+    {
+      "name": "origin",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The origin method is used to retrieve the 3D point that defines the origin of the image.",
+      "remarks": "The origin method is used to retrieve the 3D point that defines the origin of the image.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#origin-instance_method"
+    },
+    {
+      "name": "size",
+      "type": "Object",
+      "getter": false,
+      "setter": true,
+      "summary": "The size= method is used to set the width and height of the image, in inches.",
+      "remarks": "The size= method is used to set the width and height of the image, in inches.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#size=-instance_method"
+    },
+    {
+      "name": "transformation",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The transformation method is used to retrieve the transformation for the image.",
+      "remarks": "The transformation method is used to retrieve the transformation for the image.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#transformation-instance_method"
+    },
+    {
+      "name": "width",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The width method is used to retrieve the width of the image.",
+      "remarks": "The width method is used to retrieve the width of the image. The width is given in inches.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Image.html#width-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

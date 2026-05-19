@@ -1,0 +1,222 @@
+{
+  "name": "Group",
+  "namespace": "Layout",
+  "kind": "class",
+  "summary": "A group is a special type of Entity that does not belong to a Layer and contains other Entitys as children. A Group\u0027s children may include other Groups, allowing for a hierarchical tree structure of Entitys. A Group must contain at least one child and will be automatically collapsed if an operation is performed that results in the Group being empty.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Layout/Group.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Group(entities)",
+      "summary": "The #initialize method creates a new Layout::Group.",
+      "remarks": "The #initialize method creates a new Layout::Group.",
+      "params": [
+        {
+          "name": "entities",
+          "type": "Array\u003CLayout::Entity\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if entities is empty."
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if entities contains Entitys that belong to different Documents"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if entities contains a mix of Entitys that belong to a Document and Entitys that don\u0027t belong to a Document"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if entities contains Entitys on both shared and non-shared Layers, or on non-shared Layers belonging to different Pages"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if entities contains the same Entity more than once"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "entities",
+      "signature": "entities =\u003E Layout::Entities",
+      "summary": "The #entities method returns the Entities that belong to the Layout::Group.",
+      "remarks": "The #entities method returns the Entities that belong to the Layout::Group.",
+      "params": [],
+      "returns": {
+        "type": "Layout::Entities",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#entities-instance_method"
+    },
+    {
+      "name": "remove_scale_factor",
+      "signature": "remove_scale_factor(resize_behavior) =\u003E Object",
+      "summary": "The #remove_scale_factor method removes the scale factor from the Layout::Group.",
+      "remarks": "The #remove_scale_factor method removes the scale factor from the Layout::Group. The resize behavior can be one of the following values: Layout::Group::RESIZE_BEHAVIOR_NONE Layout::Group::RESIZE_BEHAVIOR_BOUNDS Layout::Group::RESIZE_BEHAVIOR_BOUNDS_AND_FONTS",
+      "params": [
+        {
+          "name": "resize_behavior",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the Layout::Group does not have a scale factor"
+        },
+        {
+          "type": "Layout::LockedEntityError",
+          "when": "if the Layout::Group is locked"
+        },
+        {
+          "type": "Layout::LockedLayerError",
+          "when": "if the Layout::Group is on a locked layer"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#remove_scale_factor-instance_method"
+    },
+    {
+      "name": "scale_factor",
+      "signature": "scale_factor =\u003E Float?",
+      "summary": "The #scale_factor method returns the scale factor associated with the Layout::Group.",
+      "remarks": "The #scale_factor method returns the scale factor associated with the Layout::Group.",
+      "params": [],
+      "returns": {
+        "type": "Float, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#scale_factor-instance_method"
+    },
+    {
+      "name": "set_scale_factor",
+      "signature": "set_scale_factor(scale_factor, units_format, resize_behavior) =\u003E Object",
+      "summary": "The #set_scale_factor method sets the scale factor for the Layout::Group.",
+      "remarks": "The #set_scale_factor method sets the scale factor for the Layout::Group. The units format can be any of the following values: Layout::Document::FRACTIONAL_INCHES Layout::Document::DECIMAL_INCHES Layout::Document::DECIMAL_FEET Layout::Document::DECIMAL_MILLIMETERS Layout::Document::DECIMAL_CENTIMETERS Layout::Document::DECIMAL_METERS Layout::Document::DECIMAL_POINTS The resize behavior can be one of the following values: Layout::Group::RESIZE_BEHAVIOR_NONE Layout::Group::RESIZE_BEHAVIOR_BOUNDS Layout::Group::RESIZE_BEHAVIOR_BOUNDS_AND_FONTS",
+      "params": [
+        {
+          "name": "scale_factor",
+          "type": "Float",
+          "optional": false
+        },
+        {
+          "name": "units_format",
+          "type": "Integer",
+          "optional": false
+        },
+        {
+          "name": "resize_behavior",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "LockedLayerError",
+          "when": "if the Layout::Group is on a locked Layer"
+        },
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Group is locked"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if scale_factor is an invalid value"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if the Layout::Group cannot be assigned a scale factor because it is already inheriting a scale factor from its parent"
+        },
+        {
+          "type": "ArgumentError",
+          "when": "if a scale factor cannot be set for the Layout::Group"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#set_scale_factor-instance_method"
+    },
+    {
+      "name": "ungroup",
+      "signature": "ungroup =\u003E Boolean",
+      "summary": "The #ungroup method removes all Entitys from the Layout::Group and deletes the Layout::Group.",
+      "remarks": "The #ungroup method removes all Entitys from the Layout::Group and deletes the Layout::Group.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "LockedEntityError",
+          "when": "if the Layout::Group is locked"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#ungroup-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "scale_precision",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #scale_precision method returns the precision used for the scale of the Layout::Group.",
+      "remarks": "The #scale_precision method returns the precision used for the scale of the Layout::Group.",
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#scale_precision-instance_method"
+    },
+    {
+      "name": "scale_units",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The #scale_units method returns the units format used in the scale for the Layout::Group.",
+      "remarks": "The #scale_units method returns the units format used in the scale for the Layout::Group. The units format can be any of the following values: Layout::Document::FRACTIONAL_INCHES Layout::Document::DECIMAL_INCHES Layout::Document::DECIMAL_FEET Layout::Document::DECIMAL_MILLIMETERS Layout::Document::DECIMAL_CENTIMETERS Layout::Document::DECIMAL_METERS Layout::Document::DECIMAL_POINTS",
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#scale_units-instance_method"
+    },
+    {
+      "name": "RESIZE_BEHAVIOR_NONE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#RESIZE_BEHAVIOR_NONE-constant"
+    },
+    {
+      "name": "RESIZE_BEHAVIOR_BOUNDS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#RESIZE_BEHAVIOR_BOUNDS-constant"
+    },
+    {
+      "name": "RESIZE_BEHAVIOR_BOUNDS_AND_FONTS",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Layout/Group.html#RESIZE_BEHAVIOR_BOUNDS_AND_FONTS-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

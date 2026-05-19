@@ -1,0 +1,482 @@
+{
+  "name": "Vector2d",
+  "namespace": "Geom",
+  "kind": "class",
+  "summary": "The Vector2d class represents vectors in a 2 dimensional space. There are numerous tutorials on 2D vectors available on the internet.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Vector2d(x, y)",
+      "summary": "The new method creates a new Geom::Vector2d.",
+      "remarks": "The new method creates a new Geom::Vector2d.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Float",
+          "doc": "The length in the x direction",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Float",
+          "doc": "The length in the y direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "%",
+      "signature": "%(vector) =\u003E Float",
+      "summary": "The #% method is used to compute the dot product between two vectors.",
+      "remarks": "The #% method is used to compute the dot product between two vectors. This is an alias of the #dot method.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#%-instance_method"
+    },
+    {
+      "name": "*",
+      "signature": "*(vector) =\u003E Float",
+      "summary": "The #* method returns the cross product between two Geom::Vector2d.",
+      "remarks": "The #* method returns the cross product between two Geom::Vector2d. This is an alias of the cross method.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#*-instance_method"
+    },
+    {
+      "name": "\u002B",
+      "signature": "\u002B(vector) =\u003E Geom::Vector2d",
+      "summary": "The #\u002B method adds a Geom::Vector2d to this one.",
+      "remarks": "The #\u002B method adds a Geom::Vector2d to this one.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#\u002B-instance_method"
+    },
+    {
+      "name": "-",
+      "signature": "-(vector) =\u003E Geom::Vector2d",
+      "summary": "The #- method subtracts a Geom::Vector2d from this one.",
+      "remarks": "The #- method subtracts a Geom::Vector2d from this one.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#--instance_method"
+    },
+    {
+      "name": "angle_between",
+      "signature": "angle_between(vector) =\u003E Float",
+      "summary": "The #angle_between method computes the angle in radians between the Geom::Vector2d and another Geom::Vector2d.",
+      "remarks": "The #angle_between method computes the angle in radians between the Geom::Vector2d and another Geom::Vector2d.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": "The angle (in radians)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#angle_between-instance_method"
+    },
+    {
+      "name": "clone",
+      "signature": "clone =\u003E Geom::Vector2d",
+      "summary": "The #clone method makes a copy of the Geom::Vector2d.",
+      "remarks": "The #clone method makes a copy of the Geom::Vector2d. This method is equivalent to vec2 = Geom::Vector2d.new(vec).",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#clone-instance_method"
+    },
+    {
+      "name": "cross",
+      "signature": "cross(vector) =\u003E Float",
+      "summary": "The #cross method returns the cross product between two Geom::Vector2ds.",
+      "remarks": "The #cross method returns the cross product between two Geom::Vector2ds. The cross product, also called the vector product, is an operation on two vectors. The cross product of two vectors produces a third vector which is perpendicular to the plane in which the first two lie.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#cross-instance_method"
+    },
+    {
+      "name": "dot",
+      "signature": "dot(vector) =\u003E Float",
+      "summary": "The #dot method is used to compute the dot product between two vectors.",
+      "remarks": "The #dot method is used to compute the dot product between two vectors.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#dot-instance_method"
+    },
+    {
+      "name": "inspect",
+      "signature": "inspect =\u003E String",
+      "summary": "The #inspect method formats the Geom::Vector2d as a string.",
+      "remarks": "The #inspect method formats the Geom::Vector2d as a string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the string representation of the Geom::Vector2d"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#inspect-instance_method"
+    },
+    {
+      "name": "normalize",
+      "signature": "normalize =\u003E Geom::Vector2d",
+      "summary": "The #normalize method returns a Geom::Vector2d that is a unit vector of the Geom::Vector2d.",
+      "remarks": "The #normalize method returns a Geom::Vector2d that is a unit vector of the Geom::Vector2d.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#normalize-instance_method"
+    },
+    {
+      "name": "normalize!",
+      "signature": "normalize! =\u003E Object",
+      "summary": "The #normalize! method converts a Geom::Vector2d vector into a unit vector.",
+      "remarks": "The #normalize! method converts a Geom::Vector2d vector into a unit vector. Another way to do this is vector.length = 1.0",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#normalize!-instance_method"
+    },
+    {
+      "name": "parallel?",
+      "signature": "parallel?(vector) =\u003E Boolean",
+      "summary": "The #parallel? method determines if two Geom::Vector2ds are parallel within a tolerance.",
+      "remarks": "The #parallel? method determines if two Geom::Vector2ds are parallel within a tolerance. Two vectors are parallel if there exists a scalar multiple between them.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#parallel?-instance_method"
+    },
+    {
+      "name": "perpendicular?",
+      "signature": "perpendicular?(vector) =\u003E Boolean",
+      "summary": "The #perpendicular? method determines if two Geom::Vector2ds are perpendicular within a tolerance.",
+      "remarks": "The #perpendicular? method determines if two Geom::Vector2ds are perpendicular within a tolerance. Two vectors are considered perpendicular if their dot product is zero.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#perpendicular?-instance_method"
+    },
+    {
+      "name": "reverse",
+      "signature": "reverse =\u003E Geom::Vector2d",
+      "summary": "The #reverse method returns a new Geom::Vector2d that is the reverse of the Geom::Vector2d, leaving the original unchanged.",
+      "remarks": "The #reverse method returns a new Geom::Vector2d that is the reverse of the Geom::Vector2d, leaving the original unchanged.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#reverse-instance_method"
+    },
+    {
+      "name": "reverse!",
+      "signature": "reverse! =\u003E Object",
+      "summary": "The #reverse! method reverses the Geom::Vector2d in place.",
+      "remarks": "The #reverse! method reverses the Geom::Vector2d in place.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#reverse!-instance_method"
+    },
+    {
+      "name": "same_direction?",
+      "signature": "same_direction?(vector) =\u003E Boolean",
+      "summary": "The #same_direction? method determines if the Geom::Vector2d is parallel to and in the same direction as another Geom::Vector2d within tolerance.",
+      "remarks": "The #same_direction? method determines if the Geom::Vector2d is parallel to and in the same direction as another Geom::Vector2d within tolerance.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#same_direction?-instance_method"
+    },
+    {
+      "name": "set!",
+      "signature": "set!(vector) =\u003E Geom::Vector2d | set!(x, y) =\u003E Geom::Vector2d",
+      "summary": "The #set! method sets the values of the Geom::Vector2d.",
+      "remarks": "The #set! method sets the values of the Geom::Vector2d.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Float, Float)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#set!-instance_method"
+    },
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Array(Float, Float)",
+      "summary": "The #to_a method retrieves the coordinates of the Geom::Vector2d in an Array.",
+      "remarks": "The #to_a method retrieves the coordinates of the Geom::Vector2d in an Array.",
+      "params": [],
+      "returns": {
+        "type": "Array(Float, Float)",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#to_a-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method returns a string representation of the Geom::Vector2d.",
+      "remarks": "The #to_s method returns a string representation of the Geom::Vector2d.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the string representation of the Geom::Vector2d"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#to_s-instance_method"
+    },
+    {
+      "name": "transform",
+      "signature": "transform(transform) =\u003E Geom::Vector2d",
+      "summary": "The #transform method applies a transformation to a vector, returning a new vector.",
+      "remarks": "The #transform method applies a transformation to a vector, returning a new vector. The original vector is unchanged by this method.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation2d",
+          "doc": "A transformation object to apply to the vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": "the newly transformed vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#transform-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transform) =\u003E Geom::Vector2d",
+      "summary": "The #transform! method applies a transformation to a vector.",
+      "remarks": "The #transform! method applies a transformation to a vector. The vector itself is modified.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation2d",
+          "doc": "A Transformation object to apply to the vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": "the transformed vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#transform!-instance_method"
+    },
+    {
+      "name": "unit_vector?",
+      "signature": "unit_vector? =\u003E Boolean",
+      "summary": "The #unit_vector? method returns whether the Geom::Vector2d is a unit vector.",
+      "remarks": "The #unit_vector? method returns whether the Geom::Vector2d is a unit vector. This is equivalent to vector.length == 1.0",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#unit_vector?-instance_method"
+    },
+    {
+      "name": "valid?",
+      "signature": "valid? =\u003E Boolean",
+      "summary": "The #valid? method verifies if a Geom::Vector2d is valid.",
+      "remarks": "The #valid? method verifies if a Geom::Vector2d is valid. A Geom::Vector2d is valid if its length is not zero.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#valid?-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Geom::Vector2d, Array(Float, Float)",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method returns whether two Geom::Vector2d are equal within tolerance.",
+      "remarks": "The #== method returns whether two Geom::Vector2d are equal within tolerance.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#==-instance_method"
+    },
+    {
+      "name": "[]",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #[] method returns the value of the Geom::Vector2d at the specified index.",
+      "remarks": "The #[] method returns the value of the Geom::Vector2d at the specified index.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#[]-instance_method"
+    },
+    {
+      "name": "length",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #length method returns the length of the Geom::Vector2d.",
+      "remarks": "The #length method returns the length of the Geom::Vector2d.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#length-instance_method"
+    },
+    {
+      "name": "x",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #x method retrieves the x value of the Geom::Vector2d.",
+      "remarks": "The #x method retrieves the x value of the Geom::Vector2d.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#x-instance_method"
+    },
+    {
+      "name": "y",
+      "type": "Float",
+      "getter": true,
+      "setter": true,
+      "summary": "The #y method retrieves the y value of the Geom::Vector2d.",
+      "remarks": "The #y method retrieves the y value of the Geom::Vector2d.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Vector2d.html#y-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

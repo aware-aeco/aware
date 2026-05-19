@@ -25,7 +25,12 @@ public static class SkillWriter
         var byNamespace = ir.types.GroupBy(t => t.@namespace).OrderBy(g => g.Key);
         foreach (var group in byNamespace)
         {
-            var slug = NormaliseToSlug(group.Key);
+            // Ruby's root namespace surfaces as empty string (e.g. `Array`, `LanguageHandler`,
+            // `Numeric` etc. are not namespaced). Without a non-empty filename stem we'd write
+            // a literal `.md` file — invisible on Unix, useless to humans. Use `_root.md` for
+            // these instead so the empty namespace still gets a skill but the filename is
+            // human-readable.
+            var slug = string.IsNullOrEmpty(group.Key) ? "_root" : NormaliseToSlug(group.Key);
             result[$"{slug}.md"] = RenderNamespace(group.Key, group.ToList(), ir.host, ir.host_version);
         }
         return result;
@@ -140,5 +145,13 @@ public static class SkillWriter
         return sb.ToString();
     }
 
-    static string NormaliseToSlug(string s) => s.Replace('.', '-').ToLowerInvariant();
+    /// <summary>
+    /// Convert a vendor namespace into a filename-safe slug. .NET namespaces use `.` as the
+    /// separator (e.g. `Tekla.Structures.Model`); Ruby namespaces use `::` (e.g.
+    /// `Sketchup::Http`). Both collapse into a single dash-delimited lowercase slug so the
+    /// skills/ filenames work cross-platform — `:` is reserved on Windows file systems and
+    /// would crash File.WriteAllText.
+    /// </summary>
+    static string NormaliseToSlug(string s) =>
+        s.Replace("::", "-").Replace('.', '-').ToLowerInvariant();
 }

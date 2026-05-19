@@ -1,0 +1,574 @@
+{
+  "name": "WebDialog",
+  "namespace": "UI",
+  "kind": "class",
+  "summary": "Deprecated. Please use HtmlDialog that was introduced in SketchUp 2017. The Ruby WebDialog class allows you to create and interact with DHTML dialog boxes from Ruby. If your goal is to simply display a website to your users, consider using openURL, which will show them a web page in their default browser rather than inside a dialog in SketchUp. See this blog post for a detailed, step-by-step example: sketchupapi.blogspot.com/2008/02/sharing-data-between-sketchup-ruby-and.html Under Windows the IE render mode is different in webdialogs than from what you see in the normal browser. It will by default pick an older render mode and different versions of SketchUp will use different modes. In order to reliably control the render mode of your webdialogs under Windows you need to insert a special META compatibility tag: Starting with SketchUp 2013, you can embed a special HTML link in your dialog that will launch Extension Warehouse and show a specified extension\u0027s page. This can be useful if your extension has a dependency on another one and you would like to direct the user to install that extension. For example, to launch an extension\u0027s page whose URL is: extensions.sketchup.com/en/content/advanced-camera-tools The link would be:",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "WebDialog(dialog_title = \u0022\u0022, scrollable = true, pref_key = nil, width = 250, height = 250, left = 0, top = 0, resizable = true)",
+      "summary": "Note: Since SU2017 the position and size of the dialog is DPI aware - it will scale to the DPI of the monitor automatically. Specify units as they would be on a traditional low-DPI monitor. Note: The browser which is embedded inside the dialog depends on the user\u0027s OS. On Mac, Safari is embedded, while on the PC whatever version of Internet Explorer is installed will be embedded. The new method is used to create a new webdialog.",
+      "remarks": "Note: Since SU2017 the position and size of the dialog is DPI aware - it will scale to the DPI of the monitor automatically. Specify units as they would be on a traditional low-DPI monitor. Note: The browser which is embedded inside the dialog depends on the user\u0027s OS. On Mac, Safari is embedded, while on the PC whatever version of Internet Explorer is installed will be embedded. The new method is used to create a new webdialog.",
+      "params": [
+        {
+          "name": "dialog_title",
+          "type": "String",
+          "doc": "The title to be displayed in the webdialog.",
+          "optional": true,
+          "default": "\u0022\u0022"
+        },
+        {
+          "name": "scrollable",
+          "type": "Boolean",
+          "doc": "true if you want to allow scrollbars, false if you do not want to allow scrollbars.",
+          "optional": true,
+          "default": "true"
+        },
+        {
+          "name": "pref_key",
+          "type": "String, nil",
+          "doc": "The registry entry where the location and size of the dialog will be saved. If preferences_key is not included, the location and size will not be stored.",
+          "optional": true,
+          "default": "nil"
+        },
+        {
+          "name": "width",
+          "type": "Integer",
+          "doc": "The width of the webdialog.",
+          "optional": true,
+          "default": "250"
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "doc": "The height of the webdialog.",
+          "optional": true,
+          "default": "250"
+        },
+        {
+          "name": "left",
+          "type": "Integer",
+          "doc": "The number of pixels from the left.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "top",
+          "type": "Integer",
+          "doc": "The number of pixels from the top.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "resizable",
+          "type": "Integer",
+          "doc": "true if you want the webdialog to be resizable, false if not.",
+          "optional": true,
+          "default": "true) =\u003E UI::WebDialog | initialize(properties"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_action_callback",
+      "signature": "add_action_callback(callback_name) {|dialog, params| ... } =\u003E Object",
+      "summary": "The add_action_callback method establishes a Ruby callback method that your web dialog can call to perform some function.",
+      "remarks": "The add_action_callback method establishes a Ruby callback method that your web dialog can call to perform some function. Use the skp:callback_method_name to invoke the callback method from your webdialog. Your JavaScript in the webdialog will invoke the callback method with a string representing arguments to the callback method. Note that you\u0027re sending data down to Ruby as a single string that\u0027s passed via the window.location bar. In Internet Explorer on PC, there is a length limit of 2038 characters for this bar, so if you\u0027re needing to pass large data down you might consider using get_element_value to pull in a longer string from a hidden input field in the HTML.",
+      "params": [
+        {
+          "name": "callback_name",
+          "type": "Object",
+          "doc": "The name of the callback method to be invoked from the webdialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "nil"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#add_action_callback-instance_method"
+    },
+    {
+      "name": "allow_actions_from_host",
+      "signature": "allow_actions_from_host(hostname) =\u003E Boolean",
+      "summary": "By default, actions are only allowed on the host where the webdialog is displayed.",
+      "remarks": "By default, actions are only allowed on the host where the webdialog is displayed. The allow_actions_from_host method is used to selectively allow actions to take place on a host remote from the host where the webdialog exists. If the webdialog is local, no remote host is allowed unless you use this method.",
+      "params": [
+        {
+          "name": "hostname",
+          "type": "String",
+          "doc": "The name (domain) of the host that your webdialog can access safely.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#allow_actions_from_host-instance_method"
+    },
+    {
+      "name": "bring_to_front",
+      "signature": "bring_to_front =\u003E UI::WebDialog",
+      "summary": "The bring_to_front method is used to bring the webdialog to the front of all the windows on the desktop.",
+      "remarks": "The bring_to_front method is used to bring the webdialog to the front of all the windows on the desktop. See show_modal for how to ensure that your WedDialogs are on top.",
+      "params": [],
+      "returns": {
+        "type": "UI::WebDialog",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#bring_to_front-instance_method"
+    },
+    {
+      "name": "close",
+      "signature": "close =\u003E nil",
+      "summary": "The close method is used to close the webdialog.",
+      "remarks": "The close method is used to close the webdialog.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#close-instance_method"
+    },
+    {
+      "name": "execute_script",
+      "signature": "execute_script(script) =\u003E Boolean",
+      "summary": "The execute_script method is used to execute a JavaScript string on the web dialog.",
+      "remarks": "The execute_script method is used to execute a JavaScript string on the web dialog.",
+      "params": [
+        {
+          "name": "script",
+          "type": "String",
+          "doc": "The JavaScript script to execute on the webdialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#execute_script-instance_method"
+    },
+    {
+      "name": "get_default_dialog_color",
+      "signature": "get_default_dialog_color =\u003E String",
+      "summary": "The get_default_dialog_color method is used to get the default dialog color for the web dialog.",
+      "remarks": "The get_default_dialog_color method is used to get the default dialog color for the web dialog.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "a six digit hexidecimal number representing the color"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#get_default_dialog_color-instance_method"
+    },
+    {
+      "name": "get_element_value",
+      "signature": "get_element_value(element_id) =\u003E String",
+      "summary": "The get_element_value method is used to get a value, with a given element_id, from the web dialog\u0027s DOM.",
+      "remarks": "The get_element_value method is used to get a value, with a given element_id, from the web dialog\u0027s DOM.",
+      "params": [
+        {
+          "name": "element_id",
+          "type": "String",
+          "doc": "The name of the element in your HTML code.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "a string containing the retrieved value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#get_element_value-instance_method"
+    },
+    {
+      "name": "navigation_buttons_enabled?",
+      "signature": "navigation_buttons_enabled? =\u003E Boolean",
+      "summary": "The navigation_buttons_enabled? method is used to get whether the home, next, and back buttons are visible at the top of the WebDialog on the mac.",
+      "remarks": "The navigation_buttons_enabled? method is used to get whether the home, next, and back buttons are visible at the top of the WebDialog on the mac. This method has no use on the PC, as these buttons are never displayed. On the mac, this defaults to true for new WebDialogs.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#navigation_buttons_enabled?-instance_method"
+    },
+    {
+      "name": "post_url",
+      "signature": "post_url(url, data) =\u003E nil",
+      "summary": "The post_url method is used to send the data to a url using the HTTP POST method.",
+      "remarks": "The post_url method is used to send the data to a url using the HTTP POST method.",
+      "params": [
+        {
+          "name": "url",
+          "type": "String",
+          "doc": "The url to send the data.",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "String",
+          "doc": "The data to be sent.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#post_url-instance_method"
+    },
+    {
+      "name": "screen_scale_factor",
+      "signature": "screen_scale_factor =\u003E Float",
+      "summary": "The screen_scale_factor method returns the ratio of screen pixels to logical window units (called \u0027points\u0027 on Mac) for the screen this WebDialog is currently in.",
+      "remarks": "The screen_scale_factor method returns the ratio of screen pixels to logical window units (called \u0027points\u0027 on Mac) for the screen this WebDialog is currently in. On a retina screen Mac, this ratio will be greater than 1.0. On Windows this always return 1.0.",
+      "params": [],
+      "returns": {
+        "type": "Float",
+        "doc": "screen scale factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#screen_scale_factor-instance_method"
+    },
+    {
+      "name": "set_background_color",
+      "signature": "set_background_color(color) =\u003E nil",
+      "summary": "The set_background_color method is used to set the background color for the webdialog.",
+      "remarks": "The set_background_color method is used to set the background color for the webdialog.",
+      "params": [
+        {
+          "name": "color",
+          "type": "String",
+          "doc": "A six digit hexidecimal color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_background_color-instance_method"
+    },
+    {
+      "name": "set_file",
+      "signature": "set_file(filename, path = nil) =\u003E nil",
+      "summary": "The #set_file method is used to identify a local HTML file to display in the webdialog.",
+      "remarks": "The #set_file method is used to identify a local HTML file to display in the webdialog.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "String",
+          "doc": "The filename for the webdialog file (HTML file).",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "String",
+          "doc": "A path that filename is relative to.",
+          "optional": true,
+          "default": "nil"
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_file-instance_method"
+    },
+    {
+      "name": "set_full_security",
+      "signature": "set_full_security =\u003E UI::WebDialog",
+      "summary": "The set_full_security method is used to place the WebDialog into a higher security mode where remote URLs and plugins (such as Flash) are not allowed inside the browser.",
+      "remarks": "The set_full_security method is used to place the WebDialog into a higher security mode where remote URLs and plugins (such as Flash) are not allowed inside the browser. This defaults to false when a new WebDialog is created.",
+      "params": [],
+      "returns": {
+        "type": "UI::WebDialog",
+        "doc": "the updated WebDialog"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_full_security-instance_method"
+    },
+    {
+      "name": "set_html",
+      "signature": "set_html(html_string) =\u003E nil",
+      "summary": "The set_html method is used to load a webdialog with a string of provided HTML.",
+      "remarks": "The set_html method is used to load a webdialog with a string of provided HTML.",
+      "params": [
+        {
+          "name": "html_string",
+          "type": "String",
+          "doc": "A string of valid html to display in your webdialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_html-instance_method"
+    },
+    {
+      "name": "set_on_close",
+      "signature": "set_on_close { ... } =\u003E nil",
+      "summary": "Note: #close method should not be called from the #set_on_close callback.",
+      "remarks": "Note: #close method should not be called from the #set_on_close callback. That would make it trigger itself recursively. The set_on_close method is used to establish one or more activities to perform when the dialog closes (such as saving values stored in the dialog).",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_on_close-instance_method"
+    },
+    {
+      "name": "set_position",
+      "signature": "set_position(left, top) =\u003E nil",
+      "summary": "Note: As of SU2017 this will automatically scale the x and y by the same factor as UI.",
+      "remarks": "Note: As of SU2017 this will automatically scale the x and y by the same factor as UI.scale_factor. The set_position method is used to set the position of the webdialog relative to the screen, in pixels.",
+      "params": [
+        {
+          "name": "left",
+          "type": "Integer",
+          "doc": "The number of pixels from the left.",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "Integer",
+          "doc": "The number of pixels from the top of the screen.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_position-instance_method"
+    },
+    {
+      "name": "set_size",
+      "signature": "set_size(w, h) =\u003E nil",
+      "summary": "Note: As of SU2017 this will automatically scale the width and height by the same factor as UI.",
+      "remarks": "Note: As of SU2017 this will automatically scale the width and height by the same factor as UI.scale_factor. The set_size method is used to set the size of the webdialog, in pixels.",
+      "params": [
+        {
+          "name": "w",
+          "type": "Integer",
+          "doc": "Width of the webdialog.",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "Integer",
+          "doc": "Height of the webdialog.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_size-instance_method"
+    },
+    {
+      "name": "set_url",
+      "signature": "set_url(url) =\u003E nil",
+      "summary": "The set_url method is used to load a webdialog with the content at a specific URL.",
+      "remarks": "The set_url method is used to load a webdialog with the content at a specific URL. This method allows you to load web sites in a webdialog.",
+      "params": [
+        {
+          "name": "url",
+          "type": "String",
+          "doc": "The URL for a specific web site.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#set_url-instance_method"
+    },
+    {
+      "name": "show",
+      "signature": "show {|dialog| ... } =\u003E nil",
+      "summary": "The show method is used to display a non-modal dialog box.",
+      "remarks": "The show method is used to display a non-modal dialog box.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#show-instance_method"
+    },
+    {
+      "name": "show_modal",
+      "signature": "show_modal {|dialog| ... } =\u003E nil",
+      "summary": "The show_modal method is used to display a modal dialog box.",
+      "remarks": "The show_modal method is used to display a modal dialog box. In SketchUp 6 and 7, this behaves differently on Mac vs. PC. On the PC, it shows a truly modal dialog, meaning so long as the WebDialog is visible, no input can be performed elsewhere inside SketchUp. On the Mac, \u201Cmodal\u201D WebDialogs do not behave this way, but instead are \u201Calways on top\u201D of other windows.",
+      "params": [],
+      "returns": {
+        "type": "nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#show_modal-instance_method"
+    },
+    {
+      "name": "visible?",
+      "signature": "visible? =\u003E Boolean",
+      "summary": "The visible? method is used to tell if the webdialog is currently shown.",
+      "remarks": "The visible? method is used to tell if the webdialog is currently shown.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#visible?-instance_method"
+    },
+    {
+      "name": "write_image",
+      "signature": "write_image(image_path, option, top_left_x, top_left_y, bottom_right_x, bottom_right_y) =\u003E Object",
+      "summary": "The write_image method is used to grab a portion of the web dialog screen and save the image to the given file path.",
+      "remarks": "The write_image method is used to grab a portion of the web dialog screen and save the image to the given file path.",
+      "params": [
+        {
+          "name": "image_path",
+          "type": "String",
+          "doc": "The destination path of the saved image.",
+          "optional": false
+        },
+        {
+          "name": "option",
+          "type": "Integer",
+          "doc": "Specifies what method to use when saving the image. For JPG/JPEG images, this specifies the image quality and can range from 1 to 100. For PNG images this specifies the compression algorithm: \u003C4 (best speed), 4-8 (default), or \u003E=9 (best compression).",
+          "optional": false
+        },
+        {
+          "name": "top_left_x",
+          "type": "Integer",
+          "doc": "The x coordinate of the upper left corner of the region to grab.",
+          "optional": false
+        },
+        {
+          "name": "top_left_y",
+          "type": "Integer",
+          "doc": "The x coordinate of the upper left corner of the region to grab.",
+          "optional": false
+        },
+        {
+          "name": "bottom_right_x",
+          "type": "Integer",
+          "doc": "The x coordinate of the lower right corner of the region to grab.",
+          "optional": false
+        },
+        {
+          "name": "bottom_right_y",
+          "type": "Integer",
+          "doc": "The x coordinate of the lower right corner of the region to grab.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#write_image-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "max_height",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The max_height method is used to get the maximum height that the user is allowed to resize the dialog to.",
+      "remarks": "The max_height method is used to get the maximum height that the user is allowed to resize the dialog to.",
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#max_height-instance_method"
+    },
+    {
+      "name": "max_width",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The max_width method is used to get the maximum width that the user is allowed to resize the dialog to.",
+      "remarks": "The max_width method is used to get the maximum width that the user is allowed to resize the dialog to.",
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#max_width-instance_method"
+    },
+    {
+      "name": "min_height",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The min_width method is used to get the minimum height that the user is allowed to resize the dialog to.",
+      "remarks": "The min_width method is used to get the minimum height that the user is allowed to resize the dialog to.",
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#min_height-instance_method"
+    },
+    {
+      "name": "min_width",
+      "type": "Integer",
+      "getter": true,
+      "setter": true,
+      "summary": "The min_width method is used to get the minimum width that the user is allowed to resize the dialog to.",
+      "remarks": "The min_width method is used to get the minimum width that the user is allowed to resize the dialog to.",
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#min_width-instance_method"
+    },
+    {
+      "name": "navigation_buttons_enabled",
+      "type": "Object",
+      "getter": false,
+      "setter": true,
+      "summary": "The navigation_buttons_enabled= method is used to set whether the home, next, and back buttons are visible at the top of the WebDialog on the mac.",
+      "remarks": "The navigation_buttons_enabled= method is used to set whether the home, next, and back buttons are visible at the top of the WebDialog on the mac. This method has no use on the PC, as these buttons are never displayed.",
+      "doc_url": "https://ruby.sketchup.com/UI/WebDialog.html#navigation_buttons_enabled=-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

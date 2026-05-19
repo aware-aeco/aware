@@ -126,6 +126,15 @@ internal static class Program
                             // delegation to the Rhino PageParser/MemberPageParser.
                             "grasshopper" => Ingest.Extractors.Grasshopper.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // SketchUp extractor (Phase B B4) — Ruby API YARD docs from
+                            // ruby.sketchup.com. Unified docs site (no per-version trees);
+                            // both 2025.0 and 2026.0 produce IRs from the same source — the
+                            // version field just stamps the host_version. ~155 types,
+                            // single-pass extraction (YARD inlines all members on the type
+                            // page, no enrichment pass needed). NOT the C SDK — that's
+                            // intentionally skipped per project memory.
+                            "sketchup" => Ingest.Extractors.SketchUp.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             // ArchiCAD extractor (Phase B B7) — hybrid source: Tapir community
                             // JSON-RPC catalog from ENZYME-APD/tapir-archicad-automation (GitHub raw)
                             // + Graphisoft official JSON Interface docs at archicadapi.graphisoft.com.

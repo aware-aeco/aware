@@ -1,0 +1,315 @@
+{
+  "name": "Point2d",
+  "namespace": "Geom",
+  "kind": "class",
+  "summary": "The Point2d class allows you to work with a point in 2D space. Point2d is a series of values representing x and y coordinates. The values are specified as [x, y]. For example [1, 1]. To create a point call Geom::Point2d.new, where the creation method can take a variety of arguments:",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "Point2d(x, y)",
+      "summary": "The new method creates a new Geom::Point2d.",
+      "remarks": "The new method creates a new Geom::Point2d.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Numeric",
+          "doc": "The location along the x axis",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Numeric",
+          "doc": "The location along the y axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "\u002B",
+      "signature": "\u002B(vector) =\u003E Geom::Point2d",
+      "summary": "The #\u002B operator is a simple way to add to the current x and y values of the Geom::Point2d, or to set the values of the Geom::Point2d by adding a Vector2d to the Geom::Point2d.",
+      "remarks": "The #\u002B operator is a simple way to add to the current x and y values of the Geom::Point2d, or to set the values of the Geom::Point2d by adding a Vector2d to the Geom::Point2d.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#\u002B-instance_method"
+    },
+    {
+      "name": "-",
+      "signature": "-(array2d) =\u003E Geom::Vector2d | -(point2d) =\u003E Geom::Vector2d | -(vector2d) =\u003E Geom::Point2d",
+      "summary": "The #- operator is a simple way to subtract from the current x and y values of the Geom::Point2d.",
+      "remarks": "The #- operator is a simple way to subtract from the current x and y values of the Geom::Point2d.",
+      "params": [
+        {
+          "name": "array2d",
+          "type": "Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#--instance_method"
+    },
+    {
+      "name": "clone",
+      "signature": "clone =\u003E Geom::Point2d",
+      "summary": "The #clone method creates another point identical to the Geom::Point2d being cloned.",
+      "remarks": "The #clone method creates another point identical to the Geom::Point2d being cloned.",
+      "params": [],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": "the cloned Geom::Point2d object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#clone-instance_method"
+    },
+    {
+      "name": "distance",
+      "signature": "distance(point) =\u003E Numeric",
+      "summary": "The #distance method computes the distance from the Geom::Point2d to another Geom::Point2d.",
+      "remarks": "The #distance method computes the distance from the Geom::Point2d to another Geom::Point2d.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point2d, Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Numeric",
+        "doc": "the distance between the points in the current units"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#distance-instance_method"
+    },
+    {
+      "name": "inspect",
+      "signature": "inspect =\u003E String",
+      "summary": "The #inspect method formats the Geom::Point2d as a string.",
+      "remarks": "The #inspect method formats the Geom::Point2d as a string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#inspect-instance_method"
+    },
+    {
+      "name": "offset",
+      "signature": "offset(vector) =\u003E Geom::Point2d | offset(vector, distance) =\u003E Geom::Point2d",
+      "summary": "The #offset method offsets the Geom::Point2d by a Vector2d and returns a new Geom::Point2d.",
+      "remarks": "The #offset method offsets the Geom::Point2d by a Vector2d and returns a new Geom::Point2d. If distance is provided, it must be non-zero.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#offset-instance_method"
+    },
+    {
+      "name": "offset!",
+      "signature": "offset!(vector) =\u003E Geom::Point2d | offset!(vector, distance) =\u003E Geom::Point2d",
+      "summary": "The #offset! method offsets the Geom::Point2d by a Vector2d.",
+      "remarks": "The #offset! method offsets the Geom::Point2d by a Vector2d. The Geom::Point2d itself is modified. The length of the vector must not be zero.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Geom::Vector2d, Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#offset!-instance_method"
+    },
+    {
+      "name": "set!",
+      "signature": "set!(point) =\u003E Geom::Point2d | set!(x, y) =\u003E Geom::Point2d",
+      "summary": "The #set! method sets the values of the Geom::Point2d.",
+      "remarks": "The #set! method sets the values of the Geom::Point2d.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point2d, Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#set!-instance_method"
+    },
+    {
+      "name": "to_a",
+      "signature": "to_a =\u003E Array(Numeric, Numeric)",
+      "summary": "The #to_a method converts the Geom::Point2d to an array of 2 numbers.",
+      "remarks": "The #to_a method converts the Geom::Point2d to an array of 2 numbers.",
+      "params": [],
+      "returns": {
+        "type": "Array(Numeric, Numeric)",
+        "doc": "an array of two numbers representing x, y of the Geom::Point2d"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#to_a-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method returns a string representation of the Geom::Point2d.",
+      "remarks": "The #to_s method returns a string representation of the Geom::Point2d.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#to_s-instance_method"
+    },
+    {
+      "name": "transform",
+      "signature": "transform(transform) =\u003E Geom::Point2d",
+      "summary": "The #transform method applies a transformation to a point, returning a new point.",
+      "remarks": "The #transform method applies a transformation to a point, returning a new point. The original point is unchanged by this method.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation2d",
+          "doc": "A Transformation object to apply to the point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": "the transformed point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#transform-instance_method"
+    },
+    {
+      "name": "transform!",
+      "signature": "transform!(transform) =\u003E Geom::Point2d",
+      "summary": "The #transform! method applies a transformation to a point.",
+      "remarks": "The #transform! method applies a transformation to a point. The point itself is modified.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Geom::Transformation2d",
+          "doc": "A Transformation object to apply to the point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Point2d",
+        "doc": "the transformed point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#transform!-instance_method"
+    },
+    {
+      "name": "vector_to",
+      "signature": "vector_to(point) =\u003E Geom::Vector2d",
+      "summary": "The #vector_to method returns the vector between points.",
+      "remarks": "The #vector_to method returns the vector between points.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point2d, Array(Numeric, Numeric)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Geom::Vector2d",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#vector_to-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "=",
+      "type": "Geom::Point2d, Array(Numeric, Numeric)",
+      "getter": false,
+      "setter": true,
+      "summary": "The #== method compares two points for equality.",
+      "remarks": "The #== method compares two points for equality. This uses the standard SketchUp tolerance to determine if two points are the same.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#==-instance_method"
+    },
+    {
+      "name": "[]",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #[] method returns the value of the Geom::Point2d at the specified index.",
+      "remarks": "The #[] method returns the value of the Geom::Point2d at the specified index.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#[]-instance_method"
+    },
+    {
+      "name": "x",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #x method returns the x value of the Geom::Point2d.",
+      "remarks": "The #x method returns the x value of the Geom::Point2d.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#x-instance_method"
+    },
+    {
+      "name": "y",
+      "type": "Length",
+      "getter": true,
+      "setter": true,
+      "summary": "The #y method returns the y value of the Geom::Point2d.",
+      "remarks": "The #y method returns the y value of the Geom::Point2d.",
+      "doc_url": "https://ruby.sketchup.com/Geom/Point2d.html#y-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

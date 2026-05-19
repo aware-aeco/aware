@@ -1,0 +1,313 @@
+{
+  "name": "Entity",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "This is the base class for all SketchUp entities. Entities are basically anything that can be contained in a model, including Drawingelements such as Edges, SectionPlanes, Groups, etc. and entities that relate to those Drawingelements, such as Loops, Layers, etc. Keep in mind that the methods below are available on all subclasses. For example, an Edge\u0027s parent class is Drawingelement, and a Drawingelement\u0027s parent class is Entity. Therefore an Edge has all of the methods defined in Drawingelement and Entity. The Object.is_a? method is the common way of determining what sort of Entity you\u0027re dealing with.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add_observer",
+      "signature": "add_observer(observer) =\u003E Boolean",
+      "summary": "The add_observer method is used to add an observer to the current object.",
+      "remarks": "The add_observer method is used to add an observer to the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#add_observer-instance_method"
+    },
+    {
+      "name": "attribute_dictionaries",
+      "signature": "attribute_dictionaries =\u003E Sketchup::AttributeDictionaries?",
+      "summary": "Note: The return value may be either nil or an empty AttributeDictionaries collection if this entity has no AttributeDictionarys.",
+      "remarks": "Note: The return value may be either nil or an empty AttributeDictionaries collection if this entity has no AttributeDictionarys. The attribute_dictionaries method is used to retrieve the AttributeDictionaries collection attached to the entity.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::AttributeDictionaries, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#attribute_dictionaries-instance_method"
+    },
+    {
+      "name": "attribute_dictionary",
+      "signature": "attribute_dictionary(name, create = false) =\u003E Sketchup::AttributeDictionary?",
+      "summary": "The attribute_dictionary method is used to retrieve an attribute dictionary with a given name that is attached to an Entity.",
+      "remarks": "The attribute_dictionary method is used to retrieve an attribute dictionary with a given name that is attached to an Entity.",
+      "params": [
+        {
+          "name": "name",
+          "type": "String",
+          "doc": "The name of the attribute dictionary.",
+          "optional": false
+        },
+        {
+          "name": "create",
+          "type": "Boolean",
+          "doc": "boolean, if set to true then the attribute dictionary will be created if it does not exist.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::AttributeDictionary, nil",
+        "doc": "an AttributeDictionary object if successful, or nil if there is no attribute dictionary"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#attribute_dictionary-instance_method"
+    },
+    {
+      "name": "delete_attribute",
+      "signature": "delete_attribute(dictionary_name) =\u003E Boolean | delete_attribute(dictionary_name, key) =\u003E Boolean",
+      "summary": "Note: In SketchUp 2018, special attribute dictionaries have been added.",
+      "remarks": "Note: In SketchUp 2018, special attribute dictionaries have been added. The name of these dictionaries are \u201CSU_InstanceSet\u201D and \u201CSU_DefinitionSet\u201D. The dictionaries cannot be deleted via ruby and an ArgumentError will be raised. The key/value pairs in the dictionary can be deleted safely. The #delete_attribute method is used to delete an attribute from an entity. If only the dictionary_name is given, then it deletes the entire AttributeDictionary. Otherwise, #delete_attribute deletes the attribute with the given key from the given dictionary.",
+      "params": [
+        {
+          "name": "dictionary_name",
+          "type": "String",
+          "doc": "The name of an attribute dictionary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#delete_attribute-instance_method"
+    },
+    {
+      "name": "deleted?",
+      "signature": "deleted? =\u003E Boolean",
+      "summary": "The deleted? method is used to determine if your entity is still valid (not deleted by another script, for example.",
+      "remarks": "The deleted? method is used to determine if your entity is still valid (not deleted by another script, for example.)",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#deleted?-instance_method"
+    },
+    {
+      "name": "entityID",
+      "signature": "entityID =\u003E Integer",
+      "summary": "The entityID method is used to retrieve a unique ID assigned to an entity.",
+      "remarks": "The entityID method is used to retrieve a unique ID assigned to an entity. The entityID is not persistent between sessions.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the id for the Entity object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#entityID-instance_method"
+    },
+    {
+      "name": "get_attribute",
+      "signature": "get_attribute(dict_name, key, default_value = nil) =\u003E Object",
+      "summary": "The #get_attribute method is used to retrieve the value of an attribute in the entity\u0027s attribute dictionary.",
+      "remarks": "The #get_attribute method is used to retrieve the value of an attribute in the entity\u0027s attribute dictionary. If the third parameter, default_value, is not passed and there is no attribute that matches the given name, it returns nil. If default_value is provided and there is no matching attribute it returns the given value. It does not create an attribute with that name though.",
+      "params": [
+        {
+          "name": "dict_name",
+          "type": "String",
+          "doc": "The name of an attribute dictionary.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "An attribute key.",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Object",
+          "doc": "A default value to return if no attribute is found.",
+          "optional": true,
+          "default": "nil"
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "the retrieved value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#get_attribute-instance_method"
+    },
+    {
+      "name": "inspect",
+      "signature": "inspect =\u003E String",
+      "summary": "The #inspect method is used to retrieve the string representation of the entity.",
+      "remarks": "The #inspect method is used to retrieve the string representation of the entity.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#inspect-instance_method"
+    },
+    {
+      "name": "model",
+      "signature": "model =\u003E Sketchup::Model",
+      "summary": "The model method is used to retrieve the model for the entity.",
+      "remarks": "The model method is used to retrieve the model for the entity.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::Model",
+        "doc": "the model that contains the Entity object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#model-instance_method"
+    },
+    {
+      "name": "parent",
+      "signature": "parent =\u003E Sketchup::ComponentDefinition, Sketchup::Model",
+      "summary": "The parent method is used to retrieve the parent of the entity.",
+      "remarks": "The parent method is used to retrieve the parent of the entity. The parent will be a ComponentDefinition, a Group, a Model, or whatever the entity is contained within.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::ComponentDefinition, Sketchup::Model",
+        "doc": "a Entity object representing the parent of this entity"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#parent-instance_method"
+    },
+    {
+      "name": "persistent_id",
+      "signature": "persistent_id =\u003E Integer",
+      "summary": "Note: Only a subset of entity types support PIDs.",
+      "remarks": "Note: Only a subset of entity types support PIDs. Refer to the table below for which and when support was added. In general it is entities that you can iterate over in a Sketchup::Entities collection. The #persistent_id method is used to retrieve a unique persistent id assigned to an entity. The persistent id persistent between sessions. SketchUp 2020.1 ComponentDefinition Material Style SketchUp 2020.0 Layer LineStyle SketchUp 2018 Page SketchUp 2017 ComponentInstance ConstructionLine ConstructionPoint Curve Dimension Sketchup::Edge Face Group Image SectionPlane Text Vertex Polyline3d entities exposed only as Drawingelement Use #typename to determine if a Drawingelement is a \u201CPolyline3d\u201D.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": "the id for the Sketchup::Entity object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#persistent_id-instance_method"
+    },
+    {
+      "name": "remove_observer",
+      "signature": "remove_observer(observer) =\u003E Boolean",
+      "summary": "The remove_observer method is used to remove an observer from the current object.",
+      "remarks": "The remove_observer method is used to remove an observer from the current object.",
+      "params": [
+        {
+          "name": "observer",
+          "type": "Object",
+          "doc": "An observer.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false if unsuccessful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#remove_observer-instance_method"
+    },
+    {
+      "name": "set_attribute",
+      "signature": "set_attribute(dict_name, key, value) =\u003E Object",
+      "summary": "The set attribute is used to set the value of an attribute in an attribute dictionary with the given name.",
+      "remarks": "The set attribute is used to set the value of an attribute in an attribute dictionary with the given name. This method will create a new AttributeDictionary if none exists. Note, a bug prior to SketchUp 2015 would corrupt the model if the key is an empty string. This also includes values that will evaluate to empty strings, such as nil.",
+      "params": [
+        {
+          "name": "dict_name",
+          "type": "String",
+          "doc": "The name of an attribute dictionary.",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "String",
+          "doc": "An attribute key.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Object",
+          "doc": "The value for the attribute.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "the newly set value if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#set_attribute-instance_method"
+    },
+    {
+      "name": "to_s",
+      "signature": "to_s =\u003E String",
+      "summary": "The #to_s method is used to retrieve the string representation of the entity.",
+      "remarks": "The #to_s method is used to retrieve the string representation of the entity.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#to_s-instance_method"
+    },
+    {
+      "name": "typename",
+      "signature": "typename =\u003E String",
+      "summary": "Note: Prefer is_a? over typename when possible as it is faster.",
+      "remarks": "Note: Prefer is_a? over typename when possible as it is faster. The typename method retrieves the type of the entity, which will be a string such as \u201CFace\u201D, \u201CEdge\u201D, or \u201CGroup\u201D.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "the type of the entity"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#typename-instance_method"
+    },
+    {
+      "name": "valid?",
+      "signature": "valid? =\u003E Boolean",
+      "summary": "The #valid? method is used to determine if your entity is still valid (not deleted by another script, for example).",
+      "remarks": "The #valid? method is used to determine if your entity is still valid (not deleted by another script, for example). This method is functionally the inverse to the #deleted? method.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Entity.html#valid?-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

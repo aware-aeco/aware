@@ -1,0 +1,48 @@
+{
+  "name": "Style",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The Style class contains methods for modifying information about a specific style. Styles are a collection of display settings that tell SketchUp how to draw the model. In SketchUp, there are two important style objects in a model: The Sketchup::Styles#selected_style is the style currently selected in the Styles Browser. The Sketchup::Styles#active_style is a temporary copy of the selected style that allows editing without committing changes. Changes to the active style are not saved unless you call Sketchup::Styles#update_selected_style.",
+  "base": "Entity",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/Style.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "path",
+      "signature": "path =\u003E String",
+      "summary": "The #path method gets the file path the Sketchup::Style was loaded from.",
+      "remarks": "The #path method gets the file path the Sketchup::Style was loaded from.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "path The file path the style was loaded from."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Style.html#path-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "description",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #description method gets the description for a Sketchup::Style.",
+      "remarks": "The #description method gets the description for a Sketchup::Style.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Style.html#description-instance_method"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "The #name method gets the name for a Sketchup::Style.",
+      "remarks": "The #name method gets the name for a Sketchup::Style.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/Style.html#name-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

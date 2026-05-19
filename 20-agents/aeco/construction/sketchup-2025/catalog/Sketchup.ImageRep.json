@@ -1,0 +1,263 @@
+{
+  "name": "ImageRep",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "References an image representation object.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html",
+  "constructors": [
+    {
+      "name": "initialize",
+      "signature": "ImageRep(filepath)",
+      "summary": "The #initialize method creates a new image object. The image object will have no data if a path to the image is not provided.",
+      "remarks": "The #initialize method creates a new image object. The image object will have no data if a path to the image is not provided.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the file path or image is invalid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#initialize-instance_method"
+    }
+  ],
+  "methods": [
+    {
+      "name": "bits_per_pixel",
+      "signature": "bits_per_pixel =\u003E Integer",
+      "summary": "The #bits_per_pixel method gets the number of bits per pixel in the image.",
+      "remarks": "The #bits_per_pixel method gets the number of bits per pixel in the image.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#bits_per_pixel-instance_method"
+    },
+    {
+      "name": "color_at_uv",
+      "signature": "color_at_uv(u, v, bilinear = false) =\u003E Sketchup::Color?",
+      "summary": "The #color_at_uv method returns a color corresponding to the UV texture coordinates.",
+      "remarks": "The #color_at_uv method returns a color corresponding to the UV texture coordinates. 0.0, 0.0 maps to the bottom left and 1.0, 1.0 to the top right of the image.",
+      "params": [
+        {
+          "name": "u",
+          "type": "Float",
+          "doc": "The U texture coordinate.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "Float",
+          "doc": "The V texture coordinate.",
+          "optional": false
+        },
+        {
+          "name": "bilinear",
+          "type": "Boolean",
+          "doc": "Use bilinear texture filtering. This interpolates the colors instead of picking the nearest neighbor.",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Color, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#color_at_uv-instance_method"
+    },
+    {
+      "name": "colors",
+      "signature": "colors =\u003E Array\u003CSketchup::Color\u003E?",
+      "summary": "The #colors method returns an array of Color for each pixel in the image.",
+      "remarks": "The #colors method returns an array of Color for each pixel in the image.",
+      "params": [],
+      "returns": {
+        "type": "Array\u003CSketchup::Color\u003E, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#colors-instance_method"
+    },
+    {
+      "name": "data",
+      "signature": "data =\u003E String?",
+      "summary": "Note: The byte order of the pixels are RGB(A) on macOS and BGR(A) on Windows.",
+      "remarks": "Note: The byte order of the pixels are RGB(A) on macOS and BGR(A) on Windows. The #data method gets the pixel data for an image in a string of bytes.",
+      "params": [],
+      "returns": {
+        "type": "String, nil",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#data-instance_method"
+    },
+    {
+      "name": "height",
+      "signature": "height =\u003E Integer",
+      "summary": "The #height method returns the height of an image.",
+      "remarks": "The #height method returns the height of an image.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#height-instance_method"
+    },
+    {
+      "name": "load_file",
+      "signature": "load_file(filepath) =\u003E Object",
+      "summary": "The #load_file method loads image data from the specified file.",
+      "remarks": "The #load_file method loads image data from the specified file.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "if the filepath or image is invalid."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#load_file-instance_method"
+    },
+    {
+      "name": "row_padding",
+      "signature": "row_padding =\u003E Integer",
+      "summary": "The #row_padding method returns the size of the row padding of an image in bytes.",
+      "remarks": "The #row_padding method returns the size of the row padding of an image in bytes.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#row_padding-instance_method"
+    },
+    {
+      "name": "save_file",
+      "signature": "save_file(filepath) =\u003E Object",
+      "summary": "The #save_file method saves an image data object to an image file specified by a path.",
+      "remarks": "The #save_file method saves an image data object to an image file specified by a path.",
+      "params": [
+        {
+          "name": "filepath",
+          "type": "String",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#save_file-instance_method"
+    },
+    {
+      "name": "set_data",
+      "signature": "set_data(width, height, bits_per_pixel, row_padding, pixel_data) =\u003E Sketchup::ImageRep",
+      "summary": "Note: The byte order of the pixels are RGB(A) on macOS and BGR(A) on Windows.",
+      "remarks": "Note: The byte order of the pixels are RGB(A) on macOS and BGR(A) on Windows. Note: The encoding of the pixel_data String parameter should be ASCII-8BIT. Any other encoding could corrupt the binary data. Using Array#pack(\u201CC*\u201D) gives correct encoding. The #set_data method discards any existing data and sets new pixel data for the Sketchup::ImageRep.",
+      "params": [
+        {
+          "name": "width",
+          "type": "Integer",
+          "doc": "The width of the pixel data. Must be greater than 0.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "Integer",
+          "doc": "The height of the pixel data. Must be greater than 0.",
+          "optional": false
+        },
+        {
+          "name": "bits_per_pixel",
+          "type": "Integer",
+          "doc": "The bits per pixel for the pixel data. Must be either 8/24/32.",
+          "optional": false
+        },
+        {
+          "name": "row_padding",
+          "type": "Integer",
+          "doc": "The row padding for the pixel data which is sized in bytes. Row padding is used to pad each row with zeros so that each scanline on the pixel data will end on the data-type boundary.",
+          "optional": false
+        },
+        {
+          "name": "pixel_data",
+          "type": "String",
+          "doc": "The binary string containing the pixel data representing the new image.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::ImageRep",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "ArgumentError",
+          "when": "If width, height, bits_per_pixel or pixel_data are invalid."
+        },
+        {
+          "type": "TypeError",
+          "when": "If width, height, bits_per_pixel or pixel_data are wrong data types."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#set_data-instance_method"
+    },
+    {
+      "name": "size",
+      "signature": "size =\u003E Integer",
+      "summary": "The #size method gets the total size of the image data in bytes.",
+      "remarks": "The #size method gets the total size of the image data in bytes.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#size-instance_method"
+    },
+    {
+      "name": "width",
+      "signature": "width =\u003E Integer",
+      "summary": "The #width method returns the width of an image.",
+      "remarks": "The #width method returns the width of an image.",
+      "params": [],
+      "returns": {
+        "type": "Integer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/ImageRep.html#width-instance_method"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

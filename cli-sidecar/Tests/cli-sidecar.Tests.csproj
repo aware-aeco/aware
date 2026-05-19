@@ -39,6 +39,9 @@
     <None Include="fixtures\rhino-*.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="fixtures\sketchup-*.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="fixtures\archicad-*.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -1,0 +1,418 @@
+{
+  "name": "PickHelper",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "Note: The same Pickhelper instance is being reused by SketchUp. Don\u0027t extend, add methods or redefine methods on this object as it can clash with other extensions. The PickHelper class is used to pick entities that reside under the current cursor location, similar to native Select tool. Unlike InputPoint, PickHelper uses no inference. Only Tools react to cursor location and most of these methods are only useful in the context of a tool. For example, if you want to determine the entity you just clicked, you would use #do_pick from within your Tool#onLButtonDown method. You can retrieve a PickHelper object using the View#pick_helper method. Entities that are picked (found under the cursor when a mouse or keyboard event occurs), are called Pick Records and are placed in an indexed list.",
+  "base": "Object",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "all_picked",
+      "signature": "all_picked =\u003E Object",
+      "summary": "The all_picked method is used to get an array of entities from the active entities from all the pick paths.",
+      "remarks": "The all_picked method is used to get an array of entities from the active entities from all the pick paths. Duplicates might occur if there are multiple pick paths for entities that ends in a group or component. For example, if the pick hits at the border of an edge and face inside a group there will be two pick paths - one for the face and one for the edge. Since this method returns entities from the active entities it would return an array with the group two times.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "elements - the array of elements in the pick."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#all_picked-instance_method"
+    },
+    {
+      "name": "best_picked",
+      "signature": "best_picked =\u003E Object",
+      "summary": "The best_picked method is used to retrieve the \u201Cbest\u201D entity picked (entity that you would have picked if you were using the select tool).",
+      "remarks": "The best_picked method is used to retrieve the \u201Cbest\u201D entity picked (entity that you would have picked if you were using the select tool). Returns nil if nothing was picked. You must have called do_pick before calling this method.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "entity - the best picked entity"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#best_picked-instance_method"
+    },
+    {
+      "name": "boundingbox_pick",
+      "signature": "boundingbox_pick(bounding_box, pick_type, transformation = IDENTITY) =\u003E Integer",
+      "summary": "Used to pick a set of entities from a model from a Geom::BoundingBox.",
+      "remarks": "Used to pick a set of entities from a model from a Geom::BoundingBox. The pick criteria can be for completely-contained or partially-contained entities, similar to how the Selection tool works.",
+      "params": [
+        {
+          "name": "bounding_box",
+          "type": "Geom::BoundingBox",
+          "doc": "Bounding box defining the volume to use for picking.",
+          "optional": false
+        },
+        {
+          "name": "pick_type",
+          "type": "Integer",
+          "doc": "PICK_INSIDE to select entities completely contained or PICK_CROSSING to select entities partially contained.",
+          "optional": false
+        },
+        {
+          "name": "transformation",
+          "type": "Geom::Transformation",
+          "doc": "Transformation that will be applied to the volume defined by the bounding_box that allows for a rotation.",
+          "optional": true,
+          "default": "IDENTITY"
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "The number of entities picked"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#boundingbox_pick-instance_method"
+    },
+    {
+      "name": "count",
+      "signature": "count =\u003E Object",
+      "summary": "The count method is used to count the number of entities picked (number of pick records)",
+      "remarks": "The count method is used to count the number of entities picked (number of pick records)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "number - the number of entities picked"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#count-instance_method"
+    },
+    {
+      "name": "depth_at",
+      "signature": "depth_at(index) =\u003E Object",
+      "summary": "The depth_at method retrieves the depth of one of the currently picked entities in the list of pick records.",
+      "remarks": "The depth_at method retrieves the depth of one of the currently picked entities in the list of pick records.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Object",
+          "doc": "A number from 0 to number of items picked minus one.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "integer - the depth of the entity if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#depth_at-instance_method"
+    },
+    {
+      "name": "do_pick",
+      "signature": "do_pick(x, y, aperture = 0) =\u003E Integer | do_pick(x, y, aperture = 0.0) =\u003E Integer",
+      "summary": "The #do_pick method is used to perform the initial pick.",
+      "remarks": "The #do_pick method is used to perform the initial pick. This method is generally called before any other methods in the PickHelper class.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Integer",
+          "doc": "Screen coordinate in physical pixels.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Integer",
+          "doc": "Screen coordinate in physical pixels.",
+          "optional": false
+        },
+        {
+          "name": "aperture",
+          "type": "Integer",
+          "doc": "The size of the aperture in physical pixels.",
+          "optional": true,
+          "default": "0) =\u003E Integer | do_pick(x, y, aperture = 0.0"
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "Number of entities picked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#do_pick-instance_method"
+    },
+    {
+      "name": "element_at",
+      "signature": "element_at(index) =\u003E Object",
+      "summary": "The element_at method is used to retrieve a specific entity in the list of picked elements.",
+      "remarks": "The element_at method is used to retrieve a specific entity in the list of picked elements. This element will be from the active entities. Use count() to get the number of possible pick paths.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Object",
+          "doc": "A number from 0 to number of items picked minus one.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "entity - the entity at the index position in the list of picked entities."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#element_at-instance_method"
+    },
+    {
+      "name": "init",
+      "signature": "init(x, y, aperture = 0) =\u003E Sketchup::PickHelper | init(x, y, aperture = 0.0) =\u003E Sketchup::PickHelper",
+      "summary": "The #init method is used to initialize the PickHelper for testing points.",
+      "remarks": "The #init method is used to initialize the PickHelper for testing points. You do not normally need to call this method, but you can use this if you want to call #test_point or #pick_segment on a lot of points.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Integer",
+          "doc": "Screen coordinate in physical pixels.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Integer",
+          "doc": "Screen coordinate in physical pixels.",
+          "optional": false
+        },
+        {
+          "name": "aperture",
+          "type": "Integer",
+          "doc": "The size of the aperture in physical pixels. This is the width and height of the square picking aperture.",
+          "optional": true,
+          "default": "0) =\u003E Sketchup::PickHelper | init(x, y, aperture = 0.0"
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::PickHelper",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#init-instance_method"
+    },
+    {
+      "name": "leaf_at",
+      "signature": "leaf_at(index) =\u003E Object",
+      "summary": "The leaf_at method retrieves the deepest thing in a pick path.",
+      "remarks": "The leaf_at method retrieves the deepest thing in a pick path. For example, if you have a face that is within a component that is within another component, leaf_at returns the face. Use count() to get the number of possible pick paths.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Object",
+          "doc": "A number from 0 to number of items picked minus one.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "entity - the leaf entity"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#leaf_at-instance_method"
+    },
+    {
+      "name": "path_at",
+      "signature": "path_at(index) =\u003E Object",
+      "summary": "The path_at method is used to retrieve the entire path for an entity in the pick list (as an array).",
+      "remarks": "The path_at method is used to retrieve the entire path for an entity in the pick list (as an array). If one of the pick paths end in a face nested in a group nested in a component this method will return an array of these entities. The Group will be first and the face will be last. The first item in the array will be from the active entities and the last item will be a drawing element that is not a group, component or image.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Object",
+          "doc": "A number from 0 to number of items picked minus one.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "array - an array of entities including the leaf"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#path_at-instance_method"
+    },
+    {
+      "name": "pick_segment",
+      "signature": "pick_segment(points) =\u003E Integer, false | pick_segment(points, x, y, aperture = 0) =\u003E Integer, false",
+      "summary": "Note: The return value will be a negative index when a segment is picked.",
+      "remarks": "Note: The return value will be a negative index when a segment is picked. The #pick_segment method is used to pick a segment of a polyline curve that is defined by an array of points. If you click on a point in a polyline curve, the index of the point in the curve is returned (starting at 0). If you click on a segment in the polyline curve, the index of the segment is returned. Segments are returned by negative indicies and start at index -1 (for the segment connecting the first two points) and increase by a factor of -1 (for example, the segment connecting second and third point is -2). There is no need to invoke #do_pick for this and the results are unrelated.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Array\u003CGeom::Point3d\u003E",
+          "doc": "A series of points in the polyline as a list of parameters or an array containing Point3d objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer, false",
+        "doc": "an index on success, false on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#pick_segment-instance_method"
+    },
+    {
+      "name": "picked_edge",
+      "signature": "picked_edge =\u003E Object",
+      "summary": "The picked_edge method is used to retrieve the \u201Cbest\u201D Edge picked.",
+      "remarks": "The picked_edge method is used to retrieve the \u201Cbest\u201D Edge picked. Returns nil if there were no edges picked. You must have called do_pick before calling this method.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "edge - an Edge object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#picked_edge-instance_method"
+    },
+    {
+      "name": "picked_element",
+      "signature": "picked_element =\u003E Sketchup::Drawingelement? | picked_element(index) =\u003E Sketchup::Drawingelement?",
+      "summary": "The picked_element method retrieves the best drawing element, that is not an edge or a face, picked.",
+      "remarks": "The picked_element method retrieves the best drawing element, that is not an edge or a face, picked. Returns nil if nothing was picked. You must have called do_pick before calling this method.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sketchup::Drawingelement, nil",
+        "doc": "a drawing element that is not an edge or face"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#picked_element-instance_method"
+    },
+    {
+      "name": "picked_face",
+      "signature": "picked_face =\u003E Object",
+      "summary": "The picked_face method is used to retrieve the best face picked.",
+      "remarks": "The picked_face method is used to retrieve the best face picked. Returns nil if there were no faces picked. You must have called do_pick before calling this method.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "face - a Face object if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#picked_face-instance_method"
+    },
+    {
+      "name": "test_point",
+      "signature": "test_point(point) =\u003E Boolean | test_point(point, x, y, aperture = 0) =\u003E Boolean",
+      "summary": "The #test_point method is used to test a point to see if it would be selected using the default or given pick aperture.",
+      "remarks": "The #test_point method is used to test a point to see if it would be selected using the default or given pick aperture. There is no need to invoke #do_pick for this and the results are unrelated.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Geom::Point3d",
+          "doc": "Model coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#test_point-instance_method"
+    },
+    {
+      "name": "transformation_at",
+      "signature": "transformation_at(index) =\u003E Object",
+      "summary": "The transformation_at method is used to get a transformation at a specific pick path index in the pick helper.",
+      "remarks": "The transformation_at method is used to get a transformation at a specific pick path index in the pick helper. The transformation combines the transformation of all groups, components and images in the pick path. This transformation can be used to transform the coordinates of the leaf entity into the coordinates of the active entities.",
+      "params": [
+        {
+          "name": "index",
+          "type": "Object",
+          "doc": "The index where the transformation should be retrieved.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "transformation - the transformation found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#transformation_at-instance_method"
+    },
+    {
+      "name": "view",
+      "signature": "view =\u003E Sketchup::View",
+      "summary": "The #view method is used to get the view associated with the Sketchup::PickHelper.",
+      "remarks": "The #view method is used to get the view associated with the Sketchup::PickHelper.",
+      "params": [],
+      "returns": {
+        "type": "Sketchup::View",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#view-instance_method"
+    },
+    {
+      "name": "window_pick",
+      "signature": "window_pick(start_point, end_point, pick_type) =\u003E Integer",
+      "summary": "Note: Prior to SketchUp 2025.",
+      "remarks": "Note: Prior to SketchUp 2025.0 this method expected physical screen coordinates. As of SketchUp 2025.0 they are expected to be logical screen coordinates. Used to pick a set of entities from a model based on a screen coordinate rectangular area defined by two points. The pick criteria can be for completely-contained or partially-contained entities, similar to how the Selection tool works. The z value of the points passed in are ignored.",
+      "params": [
+        {
+          "name": "start_point",
+          "type": "Geom::Point3d",
+          "doc": "First screen coordinate point.",
+          "optional": false
+        },
+        {
+          "name": "end_point",
+          "type": "Geom::Point3d",
+          "doc": "Second screen coordinate point.",
+          "optional": false
+        },
+        {
+          "name": "pick_type",
+          "type": "Integer",
+          "doc": "PICK_INSIDE to select entities completely contained or PICK_CROSSING to select entities partially contained.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Integer",
+        "doc": "The number of Drawingelement objects picked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#window_pick-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PICK_INSIDE",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#PICK_INSIDE-constant"
+    },
+    {
+      "name": "PICK_CROSSING",
+      "type": "Object",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/PickHelper.html#PICK_CROSSING-constant"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "DimensionRadial",
+  "namespace": "Sketchup",
+  "kind": "class",
+  "summary": "The DimensionRadial class represents radius and diameter dimensions on arcs and circles.",
+  "base": "Dimension",
+  "interfaces": [],
+  "doc_url": "https://ruby.sketchup.com/Sketchup/DimensionRadial.html",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "leader_points",
+      "signature": "leader_points =\u003E Object",
+      "summary": "The leader_points method returns the 3 significant points along the dimension line in world coordinates.",
+      "remarks": "The leader_points method returns the 3 significant points along the dimension line in world coordinates.",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "Array of 3 Point3d objects. Point 0: leader break point, where the text extension attaches. Point 1: attach point, where leader touches the arc/circle. Point 2: opposite point, where the diameter leader touches the circle on the opposite side."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DimensionRadial.html#leader_points-instance_method"
+    }
+  ],
+  "properties": [
+    {
+      "name": "arc_curve",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The arc_curve method returns the ArcCurve object to which this dimension is attached.",
+      "remarks": "The arc_curve method returns the ArcCurve object to which this dimension is attached.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DimensionRadial.html#arc_curve-instance_method"
+    },
+    {
+      "name": "leader_break_point",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "The #leader_break_point method returns the break point on the leader where the dimension text is attached.",
+      "remarks": "The #leader_break_point method returns the break point on the leader where the dimension text is attached.",
+      "doc_url": "https://ruby.sketchup.com/Sketchup/DimensionRadial.html#leader_break_point-instance_method"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
