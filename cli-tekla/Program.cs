@@ -12,10 +12,29 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 
 namespace AwareTekla;
+
+// Roslyn-script globals — exposed to the user's C# snippet as top-level
+// identifiers `model` and `args`. MUST be public (and non-nested) so the
+// dynamically-generated Submission#N type that Roslyn produces can access
+// it from a different assembly; otherwise we hit TypeAccessException at
+// script runtime.
+public sealed class ExecGlobals
+{
+    // `dynamic` so the script can call methods on `model` without
+    // cli-tekla itself needing a static reference to Tekla.Structures.Model.
+    // The cost is DLR dispatch overhead per call — negligible vs the
+    // surrounding Tekla operations.
+    public dynamic? model = null;
+    public IDictionary<string, object?> args = new Dictionary<string, object?>();
+}
 
 internal static class Program
 {
@@ -47,8 +66,56 @@ internal static class Program
             return 0;
         }
 
-        string verb = args[0];
-        var parsed = ParseArgs(args.Skip(1).ToArray());
+        // Two invocation styles are supported:
+        //   aware-tekla.exe <verb> [flags] [--json-stdin]   (canonical)
+        //   aware-tekla.exe --json-stdin                    (verb embedded in JSON body)
+        // The second exists so AI orchestrators can ship a single JSON
+        // payload that carries everything (verb, version, code, args) —
+        // useful when the only CLI knob needed is `--json-stdin` itself.
+        string verb;
+        if (args[0].StartsWith("--", StringComparison.Ordinal))
+        {
+            string buf;
+            try { buf = Console.In.ReadToEnd(); }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"aware-tekla: stdin not readable: {e.Message}");
+                return 2;
+            }
+            JsonNode? peeked;
+            try { peeked = JsonNode.Parse(buf); }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"aware-tekla: stdin not JSON (when verb omitted on CLI): {e.Message}");
+                return 2;
+            }
+            verb = peeked?["verb"]?.GetValue<string>() ?? "";
+            if (string.IsNullOrEmpty(verb))
+            {
+                Console.Error.WriteLine(
+                    "aware-tekla: stdin JSON has no `verb` field, and no verb was passed on the CLI");
+                return 2;
+            }
+            // Re-bind Console.In to a fresh reader holding the same buffer
+            // so the verb handler downstream can read it normally.
+            Console.SetIn(new StringReader(buf));
+        }
+        else
+        {
+            verb = args[0];
+            args = args.Skip(1).ToArray();
+        }
+
+        var parsed = ParseArgs(args);
+        // If --json-stdin wasn't passed explicitly but we took the embedded-
+        // verb path above, the body still came through stdin so the flag is
+        // implied. The downstream verb handlers check parsed.JsonStdin.
+        if (!parsed.JsonStdin && verb == "exec")
+        {
+            // Exec is always stdin-driven; force the flag if the caller used
+            // the embedded-verb style.
+            parsed.JsonStdin = true;
+        }
 
         switch (verb)
         {
@@ -60,6 +127,8 @@ internal static class Program
                 return Launch(parsed);
             case "close":
                 return Close(parsed);
+            case "exec":
+                return Exec(parsed);
             default:
                 Console.Error.WriteLine($"aware-tekla: unknown verb '{verb}'. Try --help.");
                 return 2;
@@ -364,6 +433,486 @@ internal static class Program
             "Pass `force=true` if you accept losing any unsaved view state.");
     }
 
+    // ── exec ─────────────────────────────────────────────────────────────────
+    // Compile + run an ad-hoc C# script against the live Tekla model using
+    // Roslyn scripting (Microsoft.CodeAnalysis.CSharp.Scripting). The bridge
+    // between the v0.30 catalog (data) and the live Tekla host (execution).
+    //
+    // The orchestrator (AI) reads the catalog at
+    // 20-agents/aeco/engineering/tekla-2026/catalog/Tekla.Structures.*.json,
+    // drafts a C# snippet, and ships it through this verb. The script is
+    // compiled against the resolved Tekla.Structures.*.dll assemblies, run
+    // with a `Globals` object exposing `model` (a Tekla Model instance) and
+    // `args` (the args block from input JSON), and the return value is
+    // serialized back as JSON.
+    //
+    // Transaction semantics: on script success we call `model.CommitChanges()`
+    // (Tekla's equivalent of a commit — there is no rollback API; changes
+    // simply stay in working memory until the next CommitChanges). On script
+    // exception we DO NOT call CommitChanges, so partial in-memory state is
+    // not flushed to the database. The next CommitChanges from a subsequent
+    // call overwrites it.
+    static int Exec(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("exec requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+
+        string stdin = Console.In.ReadToEnd();
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        string? code     = input?["code"]?.GetValue<string>();
+        string? version  = input?["version"]?.GetValue<string>() ?? args.Version;
+        var argsNode     = input?["args"] as JsonObject;
+        if (string.IsNullOrEmpty(code))
+        {
+            EmitExecError("missing required field: code (the C# script to compile + run)");
+            return 2;
+        }
+
+        // Resolve Tekla install dir for the requested version (registry +
+        // standard path). Missing-install is non-fatal: the script may not
+        // reference Tekla types (smoke-test path returns primitives).
+        string? hostInstall = string.IsNullOrEmpty(version) ? null : DiscoverTeklaInstall(version!);
+        var (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
+
+        // Wire AssemblyResolve so Roslyn can load Tekla DLLs at script-runtime
+        // (the references list tells Roslyn at compile-time which assemblies
+        // to bind against, but the .NET loader needs the resolver at runtime
+        // for transitive Tekla.* dependencies).
+        if (!_resolverWired && probedDir is not null)
+        {
+            var probePaths = new[] { Path.Combine(probedDir, "Net48Runtime"), probedDir };
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, eventArgs) =>
+            {
+                try
+                {
+                    var name = new AssemblyName(eventArgs.Name).Name;
+                    if (string.IsNullOrEmpty(name)) return null;
+                    foreach (var probe in probePaths)
+                    {
+                        var candidate = Path.Combine(probe, $"{name}.dll");
+                        if (File.Exists(candidate)) return Assembly.LoadFrom(candidate);
+                    }
+                    return null;
+                }
+                catch { return null; }
+            };
+            _resolverWired = true;
+        }
+
+        // Run the actual Roslyn compile+execute in a no-inline method so the
+        // JIT can't pre-resolve Tekla types before AssemblyResolve is wired.
+        // (See skills/runtime-bridge-dotnet-framework.md for why this matters
+        // for any code that touches Tekla types.)
+        try
+        {
+            var result = RunScript(code!, probedReferences, argsNode, probedDir);
+            EmitExecOk(result);
+            return 0;
+        }
+        catch (CompilationErrorException ce)
+        {
+            // Script failed to compile — surface diagnostics so the caller
+            // (likely an AI) can re-draft.
+            var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
+            EmitExecFail($"compile error: {ce.Message}", diagnostics);
+            return 2;
+        }
+        catch (Exception e)
+        {
+            var root = e;
+            while (root is TargetInvocationException && root.InnerException is not null)
+                root = root.InnerException;
+            EmitExecFail(root.GetType().Name + ": " + root.Message, root.StackTrace ?? "");
+            return 2;
+        }
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static object? RunScript(
+        string code,
+        IReadOnlyList<MetadataReference> teklaReferences,
+        JsonObject? argsNode,
+        string? teklaBinDir)
+    {
+        // Standard usings — enough for catalog-style snippets to stay
+        // boilerplate-free. The script writer can add `using ...;` lines of
+        // their own at the top of `code` if they need more.
+        var imports = new List<string>
+        {
+            "System",
+            "System.Collections.Generic",
+            "System.Linq",
+        };
+
+        // Tekla usings layer on top — only included when references resolved.
+        if (teklaReferences.Count > 0)
+        {
+            imports.Add("Tekla.Structures");
+            imports.Add("Tekla.Structures.Model");
+            imports.Add("Tekla.Structures.Model.Operations");
+            imports.Add("Tekla.Structures.Geometry3d");
+            imports.Add("Tekla.Structures.Drawing");
+            imports.Add("Tekla.Structures.Datatype");
+        }
+
+        // Build references: BCL essentials + Tekla assemblies (if found).
+        var refs = new List<MetadataReference>
+        {
+            MetadataReference.CreateFromFile(typeof(object).Assembly.Location),       // mscorlib / System.Private.CoreLib
+            MetadataReference.CreateFromFile(typeof(System.Linq.Enumerable).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(System.Collections.Generic.IDictionary<,>).Assembly.Location),
+            MetadataReference.CreateFromFile(typeof(System.Dynamic.DynamicObject).Assembly.Location),  // System.Core.dll
+            MetadataReference.CreateFromFile(typeof(Microsoft.CSharp.RuntimeBinder.Binder).Assembly.Location), // Microsoft.CSharp.dll for `dynamic`
+        };
+        // De-dup by file path — typeof(...).Assembly.Location can return the
+        // same DLL twice on net48 (e.g. mscorlib + System.Collections both
+        // live in mscorlib).
+        refs = refs
+            .GroupBy(r => (r as PortableExecutableReference)?.FilePath ?? Guid.NewGuid().ToString())
+            .Select(g => g.First())
+            .ToList();
+        refs.AddRange(teklaReferences);
+
+        var options = ScriptOptions.Default
+            .WithReferences(refs)
+            .WithImports(imports)
+            // Allow `await` at top level — handy for snippets that need it.
+            // Roslyn scripts default to non-async but enabling allows both.
+            .WithEmitDebugInformation(false);
+
+        // Construct the Tekla Model lazily. If teklaBinDir is null OR Tekla
+        // isn't running, the constructor either throws or returns a model
+        // with GetConnectionStatus()==false — neither is fatal here: a
+        // smoke-test script (`return 1+2;`) never touches `model`. We set
+        // model=null and let the script blow up at its own dynamic call site
+        // if it tries to use Tekla without a live host.
+        object? modelInstance = null;
+        if (teklaBinDir is not null)
+        {
+            try
+            {
+                modelInstance = ConstructTeklaModel(teklaBinDir);
+            }
+            catch (Exception e)
+            {
+                // Don't kill exec — let smoke tests still run. Surface the
+                // failure on stderr for diagnostic purposes.
+                Console.Error.WriteLine(
+                    $"aware-tekla exec: could not construct Tekla.Structures.Model.Model — " +
+                    $"{e.GetType().Name}: {e.Message} (smoke-test scripts that don't use `model` still work)");
+            }
+        }
+
+        // Globals — exposed to the script as top-level identifiers `model`
+        // and `args`. `model` is dynamic so the script can call any method
+        // on it via DLR without us needing a compile-time Tekla reference.
+        var argsDict = JsonObjectToDictionary(argsNode);
+        var globals = new ExecGlobals { model = modelInstance, args = argsDict };
+
+        var script = CSharpScript.Create<object>(
+            code,
+            options: options,
+            globalsType: typeof(ExecGlobals));
+
+        // Compile + execute.
+        var state = script.RunAsync(globals).GetAwaiter().GetResult();
+        var returnValue = state.ReturnValue;
+
+        // Tekla "transaction-commit" — flush changes to the database. We
+        // only do this if a real Model was constructed AND the connection is
+        // live (Tekla running, model open). Without the connection check
+        // CommitChanges throws into the dead remoting channel.
+        if (modelInstance is not null)
+        {
+            var modelType = modelInstance.GetType();
+            var getStatus = modelType.GetMethod("GetConnectionStatus");
+            var connected = (bool)(getStatus?.Invoke(modelInstance, null) ?? false);
+            if (connected)
+            {
+                try
+                {
+                    var commit = modelType.GetMethod("CommitChanges", Type.EmptyTypes);
+                    commit?.Invoke(modelInstance, null);
+                }
+                catch (Exception ce)
+                {
+                    // CommitChanges failed — bubble up so we don't silently
+                    // lose the user's work in the receipt.
+                    var root = ce;
+                    while (root is TargetInvocationException && root.InnerException is not null)
+                        root = root.InnerException;
+                    throw new InvalidOperationException(
+                        $"Tekla Model.CommitChanges() failed after script success: {root.Message}", root);
+                }
+            }
+        }
+
+        return returnValue;
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static object ConstructTeklaModel(string teklaBinDir)
+    {
+        // Pre-load Tekla.Structures.*.dll in dependency order — see
+        // DispatchSendStatusInner for the rationale (loader cache failures).
+        var probePaths = new[] { Path.Combine(teklaBinDir, "Net48Runtime"), teklaBinDir };
+        foreach (var name in new[] {
+            "Tekla.Structures.dll",
+            "Tekla.Structures.Datatype.dll",
+            "Tekla.Structures.Model.dll",
+        })
+        {
+            foreach (var probe in probePaths)
+            {
+                var p = Path.Combine(probe, name);
+                if (File.Exists(p)) { Assembly.LoadFrom(p); break; }
+            }
+        }
+
+        var modelAsm = AppDomain.CurrentDomain.GetAssemblies()
+            .FirstOrDefault(a => a.GetName().Name == "Tekla.Structures.Model")
+            ?? throw new InvalidOperationException(
+                "Tekla.Structures.Model.dll could not be loaded — is the requested Tekla version installed?");
+        var modelType = modelAsm.GetType("Tekla.Structures.Model.Model")
+            ?? throw new InvalidOperationException("Tekla.Structures.Model.Model type not found");
+
+        var modelInstance = Activator.CreateInstance(modelType)
+            ?? throw new InvalidOperationException("Could not construct Model() instance");
+
+        // Verify the connection — same pattern as send-status. If Tekla
+        // isn't running, GetConnectionStatus returns false; we still
+        // return the Model so the script CAN reference Tekla types (just
+        // not call live methods).
+        var getStatus = modelType.GetMethod("GetConnectionStatus");
+        var connected = (bool)(getStatus?.Invoke(modelInstance, null) ?? false);
+        if (!connected)
+        {
+            Console.Error.WriteLine(
+                "aware-tekla exec: Tekla.Structures.Model.Model() constructed but " +
+                "GetConnectionStatus()==false. Tekla isn't running or no model is open. " +
+                "Scripts that only reference types (not state) will still work.");
+        }
+
+        return modelInstance;
+    }
+
+    static (IReadOnlyList<MetadataReference> refs, string? probedDir) ResolveTeklaReferences(string? hostInstall)
+    {
+        if (hostInstall is null) return (Array.Empty<MetadataReference>(), null);
+
+        // Honour the manifest's dll-probe-paths: Net48Runtime first, then bin.
+        var binDir = Path.Combine(hostInstall, "bin");
+        if (!Directory.Exists(binDir))
+            return (Array.Empty<MetadataReference>(), null);
+
+        var probePaths = new[] { Path.Combine(binDir, "Net48Runtime"), binDir };
+        var wanted = new[]
+        {
+            "Tekla.Structures.dll",
+            "Tekla.Structures.Model.dll",
+            "Tekla.Structures.Datatype.dll",
+            "Tekla.Structures.Drawing.dll",
+            "Tekla.Structures.Geometry3d.Compatibility.dll",
+        };
+
+        var found = new List<MetadataReference>();
+        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var name in wanted)
+        {
+            foreach (var probe in probePaths)
+            {
+                var p = Path.Combine(probe, name);
+                if (File.Exists(p) && seen.Add(name))
+                {
+                    found.Add(MetadataReference.CreateFromFile(p));
+                    break;
+                }
+            }
+        }
+
+        return (found, binDir);
+    }
+
+    static string? DiscoverTeklaInstall(string version)
+    {
+        // Standard path first — Tekla's installer always puts builds here.
+        var stdPath = $@"C:\Program Files\Tekla Structures\{version}";
+        if (Directory.Exists(stdPath)) return stdPath;
+
+        // Registry fallback — Tekla writes Install Folder per version.
+        try
+        {
+            using var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(
+                $@"SOFTWARE\Tekla Structures\{version}");
+            var installFolder = key?.GetValue("Install Folder") as string;
+            if (!string.IsNullOrEmpty(installFolder) && Directory.Exists(installFolder))
+                return installFolder;
+        }
+        catch { /* registry errors → null below */ }
+
+        // WOW6432Node fallback for 32-bit installer entries on 64-bit Windows.
+        try
+        {
+            using var key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(
+                $@"SOFTWARE\WOW6432Node\Tekla Structures\{version}");
+            var installFolder = key?.GetValue("Install Folder") as string;
+            if (!string.IsNullOrEmpty(installFolder) && Directory.Exists(installFolder))
+                return installFolder;
+        }
+        catch { /* registry errors → null below */ }
+
+        return null;
+    }
+
+    static Dictionary<string, object?> JsonObjectToDictionary(JsonObject? obj)
+    {
+        var dict = new Dictionary<string, object?>(StringComparer.Ordinal);
+        if (obj is null) return dict;
+        foreach (var kvp in obj)
+        {
+            dict[kvp.Key] = JsonNodeToObject(kvp.Value);
+        }
+        return dict;
+    }
+
+    static object? JsonNodeToObject(JsonNode? node)
+    {
+        if (node is null) return null;
+        if (node is JsonValue v)
+        {
+            // Try common primitive shapes; fall back to string.
+            if (v.TryGetValue<bool>(out var b)) return b;
+            if (v.TryGetValue<int>(out var i)) return i;
+            if (v.TryGetValue<long>(out var l)) return l;
+            if (v.TryGetValue<double>(out var d)) return d;
+            if (v.TryGetValue<string>(out var s)) return s;
+            return v.ToString();
+        }
+        if (node is JsonArray arr)
+        {
+            var list = new List<object?>();
+            foreach (var item in arr) list.Add(JsonNodeToObject(item));
+            return list;
+        }
+        if (node is JsonObject jo) return JsonObjectToDictionary(jo);
+        return null;
+    }
+
+    static void EmitExecOk(object? result)
+    {
+        var receipt = new JsonObject
+        {
+            ["ok"] = true,
+            ["result"] = SerializeResult(result),
+            ["host"] = "tekla",
+            ["verb"] = "exec",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+        Console.WriteLine(receipt.ToJsonString());
+    }
+
+    static void EmitExecFail(string message, string stack)
+    {
+        var receipt = new JsonObject
+        {
+            ["ok"] = false,
+            ["error"] = message,
+            ["stack"] = stack,
+            ["host"] = "tekla",
+            ["verb"] = "exec",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+        Console.WriteLine(receipt.ToJsonString());
+    }
+
+    static void EmitExecError(string message)
+    {
+        Console.Error.WriteLine($"aware-tekla exec: {message}");
+        Console.Error.WriteLine();
+        Console.Error.WriteLine("Required stdin JSON shape:");
+        Console.Error.WriteLine("  { \"verb\": \"exec\", \"version\": \"2026.0\",");
+        Console.Error.WriteLine("    \"code\": \"return 1+2;\", \"args\": {} }");
+        Console.Error.WriteLine();
+        Console.Error.WriteLine("`code` is a C# snippet with optional `return X;`. Globals:");
+        Console.Error.WriteLine("  dynamic model               // Tekla.Structures.Model.Model (or null)");
+        Console.Error.WriteLine("  IDictionary<string,object> args // input args block");
+    }
+
+    static JsonNode? SerializeResult(object? result)
+    {
+        // Defensive serializer — Tekla types are complex (often containing
+        // COM proxies or self-referencing children), so we can't trust
+        // System.Text.Json's reflection-based default to handle every input.
+        if (result is null) return null;
+
+        // Common primitives — emit directly.
+        switch (result)
+        {
+            case bool b:   return JsonValue.Create(b);
+            case int i:    return JsonValue.Create(i);
+            case long l:   return JsonValue.Create(l);
+            case double d: return JsonValue.Create(d);
+            case float f:  return JsonValue.Create((double)f);
+            case decimal m:return JsonValue.Create(m);
+            case string s: return JsonValue.Create(s);
+            case Guid g:   return JsonValue.Create(g.ToString());
+            case DateTime dt: return JsonValue.Create(dt.ToString("o"));
+        }
+
+        // IDictionary<string,*> — preserved as JSON object.
+        if (result is System.Collections.IDictionary id)
+        {
+            var jo = new JsonObject();
+            foreach (System.Collections.DictionaryEntry kvp in id)
+            {
+                jo[kvp.Key?.ToString() ?? ""] = SerializeResult(kvp.Value);
+            }
+            return jo;
+        }
+
+        // IEnumerable (but not string — caught above) — JSON array.
+        if (result is System.Collections.IEnumerable e and not string)
+        {
+            var ja = new JsonArray();
+            foreach (var item in e) ja.Add(SerializeResult(item));
+            return ja;
+        }
+
+        // Tekla.Structures.Identifier has a GUID field — common return shape.
+        var t = result.GetType();
+        var guidProp = t.GetProperty("GUID");
+        if (guidProp is not null)
+        {
+            var g = guidProp.GetValue(result);
+            if (g is not null) return JsonValue.Create(g.ToString());
+        }
+
+        // Last resort: ToString() with the type name as a hint. Better than
+        // a serialization explosion on COM proxies.
+        try
+        {
+            // Try System.Text.Json first for plain POCOs / records — bounded
+            // depth so we don't blow up on cyclic graphs.
+            var json = JsonSerializer.Serialize(result, new JsonSerializerOptions
+            {
+                MaxDepth = 6,
+                ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles,
+            });
+            return JsonNode.Parse(json);
+        }
+        catch
+        {
+            return JsonValue.Create($"{t.FullName}: {result}");
+        }
+    }
+
+
     // ── launch ───────────────────────────────────────────────────────────────
     // Spawn a Tekla instance using the headless-startup pattern. Reads
     // optional args from stdin JSON: version, model_path, bypass_ini,
@@ -499,6 +1048,7 @@ internal static class Program
               list-instances   Print running Tekla instances (PID + version)
               launch           Start a Tekla instance via Bypass.ini (headless)
               close            Save + clean-shutdown a Tekla instance (Open API + ModelSave event)
+              exec             Compile + run an ad-hoc C# script against the active model
 
             Flags:
               --version <X.Y>   Target a specific Tekla version (e.g. 2026.0)

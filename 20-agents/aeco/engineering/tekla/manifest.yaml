@@ -161,6 +161,49 @@ commands:
       schema:
         guid: string
 
+  exec:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Compile + run an arbitrary C# script against the active Tekla model
+      via Roslyn scripting. The bridge between the v0.30 catalog (data) and
+      the live Tekla host (execution). The orchestrator reads the catalog
+      to discover the type surface, drafts a snippet, ships it through
+      this verb. Auto-commits via Model.CommitChanges() on success;
+      uncommitted state is dropped on script exception. See exec.md.
+    inputs:
+      code:
+        type: string
+        required: true
+        description: |
+          C# script body. Optional trailing `return X;` makes the value
+          appear as the receipt's `result` field. Pre-imported namespaces:
+          System, System.Collections.Generic, System.Linq, plus Tekla.*
+          (Model, Operations, Geometry3d, Drawing, Datatype).
+      version:
+        type: string
+        required: false
+        example: "2026.0"
+        description: |
+          Tekla version. Used to discover {host_install} and load the
+          matching Tekla.Structures.*.dll set per dll-probe-paths. Omit
+          for primitive smoke tests that never touch Tekla types.
+      args:
+        type: object
+        required: false
+        description: |
+          Free-form input bag. Exposed to the script as
+          `IDictionary<string,object> args`.
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       any                # JSON; defensively serialized
+        error:        string             # only when ok=false
+        stack:        string             # only when ok=false
+        delivered_at: string
+
   save-attributes:
     lifecycle: single
     category: curated
