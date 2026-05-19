@@ -1,0 +1,133 @@
+{
+  "name": "CrossSectionApi",
+  "namespace": "IdeaStatiCa.RcsApi.Api",
+  "kind": "class",
+  "summary": "RCS Rest API 1.0 \u2014 CrossSection endpoints. Auto-generated REST surface; one method per HTTP operation.",
+  "remarks": "REST root: /api/1/. Source: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/CrossSectionApi.md",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ReinforcedCrossSectionsAsync",
+      "signature": "Task\u003CList\u003CRcsReinforcedCrossSection\u003E\u003E ReinforcedCrossSectionsAsync(Guid projectId)",
+      "summary": "Get reinforced cross sections",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List\u003CRcsReinforcedCrossSection\u003E",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/CrossSectionApi.md"
+    },
+    {
+      "name": "AddReinforcedCrossSectionAsync",
+      "signature": "Task\u003CRcsReinforcedCrossSection\u003E AddReinforcedCrossSectionAsync(Guid projectId, ReinforcedCrossSectionData reinforcedCrossSectionData)",
+      "summary": "Add a new reinforced cross-section to the project from embedded geometry",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        },
+        {
+          "name": "reinforcedCrossSectionData",
+          "type": "ReinforcedCrossSectionData",
+          "doc": "Reinforced cross-section with embedded geometry. Materials can be referenced by name (must exist in project) or by ID.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "RcsReinforcedCrossSection",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/CrossSectionApi.md"
+    },
+    {
+      "name": "ImportReinforcedCrossSectionAsync",
+      "signature": "Task\u003CRcsReinforcedCrossSection\u003E ImportReinforcedCrossSectionAsync(Guid projectId, RcsReinforcedCrossSectionImportData rcsReinforcedCrossSectionImportData)",
+      "summary": "Import reinforced cross-section from template",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        },
+        {
+          "name": "rcsReinforcedCrossSectionImportData",
+          "type": "RcsReinforcedCrossSectionImportData",
+          "doc": "Import data containing settings and template",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "RcsReinforcedCrossSection",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/CrossSectionApi.md"
+    },
+    {
+      "name": "GetReinforcedCrossSectionDataAsync",
+      "signature": "Task\u003CReinforcedCrossSection\u003E GetReinforcedCrossSectionDataAsync(Guid projectId, int reinforcedCssSectionId)",
+      "summary": "Get reinforced cross-section with full geometry (IOM format)",
+      "params": [
+        {
+          "name": "projectId",
+          "type": "Guid",
+          "doc": "Project ID",
+          "optional": false
+        },
+        {
+          "name": "reinforcedCssSectionId",
+          "type": "int",
+          "doc": "Reinforced cross-section ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ReinforcedCrossSection",
+        "doc": "OK"
+      },
+      "throws": [
+        {
+          "type": "ApiException",
+          "when": "Thrown by the SDK when the HTTP call returns a non-2xx status."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/CrossSectionApi.md"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

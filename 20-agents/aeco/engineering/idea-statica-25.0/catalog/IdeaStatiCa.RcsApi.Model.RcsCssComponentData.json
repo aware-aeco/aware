@@ -1,0 +1,38 @@
+{
+  "name": "RcsCssComponentData",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsCssComponentData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsCssComponentData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MaterialName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsCssComponentData.materialName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsCssComponentData.md"
+    },
+    {
+      "name": "Phase",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsCssComponentData.phase.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsCssComponentData.md"
+    },
+    {
+      "name": "Geometry",
+      "type": "Region2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsCssComponentData.geometry.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsCssComponentData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

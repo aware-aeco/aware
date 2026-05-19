@@ -1,0 +1,30 @@
+{
+  "name": "ConcreteCheckResult",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.ConcreteCheckResult.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResult.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ResultType",
+      "type": "CheckResultType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResult.resultType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResult.md"
+    },
+    {
+      "name": "CheckResults",
+      "type": "List\u003CConcreteCheckResultBase\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConcreteCheckResult.checkResults.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/ConcreteCheckResult.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

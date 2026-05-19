@@ -44,30 +44,116 @@ foreach ($i in $sampleIdx) {
 
     $issues = @()
 
-    # Type-page check: name + kind present in HTML.
+    # Type-page check: name + kind present in the source page.
     #
-    # Generic types (e.g. `Enum<E>`, `CustomObservableCollection<T>`) render their
-    # type-parameter list via LST script substitution in the HTML, so the literal
-    # substring `Enum<E>` does NOT appear in the raw HTML — it's spread across
-    # `Enum<span>...<script cs=&lt;>...<span typeparameter>E</span>...<script cs=&gt;>`.
-    # We strip the generic-parameter suffix before the contains check so generic
-    # types pass when their bare name (`Enum`) appears alongside the kind word
-    # (`Structure`). The catalog JSON itself still carries the real generic name.
+    # The check has two flavours depending on how the IR was extracted:
+    #
+    # 1. HTML-rendered Sandcastle (Tekla, Rhino, Grasshopper). The page title is a
+    #    literal "FooBar Class" / "FooBar Enumeration" / etc., and the body carries
+    #    member tables with the type name verbatim. We assert both the bare type name
+    #    AND the appropriate kind word ("Class", "Structure", ...) are present in
+    #    the HTML body.
+    #
+    # 2. Markdown-rendered openapi-generator output (IDEA Statica). The Model page
+    #    title is `# IdeaStatiCa.X.Model.<TypeName>` and the *Api page title is
+    #    `# <TagName>Api`. There's no "Class" / "Enumeration" suffix — that's an HTML
+    #    rendering convention that doesn't apply here. We still assert the type name
+    #    is present in the title; for `kind` we check structural signals (Properties
+    #    section for class/struct/enum; method-anchor list for API class).
+    #
+    # The dispatcher uses the doc_url extension to choose the right check. Generic
+    # types (e.g. `Enum<E>`) have their type-parameter list stripped before the name
+    # check so the bare name match is still meaningful for HTML's LST-script
+    # substitution and for filename slugging.
     $bareName = $t.name -replace '<[^>]+>$', ''
+    # Markdown-source variant: .md (openapi-generator) or .yaml/.yml (OpenAPI spec direct).
+    # YAML pages don't have a kind-word convention either, so they fall under the same
+    # structural-signal check as markdown.
+    $isMarkdownSource = $url -match '\.md(\?|$)' -or $url -match '\.ya?ml(\?|$)'
     try {
         $r = Invoke-WebRequest -Uri $url -UseBasicParsing -UserAgent "AWARE-coverage-verify/0.30" -ErrorAction Stop
-        $html = $r.Content
-        $kindWord = switch ($t.kind) {
-            "class" { "Class" }
-            "struct" { "Structure" }
-            "interface" { "Interface" }
-            "enum" { "Enumeration" }
-            "delegate" { "Delegate" }
-            default { "" }
-        }
-        if (-not $html.Contains($bareName)) { $issues += "type-name-missing" }
-        if ($kindWord -ne "" -and -not $html.Contains("$bareName $kindWord") -and -not ($t.name -ne $bareName -and $html.Contains("$kindWord"))) {
-            $issues += "kind-word-missing"
+        $pageText = $r.Content
+        if ($isMarkdownSource) {
+            # Markdown / YAML check: type name must appear in the page. For markdown the
+            # H1 title is the canonical place; for YAML it's the components/schemas/<Name>:
+            # line. Either way, a substring check on the bare name is sufficient — the
+            # generic-suffix has already been stripped above for templated types.
+            $isYaml = ($url -match '\.ya?ml(\?|$)')
+            if ($isYaml) {
+                # For YAML sources require BOTH the type name appears AND a near-context
+                # indication that it's defined as a schema (e.g. "<bareName>:" line near the
+                # components/schemas tree). The 'contains' check is good enough — the YAML
+                # is the openapi spec, the type name is unique in /components/schemas/<Name>.
+                if (-not $pageText.Contains("$bareName" + ":")) { $issues += "type-name-missing-in-yaml" }
+            } else {
+                $firstHashLine = ($pageText -split "`n" | Where-Object { $_ -match '^#\s' } | Select-Object -First 1)
+                if (-not $firstHashLine -or -not ($firstHashLine -match [regex]::Escape($bareName))) {
+                    $issues += "type-name-missing-in-h1"
+                }
+            }
+            switch ($t.kind) {
+                "class" {
+                    if ($t.namespace -match '\.Api$') {
+                        # API class — methods should appear as ## headings with the operationId
+                        # (without the Async suffix) on markdown pages, or as operationId: lines
+                        # in YAML pages.
+                        $methodsToCheck = if ($t.methods) { ($t.methods | Select-Object -First 3) } else { @() }
+                        $methodOk = ($methodsToCheck.Count -eq 0)
+                        foreach ($mm in $methodsToCheck) {
+                            $opBase = $mm.name -replace 'Async$', ''
+                            $opFull = $mm.name
+                            if ($isYaml) {
+                                if ($pageText -match "operationId:\s+$([regex]::Escape($opBase))\s*$" `
+                                    -or $pageText.Contains("operationId: $opBase`n") `
+                                    -or $pageText.Contains("operationId: $opBase`r")) { $methodOk = $true; break }
+                            } else {
+                                # openapi-generator emits the method heading with the Async suffix
+                                # (e.g. `## **CopyConnectionAsync**`) while the anchor id is the
+                                # lowercased operationId without the suffix (e.g. `<a id="copyconnection">`).
+                                # Accept either form so the check is robust to either rendering choice.
+                                if ($pageText -match "##\s+\*\*$([regex]::Escape($opFull))\*\*" `
+                                    -or $pageText -match "##\s+\*\*$([regex]::Escape($opBase))\*\*" `
+                                    -or $pageText -match "<a id=""$([regex]::Escape($opBase.ToLower()))""") { $methodOk = $true; break }
+                            }
+                        }
+                        if (-not $methodOk) { $issues += "api-method-heading-missing" }
+                    } else {
+                        # Model class — should have a Properties section on markdown, or a
+                        # properties: child on YAML.
+                        if ($t.properties -and $t.properties.Count -gt 0) {
+                            if ($isYaml) {
+                                if (-not ($pageText -match "(?ms)^\s+$([regex]::Escape($bareName)):\s*$.*?properties:")) {
+                                    $issues += "properties-not-found-in-yaml-schema"
+                                }
+                            } else {
+                                if (-not ($pageText -match '##\s+Properties')) { $issues += "properties-section-missing" }
+                            }
+                        }
+                    }
+                }
+                "enum" {
+                    # Enum markdown pages are skeletal (just the H1 + empty Properties header).
+                    # The IR's enum_values come from the YAML, not the markdown. We require only
+                    # that the H1 contains the type name (already checked above).
+                }
+                default {
+                    # struct/interface/delegate aren't emitted by openapi-generator. If we see
+                    # one we fall back to the type-name check only.
+                }
+            }
+        } else {
+            $kindWord = switch ($t.kind) {
+                "class" { "Class" }
+                "struct" { "Structure" }
+                "interface" { "Interface" }
+                "enum" { "Enumeration" }
+                "delegate" { "Delegate" }
+                default { "" }
+            }
+            if (-not $pageText.Contains($bareName)) { $issues += "type-name-missing" }
+            if ($kindWord -ne "" -and -not $pageText.Contains("$bareName $kindWord") -and -not ($t.name -ne $bareName -and $pageText.Contains("$kindWord"))) {
+                $issues += "kind-word-missing"
+            }
         }
     } catch {
         $issues += "type-fetch-failed: $($_.Exception.Message)"

@@ -126,6 +126,13 @@ internal static class Program
                             // delegation to the Rhino PageParser/MemberPageParser.
                             "grasshopper" => Ingest.Extractors.Grasshopper.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // IDEA Statica extractor (Phase B B8) — hybrid REST + .NET SDK docs from
+                            // idea-statica/ideastatica-public's tagged release tree. Versions 25.0
+                            // (tag 25.1.5.1491) and 26.0 (tag 26.0.1.2450) each carry openapi.yaml
+                            // + markdown SDK docs for the Connection API and the RCS API; the
+                            // extractor merges both APIs into one IR per version.
+                            "idea-statica" => Ingest.Extractors.IdeaStatica.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

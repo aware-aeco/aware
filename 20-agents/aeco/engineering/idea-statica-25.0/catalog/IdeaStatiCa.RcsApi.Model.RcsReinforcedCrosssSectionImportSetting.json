@@ -1,0 +1,30 @@
+{
+  "name": "RcsReinforcedCrosssSectionImportSetting",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.RcsReinforcedCrosssSectionImportSetting.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrosssSectionImportSetting.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ReinforcedCrossSectionId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedCrosssSectionImportSetting.reinforcedCrossSectionId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrosssSectionImportSetting.md"
+    },
+    {
+      "name": "PartsToImport",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for RcsReinforcedCrosssSectionImportSetting.partsToImport.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/docs/RcsReinforcedCrosssSectionImportSetting.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

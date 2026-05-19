@@ -1,0 +1,54 @@
+{
+  "name": "Text",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.Text.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/Text.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "List\u003Cint\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Text.color.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/Text.md"
+    },
+    {
+      "name": "Value",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Text.value.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/Text.md"
+    },
+    {
+      "name": "Position",
+      "type": "TextPosition",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Text.position.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/Text.md"
+    },
+    {
+      "name": "FontSize",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Text.fontSize.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/Text.md"
+    },
+    {
+      "name": "Tag",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for Text.tag.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/Text.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

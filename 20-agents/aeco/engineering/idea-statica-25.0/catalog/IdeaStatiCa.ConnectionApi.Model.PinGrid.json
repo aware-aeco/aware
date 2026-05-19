@@ -1,0 +1,102 @@
+{
+  "name": "PinGrid",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.PinGrid.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsReplaceable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.isReplaceable.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "Pin",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.pin.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.origin.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "AxisX",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.axisX.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "AxisY",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.axisY.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "AxisZ",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.axisZ.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "Positions",
+      "type": "List\u003CPoint3D\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.positions.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "ConnectedParts",
+      "type": "List\u003CReferenceElement\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.connectedParts.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "Length",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.length.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PinGrid.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PinGrid.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+﻿
+idx ns                              name                                 kind  result issues
+--- --                              ----                                 ----  ------ ------
+ 59 IdeaStatiCa.ConnectionApi.Model CutData                              class PASS         
+ 32 IdeaStatiCa.ConnectionApi.Model ConMemberForcesInEnum                enum  PASS         
+ 17 IdeaStatiCa.ConnectionApi.Model ConConnection                        class PASS         
+ 19 IdeaStatiCa.ConnectionApi.Model ConConnectionTemplate                class PASS         
+  5 IdeaStatiCa.ConnectionApi.Model BoltGrid                             class PASS         
+ 41 IdeaStatiCa.ConnectionApi.Model ConOperation                         class PASS         
+100 IdeaStatiCa.ConnectionApi.Api   ConnectionLibraryApi                 class PASS         
+160 IdeaStatiCa.RcsApi.Model        Segment2D                            class PASS         
+ 48 IdeaStatiCa.ConnectionApi.Model ConTemplateApplyResult               class PASS         
+ 75 IdeaStatiCa.ConnectionApi.Model OpenMessages                         class PASS         
+ 85 IdeaStatiCa.ConnectionApi.Model Segment2D                            class PASS         
+ 80 IdeaStatiCa.ConnectionApi.Model Point3D                              class PASS         
+ 69 IdeaStatiCa.ConnectionApi.Model IdeaParameterValidation              class PASS         
+ 63 IdeaStatiCa.ConnectionApi.Model DistanceComparison                   enum  PASS         
+171 IdeaStatiCa.RcsApi.Api          InternalForcesApi                    class PASS         
+ 68 IdeaStatiCa.ConnectionApi.Model IdeaParameterUpdate                  class PASS         
+165 IdeaStatiCa.RcsApi.Model        OpenProject_request                  class PASS         
+  0 IdeaStatiCa.ConnectionApi.Model AnchorGrid                           class PASS         
+ 13 IdeaStatiCa.ConnectionApi.Model CheckResWeld                         class PASS         
+168 IdeaStatiCa.RcsApi.Api          ClientApi                            class PASS         
+151 IdeaStatiCa.RcsApi.Model        ReferenceElement                     class PASS         
+  3 IdeaStatiCa.ConnectionApi.Model BeamData                             class PASS         
+ 64 IdeaStatiCa.ConnectionApi.Model DrawData                             class PASS         
+110 IdeaStatiCa.ConnectionApi.Api   ReportApi                            class PASS         
+124 IdeaStatiCa.RcsApi.Model        MaterialDuct                         enum  PASS         
+ 47 IdeaStatiCa.ConnectionApi.Model ConTemplateApplyParam                class PASS         
+146 IdeaStatiCa.RcsApi.Model        RcsSectionResultOverview             class PASS         
+ 72 IdeaStatiCa.ConnectionApi.Model MessageNumber                        enum  PASS         
+155 IdeaStatiCa.RcsApi.Model        ReinforcedCrossSectionData           class PASS         
+ 24 IdeaStatiCa.ConnectionApi.Model ConItem                              class PASS         
+157 IdeaStatiCa.RcsApi.Model        ResultOfLoading                      class PASS         
+ 87 IdeaStatiCa.ConnectionApi.Model SelectedType                         class PASS         
+101 IdeaStatiCa.ConnectionApi.Api   ConversionApi                        class PASS         
+ 15 IdeaStatiCa.ConnectionApi.Model ConAlignedPlateSideCodeEnum          enum  PASS         
+107 IdeaStatiCa.ConnectionApi.Api   ParameterApi                         class PASS         
+104 IdeaStatiCa.ConnectionApi.Api   MaterialApi                          class PASS         
+156 IdeaStatiCa.RcsApi.Model        ResultOfInternalForces               class PASS         
+145 IdeaStatiCa.RcsApi.Model        RcsSectionResultDetailed             class PASS         
+ 35 IdeaStatiCa.ConnectionApi.Model ConMemberPlatePartTypeEnum           enum  PASS         
+ 18 IdeaStatiCa.ConnectionApi.Model ConConnectionLibrarySearchParameters class PASS         
+170 IdeaStatiCa.RcsApi.Api          DesignMemberApi                      class PASS         
+ 57 IdeaStatiCa.ConnectionApi.Model CountryCode                          enum  PASS         
+ 44 IdeaStatiCa.ConnectionApi.Model ConProject                           class PASS         
+ 81 IdeaStatiCa.ConnectionApi.Model PolyLine2D                           class PASS         
+ 98 IdeaStatiCa.ConnectionApi.Api   ClientApi                            class PASS         
+ 51 IdeaStatiCa.ConnectionApi.Model ConWeldSizingMethodEnum              enum  PASS         
+ 50 IdeaStatiCa.ConnectionApi.Model ConTemplatePublishParam              class PASS         
+ 97 IdeaStatiCa.ConnectionApi.Api   CalculationApi                       class PASS         
+ 27 IdeaStatiCa.ConnectionApi.Model ConLoadEffectPositionEnum            enum  PASS         
+ 46 IdeaStatiCa.ConnectionApi.Model ConResultSummary                     class PASS         
+
+
+

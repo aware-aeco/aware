@@ -1,0 +1,118 @@
+{
+  "name": "PlateData",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.PlateData.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.name.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "Thickness",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.thickness.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "Material",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.material.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "OutlinePoints",
+      "type": "List\u003CPoint2D\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.outlinePoints.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.origin.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "AxisX",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.axisX.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "AxisY",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.axisY.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "AxisZ",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.axisZ.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "Region",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.region.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "Geometry",
+      "type": "Region2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.geometry.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "OriginalModelId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.originalModelId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "IsNegativeObject",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.isNegativeObject.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    },
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PlateData.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/PlateData.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

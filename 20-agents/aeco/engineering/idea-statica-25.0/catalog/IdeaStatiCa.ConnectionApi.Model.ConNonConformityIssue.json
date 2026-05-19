@@ -1,0 +1,46 @@
+{
+  "name": "ConNonConformityIssue",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConNonConformityIssue.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConNonConformityIssue.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "OperationId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConNonConformityIssue.operationId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConNonConformityIssue.md"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConNonConformityIssue.description.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConNonConformityIssue.md"
+    },
+    {
+      "name": "Details",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConNonConformityIssue.details.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConNonConformityIssue.md"
+    },
+    {
+      "name": "Severity",
+      "type": "ConNonConformityIssueSeverity",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConNonConformityIssue.severity.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/docs/ConNonConformityIssue.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
