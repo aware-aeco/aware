@@ -1,0 +1,120 @@
+{
+  "name": "SimpleArrayCurvePointer",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Wrapper for a C\u002B\u002B ON_SimpleArray of ON_Curve* or constant ON_Curve*. If you are not writing C\u002B\u002B code, then you can ignore this class.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer.htm",
+  "constructors": [
+    {
+      "name": "SimpleArrayCurvePointer()",
+      "signature": "public SimpleArrayCurvePointer()",
+      "summary": "Initializes a new SimpleArrayCurvePointer instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer__ctor.htm"
+    },
+    {
+      "name": "SimpleArrayCurvePointer(IEnumerable\u003CCurve\u003E)",
+      "signature": "public SimpleArrayCurvePointer(IEnumerable\u003CCurve\u003E curves)",
+      "summary": "Initializes a new SimpleArrayCurvePointer instance, from a set of input curves.",
+      "params": [
+        {
+          "name": "curves",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "A list, an array or any collection of curves that implements the enumerable interface.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer_Finalize.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer_NonConstPointer.htm"
+    },
+    {
+      "name": "ToNonConstArray",
+      "signature": "public Curve[] ToNonConstArray()",
+      "summary": "Copies the unmanaged array to a managed counterpart.",
+      "params": [],
+      "returns": {
+        "type": "Curve[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayCurvePointer_ToNonConstArray.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

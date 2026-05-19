@@ -1,0 +1,29 @@
+{
+  "name": "FileObjWriteOptions.ObjObjectNames",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileObjWriteOptions.ObjObjectNames\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileObjWriteOptions_ObjObjectNames.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoObjects",
+      "value": 0,
+      "summary": "Object names are not exported"
+    },
+    {
+      "name": "ObjectAsGroup",
+      "value": 1,
+      "summary": "Rhino Object names are exported as OBJ groups"
+    },
+    {
+      "name": "ObjectAsObject",
+      "value": 2,
+      "summary": "Rhino Object names are exported as OBJ objects"
+    }
+  ]
+}

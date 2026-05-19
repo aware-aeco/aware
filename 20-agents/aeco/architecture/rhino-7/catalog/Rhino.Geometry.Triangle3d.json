@@ -1,0 +1,483 @@
+{
+  "name": "Triangle3d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents a triangle, modeled using double three points that use double-precision floating point numbers.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Triangle3d.htm",
+  "constructors": [
+    {
+      "name": "Triangle3d",
+      "signature": "public Triangle3d(Point3d a, Point3d b, Point3d c)",
+      "summary": "Instantiates a new triangle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second point.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Third point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BarycentricCoordsAt",
+      "signature": "public Point2d BarycentricCoordsAt(Point3d point, out double signedHeight)",
+      "summary": "Gets the projection of a point onto the barycentric coordinates.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project.",
+          "optional": false
+        },
+        {
+          "name": "signedHeight",
+          "type": "System.Double",
+          "doc": "A value indicating the height of the intersection in world units, negative if the point is situated under the triangle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2d",
+        "doc": "The computed barycentric mass values relating to B and C for point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_BarycentricCoordsAt.htm"
+    },
+    {
+      "name": "ClosestParameterOnBoundary",
+      "signature": "public double ClosestParameterOnBoundary(Point3d point)",
+      "summary": "Gets the parameter on the triangle boundary closest to a test point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.ClosestParameterOnBoundary(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.ClosestParameterOnBoundary(Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_ClosestParameterOnBoundary.htm"
+    },
+    {
+      "name": "ClosestPointOnBoundary",
+      "signature": "public Point3d ClosestPointOnBoundary(Point3d point)",
+      "summary": "Gets the point on the triangle boundary closest to a test point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022point\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.ClosestPointOnBoundary(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.ClosestPointOnBoundary(Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_ClosestPointOnBoundary.htm"
+    },
+    {
+      "name": "PointAlongBoundary",
+      "signature": "public Point3d PointAlongBoundary(double t)",
+      "summary": "Gets the point along the boundary of the triangle. The triangle boundary has a domain [0, 3] where each subsequent unit domain maps to a different edge.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter along boundary.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.PointAlongBoundary(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_PointAlongBoundary.htm"
+    },
+    {
+      "name": "PointAtBarycentricCoords",
+      "signature": "public Point3d PointAtBarycentricCoords(Point2d coords)",
+      "summary": "Gets a point within this triangle using barycentric coordinates.",
+      "params": [
+        {
+          "name": "coords",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "Barycentic mass for vertex B and C. A is valued as (1 - B - C).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Point at barycentric mass."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_PointAtBarycentricCoords.htm"
+    },
+    {
+      "name": "PointOnInterior",
+      "signature": "public Point3d PointOnInterior(double u, double v)",
+      "summary": "Gets the point on the triangle using the AB and AC primary axes.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "Parameter along the AB edge.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "Parameter along the AC edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Point at parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_PointOnInterior.htm"
+    },
+    {
+      "name": "ToMesh",
+      "signature": "public Mesh ToMesh()",
+      "summary": "Create a mesh from this triangle.",
+      "params": [],
+      "returns": {
+        "type": "Mesh",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.ToMesh\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_ToMesh.htm"
+    },
+    {
+      "name": "ToPolyline",
+      "signature": "public Polyline ToPolyline()",
+      "summary": "Create a polyline from this triangle.",
+      "params": [],
+      "returns": {
+        "type": "Polyline",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.ToPolyline\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_ToPolyline.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public Triangle3d Transform(Transform transform)",
+      "summary": "Transform this triangle.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022transform\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.Transform(Rhino.Geometry.Transform)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Triangle3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.Transform(Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_Transform.htm"
+    },
+    {
+      "name": "WithA",
+      "signature": "public Triangle3d WithA(Point3d a)",
+      "summary": "Replace the A corner.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.WithA(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Triangle3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.WithA(Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_WithA.htm"
+    },
+    {
+      "name": "WithB",
+      "signature": "public Triangle3d WithB(Point3d b)",
+      "summary": "Replace the B corner.",
+      "params": [
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.WithB(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Triangle3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.WithB(Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_WithB.htm"
+    },
+    {
+      "name": "WithC",
+      "signature": "public Triangle3d WithC(Point3d c)",
+      "summary": "Replace the C corner.",
+      "params": [
+        {
+          "name": "c",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.WithC(Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Triangle3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Triangle3d.WithC(Rhino.Geometry.Point3d)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Triangle3d_WithC.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the first triangle corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_A.htm"
+    },
+    {
+      "name": "AB",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the triangle edge connecting the A and B corners.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AB.htm"
+    },
+    {
+      "name": "AltitudeA",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the altitude line starting at corner A.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AltitudeA.htm"
+    },
+    {
+      "name": "AltitudeB",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the altitude line starting at corner B.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AltitudeB.htm"
+    },
+    {
+      "name": "AltitudeC",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the altitude line starting at corner C.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AltitudeC.htm"
+    },
+    {
+      "name": "AngleA",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the angle at the A corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AngleA.htm"
+    },
+    {
+      "name": "AngleB",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the angle at the B corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AngleB.htm"
+    },
+    {
+      "name": "AngleC",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the angle at the C corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AngleC.htm"
+    },
+    {
+      "name": "Area",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the area inside this triangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_Area.htm"
+    },
+    {
+      "name": "AreaCenter",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the triangle area centroid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_AreaCenter.htm"
+    },
+    {
+      "name": "B",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the second triangle corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_B.htm"
+    },
+    {
+      "name": "BC",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the triangle edge connecting the B and C corners.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_BC.htm"
+    },
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the bounding box of this triangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_BoundingBox.htm"
+    },
+    {
+      "name": "C",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the third triangle corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_C.htm"
+    },
+    {
+      "name": "CA",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the triangle edge connecting the C and A corners.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_CA.htm"
+    },
+    {
+      "name": "Circumcenter",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the triangle circumcenter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_Circumcenter.htm"
+    },
+    {
+      "name": "Circumcircle",
+      "type": "Circle",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the circumcircle of this triangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_Circumcircle.htm"
+    },
+    {
+      "name": "MedianA",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the median line starting at corner A.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_MedianA.htm"
+    },
+    {
+      "name": "MedianB",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the median line starting at corner B.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_MedianB.htm"
+    },
+    {
+      "name": "MedianC",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the median line starting at corner C.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_MedianC.htm"
+    },
+    {
+      "name": "Orthocenter",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the triangle orthocenter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_Orthocenter.htm"
+    },
+    {
+      "name": "Perimeter",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the perimeter of this triangle. This is the sum of the lenghts of all edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_Perimeter.htm"
+    },
+    {
+      "name": "PerpendicularAB",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the perpendicular bisector for edge AB.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_PerpendicularAB.htm"
+    },
+    {
+      "name": "PerpendicularBC",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the perpendicular bisector for edge BC.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_PerpendicularBC.htm"
+    },
+    {
+      "name": "PerpendicularCA",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the perpendicular bisector for edge CA.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Triangle3d_PerpendicularCA.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

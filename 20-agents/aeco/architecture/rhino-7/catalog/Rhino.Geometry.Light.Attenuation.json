@@ -1,0 +1,29 @@
+{
+  "name": "Light.Attenuation",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Types of light attenuation available.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Light_Attenuation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Constant",
+      "value": 0,
+      "summary": "Constant light attenuation, meaning no light energy fall-off."
+    },
+    {
+      "name": "Linear",
+      "value": 1,
+      "summary": "Linear light attenuation, meaning linear light energy fall-off."
+    },
+    {
+      "name": "InverseSquared",
+      "value": 2,
+      "summary": "Inverse squared light attenuation, meaning light energy falls off in spherical order."
+    }
+  ]
+}

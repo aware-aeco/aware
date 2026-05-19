@@ -1,0 +1,146 @@
+{
+  "name": "OptionInteger",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.OptionInteger\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_OptionInteger.htm",
+  "constructors": [
+    {
+      "name": "OptionInteger(Int32)",
+      "signature": "public OptionInteger(int initialValue)",
+      "summary": "Initializes a new instance of the OptionInteger class",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022initialValue\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.OptionInteger.#ctor(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_OptionInteger__ctor.htm"
+    },
+    {
+      "name": "OptionInteger(Int32, Boolean, Int32)",
+      "signature": "public OptionInteger(int initialValue, bool setLowerLimit, int limit)",
+      "summary": "Initializes a new instance of the OptionInteger class.",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Int32",
+          "doc": "The initial value.",
+          "optional": false
+        },
+        {
+          "name": "setLowerLimit",
+          "type": "System.Boolean",
+          "doc": "If true, limit sets the lower limit and upper limit is undefined If false, limit sets the upper limit and lower limit is undefined.",
+          "optional": false
+        },
+        {
+          "name": "limit",
+          "type": "System.Int32",
+          "doc": "If setLowerLimit is true, then limit is the minimum value. Otherwise, it is the maximum.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_OptionInteger__ctor_1.htm"
+    },
+    {
+      "name": "OptionInteger(Int32, Int32, Int32)",
+      "signature": "public OptionInteger(int initialValue, int lowerLimit, int upperLimit)",
+      "summary": "Initializes a new instance of the OptionInteger class with both lower and upper limits.",
+      "params": [
+        {
+          "name": "initialValue",
+          "type": "System.Int32",
+          "doc": "The initial value.",
+          "optional": false
+        },
+        {
+          "name": "lowerLimit",
+          "type": "System.Int32",
+          "doc": "The minimum value.",
+          "optional": false
+        },
+        {
+          "name": "upperLimit",
+          "type": "System.Int32",
+          "doc": "The maximum value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_OptionInteger__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the OptionInteger",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_OptionInteger_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the OptionInteger and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_OptionInteger_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_OptionInteger_Finalize.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentValue",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_OptionInteger_CurrentValue.htm"
+    },
+    {
+      "name": "InitialValue",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_OptionInteger_InitialValue.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

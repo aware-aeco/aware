@@ -1,0 +1,96 @@
+{
+  "name": "File3dmPlugInDataTable",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Table of custom data provided by plug-ins",
+  "interfaces": [
+    "IEnumerable\u003CFile3dmPlugInData\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_File3dmPlugInDataTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Remove all entries from this table.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmPlugInDataTable_Clear.htm"
+    },
+    {
+      "name": "Dump",
+      "signature": "public string Dump()",
+      "summary": "Prepares a text dump of table.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A string containing the dump."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmPlugInDataTable_Dump.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CFile3dmPlugInData\u003E GetEnumerator()",
+      "summary": "Gets the enumerator that visits any File3dmPlugInData in this table.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CFile3dmPlugInData\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmPlugInDataTable_GetEnumerator.htm"
+    },
+    {
+      "name": "TryRead",
+      "signature": "public bool TryRead(File3dmPlugInData pluginData, Func\u003CFile3dm, BinaryArchiveReader, bool\u003E dataReader)",
+      "summary": "Attempts to read a Rhino plug-in\u0027s custom data from the File3dm file.",
+      "params": [
+        {
+          "name": "pluginData",
+          "type": "Rhino.FileIO.File3dmPlugInData",
+          "doc": "The plug-in whose data you want to try to read.",
+          "optional": false
+        },
+        {
+          "name": "dataReader",
+          "type": "System.Func\u003CFile3dm,BinaryArchiveReader,Boolean\u003E",
+          "doc": "The function that will read the data. This function must be implemented identical to the the originating plug-in\u0027s ReadDocument(RhinoDoc, BinaryArchiveReader, FileReadOptions) method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "The value returned by the data reading function if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmPlugInDataTable_TryRead.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of File3dmPlugInData objects in this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmPlugInDataTable_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "File3dmPlugInData",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the File3dmPlugInData object at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmPlugInDataTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

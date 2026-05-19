@@ -1,0 +1,24 @@
+{
+  "name": "Delegates",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.Delegates\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_Delegates.htm",
+  "constructors": [
+    {
+      "name": "Delegates",
+      "signature": "public Delegates()",
+      "summary": "Initializes a new instance of the Delegates class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_Delegates__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

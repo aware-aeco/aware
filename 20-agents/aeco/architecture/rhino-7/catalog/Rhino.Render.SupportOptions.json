@@ -1,0 +1,904 @@
+{
+  "name": "SupportOptions",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.SupportOptions\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_SupportOptions.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AlwaysShowSunPreview",
+      "signature": "public static bool AlwaysShowSunPreview()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.AlwaysShowSunPreview\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_AlwaysShowSunPreview.htm"
+    },
+    {
+      "name": "AutoSaveKeepAmount",
+      "signature": "public static int AutoSaveKeepAmount()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.AutoSaveKeepAmount\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_AutoSaveKeepAmount.htm"
+    },
+    {
+      "name": "AutoSaveRenderings",
+      "signature": "public static bool AutoSaveRenderings()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.AutoSaveRenderings\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_AutoSaveRenderings.htm"
+    },
+    {
+      "name": "CheckSupportFilesBeforeRendering",
+      "signature": "public static bool CheckSupportFilesBeforeRendering()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.CheckSupportFilesBeforeRendering\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_CheckSupportFilesBeforeRendering.htm"
+    },
+    {
+      "name": "CombineEditors",
+      "signature": "public static bool CombineEditors()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.CombineEditors\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_CombineEditors.htm"
+    },
+    {
+      "name": "CustomLibraryPath",
+      "signature": "public static string CustomLibraryPath()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.CustomLibraryPath\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_CustomLibraryPath.htm"
+    },
+    {
+      "name": "CustomPaths",
+      "signature": "public static string CustomPaths()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.CustomPaths\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_CustomPaths.htm"
+    },
+    {
+      "name": "DarkPreviewCheckerColor",
+      "signature": "public static int DarkPreviewCheckerColor()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.DarkPreviewCheckerColor\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_DarkPreviewCheckerColor.htm"
+    },
+    {
+      "name": "EnablePreviewJobLog",
+      "signature": "public static bool EnablePreviewJobLog()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.EnablePreviewJobLog\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_EnablePreviewJobLog.htm"
+    },
+    {
+      "name": "HarvestContentParameters",
+      "signature": "public static bool HarvestContentParameters()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.HarvestContentParameters\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_HarvestContentParameters.htm"
+    },
+    {
+      "name": "LabelFormatLoc",
+      "signature": "public static int LabelFormatLoc()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.LabelFormatLoc\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_LabelFormatLoc.htm"
+    },
+    {
+      "name": "LabelFormatUtc",
+      "signature": "public static int LabelFormatUtc()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.LabelFormatUtc\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_LabelFormatUtc.htm"
+    },
+    {
+      "name": "LastNavigatedLocation",
+      "signature": "public static string LastNavigatedLocation()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.LastNavigatedLocation\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_LastNavigatedLocation.htm"
+    },
+    {
+      "name": "LibrariesInitialLocation",
+      "signature": "public static SupportOptions.RdkInitialLocation LibrariesInitialLocation()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "SupportOptions.RdkInitialLocation",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.LibrariesInitialLocation\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_LibrariesInitialLocation.htm"
+    },
+    {
+      "name": "LibrariesInitialLocationCustomFolder",
+      "signature": "public static string LibrariesInitialLocationCustomFolder()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.LibrariesInitialLocationCustomFolder\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_LibrariesInitialLocationCustomFolder.htm"
+    },
+    {
+      "name": "LightPreviewCheckerColor",
+      "signature": "public static int LightPreviewCheckerColor()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.LightPreviewCheckerColor\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_LightPreviewCheckerColor.htm"
+    },
+    {
+      "name": "MaxPreviewCacheMB",
+      "signature": "public static int MaxPreviewCacheMB()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.MaxPreviewCacheMB\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_MaxPreviewCacheMB.htm"
+    },
+    {
+      "name": "MaxPreviewSeconds",
+      "signature": "public static int MaxPreviewSeconds()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.MaxPreviewSeconds\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_MaxPreviewSeconds.htm"
+    },
+    {
+      "name": "MultithreadedTextureEvaluation",
+      "signature": "public static bool MultithreadedTextureEvaluation()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.MultithreadedTextureEvaluation\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_MultithreadedTextureEvaluation.htm"
+    },
+    {
+      "name": "PreferNativeRenderer",
+      "signature": "public static bool PreferNativeRenderer()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.PreferNativeRenderer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_PreferNativeRenderer.htm"
+    },
+    {
+      "name": "PreferredUnpackFolder",
+      "signature": "public static string PreferredUnpackFolder()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.PreferredUnpackFolder\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_PreferredUnpackFolder.htm"
+    },
+    {
+      "name": "PreviewCustomRenderMeshes",
+      "signature": "public static bool PreviewCustomRenderMeshes()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.PreviewCustomRenderMeshes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_PreviewCustomRenderMeshes.htm"
+    },
+    {
+      "name": "SetAlwaysShowSunPreview",
+      "signature": "public static void SetAlwaysShowSunPreview(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetAlwaysShowSunPreview(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetAlwaysShowSunPreview.htm"
+    },
+    {
+      "name": "SetAutoSaveKeepAmount",
+      "signature": "public static void SetAutoSaveKeepAmount(int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetAutoSaveKeepAmount(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetAutoSaveKeepAmount.htm"
+    },
+    {
+      "name": "SetAutoSaveRenderings",
+      "signature": "public static void SetAutoSaveRenderings(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetAutoSaveRenderings(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetAutoSaveRenderings.htm"
+    },
+    {
+      "name": "SetCheckSupportFilesBeforeRendering",
+      "signature": "public static void SetCheckSupportFilesBeforeRendering(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetCheckSupportFilesBeforeRendering(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetCheckSupportFilesBeforeRendering.htm"
+    },
+    {
+      "name": "SetCombineEditors",
+      "signature": "public static void SetCombineEditors(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetCombineEditors(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetCombineEditors.htm"
+    },
+    {
+      "name": "SetCustomLibraryPath",
+      "signature": "public static void SetCustomLibraryPath(string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetCustomLibraryPath(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetCustomLibraryPath.htm"
+    },
+    {
+      "name": "SetCustomPaths",
+      "signature": "public static void SetCustomPaths(string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetCustomPaths(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetCustomPaths.htm"
+    },
+    {
+      "name": "SetHarvestContentParameters",
+      "signature": "public static void SetHarvestContentParameters(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetHarvestContentParameters(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetHarvestContentParameters.htm"
+    },
+    {
+      "name": "SetLabelFormatLoc",
+      "signature": "public static void SetLabelFormatLoc(int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetLabelFormatLoc(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetLabelFormatLoc.htm"
+    },
+    {
+      "name": "SetLabelFormatUtc",
+      "signature": "public static void SetLabelFormatUtc(int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetLabelFormatUtc(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetLabelFormatUtc.htm"
+    },
+    {
+      "name": "SetLastNavigatedLocation",
+      "signature": "public static void SetLastNavigatedLocation(string folder)",
+      "summary": "",
+      "params": [
+        {
+          "name": "folder",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022folder\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetLastNavigatedLocation(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetLastNavigatedLocation.htm"
+    },
+    {
+      "name": "SetLibrariesInitialLocation",
+      "signature": "public static void SetLibrariesInitialLocation(SupportOptions.RdkInitialLocation l)",
+      "summary": "",
+      "params": [
+        {
+          "name": "l",
+          "type": "Rhino.Render.SupportOptions.RdkInitialLocation",
+          "doc": "[Missing \u003Cparam name=\u0022l\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetLibrariesInitialLocation(Rhino.Render.SupportOptions.RdkInitialLocation)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetLibrariesInitialLocation.htm"
+    },
+    {
+      "name": "SetLibrariesInitialLocationCustomFolder",
+      "signature": "public static void SetLibrariesInitialLocationCustomFolder(string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetLibrariesInitialLocationCustomFolder(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetLibrariesInitialLocationCustomFolder.htm"
+    },
+    {
+      "name": "SetMultithreadedTextureEvaluation",
+      "signature": "public static void SetMultithreadedTextureEvaluation(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetMultithreadedTextureEvaluation(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetMultithreadedTextureEvaluation.htm"
+    },
+    {
+      "name": "SetPreferNativeRenderer",
+      "signature": "public static void SetPreferNativeRenderer(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetPreferNativeRenderer(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetPreferNativeRenderer.htm"
+    },
+    {
+      "name": "SetPreferredUnpackFolder",
+      "signature": "public static void SetPreferredUnpackFolder(string path)",
+      "summary": "",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetPreferredUnpackFolder(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetPreferredUnpackFolder.htm"
+    },
+    {
+      "name": "SetPreviewCustomRenderMeshes",
+      "signature": "public static void SetPreviewCustomRenderMeshes(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetPreviewCustomRenderMeshes(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetPreviewCustomRenderMeshes.htm"
+    },
+    {
+      "name": "SetShowCustom",
+      "signature": "public static void SetShowCustom(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetShowCustom(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetShowCustom.htm"
+    },
+    {
+      "name": "SetShowDetailsPanel",
+      "signature": "public static void SetShowDetailsPanel(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetShowDetailsPanel(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetShowDetailsPanel.htm"
+    },
+    {
+      "name": "SetShowDocuments",
+      "signature": "public static void SetShowDocuments(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetShowDocuments(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetShowDocuments.htm"
+    },
+    {
+      "name": "SetShowRenderContent",
+      "signature": "public static void SetShowRenderContent(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetShowRenderContent(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetShowRenderContent.htm"
+    },
+    {
+      "name": "SetSupportSharedUIs",
+      "signature": "public static void SetSupportSharedUIs(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetSupportSharedUIs(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetSupportSharedUIs.htm"
+    },
+    {
+      "name": "SetTextureSize",
+      "signature": "[ObsoleteAttribute(\u0022Support for changing the texture size programatically will disappear in a future version of Rhino\u0022)] public static void SetTextureSize(SupportOptions.RdkTextureSize size, bool bSendEvent)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "size",
+          "type": "Rhino.Render.SupportOptions.RdkTextureSize",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetTextureSize(Rhino.Render.SupportOptions.RdkTextureSize,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bSendEvent",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bSendEvent\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetTextureSize(Rhino.Render.SupportOptions.RdkTextureSize,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetTextureSize.htm"
+    },
+    {
+      "name": "SetUseDefaultLibraryPath",
+      "signature": "public static void SetUseDefaultLibraryPath(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetUseDefaultLibraryPath(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetUseDefaultLibraryPath.htm"
+    },
+    {
+      "name": "SetUsePreviewCache",
+      "signature": "public static void SetUsePreviewCache(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetUsePreviewCache(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetUsePreviewCache.htm"
+    },
+    {
+      "name": "SetUseQuickInitialPreview",
+      "signature": "public static void SetUseQuickInitialPreview(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SetUseQuickInitialPreview(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SetUseQuickInitialPreview.htm"
+    },
+    {
+      "name": "ShowCustom",
+      "signature": "public static bool ShowCustom()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.ShowCustom\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_ShowCustom.htm"
+    },
+    {
+      "name": "ShowDetailsPanel",
+      "signature": "public static bool ShowDetailsPanel()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.ShowDetailsPanel\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_ShowDetailsPanel.htm"
+    },
+    {
+      "name": "ShowDocuments",
+      "signature": "public static bool ShowDocuments()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.ShowDocuments\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_ShowDocuments.htm"
+    },
+    {
+      "name": "ShowRenderContent",
+      "signature": "public static bool ShowRenderContent()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.ShowRenderContent\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_ShowRenderContent.htm"
+    },
+    {
+      "name": "SupportSharedUIs",
+      "signature": "public static bool SupportSharedUIs()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SupportSharedUIs\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SupportSharedUIs.htm"
+    },
+    {
+      "name": "SupportSharedUIsNoCache",
+      "signature": "public static bool SupportSharedUIsNoCache()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.SupportSharedUIsNoCache\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_SupportSharedUIsNoCache.htm"
+    },
+    {
+      "name": "TextureSize",
+      "signature": "public static int TextureSize()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.TextureSize\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_TextureSize.htm"
+    },
+    {
+      "name": "UseDefaultLibraryPath",
+      "signature": "public static bool UseDefaultLibraryPath()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.UseDefaultLibraryPath\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_UseDefaultLibraryPath.htm"
+    },
+    {
+      "name": "UsePreview",
+      "signature": "public static bool UsePreview()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.UsePreview\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_UsePreview.htm"
+    },
+    {
+      "name": "UsePreviewCache",
+      "signature": "public static bool UsePreviewCache()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.UsePreviewCache\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_UsePreviewCache.htm"
+    },
+    {
+      "name": "UseQuickInitialPreview",
+      "signature": "public static bool UseQuickInitialPreview()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.UseQuickInitialPreview\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_UseQuickInitialPreview.htm"
+    },
+    {
+      "name": "UseRenderedPreview",
+      "signature": "public static bool UseRenderedPreview()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SupportOptions.UseRenderedPreview\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SupportOptions_UseRenderedPreview.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,175 @@
+{
+  "name": "HiddenLineDrawingParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Input used for computing a hidden line drawing",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_HiddenLineDrawingParameters.htm",
+  "constructors": [
+    {
+      "name": "HiddenLineDrawingParameters",
+      "signature": "public HiddenLineDrawingParameters()",
+      "summary": "default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingParameters__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddClippingPlane",
+      "signature": "public void AddClippingPlane(Plane plane)",
+      "summary": "Specify clipping planes that are active for this view.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022plane\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawingParameters.AddClippingPlane(Rhino.Geometry.Plane)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingParameters_AddClippingPlane.htm"
+    },
+    {
+      "name": "AddGeometry(GeometryBase, Object)",
+      "signature": "public bool AddGeometry(GeometryBase geometry, Object tag)",
+      "summary": "Add geometry that should be included in the calculation",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Currently only curves, meshes, breps, surfaces, and extrusions are supported",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "arbitrary data to be associated with this geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the type of geometry can be added for calculations. Currently only curves, meshes, breps, surfaces and extrusions are supported"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingParameters_AddGeometry_1.htm"
+    },
+    {
+      "name": "AddGeometry(GeometryBase, Transform, Object)",
+      "signature": "public bool AddGeometry(GeometryBase geometry, Transform xform, Object tag)",
+      "summary": "Add geometry that should be included in the calculation",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Currently only points, point clouds, curves, meshes, breps, surfaces, and extrusions are supported",
+          "optional": false
+        },
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022xform\u0022/\u003E documentation for \u0022M:Rhino.Geometry.HiddenLineDrawingParameters.AddGeometry(Rhino.Geometry.GeometryBase,Rhino.Geometry.Transform,System.Object)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "System.Object",
+          "doc": "arbitrary data to be associated with this geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the type of geometry can be added for calculations. Currently only points, point clouds, curves, meshes, breps, surfaces and extrusions are supported"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingParameters_AddGeometry.htm"
+    },
+    {
+      "name": "SetViewport(RhinoViewport)",
+      "signature": "public void SetViewport(RhinoViewport viewport)",
+      "summary": "Set the viewport for the hidden line drawing (HLD). The viewport supplies the projection that determines the visibility of curves, and the HLD coordinate system in which the resulting curves are represented. The HLD-coordinate system is a right handed system for 3-D model space, in which the 3rd coordinate direction is the projection direction. In particular the z-coordinate direction points from the scene toward the camera.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "A copy of rhinoViewport is made inside of HiddenLineDrawing.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingParameters_SetViewport.htm"
+    },
+    {
+      "name": "SetViewport(ViewportInfo)",
+      "signature": "public void SetViewport(ViewportInfo viewport)",
+      "summary": "Set the viewport for the hidden line drawing (HLD). The viewport supplies the projection that determines the visibility of curves, and the HLD coordinate system in which the resulting curves are represented. The HLD-coordinate system is a right handed system for 3-D model space, in which the 3rd coordinate direction is the projection direction. In particular the z-coordinate direction points from the scene toward the camera.",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "A copy of viewportInfo is made inside of HiddenLineDrawing.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HiddenLineDrawingParameters_SetViewport_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsoluteTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Absolute tolerance is used to decide if curves overlap or intersect. A suggested value is to use RhinoDoc.AbsoluteTolerance",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingParameters_AbsoluteTolerance.htm"
+    },
+    {
+      "name": "Flatten",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Flatten the computed geometry",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingParameters_Flatten.htm"
+    },
+    {
+      "name": "IncludeHiddenCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Include hidden curves in hidden line drawing (default is true)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingParameters_IncludeHiddenCurves.htm"
+    },
+    {
+      "name": "IncludeTangentEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Include tangent edges in hidden line drawing (default is true)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingParameters_IncludeTangentEdges.htm"
+    },
+    {
+      "name": "IncludeTangentSeams",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Include tangent seams in hidden line drawing (default is true)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HiddenLineDrawingParameters_IncludeTangentSeams.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

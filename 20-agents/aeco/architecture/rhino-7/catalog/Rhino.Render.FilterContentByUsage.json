@@ -1,0 +1,29 @@
+{
+  "name": "FilterContentByUsage",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Content collection filter value",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_FilterContentByUsage.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No filter in use"
+    },
+    {
+      "name": "Used",
+      "value": 1,
+      "summary": "Display only used contents"
+    },
+    {
+      "name": "Unused",
+      "value": 2,
+      "summary": "Display only unused contents"
+    }
+  ]
+}

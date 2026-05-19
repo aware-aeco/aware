@@ -1,0 +1,102 @@
+{
+  "name": "IHeaderButtonHandler",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.IHeaderButtonHandler\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_IHeaderButtonHandler.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ButtonDetails",
+      "signature": "bool ButtonDetails(int index, ref Bitmap iconOut, ref string sToolTipOut)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonDetails(System.Int32,System.Drawing.Bitmap@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "iconOut",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022iconOut\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonDetails(System.Int32,System.Drawing.Bitmap@,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "sToolTipOut",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022sToolTipOut\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonDetails(System.Int32,System.Drawing.Bitmap@,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonDetails(System.Int32,System.Drawing.Bitmap@,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IHeaderButtonHandler_ButtonDetails.htm"
+    },
+    {
+      "name": "ButtonRect",
+      "signature": "Rectangle ButtonRect(int index, Rectangle rectHeader)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonRect(System.Int32,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rectHeader",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rectHeader\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonRect(System.Int32,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.ButtonRect(System.Int32,System.Drawing.Rectangle)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IHeaderButtonHandler_ButtonRect.htm"
+    },
+    {
+      "name": "DeleteThis",
+      "signature": "void DeleteThis()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IHeaderButtonHandler_DeleteThis.htm"
+    },
+    {
+      "name": "OnButtonClicked",
+      "signature": "bool OnButtonClicked(int index)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.OnButtonClicked(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.IHeaderButtonHandler.OnButtonClicked(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IHeaderButtonHandler_OnButtonClicked.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

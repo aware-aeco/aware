@@ -1,0 +1,39 @@
+{
+  "name": "Light.Event",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "enum",
+  "summary": "Light change type",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_ChangeQueue_Light_Event.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Added",
+      "value": 0,
+      "summary": "Light was added"
+    },
+    {
+      "name": "Deleted",
+      "value": 1,
+      "summary": "Light was deleted"
+    },
+    {
+      "name": "Undeleted",
+      "value": 2,
+      "summary": "Light was undeleted"
+    },
+    {
+      "name": "Modified",
+      "value": 3,
+      "summary": "Light was modified"
+    },
+    {
+      "name": "Sorted",
+      "value": 4,
+      "summary": "Light was sorted in LightTable"
+    }
+  ]
+}

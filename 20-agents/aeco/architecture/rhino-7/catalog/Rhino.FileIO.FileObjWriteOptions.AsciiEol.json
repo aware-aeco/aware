@@ -1,0 +1,29 @@
+{
+  "name": "FileObjWriteOptions.AsciiEol",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "End of Line",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileObjWriteOptions_AsciiEol.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Crlf",
+      "value": 0,
+      "summary": "MicroSoft"
+    },
+    {
+      "name": "Lf",
+      "value": 1,
+      "summary": "UNIX"
+    },
+    {
+      "name": "Cr",
+      "value": 2,
+      "summary": "Apple"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "DescriptionType",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "Rhino plug-in developer information fields.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_DescriptionType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Organization",
+      "value": 0
+    },
+    {
+      "name": "Address",
+      "value": 1
+    },
+    {
+      "name": "Country",
+      "value": 2
+    },
+    {
+      "name": "Phone",
+      "value": 3
+    },
+    {
+      "name": "WebSite",
+      "value": 4
+    },
+    {
+      "name": "Email",
+      "value": 5
+    },
+    {
+      "name": "UpdateUrl",
+      "value": 6
+    },
+    {
+      "name": "Fax",
+      "value": 7
+    },
+    {
+      "name": "Icon",
+      "value": 8
+    }
+  ]
+}

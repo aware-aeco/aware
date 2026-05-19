@@ -1,0 +1,88 @@
+{
+  "name": "LocalizeStringPair",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Pair of strings used for localization.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_LocalizeStringPair.htm",
+  "constructors": [
+    {
+      "name": "LocalizeStringPair",
+      "signature": "public LocalizeStringPair(string english, string local)",
+      "summary": "Initializes a new instance of the LocalizeStringPair class",
+      "params": [
+        {
+          "name": "english",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022english\u0022/\u003E documentation for \u0022M:Rhino.UI.LocalizeStringPair.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "local",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022local\u0022/\u003E documentation for \u0022M:Rhino.UI.LocalizeStringPair.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_LocalizeStringPair__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides Object.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.LocalizeStringPair.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_LocalizeStringPair_ToString.htm"
+    },
+    {
+      "name": "Implicit(LocalizeStringPair to String)",
+      "signature": "public static implicit operator string (LocalizeStringPair lcp)",
+      "summary": "",
+      "params": [
+        {
+          "name": "lcp",
+          "type": "Rhino.UI.LocalizeStringPair",
+          "doc": "[Missing \u003Cparam name=\u0022lcp\u0022/\u003E documentation for \u0022M:Rhino.UI.LocalizeStringPair.op_Implicit(Rhino.UI.LocalizeStringPair)~System.String\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.LocalizeStringPair.op_Implicit(Rhino.UI.LocalizeStringPair)~System.String\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_LocalizeStringPair_op_Implicit.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "English",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_LocalizeStringPair_English.htm"
+    },
+    {
+      "name": "Local",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_LocalizeStringPair_Local.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

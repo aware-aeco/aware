@@ -1,0 +1,29 @@
+{
+  "name": "BlendContinuity",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Used in curve and surface blending and matching functions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_BlendContinuity.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Position",
+      "value": 0,
+      "summary": "G0: The curves or surfaces touch at the join point (position)."
+    },
+    {
+      "name": "Tangency",
+      "value": 1,
+      "summary": "G1: The curves or surfaces also share a common tangent direction at the join point (tangent)."
+    },
+    {
+      "name": "Curvature",
+      "value": 2,
+      "summary": "G2: The curves or surfaces also share a common center of curvature at the join point (curvature)."
+    }
+  ]
+}

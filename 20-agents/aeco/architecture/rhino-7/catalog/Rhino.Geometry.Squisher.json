@@ -1,0 +1,356 @@
+{
+  "name": "Squisher",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "class used to wrap Squish functions",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Squisher.htm",
+  "constructors": [
+    {
+      "name": "Squisher",
+      "signature": "public Squisher()",
+      "summary": "constructs a squisher with default parameters",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_Finalize.htm"
+    },
+    {
+      "name": "Get2dMesh",
+      "signature": "public Mesh Get2dMesh()",
+      "summary": "Get the 2d mesh that results from the squish operation",
+      "params": [],
+      "returns": {
+        "type": "Mesh",
+        "doc": "Returns the squished 2d mesh"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_Get2dMesh.htm"
+    },
+    {
+      "name": "Get3dMesh",
+      "signature": "public Mesh Get3dMesh()",
+      "summary": "Get the 3d mesh that was used for squish operation",
+      "params": [],
+      "returns": {
+        "type": "Mesh",
+        "doc": "Returns the squished 2d mesh"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_Get3dMesh.htm"
+    },
+    {
+      "name": "GetMesh2dEdges",
+      "signature": "public Line[] GetMesh2dEdges()",
+      "summary": "Gets the edges of the mesh which correspond to the edges of the same indices resulting from GetMesh3dEdges",
+      "params": [],
+      "returns": {
+        "type": "Line[]",
+        "doc": "And array of lines representing the mesh edges"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_GetMesh2dEdges.htm"
+    },
+    {
+      "name": "GetMesh3dEdges",
+      "signature": "public Line[] GetMesh3dEdges()",
+      "summary": "Gets the edges of the mesh which correspond to the edges of the same indices resulting from GetMesh2dEdges",
+      "params": [],
+      "returns": {
+        "type": "Line[]",
+        "doc": "And array of lines representing the mesh edges"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_GetMesh3dEdges.htm"
+    },
+    {
+      "name": "Is2dPatternSquished",
+      "signature": "public static bool Is2dPatternSquished(GeometryBase geometry)",
+      "summary": "Returns true if the input geometry was the result of a squish operation",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "[Missing \u003Cparam name=\u0022geometry\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Squisher.Is2dPatternSquished(Rhino.Geometry.GeometryBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Squisher.Is2dPatternSquished(Rhino.Geometry.GeometryBase)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_Is2dPatternSquished.htm"
+    },
+    {
+      "name": "SquishBack2dMarks",
+      "signature": "public static IEnumerable\u003CGeometryBase\u003E SquishBack2dMarks(GeometryBase squishedGeometry, IEnumerable\u003CGeometryBase\u003E marks)",
+      "summary": "Maps 2D geometry from the squished surface or mesh back to the original 3D surface or mesh",
+      "params": [
+        {
+          "name": "squishedGeometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "The squished surface or mesh",
+          "optional": false
+        },
+        {
+          "name": "marks",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "The input 2D geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CGeometryBase\u003E",
+        "doc": "An enumeratd list of squished marks. Individual marks that fail to squish are null in this list. Returns null on complete failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishBack2dMarks.htm"
+    },
+    {
+      "name": "SquishCurve",
+      "signature": "public PolylineCurve SquishCurve(Curve curve)",
+      "summary": "Maps a curve on or near a previously squished 3d surface to the resulting 2d surface",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The curve to squish",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolylineCurve",
+        "doc": "The squished curve"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishCurve.htm"
+    },
+    {
+      "name": "SquishMesh(SquishParameters, Mesh)",
+      "signature": "public Mesh SquishMesh(SquishParameters sp, Mesh mesh3d)",
+      "summary": "Squish the given mesh into a flat mesh",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Rhino.Geometry.SquishParameters",
+          "doc": "The parameters for the squish operation",
+          "optional": false
+        },
+        {
+          "name": "mesh3d",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "The mesh to squish",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "A flattened mesh"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishMesh.htm"
+    },
+    {
+      "name": "SquishMesh(SquishParameters, Mesh, IEnumerable\u003CGeometryBase\u003E, List\u003CGeometryBase\u003E)",
+      "signature": "public Mesh SquishMesh(SquishParameters sp, Mesh mesh3d, IEnumerable\u003CGeometryBase\u003E marks, List\u003CGeometryBase\u003E squished_marks_out)",
+      "summary": "Squish the given mesh into a flat mesh",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Rhino.Geometry.SquishParameters",
+          "doc": "The parameters for the squish operation",
+          "optional": false
+        },
+        {
+          "name": "mesh3d",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "The mesh to squish",
+          "optional": false
+        },
+        {
+          "name": "marks",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "Points, Curves, PoiuntClouds, and TextDots to squish. Can be null.",
+          "optional": false
+        },
+        {
+          "name": "squished_marks_out",
+          "type": "System.Collections.Generic.List\u003CGeometryBase\u003E",
+          "doc": "The squished marks. If a mark fails to squish, it will have a null entry in the list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "A flattened mesh"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishMesh_1.htm"
+    },
+    {
+      "name": "SquishPoint",
+      "signature": "public bool SquishPoint(Point3d point, out Point3d squishedPoint)",
+      "summary": "Maps a point on or near the previously squished 3d surface to the flattened surface",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point to squish",
+          "optional": false
+        },
+        {
+          "name": "squishedPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The squished point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishPoint.htm"
+    },
+    {
+      "name": "SquishSurface(SquishParameters, Surface)",
+      "signature": "public Brep SquishSurface(SquishParameters sp, Surface surface)",
+      "summary": "Squish the surface into a flat brep",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Rhino.Geometry.SquishParameters",
+          "doc": "The parameters for the squish operation",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "The surface to be squished",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "A brep representing the flattened surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishSurface.htm"
+    },
+    {
+      "name": "SquishSurface(SquishParameters, Surface, IEnumerable\u003CGeometryBase\u003E, List\u003CGeometryBase\u003E)",
+      "signature": "public Brep SquishSurface(SquishParameters sp, Surface surface, IEnumerable\u003CGeometryBase\u003E marks, List\u003CGeometryBase\u003E squished_marks_out)",
+      "summary": "Squish the surface into a flat brep",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Rhino.Geometry.SquishParameters",
+          "doc": "The parameters for the squish operation",
+          "optional": false
+        },
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "The surface to be squished",
+          "optional": false
+        },
+        {
+          "name": "marks",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "Point, PountCloud, TextDot, and Curve objects to squish. Can be null.",
+          "optional": false
+        },
+        {
+          "name": "squished_marks_out",
+          "type": "System.Collections.Generic.List\u003CGeometryBase\u003E",
+          "doc": "A list of the squished marks, with null entires for marks that fail to squish. Can be null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "A brep representing the flattened surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishSurface_1.htm"
+    },
+    {
+      "name": "SquishTextDot",
+      "signature": "public TextDot SquishTextDot(TextDot textDot)",
+      "summary": "Maps a TextDot on or near a previously squished 3d surface to the resulting 2d surface",
+      "params": [
+        {
+          "name": "textDot",
+          "type": "Rhino.Geometry.TextDot",
+          "doc": "The text dot to squish",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextDot",
+        "doc": "The resulting textDot"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Squisher_SquishTextDot.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

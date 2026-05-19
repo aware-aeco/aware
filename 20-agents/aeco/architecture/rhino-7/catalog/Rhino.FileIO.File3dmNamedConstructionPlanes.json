@@ -1,0 +1,225 @@
+{
+  "name": "File3dmNamedConstructionPlanes",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Provides access to named construction planes in the 3dm file.",
+  "interfaces": [
+    "IList\u003CConstructionPlane\u003E",
+    "ICollection\u003CConstructionPlane\u003E",
+    "IEnumerable\u003CConstructionPlane\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_File3dmNamedConstructionPlanes.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(ConstructionPlane)",
+      "signature": "public void Add(ConstructionPlane cplane)",
+      "summary": "Adds a named construction plane to the table.",
+      "params": [
+        {
+          "name": "cplane",
+          "type": "Rhino.DocObjects.ConstructionPlane",
+          "doc": "The construction plane to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_Add.htm"
+    },
+    {
+      "name": "Add(String, Plane)",
+      "signature": "public int Add(string name, Plane plane)",
+      "summary": "Adds a named construction plane to the table.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the named construction plane.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 based index of the named construction plane. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_Add_1.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Removes all named construction planes from the table.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_Clear.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(ConstructionPlane cplane)",
+      "summary": "Returns an indication of the presence of a named construction plane in the table.",
+      "params": [
+        {
+          "name": "cplane",
+          "type": "Rhino.DocObjects.ConstructionPlane",
+          "doc": "The construction plane to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the named construction plane is in the table; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_Contains.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(ConstructionPlane[] array, int arrayIndex)",
+      "summary": "Copies the content of the table to an array.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Rhino.DocObjects.ConstructionPlane[]",
+          "doc": "[Missing \u003Cparam name=\u0022array\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmNamedConstructionPlanes.CopyTo(Rhino.DocObjects.ConstructionPlane[],System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022arrayIndex\u0022/\u003E documentation for \u0022M:Rhino.FileIO.File3dmNamedConstructionPlanes.CopyTo(Rhino.DocObjects.ConstructionPlane[],System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_CopyTo.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public bool Delete(int index)",
+      "summary": "Remove a named construction plane from the table.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Zero based array index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_Delete_1.htm"
+    },
+    {
+      "name": "Delete(ConstructionPlane)",
+      "signature": "public bool Delete(ConstructionPlane cplane)",
+      "summary": "Deletes a named construction plane from the table.",
+      "params": [
+        {
+          "name": "cplane",
+          "type": "Rhino.DocObjects.ConstructionPlane",
+          "doc": "The construction plane to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.File3dmNamedConstructionPlanes.Delete(Rhino.DocObjects.ConstructionPlane)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_Delete.htm"
+    },
+    {
+      "name": "FindName",
+      "signature": "public ConstructionPlane FindName(string name)",
+      "summary": "Finds a named construction plane given its name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the construction plane to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConstructionPlane",
+        "doc": "A ConstructionPlane, or null if not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_FindName.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CConstructionPlane\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all construction planes in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CConstructionPlane\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_GetEnumerator.htm"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "public int IndexOf(ConstructionPlane cplane)",
+      "summary": "Returns the index of a named construction plane.",
+      "params": [
+        {
+          "name": "cplane",
+          "type": "Rhino.DocObjects.ConstructionPlane",
+          "doc": "The construction plane to be searched.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the named construction plane, -1 if not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_File3dmNamedConstructionPlanes_IndexOf.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of named construction planes in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmNamedConstructionPlanes_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ConstructionPlane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the named construction plane at an index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_File3dmNamedConstructionPlanes_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

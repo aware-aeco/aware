@@ -1,0 +1,264 @@
+{
+  "name": "MeshNgon",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a mesh ngon. When retrieved from the Ngon property of a mesh, this contains faces that have edge valence strictly higher than 4.When retrieving Ngons from GetNgonAndFacesEnumerable(), this might contain also triangles and quads.",
+  "interfaces": [
+    "IEquatable\u003CMeshNgon\u003E",
+    "IComparable\u003CMeshNgon\u003E",
+    "IComparable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshNgon.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BoundaryVertexIndexList",
+      "signature": "public uint[] BoundaryVertexIndexList()",
+      "summary": "Get the outer boundary mesh vertex list of the ngon. Vertices are sorted counterclockwise with respect to the direction of the face, although the degree by which vertex normals will respect this might vary.",
+      "params": [],
+      "returns": {
+        "type": "UInt32[]",
+        "doc": "A list of mesh vertex indexes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_BoundaryVertexIndexList.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(MeshNgon otherNgon)",
+      "summary": "Compares this MeshNgon with otherNgon and returns a value of 1, 0, or -1. Priority is for vertex count, then face count, then vertex index list values, then face index list values.",
+      "params": [
+        {
+          "name": "otherNgon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "The other MeshNgon to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to otherNgon-1: if this \u003C otherNgon. \u002B1: if this \u003E otherNgon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_CompareTo.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static MeshNgon Create(IList\u003Cint\u003E meshVertexIndexList, IList\u003Cint\u003E meshFaceIndexList)",
+      "summary": "Constructs an ngon from lists of mesh vertex and face indexes.",
+      "params": [
+        {
+          "name": "meshVertexIndexList",
+          "type": "System.Collections.Generic.IList\u003CInt32\u003E",
+          "doc": "A list of mesh vertex indexes that define the outer boundary of the ngon. The mesh vertex indexes must be in the correct order.",
+          "optional": false
+        },
+        {
+          "name": "meshFaceIndexList",
+          "type": "System.Collections.Generic.IList\u003CInt32\u003E",
+          "doc": "A list of mesh face indexes that define the interior of the ngon. The mesh face indexes may be in any order.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshNgon",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.MeshNgon.Create(System.Collections.Generic.IList{System.Int32},System.Collections.Generic.IList{System.Int32})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_Create.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object otherObj)",
+      "summary": "Determines if otherObj is a MeshNgon and is identical to this ngon.",
+      "params": [
+        {
+          "name": "otherObj",
+          "type": "System.Object",
+          "doc": "Any object the represents the other mesh face for comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if otherObj is a MeshNgon and is identical to this ngon; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_Equals_1.htm"
+    },
+    {
+      "name": "Equals(MeshNgon)",
+      "signature": "public bool Equals(MeshNgon otherNgon)",
+      "summary": "Determines if this ngon and otherNgon are identical.",
+      "params": [
+        {
+          "name": "otherNgon",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "The other ngon for comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if otherNgon is identical to this ngon; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_Equals.htm"
+    },
+    {
+      "name": "FaceIndexList",
+      "signature": "public uint[] FaceIndexList()",
+      "summary": "Get the ngon\u0027s mesh face index list.",
+      "params": [],
+      "returns": {
+        "type": "UInt32[]",
+        "doc": "A list of mesh face indexes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_FaceIndexList.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Returns a runtime-stable hash code for the current mesh ngon. You are not allowed to rely on persistence of this hash code in serialization, but for each instance of the application, this hash code will be the same for ngons with identical vertex and face lists.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique integer that represents this mesh ngon."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_GetHashCode.htm"
+    },
+    {
+      "name": "Set",
+      "signature": "public void Set(IList\u003Cint\u003E meshVertexIndexList, IList\u003Cint\u003E meshFaceIndexList)",
+      "summary": "Set the ngon vertex and face index lists.",
+      "params": [
+        {
+          "name": "meshVertexIndexList",
+          "type": "System.Collections.Generic.IList\u003CInt32\u003E",
+          "doc": "A list of mesh vertex indexes that define the outer boundary of the ngon. The mesh vertex indexes must be in the correct order.",
+          "optional": false
+        },
+        {
+          "name": "meshFaceIndexList",
+          "type": "System.Collections.Generic.IList\u003CInt32\u003E",
+          "doc": "A list of mesh face indexes that define the interior of the ngon. The mesh face indexes may be in any order.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_Set.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a string representation for this MeshNgon. This is to provide a meaningful visualization of this structure and is subject to change in newer releases.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_ToString.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(MeshNgon a, MeshNgon b)",
+      "summary": "Determines whether two MeshNgon structures have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "The first MeshNgon.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "The second MeshNgon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the vertex and face index lists are identical; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(MeshNgon a, MeshNgon b)",
+      "summary": "Determines whether two MeshNgon structures have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "The first MeshNgon.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.MeshNgon",
+          "doc": "The second MeshNgon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the vertex or face index lists are different in any way; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshNgon_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundaryVertexCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the number of vertices in this ngon. about length information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshNgon_BoundaryVertexCount.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "MeshNgon",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an empty MeshNgon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshNgon_Empty.htm"
+    },
+    {
+      "name": "FaceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the number of faces in this ngon.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshNgon_FaceCount.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get a mesh vertex index from the ngon\u0027s vertex index list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshNgon_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "LicenseCapabilities",
+  "namespace": "Rhino.PlugIns",
+  "kind": "enum",
+  "summary": "Controls the buttons that will appear on the license notification window that is displayed if a license for the requesting product is not found. Note, the \u0022Close\u0022 button will always be displayed.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_LicenseCapabilities.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoCapabilities",
+      "value": 0,
+      "summary": "Only the \u0022Close\u0022 button will be displayed"
+    },
+    {
+      "name": "CanBePurchased",
+      "value": 1,
+      "summary": "Shows \u0022Buy a license\u0022 button"
+    },
+    {
+      "name": "CanBeSpecified",
+      "value": 2,
+      "summary": "OBSOLETE: Shows \u0022\u0022Enter a license\u0022 and \u0022Use a Zoo\u0022 buttons. Use SupportsStandalone | SupportsZoo instead."
+    },
+    {
+      "name": "CanBeEvaluated",
+      "value": 4,
+      "summary": "Shows \u0022Evaluate\u0022 button"
+    },
+    {
+      "name": "EvaluationIsExpired",
+      "value": 8,
+      "summary": "Shows \u0022Evaluate\u0022 button disabled"
+    },
+    {
+      "name": "SupportsRhinoAccounts",
+      "value": 16,
+      "summary": "Supports getting a license from a Cloud Zoo / Rhino Account"
+    },
+    {
+      "name": "SupportsStandalone",
+      "value": 32,
+      "summary": "Supports single-computer licensing"
+    },
+    {
+      "name": "SupportsZooPerUser",
+      "value": 64,
+      "summary": "Supports getting a license from a Zoo server"
+    },
+    {
+      "name": "SupportsZooPerCore",
+      "value": 128,
+      "summary": "Supports getting a license from a Zoo server"
+    },
+    {
+      "name": "SupportsLicenseDiscovery",
+      "value": 256,
+      "summary": "Supports license discovery API flow"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "PostEffectType",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Early",
+      "value": 0
+    },
+    {
+      "name": "ToneMapping",
+      "value": 1
+    },
+    {
+      "name": "Late",
+      "value": 2
+    }
+  ]
+}

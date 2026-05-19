@@ -1,0 +1,197 @@
+{
+  "name": "CommandAliasList",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to access command aliases.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_CommandAliasList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public static bool Add(string alias, string macro)",
+      "summary": "Adds a new command alias to Rhino.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "[in] The name of the command alias.",
+          "optional": false
+        },
+        {
+          "name": "macro",
+          "type": "System.String",
+          "doc": "[in] The command macro to run when the alias is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public static void Clear()",
+      "summary": "Removes all aliases from the list.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_Clear.htm"
+    },
+    {
+      "name": "Delete",
+      "signature": "public static bool Delete(string alias)",
+      "summary": "Deletes an existing command alias from Rhino.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "[in] The name of the command alias.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_Delete.htm"
+    },
+    {
+      "name": "GetDefaults",
+      "signature": "public static Dictionary\u003Cstring, string\u003E GetDefaults()",
+      "summary": "Constructs a dictionary containing as keys the default names and as value the default macro. The returned dictionary contains a copy of the settings.",
+      "params": [],
+      "returns": {
+        "type": "Dictionary\u003CString,String\u003E",
+        "doc": "A new dictionary with the default name/macro combinations."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_GetDefaults.htm"
+    },
+    {
+      "name": "GetMacro",
+      "signature": "public static string GetMacro(string alias)",
+      "summary": "Returns the macro of a command alias.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "[in] The name of the command alias.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.CommandAliasList.GetMacro(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_GetMacro.htm"
+    },
+    {
+      "name": "GetNames",
+      "signature": "public static string[] GetNames()",
+      "summary": "Returns a list of command alias names.",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array of strings. This can be empty."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_GetNames.htm"
+    },
+    {
+      "name": "IsAlias",
+      "signature": "public static bool IsAlias(string alias)",
+      "summary": "Verifies that a command alias exists in Rhino.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "[in] The name of the command alias.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the alias exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_IsAlias.htm"
+    },
+    {
+      "name": "IsDefault",
+      "signature": "public static bool IsDefault()",
+      "summary": "Computes a value indicating if the current alias list is the same as the default alias list.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the current alias list is exactly equal to the default alias list; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_IsDefault.htm"
+    },
+    {
+      "name": "SetMacro",
+      "signature": "public static bool SetMacro(string alias, string macro)",
+      "summary": "Modifies the macro of a command alias.",
+      "params": [
+        {
+          "name": "alias",
+          "type": "System.String",
+          "doc": "[in] The name of the command alias.",
+          "optional": false
+        },
+        {
+          "name": "macro",
+          "type": "System.String",
+          "doc": "[in] The new command macro to run when the alias is executed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_SetMacro.htm"
+    },
+    {
+      "name": "ToDictionary",
+      "signature": "public static Dictionary\u003Cstring, string\u003E ToDictionary()",
+      "summary": "Constructs a new dictionary that contains: as keys all names and as values all macros. Modifications to this dictionary do not affect any Rhino command alias.",
+      "params": [],
+      "returns": {
+        "type": "Dictionary\u003CString,String\u003E",
+        "doc": "The new dictionary."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CommandAliasList_ToDictionary.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of command alias in Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CommandAliasList_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

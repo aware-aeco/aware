@@ -1,0 +1,264 @@
+{
+  "name": "StringTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "Collection of document user data strings",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_StringTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Delete(String)",
+      "signature": "public void Delete(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.Delete(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_Delete.htm"
+    },
+    {
+      "name": "Delete(String, String)",
+      "signature": "public void Delete(string section, string entry)",
+      "summary": "Removes user data strings from the document.",
+      "params": [
+        {
+          "name": "section",
+          "type": "System.String",
+          "doc": "name of section to delete. If null, all sections will be deleted.",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "System.String",
+          "doc": "name of entry to delete. If null, all entries will be deleted for a given section.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_Delete_1.htm"
+    },
+    {
+      "name": "GetEntryNames",
+      "signature": "public string[] GetEntryNames(string section)",
+      "summary": "Return list of all entry names for a given section of user data strings in the document.",
+      "params": [
+        {
+          "name": "section",
+          "type": "System.String",
+          "doc": "The section from which to retrieve section names.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array of section names. This can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_GetEntryNames.htm"
+    },
+    {
+      "name": "GetKey",
+      "signature": "public string GetKey(int i)",
+      "summary": "",
+      "params": [
+        {
+          "name": "i",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022i\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.GetKey(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.GetKey(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_GetKey.htm"
+    },
+    {
+      "name": "GetSectionNames",
+      "signature": "public string[] GetSectionNames()",
+      "summary": "Returns a list of all the section names for user data strings in the document. By default a section name is a key that is prefixed with a string separated by a backslash.",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "An array of section names. This can be empty, but not null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_GetSectionNames.htm"
+    },
+    {
+      "name": "GetValue(Int32)",
+      "signature": "public string GetValue(int i)",
+      "summary": "",
+      "params": [
+        {
+          "name": "i",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022i\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.GetValue(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.GetValue(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_GetValue.htm"
+    },
+    {
+      "name": "GetValue(String)",
+      "signature": "public string GetValue(string key)",
+      "summary": "",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.GetValue(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.StringTable.GetValue(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_GetValue_1.htm"
+    },
+    {
+      "name": "GetValue(String, String)",
+      "signature": "public string GetValue(string section, string entry)",
+      "summary": "Gets a user data string from the document.",
+      "params": [
+        {
+          "name": "section",
+          "type": "System.String",
+          "doc": "The section at which to get the value.",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "System.String",
+          "doc": "The entry to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The user data."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_GetValue_2.htm"
+    },
+    {
+      "name": "SetString(String, String)",
+      "signature": "public string SetString(string key, string value)",
+      "summary": "Adds or sets a user data string to the document.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "The key.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The entry value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The previous value if successful and a previous value existed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_SetString.htm"
+    },
+    {
+      "name": "SetString(String, String, String)",
+      "signature": "public string SetString(string section, string entry, string value)",
+      "summary": "Adds or sets a user data string to the document.",
+      "params": [
+        {
+          "name": "section",
+          "type": "System.String",
+          "doc": "The section.",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "System.String",
+          "doc": "The entry name.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "The entry value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The previous value if successful and a previous value existed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_StringTable_SetString_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of user data strings in the current document.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_StringTable_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this object table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_StringTable_Document.htm"
+    },
+    {
+      "name": "DocumentDataCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_StringTable_DocumentDataCount.htm"
+    },
+    {
+      "name": "DocumentUserTextCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_StringTable_DocumentUserTextCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

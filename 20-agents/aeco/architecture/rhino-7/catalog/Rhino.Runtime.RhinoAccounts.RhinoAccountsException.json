@@ -1,0 +1,54 @@
+{
+  "name": "RhinoAccountsException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Base exception for all Rhino Accounts operations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsException(Exception)",
+      "signature": "public RhinoAccountsException(Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsException(String, Exception)",
+      "signature": "public RhinoAccountsException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

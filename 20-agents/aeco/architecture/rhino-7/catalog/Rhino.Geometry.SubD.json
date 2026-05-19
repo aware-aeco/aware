@@ -1,0 +1,1146 @@
+{
+  "name": "SubD",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Subdivision surface",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubD.htm",
+  "constructors": [
+    {
+      "name": "SubD()",
+      "signature": "public SubD()",
+      "summary": "Create a new instance of SubD geometry",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD__ctor.htm"
+    },
+    {
+      "name": "SubD(SerializationInfo, StreamingContext)",
+      "signature": "protected SubD(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor used in serialization.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubD.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubD.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearEvaluationCache",
+      "signature": "public void ClearEvaluationCache()",
+      "summary": "Clear cached information that depends on the location of vertex control points",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_ClearEvaluationCache.htm"
+    },
+    {
+      "name": "ComponentFromComponentIndex",
+      "signature": "public SubDComponent ComponentFromComponentIndex(ComponentIndex componentIndex)",
+      "summary": "Returns a SubDComponent, eithere a SubDEdge, SubDFace, or SubDVertex, from a component index.",
+      "params": [
+        {
+          "name": "componentIndex",
+          "type": "Rhino.Geometry.ComponentIndex",
+          "doc": "The component index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDComponent",
+        "doc": "The SubDComponent if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_ComponentFromComponentIndex.htm"
+    },
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex ComponentIndex()",
+      "summary": "If this piece of geometry is a component in something larger, like a BrepEdge in a Brep, then this function returns the component index.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex",
+        "doc": "This object\u0027s component index. If this object is not a sub-piece of a larger geometric entity, then the returned index has m_type = ComponentIndex.InvalidType and m_index = -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_ComponentIndex.htm"
+    },
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "CreateFromCylinder",
+      "signature": "public static SubD CreateFromCylinder(Cylinder cylinder, uint circumferenceFaceCount, uint heightFaceCount, SubDEndCapStyle endCapStyle, SubDEdgeTag endCapEdgeTag, SubDComponentLocation radiusLocation)",
+      "summary": "Creates a SubD form of a cylinder.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "The defining cylinder.",
+          "optional": false
+        },
+        {
+          "name": "circumferenceFaceCount",
+          "type": "System.UInt32",
+          "doc": "Number of faces around the cylinder.",
+          "optional": false
+        },
+        {
+          "name": "heightFaceCount",
+          "type": "System.UInt32",
+          "doc": "Number of faces in the top-to-bottom direction.",
+          "optional": false
+        },
+        {
+          "name": "endCapStyle",
+          "type": "Rhino.Geometry.SubDEndCapStyle",
+          "doc": "The end cap style.",
+          "optional": false
+        },
+        {
+          "name": "endCapEdgeTag",
+          "type": "Rhino.Geometry.SubDEdgeTag",
+          "doc": "The end cap edge tag.",
+          "optional": false
+        },
+        {
+          "name": "radiusLocation",
+          "type": "Rhino.Geometry.SubDComponentLocation",
+          "doc": "The SubD component location.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromCylinder.htm"
+    },
+    {
+      "name": "CreateFromLoft",
+      "signature": "public static SubD CreateFromLoft(IEnumerable\u003CNurbsCurve\u003E curves, bool closed, bool addCorners, bool addCreases, int divisions)",
+      "summary": "Creates a SubD lofted through shape curves.",
+      "remarks": "Shape curves must be in the proper order and orientation and have point counts for the desired surface. Shape curves must be either all open or all closed.",
+      "params": [
+        {
+          "name": "curves",
+          "type": "System.Collections.Generic.IEnumerable\u003CNurbsCurve\u003E",
+          "doc": "An enumeration of SubD-friendly NURBS curves to loft through.",
+          "optional": false
+        },
+        {
+          "name": "closed",
+          "type": "System.Boolean",
+          "doc": "Creates a SubD that is closed in the lofting direction. Must have three or more shape curves.",
+          "optional": false
+        },
+        {
+          "name": "addCorners",
+          "type": "System.Boolean",
+          "doc": "With open curves, adds creased vertices to the SubD at both ends of the first and last curves.",
+          "optional": false
+        },
+        {
+          "name": "addCreases",
+          "type": "System.Boolean",
+          "doc": "With kinked curves, adds creased edges to the SubD along the kinks.",
+          "optional": false
+        },
+        {
+          "name": "divisions",
+          "type": "System.Int32",
+          "doc": "The segment number between adjacent input curves.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromLoft.htm"
+    },
+    {
+      "name": "CreateFromMesh(Mesh)",
+      "signature": "public static SubD CreateFromMesh(Mesh mesh)",
+      "summary": "Create a new SubD from a mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "The input mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromMesh.htm"
+    },
+    {
+      "name": "CreateFromMesh(Mesh, SubDCreationOptions)",
+      "signature": "public static SubD CreateFromMesh(Mesh mesh, SubDCreationOptions options)",
+      "summary": "Create a new SubD from a mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "The input mesh.",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Rhino.Geometry.SubDCreationOptions",
+          "doc": "The SubD creation options.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromMesh_1.htm"
+    },
+    {
+      "name": "CreateFromSurface",
+      "signature": "public static SubD CreateFromSurface(Surface surface, SubDFromSurfaceMethods method, bool corners)",
+      "summary": "Create a SubD that approximates the surface. If the surface is a SubD friendly NURBS surface and withCorners is true, then the SubD and input surface will have the same geometry.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "[Missing \u003Cparam name=\u0022surface\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubD.CreateFromSurface(Rhino.Geometry.Surface,Rhino.Geometry.SubDFromSurfaceMethods,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "Rhino.Geometry.SubDFromSurfaceMethods",
+          "doc": "Selects the method used to calculate the SubD.",
+          "optional": false
+        },
+        {
+          "name": "corners",
+          "type": "System.Boolean",
+          "doc": "If the surface is open, then the corner vertices with be tagged as VertexTagCorner. This makes the resulting SubD have sharp corners to match the appearance of the input surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubD.CreateFromSurface(Rhino.Geometry.Surface,Rhino.Geometry.SubDFromSurfaceMethods,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromSurface.htm"
+    },
+    {
+      "name": "CreateFromSweep(NurbsCurve, NurbsCurve, IEnumerable\u003CNurbsCurve\u003E, Boolean, Boolean)",
+      "signature": "public static SubD CreateFromSweep(NurbsCurve rail1, NurbsCurve rail2, IEnumerable\u003CNurbsCurve\u003E shapes, bool closed, bool addCorners)",
+      "summary": "Fits a SubD through a series of profile curves that define the SubD cross-sections and two curves that defines SubD edges.",
+      "remarks": "Shape curves must be in the proper order and orientation. Shape curves must have the same point counts and rail curves must have the same point counts. Shape curves will relocated to the nearest pair of Greville points on the rails. Shape curves will be made at each pair of rail edit points where there isn\u0027t an input shape.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "The first SubD-friendly NURBS curve to sweep along.",
+          "optional": false
+        },
+        {
+          "name": "rail2",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "The second SubD-friendly NURBS curve to sweep along.",
+          "optional": false
+        },
+        {
+          "name": "shapes",
+          "type": "System.Collections.Generic.IEnumerable\u003CNurbsCurve\u003E",
+          "doc": "An enumeration of SubD-friendly NURBS curves to sweep through.",
+          "optional": false
+        },
+        {
+          "name": "closed",
+          "type": "System.Boolean",
+          "doc": "Creates a SubD that is closed in the rail curve direction.",
+          "optional": false
+        },
+        {
+          "name": "addCorners",
+          "type": "System.Boolean",
+          "doc": "With open curves, adds creased vertices to the SubD at both ends of the first and last curves.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromSweep.htm"
+    },
+    {
+      "name": "CreateFromSweep(NurbsCurve, IEnumerable\u003CNurbsCurve\u003E, Boolean, Boolean, Boolean, Vector3d)",
+      "signature": "public static SubD CreateFromSweep(NurbsCurve rail1, IEnumerable\u003CNurbsCurve\u003E shapes, bool closed, bool addCorners, bool roadlikeFrame, Vector3d roadlikeNormal)",
+      "summary": "Fits a SubD through a series of profile curves that define the SubD cross-sections and one curve that defines a SubD edge.",
+      "remarks": "Shape curves must be in the proper order and orientation. Shape curves must have the same point counts and rail curves must have the same point counts. Shape curves will relocated to the nearest pair of Greville points on the rails. Shape curves will be made at each pair of rail edit points where there isn\u0027t an input shape.",
+      "params": [
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "A SubD-friendly NURBS curve to sweep along.",
+          "optional": false
+        },
+        {
+          "name": "shapes",
+          "type": "System.Collections.Generic.IEnumerable\u003CNurbsCurve\u003E",
+          "doc": "An enumeration of SubD-friendly NURBS curves to sweep through.",
+          "optional": false
+        },
+        {
+          "name": "closed",
+          "type": "System.Boolean",
+          "doc": "Creates a SubD that is closed in the rail curve direction.",
+          "optional": false
+        },
+        {
+          "name": "addCorners",
+          "type": "System.Boolean",
+          "doc": "With open curves, adds creased vertices to the SubD at both ends of the first and last curves.",
+          "optional": false
+        },
+        {
+          "name": "roadlikeFrame",
+          "type": "System.Boolean",
+          "doc": "Determines how sweep frame rotations are calculated. If false (Freeform), frame are propogated based on a refrence direction taken from the rail curve curvature direction. If true (Roadlike), frame rotations are calculated based on a vector supplied in \u0022roadlikeNormal\u0022 and the world coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "roadlikeNormal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "If roadlikeFrame = true, provide 3D vector used to calculate the frame rotations for sweep shapes. If roadlikeFrame = false, then pass Unset.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_CreateFromSweep_1.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Deletes the underlying native pointer during a Dispose call or GC collection",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_Dispose.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public virtual GeometryBase Duplicate()",
+      "summary": "Constructs a deep (full) copy of this object.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "An object of the same type as this, with the same properties and behavior."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateShallow",
+      "signature": "public GeometryBase DuplicateShallow()",
+      "summary": "Constructs a light copy of this object. By \u0022light\u0022, it is meant that the same underlying data is used until something is done to attempt to change it. For example, you could have a shallow copy of a very heavy mesh object and the same underlying data will be used when doing things like inspecting the number of faces on the mesh. If you modify the location of one of the mesh vertices, the shallow copy will create a full duplicate of the underlying mesh data and the shallow copy will become a deep copy.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "An object of the same type as this object. This behavior is overridden by implementing classes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_DuplicateShallow.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "GetBoundingBox(Boolean)",
+      "signature": "public BoundingBox GetBoundingBox(bool accurate)",
+      "summary": "Bounding box solver. Gets the world axis aligned bounding box for the geometry.",
+      "params": [
+        {
+          "name": "accurate",
+          "type": "System.Boolean",
+          "doc": "If true, a physically accurate bounding box will be computed. If not, a bounding box estimate will be computed. For some geometry types there is no difference between the estimate and the accurate bounding box. Estimated bounding boxes can be computed much (much) faster than accurate (or \u0022tight\u0022) bounding boxes. Estimated bounding boxes are always similar to or larger than accurate bounding boxes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The bounding box of the geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_3.htm"
+    },
+    {
+      "name": "GetBoundingBox(Plane)",
+      "signature": "public BoundingBox GetBoundingBox(Plane plane)",
+      "summary": "Aligned Bounding box solver. Gets the plane aligned bounding box.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane for BoundingBox.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A BoundingBox in plane coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetBoundingBox(Transform)",
+      "signature": "public virtual BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "Aligned Bounding box solver. Gets the world axis aligned bounding box for the transformed geometry.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to object prior to the BoundingBox computation. The geometry itself is not modified.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The accurate bounding box of the transformed geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_2.htm"
+    },
+    {
+      "name": "GetBoundingBox(Plane, Box)",
+      "signature": "public BoundingBox GetBoundingBox(Plane plane, out Box worldBox)",
+      "summary": "Aligned Bounding box solver. Gets the plane aligned bounding box.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane for BoundingBox.",
+          "optional": false
+        },
+        {
+          "name": "worldBox",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Aligned box in World coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A BoundingBox in plane coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_1.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets user string from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets a copy of all (user key string, user value string) pairs attached to this geometry.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A new collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetUserStrings.htm"
+    },
+    {
+      "name": "InterpolateSurfacePoints",
+      "signature": "public bool InterpolateSurfacePoints(Point3d[] surfacePoints)",
+      "summary": "Modifies the SubD so that the SubD vertex limit surface points are equal to surface_points[]",
+      "params": [
+        {
+          "name": "surfacePoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "point for limit surface to interpolate. surface_points[i] is the location for the i-th vertex returned by SubVertexIterator vit(this)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubD.InterpolateSurfacePoints(Rhino.Geometry.Point3d[])\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_InterpolateSurfacePoints.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "JoinSubDs",
+      "signature": "public static SubD[] JoinSubDs(IEnumerable\u003CSubD\u003E subdsToJoin, double tolerance, bool joinedEdgesAreCreases)",
+      "summary": "Joins an enumeration of SubDs to form as few as possible resulting SubDs. There may be more than one SubD in the result array.",
+      "remarks": "All of the input SubDs are copied and added to the result array in one form or another.",
+      "params": [
+        {
+          "name": "subdsToJoin",
+          "type": "System.Collections.Generic.IEnumerable\u003CSubD\u003E",
+          "doc": "An enumeration of SubDs to join.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The join tolerance.",
+          "optional": false
+        },
+        {
+          "name": "joinedEdgesAreCreases",
+          "type": "System.Boolean",
+          "doc": "If true, merged boundary edges will be creases. If false, merged boundary edges will be smooth.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubD.JoinSubDs(System.Collections.Generic.IEnumerable{Rhino.Geometry.SubD},System.Double,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_JoinSubDs.htm"
+    },
+    {
+      "name": "MakeDeformable",
+      "signature": "public bool MakeDeformable()",
+      "summary": "If possible, converts the object into a form that can be accurately modified with \u0022squishy\u0022 transformations like projections, shears, an non-uniform scaling.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "false if object cannot be converted to a deformable object. true if object was already deformable or was converted into a deformable object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_MakeDeformable.htm"
+    },
+    {
+      "name": "MemoryEstimate",
+      "signature": "public uint MemoryEstimate()",
+      "summary": "Computes an estimate of the number of bytes that this object is using in memory.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "An estimated memory footprint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_MemoryEstimate.htm"
+    },
+    {
+      "name": "MergeAllCoplanarFaces(Double)",
+      "signature": "public bool MergeAllCoplanarFaces(double tolerance)",
+      "summary": "Merges adjacent coplanar faces into single faces.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance for determining when edges are adjacent. When in doubt, use the document\u0027s ModelAbsoluteTolerance property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if faces were merged, false if no faces were merged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_MergeAllCoplanarFaces.htm"
+    },
+    {
+      "name": "MergeAllCoplanarFaces(Double, Double)",
+      "signature": "public bool MergeAllCoplanarFaces(double tolerance, double angleTolerance)",
+      "summary": "Merges adjacent coplanar faces into single faces.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Tolerance for determining when edges are adjacent. When in doubt, use the document\u0027s ModelAbsoluteTolerance property.",
+          "optional": false
+        },
+        {
+          "name": "angleTolerance",
+          "type": "System.Double",
+          "doc": "Angle tolerance, in radians, for determining when faces are parallel. When in doubt, use the document\u0027s ModelAngleToleranceRadians property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if faces were merged, false if no faces were merged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_MergeAllCoplanarFaces_1.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected override void NonConstOperation()",
+      "summary": "Destroy cache handle",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_NonConstOperation.htm"
+    },
+    {
+      "name": "Offset",
+      "signature": "public SubD Offset(double distance, bool solidify)",
+      "summary": "Makes a new SubD with vertices offset at distance in the direction of the control net vertex normals. Optionally, based on the value of solidify, adds the input SubD and a ribbon of faces along any naked edges.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "The distance to offset.",
+          "optional": false
+        },
+        {
+          "name": "solidify",
+          "type": "System.Boolean",
+          "doc": "true if the output SubD should be turned into a closed SubD.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubD",
+        "doc": "A new SubD if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_Offset.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected override void OnSwitchToNonConst()",
+      "summary": "Called when this object switches from being considered \u0022owned by the document\u0022 to being an independent instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public bool Rotate(double angleRadians, Vector3d rotationAxis, Point3d rotationCenter)",
+      "summary": "Rotates the object about the specified axis. A positive rotation angle results in a counter-clockwise rotation about the axis (right hand rule).",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Angle of rotation in radians.",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction of the axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on the axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully rotated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Rotate.htm"
+    },
+    {
+      "name": "Scale",
+      "signature": "public bool Scale(double scaleFactor)",
+      "summary": "Scales the object by the specified factor. The scale is centered at the origin.",
+      "params": [
+        {
+          "name": "scaleFactor",
+          "type": "System.Double",
+          "doc": "The uniform scaling factor.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully scaled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Scale.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_SetUserString.htm"
+    },
+    {
+      "name": "Subdivide",
+      "signature": "public bool Subdivide(int count)",
+      "summary": "Apply the Catmull-Clark subdivision algorithm and save the results in this SubD",
+      "params": [
+        {
+          "name": "count",
+          "type": "System.Int32",
+          "doc": "Number of times to subdivide (must be greater than 0)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_Subdivide.htm"
+    },
+    {
+      "name": "ToBrep()",
+      "signature": "public Brep ToBrep()",
+      "summary": "Create a Brep based on this SubD geometry, based on SubDToBrepOptions.Default options.",
+      "params": [],
+      "returns": {
+        "type": "Brep",
+        "doc": "A new Brep if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_ToBrep.htm"
+    },
+    {
+      "name": "ToBrep(SubDToBrepOptions)",
+      "signature": "public Brep ToBrep(SubDToBrepOptions options)",
+      "summary": "Create a Brep based on this SubD geometry.",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.Geometry.SubDToBrepOptions",
+          "doc": "The SubD to Brep conversion options. Use SubDToBrepOptions.Default for sensible defaults. Currently, these return unpacked faces and locally-G1 vertices in the output Brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "A new Brep if successful, or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_ToBrep_1.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms the geometry. If the input Transform has a SimilarityType of OrientationReversing, you may want to consider flipping the transformed geometry after calling this function when it makes sense. For example, you may want to call Flip() on a Brep after transforming it.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully transformed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Transform.htm"
+    },
+    {
+      "name": "Translate(Vector3d)",
+      "signature": "public bool Translate(Vector3d translationVector)",
+      "summary": "Translates the object along the specified vector.",
+      "params": [
+        {
+          "name": "translationVector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A moving vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully translated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Translate.htm"
+    },
+    {
+      "name": "Translate(Double, Double, Double)",
+      "signature": "public bool Translate(double x, double y, double z)",
+      "summary": "Translates the object along the specified vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X component.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y component.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The Z component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully translated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Translate_1.htm"
+    },
+    {
+      "name": "UpdateAllTagsAndSectorCoefficients",
+      "signature": "public uint UpdateAllTagsAndSectorCoefficients()",
+      "summary": "Updates vertex tag, edge tag, and edge coefficient values on the active level. After completing custom editing operations that modify the topology of the SubD control net or changing values of vertex or edge tags, the tag and sector coefficients information on nearby components in the edited areas need to be updated.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "Number of vertices and edges that were changed during the update."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubD_UpdateAllTagsAndSectorCoefficients.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "Edges",
+      "type": "SubDEdgeList",
+      "getter": true,
+      "setter": false,
+      "summary": "All edges in this SubD",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubD_Edges.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "SubD",
+      "getter": true,
+      "setter": false,
+      "summary": "Get a new, empty SubD object.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubD_Empty.htm"
+    },
+    {
+      "name": "Faces",
+      "type": "SubDFaceList",
+      "getter": true,
+      "setter": false,
+      "summary": "All faces in this SubD",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubD_Faces.htm"
+    },
+    {
+      "name": "HasBrepForm",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the Brep.TryConvertBrep function will be successful for this object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_HasBrepForm.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "IsDeformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if object can be accurately modified with \u0022squishy\u0022 transformations like projections, shears, and non-uniform scaling.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_IsDeformable.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsSolid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Test SubD to see if the active level is a solid. A \u0022solid\u0022 is a closed oriented manifold, or a closed oriented manifold.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubD_IsSolid.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "ObjectType",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Useful for switch statements that need to differentiate between basic object types like points, curves, surfaces, and so on.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_ObjectType.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of user strings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_UserStringCount.htm"
+    },
+    {
+      "name": "Vertices",
+      "type": "SubDVertexList",
+      "getter": true,
+      "setter": false,
+      "summary": "All vertices in this SubD",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubD_Vertices.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

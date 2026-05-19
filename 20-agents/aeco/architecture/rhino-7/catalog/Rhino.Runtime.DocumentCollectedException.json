@@ -1,0 +1,41 @@
+{
+  "name": "DocumentCollectedException",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Represents the error that happen when a class user attempts to execute a modifying operation on an object that has been added to a document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_DocumentCollectedException.htm",
+  "constructors": [
+    {
+      "name": "DocumentCollectedException()",
+      "signature": "public DocumentCollectedException()",
+      "summary": "Initializes a new instance of the document controlled exception class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_DocumentCollectedException__ctor.htm"
+    },
+    {
+      "name": "DocumentCollectedException(String)",
+      "signature": "public DocumentCollectedException(string message)",
+      "summary": "Initializes a new instance of the document collected exception class.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "A more specific message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_DocumentCollectedException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

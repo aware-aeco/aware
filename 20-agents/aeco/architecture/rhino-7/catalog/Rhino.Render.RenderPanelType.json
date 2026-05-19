@@ -1,0 +1,19 @@
+{
+  "name": "RenderPanelType",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Contains the custom user interfaces that may be provided",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderPanelType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "RenderWindow",
+      "value": 0,
+      "summary": "A custom control panel added to the render output window."
+    }
+  ]
+}

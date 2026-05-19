@@ -1,0 +1,281 @@
+{
+  "name": "CustomRenderMeshProvider2",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.CustomRenderMeshProvider2\u0022]",
+  "base": "CustomRenderMeshProvider",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_CustomRenderMeshProvider2.htm",
+  "constructors": [
+    {
+      "name": "CustomRenderMeshProvider2",
+      "signature": "protected CustomRenderMeshProvider2()",
+      "summary": "Initializes a new instance of the CustomRenderMeshProvider2 class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BoundingBox(ViewportInfo, RhinoObject, Guid, Boolean)",
+      "signature": "public override BoundingBox BoundingBox(ViewportInfo vp, RhinoObject obj, Guid requestingPlugIn, bool preview)",
+      "summary": "(Overrides CustomRenderMeshProvider.BoundingBox(ViewportInfo, RhinoObject, Guid, Boolean).)",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022preview\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2_BoundingBox_1.htm"
+    },
+    {
+      "name": "BoundingBox(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes)",
+      "signature": "public virtual BoundingBox BoundingBox(ViewportInfo vp, RhinoObject obj, RhinoDoc doc, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022attrs\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BoundingBox(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2_BoundingBox.htm"
+    },
+    {
+      "name": "BuildCustomMeshes(ViewportInfo, RenderPrimitiveList, Guid, Boolean)",
+      "signature": "public override bool BuildCustomMeshes(ViewportInfo vp, RenderPrimitiveList objMeshes, Guid requestingPlugIn, bool preview)",
+      "summary": "(Overrides CustomRenderMeshProvider.BuildCustomMeshes(ViewportInfo, RenderPrimitiveList, Guid, Boolean).)",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.Render.RenderPrimitiveList,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "objMeshes",
+          "type": "Rhino.Render.RenderPrimitiveList",
+          "doc": "[Missing \u003Cparam name=\u0022objMeshes\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.Render.RenderPrimitiveList,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.Render.RenderPrimitiveList,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022preview\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.Render.RenderPrimitiveList,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.Render.RenderPrimitiveList,System.Guid,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2_BuildCustomMeshes.htm"
+    },
+    {
+      "name": "BuildCustomMeshes(ViewportInfo, RhinoDoc, RenderPrimitiveList, Guid, DisplayPipelineAttributes)",
+      "signature": "public abstract bool BuildCustomMeshes(ViewportInfo vp, RhinoDoc doc, RenderPrimitiveList objMeshes, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,Rhino.Render.RenderPrimitiveList,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,Rhino.Render.RenderPrimitiveList,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "objMeshes",
+          "type": "Rhino.Render.RenderPrimitiveList",
+          "doc": "[Missing \u003Cparam name=\u0022objMeshes\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,Rhino.Render.RenderPrimitiveList,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,Rhino.Render.RenderPrimitiveList,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022attrs\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,Rhino.Render.RenderPrimitiveList,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.BuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.RhinoDoc,Rhino.Render.RenderPrimitiveList,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2_BuildCustomMeshes_1.htm"
+    },
+    {
+      "name": "WillBuildCustomMeshes(ViewportInfo, RhinoObject, Guid, Boolean)",
+      "signature": "public override bool WillBuildCustomMeshes(ViewportInfo vp, RhinoObject obj, Guid requestingPlugIn, bool preview)",
+      "summary": "(Overrides CustomRenderMeshProvider.WillBuildCustomMeshes(ViewportInfo, RhinoObject, Guid, Boolean).)",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "preview",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022preview\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,System.Guid,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2_WillBuildCustomMeshes_1.htm"
+    },
+    {
+      "name": "WillBuildCustomMeshes(ViewportInfo, RhinoObject, RhinoDoc, Guid, DisplayPipelineAttributes)",
+      "signature": "public abstract bool WillBuildCustomMeshes(ViewportInfo vp, RhinoObject obj, RhinoDoc doc, Guid requestingPlugIn, DisplayPipelineAttributes attrs)",
+      "summary": "",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022vp\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "requestingPlugIn",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022requestingPlugIn\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "attrs",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022attrs\u0022/\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.CustomRenderMeshProvider2.WillBuildCustomMeshes(Rhino.DocObjects.ViewportInfo,Rhino.DocObjects.RhinoObject,Rhino.RhinoDoc,System.Guid,Rhino.Display.DisplayPipelineAttributes)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_CustomRenderMeshProvider2_WillBuildCustomMeshes.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the provider for UI display.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_CustomRenderMeshProvider_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,971 @@
+{
+  "name": "Plane",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the value of a center point and two axes in a plane in three dimensions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Plane.htm",
+  "constructors": [
+    {
+      "name": "Plane(Plane)",
+      "signature": "public Plane(Plane other)",
+      "summary": "Copy constructor.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The source plane value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane__ctor.htm"
+    },
+    {
+      "name": "Plane(Point3d, Vector3d)",
+      "signature": "public Plane(Point3d origin, Vector3d normal)",
+      "summary": "Constructs a plane from a point and a normal vector.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Origin point of the plane.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Non-zero normal to the plane.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane__ctor_2.htm"
+    },
+    {
+      "name": "Plane(Point3d, Point3d, Point3d)",
+      "signature": "public Plane(Point3d origin, Point3d xPoint, Point3d yPoint)",
+      "summary": "Initializes a plane from three non-collinear points.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Origin point of the plane.",
+          "optional": false
+        },
+        {
+          "name": "xPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second point in the plane. The x-axis will be parallel to x_point-origin.",
+          "optional": false
+        },
+        {
+          "name": "yPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Third point on the plane that is not collinear with the first two points. taxis*(y_point-origin) will be \u003E 0.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane__ctor_1.htm"
+    },
+    {
+      "name": "Plane(Point3d, Vector3d, Vector3d)",
+      "signature": "public Plane(Point3d origin, Vector3d xDirection, Vector3d yDirection)",
+      "summary": "Constructs a plane from a point and two vectors in the plane.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Origin point of the plane.",
+          "optional": false
+        },
+        {
+          "name": "xDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Non-zero vector in the plane that determines the x-axis direction.",
+          "optional": false
+        },
+        {
+          "name": "yDirection",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Non-zero vector not parallel to x_dir that is used to determine the y-axis direction. y_dir does not need to be perpendicular to x_dir.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane__ctor_3.htm"
+    },
+    {
+      "name": "Plane(Double, Double, Double, Double)",
+      "signature": "public Plane(double a, double b, double c, double d)",
+      "summary": "Constructs a plane from an equation Ax\u002BBy\u002BCz\u002BD=0.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Plane.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Plane.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Plane.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Plane.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public Plane Clone()",
+      "summary": "Returns a deep copy of this instance.",
+      "params": [],
+      "returns": {
+        "type": "Plane",
+        "doc": "A plane with the same values as this item."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Clone.htm"
+    },
+    {
+      "name": "ClosestParameter",
+      "signature": "public bool ClosestParameter(Point3d testPoint, out double s, out double t)",
+      "summary": "Gets the parameters of the point on the plane closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to get close to.",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "System.Double",
+          "doc": "Parameter along plane X-direction.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter along plane Y-direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a parameter could be found, false if the point could not be projected successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ClosestParameter.htm"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d testPoint)",
+      "summary": "Gets the point on the plane closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to get close to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the plane that is closest to testPoint, or Point3d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ClosestPoint.htm"
+    },
+    {
+      "name": "DistanceTo(Point3d)",
+      "signature": "public double DistanceTo(Point3d testPoint)",
+      "summary": "Returns the signed distance from testPoint to its projection onto this plane. If the point is below the plane, a negative distance is returned.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "Signed distance from this plane to testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_DistanceTo_1.htm"
+    },
+    {
+      "name": "DistanceTo(BoundingBox, Double, Double)",
+      "signature": "public bool DistanceTo(BoundingBox bbox, out double min, out double max)",
+      "summary": "Returns the signed minimum and maximum distances from bounding box to this plane.",
+      "params": [
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "bounding box to get distances from",
+          "optional": false
+        },
+        {
+          "name": "min",
+          "type": "System.Double",
+          "doc": "minimum signed distance from plane to box",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "System.Double",
+          "doc": "maximum signed distance from plane to box",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "false if plane has zero length normal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_DistanceTo.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Plane other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Plane.EpsilonEquals(Rhino.Geometry.Plane,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Plane.EpsilonEquals(Rhino.Geometry.Plane,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Plane.EpsilonEquals(Rhino.Geometry.Plane,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines if an object is a plane and has the same components as this plane.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "An object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a plane and has the same components as this plane; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Plane)",
+      "signature": "public bool Equals(Plane plane)",
+      "summary": "Determines if another plane has the same components as this plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if plane has the same components as this plane; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Equals.htm"
+    },
+    {
+      "name": "ExtendThroughBox(BoundingBox, Interval, Interval)",
+      "signature": "public bool ExtendThroughBox(BoundingBox box, out Interval s, out Interval t)",
+      "summary": "Extends this plane through a bounding box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A box to use as minimal extension boundary.",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "If this function returns true, the s parameter returns the Interval on the plane along the X direction that will encompass the Box.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "If this function returns true, the t parameter returns the Interval on the plane along the Y direction that will encompass the Box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ExtendThroughBox.htm"
+    },
+    {
+      "name": "ExtendThroughBox(Box, Interval, Interval)",
+      "signature": "public bool ExtendThroughBox(Box box, out Interval s, out Interval t)",
+      "summary": "Extend this plane through a Box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "A box to use for extension.",
+          "optional": false
+        },
+        {
+          "name": "s",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "If this function returns true, the s parameter returns the Interval on the plane along the X direction that will encompass the Box.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "If this function returns true, the t parameter returns the Interval on the plane along the Y direction that will encompass the Box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ExtendThroughBox_1.htm"
+    },
+    {
+      "name": "FitPlaneToPoints(IEnumerable\u003CPoint3d\u003E, Plane)",
+      "signature": "public static PlaneFitResult FitPlaneToPoints(IEnumerable\u003CPoint3d\u003E points, out Plane plane)",
+      "summary": "Fit a plane through a collection of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to fit to.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Resulting plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PlaneFitResult",
+        "doc": "A value indicating the result of the operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_FitPlaneToPoints.htm"
+    },
+    {
+      "name": "FitPlaneToPoints(IEnumerable\u003CPoint3d\u003E, Plane, Double)",
+      "signature": "public static PlaneFitResult FitPlaneToPoints(IEnumerable\u003CPoint3d\u003E points, out Plane plane, out double maximumDeviation)",
+      "summary": "Fit a plane through a collection of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to fit to.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Resulting plane.",
+          "optional": false
+        },
+        {
+          "name": "maximumDeviation",
+          "type": "System.Double",
+          "doc": "The distance from the furthest point to the plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PlaneFitResult",
+        "doc": "A value indicating the result of the operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_FitPlaneToPoints_1.htm"
+    },
+    {
+      "name": "Flip",
+      "signature": "public void Flip()",
+      "summary": "Flip this plane by swapping out the X and Y axes and inverting the Z axis.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Flip.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Gets a non-unique hashing code for this entity.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A particular number for a specific instance of plane."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_GetHashCode.htm"
+    },
+    {
+      "name": "GetPlaneEquation",
+      "signature": "public double[] GetPlaneEquation()",
+      "summary": "Gets the plane equation for this plane in the format of Ax\u002BBy\u002BCz\u002BD=0.",
+      "params": [],
+      "returns": {
+        "type": "Double[]",
+        "doc": "Array of four values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_GetPlaneEquation.htm"
+    },
+    {
+      "name": "PointAt(Double, Double)",
+      "signature": "public Point3d PointAt(double u, double v)",
+      "summary": "Evaluate a point on the plane.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "evaluation parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "evaluation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "plane.origin \u002B u*plane.xaxis \u002B v*plane.yaxis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_PointAt.htm"
+    },
+    {
+      "name": "PointAt(Double, Double, Double)",
+      "signature": "public Point3d PointAt(double u, double v, double w)",
+      "summary": "Evaluate a point on the plane.",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Double",
+          "doc": "evaluation parameter.",
+          "optional": false
+        },
+        {
+          "name": "v",
+          "type": "System.Double",
+          "doc": "evaluation parameter.",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "System.Double",
+          "doc": "evaluation parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "plane.origin \u002B u*plane.xaxis \u002B v*plane.yaxis \u002B z*plane.zaxis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_PointAt_1.htm"
+    },
+    {
+      "name": "RemapToPlaneSpace",
+      "signature": "public bool RemapToPlaneSpace(Point3d ptSample, out Point3d ptPlane)",
+      "summary": "Convert a point from World space coordinates into Plane space coordinates.",
+      "remarks": "D stands for distance, not disease.",
+      "params": [
+        {
+          "name": "ptSample",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "World point to remap.",
+          "optional": false
+        },
+        {
+          "name": "ptPlane",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point in plane (s,t,d) coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_RemapToPlaneSpace.htm"
+    },
+    {
+      "name": "Rotate(Double, Vector3d)",
+      "signature": "public bool Rotate(double angle, Vector3d axis)",
+      "summary": "Rotate the plane about its origin point.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Rotate.htm"
+    },
+    {
+      "name": "Rotate(Double, Vector3d, Point3d)",
+      "signature": "public bool Rotate(double angle, Vector3d axis, Point3d centerOfRotation)",
+      "summary": "Rotate the plane about a custom anchor point.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "System.Double",
+          "doc": "Angle in radians.",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "centerOfRotation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Rotate_1.htm"
+    },
+    {
+      "name": "Rotate(Double, Double, Vector3d)",
+      "signature": "public bool Rotate(double sinAngle, double cosAngle, Vector3d axis)",
+      "summary": "Rotate the plane about its origin point.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "Sin(angle).",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "Cos(angle).",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Rotate_2.htm"
+    },
+    {
+      "name": "Rotate(Double, Double, Vector3d, Point3d)",
+      "signature": "public bool Rotate(double sinAngle, double cosAngle, Vector3d axis, Point3d centerOfRotation)",
+      "summary": "Rotate the plane about a custom anchor point.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "Sin(angle)",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "Cos(angle)",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "centerOfRotation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Rotate_3.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Constructs the string representation of this plane.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Text."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transform the plane with a Transformation matrix.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Transform.htm"
+    },
+    {
+      "name": "Translate",
+      "signature": "public bool Translate(Vector3d delta)",
+      "summary": "Translate (move) the plane along a vector.",
+      "params": [
+        {
+          "name": "delta",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Translation (motion) vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_Translate.htm"
+    },
+    {
+      "name": "UpdateEquation",
+      "signature": "public bool UpdateEquation()",
+      "summary": "Update Equations",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "bool"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_UpdateEquation.htm"
+    },
+    {
+      "name": "ValueAt",
+      "signature": "public double ValueAt(Point3d p)",
+      "summary": "Get the value of the plane equation at the point.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "evaluation point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "returns pe[0]*p.X \u002B pe[1]*p.Y \u002B pe[2]*p.Z \u002B pe[3] where pe[0], pe[1], pe[2] and pe[3] are the coefficients of the plane equation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_ValueAt.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Plane a, Plane b)",
+      "summary": "Determines if two planes are equal.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A first plane.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A second plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two planes have all equal components; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Plane a, Plane b)",
+      "summary": "Determines if two planes are different.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A first plane.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A second plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two planes have any different component components; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Plane_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this is a valid plane. A plane is considered to be valid when all fields contain reasonable information and the equation jibes with point and z-axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_IsValid.htm"
+    },
+    {
+      "name": "Normal",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the normal of this plane. This is essentially the ZAxis of the plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_Normal.htm"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the origin point of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_Origin.htm"
+    },
+    {
+      "name": "OriginX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X coordinate of the origin of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_OriginX.htm"
+    },
+    {
+      "name": "OriginY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y coordinate of the origin of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_OriginY.htm"
+    },
+    {
+      "name": "OriginZ",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z coordinate of the origin of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_OriginZ.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a plane that contains Unset origin and axis vectors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_Unset.htm"
+    },
+    {
+      "name": "WorldXY",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "plane coincident with the World XY plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_WorldXY.htm"
+    },
+    {
+      "name": "WorldYZ",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "plane coincident with the World YZ plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_WorldYZ.htm"
+    },
+    {
+      "name": "WorldZX",
+      "type": "Plane",
+      "getter": true,
+      "setter": false,
+      "summary": "plane coincident with the World ZX plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_WorldZX.htm"
+    },
+    {
+      "name": "XAxis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X axis vector of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_XAxis.htm"
+    },
+    {
+      "name": "YAxis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y axis vector of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_YAxis.htm"
+    },
+    {
+      "name": "ZAxis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z axis vector of this plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Plane_ZAxis.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

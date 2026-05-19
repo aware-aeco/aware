@@ -1,0 +1,29 @@
+{
+  "name": "ObjectPlotWeightSource",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for the source of plotting/printing weight of single objects.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ObjectPlotWeightSource.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PlotWeightFromLayer",
+      "value": 0,
+      "summary": "use plot color assigned to layer."
+    },
+    {
+      "name": "PlotWeightFromObject",
+      "value": 1,
+      "summary": "use plot color assigned to object."
+    },
+    {
+      "name": "PlotWeightFromParent",
+      "value": 3,
+      "summary": "for objects with parents (like objects in instance references, use parent plot color) if no parent, treat as plot_color_from_layer."
+    }
+  ]
+}

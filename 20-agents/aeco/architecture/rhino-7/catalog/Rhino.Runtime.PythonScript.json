@@ -1,0 +1,424 @@
+{
+  "name": "PythonScript",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Represents a Python script.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_PythonScript.htm",
+  "constructors": [
+    {
+      "name": "PythonScript",
+      "signature": "protected PythonScript()",
+      "summary": "Initializes a new instance of the PythonScript class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddRuntimeAssembly",
+      "signature": "public static void AddRuntimeAssembly(Assembly assembly)",
+      "summary": "Add assembly to list of assemblies used by python",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.Runtime.PythonScript.AddRuntimeAssembly(System.Reflection.Assembly)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_AddRuntimeAssembly.htm"
+    },
+    {
+      "name": "Compile",
+      "signature": "public abstract PythonCompiledCode Compile(string script)",
+      "summary": "Compiles a class in a quick-to-execute proxy.",
+      "params": [
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "A string text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PythonCompiledCode",
+        "doc": "A Python compiled code instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_Compile.htm"
+    },
+    {
+      "name": "ContainsVariable",
+      "signature": "public abstract bool ContainsVariable(string name)",
+      "summary": "Determines if the main scripting context has a variable with a name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The variable name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the variable is present."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_ContainsVariable.htm"
+    },
+    {
+      "name": "Create",
+      "signature": "public static PythonScript Create()",
+      "summary": "Constructs a new Python script context.",
+      "params": [],
+      "returns": {
+        "type": "PythonScript",
+        "doc": "A new Python script, or null if none could be created. Rhino 4 always returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_Create.htm"
+    },
+    {
+      "name": "CreateTextEditorControl",
+      "signature": "public abstract Object CreateTextEditorControl(string script, Action\u003Cstring\u003E helpcallback)",
+      "summary": "Creates a control where the user is able to type Python code.",
+      "params": [
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "A starting script.",
+          "optional": false
+        },
+        {
+          "name": "helpcallback",
+          "type": "System.Action\u003CString\u003E",
+          "doc": "A method that is called when help is shown for a function, a class or a method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "A Windows Forms control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_CreateTextEditorControl.htm"
+    },
+    {
+      "name": "EvaluateExpression",
+      "signature": "public abstract Object EvaluateExpression(string statements, string expression)",
+      "summary": "Evaluates statements and an expression in the main scripting context.",
+      "params": [
+        {
+          "name": "statements",
+          "type": "System.String",
+          "doc": "One or several statements.",
+          "optional": false
+        },
+        {
+          "name": "expression",
+          "type": "System.String",
+          "doc": "An expression.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The expression result."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_EvaluateExpression.htm"
+    },
+    {
+      "name": "ExecuteFile",
+      "signature": "public abstract bool ExecuteFile(string path)",
+      "summary": "Executes a Python file. The file is executed in a new, __main__ scope.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to the file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the file executed. This method can throw scripting-runtime based exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_ExecuteFile.htm"
+    },
+    {
+      "name": "ExecuteFileInScope",
+      "signature": "public abstract bool ExecuteFileInScope(string path)",
+      "summary": "Executes a Python file in the calling script scope. All old variables are kept.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The path to the file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the file executed. This method can throw scripting-runtime based exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_ExecuteFileInScope.htm"
+    },
+    {
+      "name": "ExecuteScript",
+      "signature": "public abstract bool ExecuteScript(string script)",
+      "summary": "Executes a Python string.",
+      "params": [
+        {
+          "name": "script",
+          "type": "System.String",
+          "doc": "A Python text.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the file executed. This method can throw scripting-runtime based exceptions."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_ExecuteScript.htm"
+    },
+    {
+      "name": "GetSearchPaths",
+      "signature": "protected abstract string[] GetSearchPaths()",
+      "summary": "Protected helper function for static SearchPaths",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.PythonScript.GetSearchPaths\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_GetSearchPaths.htm"
+    },
+    {
+      "name": "GetStackTraceFromException",
+      "signature": "public abstract string GetStackTraceFromException(Exception ex)",
+      "summary": "Retrieves a meaningful representation of the call stack.",
+      "params": [
+        {
+          "name": "ex",
+          "type": "System.Exception",
+          "doc": "An exception that was thrown by some of the methods in this class.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A string that represents the Python exception."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_GetStackTraceFromException.htm"
+    },
+    {
+      "name": "GetVariable",
+      "signature": "public abstract Object GetVariable(string name)",
+      "summary": "Gets the object associated with a variable name in the main scripting context.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "A variable name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "The variable object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_GetVariable.htm"
+    },
+    {
+      "name": "GetVariableNames",
+      "signature": "public abstract IEnumerable\u003Cstring\u003E GetVariableNames()",
+      "summary": "Retrieves all variable names in the script.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerable\u003CString\u003E",
+        "doc": "An enumerable set with all names of the variables."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_GetVariableNames.htm"
+    },
+    {
+      "name": "RemoveVariable",
+      "signature": "public abstract void RemoveVariable(string name)",
+      "summary": "Removes a defined variable from the main scripting context.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The variable name.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_RemoveVariable.htm"
+    },
+    {
+      "name": "RuntimeAssemblies",
+      "signature": "public static Assembly[] RuntimeAssemblies()",
+      "summary": "Get list of assemblies used by python for library browser and inclusion into the runtime",
+      "params": [],
+      "returns": {
+        "type": "Assembly[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.PythonScript.RuntimeAssemblies\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_RuntimeAssemblies.htm"
+    },
+    {
+      "name": "SetIntellisenseVariable",
+      "signature": "public virtual void SetIntellisenseVariable(string name, Object value)",
+      "summary": "Sets a variable for runtime introspection.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "A variable name.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "A variable value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_SetIntellisenseVariable.htm"
+    },
+    {
+      "name": "SetSearchPaths",
+      "signature": "protected abstract void SetSearchPaths(string[] paths)",
+      "summary": "Protected helper function for static SearchPaths",
+      "params": [
+        {
+          "name": "paths",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022paths\u0022/\u003E documentation for \u0022M:Rhino.Runtime.PythonScript.SetSearchPaths(System.String[])\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_SetSearchPaths.htm"
+    },
+    {
+      "name": "SetupScriptContext",
+      "signature": "public virtual void SetupScriptContext(Object doc)",
+      "summary": "Setups the script context. Use a RhinoDoc instance unless unsure.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "System.Object",
+          "doc": "Document.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_SetupScriptContext.htm"
+    },
+    {
+      "name": "SetVariable",
+      "signature": "public abstract void SetVariable(string name, Object value)",
+      "summary": "Sets a variable with a name and an object. Object can be null (Nothing in Visual Basic).",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "A valid variable name in Python.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Object",
+          "doc": "A valid value for that variable name.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonScript_SetVariable.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ContextId",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a context unique identified.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_PythonScript_ContextId.htm"
+    },
+    {
+      "name": "Output",
+      "type": "Action\u003CString\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Python script \u0022print()\u0022 target. By default string output goes to the Rhino.RhinoApp.Write function. Set Output if you want to redirect the output from python to a different function while this script executes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_PythonScript_Output.htm"
+    },
+    {
+      "name": "ScriptContextCommand",
+      "type": "Command",
+      "getter": true,
+      "setter": true,
+      "summary": "Command associated with this script. Used for localiation",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_PythonScript_ScriptContextCommand.htm"
+    },
+    {
+      "name": "ScriptContextDoc",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "object set to variable held in scriptcontext.doc.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_PythonScript_ScriptContextDoc.htm"
+    },
+    {
+      "name": "SearchPaths",
+      "type": "String[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get/Set additional search paths used by the python interpreter",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_PythonScript_SearchPaths.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

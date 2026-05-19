@@ -1,0 +1,49 @@
+{
+  "name": "Result",
+  "namespace": "Rhino.Commands",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values for several command result types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Commands_Result.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Success",
+      "value": 0,
+      "summary": "Command worked."
+    },
+    {
+      "name": "Cancel",
+      "value": 1,
+      "summary": "User canceled command."
+    },
+    {
+      "name": "Nothing",
+      "value": 2,
+      "summary": "Command did nothing but cancel was not pressed."
+    },
+    {
+      "name": "Failure",
+      "value": 3,
+      "summary": "Command failed (bad input, computational problem, etc.)"
+    },
+    {
+      "name": "UnknownCommand",
+      "value": 4,
+      "summary": "Command not found (user probably had a typo in command name)."
+    },
+    {
+      "name": "CancelModelessDialog",
+      "value": 5,
+      "summary": "Commands canceled and modeless dialog."
+    },
+    {
+      "name": "ExitRhino",
+      "value": 268435455,
+      "summary": "exit RhinoCommon."
+    }
+  ]
+}

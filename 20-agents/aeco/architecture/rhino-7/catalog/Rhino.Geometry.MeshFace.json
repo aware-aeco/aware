@@ -1,0 +1,474 @@
+{
+  "name": "MeshFace",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the values of the four indices of a mesh face quad. If the third and fourth values are the same, this face represents a triangle.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshFace.htm",
+  "constructors": [
+    {
+      "name": "MeshFace(Int32, Int32, Int32)",
+      "signature": "public MeshFace(int a, int b, int c)",
+      "summary": "Constructs a new triangular Mesh face.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Int32",
+          "doc": "Index of first corner.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "doc": "Index of second corner.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Int32",
+          "doc": "Index of third corner.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace__ctor.htm"
+    },
+    {
+      "name": "MeshFace(Int32, Int32, Int32, Int32)",
+      "signature": "public MeshFace(int a, int b, int c, int d)",
+      "summary": "Constructs a new quadrangular Mesh face.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Int32",
+          "doc": "Index of first corner.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "doc": "Index of second corner.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Int32",
+          "doc": "Index of third corner.",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Int32",
+          "doc": "Index of fourth corner.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(MeshFace other)",
+      "summary": "Compares this MeshFace with another MeshFace and returns a value of 1, 0, or -1, referring to dictionary order. Index evaluation priority is first A, then B, then C, then D.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "The other MeshFace to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this \u003C other. Priority is for index of corner A first, then B, then C, then D.\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_CompareTo.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Returns a value indicating whether the other object obj has precisely the same value as the current one.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "Any object the represents the other mesh face for comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a mesh face that, also orderly, equals to the present one; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_Equals_1.htm"
+    },
+    {
+      "name": "Equals(MeshFace)",
+      "signature": "public bool Equals(MeshFace other)",
+      "summary": "Returns a value indicating whether the other mesh face has precisely the same value as the current one.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "The other mesh face for comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the other face is, also orderly, equal to the present one; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_Equals.htm"
+    },
+    {
+      "name": "Flip",
+      "signature": "public MeshFace Flip()",
+      "summary": "Reverses the orientation of the face by swapping corners. The first corner is always maintained.",
+      "params": [],
+      "returns": {
+        "type": "MeshFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.MeshFace.Flip\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_Flip.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Returns a runtime-stable hash code for the current mesh face. You are not allowed to rely on persistence of this hash code in serialization, but for each version of RhinoCommon, this hash code will be the same for each mesh face.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique integer that represents this mesh face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_GetHashCode.htm"
+    },
+    {
+      "name": "IsValid()",
+      "signature": "public bool IsValid()",
+      "summary": "Gets a value indicating whether or not this mesh face is considered to be valid. Note that even valid mesh faces could potentially be invalid in the context of a specific Mesh, if one or more of the corner indices exceeds the number of vertices on the mesh. If you want to perform a complete validity check, use IsValid(int) instead.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.MeshFace.IsValid\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_IsValid.htm"
+    },
+    {
+      "name": "IsValid(Int32)",
+      "signature": "public bool IsValid(int vertexCount)",
+      "summary": "Gets a value indicating whether or not this mesh face is considered to be valid. Unlike the simple IsValid function, this function takes upper bound indices into account.",
+      "params": [
+        {
+          "name": "vertexCount",
+          "type": "System.Int32",
+          "doc": "Number of vertices in the mesh that this face is a part of.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the face is considered valid, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_IsValid_2.htm"
+    },
+    {
+      "name": "IsValid(Point3d[])",
+      "signature": "public bool IsValid(Point3d[] points)",
+      "summary": "Gets a value indicating whether or not this mesh face is considered to be valid. Unlike the simple IsValid function, this function takes actual point locations into account.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "Array of vertices with which to validate the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the face is considered valid, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_IsValid_1.htm"
+    },
+    {
+      "name": "IsValidEx",
+      "signature": "public bool IsValidEx(ref Point3d[] points)",
+      "summary": "Gets a value indicating whether or not this mesh face is considered to be valid. Unlike the simple IsValid function, this function takes actual point locations into account.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "Array of vertices with which to validate the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the face is considered valid, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_IsValidEx.htm"
+    },
+    {
+      "name": "Repair",
+      "signature": "public bool Repair(Point3d[] points)",
+      "summary": "Attempts to repair this mesh face by taking both face indexes and actual vertex locations into account.",
+      "remarks": "This function assumes the face is invalid and attempts to repair unconditionally. It is only worthwhile to call Repair on faces where IsValid returns false.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "Array of vertices with which to consider when repairing the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the face was repaired, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_Repair.htm"
+    },
+    {
+      "name": "RepairEx",
+      "signature": "public bool RepairEx(ref Point3d[] points)",
+      "summary": "Attempts to repair this mesh face by taking both face indexes and actual vertex locations into account.",
+      "remarks": "This function assumes the face is invalid and attempts to repair unconditionally. It is only worthwhile to call Repair on faces where IsValid returns false. This function is the analog of UnsafeNativeMethods.ON_MeshFace_Repair done completely here to avoid copying the point array.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "Array of vertices with which to consider when repairing the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the face was repaired, false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_RepairEx.htm"
+    },
+    {
+      "name": "Set(Int32, Int32, Int32)",
+      "signature": "public void Set(int a, int b, int c)",
+      "summary": "Sets all the corners for this face as a triangle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Int32",
+          "doc": "Index of first corner.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "doc": "Index of second corner.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Int32",
+          "doc": "Index of third corner.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_Set.htm"
+    },
+    {
+      "name": "Set(Int32, Int32, Int32, Int32)",
+      "signature": "public void Set(int a, int b, int c, int d)",
+      "summary": "Sets all the corners for this face as a quad.",
+      "params": [
+        {
+          "name": "a",
+          "type": "System.Int32",
+          "doc": "Index of first corner.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Int32",
+          "doc": "Index of second corner.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "System.Int32",
+          "doc": "Index of third corner.",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "System.Int32",
+          "doc": "Index of fourth corner.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_Set_1.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns a string representation for this MeshFace. This is to provide a meaningful visualization of this structure and is subject to change in newer releases.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The string representation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_ToString.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(MeshFace a, MeshFace b)",
+      "summary": "Determines whether two MeshFace structures have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "The first MeshFace.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "The second MeshFace.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the indices of the two points are exactly equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(MeshFace a, MeshFace b)",
+      "summary": "Determines whether two MeshFace structures have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "The first MeshFace.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "The second MeshFace.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the indices of the two points are in any way different; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshFace_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the first corner index of the mesh face.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_A.htm"
+    },
+    {
+      "name": "B",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the second corner index of the mesh face.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_B.htm"
+    },
+    {
+      "name": "C",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the third corner index of the mesh face.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_C.htm"
+    },
+    {
+      "name": "D",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the fourth corner index of the mesh face. If D equals C, the mesh face is considered to be a triangle rather than a quad.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_D.htm"
+    },
+    {
+      "name": "IsQuad",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this mesh face is a quad. A mesh face is considered to be a triangle when C does not equal D, thus it is possible for an Invalid mesh face to also be a quad.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_IsQuad.htm"
+    },
+    {
+      "name": "IsTriangle",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this mesh face is a triangle. A mesh face is considered to be a triangle when C equals D, thus it is possible for an Invalid mesh face to also be a triangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_IsTriangle.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vertex index associated with an entry in this face.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_Item.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "MeshFace",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an Unset MeshFace. Unset faces have Int32.MinValue for all corner indices.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshFace_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

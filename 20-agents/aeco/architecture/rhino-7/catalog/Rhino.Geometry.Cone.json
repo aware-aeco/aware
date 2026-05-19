@@ -1,0 +1,207 @@
+{
+  "name": "Cone",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the center plane, radius and height values in a right circular cone.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Cone.htm",
+  "constructors": [
+    {
+      "name": "Cone",
+      "signature": "public Cone(Plane plane, double height, double radius)",
+      "summary": "Initializes a new cone with a specified base plane, height and radius.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane of cone. The apex of the cone is at the plane\u0027s origin.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height of cone.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "Radius of cone.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AngleInDegrees",
+      "signature": "public double AngleInDegrees()",
+      "summary": "Computes the angle (in degrees) between the axis and the side of the cone. The angle and the height have the same sign.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "An angle in degrees."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone_AngleInDegrees.htm"
+    },
+    {
+      "name": "AngleInRadians",
+      "signature": "public double AngleInRadians()",
+      "summary": "Computes the angle (in radians) between the axis and the side of the cone. The angle and the height have the same sign.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "Math.Atan(Radius / Height) if the height is not 0; 0 if the radius is 0; Math.PI otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone_AngleInRadians.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Cone other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Cone",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Cone.EpsilonEquals(Rhino.Geometry.Cone,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Cone.EpsilonEquals(Rhino.Geometry.Cone,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Cone.EpsilonEquals(Rhino.Geometry.Cone,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone_EpsilonEquals.htm"
+    },
+    {
+      "name": "ToBrep",
+      "signature": "public Brep ToBrep(bool capBottom)",
+      "summary": "Gets a Brep representation of the cone with a single face for the cone, an edge along the cone seam, and vertices at the base and apex ends of this seam edge. The optional cap is a single face with one circular edge starting and ending at the base vertex.",
+      "params": [
+        {
+          "name": "capBottom",
+          "type": "System.Boolean",
+          "doc": "true if the bottom should be filled with a surface. false otherwise.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "A brep (polysurface) representation of this cone values."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone_ToBrep.htm"
+    },
+    {
+      "name": "ToNurbsSurface",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Constructs a Nurbs surface representation of this Cone. This is synonymous with calling NurbsSurface.CreateFromCone().",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A Nurbs surface representation of the cone or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone_ToNurbsSurface.htm"
+    },
+    {
+      "name": "ToRevSurface",
+      "signature": "public RevSurface ToRevSurface()",
+      "summary": "Constructs a RevSurface representation of this Cone. This is synonymous with calling RevSurface.CreateFromCone().",
+      "params": [],
+      "returns": {
+        "type": "RevSurface",
+        "doc": "A RevSurface representation of the cone or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cone_ToRevSurface.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ApexPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Point at tip of the cone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_ApexPoint.htm"
+    },
+    {
+      "name": "Axis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Unit vector axis of cone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_Axis.htm"
+    },
+    {
+      "name": "BasePoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Center of base circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_BasePoint.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height of the circular right cone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_Height.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if plane is valid, height is not zero and radius is not zero.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_IsValid.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the base plane of the cone. The apex of the cone is at the plane\u0027s origin.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_Plane.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the cone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_Radius.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Cone",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an invalid Cone.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cone_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

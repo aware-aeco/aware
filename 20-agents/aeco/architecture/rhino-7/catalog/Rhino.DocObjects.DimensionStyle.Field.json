@@ -1,0 +1,477 @@
+{
+  "name": "DimensionStyle.Field",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Field identifiers used for file i/o and getting/setting values",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_Field.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0
+    },
+    {
+      "name": "Name",
+      "value": 1,
+      "summary": "Dimension style Name property. Cannot be inherited from parent."
+    },
+    {
+      "name": "Index",
+      "value": 2,
+      "summary": "Dimension style runtime model component index property. Cannot be inherited from parent."
+    },
+    {
+      "name": "ExtensionLineExtension",
+      "value": 3
+    },
+    {
+      "name": "ExtensionLineOffset",
+      "value": 4
+    },
+    {
+      "name": "Arrowsize",
+      "value": 5
+    },
+    {
+      "name": "LeaderArrowsize",
+      "value": 6
+    },
+    {
+      "name": "Centermark",
+      "value": 7
+    },
+    {
+      "name": "TextGap",
+      "value": 8
+    },
+    {
+      "name": "TextHeight",
+      "value": 9
+    },
+    {
+      "name": "DimTextLocation",
+      "value": 10,
+      "summary": "Linear, angular, and ordinate dimension text location above/in/below"
+    },
+    {
+      "name": "MaskFrameType",
+      "value": 11,
+      "summary": "Text mask frame"
+    },
+    {
+      "name": "LengthResolution",
+      "value": 12
+    },
+    {
+      "name": "AngleFormat",
+      "value": 13
+    },
+    {
+      "name": "AngleResolution",
+      "value": 14
+    },
+    {
+      "name": "Font",
+      "value": 15
+    },
+    {
+      "name": "LengthFactor",
+      "value": 16,
+      "summary": "LengthFactor is a rarely used. It applies when a model is being drawn to a scale and the dimension length values should be reverse scaled. For example, if a model is drawn at 1/4 scale, a line 5 units long indicates the real world line is 20 units long. In this case setting LengthFactor to 4 would cause a linear dimension applied to that line to display a value of 20."
+    },
+    {
+      "name": "Alternate",
+      "value": 17
+    },
+    {
+      "name": "AlternateLengthFactor",
+      "value": 18,
+      "summary": "AlternateLengthFactor is a rarely used. See Length factor for a discription of this property."
+    },
+    {
+      "name": "AlternateLengthResolution",
+      "value": 20
+    },
+    {
+      "name": "Prefix",
+      "value": 21
+    },
+    {
+      "name": "Suffix",
+      "value": 22
+    },
+    {
+      "name": "AlternatePrefix",
+      "value": 23
+    },
+    {
+      "name": "AlternateSuffix",
+      "value": 24
+    },
+    {
+      "name": "DimensionLineExtension",
+      "value": 25
+    },
+    {
+      "name": "SuppressExtension1",
+      "value": 26
+    },
+    {
+      "name": "SuppressExtension2",
+      "value": 27
+    },
+    {
+      "name": "ExtLineColorSource",
+      "value": 28
+    },
+    {
+      "name": "DimLineColorSource",
+      "value": 29
+    },
+    {
+      "name": "ArrowColorSource",
+      "value": 30
+    },
+    {
+      "name": "TextColorSource",
+      "value": 31
+    },
+    {
+      "name": "ExtLineColor",
+      "value": 32
+    },
+    {
+      "name": "DimLineColor",
+      "value": 33
+    },
+    {
+      "name": "ArrowColor",
+      "value": 34
+    },
+    {
+      "name": "TextColor",
+      "value": 35
+    },
+    {
+      "name": "ExtLinePlotColorSource",
+      "value": 36
+    },
+    {
+      "name": "DimLinePlotColorSource",
+      "value": 37
+    },
+    {
+      "name": "ArrowPlotColorSource",
+      "value": 38
+    },
+    {
+      "name": "TextPlotColorSource",
+      "value": 39
+    },
+    {
+      "name": "ExtLinePlotColor",
+      "value": 40
+    },
+    {
+      "name": "DimLinePlotColor",
+      "value": 41
+    },
+    {
+      "name": "ArrowPlotColor",
+      "value": 42
+    },
+    {
+      "name": "TextPlotColor",
+      "value": 43
+    },
+    {
+      "name": "ExtLinePlotWeightSource",
+      "value": 44
+    },
+    {
+      "name": "DimLinePlotWeightSource",
+      "value": 45
+    },
+    {
+      "name": "ExtLinePlotWeight_mm",
+      "value": 46
+    },
+    {
+      "name": "DimLinePlotWeight_mm",
+      "value": 47
+    },
+    {
+      "name": "ToleranceFormat",
+      "value": 48
+    },
+    {
+      "name": "ToleranceResolution",
+      "value": 49
+    },
+    {
+      "name": "ToleranceUpperValue",
+      "value": 50
+    },
+    {
+      "name": "ToleranceLowerValue",
+      "value": 51
+    },
+    {
+      "name": "AltToleranceResolution",
+      "value": 52
+    },
+    {
+      "name": "ToleranceHeightScale",
+      "value": 53
+    },
+    {
+      "name": "BaselineSpacing",
+      "value": 54
+    },
+    {
+      "name": "DrawMask",
+      "value": 55
+    },
+    {
+      "name": "MaskColorSource",
+      "value": 56
+    },
+    {
+      "name": "MaskColor",
+      "value": 57
+    },
+    {
+      "name": "MaskBorder",
+      "value": 58
+    },
+    {
+      "name": "DimensionScale",
+      "value": 59
+    },
+    {
+      "name": "DimscaleSource",
+      "value": 60
+    },
+    {
+      "name": "FixedExtensionLength",
+      "value": 61
+    },
+    {
+      "name": "FixedExtensionOn",
+      "value": 62
+    },
+    {
+      "name": "TextRotation",
+      "value": 63
+    },
+    {
+      "name": "SuppressArrow1",
+      "value": 64
+    },
+    {
+      "name": "SuppressArrow2",
+      "value": 65
+    },
+    {
+      "name": "TextmoveLeader",
+      "value": 66
+    },
+    {
+      "name": "ArclengthSymbol",
+      "value": 67
+    },
+    {
+      "name": "StackTextheightScale",
+      "value": 68
+    },
+    {
+      "name": "StackFormat",
+      "value": 69
+    },
+    {
+      "name": "AltRound",
+      "value": 70
+    },
+    {
+      "name": "Round",
+      "value": 71
+    },
+    {
+      "name": "AngularRound",
+      "value": 72
+    },
+    {
+      "name": "AltZeroSuppress",
+      "value": 73
+    },
+    {
+      "name": "AngleZeroSuppress",
+      "value": 75
+    },
+    {
+      "name": "ZeroSuppress",
+      "value": 76
+    },
+    {
+      "name": "AltBelow",
+      "value": 77
+    },
+    {
+      "name": "ArrowType1",
+      "value": 78
+    },
+    {
+      "name": "ArrowType2",
+      "value": 79
+    },
+    {
+      "name": "LeaderArrowType",
+      "value": 80
+    },
+    {
+      "name": "ArrowBlockId1",
+      "value": 81
+    },
+    {
+      "name": "ArrowBlockId2",
+      "value": 82
+    },
+    {
+      "name": "LeaderArrowBlock",
+      "value": 83
+    },
+    {
+      "name": "DimRadialTextLocation",
+      "value": 84,
+      "summary": "Radial dimension text location above/in/below"
+    },
+    {
+      "name": "TextVerticalAlignment",
+      "value": 85
+    },
+    {
+      "name": "LeaderTextVerticalAlignment",
+      "value": 86
+    },
+    {
+      "name": "LeaderContentAngleStyle",
+      "value": 87
+    },
+    {
+      "name": "LeaderCurveType",
+      "value": 88
+    },
+    {
+      "name": "LeaderContentAngle",
+      "value": 89
+    },
+    {
+      "name": "LeaderHasLanding",
+      "value": 90
+    },
+    {
+      "name": "LeaderLandingLength",
+      "value": 91
+    },
+    {
+      "name": "MaskFlags",
+      "value": 92
+    },
+    {
+      "name": "CentermarkStyle",
+      "value": 93
+    },
+    {
+      "name": "TextHorizontalAlignment",
+      "value": 94
+    },
+    {
+      "name": "LeaderTextHorizontalAlignment",
+      "value": 95
+    },
+    {
+      "name": "DrawForward",
+      "value": 96
+    },
+    {
+      "name": "SignedOrdinate",
+      "value": 97
+    },
+    {
+      "name": "UnitSystem",
+      "value": 98,
+      "summary": "Unit system for dimension rendering sizes like TextHeight, TextGap, ArrowSize, ExtOffset, and dozens of other properties that control the appearance and placement of the components used to render a dimension."
+    },
+    {
+      "name": "TextMask",
+      "value": 99
+    },
+    {
+      "name": "TextOrientation",
+      "value": 100
+    },
+    {
+      "name": "LeaderTextOrientation",
+      "value": 101
+    },
+    {
+      "name": "DimTextOrientation",
+      "value": 102
+    },
+    {
+      "name": "DimRadialTextOrientation",
+      "value": 103
+    },
+    {
+      "name": "DimTextAngleStyle",
+      "value": 104
+    },
+    {
+      "name": "DimRadialTextAngleStyle",
+      "value": 105
+    },
+    {
+      "name": "TextUnderlined",
+      "value": 106
+    },
+    {
+      "name": "DimensionLengthDisplay",
+      "value": 109,
+      "summary": "Dimension length display. See ON_DimStyle::DimensionLengthDisplay() for a descpription of this parameter."
+    },
+    {
+      "name": "AlternateDimensionLengthDisplay",
+      "value": 110,
+      "summary": "Alternate dimension length display. See ON_DimStyle::AlternateDimensionLengthDisplay() for a descpription of this parameter."
+    },
+    {
+      "name": "ForceDimLine",
+      "value": 111,
+      "summary": "Force dimension line to draw when text is moved outside"
+    },
+    {
+      "name": "ArrowFit",
+      "value": 112,
+      "summary": "Arrow position when arrows won\u0027t fit between extensions"
+    },
+    {
+      "name": "TextFit",
+      "value": 113,
+      "summary": "Text position when text won\u0027t fit between extensions"
+    },
+    {
+      "name": "DecimalSeparator",
+      "value": 114,
+      "summary": "Character to use for decimal separator in dimension text"
+    },
+    {
+      "name": "Count",
+      "value": 115,
+      "summary": "Every enum UINT value that identifies a valid dimension style property is less than the UINT value of Count."
+    }
+  ]
+}

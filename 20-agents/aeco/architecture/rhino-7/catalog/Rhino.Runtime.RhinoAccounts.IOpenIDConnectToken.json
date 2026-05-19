@@ -1,0 +1,190 @@
+{
+  "name": "IOpenIDConnectToken",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "interface",
+  "summary": "This class represents an OpenIDConnect token issued from an OpenID provider. The token is immutable.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AdminGroups",
+      "type": "IReadOnlyDictionary\u003CString,RhinoAccountsGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all the groups the user is an admin of.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_AdminGroups.htm"
+    },
+    {
+      "name": "AllGroups",
+      "type": "IReadOnlyDictionary\u003CString,RhinoAccountsGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all the groups the user is a member of.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_AllGroups.htm"
+    },
+    {
+      "name": "AtHash",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Access Token hash value. Its value is the base64url encoding of the left-most half of the hash of the octets of the ASCII representation of the access_token value, where the hash algorithm used is the hash algorithm used in the alg Header Parameter of the ID Token\u0027s JOSE Header. For instance, if the alg is RS256, hash the access_token value with SHA-256, then take the left-most 128 bits and base64url encode them. The at_hash value is a case sensitive string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_AtHash.htm"
+    },
+    {
+      "name": "Aud",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The id of the client (the audience) this token is intended for.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Aud.htm"
+    },
+    {
+      "name": "AuthTime",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Time when the End-User authentication occurred",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_AuthTime.htm"
+    },
+    {
+      "name": "Emails",
+      "type": "IReadOnlyCollection\u003CString\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All the emails belonging to the account the token represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Emails.htm"
+    },
+    {
+      "name": "EmailVerified",
+      "type": "Nullable\u003CBoolean\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "true if all the emails in the account have been verified; false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_EmailVerified.htm"
+    },
+    {
+      "name": "Exp",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The date the token expires.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Exp.htm"
+    },
+    {
+      "name": "Iat",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The date the token was issued.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Iat.htm"
+    },
+    {
+      "name": "IsExpired",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if the token is expired; false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_IsExpired.htm"
+    },
+    {
+      "name": "Iss",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The id of the entity that issued the token.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Iss.htm"
+    },
+    {
+      "name": "IsUpdated",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if the token has been updated; false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_IsUpdated.htm"
+    },
+    {
+      "name": "Locale",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The local of the user this token represents. ISO 639-1 Alpha-2 [ISO639\u20111] language code and an ISO 3166-1 Alpha-2 [ISO3166\u20111] country code in, separated by a dash.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Locale.htm"
+    },
+    {
+      "name": "MemberGroups",
+      "type": "IReadOnlyDictionary\u003CString,RhinoAccountsGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all the groups the user is a member of, but not an admin or an owner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_MemberGroups.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the user this token represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Name.htm"
+    },
+    {
+      "name": "Nonce",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "String value used to associate a Client session with an ID Token, and to mitigate replay attacks",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Nonce.htm"
+    },
+    {
+      "name": "OwnerGroups",
+      "type": "IReadOnlyDictionary\u003CString,RhinoAccountsGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all the groups the user is an owner of.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_OwnerGroups.htm"
+    },
+    {
+      "name": "Phone",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The phone of the user this token represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Phone.htm"
+    },
+    {
+      "name": "Picture",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The url of a picture/avatar/icon of the user this token represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Picture.htm"
+    },
+    {
+      "name": "RawToken",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The raw OpenIDConnect token.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_RawToken.htm"
+    },
+    {
+      "name": "Sub",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The unique id for the subject this token represents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_Sub.htm"
+    },
+    {
+      "name": "UpdatedAt",
+      "type": "Nullable\u003CDateTime\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "The last time the token was updated.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_RhinoAccounts_IOpenIDConnectToken_UpdatedAt.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "RhinoGetPlotWidthArgs",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Argument flags passed to methods used to get Rhino plot width lists",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_RhinoGetPlotWidthArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NoArgs",
+      "value": 0,
+      "summary": "Just get the standard or default width list"
+    },
+    {
+      "name": "ByLayer",
+      "value": 1,
+      "summary": "Include a By Layer option"
+    },
+    {
+      "name": "ByParent",
+      "value": 2,
+      "summary": "Include a By Parent option"
+    },
+    {
+      "name": "HairLine",
+      "value": 4,
+      "summary": "Include a hairline width option"
+    },
+    {
+      "name": "Default",
+      "value": 8,
+      "summary": "Include a default width option"
+    },
+    {
+      "name": "None",
+      "value": 32,
+      "summary": "Include a no print option"
+    },
+    {
+      "name": "All",
+      "value": 268435455,
+      "summary": "Include everything"
+    }
+  ]
+}

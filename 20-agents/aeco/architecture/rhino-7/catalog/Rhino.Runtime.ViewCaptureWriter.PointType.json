@@ -1,0 +1,30 @@
+{
+  "name": "ViewCaptureWriter.PointType",
+  "namespace": "Rhino.Runtime",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Runtime.ViewCaptureWriter.PointType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_ViewCaptureWriter_PointType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Move",
+      "value": 0
+    },
+    {
+      "name": "Line",
+      "value": 1
+    },
+    {
+      "name": "CubicBezier",
+      "value": 2
+    },
+    {
+      "name": "Close",
+      "value": 3
+    }
+  ]
+}

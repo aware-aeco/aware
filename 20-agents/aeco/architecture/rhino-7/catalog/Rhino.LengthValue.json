@@ -1,0 +1,273 @@
+{
+  "name": "LengthValue",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Represents a length with an associated unit system and a string representation of that length. This allows for going back and forth from numerical representation of a length and a string representation without \u0022guessing\u0022 at the initial string",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_LengthValue.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangeLength",
+      "signature": "public LengthValue ChangeLength(double newLength)",
+      "summary": "Changes the numeric value in a LengthValue and leaves all of the other info unchanged UnitSystem, ParseSettings and StringFormat stay as they were",
+      "params": [
+        {
+          "name": "newLength",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022newLength\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.ChangeLength(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "A new LengthValue"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_ChangeLength.htm"
+    },
+    {
+      "name": "ChangeUnitSystem",
+      "signature": "public LengthValue ChangeUnitSystem(UnitSystem newUnits)",
+      "summary": "Change the UnitSystem of a LengthValue The numeric value of Length is scaled by new_us / current unit system so that the absolute length stays the same",
+      "params": [
+        {
+          "name": "newUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022newUnits\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.ChangeUnitSystem(Rhino.UnitSystem)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.ChangeUnitSystem(Rhino.UnitSystem)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_ChangeUnitSystem.htm"
+    },
+    {
+      "name": "Create(Double, UnitSystem, LengthValue.StringFormat)",
+      "signature": "public static LengthValue Create(double length, UnitSystem us, LengthValue.StringFormat format)",
+      "summary": "Create from Length and UnitSystem",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Double",
+          "doc": "Numeric length value",
+          "optional": false
+        },
+        {
+          "name": "us",
+          "type": "Rhino.UnitSystem",
+          "doc": "Unit system",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Rhino.LengthValue.StringFormat",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.Double,Rhino.UnitSystem,Rhino.LengthValue.StringFormat)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.Double,Rhino.UnitSystem,Rhino.LengthValue.StringFormat)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Create.htm"
+    },
+    {
+      "name": "Create(String, StringParserSettings, Boolean)",
+      "signature": "public static LengthValue Create(string s, StringParserSettings ps, out bool parsedAll)",
+      "summary": "Create from string",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "string to parse",
+          "optional": false
+        },
+        {
+          "name": "ps",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[Missing \u003Cparam name=\u0022ps\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.String,Rhino.Input.StringParserSettings,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parsedAll",
+          "type": "System.Boolean",
+          "doc": "true if the whole string was parsed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.String,Rhino.Input.StringParserSettings,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Create_2.htm"
+    },
+    {
+      "name": "Create(Double, UnitSystem, LengthValue.StringFormat, UInt32)",
+      "signature": "public static LengthValue Create(double length, UnitSystem us, LengthValue.StringFormat format, uint localeId)",
+      "summary": "Create from Length and UnitSystem",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Double",
+          "doc": "Numeric length value",
+          "optional": false
+        },
+        {
+          "name": "us",
+          "type": "Rhino.UnitSystem",
+          "doc": "Unit system",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Rhino.LengthValue.StringFormat",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.Double,Rhino.UnitSystem,Rhino.LengthValue.StringFormat,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "localeId",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022localeId\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.Double,Rhino.UnitSystem,Rhino.LengthValue.StringFormat,System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.Create(System.Double,Rhino.UnitSystem,Rhino.LengthValue.StringFormat,System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Create_1.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "actively reclaim native allocated ON_LenghtValue*",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "passively reclaim native allocated ON_LenghtValue*",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Finalize.htm"
+    },
+    {
+      "name": "IsUnset",
+      "signature": "public bool IsUnset()",
+      "summary": "Test IsUnset",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.IsUnset\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_IsUnset.htm"
+    },
+    {
+      "name": "Length()",
+      "signature": "public double Length()",
+      "summary": "Length value in this instance\u0027s current unit system",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.Length\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Length.htm"
+    },
+    {
+      "name": "Length(UnitSystem)",
+      "signature": "public double Length(UnitSystem units)",
+      "summary": "Length value in a given unit system",
+      "params": [
+        {
+          "name": "units",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.LengthValue.Length(Rhino.UnitSystem)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.LengthValue.Length(Rhino.UnitSystem)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_LengthValue_Length_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ContextAngleUnitSystem",
+      "type": "AngleUnitSystem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the context AngleUnitSystem from this LengthValue\u0027s ParseSettings",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_LengthValue_ContextAngleUnitSystem.htm"
+    },
+    {
+      "name": "ContextLocaleId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "returns the context LocaleId from this LengthValue",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_LengthValue_ContextLocaleId.htm"
+    },
+    {
+      "name": "LengthString",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Return length as a string",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_LengthValue_LengthString.htm"
+    },
+    {
+      "name": "LengthStringFormat",
+      "type": "LengthValue.StringFormat",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the StringFormat from this LengthValue",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_LengthValue_LengthStringFormat.htm"
+    },
+    {
+      "name": "ParseSettings",
+      "type": "StringParserSettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Parse settings",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_LengthValue_ParseSettings.htm"
+    },
+    {
+      "name": "UnitSystem",
+      "type": "UnitSystem",
+      "getter": true,
+      "setter": false,
+      "summary": "UnitSystem used by this LengthValue",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_LengthValue_UnitSystem.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

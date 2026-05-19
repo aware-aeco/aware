@@ -1,0 +1,59 @@
+{
+  "name": "RenderContentChangeReason",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Enumeration denoting type of change for attach or detach",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderContentChangeReason.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No attach or detach change"
+    },
+    {
+      "name": "Attach",
+      "value": 1,
+      "summary": "Content is being attached by the RhinoDoc.AttachContent() or RenderContent.AttachChild() methods."
+    },
+    {
+      "name": "Detach",
+      "value": 2,
+      "summary": "Content is being detached by the RenderContent.DeleteContent() method."
+    },
+    {
+      "name": "ChangeAttach",
+      "value": 3,
+      "summary": "Content is being attached while changing."
+    },
+    {
+      "name": "ChangeDetach",
+      "value": 4,
+      "summary": "Content is being detached while changing."
+    },
+    {
+      "name": "AttachUndo",
+      "value": 5,
+      "summary": "Content is being attached during undo/redo"
+    },
+    {
+      "name": "DetachUndo",
+      "value": 6,
+      "summary": "Content is being detached during undo/redo."
+    },
+    {
+      "name": "Open",
+      "value": 7,
+      "summary": "Content is being attached during open document"
+    },
+    {
+      "name": "Delete",
+      "value": 8,
+      "summary": "Content is being detached during normal deletion."
+    }
+  ]
+}

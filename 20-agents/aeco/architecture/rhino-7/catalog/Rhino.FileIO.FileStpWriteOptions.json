@@ -1,0 +1,49 @@
+{
+  "name": "FileStpWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Options used when writing a STP file",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileStpWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileStpWriteOptions",
+      "signature": "public FileStpWriteOptions()",
+      "summary": "Initializes a new instance of the FileStpWriteOptions class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FileStpWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Export2dCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Some (not most, and not Rhino) importing applications can make use of the 2-D trimming curves to get a more accurate and faster import. The size of the step file will be larger",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileStpWriteOptions_Export2dCurves.htm"
+    },
+    {
+      "name": "ExportBlack",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Let importing application set color for black objects. If a Rhino object has color black, no color is assigned to the object in the step file.This will cause the importing application to give the object its default color.This is desirable because black objects look like ink blots in some applications.This option is grayed out if the schema option is AP203ControConfigDesign since that schema does not include color entities.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileStpWriteOptions_ExportBlack.htm"
+    },
+    {
+      "name": "SplitClosedSurfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Splits closed surfaces, for example, the interior surfaces of drilled holes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileStpWriteOptions_SplitClosedSurfaces.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

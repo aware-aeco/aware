@@ -1,0 +1,38 @@
+{
+  "name": "CurveSegment",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "struct",
+  "summary": "For internal use only.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InteropWrappers_CurveSegment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The index of the curve used by this boundary element.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_CurveSegment_Index.htm"
+    },
+    {
+      "name": "Reversed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this piece of the curve should be reversed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_CurveSegment_Reversed.htm"
+    },
+    {
+      "name": "SubDomain",
+      "type": "Interval",
+      "getter": true,
+      "setter": false,
+      "summary": "The sub-domain of the curve used by this boundary element.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_CurveSegment_SubDomain.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,64 @@
+{
+  "name": "LightStyle",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values to represent light styles or types, such as directional or spotlight.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_LightStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No light type. This is the default value of the enumeration type."
+    },
+    {
+      "name": "CameraDirectional",
+      "value": 4,
+      "summary": "Light location and direction in camera coordinates. \u002Bx points to right, \u002By points up, \u002Bz points towards camera."
+    },
+    {
+      "name": "CameraPoint",
+      "value": 5,
+      "summary": "Light location and direction in camera coordinates. \u002Bx points to right, \u002By points up, \u002Bz points towards camera."
+    },
+    {
+      "name": "CameraSpot",
+      "value": 6,
+      "summary": "Light location and direction in camera coordinates. \u002Bx points to right, \u002By points up, \u002Bz points towards camera."
+    },
+    {
+      "name": "WorldDirectional",
+      "value": 7,
+      "summary": "Light location and direction in world coordinates."
+    },
+    {
+      "name": "WorldPoint",
+      "value": 8,
+      "summary": "Light location and direction in world coordinates."
+    },
+    {
+      "name": "WorldSpot",
+      "value": 9,
+      "summary": "Light location and direction in world coordinates."
+    },
+    {
+      "name": "Ambient",
+      "value": 10,
+      "summary": "Ambient light."
+    },
+    {
+      "name": "WorldLinear",
+      "value": 11,
+      "summary": "Linear light in world coordinates."
+    },
+    {
+      "name": "WorldRectangular",
+      "value": 12,
+      "summary": "Rectangular light in world coordinates."
+    }
+  ]
+}

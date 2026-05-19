@@ -1,0 +1,294 @@
+{
+  "name": "TrulyObservableOrderedSet\u003CT\u003E",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "class",
+  "summary": "An ordered set that notifies its subscribers whenever one of its INotifyPropertyChanged elements raises its PropertyChanged event.",
+  "remarks": "This class prevents the removal of elements by assemblies they cannot be edited by. At the time of removal, each element\u0027s Editable() method will be invoked, and if false, an InvalidOperationException will be thrown.",
+  "interfaces": [
+    "IList\u003CT\u003E",
+    "ICollection\u003CT\u003E",
+    "IEnumerable\u003CT\u003E",
+    "IEnumerable",
+    "INotifyCollectionChanged"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1.htm",
+  "constructors": [
+    {
+      "name": "TrulyObservableOrderedSet\u003CT\u003E()",
+      "signature": "public TrulyObservableOrderedSet()",
+      "summary": "Creates an empty instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1__ctor.htm"
+    },
+    {
+      "name": "TrulyObservableOrderedSet\u003CT\u003E(IEnumerable\u003CT\u003E)",
+      "signature": "public TrulyObservableOrderedSet(IEnumerable\u003CT\u003E items)",
+      "summary": "Creates an instance with the given items.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "Items that the instance will contain. If there are duplicate items, they will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(T item)",
+      "summary": "Adds an object to the end of the ordered set if the set does not already contain the item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The item to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the ordered set.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if at least one item currently in the set cannot be modified by the current assembly."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Clear.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(T item)",
+      "summary": "Determines whether an element is in the set.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The item to check for inclusion.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the item is in the set; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Contains.htm"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "public void CopyTo(T[] array, int arrayIndex)",
+      "summary": "Copies the values of the set to an array.",
+      "params": [
+        {
+          "name": "array",
+          "type": "T[]",
+          "doc": "The array to copy the values to.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "System.Int32",
+          "doc": "The index of the array to start the copy.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_CopyTo.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that iterates through the set.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CT\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.Notifications.TrulyObservableOrderedSet\u00601.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_GetEnumerator.htm"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "public int IndexOf(T item)",
+      "summary": "Searches for the specified object and returns the zero-based index of the first occurrence.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The item to locate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The zero-based index of the first occurrence of item if found; otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_IndexOf.htm"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int index, T item)",
+      "summary": "Inserts an element at the specified index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index to insert the element at.",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The item to insert.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexOutOfRangeException",
+          "when": "Thrown if the index passed is out of bounds."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Insert.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(T item)",
+      "summary": "Removes an element from the set.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "doc": "The element to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the element was removed; otherwise returns false."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if the item that will be removed cannot be modified by the current assembly."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Remove.htm"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "public void RemoveAt(int index)",
+      "summary": "Removes an element at the specified index from the set.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the element to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "IndexOutOfRangeException",
+          "when": "Thrown if the index passed is out of bounds."
+        },
+        {
+          "type": "InvalidOperationException",
+          "when": "Thrown if the item that will be removed cannot be modified by the current assembly."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_RemoveAt.htm"
+    },
+    {
+      "name": "Sort\u003CTKey\u003E",
+      "signature": "public void Sort\u003CTKey\u003E(Func\u003CT, TKey\u003E keySelector, bool descending = false)",
+      "summary": "Sorts the set.",
+      "params": [
+        {
+          "name": "keySelector",
+          "type": "System.Func\u003CT,TKey\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022keySelector\u0022/\u003E documentation for \u0022M:Rhino.Runtime.Notifications.TrulyObservableOrderedSet\u00601.Sort\u0060\u00601(System.Func{\u00600,\u0060\u00600},System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "descending",
+          "type": "System.Boolean",
+          "doc": "If true, the sort will happen in descending other; if false, it will happen in ascending order.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Sort__1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the total number of items in the set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Count.htm"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Always returns false.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_IsReadOnly.htm"
+    },
+    {
+      "name": "Item",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or replaces an element in the ordered set at the specified index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_Item.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "CollectionChanged",
+      "delegate": "System.Collections.Specialized.NotifyCollectionChangedEventHandler",
+      "signature": "public event NotifyCollectionChangedEventHandler CollectionChanged",
+      "summary": "Triggered whenever the set changes or when one of its elements has its PropertyChanged event triggered.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Runtime_Notifications_TrulyObservableOrderedSet_1_CollectionChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

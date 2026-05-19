@@ -1,0 +1,546 @@
+{
+  "name": "DimStyleTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.DimStyleTable\u0022]",
+  "base": "RhinoDocCommonTable\u003CDimensionStyle\u003E",
+  "interfaces": [
+    "ICollection\u003CDimensionStyle\u003E",
+    "IEnumerable\u003CDimensionStyle\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_DimStyleTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(String)",
+      "signature": "public int Add(string name)",
+      "summary": "Adds a new AnnotationStyle to the document. The new AnnotationStyle will be initialized with the current default AnnotationStyle properties.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the new AnnotationStyle. If null or empty, Rhino automatically generates the name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "index of new AnnotationStyle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Add_1.htm"
+    },
+    {
+      "name": "Add(String, Boolean)",
+      "signature": "public int Add(string name, bool reference)",
+      "summary": "Adds a new AnnotationStyle to the document. The new AnnotationStyle will be initialized with the current default AnnotationStyle properties.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the new AnnotationStyle. If null or empty, Rhino automatically generates the name.",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "System.Boolean",
+          "doc": "if true the dimstyle will not be saved in files.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "index of new AnnotationStyle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Add_2.htm"
+    },
+    {
+      "name": "Add(DimensionStyle, Boolean)",
+      "signature": "public int Add(DimensionStyle dimstyle, bool reference)",
+      "summary": "Adds a new DimensionStyle to the document.",
+      "params": [
+        {
+          "name": "dimstyle",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "The dimension style to add",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "System.Boolean",
+          "doc": "if true the dimstyle will not be saved in files.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "index of new AnnotationStyle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Marks all items as deleted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_Clear.htm"
+    },
+    {
+      "name": "Delete(DimensionStyle)",
+      "signature": "public override bool Delete(DimensionStyle item)",
+      "summary": "Removes an annotation style.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "The item to remove.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the item was removed; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Delete.htm"
+    },
+    {
+      "name": "Delete(Int32, Boolean)",
+      "signature": "public bool Delete(int index, bool quiet)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Delete(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022quiet\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Delete(System.Int32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Delete(System.Int32,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Delete_1.htm"
+    },
+    {
+      "name": "Find(Guid, Boolean)",
+      "signature": "public DimensionStyle Find(Guid styleId, bool ignoreDeleted)",
+      "summary": "",
+      "params": [
+        {
+          "name": "styleId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022styleId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Find(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeleted",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022ignoreDeleted\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Find(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Find(System.Guid,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Find.htm"
+    },
+    {
+      "name": "Find(String, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022ignoreDeleted is always considered true now. Use FindName.\u0022)] public DimensionStyle Find(string name, bool ignoreDeleted)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Find(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeleted",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022ignoreDeleted\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Find(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Find(System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Find_1.htm"
+    },
+    {
+      "name": "FindId",
+      "signature": "public virtual T FindId(Guid id)",
+      "summary": "Uses the guid to find a model component. Deleted objects cannot be found by id. The guid is the value that is stored in the .Id property. In a single document, no two active objects have the same guid. If an object is replaced with a new object, then the guid persists. For example, if the _Move command moves an object, then the moved object inherits its guid from the starting object. If the Copy command copies an object, then the copy gets a new guid. This guid persists through file saving/opening operations. This function will not find grip objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of model component to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Reference to the rhino object with the objectId or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "FindIndex",
+      "signature": "public DimensionStyle FindIndex(int index)",
+      "summary": "Retrieves a DimensionStyle object based on Index. This search type of search is discouraged. We are moving towards using only IDs for all tables.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "A DimensionStyle object, or null if none was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_FindIndex.htm"
+    },
+    {
+      "name": "FindName",
+      "signature": "public DimensionStyle FindName(string name)",
+      "summary": "Finds the DimensionStyle with a given name and returns it. None is returned if no DimensionStyle is found.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The string to search. Deleted styles are ignored.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "The instance, or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_FindName.htm"
+    },
+    {
+      "name": "FindRoot",
+      "signature": "public DimensionStyle FindRoot(Guid styleId, bool ignoreDeleted)",
+      "summary": "",
+      "params": [
+        {
+          "name": "styleId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022styleId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.FindRoot(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ignoreDeleted",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022ignoreDeleted\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.FindRoot(System.Guid,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.FindRoot(System.Guid,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_FindRoot.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public override IEnumerator\u003CDimensionStyle\u003E GetEnumerator()",
+      "summary": "(Overrides CommonComponentTable\u003CT\u003E.GetEnumerator().)",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CDimensionStyle\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_GetEnumerator.htm"
+    },
+    {
+      "name": "GetUnusedStyleName()",
+      "signature": "public string GetUnusedStyleName()",
+      "summary": "Get a unique name for a style that does not already exist in the DimStyle table",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.GetUnusedStyleName\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_GetUnusedStyleName.htm"
+    },
+    {
+      "name": "GetUnusedStyleName(String)",
+      "signature": "public string GetUnusedStyleName(string rootName)",
+      "summary": "Get a unique name for a dimension style that does not already exist in the DimStyle table",
+      "params": [
+        {
+          "name": "rootName",
+          "type": "System.String",
+          "doc": "prefix in name; typically the parent style name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.GetUnusedStyleName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_GetUnusedStyleName_1.htm"
+    },
+    {
+      "name": "Modify(DimensionStyle, AnnotationBase)",
+      "signature": "public ModifyType Modify(DimensionStyle dimstyle, AnnotationBase annotation)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dimstyle",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "[Missing \u003Cparam name=\u0022dimstyle\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Modify(Rhino.DocObjects.DimensionStyle,Rhino.Geometry.AnnotationBase)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "annotation",
+          "type": "Rhino.Geometry.AnnotationBase",
+          "doc": "[Missing \u003Cparam name=\u0022annotation\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Modify(Rhino.DocObjects.DimensionStyle,Rhino.Geometry.AnnotationBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ModifyType",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.DimStyleTable.Modify(Rhino.DocObjects.DimensionStyle,Rhino.Geometry.AnnotationBase)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Modify.htm"
+    },
+    {
+      "name": "Modify(DimensionStyle, Guid, Boolean)",
+      "signature": "public bool Modify(DimensionStyle newSettings, Guid dimstyleId, bool quiet)",
+      "summary": "Modifies dimension style settings.",
+      "params": [
+        {
+          "name": "newSettings",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "This information is copied.",
+          "optional": false
+        },
+        {
+          "name": "dimstyleId",
+          "type": "System.Guid",
+          "doc": "Id of dimension style",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "if true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if Id is not already in table"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Modify_1.htm"
+    },
+    {
+      "name": "Modify(DimensionStyle, Int32, Boolean)",
+      "signature": "public bool Modify(DimensionStyle newSettings, int dimstyleIndex, bool quiet)",
+      "summary": "Modifies dimension style settings.",
+      "params": [
+        {
+          "name": "newSettings",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "This information is copied.",
+          "optional": false
+        },
+        {
+          "name": "dimstyleIndex",
+          "type": "System.Int32",
+          "doc": "zero based index of dimension to set. Must be in the range 0 \u003C= dimstyleIndex \u003C DimStyleTable.Count.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "if true, information message boxes pop up when illegal changes are attempted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if dimstyleIndex is out of range"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_Modify_2.htm"
+    },
+    {
+      "name": "SetCurrent",
+      "signature": "public bool SetCurrent(int index, bool quiet)",
+      "summary": "Sets the Current property.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the current DimStyle.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "true if error dialog boxes are disabled. False if they are enabled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the method achieved its goal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_SetCurrent.htm"
+    },
+    {
+      "name": "SetCurrentDimensionStyleIndex",
+      "signature": "[ObsoleteAttribute(\u0022Use the SetCurrent property.\u0022)] public bool SetCurrentDimensionStyleIndex(int index, bool quiet)",
+      "summary": "Do not use. Use the SetCurrent(Int32, Boolean) method.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Do not use.",
+          "optional": false
+        },
+        {
+          "name": "quiet",
+          "type": "System.Boolean",
+          "doc": "Do not use.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Do not use."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_DimStyleTable_SetCurrentDimensionStyleIndex.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BuiltInStyles",
+      "type": "DimensionStyle[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Creates an array of default AnnotationStyle objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_BuiltInStyles.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns DimStyle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_ComponentType.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the count of all items, including deleted ones.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_CommonComponentTable_1_Count.htm"
+    },
+    {
+      "name": "Current",
+      "type": "DimensionStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an instance of the current DimensionStyle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_Current.htm"
+    },
+    {
+      "name": "CurrentDimensionStyle",
+      "type": "DimensionStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "Do not use. Use the Current property.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_CurrentDimensionStyle.htm"
+    },
+    {
+      "name": "CurrentId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_CurrentId.htm"
+    },
+    {
+      "name": "CurrentIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_CurrentIndex.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_RhinoDocCommonTable_1_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "DimensionStyle",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_DimStyleTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

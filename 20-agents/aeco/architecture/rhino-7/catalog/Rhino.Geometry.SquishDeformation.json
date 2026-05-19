@@ -1,0 +1,44 @@
+{
+  "name": "SquishDeformation",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "The types of deformation allowed in the squish process",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SquishDeformation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Free",
+      "value": 0,
+      "summary": "No preference for compression or stretching."
+    },
+    {
+      "name": "StretchMostly",
+      "value": 1,
+      "summary": "Strong bias for expansion when the pattern is deformed into the 3-D shape."
+    },
+    {
+      "name": "StretchOnly",
+      "value": 2,
+      "summary": "Absolutely no compression when the pattern is deformed into the 3-D shape."
+    },
+    {
+      "name": "CompressMostly",
+      "value": 3,
+      "summary": "Strong bias for compression when the pattern is deformed into the 3-D shape."
+    },
+    {
+      "name": "CompressOnly",
+      "value": 4,
+      "summary": "Absolutely no expansion when the pattern is deformed into the 3-D shape."
+    },
+    {
+      "name": "Custom",
+      "value": 5,
+      "summary": "The Custom option lets you set the parameters used by the custom deformations. There are four parameters you can set: BndStretch, BndCompress, InteriorStretch, InteriorCompress The default value for these parameters is 1 and they can be set to any positive number. A larger value reduces the amount of the specified deformation compared to what happens when all four parameters are equal. For example, if you want to severely limit interior expansion, you could do something like: BndStretch = 1 BndCompress = 1 InteriorStretch = 1 InteriorCompress = 100 If you want to preserve boundary lengths you could use the settings: BndStretch = 10 BndCompress = 10 InteriorStretch = 1 InteriorCompress = 1"
+    }
+  ]
+}

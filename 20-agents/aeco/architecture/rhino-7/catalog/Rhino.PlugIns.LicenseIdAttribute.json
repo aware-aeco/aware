@@ -1,0 +1,41 @@
+{
+  "name": "LicenseIdAttribute",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.PlugIns.LicenseIdAttribute\u0022]",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_LicenseIdAttribute.htm",
+  "constructors": [
+    {
+      "name": "LicenseIdAttribute",
+      "signature": "public LicenseIdAttribute(string value)",
+      "summary": "Initializes a new instance of the LicenseIdAttribute class",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseIdAttribute.#ctor(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseIdAttribute__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_PlugIns_LicenseIdAttribute_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

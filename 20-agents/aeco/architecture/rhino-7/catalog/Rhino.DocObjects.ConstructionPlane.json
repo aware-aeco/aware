@@ -1,0 +1,145 @@
+{
+  "name": "ConstructionPlane",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Represents a construction plane inside the document. Use Rhino.DocObjects.Tables.NamedConstructionPlaneTable methods and indexers to add and access a ConstructionPlane.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ConstructionPlane.htm",
+  "constructors": [
+    {
+      "name": "ConstructionPlane",
+      "signature": "public ConstructionPlane()",
+      "summary": "Initializes a new instance of ConstructionPlane.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ConstructionPlane__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DepthBuffered",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the grid is drawn on top of geometry. false=grid is always drawn behind 3d geometrytrue=grid is drawn at its depth as a 3d plane and grid lines obscure things behind the grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_DepthBuffered.htm"
+    },
+    {
+      "name": "GridLineCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the total amount of grid lines in each direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_GridLineCount.htm"
+    },
+    {
+      "name": "GridSpacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the distance between grid lines.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_GridSpacing.htm"
+    },
+    {
+      "name": "GridXColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the grid X-axis mark.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_GridXColor.htm"
+    },
+    {
+      "name": "GridYColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the grid Y-axis mark.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_GridYColor.htm"
+    },
+    {
+      "name": "GridZColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the grid Z-axis mark.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_GridZColor.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of the construction plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_Name.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the geometric plane to use for construction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_Plane.htm"
+    },
+    {
+      "name": "ShowAxes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the axes of the grid should be visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_ShowAxes.htm"
+    },
+    {
+      "name": "ShowGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the grid itself should be visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_ShowGrid.htm"
+    },
+    {
+      "name": "ShowZAxis",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether the Z axis of the grid should be visible.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_ShowZAxis.htm"
+    },
+    {
+      "name": "SnapSpacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "when \u0022grid snap\u0022 is enabled, the distance between snap points. Typically this is the same distance as grid spacing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_SnapSpacing.htm"
+    },
+    {
+      "name": "ThickLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the thicker, wider line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_ThickLineColor.htm"
+    },
+    {
+      "name": "ThickLineFrequency",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the recurrence of a wider line on the grid. 0: No lines are thick, all are drawn thin.1: All lines are thick.2: Every other line is thick.3: One line in three lines is thick (and two are thin).4: ...",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_ThickLineFrequency.htm"
+    },
+    {
+      "name": "ThinLineColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the color of the thinner, less prominent line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ConstructionPlane_ThinLineColor.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

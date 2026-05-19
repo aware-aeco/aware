@@ -1,0 +1,29 @@
+{
+  "name": "ButtonType",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "enum",
+  "summary": "The type of button in a notification.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_Notifications_ButtonType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CancelOrClose",
+      "value": 0,
+      "summary": "Denotes either the Cancel button as well as, on some platforms, the close button if present."
+    },
+    {
+      "name": "Confirm",
+      "value": 1,
+      "summary": "The Confirm buttton."
+    },
+    {
+      "name": "Alternate",
+      "value": 2,
+      "summary": "The Alternate button."
+    }
+  ]
+}

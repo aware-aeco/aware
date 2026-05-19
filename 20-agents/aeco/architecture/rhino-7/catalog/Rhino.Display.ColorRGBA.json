@@ -1,0 +1,605 @@
+{
+  "name": "ColorRGBA",
+  "namespace": "Rhino.Display",
+  "kind": "struct",
+  "summary": "Represents a RGBA (Red, Green, Blue, Alpha) color with double precision floating point channel.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_ColorRGBA.htm",
+  "constructors": [
+    {
+      "name": "ColorRGBA(Color)",
+      "signature": "public ColorRGBA(Color color)",
+      "summary": "Constructs a new instance of ColorRGBA that is equivalent to an ARGB color.",
+      "params": [
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "ARGB color to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA__ctor_3.htm"
+    },
+    {
+      "name": "ColorRGBA(Int32)",
+      "signature": "public ColorRGBA(int argb)",
+      "summary": "Constructs a new instance of ColorRGBA that is equivalent to an ARGB color.",
+      "params": [
+        {
+          "name": "argb",
+          "type": "System.Int32",
+          "doc": "ARGB color to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA__ctor_4.htm"
+    },
+    {
+      "name": "ColorRGBA(ColorRGBA)",
+      "signature": "public ColorRGBA(ColorRGBA color)",
+      "summary": "Initializes a new instance of the ColorRGBA class",
+      "params": [
+        {
+          "name": "color",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(Rhino.Display.ColorRGBA)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA__ctor.htm"
+    },
+    {
+      "name": "ColorRGBA(Double, Double, Double)",
+      "signature": "public ColorRGBA(double red, double green, double blue)",
+      "summary": "Initializes a new instance of the ColorRGBA class",
+      "params": [
+        {
+          "name": "red",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022red\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022green\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022blue\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA__ctor_1.htm"
+    },
+    {
+      "name": "ColorRGBA(Double, Double, Double, Double)",
+      "signature": "public ColorRGBA(double red, double green, double blue, double alpha)",
+      "summary": "Initializes a new instance of the ColorRGBA class",
+      "params": [
+        {
+          "name": "red",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022red\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022green\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022blue\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022alpha\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.#ctor(System.Double,System.Double,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyGamma",
+      "signature": "public static ColorRGBA ApplyGamma(ColorRGBA col, double gamma)",
+      "summary": "",
+      "params": [
+        {
+          "name": "col",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022col\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ApplyGamma(Rhino.Display.ColorRGBA,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gamma",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022gamma\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ApplyGamma(Rhino.Display.ColorRGBA,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ApplyGamma(Rhino.Display.ColorRGBA,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_ApplyGamma.htm"
+    },
+    {
+      "name": "BlendTo",
+      "signature": "public ColorRGBA BlendTo(ColorRGBA col, double coefficient)",
+      "summary": "",
+      "params": [
+        {
+          "name": "col",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022col\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.BlendTo(Rhino.Display.ColorRGBA,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "coefficient",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022coefficient\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.BlendTo(Rhino.Display.ColorRGBA,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.BlendTo(Rhino.Display.ColorRGBA,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_BlendTo.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(ColorRGBA other)",
+      "summary": "Compares this ColorRGBA with another ColorRGBA. Channels evaluation priority is first A, then R, then G, then B.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "The other ColorRGBA to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this \u003C other\u002B1: if this \u003E other"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CompareTo.htm"
+    },
+    {
+      "name": "CreateFromCMYK",
+      "signature": "public static ColorRGBA CreateFromCMYK(ColorCMYK cmyk)",
+      "summary": "Create the nearest RGBA equivalent of a CMYK color.",
+      "params": [
+        {
+          "name": "cmyk",
+          "type": "Rhino.Display.ColorCMYK",
+          "doc": "Target color in CMYK space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "The RGBA equivalent of the CMYK color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CreateFromCMYK.htm"
+    },
+    {
+      "name": "CreateFromHSL",
+      "signature": "public static ColorRGBA CreateFromHSL(ColorHSL hsl)",
+      "summary": "Constructs the nearest RGBA equivalent of an HSV color.",
+      "params": [
+        {
+          "name": "hsl",
+          "type": "Rhino.Display.ColorHSL",
+          "doc": "Target color in HSL space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "The RGBA equivalent of the HSL color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CreateFromHSL.htm"
+    },
+    {
+      "name": "CreateFromHSV",
+      "signature": "public static ColorRGBA CreateFromHSV(ColorHSV hsv)",
+      "summary": "Constructs the nearest RGBA equivalent of an HSL color.",
+      "params": [
+        {
+          "name": "hsv",
+          "type": "Rhino.Display.ColorHSV",
+          "doc": "Target color in HSL space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "The RGBA equivalent of the HSL color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CreateFromHSV.htm"
+    },
+    {
+      "name": "CreateFromLAB",
+      "signature": "public static ColorRGBA CreateFromLAB(ColorLAB lab)",
+      "summary": "Create the nearest RGBA equivalent of a LAB color.",
+      "params": [
+        {
+          "name": "lab",
+          "type": "Rhino.Display.ColorLAB",
+          "doc": "Target color in LAB space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "The RGBA equivalent of the LAB color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CreateFromLAB.htm"
+    },
+    {
+      "name": "CreateFromLCH",
+      "signature": "public static ColorRGBA CreateFromLCH(ColorLCH lch)",
+      "summary": "Create the nearest RGBA equivalent of a LCH color.",
+      "params": [
+        {
+          "name": "lch",
+          "type": "Rhino.Display.ColorLCH",
+          "doc": "Target color in LCH space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "The RGBA equivalent of the LCH color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CreateFromLCH.htm"
+    },
+    {
+      "name": "CreateFromXYZ",
+      "signature": "public static ColorRGBA CreateFromXYZ(ColorXYZ xyz)",
+      "summary": "Create the nearest RGBA equivalent of an XYZ color.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Rhino.Display.ColorXYZ",
+          "doc": "Target color in XYZ space.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "The RGBA equivalent of the XYZ color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_CreateFromXYZ.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(ColorRGBA other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.EpsilonEquals(Rhino.Display.ColorRGBA,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.EpsilonEquals(Rhino.Display.ColorRGBA,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.EpsilonEquals(Rhino.Display.ColorRGBA,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides ValueType.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.Equals(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.Equals(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_Equals_1.htm"
+    },
+    {
+      "name": "Equals(ColorRGBA)",
+      "signature": "public bool Equals(ColorRGBA other)",
+      "summary": "Determines whether the specified ColorRGBA has the same values as the present color.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "The specified color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if color has the same channel values as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_Equals.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides ValueType.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_GetHashCode.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ValueType.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ToString(System.String,System.IFormatProvider)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "[Missing \u003Cparam name=\u0022formatProvider\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ToString(System.String,System.IFormatProvider)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.ToString(System.String,System.IFormatProvider)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_ToString_1.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(ColorRGBA a, ColorRGBA b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Equality(Rhino.Display.ColorRGBA,Rhino.Display.ColorRGBA)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Equality(Rhino.Display.ColorRGBA,Rhino.Display.ColorRGBA)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Equality(Rhino.Display.ColorRGBA,Rhino.Display.ColorRGBA)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_op_Equality.htm"
+    },
+    {
+      "name": "Explicit(ColorRGBA to Color)",
+      "signature": "public static explicit operator Color (ColorRGBA value)",
+      "summary": "Explicitly converts a ColorRGBA in a Color.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "A RGBA color.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "An ARGB Color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_op_Explicit.htm"
+    },
+    {
+      "name": "Implicit(Color to ColorRGBA)",
+      "signature": "public static implicit operator ColorRGBA (Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Implicit(System.Drawing.Color)~Rhino.Display.ColorRGBA\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ColorRGBA",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Implicit(System.Drawing.Color)~Rhino.Display.ColorRGBA\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_op_Implicit.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(ColorRGBA a, ColorRGBA b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022a\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Inequality(Rhino.Display.ColorRGBA,Rhino.Display.ColorRGBA)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Display.ColorRGBA",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Inequality(Rhino.Display.ColorRGBA,Rhino.Display.ColorRGBA)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Display.ColorRGBA.op_Inequality(Rhino.Display.ColorRGBA,Rhino.Display.ColorRGBA)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ColorRGBA_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "A",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the alpha channel value. Alpha channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_A.htm"
+    },
+    {
+      "name": "B",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the blue channel value. Blue channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_B.htm"
+    },
+    {
+      "name": "Black",
+      "type": "ColorRGBA",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_Black.htm"
+    },
+    {
+      "name": "Blue",
+      "type": "ColorRGBA",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_Blue.htm"
+    },
+    {
+      "name": "G",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the green channel value. Green channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_G.htm"
+    },
+    {
+      "name": "Green",
+      "type": "ColorRGBA",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_Green.htm"
+    },
+    {
+      "name": "R",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the red channel value. Red channels are limited to a 0~1 range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_R.htm"
+    },
+    {
+      "name": "Red",
+      "type": "ColorRGBA",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_Red.htm"
+    },
+    {
+      "name": "White",
+      "type": "ColorRGBA",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ColorRGBA_White.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

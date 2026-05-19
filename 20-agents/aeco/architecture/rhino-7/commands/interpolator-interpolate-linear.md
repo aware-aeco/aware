@@ -1,5 +1,0 @@
-# interpolator-interpolate-linear
-
-Lifecycle: single
-
-Sample the list of numbers with linear interpolation.

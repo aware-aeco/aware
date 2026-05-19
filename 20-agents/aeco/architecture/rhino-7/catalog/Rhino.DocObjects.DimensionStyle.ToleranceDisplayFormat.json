@@ -1,0 +1,34 @@
+{
+  "name": "DimensionStyle.ToleranceDisplayFormat",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Style of tolerance display for dimensions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_ToleranceDisplayFormat.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No tolerance display"
+    },
+    {
+      "name": "Symmetrical",
+      "value": 1,
+      "summary": "Symmetrical \u002B/- tolerance"
+    },
+    {
+      "name": "Deviation",
+      "value": 2,
+      "summary": "Distance \u002Btol, -tol"
+    },
+    {
+      "name": "Limits",
+      "value": 3,
+      "summary": "Distance upper and lower limits"
+    }
+  ]
+}

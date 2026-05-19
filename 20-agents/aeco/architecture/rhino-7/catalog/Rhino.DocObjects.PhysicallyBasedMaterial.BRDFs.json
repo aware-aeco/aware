@@ -1,0 +1,22 @@
+{
+  "name": "PhysicallyBasedMaterial.BRDFs",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.PhysicallyBasedMaterial.BRDFs\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_PhysicallyBasedMaterial_BRDFs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GGX",
+      "value": 0
+    },
+    {
+      "name": "Ward",
+      "value": 1
+    }
+  ]
+}

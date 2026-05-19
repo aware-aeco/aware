@@ -1,0 +1,353 @@
+{
+  "name": "MeshTopologyEdgeList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Represents an entry point to the list of edges in a mesh topology.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_MeshTopologyEdgeList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CollapseEdge",
+      "signature": "public bool CollapseEdge(int topologyEdgeIndex)",
+      "summary": "Replaces a mesh edge with a vertex at its center and update adjacent faces as needed.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge in TopologyEdges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_CollapseEdge.htm"
+    },
+    {
+      "name": "EdgeLine",
+      "signature": "public Line EdgeLine(int topologyEdgeIndex)",
+      "summary": "Gets the 3d line along an edge.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "The topology edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "Line along edge. If input is not valid, an Invalid Line is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_EdgeLine.htm"
+    },
+    {
+      "name": "GetConnectedFaces(Int32)",
+      "signature": "public int[] GetConnectedFaces(int topologyEdgeIndex)",
+      "summary": "Gets indices of faces connected to an edge.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge that is queried.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of face indices the edge borders. This might be empty on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_GetConnectedFaces.htm"
+    },
+    {
+      "name": "GetConnectedFaces(Int32, Boolean[])",
+      "signature": "public int[] GetConnectedFaces(int topologyEdgeIndex, out bool[] faceOrientationMatchesEdgeDirection)",
+      "summary": "Gets indices of faces connected to an edge.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge that is queried.",
+          "optional": false
+        },
+        {
+          "name": "faceOrientationMatchesEdgeDirection",
+          "type": "System.Boolean[]",
+          "doc": "An array of Boolean values that explains whether each face direction matches the direction of the specified edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of face indices the edge borders. This might be empty on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_GetConnectedFaces_1.htm"
+    },
+    {
+      "name": "GetEdgeIndex",
+      "signature": "public int GetEdgeIndex(int topologyVertex1, int topologyVertex2)",
+      "summary": "Returns index of edge that connects topological vertices. returns -1 if no edge is found.",
+      "params": [
+        {
+          "name": "topologyVertex1",
+          "type": "System.Int32",
+          "doc": "The first topology vertex index.",
+          "optional": false
+        },
+        {
+          "name": "topologyVertex2",
+          "type": "System.Int32",
+          "doc": "The second topology vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The edge index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_GetEdgeIndex.htm"
+    },
+    {
+      "name": "GetEdgesForFace(Int32)",
+      "signature": "public int[] GetEdgesForFace(int faceIndex)",
+      "summary": "Gets indices of edges that surround a given face.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "A new array of indices to the topological edges that are connected with the specified face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_GetEdgesForFace.htm"
+    },
+    {
+      "name": "GetEdgesForFace(Int32, Boolean[])",
+      "signature": "public int[] GetEdgesForFace(int faceIndex, out bool[] sameOrientation)",
+      "summary": "Gets indices of edges that surround a given face.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        },
+        {
+          "name": "sameOrientation",
+          "type": "System.Boolean[]",
+          "doc": "Same length as returned edge index array. For each edge, the sameOrientation value tells you if the edge orientation matches the face orientation (true), or is reversed (false) compared to it.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "A new array of indices to the topological edges that are connected with the specified face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_GetEdgesForFace_1.htm"
+    },
+    {
+      "name": "GetTopologyVertices",
+      "signature": "public IndexPair GetTopologyVertices(int topologyEdgeIndex)",
+      "summary": "Gets the two topology vertices for a given topology edge.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IndexPair",
+        "doc": "The pair of vertex indices the edge connects."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_GetTopologyVertices.htm"
+    },
+    {
+      "name": "IsEdgeUnwelded",
+      "signature": "public bool IsEdgeUnwelded(int topologyEdgeIndex)",
+      "summary": "Determines if the mesh edge is unwelded, or if the mesh faces that share the edge have unique vertex indices.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge in TopologyEdges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the edge is unwelded, false if the edge is welded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_IsEdgeUnwelded.htm"
+    },
+    {
+      "name": "IsHidden",
+      "signature": "public bool IsHidden(int topologyEdgeIndex)",
+      "summary": "Returns true if the topological edge is hidden. The mesh topology edge is hidden only if either of its mesh topology vertices is hidden.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge in TopologyEdges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if mesh topology edge is hidden."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_IsHidden.htm"
+    },
+    {
+      "name": "IsNgonInterior",
+      "signature": "public bool IsNgonInterior(int topologyEdgeIndex)",
+      "summary": "Returns true if the topological edge is an interior ngon edge",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge in TopologyEdges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if mesh topology edge is an interior ngon edge."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_IsNgonInterior.htm"
+    },
+    {
+      "name": "IsSwappableEdge",
+      "signature": "public bool IsSwappableEdge(int topologyEdgeIndex)",
+      "summary": "Determines if a mesh edge index is valid input for SwapEdge(Int32).",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge in TopologyEdges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if edge can be swapped."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_IsSwappableEdge.htm"
+    },
+    {
+      "name": "SplitEdge(Int32, Point3d)",
+      "signature": "public bool SplitEdge(int topologyEdgeIndex, Point3d point)",
+      "summary": "Divides a mesh edge to create two or more triangles",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "Edge to divide",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Location to perform the split",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_SplitEdge.htm"
+    },
+    {
+      "name": "SplitEdge(Int32, Double)",
+      "signature": "public bool SplitEdge(int topologyEdgeIndex, double t)",
+      "summary": "Divides a mesh edge to create two or more triangles",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "Edge to divide",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter along edge. This is the same as getting an EdgeLine and calling PointAt(t) on that line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_SplitEdge_1.htm"
+    },
+    {
+      "name": "SwapEdge",
+      "signature": "public bool SwapEdge(int topologyEdgeIndex)",
+      "summary": "If the edge is shared by two triangular face, then the edge is swapped.",
+      "params": [
+        {
+          "name": "topologyEdgeIndex",
+          "type": "System.Int32",
+          "doc": "An index of a topology edge in TopologyEdges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshTopologyEdgeList_SwapEdge.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of edges in this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshTopologyEdgeList_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

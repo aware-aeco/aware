@@ -1,0 +1,114 @@
+{
+  "name": "RenderEnvironmentTable",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderEnvironmentTable\u0022]",
+  "interfaces": [
+    "IEnumerable\u003CRenderEnvironment\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderEnvironmentTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public bool Add(RenderEnvironment c)",
+      "summary": "",
+      "params": [
+        {
+          "name": "c",
+          "type": "Rhino.Render.RenderEnvironment",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderEnvironmentTable.Add(Rhino.Render.RenderEnvironment)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderEnvironmentTable.Add(Rhino.Render.RenderEnvironment)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderEnvironmentTable_Add.htm"
+    },
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts changeContext)",
+      "summary": "",
+      "params": [
+        {
+          "name": "changeContext",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "[Missing \u003Cparam name=\u0022changeContext\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderEnvironmentTable.BeginChange(Rhino.Render.RenderContent.ChangeContexts)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderEnvironmentTable_BeginChange.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public void EndChange()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderEnvironmentTable_EndChange.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CRenderEnvironment\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CRenderEnvironment\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderEnvironmentTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderEnvironmentTable_GetEnumerator.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(RenderEnvironment c)",
+      "summary": "",
+      "params": [
+        {
+          "name": "c",
+          "type": "Rhino.Render.RenderEnvironment",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderEnvironmentTable.Remove(Rhino.Render.RenderEnvironment)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderEnvironmentTable.Remove(Rhino.Render.RenderEnvironment)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderEnvironmentTable_Remove.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderEnvironmentTable_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "RenderEnvironment",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderEnvironmentTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

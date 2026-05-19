@@ -1,0 +1,358 @@
+{
+  "name": "RhinoAccountsManager",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Performs various Rhino Accounts-related tasks.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ExecuteProtectedCode",
+      "signature": "public static void ExecuteProtectedCode(Action\u003CSecretKey\u003E protectedCode)",
+      "summary": "Any synchronous method in the IRhinoAccountsManager class must be executed within the function passed to this method, or an InvalidOperationException will be thrown.",
+      "remarks": "The code within the function passed must be kept as breif as possible for performance and security reasons.",
+      "params": [
+        {
+          "name": "protectedCode",
+          "type": "System.Action\u003CSecretKey\u003E",
+          "doc": "A function returning an awaitable task that has a SecretKey passed to it. You will need to pass this secret key to any method you wish to call within IRhinoAccountsManager.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "RhinoAccountsOperationInProgressException",
+          "when": "Another operation is already in progress."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_ExecuteProtectedCode.htm"
+    },
+    {
+      "name": "ExecuteProtectedCodeAsync",
+      "signature": "public static Task ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E protectedCode)",
+      "summary": "Any asynchronous method in the IRhinoAccountsManager class must be executed within the function passed to this method, or an InvalidOperationException will be thrown.",
+      "remarks": "The code within the function passed must be kept as breif as possible for performance and security reasons.",
+      "params": [
+        {
+          "name": "protectedCode",
+          "type": "System.Func\u003CSecretKey,Task\u003E",
+          "doc": "A function returning an awaitable task that has a SecretKey passed to it. You will need to pass this secret key to any method you wish to call within IRhinoAccountsManager.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.RhinoAccounts.RhinoAccountsManager.ExecuteProtectedCodeAsync(System.Func{Rhino.Runtime.RhinoAccounts.SecretKey,System.Threading.Tasks.Task})\u0022]"
+      },
+      "throws": [
+        {
+          "type": "RhinoAccountsOperationInProgressException",
+          "when": "Another operation is already in progress."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_ExecuteProtectedCodeAsync.htm"
+    },
+    {
+      "name": "GetAuthTokensAsync(String, String, SecretKey, CancellationToken)",
+      "signature": "public static Task\u003CTuple\u003CIOpenIDConnectToken, IOAuth2Token\u003E\u003E GetAuthTokensAsync(string clientId, string clientSecret, SecretKey secretKey, CancellationToken cancellationToken)",
+      "summary": "Asynchronously retrieves auth tokens with the given criteria from the Rhino Accounts server.",
+      "remarks": "This method includes a default scope of \u0027openid\u0027, \u0027email\u0027, \u0027profile\u0027, and \u0027groups\u0027. It should be suffifient for most workflows. This method shows the user a UI showing them the progress of the operation, and allows them to cancel it at any time. It also stores the retrieved tokens in a secure cache so they can be retrieved in the future by calling TryGetAuthTokens(String, SecretKey)",
+      "params": [
+        {
+          "name": "clientId",
+          "type": "System.String",
+          "doc": "The unique id of the client registered in Rhino Accounts.",
+          "optional": false
+        },
+        {
+          "name": "clientSecret",
+          "type": "System.String",
+          "doc": "The secret of the client registered in Rhino Accounts",
+          "optional": false
+        },
+        {
+          "name": "secretKey",
+          "type": "Rhino.Runtime.RhinoAccounts.SecretKey",
+          "doc": "A special key that was handed to you in ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E)",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "A token that can be used to signal that the operation should be cancelled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CTuple\u003CIOpenIDConnectToken,IOAuth2Token\u003E\u003E",
+        "doc": "The auth tokens requested."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "An invalid secretKey was passed, or the assembly is not allowed to call methods from IRhinoAccountsManager"
+        },
+        {
+          "type": "RhinoAccountsException",
+          "when": "An error occurred during the authentication process. You may look at the specific subclass of the exception gain more insight as to why the operation failed."
+        },
+        {
+          "type": "OperationCanceledException",
+          "when": "The operation was cancelled, either by internal decisions or because the cancellationToken was cancelled."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_GetAuthTokensAsync.htm"
+    },
+    {
+      "name": "GetAuthTokensAsync(String, String, IEnumerable\u003CString\u003E, String, Nullable\u003CInt32\u003E, Boolean, IProgress\u003CRhinoAccoountsProgressInfo\u003E, SecretKey, CancellationToken)",
+      "signature": "public static Task\u003CTuple\u003CIOpenIDConnectToken, IOAuth2Token\u003E\u003E GetAuthTokensAsync(string clientId, string clientSecret, IEnumerable\u003Cstring\u003E scope, string prompt, Nullable\u003Cint\u003E maxAge, bool showUI, IProgress\u003CRhinoAccoountsProgressInfo\u003E progress, SecretKey secretKey, CancellationToken cancellationToken)",
+      "summary": "Asynchronously retrieves auth tokens with the given criteria from the Rhino Accounts server.",
+      "params": [
+        {
+          "name": "clientId",
+          "type": "System.String",
+          "doc": "The unique id of the client registered in Rhino Accounts.",
+          "optional": false
+        },
+        {
+          "name": "clientSecret",
+          "type": "System.String",
+          "doc": "The secret of the client registered in Rhino Accounts",
+          "optional": false
+        },
+        {
+          "name": "scope",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The scope desired for the tokens. Valid scope values can be found in the Rhino Accounts documentation.",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "The prompt of the request. See Rhino Accounts documentation for details. You may pass null if no prompt is desired.",
+          "optional": false
+        },
+        {
+          "name": "maxAge",
+          "type": "System.Nullable\u003CInt32\u003E",
+          "doc": "The maxAge of the request. See Rhino Accounts documentation for details. You may pass null if no maxAge should be enforced.",
+          "optional": false
+        },
+        {
+          "name": "showUI",
+          "type": "System.Boolean",
+          "doc": "true if the user should see a UI showing the progress of the operation and a way to cancel it, or false if the UI should not be displayed. If false, it is strongly recommended that you pass a progress object and display your own UI to the user.",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "System.IProgress\u003CRhinoAccoountsProgressInfo\u003E",
+          "doc": "An object that will report the progress of the operation to the caller. If no progress is needed, you may pass null.",
+          "optional": false
+        },
+        {
+          "name": "secretKey",
+          "type": "Rhino.Runtime.RhinoAccounts.SecretKey",
+          "doc": "A special key that was handed to you in ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E)",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "A token that can be used to signal that the operation should be cancelled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CTuple\u003CIOpenIDConnectToken,IOAuth2Token\u003E\u003E",
+        "doc": "The auth tokens requested."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "An invalid secretKey was passed, or the assembly is not allowed to call methods from IRhinoAccountsManager"
+        },
+        {
+          "type": "RhinoAccountsException",
+          "when": "An error occurred during the authentication process. You may look at the specific subclass of the exception gain more insight as to why the operation failed."
+        },
+        {
+          "type": "OperationCanceledException",
+          "when": "The operation was cancelled, either by internal decisions or because the cancellationToken was cancelled."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_GetAuthTokensAsync_1.htm"
+    },
+    {
+      "name": "RevokeAuthTokenAsync",
+      "signature": "public static Task RevokeAuthTokenAsync(IOAuth2Token oauth2Token, SecretKey secretKey, CancellationToken cancellationToken)",
+      "summary": "Invalidates/revokes an IOAuth2Token object from the Rhino Accounts server.",
+      "remarks": "If the OAuth 2 token is stored in the local cache, it will be removed from the cache as well.",
+      "params": [
+        {
+          "name": "oauth2Token",
+          "type": "Rhino.Runtime.RhinoAccounts.IOAuth2Token",
+          "doc": "The token to revoke.",
+          "optional": false
+        },
+        {
+          "name": "secretKey",
+          "type": "Rhino.Runtime.RhinoAccounts.SecretKey",
+          "doc": "A special key that was handed to you in ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E)",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "A token that can be used to signal that the operation should be cancelled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.RhinoAccounts.RhinoAccountsManager.RevokeAuthTokenAsync(Rhino.Runtime.RhinoAccounts.IOAuth2Token,Rhino.Runtime.RhinoAccounts.SecretKey,System.Threading.CancellationToken)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "An invalid secretKey was passed, or the assembly is not allowed to call methods from IRhinoAccountsManager"
+        },
+        {
+          "type": "OperationCanceledException",
+          "when": "The operation was cancelled, either by internal decisions or because the cancellationToken was cancelled."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_RevokeAuthTokenAsync.htm"
+    },
+    {
+      "name": "TryGetAuthTokens(String, SecretKey)",
+      "signature": "public static Tuple\u003CIOpenIDConnectToken, IOAuth2Token\u003E TryGetAuthTokens(string clientId, SecretKey secretKey)",
+      "summary": "Attempts to return cached auth tokens that match the given criteria if any have been stored in cache.",
+      "params": [
+        {
+          "name": "clientId",
+          "type": "System.String",
+          "doc": "The unique id of the client registered in Rhino Accounts.",
+          "optional": false
+        },
+        {
+          "name": "secretKey",
+          "type": "Rhino.Runtime.RhinoAccounts.SecretKey",
+          "doc": "A special key that was handed to you in ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CIOpenIDConnectToken,IOAuth2Token\u003E",
+        "doc": "Cached tokens matching the exact criteria passed, or null if none can be found matching the criteria."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "An invalid secretKey was passed, or the assembly is not allowed to call methods from IRhinoAccountsManager"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_TryGetAuthTokens.htm"
+    },
+    {
+      "name": "TryGetAuthTokens(String, IEnumerable\u003CString\u003E, SecretKey)",
+      "signature": "public static Tuple\u003CIOpenIDConnectToken, IOAuth2Token\u003E TryGetAuthTokens(string clientId, IEnumerable\u003Cstring\u003E scope, SecretKey secretKey)",
+      "summary": "Attempts to return cached auth tokens that match the given criteria if any have been stored in cache.",
+      "params": [
+        {
+          "name": "clientId",
+          "type": "System.String",
+          "doc": "The unique id of the client registered in Rhino Accounts.",
+          "optional": false
+        },
+        {
+          "name": "scope",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "The scope desired for the tokens. Valid scope values can be found in the Rhino Accounts documentation.",
+          "optional": false
+        },
+        {
+          "name": "secretKey",
+          "type": "Rhino.Runtime.RhinoAccounts.SecretKey",
+          "doc": "A special key that was handed to you in ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple\u003CIOpenIDConnectToken,IOAuth2Token\u003E",
+        "doc": "Cached tokens matching the exact criteria passed, or null if none can be found matching the criteria."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "An invalid secretKey was passed, or the assembly is not allowed to call methods from IRhinoAccountsManager"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_TryGetAuthTokens_1.htm"
+    },
+    {
+      "name": "UpdateOpenIDConnectTokenAsync",
+      "signature": "public static Task\u003CIOpenIDConnectToken\u003E UpdateOpenIDConnectTokenAsync(IOpenIDConnectToken currentToken, IOAuth2Token oauth2Token, SecretKey secretKey, CancellationToken cancellationToken)",
+      "summary": "Updates an OpenID Connect token so that it contains the latest user information by contacting the Rhino Account\u0027s server userinfo endpoint using a compatible O",
+      "remarks": "If the OpenID Connect token is currently stored in the local cache, it will be updated to reflect the new token.",
+      "params": [
+        {
+          "name": "currentToken",
+          "type": "Rhino.Runtime.RhinoAccounts.IOpenIDConnectToken",
+          "doc": "The existing OpenID Connect token that you wish to updated with the latest user information.",
+          "optional": false
+        },
+        {
+          "name": "oauth2Token",
+          "type": "Rhino.Runtime.RhinoAccounts.IOAuth2Token",
+          "doc": "A valid OAuth2 token used for authorization. The OAuth2 token must have been issued together with the OpenID Connect token passed or a RhinoAccountsAuthTokenMismatchException will be thrown.",
+          "optional": false
+        },
+        {
+          "name": "secretKey",
+          "type": "Rhino.Runtime.RhinoAccounts.SecretKey",
+          "doc": "A special key that was handed to you in ExecuteProtectedCodeAsync(Func\u003CSecretKey, Task\u003E)",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "doc": "A token that can be used to signal that the operation should be cancelled.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Task\u003CIOpenIDConnectToken\u003E",
+        "doc": "The updated OpenIDConnectToken based on the original token passed to this method."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "An invalid secretKey was passed, or the assembly is not allowed to call methods from IRhinoAccountsManager"
+        },
+        {
+          "type": "RhinoAccountsException",
+          "when": "An error occurred during the authentication process. You may look at the specific subclass of the exception gain more insight as to why the operation failed."
+        },
+        {
+          "type": "OperationCanceledException",
+          "when": "The operation was cancelled, either by internal decisions or because the cancellationToken was cancelled."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsManager_UpdateOpenIDConnectTokenAsync.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,76 @@
+{
+  "name": "ComponentIndex",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents an index of an element contained in another object.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_ComponentIndex.htm",
+  "constructors": [
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex(ComponentIndexType type, int index)",
+      "summary": "Construct component index with a specific type/index combination",
+      "params": [
+        {
+          "name": "type",
+          "type": "Rhino.Geometry.ComponentIndexType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Geometry.ComponentIndex.#ctor(Rhino.Geometry.ComponentIndexType,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.ComponentIndex.#ctor(Rhino.Geometry.ComponentIndexType,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ComponentIndex__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsUnset",
+      "signature": "public bool IsUnset()",
+      "summary": "Return true is this component index is the same as the Unset component index",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.ComponentIndex.IsUnset\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ComponentIndex_IsUnset.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentIndexType",
+      "type": "ComponentIndexType",
+      "getter": true,
+      "setter": false,
+      "summary": "The interpretation of Index depends on the Type value. Type m_index interpretation (0 based indices) no_type used when context makes it clear what array is being index brep_vertex Brep.m_V[] array index brep_edge Brep.m_E[] array index brep_face Brep.m_F[] array index brep_trim Brep.m_T[] array index brep_loop Brep.m_L[] array index mesh_vertex Mesh.m_V[] array index meshtop_vertex MeshTopology.m_topv[] array index meshtop_edge MeshTopology.m_tope[] array index mesh_face Mesh.m_F[] array index idef_part InstanceDefinition.m_object_uuid[] array index polycurve_segment PolyCurve::m_segment[] array index dim_linear_point LinearDimension2::POINT_INDEX dim_radial_point RadialDimension2::POINT_INDEX dim_angular_point AngularDimension2::POINT_INDEX dim_ordinate_point OrdinateDimension2::POINT_INDEX dim_text_point TextEntity2 origin point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ComponentIndex_ComponentIndexType.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "The interpretation of m_index depends on the m_type value. m_type m_index interpretation (0 based indices) no_type used when context makes it clear what array is being index brep_vertex Brep.m_V[] array index brep_edge Brep.m_E[] array index brep_face Brep.m_F[] array index brep_trim Brep.m_T[] array index brep_loop Brep.m_L[] array index mesh_vertex Mesh.m_V[] array index meshtop_vertex MeshTopology.m_topv[] array index meshtop_edge MeshTopology.m_tope[] array index mesh_face Mesh.m_F[] array index idef_part InstanceDefinition.m_object_uuid[] array index polycurve_segment PolyCurve::m_segment[] array index dim_linear_point LinearDimension2::POINT_INDEX dim_radial_point RadialDimension2::POINT_INDEX dim_angular_point AngularDimension2::POINT_INDEX dim_ordinate_point OrdinateDimension2::POINT_INDEX dim_text_point TextEntity2 origin point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ComponentIndex_Index.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "ComponentIndex",
+      "getter": true,
+      "setter": false,
+      "summary": "The unset value of component index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ComponentIndex_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

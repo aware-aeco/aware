@@ -1,0 +1,34 @@
+{
+  "name": "ShowPanelReason",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "OnShowDockbar event type",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ShowPanelReason.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Show",
+      "value": 0,
+      "summary": "Dock bar shown or made visible"
+    },
+    {
+      "name": "Hide",
+      "value": 1,
+      "summary": "Dock bar hidden, no longer visible"
+    },
+    {
+      "name": "HideOnDeactivate",
+      "value": 2,
+      "summary": "Dock bar temporarily hidden because the main Rhino application is no longer active."
+    },
+    {
+      "name": "ShowOnDeactivate",
+      "value": 3,
+      "summary": "Dock bar that was temporarily hidden when the main Rhino application was deactivated is now being shown."
+    }
+  ]
+}

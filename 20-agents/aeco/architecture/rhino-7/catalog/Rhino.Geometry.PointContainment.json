@@ -1,0 +1,34 @@
+{
+  "name": "PointContainment",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for closed curve/point spatial relationships.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_PointContainment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Relation is meaningless."
+    },
+    {
+      "name": "Inside",
+      "value": 1,
+      "summary": "Point is on the interior of the region implied by the closed curve."
+    },
+    {
+      "name": "Outside",
+      "value": 2,
+      "summary": "Point is on the exterior of the region implied by the closed curve."
+    },
+    {
+      "name": "Coincident",
+      "value": 3,
+      "summary": "Point is coincident with the curve and therefor neither inside not outside."
+    }
+  ]
+}

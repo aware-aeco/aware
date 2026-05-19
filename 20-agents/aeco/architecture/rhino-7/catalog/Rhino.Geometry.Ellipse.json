@@ -1,0 +1,184 @@
+{
+  "name": "Ellipse",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the values of a plane and the two semi-axes radii in an ellipse.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Ellipse.htm",
+  "constructors": [
+    {
+      "name": "Ellipse(Plane, Double, Double)",
+      "signature": "public Ellipse(Plane plane, double radius1, double radius2)",
+      "summary": "Initializes a new ellipse from base plane and both principal radii.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane of ellipse.",
+          "optional": false
+        },
+        {
+          "name": "radius1",
+          "type": "System.Double",
+          "doc": "Ellipse radius along base plane X direction.",
+          "optional": false
+        },
+        {
+          "name": "radius2",
+          "type": "System.Double",
+          "doc": "Ellipse radius along base plane Y direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Ellipse__ctor.htm"
+    },
+    {
+      "name": "Ellipse(Point3d, Point3d, Point3d)",
+      "signature": "public Ellipse(Point3d center, Point3d second, Point3d third)",
+      "summary": "Initializes a new ellipse from a center point and the two semi-axes intersections.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A center for the ellipse. The average of the foci.",
+          "optional": false
+        },
+        {
+          "name": "second",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The intersection of the ellipse X axis with the ellipse itself.",
+          "optional": false
+        },
+        {
+          "name": "third",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point that determines the radius along the Y semi-axis. If the point is at right angle with the (center - second point) vector, it will be the intersection of the ellipse Y axis with the ellipse itself.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Ellipse__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Ellipse other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Ellipse",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Ellipse.EpsilonEquals(Rhino.Geometry.Ellipse,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Ellipse.EpsilonEquals(Rhino.Geometry.Ellipse,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Ellipse.EpsilonEquals(Rhino.Geometry.Ellipse,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Ellipse_EpsilonEquals.htm"
+    },
+    {
+      "name": "GetFoci",
+      "signature": "public void GetFoci(out Point3d F1, out Point3d F2)",
+      "summary": "Gets the foci. The foci are two points whose sum of distances from any point on the ellipse is always the same.",
+      "params": [
+        {
+          "name": "F1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first focus.",
+          "optional": false
+        },
+        {
+          "name": "F2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second focus.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Ellipse_GetFoci.htm"
+    },
+    {
+      "name": "ToNurbsCurve",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Constructs a nurbs curve representation of this ellipse. This is equivalent to calling NurbsCurve.CreateFromEllipse().",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A nurbs curve representation of this ellipse or null if no such representation could be made."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Ellipse_ToNurbsCurve.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the center of the ellipse.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Ellipse_Center.htm"
+    },
+    {
+      "name": "FocalDistance",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the distance from the center to a focus.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Ellipse_FocalDistance.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an indication of the validity of this ellipse.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Ellipse_IsValid.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the base plane of the ellipse.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Ellipse_Plane.htm"
+    },
+    {
+      "name": "Radius1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the ellipse along the base plane X semi-axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Ellipse_Radius1.htm"
+    },
+    {
+      "name": "Radius2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the ellipse along the base plane Y semi-axis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Ellipse_Radius2.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

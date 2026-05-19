@@ -1,0 +1,54 @@
+{
+  "name": "DimensionStyle.ArrowType",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for arrowhead shapes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_ArrowType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "UserBlock",
+      "value": 1
+    },
+    {
+      "name": "SolidTriangle",
+      "value": 2
+    },
+    {
+      "name": "Dot",
+      "value": 3
+    },
+    {
+      "name": "Tick",
+      "value": 4
+    },
+    {
+      "name": "ShortTriangle",
+      "value": 5
+    },
+    {
+      "name": "OpenArrow",
+      "value": 6
+    },
+    {
+      "name": "Rectangle",
+      "value": 7
+    },
+    {
+      "name": "LongTriangle",
+      "value": 8
+    },
+    {
+      "name": "LongerTriangle",
+      "value": 9
+    }
+  ]
+}

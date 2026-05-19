@@ -1,0 +1,29 @@
+{
+  "name": "BasepointZero",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Specifies enumerated constants used to indicate the zero level convention relating to a location on Earth. This is used in conjunction with the EarthAnchorPoint class.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_BasepointZero.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GroundLevel",
+      "value": 0,
+      "summary": "The ground level is the convention for 0."
+    },
+    {
+      "name": "MeanSeaLevel",
+      "value": 1,
+      "summary": "The mean sea level is the convention for 0."
+    },
+    {
+      "name": "CenterOfEarth",
+      "value": 2,
+      "summary": "The center of the planet is the convention for 0."
+    }
+  ]
+}

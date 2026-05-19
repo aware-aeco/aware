@@ -1,0 +1,169 @@
+{
+  "name": "DecalCreateParams",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Used by RhinoObject.AddDecal() to create and add a decal",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_DecalCreateParams.htm",
+  "constructors": [
+    {
+      "name": "DecalCreateParams",
+      "signature": "public DecalCreateParams()",
+      "summary": "Initializes a new instance of the DecalCreateParams class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DecalCreateParams__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DecalMapping",
+      "type": "DecalMapping",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_DecalMapping.htm"
+    },
+    {
+      "name": "DecalProjection",
+      "type": "DecalProjection",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_DecalProjection.htm"
+    },
+    {
+      "name": "EndLatitude",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_EndLatitude.htm"
+    },
+    {
+      "name": "EndLongitude",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_EndLongitude.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_Height.htm"
+    },
+    {
+      "name": "MapToInside",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_MapToInside.htm"
+    },
+    {
+      "name": "MaxU",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_MaxU.htm"
+    },
+    {
+      "name": "MaxV",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_MaxV.htm"
+    },
+    {
+      "name": "MinU",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_MinU.htm"
+    },
+    {
+      "name": "MinV",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_MinV.htm"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_Origin.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_Radius.htm"
+    },
+    {
+      "name": "StartLatitude",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_StartLatitude.htm"
+    },
+    {
+      "name": "StartLongitude",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_StartLongitude.htm"
+    },
+    {
+      "name": "TextureInstanceId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_TextureInstanceId.htm"
+    },
+    {
+      "name": "Transparency",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_Transparency.htm"
+    },
+    {
+      "name": "VectorAcross",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_VectorAcross.htm"
+    },
+    {
+      "name": "VectorUp",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_DecalCreateParams_VectorUp.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

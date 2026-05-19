@@ -1,0 +1,189 @@
+{
+  "name": "SubDVertex",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Single vertex of a SubD",
+  "base": "SubDComponent",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDVertex.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EdgeAt",
+      "signature": "public SubDEdge EdgeAt(int index)",
+      "summary": "Retrieve a SubDEdge from this vertex",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDVertex.EdgeAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDVertex.EdgeAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDVertex_EdgeAt.htm"
+    },
+    {
+      "name": "FaceAt",
+      "signature": "public SubDFace FaceAt(int index)",
+      "summary": "Retrieve a SubDFace from this vertex",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SubDVertex.FaceAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDVertex.FaceAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDVertex_FaceAt.htm"
+    },
+    {
+      "name": "SurfacePoint",
+      "signature": "public Point3d SurfacePoint()",
+      "summary": "The SubD surface point",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SubDVertex.SurfacePoint\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SubDVertex_SurfacePoint.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlNetPoint",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Location of the \u0022control net\u0022 point that this SubDVertex represents",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_ControlNetPoint.htm"
+    },
+    {
+      "name": "EdgeCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of edges for this vertex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_EdgeCount.htm"
+    },
+    {
+      "name": "Edges",
+      "type": "IEnumerable\u003CSubDEdge\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All edges that this vertex is part of",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_Edges.htm"
+    },
+    {
+      "name": "FaceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of faces for this vertex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_FaceCount.htm"
+    },
+    {
+      "name": "Id",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Unique id within the parent SubD for this item",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_Id.htm"
+    },
+    {
+      "name": "IsDamaged",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is damaged.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsDamaged.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsDeleted.htm"
+    },
+    {
+      "name": "IsHidden",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is hidden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsHidden.htm"
+    },
+    {
+      "name": "IsHighlighted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is highlighted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsHighlighted.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsLocked.htm"
+    },
+    {
+      "name": "IsSelected",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the SubD component is selected.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_IsSelected.htm"
+    },
+    {
+      "name": "Next",
+      "type": "SubDVertex",
+      "getter": true,
+      "setter": false,
+      "summary": "Next vertex in linked list of vertices on this level",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_Next.htm"
+    },
+    {
+      "name": "ParentSubD",
+      "type": "SubD",
+      "getter": true,
+      "setter": false,
+      "summary": "SubD that this component belongs to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDComponent_ParentSubD.htm"
+    },
+    {
+      "name": "Previous",
+      "type": "SubDVertex",
+      "getter": true,
+      "setter": false,
+      "summary": "Previous vertex in linked list of vertices on this level",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_Previous.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "SubDVertexTag",
+      "getter": true,
+      "setter": true,
+      "summary": "identifies the type of subdivision vertex",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SubDVertex_Tag.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

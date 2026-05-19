@@ -1,0 +1,54 @@
+{
+  "name": "RhinoAccountsProxyException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Exception thrown when there is a problem with a proxy setting during a Rhino Accounts operation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsProxyException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsProxyException(Exception)",
+      "signature": "public RhinoAccountsProxyException(Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsProxyException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsProxyException(String, Exception)",
+      "signature": "public RhinoAccountsProxyException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsProxyException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

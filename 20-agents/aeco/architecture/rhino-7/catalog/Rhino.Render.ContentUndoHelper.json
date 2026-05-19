@@ -1,0 +1,149 @@
+{
+  "name": "ContentUndoHelper",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Content undo helper to be used with \u0022using {}\u0022 to enclose a block of changes.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_ContentUndoHelper.htm",
+  "constructors": [
+    {
+      "name": "ContentUndoHelper",
+      "signature": "public ContentUndoHelper(RhinoDoc doc, string description)",
+      "summary": "Constructs a ContentUndoHelper object inside a using block to handle undo when modifying a RenderContent or - alternatively - create the ContentUndoHelper and explicitly call Dispose when you are done.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.ContentUndoHelper.#ctor(Rhino.RhinoDoc,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "Undo description (which appears in the UI when undo is run)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddContent",
+      "signature": "public bool AddContent(RenderContent content, RenderContent parent)",
+      "summary": "Call this *after* adding a content. Undo will cause the content to be deleted.",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Content you just added to the ContentList.",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "is the content that will become the parent of the new content, or null if the new content is being added at the top level (i.e., not a child).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the content was added."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper_AddContent.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the ContentUndoHelper",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool isDisposing)",
+      "summary": "Releases the unmanaged resources used by the ContentUndoHelper and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "isDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper_Finalize.htm"
+    },
+    {
+      "name": "ModifyContent",
+      "signature": "public bool ModifyContent(RenderContent content)",
+      "summary": "Call this before modifying or deleting a content. Undo will cause the content to be restored.",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "Content you are about to modify.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the content was modified."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper_ModifyContent.htm"
+    },
+    {
+      "name": "TweakContent",
+      "signature": "public bool TweakContent(RenderContent content, string parameterName)",
+      "summary": "Call this before tweaking a single content parameter. Undo will cause the parameter to be restored.",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "The render content",
+          "optional": false
+        },
+        {
+          "name": "parameterName",
+          "type": "System.String",
+          "doc": "The parameter name you are about to change.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the content was tweaked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_ContentUndoHelper_TweakContent.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

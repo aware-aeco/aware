@@ -1,0 +1,125 @@
+{
+  "name": "GetArc",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.GetArc\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetArc.htm",
+  "constructors": [
+    {
+      "name": "GetArc",
+      "signature": "public GetArc()",
+      "summary": "Initializes a new instance of the GetArc class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetArc__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetArc_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetArc_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetArc_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out Arc arc)",
+      "summary": "Perform the \u0027get\u0027 operation.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Rhino.Geometry.Arc",
+          "doc": "[Missing \u003Cparam name=\u0022arc\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.GetArc.Get(Rhino.Geometry.Arc@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Input.Custom.GetArc.Get(Rhino.Geometry.Arc@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetArc_Get.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllowDeformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Allow for deformable options",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetArc_AllowDeformable.htm"
+    },
+    {
+      "name": "DefaultRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Default radius used for start and end radius",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetArc_DefaultRadius.htm"
+    },
+    {
+      "name": "Deformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Is the deformable option set",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetArc_Deformable.htm"
+    },
+    {
+      "name": "DeformableDegree",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetArc_DeformableDegree.htm"
+    },
+    {
+      "name": "DeformablePointCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetArc_DeformablePointCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,688 @@
+{
+  "name": "BoundingBox",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the value of two points in a bounding box defined by the two extreme corner points. This box is therefore aligned to the world X, Y and Z axes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_BoundingBox.htm",
+  "constructors": [
+    {
+      "name": "BoundingBox(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public BoundingBox(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Constructs a bounding box from a collection of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to include in the bounding box.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox__ctor_1.htm"
+    },
+    {
+      "name": "BoundingBox(Point3d, Point3d)",
+      "signature": "public BoundingBox(Point3d min, Point3d max)",
+      "summary": "Constructs a new bounding box from two corner points.",
+      "params": [
+        {
+          "name": "min",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point containing all the minimum coordinates.",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point containing all the maximum coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox__ctor.htm"
+    },
+    {
+      "name": "BoundingBox(IEnumerable\u003CPoint3d\u003E, Transform)",
+      "signature": "public BoundingBox(IEnumerable\u003CPoint3d\u003E points, Transform xform)",
+      "summary": "Constructs a bounding box from a collection of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to include in the bounding box.",
+          "optional": false
+        },
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox__ctor_2.htm"
+    },
+    {
+      "name": "BoundingBox(Double, Double, Double, Double, Double, Double)",
+      "signature": "public BoundingBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ)",
+      "summary": "Constructs a bounding box from numeric extremes.",
+      "params": [
+        {
+          "name": "minX",
+          "type": "System.Double",
+          "doc": "Lower extreme for box X size.",
+          "optional": false
+        },
+        {
+          "name": "minY",
+          "type": "System.Double",
+          "doc": "Lower extreme for box Y size.",
+          "optional": false
+        },
+        {
+          "name": "minZ",
+          "type": "System.Double",
+          "doc": "Lower extreme for box Z size.",
+          "optional": false
+        },
+        {
+          "name": "maxX",
+          "type": "System.Double",
+          "doc": "Upper extreme for box X size.",
+          "optional": false
+        },
+        {
+          "name": "maxY",
+          "type": "System.Double",
+          "doc": "Upper extreme for box Y size.",
+          "optional": false
+        },
+        {
+          "name": "maxZ",
+          "type": "System.Double",
+          "doc": "Upper extreme for box Z size.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestPoint(Point3d)",
+      "signature": "public Point3d ClosestPoint(Point3d point)",
+      "summary": "Finds the closest point on or in the bounding box.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Sample point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on or in the box that is closest to the sample point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_ClosestPoint.htm"
+    },
+    {
+      "name": "ClosestPoint(Point3d, Boolean)",
+      "signature": "public Point3d ClosestPoint(Point3d point, bool includeInterior)",
+      "summary": "Finds the closest point on or in the bounding box.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Sample point.",
+          "optional": false
+        },
+        {
+          "name": "includeInterior",
+          "type": "System.Boolean",
+          "doc": "If false, the point is projected onto the boundary faces only, otherwise the interior of the box is also taken into consideration.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on or in the box that is closest to the sample point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_ClosestPoint_1.htm"
+    },
+    {
+      "name": "Contains(BoundingBox)",
+      "signature": "public bool Contains(BoundingBox box)",
+      "summary": "Determines whether this bounding box contains another bounding box. This is the same as calling Contains(box,false).",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box is on the inside of this bounding box, or is coincident with the surface of it."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Contains.htm"
+    },
+    {
+      "name": "Contains(Point3d)",
+      "signature": "public bool Contains(Point3d point)",
+      "summary": "Tests a point for bounding box inclusion. This is the same as calling Contains(point, false)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the point is on the inside of or coincident with this bounding box; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Contains_2.htm"
+    },
+    {
+      "name": "Contains(BoundingBox, Boolean)",
+      "signature": "public bool Contains(BoundingBox box, bool strict)",
+      "summary": "Determines whether this bounding box contains another bounding box. The user can choose how to treat bounding boxes with coincident surfaces.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the box needs to be fully on the inside of the bounding box. I.e. coincident boxes will be considered \u0027outside\u0027.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box is (strictly) on the inside of this BoundingBox."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Contains_1.htm"
+    },
+    {
+      "name": "Contains(Point3d, Boolean)",
+      "signature": "public bool Contains(Point3d point, bool strict)",
+      "summary": "Tests a point for BoundingBox inclusion.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the point needs to be fully on the inside of the BoundingBox. I.e. coincident points will be considered \u0027outside\u0027.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "If \u0027strict\u0027 is affirmative, true if the point is inside this bounding box; false if it is on the surface or outside.If \u0027strict\u0027 is negative, true if the point is on the surface or on the inside of the bounding box; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Contains_3.htm"
+    },
+    {
+      "name": "Corner",
+      "signature": "public Point3d Corner(bool minX, bool minY, bool minZ)",
+      "summary": "Gets one of the eight corners of the box.",
+      "params": [
+        {
+          "name": "minX",
+          "type": "System.Boolean",
+          "doc": "true for the minimum on the X axis; false for the maximum.",
+          "optional": false
+        },
+        {
+          "name": "minY",
+          "type": "System.Boolean",
+          "doc": "true for the minimum on the Y axis; false for the maximum.",
+          "optional": false
+        },
+        {
+          "name": "minZ",
+          "type": "System.Boolean",
+          "doc": "true for the minimum on the Z axis; false for the maximum.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The requested point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Corner.htm"
+    },
+    {
+      "name": "FurthestPoint",
+      "signature": "public Point3d FurthestPoint(Point3d point)",
+      "summary": "Finds the furthest point on the Box.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Sample point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the box that is furthest from the sample point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_FurthestPoint.htm"
+    },
+    {
+      "name": "GetCorners",
+      "signature": "public Point3d[] GetCorners()",
+      "summary": "Gets an array filled with the 8 corner points of this box. See remarks for the return order.",
+      "remarks": "[0] Min.X, Min.Y, Min.Z[1] Max.X, Min.Y, Min.Z[2] Max.X, Max.Y, Min.Z[3] Min.X, Max.Y, Min.Z[4] Min.X, Min.Y, Max.Z[5] Max.X, Min.Y, Max.Z[6] Max.X, Max.Y, Max.Z[7] Min.X, Max.Y, Max.Z",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of 8 corners."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_GetCorners.htm"
+    },
+    {
+      "name": "GetEdges",
+      "signature": "public Line[] GetEdges()",
+      "summary": "Gets an array of the 12 edges of this box.",
+      "params": [],
+      "returns": {
+        "type": "Line[]",
+        "doc": "If the bounding box IsValid, the 12 edges; otherwise, null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_GetEdges.htm"
+    },
+    {
+      "name": "Inflate(Double)",
+      "signature": "public void Inflate(double amount)",
+      "summary": "Inflates the box with equal amounts in all directions. Inflating with negative amounts may result in decreasing boxes. Invalid boxes can not be inflated.",
+      "params": [
+        {
+          "name": "amount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in all directions.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Inflate.htm"
+    },
+    {
+      "name": "Inflate(Double, Double, Double)",
+      "signature": "public void Inflate(double xAmount, double yAmount, double zAmount)",
+      "summary": "Inflate the box with custom amounts in all directions. Inflating with negative amounts may result in decreasing boxes. InValid boxes can not be inflated.",
+      "params": [
+        {
+          "name": "xAmount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in the x direction.",
+          "optional": false
+        },
+        {
+          "name": "yAmount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in the y direction.",
+          "optional": false
+        },
+        {
+          "name": "zAmount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in the z direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Inflate_1.htm"
+    },
+    {
+      "name": "Intersection",
+      "signature": "public static BoundingBox Intersection(BoundingBox a, BoundingBox b)",
+      "summary": "Computes the intersection of two bounding boxes.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A first bounding box.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "A second bounding box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The intersection bounding box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Intersection.htm"
+    },
+    {
+      "name": "IsDegenerate",
+      "signature": "public int IsDegenerate(double tolerance)",
+      "summary": "Determines whether a bounding box is degenerate (flat) in one or more directions.",
+      "params": [
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "Distances \u003C= tolerance will be considered to be zero. If tolerance is negative (default), then a scale invariant tolerance is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 = box is not degenerate 1 = box is a rectangle (degenerate in one direction). 2 = box is a line (degenerate in two directions). 3 = box is a point (degenerate in three directions) 4 = box is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_IsDegenerate.htm"
+    },
+    {
+      "name": "MakeValid",
+      "signature": "public bool MakeValid()",
+      "summary": "Ensures that the box is defined in an increasing fashion along X, Y and Z axes. If the Min or Max points are unset, this function will not change the box.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box was made valid, false if the box could not be made valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_MakeValid.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double tx, double ty, double tz)",
+      "summary": "Evaluates the bounding box with normalized parameters. The box has idealized side length of 1x1x1.",
+      "params": [
+        {
+          "name": "tx",
+          "type": "System.Double",
+          "doc": "Normalized (between 0 and 1 is inside the box) parameter along the X direction.",
+          "optional": false
+        },
+        {
+          "name": "ty",
+          "type": "System.Double",
+          "doc": "Normalized (between 0 and 1 is inside the box) parameter along the Y direction.",
+          "optional": false
+        },
+        {
+          "name": "tz",
+          "type": "System.Double",
+          "doc": "Normalized (between 0 and 1 is inside the box) parameter along the Z direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at the {tx, ty, tz} parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_PointAt.htm"
+    },
+    {
+      "name": "ToBrep",
+      "signature": "public Brep ToBrep()",
+      "summary": "Constructs a Brep representation of this bounding box.",
+      "params": [],
+      "returns": {
+        "type": "Brep",
+        "doc": "If this operation is successful, a Brep representation of this box; otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_ToBrep.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Constructs the string representation of this aligned bounding box.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Text."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_ToString.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Updates this bounding box to be the smallest axis aligned bounding box that contains the transformed result of its 8 original corner points.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "A transform.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this operation is successful; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Transform.htm"
+    },
+    {
+      "name": "Union(BoundingBox)",
+      "signature": "public void Union(BoundingBox other)",
+      "summary": "Updates this BoundingBox to represent the union of itself and another box.",
+      "remarks": "If either this BoundingBox or the other BoundingBox is InValid, the Valid BoundingBox will be the only one included in the union.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to include in this union.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Union.htm"
+    },
+    {
+      "name": "Union(Point3d)",
+      "signature": "public void Union(Point3d point)",
+      "summary": "Updates this BoundingBox to represent the union of itself and a point.",
+      "remarks": "If this bounding box is InValid then the union will be the BoundingBox containing only the point. If the point is InValid, this BoundingBox will remain unchanged.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to include in the union.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Union_3.htm"
+    },
+    {
+      "name": "Union(BoundingBox, BoundingBox)",
+      "signature": "public static BoundingBox Union(BoundingBox a, BoundingBox b)",
+      "summary": "Returns a new BoundingBox that represents the union of boxes a and b.",
+      "remarks": "Invalid boxes are ignored and will not affect the union.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "First box to include in union.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Second box to include in union.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The BoundingBox that contains both a and b."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Union_1.htm"
+    },
+    {
+      "name": "Union(BoundingBox, Point3d)",
+      "signature": "public static BoundingBox Union(BoundingBox box, Point3d point)",
+      "summary": "Returns a new BoundingBox that represents the union of a bounding box and a point.",
+      "remarks": "Invalid boxes and points are ignored and will not affect the union.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to include in the union.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to include in the union.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The BoundingBox that contains both the box and the point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_BoundingBox_Union_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Area",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the area of this BoundingBox.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Area.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point in the center of the bounding box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Center.htm"
+    },
+    {
+      "name": "Diagonal",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the diagonal vector of this BoundingBox. The diagonal connects the Min and Max points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Diagonal.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an [Empty] bounding box. An Empty box is an invalid structure that has negative width.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Empty.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether or not this bounding box is valid. Empty boxes are not valid, and neither are boxes with unset points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_IsValid.htm"
+    },
+    {
+      "name": "Max",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point in the maximal corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Max.htm"
+    },
+    {
+      "name": "Min",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the point in the minimal corner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Min.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a bounding box that has Unset coordinates for Min and Max.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Unset.htm"
+    },
+    {
+      "name": "Volume",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the volume of this BoundingBox.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_BoundingBox_Volume.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

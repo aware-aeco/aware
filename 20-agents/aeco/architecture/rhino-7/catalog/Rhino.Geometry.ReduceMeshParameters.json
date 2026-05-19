@@ -1,0 +1,97 @@
+{
+  "name": "ReduceMeshParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Parameters for Reduce method",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_ReduceMeshParameters.htm",
+  "constructors": [
+    {
+      "name": "ReduceMeshParameters",
+      "signature": "public ReduceMeshParameters()",
+      "summary": "Constructs a polygon reduction parameter object with default values. Users of this class should not rely on default values to stay constant across service releases.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ReduceMeshParameters__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Accuracy",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Integer from 1 to 10 telling how accurate reduction algorithm to use. Greater number gives more accurate results",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_Accuracy.htm"
+    },
+    {
+      "name": "AllowDistortion",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true mesh appearance is not changed even if the target polygon count is not reached",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_AllowDistortion.htm"
+    },
+    {
+      "name": "CancelToken",
+      "type": "CancellationToken",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_CancelToken.htm"
+    },
+    {
+      "name": "DesiredPolygonCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Desired or target number of faces",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_DesiredPolygonCount.htm"
+    },
+    {
+      "name": "Error",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_Error.htm"
+    },
+    {
+      "name": "FaceTags",
+      "type": "Int32[]",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_FaceTags.htm"
+    },
+    {
+      "name": "LockedComponents",
+      "type": "ComponentIndex[]",
+      "getter": true,
+      "setter": true,
+      "summary": "List of topological mesh vertices and mesh vertices that will not be moved or deleted in reduction process. Each mesh vertex will lock the corresponding topological mesh vertex. In other words it is not possible to have a locked and non-locked mesh vertex at the same location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_LockedComponents.htm"
+    },
+    {
+      "name": "NormalizeMeshSize",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true mesh is fitted to an axis aligned unit cube until reduction is complete",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_NormalizeMeshSize.htm"
+    },
+    {
+      "name": "ProgressReporter",
+      "type": "IProgress\u003CDouble\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ReduceMeshParameters_ProgressReporter.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,86 @@
+{
+  "name": "GroundPlane",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "ChangeQueue ground plane",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_ChangeQueue_GroundPlane.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Altitude",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the altitude for ground plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_Altitude.htm"
+    },
+    {
+      "name": "Crc",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the checksum of this groundplane object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_Crc.htm"
+    },
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if ground plane is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_Enabled.htm"
+    },
+    {
+      "name": "IsShadowOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Get true if ground plane should be shadow-only",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_IsShadowOnly.htm"
+    },
+    {
+      "name": "MaterialId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "The CRC / RenderHash of the material on this ground plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_MaterialId.htm"
+    },
+    {
+      "name": "ShowUnderside",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if ground plane underside should be shown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_ShowUnderside.htm"
+    },
+    {
+      "name": "TextureOffset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Get texture offset on the ground plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_TextureOffset.htm"
+    },
+    {
+      "name": "TextureRotation",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Get texture rotation on the ground plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_TextureRotation.htm"
+    },
+    {
+      "name": "TextureScale",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Get texture scale on the ground plane",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_GroundPlane_TextureScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

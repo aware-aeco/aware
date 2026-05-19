@@ -1,0 +1,662 @@
+{
+  "name": "NamedParametersEventArgs",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Dictionary style class used for named callbacks from C\u002B\u002B -\u003E .NET",
+  "base": "EventArgs",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_NamedParametersEventArgs.htm",
+  "constructors": [
+    {
+      "name": "NamedParametersEventArgs",
+      "signature": "public NamedParametersEventArgs()",
+      "summary": "Construct a new named parameter even args. You should dispose this class when you are done with it",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose native resources",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer in case Dispose wasn\u0027t called",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Finalize.htm"
+    },
+    {
+      "name": "Set(String, GeometryBase)",
+      "signature": "public void Set(string name, GeometryBase value)",
+      "summary": "Set geometry for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,Rhino.Geometry.GeometryBase)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,Rhino.Geometry.GeometryBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set.htm"
+    },
+    {
+      "name": "Set(String, Point3d)",
+      "signature": "public void Set(string name, Point3d value)",
+      "summary": "Set a Point3d value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,Rhino.Geometry.Point3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_1.htm"
+    },
+    {
+      "name": "Set(String, Vector3d)",
+      "signature": "public void Set(string name, Vector3d value)",
+      "summary": "Set a Vector3d value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_2.htm"
+    },
+    {
+      "name": "Set(String, Boolean)",
+      "signature": "public void Set(string name, bool value)",
+      "summary": "Set a bool value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_3.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CGeometryBase\u003E)",
+      "signature": "public void Set(string name, IEnumerable\u003CGeometryBase\u003E values)",
+      "summary": "Set a list of geometry for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Collections.Generic.IEnumerable{Rhino.Geometry.GeometryBase})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_4.htm"
+    },
+    {
+      "name": "Set(String, IEnumerable\u003CString\u003E)",
+      "signature": "public void Set(string name, IEnumerable\u003Cstring\u003E strings)",
+      "summary": "Set a list of strings as a value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "strings",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022strings\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Collections.Generic.IEnumerable{System.String})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_5.htm"
+    },
+    {
+      "name": "Set(String, Double)",
+      "signature": "public void Set(string name, double value)",
+      "summary": "Set a double value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_6.htm"
+    },
+    {
+      "name": "Set(String, Color)",
+      "signature": "public void Set(string name, Color value)",
+      "summary": "Set a Color value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_7.htm"
+    },
+    {
+      "name": "Set(String, Int32)",
+      "signature": "public void Set(string name, int value)",
+      "summary": "Set an int value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_8.htm"
+    },
+    {
+      "name": "Set(String, String)",
+      "signature": "public void Set(string name, string value)",
+      "summary": "Set a string value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_9.htm"
+    },
+    {
+      "name": "Set(String, UInt32)",
+      "signature": "public void Set(string name, uint value)",
+      "summary": "Set an unsigned int for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.UInt32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.Set(System.String,System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_Set_10.htm"
+    },
+    {
+      "name": "SetWindowHandle",
+      "signature": "public void SetWindowHandle(string name, IntPtr value)",
+      "summary": "Set a HWND on Windows or NSView* on Mac",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.SetWindowHandle(System.String,System.IntPtr)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.SetWindowHandle(System.String,System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_SetWindowHandle.htm"
+    },
+    {
+      "name": "TryGetBool",
+      "signature": "public bool TryGetBool(string name, out bool value)",
+      "summary": "Try to get a bool value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetBool(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetBool(System.String,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetBool(System.String,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetBool.htm"
+    },
+    {
+      "name": "TryGetColor",
+      "signature": "public bool TryGetColor(string name, out Color value)",
+      "summary": "Try to get a Color value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetColor(System.String,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetColor(System.String,System.Drawing.Color@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetColor(System.String,System.Drawing.Color@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetColor.htm"
+    },
+    {
+      "name": "TryGetDouble",
+      "signature": "public bool TryGetDouble(string name, out double value)",
+      "summary": "Try to get a double value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetDouble(System.String,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetDouble(System.String,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetDouble(System.String,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetDouble.htm"
+    },
+    {
+      "name": "TryGetGeometry",
+      "signature": "public bool TryGetGeometry(string name, out GeometryBase[] values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetGeometry(System.String,Rhino.Geometry.GeometryBase[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "Rhino.Geometry.GeometryBase[]",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetGeometry(System.String,Rhino.Geometry.GeometryBase[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetGeometry(System.String,Rhino.Geometry.GeometryBase[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetGeometry.htm"
+    },
+    {
+      "name": "TryGetInt",
+      "signature": "public bool TryGetInt(string name, out int value)",
+      "summary": "Try to get an int value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetInt(System.String,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetInt(System.String,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetInt(System.String,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetInt.htm"
+    },
+    {
+      "name": "TryGetPoint",
+      "signature": "public bool TryGetPoint(string name, out Point3d value)",
+      "summary": "Try to get a Point3d value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetPoint(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetPoint(System.String,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetPoint(System.String,Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetPoint.htm"
+    },
+    {
+      "name": "TryGetRhinoObjects",
+      "signature": "public bool TryGetRhinoObjects(string key, out RhinoObject[] values)",
+      "summary": "Get array of RhinoObject for the specified key",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetRhinoObjects(System.String,Rhino.DocObjects.RhinoObject[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "Rhino.DocObjects.RhinoObject[]",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetRhinoObjects(System.String,Rhino.DocObjects.RhinoObject[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetRhinoObjects(System.String,Rhino.DocObjects.RhinoObject[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetRhinoObjects.htm"
+    },
+    {
+      "name": "TryGetString",
+      "signature": "public bool TryGetString(string name, out string value)",
+      "summary": "Try to get a string value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetString(System.String,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetString(System.String,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetString(System.String,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetString.htm"
+    },
+    {
+      "name": "TryGetStrings",
+      "signature": "public bool TryGetStrings(string name, out string[] value)",
+      "summary": "Try to get a string value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetStrings(System.String,System.String[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetStrings(System.String,System.String[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetStrings(System.String,System.String[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetStrings.htm"
+    },
+    {
+      "name": "TryGetUnsignedInt",
+      "signature": "public bool TryGetUnsignedInt(string name, out uint value)",
+      "summary": "Try to get an unsigned int for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetUnsignedInt(System.String,System.UInt32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetUnsignedInt(System.String,System.UInt32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetUnsignedInt(System.String,System.UInt32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetUnsignedInt.htm"
+    },
+    {
+      "name": "TryGetVector",
+      "signature": "public bool TryGetVector(string name, out Vector3d value)",
+      "summary": "Try to get a Vector3d value for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetVector(System.String,Rhino.Geometry.Vector3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetVector(System.String,Rhino.Geometry.Vector3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetVector(System.String,Rhino.Geometry.Vector3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetVector.htm"
+    },
+    {
+      "name": "TryGetViewport",
+      "signature": "public bool TryGetViewport(string name, out ViewportInfo viewport)",
+      "summary": "Try to get a viewport for a given key name",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetViewport(System.String,Rhino.DocObjects.ViewportInfo@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetViewport(System.String,Rhino.DocObjects.ViewportInfo@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetViewport(System.String,Rhino.DocObjects.ViewportInfo@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetViewport.htm"
+    },
+    {
+      "name": "TryGetWindowHandle",
+      "signature": "public bool TryGetWindowHandle(string name, out IntPtr value)",
+      "summary": "Gets a HWND on Windows or NSVIew* on Mac",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetWindowHandle(System.String,System.IntPtr@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetWindowHandle(System.String,System.IntPtr@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.NamedParametersEventArgs.TryGetWindowHandle(System.String,System.IntPtr@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_NamedParametersEventArgs_TryGetWindowHandle.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

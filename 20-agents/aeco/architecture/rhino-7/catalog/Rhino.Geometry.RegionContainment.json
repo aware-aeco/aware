@@ -1,0 +1,34 @@
+{
+  "name": "RegionContainment",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values for closed curve/closed curve relationships.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_RegionContainment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Disjoint",
+      "value": 0,
+      "summary": "There is no common area between the two regions."
+    },
+    {
+      "name": "MutualIntersection",
+      "value": 1,
+      "summary": "The two curves intersect. There is therefore no full containment relationship either way."
+    },
+    {
+      "name": "AInsideB",
+      "value": 2,
+      "summary": "Region bounded by curveA (first curve) is inside of curveB (second curve)."
+    },
+    {
+      "name": "BInsideA",
+      "value": 3,
+      "summary": "Region bounded by curveB (second curve) is inside of curveA (first curve)."
+    }
+  ]
+}

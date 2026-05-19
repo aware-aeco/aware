@@ -1,0 +1,63 @@
+{
+  "name": "TaskCompleteEventArgs",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.TaskCompleteEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_TaskCompleteEventArgs.htm",
+  "constructors": [
+    {
+      "name": "TaskCompleteEventArgs",
+      "signature": "public TaskCompleteEventArgs(Task task, RhinoDoc doc)",
+      "summary": "Initializes a new instance of the TaskCompleteEventArgs class",
+      "params": [
+        {
+          "name": "task",
+          "type": "System.Threading.Tasks.Task",
+          "doc": "[Missing \u003Cparam name=\u0022task\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.TaskCompleteEventArgs.#ctor(System.Threading.Tasks.Task,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Input.Custom.TaskCompleteEventArgs.#ctor(System.Threading.Tasks.Task,Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_TaskCompleteEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Doc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_TaskCompleteEventArgs_Doc.htm"
+    },
+    {
+      "name": "Redraw",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_TaskCompleteEventArgs_Redraw.htm"
+    },
+    {
+      "name": "Task",
+      "type": "Task",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_TaskCompleteEventArgs_Task.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,19 @@
+{
+  "name": "MeshUnwrapMethod",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Unwrapping method used",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshUnwrapMethod.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LSCM",
+      "value": 0,
+      "summary": "Least squares conformal map, Rhino 7 standard method"
+    }
+  ]
+}

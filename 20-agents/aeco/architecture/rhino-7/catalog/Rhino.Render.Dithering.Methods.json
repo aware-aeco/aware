@@ -1,0 +1,29 @@
+{
+  "name": "Dithering.Methods",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Dithering algorithm.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Dithering_Methods.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No dithering"
+    },
+    {
+      "name": "FloydSteinberg",
+      "value": 1,
+      "summary": "Floyd Steinberg algorithm"
+    },
+    {
+      "name": "SimpleNoise",
+      "value": 2,
+      "summary": "Simple random noise"
+    }
+  ]
+}

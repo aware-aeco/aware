@@ -1,0 +1,27 @@
+{
+  "name": "IResizableList\u003CT\u003E",
+  "namespace": "Rhino.Collections",
+  "kind": "interface",
+  "summary": "Provides the ability to resize a generic list by setting the Count property.",
+  "interfaces": [
+    "IList\u003CT\u003E",
+    "ICollection\u003CT\u003E",
+    "IEnumerable\u003CT\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Collections_IResizableList_1.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the length of the list. This hides (Shadows in Vb.Net) the read-only Count property of the generic list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Collections_IResizableList_1_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

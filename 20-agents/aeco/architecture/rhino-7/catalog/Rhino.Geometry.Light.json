@@ -1,0 +1,1055 @@
+{
+  "name": "Light",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents a light that shines in the modeling space.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Light.htm",
+  "constructors": [
+    {
+      "name": "Light()",
+      "signature": "public Light()",
+      "summary": "Initializes a new light.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light__ctor.htm"
+    },
+    {
+      "name": "Light(SerializationInfo, StreamingContext)",
+      "signature": "protected Light(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor used in serialization.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "Serialization data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "Serialization stream.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ComponentIndex",
+      "signature": "public ComponentIndex ComponentIndex()",
+      "summary": "If this piece of geometry is a component in something larger, like a BrepEdge in a Brep, then this function returns the component index.",
+      "params": [],
+      "returns": {
+        "type": "ComponentIndex",
+        "doc": "This object\u0027s component index. If this object is not a sub-piece of a larger geometric entity, then the returned index has m_type = ComponentIndex.InvalidType and m_index = -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_ComponentIndex.htm"
+    },
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "CreateSunLight(Sun)",
+      "signature": "public static Light CreateSunLight(Sun sun)",
+      "summary": "Constructs a light which simulates a Sun.",
+      "params": [
+        {
+          "name": "sun",
+          "type": "Rhino.Render.Sun",
+          "doc": "A Sun object from the Rhino.Render namespace.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Light",
+        "doc": "A light."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light_CreateSunLight.htm"
+    },
+    {
+      "name": "CreateSunLight(Double, Double, Double)",
+      "signature": "public static Light CreateSunLight(double northAngleDegrees, double azimuthDegrees, double altitudeDegrees)",
+      "summary": "Constructs a light that represents the Sun.",
+      "params": [
+        {
+          "name": "northAngleDegrees",
+          "type": "System.Double",
+          "doc": "The angle of North in degrees. North is the angle between positive World Y axis and model North, as measured on World XY plane.",
+          "optional": false
+        },
+        {
+          "name": "azimuthDegrees",
+          "type": "System.Double",
+          "doc": "The Azimuth angle value in degrees. Azimuth is the compass angle from North.",
+          "optional": false
+        },
+        {
+          "name": "altitudeDegrees",
+          "type": "System.Double",
+          "doc": "The Altitude angle in degrees. Altitude is the angle above the ground plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Light",
+        "doc": "A new sun light."
+      },
+      "throws": [
+        {
+          "type": "RdkNotLoadedException",
+          "when": "If the RDK is not loaded."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light_CreateSunLight_2.htm"
+    },
+    {
+      "name": "CreateSunLight(Double, DateTime, Double, Double)",
+      "signature": "public static Light CreateSunLight(double northAngleDegrees, DateTime when, double latitudeDegrees, double longitudeDegrees)",
+      "summary": "Constructs a light which simulates the Sun based on a given time and location on Earth.",
+      "params": [
+        {
+          "name": "northAngleDegrees",
+          "type": "System.Double",
+          "doc": "The angle of North in degrees. North is the angle between positive World Y axis and model North, as measured on World XY plane.",
+          "optional": false
+        },
+        {
+          "name": "when",
+          "type": "System.DateTime",
+          "doc": "The time of the measurement. The Kind property of DateTime specifies whether this is in local or universal time. Local and Undefined daytime kinds in this argument are considered local.",
+          "optional": false
+        },
+        {
+          "name": "latitudeDegrees",
+          "type": "System.Double",
+          "doc": "The latitude, in degrees, of the location on Earth.",
+          "optional": false
+        },
+        {
+          "name": "longitudeDegrees",
+          "type": "System.Double",
+          "doc": "The longitude, in degrees, of the location on Earth.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Light",
+        "doc": "A newly constructed light object."
+      },
+      "throws": [
+        {
+          "type": "RdkNotLoadedException",
+          "when": "If the RDK is not loaded."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light_CreateSunLight_1.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected override void Dispose(bool disposing)",
+      "summary": "Overridden in order to destroy local display cache information",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Dispose.htm"
+    },
+    {
+      "name": "Duplicate",
+      "signature": "public virtual GeometryBase Duplicate()",
+      "summary": "Constructs a deep (full) copy of this object.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "An object of the same type as this, with the same properties and behavior."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Duplicate.htm"
+    },
+    {
+      "name": "DuplicateShallow",
+      "signature": "public GeometryBase DuplicateShallow()",
+      "summary": "Constructs a light copy of this object. By \u0022light\u0022, it is meant that the same underlying data is used until something is done to attempt to change it. For example, you could have a shallow copy of a very heavy mesh object and the same underlying data will be used when doing things like inspecting the number of faces on the mesh. If you modify the location of one of the mesh vertices, the shallow copy will create a full duplicate of the underlying mesh data and the shallow copy will become a deep copy.",
+      "params": [],
+      "returns": {
+        "type": "GeometryBase",
+        "doc": "An object of the same type as this object. This behavior is overridden by implementing classes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_DuplicateShallow.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "GetAttenuation",
+      "signature": "public double GetAttenuation(double d)",
+      "summary": "Gets the attenuation settings (ignored for \u0022directional\u0022 and \u0022ambient\u0022 lights). attenuation = 1/(a0 \u002B d*a1 \u002B d^2*a2) where d = distance to light.",
+      "params": [
+        {
+          "name": "d",
+          "type": "System.Double",
+          "doc": "The distance to evaluate.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "0 if a0 \u002B d*a1 \u002B d^2*a2 \u003C= 0."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light_GetAttenuation.htm"
+    },
+    {
+      "name": "GetBoundingBox(Boolean)",
+      "signature": "public BoundingBox GetBoundingBox(bool accurate)",
+      "summary": "Bounding box solver. Gets the world axis aligned bounding box for the geometry.",
+      "params": [
+        {
+          "name": "accurate",
+          "type": "System.Boolean",
+          "doc": "If true, a physically accurate bounding box will be computed. If not, a bounding box estimate will be computed. For some geometry types there is no difference between the estimate and the accurate bounding box. Estimated bounding boxes can be computed much (much) faster than accurate (or \u0022tight\u0022) bounding boxes. Estimated bounding boxes are always similar to or larger than accurate bounding boxes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The bounding box of the geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_3.htm"
+    },
+    {
+      "name": "GetBoundingBox(Plane)",
+      "signature": "public BoundingBox GetBoundingBox(Plane plane)",
+      "summary": "Aligned Bounding box solver. Gets the plane aligned bounding box.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane for BoundingBox.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A BoundingBox in plane coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox.htm"
+    },
+    {
+      "name": "GetBoundingBox(Transform)",
+      "signature": "public virtual BoundingBox GetBoundingBox(Transform xform)",
+      "summary": "Aligned Bounding box solver. Gets the world axis aligned bounding box for the transformed geometry.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to object prior to the BoundingBox computation. The geometry itself is not modified.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "The accurate bounding box of the transformed geometry in world coordinates or BoundingBox.Empty if not bounding box could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_2.htm"
+    },
+    {
+      "name": "GetBoundingBox(Plane, Box)",
+      "signature": "public BoundingBox GetBoundingBox(Plane plane, out Box worldBox)",
+      "summary": "Aligned Bounding box solver. Gets the plane aligned bounding box.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane for BoundingBox.",
+          "optional": false
+        },
+        {
+          "name": "worldBox",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Aligned box in World coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A BoundingBox in plane coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetBoundingBox_1.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetSpotLightRadii",
+      "signature": "public bool GetSpotLightRadii(out double innerRadius, out double outerRadius)",
+      "summary": "Gets the spot light radii.",
+      "params": [
+        {
+          "name": "innerRadius",
+          "type": "System.Double",
+          "doc": "The inner radius. This out parameter is assigned during this call.",
+          "optional": false
+        },
+        {
+          "name": "outerRadius",
+          "type": "System.Double",
+          "doc": "The outer radius. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if operation succeeded; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light_GetSpotLightRadii.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets user string from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets a copy of all (user key string, user value string) pairs attached to this geometry.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A new collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_GetUserStrings.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "MakeDeformable",
+      "signature": "public bool MakeDeformable()",
+      "summary": "If possible, converts the object into a form that can be accurately modified with \u0022squishy\u0022 transformations like projections, shears, an non-uniform scaling.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "false if object cannot be converted to a deformable object. true if object was already deformable or was converted into a deformable object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_MakeDeformable.htm"
+    },
+    {
+      "name": "MemoryEstimate",
+      "signature": "public uint MemoryEstimate()",
+      "summary": "Computes an estimate of the number of bytes that this object is using in memory.",
+      "params": [],
+      "returns": {
+        "type": "UInt32",
+        "doc": "An estimated memory footprint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_MemoryEstimate.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected override void NonConstOperation()",
+      "summary": "Destroy cache handle",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_NonConstOperation.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected override void OnSwitchToNonConst()",
+      "summary": "Is called when a non-constant operation occurs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "Rotate",
+      "signature": "public bool Rotate(double angleRadians, Vector3d rotationAxis, Point3d rotationCenter)",
+      "summary": "Rotates the object about the specified axis. A positive rotation angle results in a counter-clockwise rotation about the axis (right hand rule).",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Angle of rotation in radians.",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction of the axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "rotationCenter",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point on the axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully rotated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Rotate.htm"
+    },
+    {
+      "name": "Scale",
+      "signature": "public bool Scale(double scaleFactor)",
+      "summary": "Scales the object by the specified factor. The scale is centered at the origin.",
+      "params": [
+        {
+          "name": "scaleFactor",
+          "type": "System.Double",
+          "doc": "The uniform scaling factor.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully scaled."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Scale.htm"
+    },
+    {
+      "name": "SetAttenuation",
+      "signature": "public void SetAttenuation(double a0, double a1, double a2)",
+      "summary": "Sets the attenuation settings (ignored for \u0022directional\u0022 and \u0022ambient\u0022 lights). attenuation = 1/(a0 \u002B d*a1 \u002B d^2*a2) where d = distance to light.",
+      "params": [
+        {
+          "name": "a0",
+          "type": "System.Double",
+          "doc": "The new constant attenuation divisor term.",
+          "optional": false
+        },
+        {
+          "name": "a1",
+          "type": "System.Double",
+          "doc": "The new reverse linear attenuation divisor term.",
+          "optional": false
+        },
+        {
+          "name": "a2",
+          "type": "System.Double",
+          "doc": "The new reverse quadratic attenuation divisor term.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Light_SetAttenuation.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_SetUserString.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms the geometry. If the input Transform has a SimilarityType of OrientationReversing, you may want to consider flipping the transformed geometry after calling this function when it makes sense. For example, you may want to call Flip() on a Brep after transforming it.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply to geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully transformed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Transform.htm"
+    },
+    {
+      "name": "Translate(Vector3d)",
+      "signature": "public bool Translate(Vector3d translationVector)",
+      "summary": "Translates the object along the specified vector.",
+      "params": [
+        {
+          "name": "translationVector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A moving vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully translated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Translate.htm"
+    },
+    {
+      "name": "Translate(Double, Double, Double)",
+      "signature": "public bool Translate(double x, double y, double z)",
+      "summary": "Translates the object along the specified vector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The X component.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The Y component.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The Z component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if geometry successfully translated."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_GeometryBase_Translate_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Ambient",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ambient color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Ambient.htm"
+    },
+    {
+      "name": "AttenuationType",
+      "type": "Light.Attenuation",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the type of attenuation for this light.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_AttenuationType.htm"
+    },
+    {
+      "name": "AttenuationVector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or Sets the attenuation vector.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_AttenuationVector.htm"
+    },
+    {
+      "name": "CoordinateSystem",
+      "type": "CoordinateSystem",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value, determined by LightStyle, that explains whether the camera directions are relative to World or Camera spaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_CoordinateSystem.htm"
+    },
+    {
+      "name": "Diffuse",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the diffuse color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Diffuse.htm"
+    },
+    {
+      "name": "Direction",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vector direction of the camera.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Direction.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "HasBrepForm",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the Brep.TryConvertBrep function will be successful for this object",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_HasBrepForm.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "HotSpot",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The hot spot setting runs from 0.0 to 1.0 and is used to provides a linear interface for controlling the focus or concentration of a spotlight. A hot spot setting of 0.0 corresponds to a spot exponent of 128. A hot spot setting of 1.0 corresponds to a spot exponent of 0.0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_HotSpot.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the ID of this light.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Id.htm"
+    },
+    {
+      "name": "Intensity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the light intensity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Intensity.htm"
+    },
+    {
+      "name": "IsDeformable",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if object can be accurately modified with \u0022squishy\u0022 transformations like projections, shears, and non-uniform scaling.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_IsDeformable.htm"
+    },
+    {
+      "name": "IsDirectionalLight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the light style is LightStyle CameraDirectional or WorldDirectional.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsDirectionalLight.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that defines if the light is turned on (true) or off (false).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsEnabled.htm"
+    },
+    {
+      "name": "IsLinearLight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the light style is LightStyle WorldLinear.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsLinearLight.htm"
+    },
+    {
+      "name": "IsPointLight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the light style is LightStyle CameraPoint or WorldPoint.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsPointLight.htm"
+    },
+    {
+      "name": "IsRectangularLight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the light style is LightStyle WorldRectangular.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsRectangularLight.htm"
+    },
+    {
+      "name": "IsSpotLight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the light style is LightStyle CameraSpot or WorldSpot.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsSpotLight.htm"
+    },
+    {
+      "name": "IsSunLight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this object is a Sun light.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_IsSunLight.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the height in linear and rectangular lights. (ignored for non-linear/rectangular lights.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Length.htm"
+    },
+    {
+      "name": "LightStyle",
+      "type": "LightStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a light style on this camera.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_LightStyle.htm"
+    },
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the light or 3D position or location.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Location.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the spot light name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Name.htm"
+    },
+    {
+      "name": "ObjectType",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": false,
+      "summary": "Useful for switch statements that need to differentiate between basic object types like points, curves, surfaces, and so on.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_ObjectType.htm"
+    },
+    {
+      "name": "PerpendicularDirection",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a perpendicular vector to the camera direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_PerpendicularDirection.htm"
+    },
+    {
+      "name": "PowerCandela",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the light power in candelas (cd).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_PowerCandela.htm"
+    },
+    {
+      "name": "PowerLumens",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the light power in lumens (lm).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_PowerLumens.htm"
+    },
+    {
+      "name": "PowerWatts",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the light power in watts (W).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_PowerWatts.htm"
+    },
+    {
+      "name": "ShadowIntensity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the shadow intensity for the light.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_ShadowIntensity.htm"
+    },
+    {
+      "name": "Specular",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the specular color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Specular.htm"
+    },
+    {
+      "name": "SpotAngleRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the spot angle in radians. Ignored for non-spot lights.angle = 0 to pi/2 (0 to 90 degrees).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_SpotAngleRadians.htm"
+    },
+    {
+      "name": "SpotExponent",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "The spot exponent varies from 0.0 to 128.0 and provides an exponential interface for controlling the focus or concentration of a spotlight (like the OpenGL GL_SPOT_EXPONENT parameter). The spot exponent and hot spot parameters are linked; changing one will change the other. A hot spot setting of 0.0 corresponds to a spot exponent of 128. A hot spot setting of 1.0 corresponds to a spot exponent of 0.0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_SpotExponent.htm"
+    },
+    {
+      "name": "SpotLightShadowIntensity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the spot light shadow intensity. (ignored for non-spot lights.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_SpotLightShadowIntensity.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of user strings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_GeometryBase_UserStringCount.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the width in linear and rectangular lights. (ignored for non-linear/rectangular lights.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Light_Width.htm"
+    },
+    {
+      "name": "ConstantAttenuationVector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Vector denoting a constant light attenuation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Geometry_Light_ConstantAttenuationVector.htm"
+    },
+    {
+      "name": "InverseSquaredAttenuationVector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Vector denoting an inverse squared light attenuation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Geometry_Light_InverseSquaredAttenuationVector.htm"
+    },
+    {
+      "name": "LinearAttenuationVector",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Vector denoting a linear light attenuation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Geometry_Light_LinearAttenuationVector.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

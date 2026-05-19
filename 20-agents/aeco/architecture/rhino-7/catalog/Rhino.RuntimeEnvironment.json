@@ -1,0 +1,44 @@
+{
+  "name": "RuntimeEnvironment",
+  "namespace": "Rhino",
+  "kind": "enum",
+  "summary": "ON::RuntimeEnvironment identifies a runtime environment (operating system). This value is saved in binary archives so appropriate adjustments to resources provided by runtime environments, like fonts, can be made when an archive created in one runtime environment is used in another.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_RuntimeEnvironment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "ON::RuntimeEnvironment::Unset indicates no runtime is set."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "ON::RuntimeEnvironment::None indicates no runtime. This is a different condition from ON::Runtime::Unset."
+    },
+    {
+      "name": "Windows",
+      "value": 2,
+      "summary": "ON::RuntimeEnvironment::Windows indicates some version of Microsoft Windows."
+    },
+    {
+      "name": "Apple",
+      "value": 3,
+      "summary": "ON::RuntimeEnvironment::Apple indicates some version of Apple OS X or iOS."
+    },
+    {
+      "name": "Android",
+      "value": 4,
+      "summary": "ON::RuntimeEnvironment::Android indicates some version of Google Android."
+    },
+    {
+      "name": "Linux",
+      "value": 5,
+      "summary": "ON::RuntimeEnvironment::Linux indicates some version of Linux."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Fonts.Size",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Size for UI font.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Fonts_Size.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Small",
+      "value": 0,
+      "summary": "0.8 x Normal"
+    },
+    {
+      "name": "Normal",
+      "value": 1,
+      "summary": "1.0 x Normal"
+    },
+    {
+      "name": "Large",
+      "value": 2,
+      "summary": "1.2 x Normal"
+    },
+    {
+      "name": "Title",
+      "value": 3,
+      "summary": "2.0 x Normal"
+    }
+  ]
+}

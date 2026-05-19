@@ -1,0 +1,243 @@
+{
+  "name": "DevelopableSrf",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Helpers for developable surface functions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_DevelopableSrf.htm",
+  "constructors": [
+    {
+      "name": "DevelopableSrf",
+      "signature": "public DevelopableSrf()",
+      "summary": "Initializes a new instance of the DevelopableSrf class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_DevelopableSrf__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetLocalDevopableRuling",
+      "signature": "public static int GetLocalDevopableRuling(NurbsCurve rail0, double t0, Interval dom0, NurbsCurve rail1, double t1, Interval dom1, ref double t0_out, ref double t1_out)",
+      "summary": "Finds minimum twist ruling between 2 curves at local domains",
+      "params": [
+        {
+          "name": "rail0",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "First rail",
+          "optional": false
+        },
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "Seed parameter on first rail",
+          "optional": false
+        },
+        {
+          "name": "dom0",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Parameter sub-domain to adjust in on first rail",
+          "optional": false
+        },
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "Second rail",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Seed parameter on second rail",
+          "optional": false
+        },
+        {
+          "name": "dom1",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Parameter sub-domain to adjust in on second rail",
+          "optional": false
+        },
+        {
+          "name": "t0_out",
+          "type": "System.Double",
+          "doc": "Result ruling on first rail",
+          "optional": false
+        },
+        {
+          "name": "t1_out",
+          "type": "System.Double",
+          "doc": "Result ruling on second rail",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "-1: Error 0: Exact non-twisting ruling found between t0_out and t1_out 1: Ruling found between t0_out and t1_out that has less twist the ruling between t0 and t1"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_DevelopableSrf_GetLocalDevopableRuling.htm"
+    },
+    {
+      "name": "RulingMinTwist(NurbsCurve, Double, NurbsCurve, Double, Interval, Double, Double)",
+      "signature": "public static bool RulingMinTwist(NurbsCurve rail0, double t0, NurbsCurve rail1, double t1, Interval dom1, ref double t1_out, ref double cos_twist_out)",
+      "summary": "Find a ruling from rail0(t0) to rail1(t1_out) that has the least twist across the ruling with t1_out in domain1. max_cos_twist is cos(twist) for the returned ruling",
+      "params": [
+        {
+          "name": "rail0",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022rail0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022rail1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dom1",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022dom1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t1_out",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t1_out\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cos_twist_out",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022cos_twist_out\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_DevelopableSrf_RulingMinTwist_1.htm"
+    },
+    {
+      "name": "RulingMinTwist(NurbsCurve, Double, Interval, NurbsCurve, Double, Interval, Double, Double, Double)",
+      "signature": "public static bool RulingMinTwist(NurbsCurve rail0, double t0, Interval dom0, NurbsCurve rail1, double t1, Interval dom1, ref double t0_out, ref double t1_out, ref double cos_twist_out)",
+      "summary": "Find a ruling from rail0(t0_out) to rail1(t1_out) that has the least twist across the ruling with t0_out in domain0 and t1_out in domain1. max_cos_twist is cos(twist) for the returned ruling",
+      "params": [
+        {
+          "name": "rail0",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022rail0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dom0",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022dom0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022rail1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dom1",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "[Missing \u003Cparam name=\u0022dom1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t0_out",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t0_out\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t1_out",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022t1_out\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cos_twist_out",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022cos_twist_out\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.RulingMinTwist(Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,Rhino.Geometry.NurbsCurve,System.Double,Rhino.Geometry.Interval,System.Double@,System.Double@,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_DevelopableSrf_RulingMinTwist.htm"
+    },
+    {
+      "name": "UntwistRulings",
+      "signature": "public static bool UntwistRulings(NurbsCurve rail0, NurbsCurve rail1, ref IEnumerable\u003CPoint2d\u003E rulings)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail0",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022rail0\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.UntwistRulings(Rhino.Geometry.NurbsCurve,Rhino.Geometry.NurbsCurve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point2d}@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rail1",
+          "type": "Rhino.Geometry.NurbsCurve",
+          "doc": "[Missing \u003Cparam name=\u0022rail1\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.UntwistRulings(Rhino.Geometry.NurbsCurve,Rhino.Geometry.NurbsCurve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point2d}@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rulings",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022rulings\u0022/\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.UntwistRulings(Rhino.Geometry.NurbsCurve,Rhino.Geometry.NurbsCurve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point2d}@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.DevelopableSrf.UntwistRulings(Rhino.Geometry.NurbsCurve,Rhino.Geometry.NurbsCurve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Point2d}@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_DevelopableSrf_UntwistRulings.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

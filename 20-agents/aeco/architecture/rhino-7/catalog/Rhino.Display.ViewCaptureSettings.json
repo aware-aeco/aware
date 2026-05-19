@@ -1,0 +1,679 @@
+{
+  "name": "ViewCaptureSettings",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "Holds the information required to generate high resolution output of a RhinoViewport. This is used for generating paper prints or image files",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_ViewCaptureSettings.htm",
+  "constructors": [
+    {
+      "name": "ViewCaptureSettings()",
+      "signature": "public ViewCaptureSettings()",
+      "summary": "Initializes a new instance of the ViewCaptureSettings class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings__ctor.htm"
+    },
+    {
+      "name": "ViewCaptureSettings(RhinoPageView, Double)",
+      "signature": "public ViewCaptureSettings(RhinoPageView sourcePageView, double dpi)",
+      "summary": "Initializes a new instance of the ViewCaptureSettings class",
+      "params": [
+        {
+          "name": "sourcePageView",
+          "type": "Rhino.Display.RhinoPageView",
+          "doc": "[Missing \u003Cparam name=\u0022sourcePageView\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.#ctor(Rhino.Display.RhinoPageView,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dpi",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022dpi\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.#ctor(Rhino.Display.RhinoPageView,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings__ctor_1.htm"
+    },
+    {
+      "name": "ViewCaptureSettings(RhinoView, Size, Double)",
+      "signature": "public ViewCaptureSettings(RhinoView sourceView, Size mediaSize, double dpi)",
+      "summary": "Initializes a new instance of the ViewCaptureSettings class",
+      "params": [
+        {
+          "name": "sourceView",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022sourceView\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.#ctor(Rhino.Display.RhinoView,System.Drawing.Size,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "mediaSize",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022mediaSize\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.#ctor(Rhino.Display.RhinoView,System.Drawing.Size,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "dpi",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022dpi\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.#ctor(Rhino.Display.RhinoView,System.Drawing.Size,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreatePreviewSettings",
+      "signature": "public ViewCaptureSettings CreatePreviewSettings(Size size)",
+      "summary": "Create a ViewCaptureSettings based on this instance, but scaled to fit in a different sized area. Scaling is also performed on dpi. This is primarily used to for capturing images that are shown as print previews",
+      "params": [
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022size\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.CreatePreviewSettings(System.Drawing.Size)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ViewCaptureSettings",
+        "doc": "new ViewCaptureSettings instance on success. Null on failure"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_CreatePreviewSettings.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_Finalize.htm"
+    },
+    {
+      "name": "GetMargins",
+      "signature": "public bool GetMargins(UnitSystem lengthUnits, out double left, out double top, out double right, out double bottom)",
+      "summary": "Get distances from the edge of the paper (MediaSize) to the CropRectangle in a defined unit system",
+      "params": [
+        {
+          "name": "lengthUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "Units to get distances in",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "System.Double",
+          "doc": "Distance from left edge of paper to left edge of CropRectangle",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Double",
+          "doc": "Distance from top edge of paper to top edge of CropRectangle",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Double",
+          "doc": "Distance from right edge of paper to right edge of CropRectangle",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Double",
+          "doc": "Distance from bottom edge of paper to bottom edge of CropRectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if unsuccessful (this could happen if there is no set device_dpi)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_GetMargins.htm"
+    },
+    {
+      "name": "GetModelScale",
+      "signature": "public double GetModelScale(UnitSystem pageUnits, UnitSystem modelUnits)",
+      "summary": "Returns the model scale factor.",
+      "params": [
+        {
+          "name": "pageUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "The current page units.",
+          "optional": false
+        },
+        {
+          "name": "modelUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "The current model units.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The model scale factor."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_GetModelScale.htm"
+    },
+    {
+      "name": "GetOffset",
+      "signature": "public void GetOffset(UnitSystem lengthUnits, out bool fromMargin, out double x, out double y)",
+      "summary": "",
+      "params": [
+        {
+          "name": "lengthUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022lengthUnits\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.GetOffset(Rhino.UnitSystem,System.Boolean@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fromMargin",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022fromMargin\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.GetOffset(Rhino.UnitSystem,System.Boolean@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022x\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.GetOffset(Rhino.UnitSystem,System.Boolean@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022y\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.GetOffset(Rhino.UnitSystem,System.Boolean@,System.Double@,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_GetOffset.htm"
+    },
+    {
+      "name": "MatchViewportAspectRatio",
+      "signature": "public bool MatchViewportAspectRatio()",
+      "summary": "Adjust crop rectangle to match the aspect ratio of the original viewport that these settings reference",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_MatchViewportAspectRatio.htm"
+    },
+    {
+      "name": "MaximizePrintableArea",
+      "signature": "public void MaximizePrintableArea()",
+      "summary": "Minimize cropping so the full drawable area is used",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_MaximizePrintableArea.htm"
+    },
+    {
+      "name": "SetLayout",
+      "signature": "public void SetLayout(Size mediaSize, Rectangle cropRectangle)",
+      "summary": "",
+      "params": [
+        {
+          "name": "mediaSize",
+          "type": "System.Drawing.Size",
+          "doc": "[Missing \u003Cparam name=\u0022mediaSize\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetLayout(System.Drawing.Size,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "cropRectangle",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022cropRectangle\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetLayout(System.Drawing.Size,System.Drawing.Rectangle)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetLayout.htm"
+    },
+    {
+      "name": "SetMargins",
+      "signature": "public bool SetMargins(UnitSystem lengthUnits, double left, double top, double right, double bottom)",
+      "summary": "Set distances from the edge of the paper (MediaSize) to the CropRectange in a defined unit system",
+      "params": [
+        {
+          "name": "lengthUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "Units that left, top, right, and bottom are defined in",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "System.Double",
+          "doc": "Distance from left edge of paper to left edge of CropRectangle",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "System.Double",
+          "doc": "Distance from top edge of paper to top edge of CropRectangle",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "System.Double",
+          "doc": "Distance from right edge of paper to right edge of CropRectangle",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "System.Double",
+          "doc": "Distance from bottom edge of paper to bottom edge of CropRectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if successful. False if unsuccessful (this could happen if there is no set device_dpi)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetMargins.htm"
+    },
+    {
+      "name": "SetModelScaleToFit",
+      "signature": "public void SetModelScaleToFit(bool promptOnChange)",
+      "summary": "Scales the model to fit.",
+      "params": [
+        {
+          "name": "promptOnChange",
+          "type": "System.Boolean",
+          "doc": "Prompt the user if the model scale will change.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetModelScaleToFit.htm"
+    },
+    {
+      "name": "SetModelScaleToValue",
+      "signature": "public void SetModelScaleToValue(double scale)",
+      "summary": "Sets the model scale to a value.",
+      "params": [
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "doc": "The scale value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetModelScaleToValue.htm"
+    },
+    {
+      "name": "SetOffset",
+      "signature": "public void SetOffset(UnitSystem lengthUnits, bool fromMargin, double x, double y)",
+      "summary": "",
+      "params": [
+        {
+          "name": "lengthUnits",
+          "type": "Rhino.UnitSystem",
+          "doc": "[Missing \u003Cparam name=\u0022lengthUnits\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetOffset(Rhino.UnitSystem,System.Boolean,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "fromMargin",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022fromMargin\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetOffset(Rhino.UnitSystem,System.Boolean,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022x\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetOffset(Rhino.UnitSystem,System.Boolean,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022y\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetOffset(Rhino.UnitSystem,System.Boolean,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetOffset.htm"
+    },
+    {
+      "name": "SetViewport",
+      "signature": "public void SetViewport(RhinoViewport viewport)",
+      "summary": "",
+      "params": [
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.Display.ViewCaptureSettings.SetViewport(Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetViewport.htm"
+    },
+    {
+      "name": "SetWindowRect(Point2d, Point2d)",
+      "signature": "public void SetWindowRect(Point2d screenPoint1, Point2d screenPoint2)",
+      "summary": "Set the print area to a window selection based on two points in screen coordinates",
+      "params": [
+        {
+          "name": "screenPoint1",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "first point; it doesn\u0027t matter what corner of the rectangle this point represents",
+          "optional": false
+        },
+        {
+          "name": "screenPoint2",
+          "type": "Rhino.Geometry.Point2d",
+          "doc": "point representing opposite corner of rectangle from screenPoint1",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetWindowRect.htm"
+    },
+    {
+      "name": "SetWindowRect(Point3d, Point3d)",
+      "signature": "public void SetWindowRect(Point3d worldPoint1, Point3d worldPoint2)",
+      "summary": "Set the print area to a window selection based on two points in world coordinates",
+      "params": [
+        {
+          "name": "worldPoint1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First point in world coordinates. This point is projected to screen coordinates",
+          "optional": false
+        },
+        {
+          "name": "worldPoint2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second point in world coordinates. This point is projected to screen coordinates",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_ViewCaptureSettings_SetWindowRect_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ArrowheadSizeMillimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "arrowhead size in millimeters",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_ArrowheadSizeMillimeters.htm"
+    },
+    {
+      "name": "CropRectangle",
+      "type": "Rectangle",
+      "getter": true,
+      "setter": false,
+      "summary": "Actual area of output rectangle that view capture is sent to.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_CropRectangle.htm"
+    },
+    {
+      "name": "DefaultPrintWidthMillimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Line thickness used to print objects with no defined thickness (in mm)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DefaultPrintWidthMillimeters.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_Document.htm"
+    },
+    {
+      "name": "DrawAxis",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawAxis.htm"
+    },
+    {
+      "name": "DrawBackground",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawBackground.htm"
+    },
+    {
+      "name": "DrawBackgroundBitmap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawBackgroundBitmap.htm"
+    },
+    {
+      "name": "DrawClippingPlanes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawClippingPlanes.htm"
+    },
+    {
+      "name": "DrawGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawGrid.htm"
+    },
+    {
+      "name": "DrawLights",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawLights.htm"
+    },
+    {
+      "name": "DrawLockedObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawLockedObjects.htm"
+    },
+    {
+      "name": "DrawMargins",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawMargins.htm"
+    },
+    {
+      "name": "DrawSelectedObjectsOnly",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawSelectedObjectsOnly.htm"
+    },
+    {
+      "name": "DrawWallpaper",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_DrawWallpaper.htm"
+    },
+    {
+      "name": "FooterText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Text drawn at the bottom of the output",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_FooterText.htm"
+    },
+    {
+      "name": "HeaderText",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Text drawn at the top of the output",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_HeaderText.htm"
+    },
+    {
+      "name": "IsScaleToFit",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the model has been scaled to fit.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_IsScaleToFit.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_IsValid.htm"
+    },
+    {
+      "name": "MatchLinetypePatternDefinition",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Default is true. Linetype scales are normally generated right before printing/view capture in order to get linetypes to print to the same lengths as defined. If false, the linetypes are not scaled and the current pattern lengths as seen on the screen as used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_MatchLinetypePatternDefinition.htm"
+    },
+    {
+      "name": "MediaSize",
+      "type": "Size",
+      "getter": true,
+      "setter": false,
+      "summary": "Total size of the image or page in dots",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_MediaSize.htm"
+    },
+    {
+      "name": "ModelScaleType",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_ModelScaleType.htm"
+    },
+    {
+      "name": "OffsetAnchor",
+      "type": "ViewCaptureSettings.AnchorLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_OffsetAnchor.htm"
+    },
+    {
+      "name": "OutputColor",
+      "type": "ViewCaptureSettings.ColorMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_OutputColor.htm"
+    },
+    {
+      "name": "PointSizeMillimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "size of point objects in millimeters if scale \u003C= 0 the size is minimized so points are always drawn as small as possible",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_PointSizeMillimeters.htm"
+    },
+    {
+      "name": "RasterMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_RasterMode.htm"
+    },
+    {
+      "name": "Resolution",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Capture \u0022density\u0022 in dots per inch",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_Resolution.htm"
+    },
+    {
+      "name": "UsePrintWidths",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_UsePrintWidths.htm"
+    },
+    {
+      "name": "ViewArea",
+      "type": "ViewCaptureSettings.ViewAreaMapping",
+      "getter": true,
+      "setter": true,
+      "summary": "How the RhinoViewport is mapped to the output rectangle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_ViewArea.htm"
+    },
+    {
+      "name": "WireThicknessScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "scaling factor to apply to object print widths (typically 1.0). This is helpful when printing something at 1/2 scale and having all of the curves print 1/2 as thick",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_ViewCaptureSettings_WireThicknessScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

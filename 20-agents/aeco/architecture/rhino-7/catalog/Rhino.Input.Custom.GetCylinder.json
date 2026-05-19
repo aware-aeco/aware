@@ -1,0 +1,204 @@
+{
+  "name": "GetCylinder",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Class provides user interface to define a cylinder.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetCylinder.htm",
+  "constructors": [
+    {
+      "name": "GetCylinder",
+      "signature": "public GetCylinder()",
+      "summary": "Initializes a new instance of the GetCylinder class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out Cylinder cylinder)",
+      "summary": "Prompt for the getting of a cylinder.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "The cylinder geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder_Get.htm"
+    },
+    {
+      "name": "GetMesh(Int32, Int32, Cylinder)",
+      "signature": "public Result GetMesh(ref int verticalFaces, ref int aroundFaces, out Cylinder cylinder)",
+      "summary": "Prompt for the getting of a mesh cylinder.",
+      "params": [
+        {
+          "name": "verticalFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the vertical direction.",
+          "optional": false
+        },
+        {
+          "name": "aroundFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the around direction",
+          "optional": false
+        },
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "The cylinder geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder_GetMesh.htm"
+    },
+    {
+      "name": "GetMesh(Int32, Int32, Int32, Cylinder)",
+      "signature": "public Result GetMesh(ref int verticalFaces, ref int aroundFaces, ref int capStyle, out Cylinder cylinder)",
+      "summary": "Prompt for the getting of a mesh cylinder.",
+      "remarks": "The prompt for capStyle will only be seen if it\u0027s not zero, aroundFaces is even and the solid option is on.",
+      "params": [
+        {
+          "name": "verticalFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the vertical direction.",
+          "optional": false
+        },
+        {
+          "name": "aroundFaces",
+          "type": "System.Int32",
+          "doc": "The number of faces in the around direction",
+          "optional": false
+        },
+        {
+          "name": "capStyle",
+          "type": "System.Int32",
+          "doc": "Set to 0 if you don\u0027t want the prompt, 3 is triangles, 4 is quads.",
+          "optional": false
+        },
+        {
+          "name": "cylinder",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "The cylinder geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetCylinder_GetMesh_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BothSidesOption",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determine if the \u0022both sides\u0022 option is enabled",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetCylinder_BothSidesOption.htm"
+    },
+    {
+      "name": "Cap",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether or not the output should be capped.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetCylinder_Cap.htm"
+    },
+    {
+      "name": "CylinderConstraint",
+      "type": "CylinderConstraint",
+      "getter": true,
+      "setter": true,
+      "summary": "State of the cone/cylinder constraint option. When the cone/cylinder option is selected, the circle is being made as a base for a cone/cylinder. By default the vertical cone/cylinder option not available but is not selected. By default the \u0022Vertical\u0022 option applies to VerticalCircle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetCylinder_CylinderConstraint.htm"
+    },
+    {
+      "name": "DefaultSize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Default radius or diameter (based on InDiameterMode)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetCylinder_DefaultSize.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Height of cylinder",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetCylinder_Height.htm"
+    },
+    {
+      "name": "InDiameterMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the \u0022size\u0022 value is representing a radius or diameter",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetCylinder_InDiameterMode.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

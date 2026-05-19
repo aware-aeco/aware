@@ -1,0 +1,136 @@
+{
+  "name": "IDialogService",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.IDialogService\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_IDialogService.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ObjectToWindowHandle",
+      "signature": "IntPtr ObjectToWindowHandle(Object window, bool useMainRhinoWindowWhenNull)",
+      "summary": "",
+      "params": [
+        {
+          "name": "window",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022window\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ObjectToWindowHandle(System.Object,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "useMainRhinoWindowWhenNull",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022useMainRhinoWindowWhenNull\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ObjectToWindowHandle(System.Object,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IDialogService.ObjectToWindowHandle(System.Object,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IDialogService_ObjectToWindowHandle.htm"
+    },
+    {
+      "name": "ShowColorDialog",
+      "signature": "bool ShowColorDialog(Object parent, ref Color4f color, bool allowAlpha, Dialogs.OnColorChangedEvent colorCallback)",
+      "summary": "",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022parent\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowColorDialog(System.Object,Rhino.Display.Color4f@,System.Boolean,Rhino.UI.Dialogs.OnColorChangedEvent)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Rhino.Display.Color4f",
+          "doc": "[Missing \u003Cparam name=\u0022color\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowColorDialog(System.Object,Rhino.Display.Color4f@,System.Boolean,Rhino.UI.Dialogs.OnColorChangedEvent)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "allowAlpha",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022allowAlpha\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowColorDialog(System.Object,Rhino.Display.Color4f@,System.Boolean,Rhino.UI.Dialogs.OnColorChangedEvent)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "colorCallback",
+          "type": "Rhino.UI.Dialogs.OnColorChangedEvent",
+          "doc": "[Missing \u003Cparam name=\u0022colorCallback\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowColorDialog(System.Object,Rhino.Display.Color4f@,System.Boolean,Rhino.UI.Dialogs.OnColorChangedEvent)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowColorDialog(System.Object,Rhino.Display.Color4f@,System.Boolean,Rhino.UI.Dialogs.OnColorChangedEvent)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IDialogService_ShowColorDialog.htm"
+    },
+    {
+      "name": "ShowMultiListBox",
+      "signature": "string[] ShowMultiListBox(string title, string message, IList\u003Cstring\u003E items, IList\u003Cstring\u003E defaults = null)",
+      "summary": "",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022title\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowMultiListBox(System.String,System.String,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowMultiListBox(System.String,System.String,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022items\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowMultiListBox(System.String,System.String,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaults",
+          "type": "System.Collections.Generic.IList\u003CString\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022defaults\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowMultiListBox(System.String,System.String,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})\u0022]",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IDialogService.ShowMultiListBox(System.String,System.String,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IDialogService_ShowMultiListBox.htm"
+    },
+    {
+      "name": "WrapAsIWin32Window",
+      "signature": "Object WrapAsIWin32Window(IntPtr handle)",
+      "summary": "",
+      "params": [
+        {
+          "name": "handle",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022handle\u0022/\u003E documentation for \u0022M:Rhino.UI.IDialogService.WrapAsIWin32Window(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.IDialogService.WrapAsIWin32Window(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IDialogService_WrapAsIWin32Window.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

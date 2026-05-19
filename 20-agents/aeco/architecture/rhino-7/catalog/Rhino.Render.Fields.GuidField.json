@@ -1,0 +1,356 @@
+{
+  "name": "GuidField",
+  "namespace": "Rhino.Render.Fields",
+  "kind": "class",
+  "summary": "Guid field value class",
+  "base": "Field",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Fields_GuidField.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCppPointer",
+      "signature": "protected void CreateCppPointer(RenderContent content, string key, string prompt, Object initialValue, bool isTextured, bool treatAsLinear)",
+      "summary": "(Inherited from Field.)",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022content\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.Field.CreateCppPointer(Rhino.Render.RenderContent,System.String,System.String,System.Object,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.Field.CreateCppPointer(Rhino.Render.RenderContent,System.String,System.String,System.Object,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022prompt\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.Field.CreateCppPointer(Rhino.Render.RenderContent,System.String,System.String,System.Object,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "initialValue",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022initialValue\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.Field.CreateCppPointer(Rhino.Render.RenderContent,System.String,System.String,System.Object,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "isTextured",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022isTextured\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.Field.CreateCppPointer(Rhino.Render.RenderContent,System.String,System.String,System.Object,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "treatAsLinear",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022treatAsLinear\u0022/\u003E documentation for \u0022M:Rhino.Render.Fields.Field.CreateCppPointer(Rhino.Render.RenderContent,System.String,System.String,System.Object,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_CreateCppPointer.htm"
+    },
+    {
+      "name": "GetValue\u003CT\u003E",
+      "signature": "public T GetValue\u003CT\u003E()",
+      "summary": "Parametrized version of GetValue calling appropriate ValueAs* methods.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "Value of type T of the field"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_GetValue__1.htm"
+    },
+    {
+      "name": "ValueAsBool",
+      "signature": "protected bool ValueAsBool()",
+      "summary": "Return field value as a bool.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns field value as a bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsBool.htm"
+    },
+    {
+      "name": "ValueAsByteArray",
+      "signature": "protected byte[] ValueAsByteArray()",
+      "summary": "Return field as a byte array.",
+      "params": [],
+      "returns": {
+        "type": "Byte[]",
+        "doc": "Return field as a byte array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsByteArray.htm"
+    },
+    {
+      "name": "ValueAsColor4f",
+      "signature": "protected Color4f ValueAsColor4f()",
+      "summary": "Return field as a Rhino.Display.Color4f color value.",
+      "params": [],
+      "returns": {
+        "type": "Color4f",
+        "doc": "Return field as a Rhino.Display.Color4f color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsColor4f.htm"
+    },
+    {
+      "name": "ValueAsDateTime",
+      "signature": "protected DateTime ValueAsDateTime()",
+      "summary": "Return field as a DateTime value.",
+      "params": [],
+      "returns": {
+        "type": "DateTime",
+        "doc": "Return field as a DateTime value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsDateTime.htm"
+    },
+    {
+      "name": "ValueAsDouble",
+      "signature": "protected double ValueAsDouble()",
+      "summary": "Return field value as a double precision number.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "Return the field value as a double precision number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsDouble.htm"
+    },
+    {
+      "name": "ValueAsFloat",
+      "signature": "protected float ValueAsFloat()",
+      "summary": "Return field value as floating point number.",
+      "params": [],
+      "returns": {
+        "type": "Single",
+        "doc": "Return the field value as an floating point number."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsFloat.htm"
+    },
+    {
+      "name": "ValueAsGuid",
+      "signature": "protected Guid ValueAsGuid()",
+      "summary": "Return field value as Guid.",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "Return the field value as an Guid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsGuid.htm"
+    },
+    {
+      "name": "ValueAsInt",
+      "signature": "protected int ValueAsInt()",
+      "summary": "Return field value as integer.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "Return the field value as an integer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsInt.htm"
+    },
+    {
+      "name": "ValueAsObject",
+      "signature": "public override Object ValueAsObject()",
+      "summary": "(Overrides Field.ValueAsObject().)",
+      "params": [],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.Fields.GuidField.ValueAsObject\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_GuidField_ValueAsObject.htm"
+    },
+    {
+      "name": "ValueAsPoint2d",
+      "signature": "protected Point2d ValueAsPoint2d()",
+      "summary": "Return field as a Rhino.Geometry.Point2d color value.",
+      "params": [],
+      "returns": {
+        "type": "Point2d",
+        "doc": "Return field as a Rhino.Geometry.Point2d color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsPoint2d.htm"
+    },
+    {
+      "name": "ValueAsPoint3d",
+      "signature": "protected Point3d ValueAsPoint3d()",
+      "summary": "Return field as a Rhino.Geometry.Point3d color value.",
+      "params": [],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Return field as a Rhino.Geometry.Point3d color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsPoint3d.htm"
+    },
+    {
+      "name": "ValueAsPoint4d",
+      "signature": "protected Point4d ValueAsPoint4d()",
+      "summary": "Return field as a Rhino.Geometry.Point4d color value.",
+      "params": [],
+      "returns": {
+        "type": "Point4d",
+        "doc": "Return field as a Rhino.Geometry.Point4d color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsPoint4d.htm"
+    },
+    {
+      "name": "ValueAsString",
+      "signature": "protected string ValueAsString()",
+      "summary": "Get field value as a string.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Returns the field value as a string if possible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsString.htm"
+    },
+    {
+      "name": "ValueAsTransform",
+      "signature": "protected Transform ValueAsTransform()",
+      "summary": "Return field as a Rhino.Geometry.Transform color value.",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "Return field as a Rhino.Geometry.Transform color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsTransform.htm"
+    },
+    {
+      "name": "ValueAsVector2d",
+      "signature": "protected Vector2d ValueAsVector2d()",
+      "summary": "Return field as a Rhino.Geometry.Vector2d color value.",
+      "params": [],
+      "returns": {
+        "type": "Vector2d",
+        "doc": "Return field as a Rhino.Geometry.Vector2d color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsVector2d.htm"
+    },
+    {
+      "name": "ValueAsVector3d",
+      "signature": "protected Vector3d ValueAsVector3d()",
+      "summary": "Return field as a Rhino.Geometry.Vector3d color value.",
+      "params": [],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "Return field as a Rhino.Geometry.Vector3d color value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Fields_Field_ValueAsVector3d.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsHiddenInAutoUI",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "When fields are used by the automatic UI, they can be hidden from it by calling this method.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_IsHiddenInAutoUI.htm"
+    },
+    {
+      "name": "Key",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Field name value string passed to the constructor",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_Key.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Field name value string passed to the constructor.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_Name.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an object that contains data to associate with the field.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_Tag.htm"
+    },
+    {
+      "name": "TextureAmountMax",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Set Max value for Texture amount",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_TextureAmountMax.htm"
+    },
+    {
+      "name": "TextureAmountMin",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Set Min value for Texture amount",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_TextureAmountMin.htm"
+    },
+    {
+      "name": "UseTextureAmount",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if \u0027texture amount\u0027 is in use, otherwise false. The \u0027texture amount\u0027 is represented as a numeric stepper in the UI. If true, then the stepper is shown. If false, then the stepper is hidden.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_UseTextureAmount.htm"
+    },
+    {
+      "name": "UseTextureOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "True if \u0027texture on\u0027 is in use, otherwise false. In the UI \u0027texture on\u0027 is represented as a checkbox. If true then the checbox is shown. If false then the checkbox is not shown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_Field_UseTextureOn.htm"
+    },
+    {
+      "name": "Value",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the field value",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Fields_GuidField_Value.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,84 @@
+{
+  "name": "EdgeAnalysisSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to modify the visibility of edges in edge-related commands.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_EdgeAnalysisSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static EdgeAnalysisSettingsState GetCurrentState()",
+      "summary": "Gets the current settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "EdgeAnalysisSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.EdgeAnalysisSettings.GetCurrentState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_EdgeAnalysisSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static EdgeAnalysisSettingsState GetDefaultState()",
+      "summary": "Gets the factory settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "EdgeAnalysisSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.EdgeAnalysisSettings.GetDefaultState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_EdgeAnalysisSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Commits the default settings as the current settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_EdgeAnalysisSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(EdgeAnalysisSettingsState state)",
+      "summary": "Sets all settings to a particular defined joined state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.EdgeAnalysisSettingsState",
+          "doc": "The particular state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_EdgeAnalysisSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ShowEdgeColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a color used to enhance display edges in commands like _ShowEdges and _ShowNakedEdges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_EdgeAnalysisSettings_ShowEdgeColor.htm"
+    },
+    {
+      "name": "ShowEdges",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value referring to the group of edges that are targeted. 0 = all.1 = naked.2 = non-manifold.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_EdgeAnalysisSettings_ShowEdges.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

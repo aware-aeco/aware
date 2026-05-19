@@ -1,0 +1,29 @@
+{
+  "name": "SubDCreationOptions.InteriorCreaseOption",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Specifies the test used to determine when an interior mesh edge generates an interior SubD creased edge.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDCreationOptions_InteriorCreaseOption.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "The interior crease test is not defined."
+    },
+    {
+      "name": "None",
+      "value": 1,
+      "summary": "No interior creases."
+    },
+    {
+      "name": "AtMeshDoubleEdge",
+      "value": 2,
+      "summary": "An interior mesh double edge will create an interior SubD creased edge. An interior mesh double edge occurs when the sides of two mesh faces have have distinct vertex indices and identical vertex locations."
+    }
+  ]
+}

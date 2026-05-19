@@ -1,0 +1,32 @@
+{
+  "name": "UndoRedo",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "This class contains the event for UndoRedoChanged that is fired from RDK .",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_UndoRedo.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [
+    {
+      "name": "UndoRedoChanged",
+      "delegate": "System.EventHandler\u003CRenderPropertyChangedEvent\u003E",
+      "signature": "public static event EventHandler\u003CRenderPropertyChangedEvent\u003E UndoRedoChanged",
+      "summary": "Called after undo or redo has occurred for document settings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_UndoRedo_UndoRedoChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UndoRedoEndedChanged",
+      "delegate": "System.EventHandler\u003CRenderPropertyChangedEvent\u003E",
+      "signature": "public static event EventHandler\u003CRenderPropertyChangedEvent\u003E UndoRedoEndedChanged",
+      "summary": "This event is raised when undo/redo ends in rdk.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_UndoRedo_UndoRedoEndedChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

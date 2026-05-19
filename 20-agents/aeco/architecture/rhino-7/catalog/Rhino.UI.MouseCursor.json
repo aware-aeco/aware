@@ -1,0 +1,40 @@
+{
+  "name": "MouseCursor",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Contains static methods to control the mouse icon.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_MouseCursor.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetToolTip",
+      "signature": "public static void SetToolTip(string tooltip)",
+      "summary": "Sets a cursor tooltip string shown next to the mouse cursor. Overrides all cursor tooltip panes.",
+      "params": [
+        {
+          "name": "tooltip",
+          "type": "System.String",
+          "doc": "The text to show.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCursor_SetToolTip.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "Point2d",
+      "getter": true,
+      "setter": false,
+      "summary": "Retrieves the position of the mouse cursor, in screen coordinates",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_MouseCursor_Location.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

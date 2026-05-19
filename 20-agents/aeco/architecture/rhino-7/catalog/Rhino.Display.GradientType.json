@@ -1,0 +1,39 @@
+{
+  "name": "GradientType",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Style of color gradient",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_GradientType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No gradient"
+    },
+    {
+      "name": "Linear",
+      "value": 1,
+      "summary": "Linear (or axial) gradient between two points"
+    },
+    {
+      "name": "Radial",
+      "value": 2,
+      "summary": "Radial (or spherical) gradient using a center point and a radius"
+    },
+    {
+      "name": "LinearDisabled",
+      "value": 3,
+      "summary": "Disabled linear gradient. Useful for keeping gradient information around, but not having it displayed"
+    },
+    {
+      "name": "RadialDisabled",
+      "value": 4,
+      "summary": "Disabled radial gradient. Useful for keeping gradient information around, but not having it displayed"
+    }
+  ]
+}

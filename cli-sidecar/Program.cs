@@ -114,6 +114,18 @@ internal static class Program
                             // snapshot progress to disk and resume if the process is killed.
                             "tekla" => Ingest.Extractors.Tekla.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Rhino extractor (Phase B B5) — RhinoCommon docs from the McNeel
+                            // github mirror at developer.rhino3d.com / mcneel/rhinocommon-api-docs.
+                            // Version 7.0 → branch `7`; version 8.0 → branch `gh-pages` (Rhino 8.31).
+                            "rhino" => Ingest.Extractors.Rhino.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Grasshopper extractor (Phase B B6) — Grasshopper SDK docs from
+                            // mcneel/grasshopper-api-docs. Version 7.0 → branch `7`; version 8.0
+                            // → branch `gh-pages` (Grasshopper for Rhino 8.31). Identical Sandcastle
+                            // shape as Rhino — shares the parser via Grasshopper.Extractor's
+                            // delegation to the Rhino PageParser/MemberPageParser.
+                            "grasshopper" => Ingest.Extractors.Grasshopper.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

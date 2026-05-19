@@ -1,0 +1,29 @@
+{
+  "name": "SubDFromSurfaceMethods",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "ON_SubDFromSurfaceParameters::Method are ways to create a SubD from a surface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDFromSurfaceMethods.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Used to indicate the method is not set."
+    },
+    {
+      "name": "SubDFriendlyFit",
+      "value": 1,
+      "summary": "The surface is approximated with a SubD friendly NURBS surface and the SubD is created to match the subd friendly nurbs surface. If the input surface is a subd friendly NURBS surface, the subd and surface have the same geometry."
+    },
+    {
+      "name": "FromNurbsControlNet",
+      "value": 2,
+      "summary": "The surface is converted to a NURBS surface and then a subd with one face per NURBS bispan is created by using an appropriate subset of the NURBS surface control net. If the input surface is a subd friendly NURBS surface, the subd and surface have the same geometry."
+    }
+  ]
+}

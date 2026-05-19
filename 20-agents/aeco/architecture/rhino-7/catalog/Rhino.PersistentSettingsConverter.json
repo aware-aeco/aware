@@ -1,0 +1,256 @@
+{
+  "name": "PersistentSettingsConverter",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Used to convert string to string lists and string dictionaries and back to strings again.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PersistentSettingsConverter.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsStringDictionary",
+      "signature": "public static bool IsStringDictionary(string s)",
+      "summary": "Determines if the string value is formatted as a key value pair string list.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "String to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if it is a XML key value pair list otherwise return false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_IsStringDictionary.htm"
+    },
+    {
+      "name": "IsStringList",
+      "signature": "public static bool IsStringList(string s)",
+      "summary": "Determines if the string value is formatted as a string list.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "String to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if it is a XML string list otherwise return false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_IsStringList.htm"
+    },
+    {
+      "name": "ToString(KeyValuePair\u003CString, String\u003E[])",
+      "signature": "public static string ToString(KeyValuePair\u003Cstring, string\u003E[] value)",
+      "summary": "Converts a key value string pair array to a properly formatted string dictionary XML string.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "List of string pairs to turn into a dictionary XML string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Returns a properly formatted XML string that represents the string dictionary."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_ToString.htm"
+    },
+    {
+      "name": "ToString(Double)",
+      "signature": "public static string ToString(double value)",
+      "summary": "Converts a double value to a string.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "double value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Returns the double value as a settings file formatted string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_ToString_1.htm"
+    },
+    {
+      "name": "ToString(String[])",
+      "signature": "public static string ToString(string[] values)",
+      "summary": "Converts a string array to a properly formatted string list XML string.",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.String[]",
+          "doc": "List of strings to turn into a string list XML string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "Returns a properly formatted XML string that represents the list of strings."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_ToString_2.htm"
+    },
+    {
+      "name": "TryParseDouble",
+      "signature": "public static bool TryParseDouble(string s, out double value)",
+      "summary": "Converts the string representation of a number to its double-precision floating-point number equivalent. A return value indicates whether the conversion succeeded or failed. system culture.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "A string containing a number to convert.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "When this method returns, contains the double-precision floating-point number equivalent of the s parameter, if the conversion succeeded, or zero if the conversion failed. The conversion fails if the s parameter is null or Empty, is not a number in a valid format, or represents a number less than MinValue or greater than MaxValue. This parameter is passed uninitialized; any value originally supplied in result will be overwritten.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if s was converted successfully; otherwise, false.."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_TryParseDouble.htm"
+    },
+    {
+      "name": "TryParseEnum(Type, String, Int32)",
+      "signature": "public static bool TryParseEnum(Type type, string enumValueName, out int value)",
+      "summary": "Converts an enumerated value name to its integer equivalent.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The enumerated type",
+          "optional": false
+        },
+        {
+          "name": "enumValueName",
+          "type": "System.String",
+          "doc": "Enumerated value name as string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "Output value, will get set to -1 on error",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the successfully converted or false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_TryParseEnum.htm"
+    },
+    {
+      "name": "TryParseEnum(Type, String, String)",
+      "signature": "public static bool TryParseEnum(Type type, string intValueAsString, out string value)",
+      "summary": "Converts an enumerated value string (integer as string) to a enumerated value name.",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "The enumerated type",
+          "optional": false
+        },
+        {
+          "name": "intValueAsString",
+          "type": "System.String",
+          "doc": "enumerated integer value as string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "Output value, will be null on error",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the successfully converted or false if not."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_TryParseEnum_1.htm"
+    },
+    {
+      "name": "TryParseStringDictionary",
+      "signature": "public static bool TryParseStringDictionary(string s, out KeyValuePair\u003Cstring, string\u003E[] value)",
+      "summary": "Attempts to convert a string to a key value string pair array.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "String to parse",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.KeyValuePair\u003CString,String\u003E[]",
+          "doc": "Result will get copied here, if the string is null or empty then this will be an empty array, if there was an error parsing then this will be null otherwise it will be the string parsed as a key value string pair array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the string is not empty and properly formatted as a key value string pair list otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_TryParseStringDictionary.htm"
+    },
+    {
+      "name": "TryParseStringList",
+      "signature": "public static bool TryParseStringList(string s, out string[] value)",
+      "summary": "Attempts to convert a string to a string value list.",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "String to parse",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String[]",
+          "doc": "Result will get copied here, if the string is null or empty then this will be an empty list, if there was an error parsing then this will be null otherwise it will be the string parsed as a list.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the string is not empty and properly formatted as a string list otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PersistentSettingsConverter_TryParseStringList.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

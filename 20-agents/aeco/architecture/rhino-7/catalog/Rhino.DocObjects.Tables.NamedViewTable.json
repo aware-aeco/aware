@@ -1,0 +1,557 @@
+{
+  "name": "NamedViewTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "All named views in a rhino document.",
+  "interfaces": [
+    "IEnumerable\u003CViewInfo\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_NamedViewTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(ViewInfo)",
+      "signature": "public int Add(ViewInfo view)",
+      "summary": "",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Add(Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Add(Rhino.DocObjects.ViewInfo)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Add.htm"
+    },
+    {
+      "name": "Add(String, Guid)",
+      "signature": "public int Add(string name, Guid viewportId)",
+      "summary": "Adds named view to document which is based on an existing viewport.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "If name is empty, a unique name is automatically created. If there is already a named view with the same name, that view is replaced.",
+          "optional": false
+        },
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "Id of an existing viewport in the document. View information is copied from this viewport.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 based index of named view. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Add_1.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public bool Delete(int index)",
+      "summary": "Remove named view from the document.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "index of the named view in the named view table.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Delete.htm"
+    },
+    {
+      "name": "Delete(String)",
+      "signature": "public bool Delete(string name)",
+      "summary": "Remove named view from the document.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "name of the view.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Delete_1.htm"
+    },
+    {
+      "name": "FindByName",
+      "signature": "public int FindByName(string name)",
+      "summary": "Finds a named view.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "name to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of the found named view -1 no named view found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_FindByName.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CViewInfo\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CViewInfo\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_GetEnumerator.htm"
+    },
+    {
+      "name": "Rename(Int32, String)",
+      "signature": "public bool Rename(int index, string newName)",
+      "summary": "Renames a named view.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of the named view in the named view table.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Rename.htm"
+    },
+    {
+      "name": "Rename(String, String)",
+      "signature": "public bool Rename(string oldName, string newName)",
+      "summary": "Renames a named view.",
+      "params": [
+        {
+          "name": "oldName",
+          "type": "System.String",
+          "doc": "The name of a named view in the named view table.",
+          "optional": false
+        },
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "The new name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Rename_1.htm"
+    },
+    {
+      "name": "Restore(Int32, RhinoViewport)",
+      "signature": "public bool Restore(int index, RhinoViewport viewport)",
+      "summary": "Sets the MainViewport of a standard RhinoView to a named views settings",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Restore_1.htm"
+    },
+    {
+      "name": "Restore(Int32, RhinoView, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Support for backgroundBitmap is ended\u0022)] public bool Restore(int index, RhinoView view, bool backgroundBitmap)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "backgroundBitmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022backgroundBitmap\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Restore.htm"
+    },
+    {
+      "name": "Restore(Int32, RhinoViewport, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Support for backgroundBitmap is ended\u0022)] public bool Restore(int index, RhinoViewport viewport, bool backgroundBitmap)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "backgroundBitmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022backgroundBitmap\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.Restore(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_Restore_2.htm"
+    },
+    {
+      "name": "RestoreAnimated(Int32, RhinoView, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Support for backgroundBitmap is ended\u0022)] public bool RestoreAnimated(int index, RhinoView view, bool backgroundBitmap)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "backgroundBitmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022backgroundBitmap\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreAnimated.htm"
+    },
+    {
+      "name": "RestoreAnimated(Int32, RhinoViewport, Boolean)",
+      "signature": "[ObsoleteAttribute(\u0022Support for backgroundBitmap is ended\u0022)] public bool RestoreAnimated(int index, RhinoViewport viewport, bool backgroundBitmap)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "backgroundBitmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022backgroundBitmap\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreAnimated_2.htm"
+    },
+    {
+      "name": "RestoreAnimated(Int32, RhinoView, Boolean, Int32, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022Support for backgroundBitmap is ended\u0022)] public bool RestoreAnimated(int index, RhinoView view, bool backgroundBitmap, int frames, int frameRate)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "view",
+          "type": "Rhino.Display.RhinoView",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "backgroundBitmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022backgroundBitmap\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "frames",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022frames\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "frameRate",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022frameRate\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoView,System.Boolean,System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreAnimated_1.htm"
+    },
+    {
+      "name": "RestoreAnimated(Int32, RhinoViewport, Boolean, Int32, Int32)",
+      "signature": "[ObsoleteAttribute(\u0022Support for backgroundBitmap is ended\u0022)] public bool RestoreAnimated(int index, RhinoViewport viewport, bool backgroundBitmap, int frames, int frameRate)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "backgroundBitmap",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022backgroundBitmap\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "frames",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022frames\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "frameRate",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022frameRate\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimated(System.Int32,Rhino.Display.RhinoViewport,System.Boolean,System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreAnimated_3.htm"
+    },
+    {
+      "name": "RestoreAnimatedConstantSpeed",
+      "signature": "public bool RestoreAnimatedConstantSpeed(int index, RhinoViewport viewport, double units_per_frame, int ms_delay)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantSpeed(System.Int32,Rhino.Display.RhinoViewport,System.Double,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantSpeed(System.Int32,Rhino.Display.RhinoViewport,System.Double,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "units_per_frame",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022units_per_frame\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantSpeed(System.Int32,Rhino.Display.RhinoViewport,System.Double,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ms_delay",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022ms_delay\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantSpeed(System.Int32,Rhino.Display.RhinoViewport,System.Double,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantSpeed(System.Int32,Rhino.Display.RhinoViewport,System.Double,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreAnimatedConstantSpeed.htm"
+    },
+    {
+      "name": "RestoreAnimatedConstantTime",
+      "signature": "public bool RestoreAnimatedConstantTime(int index, RhinoViewport viewport, int frames, int ms_delay)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantTime(System.Int32,Rhino.Display.RhinoViewport,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantTime(System.Int32,Rhino.Display.RhinoViewport,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "frames",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022frames\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantTime(System.Int32,Rhino.Display.RhinoViewport,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ms_delay",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022ms_delay\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantTime(System.Int32,Rhino.Display.RhinoViewport,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreAnimatedConstantTime(System.Int32,Rhino.Display.RhinoViewport,System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreAnimatedConstantTime.htm"
+    },
+    {
+      "name": "RestoreWithAspectRatio",
+      "signature": "public bool RestoreWithAspectRatio(int index, RhinoViewport viewport)",
+      "summary": "",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreWithAspectRatio(System.Int32,Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "viewport",
+          "type": "Rhino.Display.RhinoViewport",
+          "doc": "[Missing \u003Cparam name=\u0022viewport\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreWithAspectRatio(System.Int32,Rhino.Display.RhinoViewport)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedViewTable.RestoreWithAspectRatio(System.Int32,Rhino.Display.RhinoViewport)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedViewTable_RestoreWithAspectRatio.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of named views in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedViewTable_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedViewTable_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ViewInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Conceptually, the named view table is an array of ViewInfo and their associated names. The indexing operator ([] in C#) can be used to get individual ViewInfo items.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedViewTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,79 @@
+{
+  "name": "SubDFaceList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "All faces in a SubD",
+  "interfaces": [
+    "IEnumerable\u003CSubDFace\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_SubDFaceList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Find(Int32)",
+      "signature": "public SubDFace Find(int id)",
+      "summary": "Find a face in this SubD with a given id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDFaceList.Find(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDFaceList.Find(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDFaceList_Find.htm"
+    },
+    {
+      "name": "Find(UInt32)",
+      "signature": "public SubDFace Find(uint id)",
+      "summary": "Find a face in this SubD with a given id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDFaceList.Find(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDFace",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDFaceList.Find(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDFaceList_Find_1.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CSubDFace\u003E GetEnumerator()",
+      "summary": "Implementation of IEnumerable",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CSubDFace\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDFaceList.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDFaceList_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of SubD faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_SubDFaceList_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

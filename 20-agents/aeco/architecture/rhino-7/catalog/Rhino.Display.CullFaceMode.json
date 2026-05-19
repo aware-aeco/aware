@@ -1,0 +1,26 @@
+{
+  "name": "CullFaceMode",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.CullFaceMode\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_CullFaceMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DrawFrontAndBack",
+      "value": 0
+    },
+    {
+      "name": "DrawFrontFaces",
+      "value": 1
+    },
+    {
+      "name": "DrawBackFaces",
+      "value": 2
+    }
+  ]
+}

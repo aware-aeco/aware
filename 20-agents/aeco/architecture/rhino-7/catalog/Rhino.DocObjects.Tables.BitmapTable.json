@@ -1,0 +1,265 @@
+{
+  "name": "BitmapTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "Stores the list of bitmaps in a Rhino document.",
+  "base": "RhinoDocCommonTable\u003CBitmapEntry\u003E",
+  "interfaces": [
+    "ICollection\u003CBitmapEntry\u003E",
+    "IEnumerable\u003CBitmapEntry\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_BitmapTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddBitmap",
+      "signature": "public int AddBitmap(string bitmapFilename, bool replaceExisting)",
+      "summary": "Adds a new bitmap with specified name to the bitmap table.",
+      "params": [
+        {
+          "name": "bitmapFilename",
+          "type": "System.String",
+          "doc": "If NULL or empty, then a unique name of the form \u0022Bitmap 01\u0022 will be automatically created.",
+          "optional": false
+        },
+        {
+          "name": "replaceExisting",
+          "type": "System.Boolean",
+          "doc": "If true and the there is already a bitmap using the specified name, then that bitmap is replaced. If false and there is already a bitmap using the specified name, then -1 is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "index of new bitmap in table on success. -1 on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_AddBitmap.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Marks all items as deleted.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_Clear.htm"
+    },
+    {
+      "name": "Delete",
+      "signature": "public override bool Delete(BitmapEntry item)",
+      "summary": "Removes the bitmap from the table.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Rhino.DocObjects.BitmapEntry",
+          "doc": "The item to remove. Null will always return false.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the item could be deleted; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_Delete.htm"
+    },
+    {
+      "name": "DeleteBitmap",
+      "signature": "public bool DeleteBitmap(string bitmapFilename)",
+      "summary": "Deletes a bitmap.",
+      "params": [
+        {
+          "name": "bitmapFilename",
+          "type": "System.String",
+          "doc": "The bitmap file name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful. false if the bitmap cannot be deleted because it is the current bitmap or because it bitmap contains active geometry."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_DeleteBitmap.htm"
+    },
+    {
+      "name": "ExportToFile",
+      "signature": "public bool ExportToFile(int index, string path)",
+      "summary": "Writes a bitmap to a file.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the bitmap to be written.",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "The full path, including file name and extension, name of the file to write.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_ExportToFile.htm"
+    },
+    {
+      "name": "ExportToFiles",
+      "signature": "public int ExportToFiles(string directoryPath, int overwrite)",
+      "summary": "Exports all the bitmaps in the table to files.",
+      "params": [
+        {
+          "name": "directoryPath",
+          "type": "System.String",
+          "doc": "full path to the directory where the bitmaps should be saved. If NULL, a dialog is used to interactively get the directory name.",
+          "optional": false
+        },
+        {
+          "name": "overwrite",
+          "type": "System.Int32",
+          "doc": "0 = no, 1 = yes, 2 = ask.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of bitmaps written."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_ExportToFiles.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "public BitmapEntry Find(string name, bool createFile, out string fileName)",
+      "summary": "This function first attempts to find the file with \u0022name\u0022 on the disk. If it does find it, \u0022fileName\u0022 is set to the full path of the file and the BitmapEntry returned will be null, even if there was a BitmapEntry with \u0022name\u0022 in the bitmap table. If the function cannot find the file on the disk, it searches the bitmap table. If it finds it, the returned BitmapEntry entry will be the entry in the table with that name. Additionally, if \u0022createFile\u0022 is true, and an entry is found, the file will be written to the disk and it\u0027s full path will be contained in \u0022fileName\u0022.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the file to search for including file extension.",
+          "optional": false
+        },
+        {
+          "name": "createFile",
+          "type": "System.Boolean",
+          "doc": "If this is true, and the file is not found on the disk but is found in the BitmapTable, then the BitmapEntry will get saved to the Rhino bitmap file cache and fileName will contain the full path to the cached file.",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "The full path to the current location of this file or an empty string if the file was not found and/or not extracted successfully.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BitmapEntry",
+        "doc": "Returns null if \u0022name\u0022 was found on the disk. If name was not found on the disk, returns the BitmapEntry with the specified name if it is found in the bitmap table and null if it was not found in the bitmap table."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_Find.htm"
+    },
+    {
+      "name": "FindId",
+      "signature": "public virtual T FindId(Guid id)",
+      "summary": "Uses the guid to find a model component. Deleted objects cannot be found by id. The guid is the value that is stored in the .Id property. In a single document, no two active objects have the same guid. If an object is replaced with a new object, then the guid persists. For example, if the _Move command moves an object, then the moved object inherits its guid from the starting object. If the Copy command copies an object, then the copy gets a new guid. This guid persists through file saving/opening operations. This function will not find grip objects.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "ID of model component to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Reference to the rhino object with the objectId or null if no such object could be found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_FindId.htm"
+    },
+    {
+      "name": "FindIndex",
+      "signature": "public BitmapEntry FindIndex(int index)",
+      "summary": "Retrieves a BitmapEntry object based on Index. This search type of search is discouraged. We are moving towards using only IDs for all tables.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BitmapEntry",
+        "doc": "A BitmapEntry object, or null if none was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_BitmapTable_FindIndex.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public virtual IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "Returns the enumerator that yields all items.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CT\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.CommonComponentTable\u00601.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_CommonComponentTable_1_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Image.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_BitmapTable_ComponentType.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the count of all items, including deleted ones.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_CommonComponentTable_1_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_RhinoDocCommonTable_1_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "BitmapEntry",
+      "getter": true,
+      "setter": false,
+      "summary": "Conceptually, the bitmap table is an array of bitmaps. The operator[] can be used to get individual bitmaps.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_BitmapTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

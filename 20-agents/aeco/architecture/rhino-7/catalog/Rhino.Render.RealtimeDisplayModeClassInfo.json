@@ -1,0 +1,65 @@
+{
+  "name": "RealtimeDisplayModeClassInfo",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Class information obligatory for registering RealtimeDisplayMode implementations.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RealtimeDisplayModeClassInfo.htm",
+  "constructors": [
+    {
+      "name": "RealtimeDisplayModeClassInfo",
+      "signature": "protected RealtimeDisplayModeClassInfo()",
+      "summary": "Initializes a new instance of the RealtimeDisplayModeClassInfo class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayModeClassInfo__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DontRegisterAttributesOnStart",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Override and return true when you don\u0027t want your class info to cause display attributes to be registered with the system.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayModeClassInfo_DontRegisterAttributesOnStart.htm"
+    },
+    {
+      "name": "DrawOpenGl",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Return true if the RealtimeDisplayMode draws its result using OpenGL. RenderWindow usage will then be skipped.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayModeClassInfo_DrawOpenGl.htm"
+    },
+    {
+      "name": "GUID",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the RealtimeDisplayMode implementation GUID",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayModeClassInfo_GUID.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Get human-facing class description for RealtimeDisplayMode implementation. This string might show up in the Rhino UI.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayModeClassInfo_Name.htm"
+    },
+    {
+      "name": "RealtimeDisplayModeType",
+      "type": "Type",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the type being registered.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayModeClassInfo_RealtimeDisplayModeType.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

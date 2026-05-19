@@ -1,0 +1,107 @@
+{
+  "name": "PreviewSceneServer",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "PreviewSceneServer",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PreviewSceneServer.htm",
+  "constructors": [
+    {
+      "name": "PreviewSceneServer",
+      "signature": "public PreviewSceneServer(IntPtr pPreviewSceneServer)",
+      "summary": "Constructor for PreviewSceneServer",
+      "params": [
+        {
+          "name": "pPreviewSceneServer",
+          "type": "System.IntPtr",
+          "doc": "[Missing \u003Cparam name=\u0022pPreviewSceneServer\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewSceneServer.#ctor(System.IntPtr)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewSceneServer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ApplyRotation",
+      "signature": "public void ApplyRotation(double X, double Y, IRhRdkPreviewSceneServer_eRotationType type)",
+      "summary": "Set Scene Server Rotation",
+      "params": [
+        {
+          "name": "X",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022X\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewSceneServer.ApplyRotation(System.Double,System.Double,Rhino.Render.IRhRdkPreviewSceneServer_eRotationType)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "Y",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022Y\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewSceneServer.ApplyRotation(System.Double,System.Double,Rhino.Render.IRhRdkPreviewSceneServer_eRotationType)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Rhino.Render.IRhRdkPreviewSceneServer_eRotationType",
+          "doc": "[Missing \u003Cparam name=\u0022type\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewSceneServer.ApplyRotation(System.Double,System.Double,Rhino.Render.IRhRdkPreviewSceneServer_eRotationType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewSceneServer_ApplyRotation.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose for PreviewSceneServer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewSceneServer_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor for PreviewSceneServer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewSceneServer_Finalize.htm"
+    },
+    {
+      "name": "SetSceneScale",
+      "signature": "public void SetSceneScale(double scale)",
+      "summary": "Set Scene Server Scale",
+      "params": [
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022scale\u0022/\u003E documentation for \u0022M:Rhino.Render.PreviewSceneServer.SetSceneScale(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PreviewSceneServer_SetSceneScale.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "The CppPointer of PreviewSceneServer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PreviewSceneServer_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

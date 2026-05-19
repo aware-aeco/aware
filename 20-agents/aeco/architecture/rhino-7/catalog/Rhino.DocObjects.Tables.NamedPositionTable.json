@@ -1,0 +1,559 @@
+{
+  "name": "NamedPositionTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "All named positions in a rhino document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_NamedPositionTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Append(Guid, IEnumerable\u003CRhinoObject\u003E)",
+      "signature": "public bool Append(Guid id, IEnumerable\u003CRhinoObject\u003E objects)",
+      "summary": "Append objects to a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position which you want to append to.",
+          "optional": false
+        },
+        {
+          "name": "objects",
+          "type": "System.Collections.Generic.IEnumerable\u003CRhinoObject\u003E",
+          "doc": "Collection of Rhino Objects to be included in this Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Append was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Append.htm"
+    },
+    {
+      "name": "Append(Guid, IEnumerable\u003CGuid\u003E)",
+      "signature": "public bool Append(Guid id, IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Append objects to a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position which you want to append to.",
+          "optional": false
+        },
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "New object ids to be included in this Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Append was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Append_1.htm"
+    },
+    {
+      "name": "Append(String, IEnumerable\u003CRhinoObject\u003E)",
+      "signature": "public bool Append(string name, IEnumerable\u003CRhinoObject\u003E objects)",
+      "summary": "Append objects to a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the Named Position which you want to append to.",
+          "optional": false
+        },
+        {
+          "name": "objects",
+          "type": "System.Collections.Generic.IEnumerable\u003CRhinoObject\u003E",
+          "doc": "Collection of Rhino Objects to be included in this Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Append was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Append_2.htm"
+    },
+    {
+      "name": "Append(String, IEnumerable\u003CGuid\u003E)",
+      "signature": "public bool Append(string name, IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Append objects to a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the Named Position which you want to append to.",
+          "optional": false
+        },
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "New object Guids to be included in this Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Append was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Append_3.htm"
+    },
+    {
+      "name": "Delete(Guid)",
+      "signature": "public bool Delete(Guid id)",
+      "summary": "Delete a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position which you want to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Delete was successful, Null in case the id does not exist as a Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Delete.htm"
+    },
+    {
+      "name": "Delete(String)",
+      "signature": "public bool Delete(string name)",
+      "summary": "Delete a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the Named Position which you want to delete.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Delete was successful, Null in case the id does not exist as a Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Delete_1.htm"
+    },
+    {
+      "name": "Id",
+      "signature": "public Guid Id(string name)",
+      "summary": "Guid of a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the Named Position for which you want to retrieve the Guid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "The Guid of the Named Position. If not found, an empty Guid is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Id.htm"
+    },
+    {
+      "name": "Name",
+      "signature": "public string Name(Guid id)",
+      "summary": "Name of a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position for which you want to retrieve the name.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The name of the Named Position as a string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Name.htm"
+    },
+    {
+      "name": "ObjectIds(Guid)",
+      "signature": "public Guid[] ObjectIds(Guid id)",
+      "summary": "Array of Rhino Object Guids related to a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The Guid of the named position from which you want to retrieve the objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "Array of Guid which pertain to the objects tracked by the Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_ObjectIds.htm"
+    },
+    {
+      "name": "ObjectIds(String)",
+      "signature": "public Guid[] ObjectIds(string name)",
+      "summary": "Array of Rhino Object Guids related to a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the Named Position from which you want to retrieve the objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid[]",
+        "doc": "Array of Guid which pertain to the objects tracked by the Named Position, or null in case no such Named Position is found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_ObjectIds_1.htm"
+    },
+    {
+      "name": "Objects(Guid)",
+      "signature": "public RhinoObject[] Objects(Guid id)",
+      "summary": "Array of Rhino Objects related to a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The Guid of the named position from which you want to retrieve the objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "Array of Rhino Objects which are tracked by the Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Objects.htm"
+    },
+    {
+      "name": "Objects(String)",
+      "signature": "public RhinoObject[] Objects(string name)",
+      "summary": "Array of Rhino Objects related to a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "The name of the Named Position from which you want to retrieve the objects.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "Array of Rhino Objects which are tracked by the Named Position if successful, null if no such Named Position exists."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Objects_1.htm"
+    },
+    {
+      "name": "ObjectXform(Guid, RhinoObject, Transform)",
+      "signature": "public bool ObjectXform(Guid id, RhinoObject obj, ref Transform xform)",
+      "summary": "Retrieve the Transform of a Rhino Object relate to a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The Guid of the Named Position",
+          "optional": false
+        },
+        {
+          "name": "obj",
+          "type": "Rhino.DocObjects.RhinoObject",
+          "doc": "The Rhino Object from which to retrieve the Transform.",
+          "optional": false
+        },
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The Transform to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Transform of the RhinoObject related to the Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_ObjectXform.htm"
+    },
+    {
+      "name": "ObjectXform(Guid, Guid, Transform)",
+      "signature": "public bool ObjectXform(Guid id, Guid objId, ref Transform xform)",
+      "summary": "Retrieve the Transform of a Rhino Object relate to a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The Guid of the Named Position",
+          "optional": false
+        },
+        {
+          "name": "objId",
+          "type": "System.Guid",
+          "doc": "The Guid of the Rhino Object from which to retrieve the Transform.",
+          "optional": false
+        },
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The Transform to retrieve.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Transform of the RhinoObject related to the Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_ObjectXform_1.htm"
+    },
+    {
+      "name": "Rename(Guid, String)",
+      "signature": "public bool Rename(Guid id, string name)",
+      "summary": "Rename a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position which you want to rename.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "New name for the Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Rename was successful. For example, this method might return False if you attempt to rename the Named Position with the currently assigned name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Rename.htm"
+    },
+    {
+      "name": "Rename(String, String)",
+      "signature": "public bool Rename(string oldName, string name)",
+      "summary": "Rename a Named Position.",
+      "params": [
+        {
+          "name": "oldName",
+          "type": "System.String",
+          "doc": "Current name of the Named Position which you want to rename.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "New name for the Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Rename was successful. For example, this method might return False if you attempt to rename the Named Position with the currently assigned name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Rename_1.htm"
+    },
+    {
+      "name": "Restore(Guid)",
+      "signature": "public bool Restore(Guid id)",
+      "summary": "Restore a Named Position.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position to restore.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False based on whether the Named Position was able to be restored."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Restore.htm"
+    },
+    {
+      "name": "Restore(String)",
+      "signature": "public bool Restore(string name)",
+      "summary": "Restore a Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the Named Position to restore.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False based on whether the Named Position was able to be restored."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Restore_1.htm"
+    },
+    {
+      "name": "Save(String, IEnumerable\u003CRhinoObject\u003E)",
+      "signature": "public Guid Save(string name, IEnumerable\u003CRhinoObject\u003E objects)",
+      "summary": "Save a new Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name for this Named Position.",
+          "optional": false
+        },
+        {
+          "name": "objects",
+          "type": "System.Collections.Generic.IEnumerable\u003CRhinoObject\u003E",
+          "doc": "Array of Rhino Objects which should be included in this Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Guid of the newly saved Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Save.htm"
+    },
+    {
+      "name": "Save(String, IEnumerable\u003CGuid\u003E)",
+      "signature": "public Guid Save(string name, IEnumerable\u003CGuid\u003E objectIds)",
+      "summary": "Save a new Named Position.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name for this Named Position.",
+          "optional": false
+        },
+        {
+          "name": "objectIds",
+          "type": "System.Collections.Generic.IEnumerable\u003CGuid\u003E",
+          "doc": "Array of Rhino Object Ids which should be included in this Named Position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Guid",
+        "doc": "Guid of the newly saved Named Position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Save_1.htm"
+    },
+    {
+      "name": "Update(Guid)",
+      "signature": "public bool Update(Guid id)",
+      "summary": "Updates a Named Position, effectively storing the current positions of the objects which the Named Position is tracking.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Guid of the Named Position which you want to update.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Update was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Update.htm"
+    },
+    {
+      "name": "Update(String)",
+      "signature": "public bool Update(string name)",
+      "summary": "Updates a Named Position, effectively storing the current positions of the objects which the Named Position is tracking.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of the Named Position which you want to update.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True or False depending on whether the Update was successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedPositionTable_Update_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of Named Positions in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedPositionTable_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedPositionTable_Document.htm"
+    },
+    {
+      "name": "Ids",
+      "type": "Guid[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array of Named Position Guids.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedPositionTable_Ids.htm"
+    },
+    {
+      "name": "Names",
+      "type": "String[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array of Named Position names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedPositionTable_Names.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

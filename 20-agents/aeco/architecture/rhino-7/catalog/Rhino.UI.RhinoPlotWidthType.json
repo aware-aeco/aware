@@ -1,0 +1,49 @@
+{
+  "name": "RhinoPlotWidthType",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Supported plot width special types",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_RhinoPlotWidthType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ByLayer",
+      "value": 0,
+      "summary": "Plot width from layer"
+    },
+    {
+      "name": "ByParent",
+      "value": 1,
+      "summary": "Plot width from parent object"
+    },
+    {
+      "name": "Hairline",
+      "value": 2,
+      "summary": "System hairline plot width"
+    },
+    {
+      "name": "Default",
+      "value": 3,
+      "summary": "Use default plot width"
+    },
+    {
+      "name": "None",
+      "value": 4,
+      "summary": "Don\u0027t print"
+    },
+    {
+      "name": "Varies",
+      "value": 5,
+      "summary": "Multiple objects selected with different types/widths"
+    },
+    {
+      "name": "Width",
+      "value": 6,
+      "summary": "Standard or custom width"
+    }
+  ]
+}

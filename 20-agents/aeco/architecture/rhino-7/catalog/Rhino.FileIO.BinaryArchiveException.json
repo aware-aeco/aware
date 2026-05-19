@@ -1,0 +1,33 @@
+{
+  "name": "BinaryArchiveException",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Thrown by BinaryArchiveReader and BinaryArchiveWriter classes when an IO error has occurred.",
+  "interfaces": [
+    "IOException"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_BinaryArchiveException.htm",
+  "constructors": [
+    {
+      "name": "BinaryArchiveException",
+      "signature": "public BinaryArchiveException(string message)",
+      "summary": "Initializes a new instance of the BinaryArchiveException class.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The inner message to show to users.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_BinaryArchiveException__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

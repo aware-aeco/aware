@@ -1,0 +1,254 @@
+{
+  "name": "Cylinder",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the values of a plane, a radius and two heights -on top and beneath- that define a right circular cylinder.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Cylinder.htm",
+  "constructors": [
+    {
+      "name": "Cylinder(Circle)",
+      "signature": "public Cylinder(Circle baseCircle)",
+      "summary": "Constructs a new cylinder with infinite height.",
+      "params": [
+        {
+          "name": "baseCircle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Base circle for infinite cylinder.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder__ctor.htm"
+    },
+    {
+      "name": "Cylinder(Circle, Double)",
+      "signature": "public Cylinder(Circle baseCircle, double height)",
+      "summary": "Constructs a new cylinder with a finite height.",
+      "params": [
+        {
+          "name": "baseCircle",
+          "type": "Rhino.Geometry.Circle",
+          "doc": "Base circle for cylinder.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height of cylinder (zero for infinite cylinder).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CircleAt",
+      "signature": "public Circle CircleAt(double linearParameter)",
+      "summary": "Compute the circle at the given elevation parameter.",
+      "params": [
+        {
+          "name": "linearParameter",
+          "type": "System.Double",
+          "doc": "Height parameter for circle section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Cylinder.CircleAt(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder_CircleAt.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Cylinder other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Cylinder",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Cylinder.EpsilonEquals(Rhino.Geometry.Cylinder,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Cylinder.EpsilonEquals(Rhino.Geometry.Cylinder,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Cylinder.EpsilonEquals(Rhino.Geometry.Cylinder,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder_EpsilonEquals.htm"
+    },
+    {
+      "name": "LineAt",
+      "signature": "public Line LineAt(double angularParameter)",
+      "summary": "Compute the line at the given angle parameter. This line will be degenerate if the cylinder is infinite.",
+      "params": [
+        {
+          "name": "angularParameter",
+          "type": "System.Double",
+          "doc": "Angle parameter for line section.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Cylinder.LineAt(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder_LineAt.htm"
+    },
+    {
+      "name": "ToBrep",
+      "signature": "public Brep ToBrep(bool capBottom, bool capTop)",
+      "summary": "Constructs a Brep representation of this Cylinder. This is synonymous with calling NurbsSurface.CreateFromCylinder().",
+      "params": [
+        {
+          "name": "capBottom",
+          "type": "System.Boolean",
+          "doc": "If true, the bottom of the cylinder will be capped.",
+          "optional": false
+        },
+        {
+          "name": "capTop",
+          "type": "System.Boolean",
+          "doc": "If true, the top of the cylinder will be capped.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep",
+        "doc": "A Brep representation of the cylinder or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder_ToBrep.htm"
+    },
+    {
+      "name": "ToNurbsSurface",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Constructs a Nurbs surface representation of this cylinder. This is synonymous with calling NurbsSurface.CreateFromCylinder().",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A Nurbs surface representation of the cylinder or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder_ToNurbsSurface.htm"
+    },
+    {
+      "name": "ToRevSurface",
+      "signature": "public RevSurface ToRevSurface()",
+      "summary": "Constructs a RevSurface representation of this Cylinder. This is synonymous with calling RevSurface.CreateFromCylinder().",
+      "params": [],
+      "returns": {
+        "type": "RevSurface",
+        "doc": "A RevSurface representation of the cylinder or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Cylinder_ToRevSurface.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Axis",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the axis direction of the cylinder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_Axis.htm"
+    },
+    {
+      "name": "BasePlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the base plane of the cylinder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_BasePlane.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the center point of the defining circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_Center.htm"
+    },
+    {
+      "name": "Height1",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the start height of the cylinder. The center of bottom cap is: BasePlane.Origin \u002B Height1 * BasePlane.ZAxis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_Height1.htm"
+    },
+    {
+      "name": "Height2",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the end height of the cylinder. If the end height equals the start height, the cylinder is presumed to be infinite. The center of top cap is: BasePlane.Origin \u002B Height2 * BasePlane.ZAxis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_Height2.htm"
+    },
+    {
+      "name": "IsFinite",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "true if the cylinder is finite (Height0 != Height1) false if the cylinder is infinite.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_IsFinite.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a boolean value indicating whether this cylinder is valid. A valid cylinder is represented by a valid circle and two valid heights.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_IsValid.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the cylinder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_Radius.htm"
+    },
+    {
+      "name": "TotalHeight",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the height of the cylinder. Infinite cylinders have a height of zero, not Double.PositiveInfinity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_TotalHeight.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Cylinder",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an invalid Cylinder.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Cylinder_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,170 @@
+{
+  "name": "UserDictionary",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "Defines the storage data class for a user dictionary.",
+  "base": "UserData",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Custom_UserDictionary.htm",
+  "constructors": [
+    {
+      "name": "UserDictionary",
+      "signature": "public UserDictionary()",
+      "summary": "Initializes a new instance of the UserDictionary class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDictionary__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserData_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserData_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserData_Finalize.htm"
+    },
+    {
+      "name": "OnDuplicate",
+      "signature": "protected override void OnDuplicate(UserData source)",
+      "summary": "Clones the user data.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.DocObjects.Custom.UserData",
+          "doc": "The source data.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDictionary_OnDuplicate.htm"
+    },
+    {
+      "name": "OnTransform",
+      "signature": "protected virtual void OnTransform(Transform transform)",
+      "summary": "Is called when the object associated with this data is transformed. If you override this function, make sure to call the base class if you want the stored Transform to be updated.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "The transform being applied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserData_OnTransform.htm"
+    },
+    {
+      "name": "Read",
+      "signature": "protected override bool Read(BinaryArchiveReader archive)",
+      "summary": "Is called to read this entity.",
+      "params": [
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveReader",
+          "doc": "An archive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Always returns true."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDictionary_Read.htm"
+    },
+    {
+      "name": "Write",
+      "signature": "protected override bool Write(BinaryArchiveWriter archive)",
+      "summary": "Is called to write this entity.",
+      "params": [
+        {
+          "name": "archive",
+          "type": "Rhino.FileIO.BinaryArchiveWriter",
+          "doc": "An archive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Always returns true."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDictionary_Write.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the text \u0022RhinoCommon UserDictionary\u0022.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_UserDictionary_Description.htm"
+    },
+    {
+      "name": "Dictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the dictionary that is associated with this class. This dictionary is unique.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_UserDictionary_Dictionary.htm"
+    },
+    {
+      "name": "ShouldWrite",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Writes this entity if the count is larger than 0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_UserDictionary_ShouldWrite.htm"
+    },
+    {
+      "name": "Transform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "Updated if user data is attached to a piece of geometry that is transformed and the virtual OnTransform() is not overridden. If you override OnTransform() and want Transform to be updated, then call the base class OnTransform() in your override. The default constructor sets Transform to the identity.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_UserData_Transform.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

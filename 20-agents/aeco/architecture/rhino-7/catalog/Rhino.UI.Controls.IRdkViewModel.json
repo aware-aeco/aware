@@ -1,0 +1,91 @@
+{
+  "name": "IRdkViewModel",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.IRdkViewModel\u0022]",
+  "interfaces": [
+    "IHasCppImplementation"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_IRdkViewModel.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Commit",
+      "signature": "void Commit(Guid uuidDataType)",
+      "summary": "",
+      "params": [
+        {
+          "name": "uuidDataType",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuidDataType\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IRdkViewModel.Commit(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IRdkViewModel_Commit.htm"
+    },
+    {
+      "name": "Discard",
+      "signature": "void Discard(Guid uuidDataType)",
+      "summary": "",
+      "params": [
+        {
+          "name": "uuidDataType",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuidDataType\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IRdkViewModel.Discard(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IRdkViewModel_Discard.htm"
+    },
+    {
+      "name": "GetData",
+      "signature": "Object GetData(Guid uuidDataType, bool bForWrite, bool bAutoChangeBracket)",
+      "summary": "",
+      "params": [
+        {
+          "name": "uuidDataType",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuidDataType\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IRdkViewModel.GetData(System.Guid,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bForWrite",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bForWrite\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IRdkViewModel.GetData(System.Guid,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bAutoChangeBracket",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bAutoChangeBracket\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.IRdkViewModel.GetData(System.Guid,System.Boolean,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Object",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.IRdkViewModel.GetData(System.Guid,System.Boolean,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_IRdkViewModel_GetData.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from IHasCppImplementation.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_Controls_IHasCppImplementation_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

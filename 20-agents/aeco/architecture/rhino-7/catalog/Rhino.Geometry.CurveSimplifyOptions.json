@@ -1,0 +1,54 @@
+{
+  "name": "CurveSimplifyOptions",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Enumerates the options to use when simplifying a curve.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_CurveSimplifyOptions.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No option is specified."
+    },
+    {
+      "name": "SplitAtFullyMultipleKnots",
+      "value": 1,
+      "summary": "Split NurbsCurves at fully multiple knots. Effectively turning single NURBS segments with kinks into multiple segments."
+    },
+    {
+      "name": "RebuildLines",
+      "value": 2,
+      "summary": "Replace linear segments with LineCurves."
+    },
+    {
+      "name": "RebuildArcs",
+      "value": 4,
+      "summary": "Replace partially circular segments with ArcCurves."
+    },
+    {
+      "name": "RebuildRationals",
+      "value": 8,
+      "summary": "Replace rational NURBS curve with constant weights with an equivalent non-rational NurbsCurve."
+    },
+    {
+      "name": "AdjustG1",
+      "value": 16,
+      "summary": "Adjust Curves at G1-joins."
+    },
+    {
+      "name": "Merge",
+      "value": 32,
+      "summary": "Merge adjacent co-linear lines or co-circular arcs or combine consecutive line segments into a polyline."
+    },
+    {
+      "name": "All",
+      "value": 63,
+      "summary": "Implies all of the simplification functions will be used."
+    }
+  ]
+}

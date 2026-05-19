@@ -1,0 +1,54 @@
+{
+  "name": "RhinoAccountsServerException",
+  "namespace": "Rhino.Runtime.RhinoAccounts",
+  "kind": "class",
+  "summary": "Exception thrown when the Rhino Accounts server returned an unsuccessful HTTP response with a code of 400 or greater.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_RhinoAccounts_RhinoAccountsServerException.htm",
+  "constructors": [
+    {
+      "name": "RhinoAccountsServerException(Exception)",
+      "signature": "public RhinoAccountsServerException(Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsServerException__ctor.htm"
+    },
+    {
+      "name": "RhinoAccountsServerException(String, Exception)",
+      "signature": "public RhinoAccountsServerException(string message, Exception innerException = null)",
+      "summary": "Generates a new instance of the exception.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "The message of the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The inner exception.",
+          "optional": true
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_RhinoAccounts_RhinoAccountsServerException__ctor_1.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

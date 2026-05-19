@@ -1,0 +1,118 @@
+{
+  "name": "PanelIds",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Standard Rhino panel Id\u0027s",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_PanelIds.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ContextHelp",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino context sensitive help panel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_ContextHelp.htm"
+    },
+    {
+      "name": "Display",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Display.htm"
+    },
+    {
+      "name": "Environment",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino environment panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Environment.htm"
+    },
+    {
+      "name": "GroundPlane",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino ground plane panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_GroundPlane.htm"
+    },
+    {
+      "name": "Layers",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino Layer panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Layers.htm"
+    },
+    {
+      "name": "Libraries",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino render properties panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Libraries.htm"
+    },
+    {
+      "name": "LightManager",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino light manager panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_LightManager.htm"
+    },
+    {
+      "name": "Materials",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino material browser",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Materials.htm"
+    },
+    {
+      "name": "Notes",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino notes panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Notes.htm"
+    },
+    {
+      "name": "ObjectProperties",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino object properties panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_ObjectProperties.htm"
+    },
+    {
+      "name": "Rendering",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino rendering properties panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Rendering.htm"
+    },
+    {
+      "name": "Sun",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino sun panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Sun.htm"
+    },
+    {
+      "name": "Texture",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Rhino texture panel",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_PanelIds_Texture.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

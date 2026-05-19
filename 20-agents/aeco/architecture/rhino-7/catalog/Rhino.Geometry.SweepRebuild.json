@@ -1,0 +1,29 @@
+{
+  "name": "SweepRebuild",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Rebuild types for creating swept surfaces",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SweepRebuild.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Do not simplify cross section curves."
+    },
+    {
+      "name": "Rebuild",
+      "value": 1,
+      "summary": "Rebuild cross section curves through points."
+    },
+    {
+      "name": "Refit",
+      "value": 2,
+      "summary": "Refit cross section curves to tolerance."
+    }
+  ]
+}

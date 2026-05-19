@@ -1,0 +1,30 @@
+{
+  "name": "RenderTexture.eLocalMappingType",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RenderTexture.eLocalMappingType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderTexture_eLocalMappingType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "lmt_none",
+      "value": 0
+    },
+    {
+      "name": "lmt_2D",
+      "value": 1
+    },
+    {
+      "name": "lmt_3D",
+      "value": 2
+    },
+    {
+      "name": "lmt_force32bit",
+      "value": "4294967295"
+    }
+  ]
+}

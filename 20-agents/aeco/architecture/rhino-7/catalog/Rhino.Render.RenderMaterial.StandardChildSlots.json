@@ -1,0 +1,149 @@
+{
+  "name": "RenderMaterial.StandardChildSlots",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Defines enumerated constant values for use in TextureChildSlotName(RenderMaterial.StandardChildSlots) method. NOTE WELL - these values cannot be changed. https://mcneel.myjetbrains.com/youtrack/issue/RH-57752",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderMaterial_StandardChildSlots.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::None."
+    },
+    {
+      "name": "Diffuse",
+      "value": 100,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::Diffuse."
+    },
+    {
+      "name": "Transparency",
+      "value": 101,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::Transparency"
+    },
+    {
+      "name": "Bump",
+      "value": 102,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::Bump"
+    },
+    {
+      "name": "Environment",
+      "value": 103,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::Environment"
+    },
+    {
+      "name": "PbrBaseColor",
+      "value": 100,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_base_color"
+    },
+    {
+      "name": "PbrSubsurface",
+      "value": 104,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_subsurface"
+    },
+    {
+      "name": "PbrSubSurfaceScattering",
+      "value": 105,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_subsurface_scattering_color"
+    },
+    {
+      "name": "PbrSubsurfaceScatteringRadius",
+      "value": 106,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_subsurface_scattering_radius"
+    },
+    {
+      "name": "PbrMetallic",
+      "value": 107,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_metallic"
+    },
+    {
+      "name": "PbrSpecular",
+      "value": 108,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_specular"
+    },
+    {
+      "name": "PbrSpecularTint",
+      "value": 109,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_specular_tint"
+    },
+    {
+      "name": "PbrRoughness",
+      "value": 110,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_roughness"
+    },
+    {
+      "name": "PbrAnisotropic",
+      "value": 111,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_anisotropic"
+    },
+    {
+      "name": "PbrAnisotropicRotation",
+      "value": 112,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_anisotropic_rotation"
+    },
+    {
+      "name": "PbrSheen",
+      "value": 113,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_sheen"
+    },
+    {
+      "name": "PbrSheenTint",
+      "value": 114,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_sheen_tint"
+    },
+    {
+      "name": "PbrClearcoat",
+      "value": 115,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_clearcoat"
+    },
+    {
+      "name": "PbrClearcoatRoughness",
+      "value": 116,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_clearcoat_roughness"
+    },
+    {
+      "name": "PbrOpacityIor",
+      "value": 117,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_opacity_ior"
+    },
+    {
+      "name": "PbrOpacity",
+      "value": 101,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_opacity"
+    },
+    {
+      "name": "PbrOpacityRoughness",
+      "value": 118,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_opacity_roughness"
+    },
+    {
+      "name": "PbrEmission",
+      "value": 119,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_emission"
+    },
+    {
+      "name": "PbrAmbientOcclusion",
+      "value": 120,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_ambient_occlusion"
+    },
+    {
+      "name": "PbrDisplacement",
+      "value": 121,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_smudge"
+    },
+    {
+      "name": "PbrClearcoatBump",
+      "value": 122,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_clearcoat_roughness"
+    },
+    {
+      "name": "PbrAlpha",
+      "value": 123,
+      "summary": "Corresponds to CRhRdkMaterial::ChildSlotUsage::PBR_alpha"
+    }
+  ]
+}

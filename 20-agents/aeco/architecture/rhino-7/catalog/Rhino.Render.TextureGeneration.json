@@ -1,0 +1,22 @@
+{
+  "name": "TextureGeneration",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.TextureGeneration\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_TextureGeneration.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Allow",
+      "value": 1
+    },
+    {
+      "name": "Disallow",
+      "value": 2
+    }
+  ]
+}

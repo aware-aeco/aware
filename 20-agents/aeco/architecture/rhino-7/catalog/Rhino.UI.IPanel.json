@@ -1,0 +1,83 @@
+{
+  "name": "IPanel",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.IPanel\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_IPanel.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PanelClosing",
+      "signature": "void PanelClosing(uint documentSerialNumber, bool onCloseDocument)",
+      "summary": "",
+      "params": [
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022documentSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanel.PanelClosing(System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onCloseDocument",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022onCloseDocument\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanel.PanelClosing(System.UInt32,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IPanel_PanelClosing.htm"
+    },
+    {
+      "name": "PanelHidden",
+      "signature": "void PanelHidden(uint documentSerialNumber, ShowPanelReason reason)",
+      "summary": "",
+      "params": [
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022documentSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanel.PanelHidden(System.UInt32,Rhino.UI.ShowPanelReason)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "reason",
+          "type": "Rhino.UI.ShowPanelReason",
+          "doc": "[Missing \u003Cparam name=\u0022reason\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanel.PanelHidden(System.UInt32,Rhino.UI.ShowPanelReason)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IPanel_PanelHidden.htm"
+    },
+    {
+      "name": "PanelShown",
+      "signature": "void PanelShown(uint documentSerialNumber, ShowPanelReason reason)",
+      "summary": "",
+      "params": [
+        {
+          "name": "documentSerialNumber",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022documentSerialNumber\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanel.PanelShown(System.UInt32,Rhino.UI.ShowPanelReason)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "reason",
+          "type": "Rhino.UI.ShowPanelReason",
+          "doc": "[Missing \u003Cparam name=\u0022reason\u0022/\u003E documentation for \u0022M:Rhino.UI.IPanel.PanelShown(System.UInt32,Rhino.UI.ShowPanelReason)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_IPanel_PanelShown.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

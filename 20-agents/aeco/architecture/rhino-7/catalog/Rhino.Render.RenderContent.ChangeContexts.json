@@ -1,0 +1,64 @@
+{
+  "name": "RenderContent.ChangeContexts",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Context of a change to content parameters.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderContent_ChangeContexts.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UI",
+      "value": 0,
+      "summary": "Change occurred as a result of user activity in the content\u0027s UI."
+    },
+    {
+      "name": "Drop",
+      "value": 1,
+      "summary": "Change occurred as a result of drag and drop."
+    },
+    {
+      "name": "Program",
+      "value": 2,
+      "summary": "Change occurred as a result of internal program activity."
+    },
+    {
+      "name": "Ignore",
+      "value": 3,
+      "summary": "Change can be disregarded."
+    },
+    {
+      "name": "Tree",
+      "value": 4,
+      "summary": "Change occurred within the content tree (e.g., nodes reordered)."
+    },
+    {
+      "name": "Undo",
+      "value": 5,
+      "summary": "Change occurred as a result of an undo."
+    },
+    {
+      "name": "FieldInit",
+      "value": 6,
+      "summary": "OBSOLETE."
+    },
+    {
+      "name": "Serialize",
+      "value": 7,
+      "summary": "Change occurred during serialization (loading)."
+    },
+    {
+      "name": "RealTimeUI",
+      "value": 8,
+      "summary": "Change occurred as a result of \u0027real-time\u0027 user activity in the (content) UI. The content\u0027s preview, UI, group members and registerable properties are not updated."
+    },
+    {
+      "name": "Script",
+      "value": 9,
+      "summary": "Change occurred as a result of executing a script."
+    }
+  ]
+}

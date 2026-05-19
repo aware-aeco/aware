@@ -1,0 +1,47 @@
+{
+  "name": "MaterialTableEventArgs",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Tables.MaterialTableEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_MaterialTableEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_MaterialTableEventArgs_Document.htm"
+    },
+    {
+      "name": "EventType",
+      "type": "MaterialTableEventType",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_MaterialTableEventArgs_EventType.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_MaterialTableEventArgs_Index.htm"
+    },
+    {
+      "name": "OldSettings",
+      "type": "Material",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_MaterialTableEventArgs_OldSettings.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

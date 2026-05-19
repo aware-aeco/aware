@@ -1,0 +1,42 @@
+{
+  "name": "DisplayPipelineAttributes.ContextsForDraw",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.DisplayPipelineAttributes.ContextsForDraw\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayPipelineAttributes_ContextsForDraw.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0
+    },
+    {
+      "name": "FilePreview",
+      "value": 1
+    },
+    {
+      "name": "ViewCapture",
+      "value": 2
+    },
+    {
+      "name": "Printing",
+      "value": 3
+    },
+    {
+      "name": "UIPreview",
+      "value": 4
+    },
+    {
+      "name": "Mask",
+      "value": 5
+    },
+    {
+      "name": "RenderOverlays",
+      "value": 6
+    }
+  ]
+}

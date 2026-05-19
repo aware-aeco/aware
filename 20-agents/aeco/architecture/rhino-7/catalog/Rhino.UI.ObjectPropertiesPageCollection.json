@@ -1,0 +1,48 @@
+{
+  "name": "ObjectPropertiesPageCollection",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Passed to Rhino.PlugIns.PlugIn.ObjectPropertiesPages to allow a plug-in to add custom ObjectPropertiesPage pages to the Rhino properties panel.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ObjectPropertiesPageCollection.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(ObjectPropertiesPage page)",
+      "summary": "Custom page to add",
+      "params": [
+        {
+          "name": "page",
+          "type": "Rhino.UI.ObjectPropertiesPage",
+          "doc": "[Missing \u003Cparam name=\u0022page\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageCollection.Add(Rhino.UI.ObjectPropertiesPage)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageCollection_Add.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document associated with the Rhino properties panel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageCollection_Document.htm"
+    },
+    {
+      "name": "DocumentRuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Document associated with the Rhino properties panel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageCollection_DocumentRuntimeSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

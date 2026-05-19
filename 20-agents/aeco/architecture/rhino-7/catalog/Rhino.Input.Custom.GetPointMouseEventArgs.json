@@ -1,0 +1,87 @@
+{
+  "name": "GetPointMouseEventArgs",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Arguments for mouse information during point getting.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetPointMouseEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ControlKeyDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_ControlKeyDown.htm"
+    },
+    {
+      "name": "LeftButtonDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_LeftButtonDown.htm"
+    },
+    {
+      "name": "MiddleButtonDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_MiddleButtonDown.htm"
+    },
+    {
+      "name": "Point",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_Point.htm"
+    },
+    {
+      "name": "RightButtonDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_RightButtonDown.htm"
+    },
+    {
+      "name": "ShiftKeyDown",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_ShiftKeyDown.htm"
+    },
+    {
+      "name": "Source",
+      "type": "GetPoint",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_Source.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_Viewport.htm"
+    },
+    {
+      "name": "WindowPoint",
+      "type": "Point",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetPointMouseEventArgs_WindowPoint.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

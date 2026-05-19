@@ -1,0 +1,1034 @@
+{
+  "name": "HostUtils",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Contains static methods to deal with teh runtime environment.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_HostUtils.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AutoInstallPlugInFolder",
+      "signature": "public static string AutoInstallPlugInFolder(bool currentUser)",
+      "summary": "Gets the auto install plug-in folder for machine or current user.",
+      "params": [
+        {
+          "name": "currentUser",
+          "type": "System.Boolean",
+          "doc": "true if the query relates to the current user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The full path to the revelant auto install plug-in directory."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_AutoInstallPlugInFolder.htm"
+    },
+    {
+      "name": "CallFromCoreRhino",
+      "signature": "public static int CallFromCoreRhino(string task)",
+      "summary": "Don\u0027t change this function in ANY way unless you chat with Steve first! This function is called by Rhino on initial startup and the signature must be exact",
+      "params": [
+        {
+          "name": "task",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022task\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.CallFromCoreRhino(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.CallFromCoreRhino(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_CallFromCoreRhino.htm"
+    },
+    {
+      "name": "CheckForRdk",
+      "signature": "public static bool CheckForRdk(bool throwOnFalse, bool usePreviousResult)",
+      "summary": "Determines if the RDK is loaded.",
+      "params": [
+        {
+          "name": "throwOnFalse",
+          "type": "System.Boolean",
+          "doc": "if the RDK is not loaded, then throws a RdkNotLoadedException.",
+          "optional": false
+        },
+        {
+          "name": "usePreviousResult",
+          "type": "System.Boolean",
+          "doc": "if true, then the last result can be used instaed of performing a full check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the RDK is loaded; false if the RDK is not loaded. Note that the RdkNotLoadedException will hinder the retrieval of any return value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_CheckForRdk.htm"
+    },
+    {
+      "name": "ClearFpuExceptionStatus",
+      "signature": "public static void ClearFpuExceptionStatus()",
+      "summary": "Clear FPU exception and busy flags (Intel assembly fnclex)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_ClearFpuExceptionStatus.htm"
+    },
+    {
+      "name": "CreateCommands(PlugIn)",
+      "signature": "public static void CreateCommands(PlugIn plugin)",
+      "summary": "Parses a plugin and create all the commands defined therein.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "Plugin to harvest for commands.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_CreateCommands.htm"
+    },
+    {
+      "name": "CreateCommands(IntPtr, Assembly)",
+      "signature": "public static int CreateCommands(IntPtr pPlugIn, Assembly pluginAssembly)",
+      "summary": "Parses a plugin and create all the commands defined therein.",
+      "params": [
+        {
+          "name": "pPlugIn",
+          "type": "System.IntPtr",
+          "doc": "Plugin to harvest for commands.",
+          "optional": false
+        },
+        {
+          "name": "pluginAssembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "Assembly associated with the plugin.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of newly created commands."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_CreateCommands_1.htm"
+    },
+    {
+      "name": "CreatePlugIn",
+      "signature": "public static PlugIn CreatePlugIn(Type pluginType, bool printDebugMessages)",
+      "summary": "Instantiates a plug-in type and registers the associated commands and classes.",
+      "params": [
+        {
+          "name": "pluginType",
+          "type": "System.Type",
+          "doc": "A plug-in type. This type must derive from PlugIn.",
+          "optional": false
+        },
+        {
+          "name": "printDebugMessages",
+          "type": "System.Boolean",
+          "doc": "true if debug messages should be printed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PlugIn",
+        "doc": "A new plug-in instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_CreatePlugIn.htm"
+    },
+    {
+      "name": "DebugDumpToString(BezierCurve)",
+      "signature": "public static string DebugDumpToString(BezierCurve bezierCurve)",
+      "summary": "Gets the debug dumps. This is a text description of the geometric contents. DebugDump() is intended for debugging and is not suitable for creating high quality text descriptions of an object.",
+      "params": [
+        {
+          "name": "bezierCurve",
+          "type": "Rhino.Geometry.BezierCurve",
+          "doc": "curve to evaluate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A debug dump text."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_DebugDumpToString.htm"
+    },
+    {
+      "name": "DebugDumpToString(GeometryBase)",
+      "signature": "public static string DebugDumpToString(GeometryBase geometry)",
+      "summary": "Gets the debug dumps. This is a text description of the geometric contents. DebugDump() is intended for debugging and is not suitable for creating high quality text descriptions of an object.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Some geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "A debug dump text."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_DebugDumpToString_1.htm"
+    },
+    {
+      "name": "DebugString(String)",
+      "signature": "public static void DebugString(string msg)",
+      "summary": "Prints a debug message to the Rhino Command Line. The message will only appear if the SendDebugToCommandLine property is set to true.",
+      "params": [
+        {
+          "name": "msg",
+          "type": "System.String",
+          "doc": "Message to print.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_DebugString.htm"
+    },
+    {
+      "name": "DebugString(String, Object[])",
+      "signature": "public static void DebugString(string format, params Object[] args)",
+      "summary": "Prints a debug message to the Rhino Command Line. The message will only appear if the SendDebugToCommandLine property is set to true.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "Message to format and print.",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "System.Object[]",
+          "doc": "An Object array containing zero or more objects to format.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_DebugString_1.htm"
+    },
+    {
+      "name": "DisplayOleAlerts",
+      "signature": "public static void DisplayOleAlerts(bool display)",
+      "summary": "Defines if Ole alerts (\u0022Server busy\u0022) alerts should be visualized. This function makes no sense on Mono.",
+      "params": [
+        {
+          "name": "display",
+          "type": "System.Boolean",
+          "doc": "Whether alerts should be visible.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_DisplayOleAlerts.htm"
+    },
+    {
+      "name": "ExceptionReport(Exception)",
+      "signature": "public static void ExceptionReport(Exception ex)",
+      "summary": "Informs RhinoCommon of an exception that has been handled but that the developer wants to screen.",
+      "params": [
+        {
+          "name": "ex",
+          "type": "System.Exception",
+          "doc": "An exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_ExceptionReport.htm"
+    },
+    {
+      "name": "ExceptionReport(String, Exception)",
+      "signature": "public static void ExceptionReport(string source, Exception ex)",
+      "summary": "Informs RhinoCommon of an exception that has been handled but that the developer wants to screen.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.String",
+          "doc": "An exception source text.",
+          "optional": false
+        },
+        {
+          "name": "ex",
+          "type": "System.Exception",
+          "doc": "An exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_ExceptionReport_1.htm"
+    },
+    {
+      "name": "ExecuteNamedCallback",
+      "signature": "public static bool ExecuteNamedCallback(string name, NamedParametersEventArgs args)",
+      "summary": "Execute a named callback",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.ExecuteNamedCallback(System.String,Rhino.Runtime.NamedParametersEventArgs)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "Rhino.Runtime.NamedParametersEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022args\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.ExecuteNamedCallback(System.String,Rhino.Runtime.NamedParametersEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.ExecuteNamedCallback(System.String,Rhino.Runtime.NamedParametersEventArgs)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_ExecuteNamedCallback.htm"
+    },
+    {
+      "name": "FileNameEndsWithRhinoBackupExtension",
+      "signature": "public static bool FileNameEndsWithRhinoBackupExtension(string fileName)",
+      "summary": "Strip file extension from file name and check to see if it is a valid Rhino backup file extension.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "File name to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the file name has an extension like 3dmbak."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_FileNameEndsWithRhinoBackupExtension.htm"
+    },
+    {
+      "name": "FileNameEndsWithRhinoExtension",
+      "signature": "public static bool FileNameEndsWithRhinoExtension(string fileName)",
+      "summary": "Strip file extension from file name and check to see if it is a valid Rhino file extension.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "System.String",
+          "doc": "File name to check.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the file name has an extension like 3dm."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_FileNameEndsWithRhinoExtension.htm"
+    },
+    {
+      "name": "GetAbsolutePath",
+      "signature": "public static bool GetAbsolutePath(string relativePath, bool bRelativePathisFileName, string relativeTo, bool bRelativeToIsFileName, out string pathOut)",
+      "summary": "Call this method to convert a relative path to an absolute path relative to the specified path.",
+      "params": [
+        {
+          "name": "relativePath",
+          "type": "System.String",
+          "doc": "Relative path to convert to an absolute path",
+          "optional": false
+        },
+        {
+          "name": "bRelativePathisFileName",
+          "type": "System.Boolean",
+          "doc": "If true then lpsFrom is treated as a file name otherwise it is treated as a directory name",
+          "optional": false
+        },
+        {
+          "name": "relativeTo",
+          "type": "System.String",
+          "doc": "File or folder the path is relative to",
+          "optional": false
+        },
+        {
+          "name": "bRelativeToIsFileName",
+          "type": "System.Boolean",
+          "doc": "If true then lpsFrom is treated as a file name otherwise it is treated as a directory name",
+          "optional": false
+        },
+        {
+          "name": "pathOut",
+          "type": "System.String",
+          "doc": "Reference to string which will receive the computed absolute path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if parameters are valid and lpsRelativePath is indeed relative to lpsRelativeTo otherwise returns false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetAbsolutePath.htm"
+    },
+    {
+      "name": "GetActivePlugInVersionFolders()",
+      "signature": "public static IEnumerable\u003CDirectoryInfo\u003E GetActivePlugInVersionFolders()",
+      "summary": "Recurses through the auto install plug-in folders and returns the directories containing \u0022active\u0022 versions of plug-ins.",
+      "remarks": "If the same package is installed in both the user and machine locations, the newest directory wins.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerable\u003CDirectoryInfo\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetActivePlugInVersionFolders\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetActivePlugInVersionFolders.htm"
+    },
+    {
+      "name": "GetActivePlugInVersionFolders(Boolean)",
+      "signature": "public static IEnumerable\u003CDirectoryInfo\u003E GetActivePlugInVersionFolders(bool currentUser)",
+      "summary": "Recurses through the auto install plug-in folders and returns the directories containing \u0022active\u0022 versions of plug-ins.",
+      "params": [
+        {
+          "name": "currentUser",
+          "type": "System.Boolean",
+          "doc": "Current user (true) or machine (false).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CDirectoryInfo\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetActivePlugInVersionFolders(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetActivePlugInVersionFolders_1.htm"
+    },
+    {
+      "name": "GetAssemblySearchPaths",
+      "signature": "public static string[] GetAssemblySearchPaths()",
+      "summary": "Returns list of directory names where additional assemblies (plug-ins, DLLs, Grasshopper components) may be located",
+      "params": [],
+      "returns": {
+        "type": "String[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetAssemblySearchPaths\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetAssemblySearchPaths.htm"
+    },
+    {
+      "name": "GetCurrentProcessInfo",
+      "signature": "public static void GetCurrentProcessInfo(out string processName, out Version processVersion)",
+      "summary": "Returns information about the current process. If Rhino is the top level process, processName is \u0022Rhino\u0022. Otherwise, processName is the name, without extension, of the main module that is executing. For example, \u0022compute.backend\u0022 or \u0022Revit\u0022. processVersion is the System.Version of the running process. It is the FileVersion of the executable.",
+      "params": [
+        {
+          "name": "processName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022processName\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetCurrentProcessInfo(System.String@,System.Version@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "processVersion",
+          "type": "System.Version",
+          "doc": "[Missing \u003Cparam name=\u0022processVersion\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetCurrentProcessInfo(System.String@,System.Version@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetCurrentProcessInfo.htm"
+    },
+    {
+      "name": "GetCustomComputeEndpoints",
+      "signature": "public static Tuple\u003Cstring, Type\u003E[] GetCustomComputeEndpoints()",
+      "summary": "Used by compute to define custom endpoints",
+      "params": [],
+      "returns": {
+        "type": "Tuple\u003CString,Type\u003E[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetCustomComputeEndpoints\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetCustomComputeEndpoints.htm"
+    },
+    {
+      "name": "GetPlatformService\u003CT\u003E",
+      "signature": "public static T GetPlatformService\u003CT\u003E(string assemblyPath = null, string typeFullName = null) where T : class",
+      "summary": "For internal use only. Loads an assembly for dependency injection via IPlatformServiceLocator.",
+      "params": [
+        {
+          "name": "assemblyPath",
+          "type": "System.String",
+          "doc": "The relative path of the assembly, relative to the position of RhinoCommon.dll",
+          "optional": true
+        },
+        {
+          "name": "typeFullName",
+          "type": "System.String",
+          "doc": "The full name of the type that is IPlatformServiceLocator. This is optional.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "An instance, or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetPlatformService__1.htm"
+    },
+    {
+      "name": "GetRhinoDotNetAssembly",
+      "signature": "public static Assembly GetRhinoDotNetAssembly()",
+      "summary": "Only works on Windows. Returns null on Mac.",
+      "params": [],
+      "returns": {
+        "type": "Assembly",
+        "doc": "An assembly."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetRhinoDotNetAssembly.htm"
+    },
+    {
+      "name": "GetSystemProcessorCount",
+      "signature": "public static int GetSystemProcessorCount()",
+      "summary": "Get the processor count on this hardware. It supports querying on CPUs with more than 64 processors (Windows).",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.GetSystemProcessorCount\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_GetSystemProcessorCount.htm"
+    },
+    {
+      "name": "InitializeRhinoCommon",
+      "signature": "public static void InitializeRhinoCommon()",
+      "summary": "Makes sure all static RhinoCommon components is set up correctly. This happens automatically when a plug-in is loaded, so you probably won\u0027t have to call this method.",
+      "remarks": "Subsequent calls to this method will be ignored.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_InitializeRhinoCommon.htm"
+    },
+    {
+      "name": "InitializeRhinoCommon_RDK",
+      "signature": "public static void InitializeRhinoCommon_RDK()",
+      "summary": "Makes sure all static RhinoCommon RDK components are set up correctly. This happens automatically when the RDK is loaded, so you probably won\u0027t have to call this method.",
+      "remarks": "Subsequent calls to this method will be ignored.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_InitializeRhinoCommon_RDK.htm"
+    },
+    {
+      "name": "InitializeZooClient",
+      "signature": "public static void InitializeZooClient()",
+      "summary": "Initializes the ZooClient and Rhino license manager, this should get called automatically when RhinoCommon is loaded so you probably won\u0027t have to call this method.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_InitializeZooClient.htm"
+    },
+    {
+      "name": "InPlaceConstCast",
+      "signature": "public static void InPlaceConstCast(GeometryBase geometry, bool makeNonConst)",
+      "summary": "DO NOT USE UNLESS YOU ARE CERTAIN ABOUT THE IMPLICATIONS. This is an expert user function which should not be needed in most cases. This function is similar to a const_cast in C\u002B\u002B to allow an object to be made temporarily modifiable without causing RhinoCommon to convert the class from const to non-const by creating a duplicate.You must call this function with a true parameter, make your modifications, and then restore the const flag by calling this function again with a false parameter. If you have any questions, please contact McNeel developer support before using!",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Some geometry.",
+          "optional": false
+        },
+        {
+          "name": "makeNonConst",
+          "type": "System.Boolean",
+          "doc": "A boolean value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_InPlaceConstCast.htm"
+    },
+    {
+      "name": "IsManagedDll",
+      "signature": "public static bool IsManagedDll(string path)",
+      "summary": "Inspects a dll to see if it is compiled as native code or as a .NET assembly",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022path\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.IsManagedDll(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.IsManagedDll(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_IsManagedDll.htm"
+    },
+    {
+      "name": "IsRhinoBackupFileExtension",
+      "signature": "public static bool IsRhinoBackupFileExtension(string fileExtension)",
+      "summary": "Check to see if the file extension is a valid Rhino file extension.",
+      "params": [
+        {
+          "name": "fileExtension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022fileExtension\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.IsRhinoBackupFileExtension(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if fileExtension is \u0022.3dmbak\u0022, \u00223dmbak\u0022, \u0022.3dm.bak\u0022, \u00223dm.bak\u0022, \u0022.3dx.bak\u0022 or \u00223dx.bak\u0022, ignoring case."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_IsRhinoBackupFileExtension.htm"
+    },
+    {
+      "name": "IsRhinoFileExtension",
+      "signature": "public static bool IsRhinoFileExtension(string fileExtension)",
+      "summary": "Check to see if the file extension is a valid Rhino file extension.",
+      "params": [
+        {
+          "name": "fileExtension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022fileExtension\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.IsRhinoFileExtension(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if fileExtension is \u0022.3dm\u0022, \u00223dm\u0022, \u0022.3dx\u0022 or \u00223dx\u0022, ignoring case."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_IsRhinoFileExtension.htm"
+    },
+    {
+      "name": "RecordInitInstanceTime",
+      "signature": "public static void RecordInitInstanceTime(string description)",
+      "summary": "Used to help record times at startup with the -stopwatch flag to help determine bottlenecks in start up speed",
+      "params": [
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RecordInitInstanceTime(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_RecordInitInstanceTime.htm"
+    },
+    {
+      "name": "RegisterComputeEndpoint",
+      "signature": "public static void RegisterComputeEndpoint(string endpointPath, Type t)",
+      "summary": "Register a class that can participate as a compute endpoint",
+      "params": [
+        {
+          "name": "endpointPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022endpointPath\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RegisterComputeEndpoint(System.String,System.Type)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Type",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RegisterComputeEndpoint(System.String,System.Type)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_RegisterComputeEndpoint.htm"
+    },
+    {
+      "name": "RegisterDynamicCommand",
+      "signature": "public static bool RegisterDynamicCommand(PlugIn plugin, Command cmd)",
+      "summary": "Adds a new dynamic command to Rhino.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "Plugin that owns the command.",
+          "optional": false
+        },
+        {
+          "name": "cmd",
+          "type": "Rhino.Commands.Command",
+          "doc": "Command to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_RegisterDynamicCommand.htm"
+    },
+    {
+      "name": "RegisterNamedCallback",
+      "signature": "public static void RegisterNamedCallback(string name, EventHandler\u003CNamedParametersEventArgs\u003E callback)",
+      "summary": "Register a named callback",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RegisterNamedCallback(System.String,System.EventHandler{Rhino.Runtime.NamedParametersEventArgs})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.EventHandler\u003CNamedParametersEventArgs\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022callback\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RegisterNamedCallback(System.String,System.EventHandler{Rhino.Runtime.NamedParametersEventArgs})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_RegisterNamedCallback.htm"
+    },
+    {
+      "name": "RemoveNamedCallback",
+      "signature": "public static void RemoveNamedCallback(string name)",
+      "summary": "Remove a named callback from the dictionary of callbacks",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022name\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RemoveNamedCallback(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_RemoveNamedCallback.htm"
+    },
+    {
+      "name": "RhinoCommonExceptionHandler",
+      "signature": "public static void RhinoCommonExceptionHandler(string title, Object sender, Exception ex)",
+      "summary": "For internal use only!!! Unhanded exception handler, writes stack trace to RhinoDotNet.txt file",
+      "params": [
+        {
+          "name": "title",
+          "type": "System.String",
+          "doc": "Exception title to write to text file",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022sender\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RhinoCommonExceptionHandler(System.String,System.Object,System.Exception)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ex",
+          "type": "System.Exception",
+          "doc": "[Missing \u003Cparam name=\u0022ex\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.RhinoCommonExceptionHandler(System.String,System.Object,System.Exception)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_RhinoCommonExceptionHandler.htm"
+    },
+    {
+      "name": "SendLogMessageToCloudCallbackProc",
+      "signature": "public static void SendLogMessageToCloudCallbackProc(HostUtils.LogMessageType msg_type, IntPtr pwStringClass, IntPtr pwStringDesc, IntPtr pwStringMessage)",
+      "summary": "Informs RhinoCommon of an message that has been handled but that the developer wants to screen.",
+      "params": [
+        {
+          "name": "msg_type",
+          "type": "Rhino.Runtime.HostUtils.LogMessageType",
+          "doc": "The messag type",
+          "optional": false
+        },
+        {
+          "name": "pwStringClass",
+          "type": "System.IntPtr",
+          "doc": "The top level message type.",
+          "optional": false
+        },
+        {
+          "name": "pwStringDesc",
+          "type": "System.IntPtr",
+          "doc": "Finer grained description of the message.",
+          "optional": false
+        },
+        {
+          "name": "pwStringMessage",
+          "type": "System.IntPtr",
+          "doc": "The message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_SendLogMessageToCloudCallbackProc.htm"
+    },
+    {
+      "name": "SetInShutDown",
+      "signature": "public static void SetInShutDown()",
+      "summary": "Informs the runtime that the application is shutting down.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_SetInShutDown.htm"
+    },
+    {
+      "name": "ShutDownRhinoCommon_RDK",
+      "signature": "public static void ShutDownRhinoCommon_RDK()",
+      "summary": "Makes sure all static RhinoCommon RDK components are de-initialized so they aren\u0027t calling into space when the RDK is unloaded.",
+      "remarks": "Subsequent calls to this method will be ignored.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_ShutDownRhinoCommon_RDK.htm"
+    },
+    {
+      "name": "UnhandledThreadException",
+      "signature": "public static void UnhandledThreadException(Object sender, ThreadExceptionEventArgs e)",
+      "summary": "Exception handler for exceptions occurring on the UI thread",
+      "params": [
+        {
+          "name": "sender",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022sender\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.UnhandledThreadException(System.Object,System.Threading.ThreadExceptionEventArgs)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "System.Threading.ThreadExceptionEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.Runtime.HostUtils.UnhandledThreadException(System.Object,System.Threading.ThreadExceptionEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_HostUtils_UnhandledThreadException.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ComputerSerialNumber",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the serial number of the computer running Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_ComputerSerialNumber.htm"
+    },
+    {
+      "name": "CurrentOSLanguage",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the current operating system language.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_CurrentOSLanguage.htm"
+    },
+    {
+      "name": "DeviceId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The DeviceId is a unique, stable ID that anonymously identifies the device that Rhino is running on. It is computed based on hardware information that should not change when the OS is upgraded, or if commonly modified hardware are added or removed from the computer. The machine-specific information is hashed using a cryptographic hash to make it anonymous.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_DeviceId.htm"
+    },
+    {
+      "name": "DeviceName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the computer running Rhino. If the computer is part of a Windows Domain, the computer name has \u0022@[DOMAIN]\u0022 appended.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_DeviceName.htm"
+    },
+    {
+      "name": "OperatingSystemBuildNumber",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Operating System Build Number \u002211763\u0022 | \u00227601\u0022 | ... | \u0022Unknown\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_OperatingSystemBuildNumber.htm"
+    },
+    {
+      "name": "OperatingSystemEdition",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Operating System Edition: \u0022Professional\u0022 | \u0022ServerDatacenter\u0022 | ... | \u0022Unknown\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_OperatingSystemEdition.htm"
+    },
+    {
+      "name": "OperatingSystemInstallationType",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Operating System Installation Type: \u0022Client\u0022 | \u0022Server\u0022 | \u0022Unknown\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_OperatingSystemInstallationType.htm"
+    },
+    {
+      "name": "OperatingSystemProductName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Operating System Edition: \u0022Professional\u0022 | \u0022ServerDatacenter\u0022 | ... | \u0022Unknown\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_OperatingSystemProductName.htm"
+    },
+    {
+      "name": "OperatingSystemVersion",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Operating System Version \u00226.1\u0022 | \u00226.3\u0022 | ... | \u0022Unknown\u0022",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_OperatingSystemVersion.htm"
+    },
+    {
+      "name": "RunningAsRhinoInside",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether Rhino is running inside another application. returns false if Rhino.exe is the top-level application. returns true if some other application is the top-level application.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningAsRhinoInside.htm"
+    },
+    {
+      "name": "RunningInDarkMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the host operating system is in dark mode and Rhino supports dark mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningInDarkMode.htm"
+    },
+    {
+      "name": "RunningInMono",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if this process is currently executing under the Mono runtime.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningInMono.htm"
+    },
+    {
+      "name": "RunningInRhino",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if RhinoCommon is currently executing inside of the Rhino.exe process. There are other cases where RhinoCommon could be running; specifically inside of Visual Studio when something like a windows form is being worked on in the resource editor or running stand-alone when compiled to be used as a version of OpenNURBS.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningInRhino.htm"
+    },
+    {
+      "name": "RunningInWindowsContainer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if this process is currently executing inside a Windows Container.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningInWindowsContainer.htm"
+    },
+    {
+      "name": "RunningOnOSX",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if this process is currently executing on the Mac OSX platform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningOnOSX.htm"
+    },
+    {
+      "name": "RunningOnServer",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if this process is currently executing in a server environment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningOnServer.htm"
+    },
+    {
+      "name": "RunningOnWindows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if this process is currently executing on the Windows platform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_RunningOnWindows.htm"
+    },
+    {
+      "name": "SendDebugToCommandLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether debug messages are printed to the command line.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_HostUtils_SendDebugToCommandLine.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "OnExceptionReport",
+      "delegate": "Rhino.Runtime.HostUtils.ExceptionReportDelegate",
+      "signature": "public static event HostUtils.ExceptionReportDelegate OnExceptionReport",
+      "summary": "Is raised when an exception is reported with one of the ExceptionReport(Exception) method.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Runtime_HostUtils_OnExceptionReport.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "OnSendLogMessageToCloud",
+      "delegate": "Rhino.Runtime.HostUtils.SendLogMessageToCloudDelegate",
+      "signature": "public static event HostUtils.SendLogMessageToCloudDelegate OnSendLogMessageToCloud",
+      "summary": "Is raised when an exception is reported with one of the method.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Runtime_HostUtils_OnSendLogMessageToCloud.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

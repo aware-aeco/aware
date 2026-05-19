@@ -1,0 +1,680 @@
+{
+  "name": "LicenseUtils",
+  "namespace": "Rhino.PlugIns",
+  "kind": "class",
+  "summary": "License Manager Utilities.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_PlugIns_LicenseUtils.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AskUserForLicense(Int32, Boolean, Object, String, ValidateProductKeyDelegate, OnLeaseChangedDelegate, String, String, Guid, Guid, LicenseCapabilities)",
+      "signature": "public static bool AskUserForLicense(int productType, bool standAlone, Object parentWindow, string textMask, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate onLeaseChangedDelegate, string product_path, string product_title, Guid pluginId, Guid licenseId, LicenseCapabilities capabilities)",
+      "summary": "This version of Rhino.PlugIns.LicenseUtils.AskUserForLicense is used by Rhino C\u002B\u002B plug-ins.",
+      "params": [
+        {
+          "name": "productType",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022productType\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "standAlone",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022standAlone\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022parentWindow\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022validateProductKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onLeaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022onLeaseChangedDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_path\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_title\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "[Missing \u003Cparam name=\u0022capabilities\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_AskUserForLicense_1.htm"
+    },
+    {
+      "name": "AskUserForLicense(Int32, Boolean, Object, String, ValidateProductKeyDelegate, OnLeaseChangedDelegate, VerifyLicenseKeyDelegate, VerifyPreviousVersionLicenseDelegate, String, String, Guid, Guid, LicenseCapabilities)",
+      "signature": "public static bool AskUserForLicense(int productType, bool standAlone, Object parentWindow, string textMask, ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate onLeaseChangedDelegate, VerifyLicenseKeyDelegate verifyLicenseKeyDelegate, VerifyPreviousVersionLicenseDelegate verifyPreviousVersionLicenseKeyDelegate, string product_path, string product_title, Guid pluginId, Guid licenseId, LicenseCapabilities capabilities)",
+      "summary": "",
+      "params": [
+        {
+          "name": "productType",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022productType\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "standAlone",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022standAlone\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "parentWindow",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022parentWindow\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022validateProductKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "onLeaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022onLeaseChangedDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "verifyLicenseKeyDelegate",
+          "type": "Rhino.PlugIns.VerifyLicenseKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022verifyLicenseKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "verifyPreviousVersionLicenseKeyDelegate",
+          "type": "Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022verifyPreviousVersionLicenseKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_path\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_title\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "Rhino.PlugIns.LicenseCapabilities",
+          "doc": "[Missing \u003Cparam name=\u0022capabilities\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.AskUserForLicense(System.Int32,System.Boolean,System.Object,System.String,Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.String,System.String,System.Guid,System.Guid,Rhino.PlugIns.LicenseCapabilities)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_AskUserForLicense.htm"
+    },
+    {
+      "name": "CheckInLicense",
+      "signature": "public static bool CheckInLicense(Guid productId)",
+      "summary": "Checks in a previously checked out license to the Zoo server from which it was checked out.",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "The Guid of the product that you want to check in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the license was checked in successful. false if not successful or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_CheckInLicense.htm"
+    },
+    {
+      "name": "CheckOutLicense",
+      "signature": "public static bool CheckOutLicense(Guid productId)",
+      "summary": "Checks out a license that is on loan from a Zoo server on a permanent basis.",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "The Guid of the product that you want to check out.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the license was checked out successful. false if not successful or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_CheckOutLicense.htm"
+    },
+    {
+      "name": "ConvertLicense",
+      "signature": "public static bool ConvertLicense(Guid productId)",
+      "summary": "Converts a product license from a standalone node to a network node.",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "The Guid of the product that you want to check in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the license was successfully converted. false if not successful or on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_ConvertLicense.htm"
+    },
+    {
+      "name": "DeleteLicense",
+      "signature": "public static bool DeleteLicense(Guid productId)",
+      "summary": "Deletes a license along with its license file.",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.DeleteLicense(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.DeleteLicense(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_DeleteLicense.htm"
+    },
+    {
+      "name": "Echo",
+      "signature": "public static string Echo(string message)",
+      "summary": "Test connectivity with the Zoo.",
+      "params": [
+        {
+          "name": "message",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022message\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.Echo(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.Echo(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_Echo.htm"
+    },
+    {
+      "name": "GetLicense(ValidateProductKeyDelegate, OnLeaseChangedDelegate, Int32, Int32, String, String, String, Guid, Guid)",
+      "signature": "public static bool GetLicense(ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate leaseChangedDelegate, int product_type, int capabilities, string textMask, string product_path, string product_title, Guid pluginId, Guid licenseId)",
+      "summary": "This version of Rhino.PlugIns.LicenseUtils.GetLicense is used by Rhino C\u002B\u002B plug-ins.",
+      "params": [
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022validateProductKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "leaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022leaseChangedDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_type",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022product_type\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022capabilities\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_path\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_title\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_GetLicense_1.htm"
+    },
+    {
+      "name": "GetLicense(ValidateProductKeyDelegate, OnLeaseChangedDelegate, VerifyLicenseKeyDelegate, VerifyPreviousVersionLicenseDelegate, Int32, Int32, String, String, String, Guid, Guid)",
+      "signature": "public static bool GetLicense(ValidateProductKeyDelegate validateProductKeyDelegate, OnLeaseChangedDelegate leaseChangedDelegate, VerifyLicenseKeyDelegate verifyLicenseKeyDelegate, VerifyPreviousVersionLicenseDelegate verifyPreviousVersionLicenseKeyDelegate, int product_type, int capabilities, string textMask, string product_path, string product_title, Guid pluginId, Guid licenseId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "validateProductKeyDelegate",
+          "type": "Rhino.PlugIns.ValidateProductKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022validateProductKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "leaseChangedDelegate",
+          "type": "Rhino.PlugIns.OnLeaseChangedDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022leaseChangedDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "verifyLicenseKeyDelegate",
+          "type": "Rhino.PlugIns.VerifyLicenseKeyDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022verifyLicenseKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "verifyPreviousVersionLicenseKeyDelegate",
+          "type": "Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate",
+          "doc": "[Missing \u003Cparam name=\u0022verifyPreviousVersionLicenseKeyDelegate\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_type",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022product_type\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "capabilities",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022capabilities\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "textMask",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022textMask\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_path",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_path\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "product_title",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022product_title\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicense(Rhino.PlugIns.ValidateProductKeyDelegate,Rhino.PlugIns.OnLeaseChangedDelegate,Rhino.PlugIns.VerifyLicenseKeyDelegate,Rhino.PlugIns.VerifyPreviousVersionLicenseDelegate,System.Int32,System.Int32,System.String,System.String,System.String,System.Guid,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_GetLicense.htm"
+    },
+    {
+      "name": "GetLicenseCapabilities",
+      "signature": "public static LicenseCapabilities GetLicenseCapabilities(int filter)",
+      "summary": "Converts an integer to a LicenseCapabilities flag",
+      "params": [
+        {
+          "name": "filter",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022filter\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicenseCapabilities(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LicenseCapabilities",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicenseCapabilities(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_GetLicenseCapabilities.htm"
+    },
+    {
+      "name": "GetLicenseStatus",
+      "signature": "public static LicenseStatus[] GetLicenseStatus()",
+      "summary": "Returns the current status of every license for UI purposes.",
+      "params": [],
+      "returns": {
+        "type": "LicenseStatus[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicenseStatus\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_GetLicenseStatus.htm"
+    },
+    {
+      "name": "GetLicenseType",
+      "signature": "public static int GetLicenseType(Guid productId)",
+      "summary": "Returns the contentType of a specified product license",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicenseType(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetLicenseType(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_GetLicenseType.htm"
+    },
+    {
+      "name": "GetOneLicenseStatus",
+      "signature": "public static LicenseStatus GetOneLicenseStatus(Guid productid)",
+      "summary": "Returns the current status of a license for UI purposes.",
+      "params": [
+        {
+          "name": "productid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productid\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetOneLicenseStatus(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LicenseStatus",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.GetOneLicenseStatus(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_GetOneLicenseStatus.htm"
+    },
+    {
+      "name": "Initialize",
+      "signature": "public static bool Initialize()",
+      "summary": "Initializes the license manager.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.Initialize\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_Initialize.htm"
+    },
+    {
+      "name": "IsCheckOutEnabled",
+      "signature": "public static bool IsCheckOutEnabled()",
+      "summary": "Returns whether or not license checkout is enabled.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.IsCheckOutEnabled\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_IsCheckOutEnabled.htm"
+    },
+    {
+      "name": "LicenseOptionsHandler",
+      "signature": "public static bool LicenseOptionsHandler(Guid pluginId, Guid licenseId, string productTitle, bool standAlone)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LicenseOptionsHandler(System.Guid,System.Guid,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "licenseId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022licenseId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LicenseOptionsHandler(System.Guid,System.Guid,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "productTitle",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022productTitle\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LicenseOptionsHandler(System.Guid,System.Guid,System.String,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "standAlone",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022standAlone\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LicenseOptionsHandler(System.Guid,System.Guid,System.String,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LicenseOptionsHandler(System.Guid,System.Guid,System.String,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_LicenseOptionsHandler.htm"
+    },
+    {
+      "name": "LoginToCloudZoo",
+      "signature": "public static bool LoginToCloudZoo()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LoginToCloudZoo\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_LoginToCloudZoo.htm"
+    },
+    {
+      "name": "LogoutOfCloudZoo",
+      "signature": "public static bool LogoutOfCloudZoo()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.LogoutOfCloudZoo\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_LogoutOfCloudZoo.htm"
+    },
+    {
+      "name": "ReturnLicense",
+      "signature": "public static bool ReturnLicense(Guid productId)",
+      "summary": "OBSOLETE - REMOVE WHEN POSSIBLE.",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ReturnLicense(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ReturnLicense(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_ReturnLicense.htm"
+    },
+    {
+      "name": "ShowBuyLicenseUi",
+      "signature": "public static void ShowBuyLicenseUi(Guid productId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "productId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022productId\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ShowBuyLicenseUi(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_ShowBuyLicenseUi.htm"
+    },
+    {
+      "name": "ShowLicenseValidationUi",
+      "signature": "public static bool ShowLicenseValidationUi(string cdkey)",
+      "summary": "ShowLicenseValidationUi",
+      "params": [
+        {
+          "name": "cdkey",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022cdkey\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ShowLicenseValidationUi(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ShowLicenseValidationUi(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_ShowLicenseValidationUi.htm"
+    },
+    {
+      "name": "ShowRhinoExpiredMessage",
+      "signature": "public static bool ShowRhinoExpiredMessage(Mode mode, ref int result)",
+      "summary": "Show Rhino or Beta expired message",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Rhino.Runtime.Mode",
+          "doc": "[Missing \u003Cparam name=\u0022mode\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ShowRhinoExpiredMessage(Rhino.Runtime.Mode,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022result\u0022/\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ShowRhinoExpiredMessage(Rhino.Runtime.Mode,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.PlugIns.LicenseUtils.ShowRhinoExpiredMessage(Rhino.Runtime.Mode,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_PlugIns_LicenseUtils_ShowRhinoExpiredMessage.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

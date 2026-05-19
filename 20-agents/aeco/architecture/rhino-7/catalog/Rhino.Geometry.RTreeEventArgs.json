@@ -1,0 +1,79 @@
+{
+  "name": "RTreeEventArgs",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents event data that is passed when an item that meets certain criteria is found and the passed RTree event is raised.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_RTreeEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Cancel",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that determines if the search should be conducted farther.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_Cancel.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the identifier of the found item.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_Id.htm"
+    },
+    {
+      "name": "IdB",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "If search is using two r-trees, IdB is element b in the search.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_IdB.htm"
+    },
+    {
+      "name": "IdBPtr",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "If search is using two r-trees, IdB is the element b pointer in the search.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_IdBPtr.htm"
+    },
+    {
+      "name": "IdPtr",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the identifier pointer of the found item.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_IdPtr.htm"
+    },
+    {
+      "name": "SearchBoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": true,
+      "summary": "Bounding box bounds used during a search. You may modify the box in a search callback to help reduce the bounds to search.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_SearchBoundingBox.htm"
+    },
+    {
+      "name": "SearchSphere",
+      "type": "Sphere",
+      "getter": true,
+      "setter": true,
+      "summary": "Sphere bounds used during a search. You can modify the sphere in a search callback to help reduce the bounds to search.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_SearchSphere.htm"
+    },
+    {
+      "name": "Tag",
+      "type": "Object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an arbitrary object that can be attached to this event args. This object will \u0022stick\u0022 through a single search and can represent user-defined state.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_RTreeEventArgs_Tag.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

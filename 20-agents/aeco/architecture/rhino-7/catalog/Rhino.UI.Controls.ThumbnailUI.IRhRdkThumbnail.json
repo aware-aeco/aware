@@ -1,0 +1,113 @@
+{
+  "name": "IRhRdkThumbnail",
+  "namespace": "Rhino.UI.Controls.ThumbnailUI",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dib",
+      "signature": "void Dib(ref Bitmap dibOut)",
+      "summary": "",
+      "params": [
+        {
+          "name": "dibOut",
+          "type": "System.Drawing.Bitmap",
+          "doc": "[Missing \u003Cparam name=\u0022dibOut\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.Dib(System.Drawing.Bitmap@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_Dib.htm"
+    },
+    {
+      "name": "GetDib",
+      "signature": "Bitmap GetDib()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.GetDib\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_GetDib.htm"
+    },
+    {
+      "name": "GetDisplayRect",
+      "signature": "void GetDisplayRect(ref RectangleF rectOut)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rectOut",
+          "type": "System.Drawing.RectangleF",
+          "doc": "[Missing \u003Cparam name=\u0022rectOut\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.GetDisplayRect(System.Drawing.RectangleF@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_GetDisplayRect.htm"
+    },
+    {
+      "name": "Id",
+      "signature": "Guid Id()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.Id\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_Id.htm"
+    },
+    {
+      "name": "IsHot",
+      "signature": "bool IsHot()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.IsHot\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_IsHot.htm"
+    },
+    {
+      "name": "IsSelected",
+      "signature": "bool IsSelected()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.IsSelected\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_IsSelected.htm"
+    },
+    {
+      "name": "Label",
+      "signature": "string Label()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnail.Label\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnail_Label.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

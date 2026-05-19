@@ -1,0 +1,44 @@
+{
+  "name": "FileFindPreference",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Defines options for file search.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileFindPreference.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "The choice is not defined."
+    },
+    {
+      "name": "FullPath",
+      "value": 1,
+      "summary": "File name exists in FullPath()."
+    },
+    {
+      "name": "RelativePath",
+      "value": 2,
+      "summary": "File name exists in base path \u002B RelativePath()."
+    },
+    {
+      "name": "BasePath",
+      "value": 3,
+      "summary": "File name exists in base path directory."
+    },
+    {
+      "name": "ContentMatch",
+      "value": 4,
+      "summary": "File with mathing content exists."
+    },
+    {
+      "name": "MostRecent",
+      "value": 5,
+      "summary": "Most recently modifed file."
+    }
+  ]
+}

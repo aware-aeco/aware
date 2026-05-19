@@ -1,0 +1,414 @@
+{
+  "name": "HermiteSurface",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Create an ON_NurbsSurface satisfying Hermite interpolation conditions at a grid of points.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_HermiteSurface.htm",
+  "constructors": [
+    {
+      "name": "HermiteSurface()",
+      "signature": "public HermiteSurface()",
+      "summary": "Initializes a new HermiteSurface instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface__ctor.htm"
+    },
+    {
+      "name": "HermiteSurface(Int32, Int32)",
+      "signature": "public HermiteSurface(int uCount, int vCount)",
+      "summary": "Initializes a new HermiteSurface instance.",
+      "params": [
+        {
+          "name": "uCount",
+          "type": "System.Int32",
+          "doc": "The number of parameters in the \u0022u\u0022 direction.",
+          "optional": false
+        },
+        {
+          "name": "vCount",
+          "type": "System.Int32",
+          "doc": "The number of parameters in the \u0022v\u0022 direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_Finalize.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(int uIndex, int vIndex)",
+      "summary": "Gets the interpolation point at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point location."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_PointAt.htm"
+    },
+    {
+      "name": "SetPointAt",
+      "signature": "public void SetPointAt(int uIndex, int vIndex, Point3d point)",
+      "summary": "Sets the interpolation point at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point location.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_SetPointAt.htm"
+    },
+    {
+      "name": "SetTwistAt",
+      "signature": "public void SetTwistAt(int uIndex, int vIndex, Vector3d twist)",
+      "summary": "Set the twist direction (mixed second partial derivative) to interpolate at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "twist",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The twist direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_SetTwistAt.htm"
+    },
+    {
+      "name": "SetUParameterAt",
+      "signature": "public void SetUParameterAt(int index, double parameter)",
+      "summary": "Sets the \u0022u\u0022 parameter at an index. These parameters are strictly increasing.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index.",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "System.Double",
+          "doc": "The parameter value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_SetUParameterAt.htm"
+    },
+    {
+      "name": "SetUTangentAt",
+      "signature": "public void SetUTangentAt(int uIndex, int vIndex, Vector3d tangent)",
+      "summary": "Set the \u0022u\u0022 tangent direction (actually first derivative) to interpolate at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "tangent",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The tangent direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_SetUTangentAt.htm"
+    },
+    {
+      "name": "SetVParameterAt",
+      "signature": "public void SetVParameterAt(int index, double parameter)",
+      "summary": "Sets the \u0022v\u0022 parameter at an index. These parameters are strictly increasing.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index.",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "System.Double",
+          "doc": "The parameter value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_SetVParameterAt.htm"
+    },
+    {
+      "name": "SetVTangentAt",
+      "signature": "public void SetVTangentAt(int uIndex, int vIndex, Vector3d tangent)",
+      "summary": "Set the \u0022v\u0022 tangent direction (actually first derivative) to interpolate at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "tangent",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The tangent direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_SetVTangentAt.htm"
+    },
+    {
+      "name": "ToNurbsSurface",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Constructs a NURBS surface satisfying the Hermite interpolation conditions.",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NURBS surface is successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_ToNurbsSurface.htm"
+    },
+    {
+      "name": "TwistAt",
+      "signature": "public Vector3d TwistAt(int uIndex, int vIndex)",
+      "summary": "Get the twist direction (mixed second partial derivative) to interpolate at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The twist direction."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_TwistAt.htm"
+    },
+    {
+      "name": "UParameterAt",
+      "signature": "public double UParameterAt(int index)",
+      "summary": "Gets the \u0022u\u0022 parameter at an index. These parameters are strictly increasing.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_UParameterAt.htm"
+    },
+    {
+      "name": "UTangentAt",
+      "signature": "public Vector3d UTangentAt(int uIndex, int vIndex)",
+      "summary": "Get the \u0022u\u0022 tangent direction (actually first derivative) to interpolate at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The tangent direction."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_UTangentAt.htm"
+    },
+    {
+      "name": "VParameterAt",
+      "signature": "public double VParameterAt(int index)",
+      "summary": "Gets the \u0022v\u0022 parameter at an index. These parameters are strictly increasing.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_VParameterAt.htm"
+    },
+    {
+      "name": "VTangentAt",
+      "signature": "public Vector3d VTangentAt(int uIndex, int vIndex)",
+      "summary": "Get the \u0022v\u0022 tangent direction (actually first derivative) to interpolate at the u,v parameter location.",
+      "params": [
+        {
+          "name": "uIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022u\u0022 index.",
+          "optional": false
+        },
+        {
+          "name": "vIndex",
+          "type": "System.Int32",
+          "doc": "The \u0022v\u0022 index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The tangent direction."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_HermiteSurface_VTangentAt.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the all of values in all of the internal data structures contain valid values, false otherwise.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HermiteSurface_IsValid.htm"
+    },
+    {
+      "name": "UCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of parameters in the \u0022u\u0022 direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HermiteSurface_UCount.htm"
+    },
+    {
+      "name": "VCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of parameters in the \u0022v\u0022 direction.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_HermiteSurface_VCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

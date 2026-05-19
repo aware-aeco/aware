@@ -1,0 +1,29 @@
+{
+  "name": "PickContext.MeshPickStyle",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.PickContext.MeshPickStyle\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_PickContext_MeshPickStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "WireframePicking",
+      "value": 0,
+      "summary": "Checks for vertex and edge hits"
+    },
+    {
+      "name": "ShadedModePicking",
+      "value": 1,
+      "summary": "Checks for face hits"
+    },
+    {
+      "name": "VertexOnlyPicking",
+      "value": 2,
+      "summary": "Returns false if no vertices are hit"
+    }
+  ]
+}

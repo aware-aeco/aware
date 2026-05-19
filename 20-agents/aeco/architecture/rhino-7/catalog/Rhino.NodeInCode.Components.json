@@ -1,0 +1,67 @@
+{
+  "name": "Components",
+  "namespace": "Rhino.NodeInCode",
+  "kind": "class",
+  "summary": "Provides access to all Grasshopper runtime components.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_NodeInCode_Components.htm",
+  "constructors": [
+    {
+      "name": "Components",
+      "signature": "protected Components()",
+      "summary": "Initializes a new instance of the Components class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_Components__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__getAllFunctions",
+      "signature": "protected virtual NodeInCodeTable __getAllFunctions()",
+      "summary": "Returns a collection with all component functions. For infrastructure usage only.",
+      "params": [],
+      "returns": {
+        "type": "NodeInCodeTable",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.NodeInCode.Components.__getAllFunctions\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_Components___getAllFunctions.htm"
+    },
+    {
+      "name": "FindComponent",
+      "signature": "public static ComponentFunctionInfo FindComponent(string fullName)",
+      "summary": "Finds a component given its full name.",
+      "params": [
+        {
+          "name": "fullName",
+          "type": "System.String",
+          "doc": "The name, including its library name and a period if it is made by a third-party.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ComponentFunctionInfo",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.NodeInCode.Components.FindComponent(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_NodeInCode_Components_FindComponent.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "NodeInCodeFunctions",
+      "type": "NodeInCodeTable",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a collection with all component functions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_NodeInCode_Components_NodeInCodeFunctions.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

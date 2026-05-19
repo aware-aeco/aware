@@ -1,0 +1,41 @@
+{
+  "name": "RealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RealtimeDisplayMode_DisplayPipelineSettingsChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "RealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs",
+      "signature": "public DisplayPipelineSettingsChangedEventArgs(DisplayPipelineAttributes dpa)",
+      "summary": "Initializes a new instance of the RealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs class",
+      "params": [
+        {
+          "name": "dpa",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "[Missing \u003Cparam name=\u0022dpa\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs.#ctor(Rhino.Display.DisplayPipelineAttributes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_DisplayPipelineSettingsChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "DisplayPipelineAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_DisplayPipelineSettingsChangedEventArgs_Attributes.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

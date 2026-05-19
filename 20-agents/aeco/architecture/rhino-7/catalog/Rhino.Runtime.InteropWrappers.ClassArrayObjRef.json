@@ -1,0 +1,129 @@
+{
+  "name": "ClassArrayObjRef",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Represents a wrapper to an unmanaged \u0022array\u0022 (list) of CRhinoObjRef instances. Wrapper for a C\u002B\u002B ON_ClassArray of CRhinoObjRef",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InteropWrappers_ClassArrayObjRef.htm",
+  "constructors": [
+    {
+      "name": "ClassArrayObjRef()",
+      "signature": "public ClassArrayObjRef()",
+      "summary": "Initializes a new ClassArrayObjRef instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef__ctor.htm"
+    },
+    {
+      "name": "ClassArrayObjRef(IEnumerable\u003CObjRef\u003E)",
+      "signature": "public ClassArrayObjRef(IEnumerable\u003CObjRef\u003E objrefs)",
+      "summary": "Initializes a new instances from a set of ObjRefs",
+      "params": [
+        {
+          "name": "objrefs",
+          "type": "System.Collections.Generic.IEnumerable\u003CObjRef\u003E",
+          "doc": "An array, a list or any enumerable set of Rhino object references.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(ObjRef objref)",
+      "summary": "Adds an ObjRef to the list.",
+      "params": [
+        {
+          "name": "objref",
+          "type": "Rhino.DocObjects.ObjRef",
+          "doc": "An ObjRef to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_Add.htm"
+    },
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_Finalize.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_NonConstPointer.htm"
+    },
+    {
+      "name": "ToNonConstArray",
+      "signature": "public ObjRef[] ToNonConstArray()",
+      "summary": "Copies the unmanaged array to a managed counterpart.",
+      "params": [],
+      "returns": {
+        "type": "ObjRef[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_ToNonConstArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of CRhinoObjRef instances in this array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_ClassArrayObjRef_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

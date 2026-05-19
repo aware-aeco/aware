@@ -1,0 +1,22 @@
+{
+  "name": "IHelp",
+  "namespace": "Rhino.UI",
+  "kind": "interface",
+  "summary": "Implement this class to add help to a modeless UI panel.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_IHelp.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HelpUrl",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Help topic URL which gets passed to RhinoHelp.Show",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_IHelp_HelpUrl.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

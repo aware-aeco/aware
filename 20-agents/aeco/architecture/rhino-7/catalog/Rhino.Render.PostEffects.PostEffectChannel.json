@@ -1,0 +1,110 @@
+{
+  "name": "PostEffectChannel",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectChannel\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectChannel.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public PostEffectChannel Clone()",
+      "summary": "Return a clone of this channel.",
+      "params": [],
+      "returns": {
+        "type": "PostEffectChannel",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectChannel.Clone\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectChannel_Clone.htm"
+    },
+    {
+      "name": "Commit",
+      "signature": "public void Commit()",
+      "summary": "Commit changes to the channel so that those changes can be used by subsequent post effects in the chain. Only valid for channels that were obtained by calling GetChannelForWrite(). If the channel has the same id as an existing channel, the existing channel will be replaced by the new one. If the existing channel was created by a previous post effect in the chain, it will be deleted. Changes to channels that are not commited simply get ignored. Note: This call merely sets a flag. The process is deferred until after the post effect has finished executing.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectChannel_Commit.htm"
+    },
+    {
+      "name": "CPU",
+      "signature": "public RenderWindow.Channel CPU()",
+      "summary": "Return an interface to this channel for doing channel operations on the CPU.",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow.Channel",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectChannel.CPU\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectChannel_CPU.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectChannel",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectChannel_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectChannel_Finalize.htm"
+    },
+    {
+      "name": "GPU",
+      "signature": "public RenderWindow.ChannelGPU GPU()",
+      "summary": "Return an interface to this channel for doing channel operations on the GPU.",
+      "params": [],
+      "returns": {
+        "type": "RenderWindow.ChannelGPU",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectChannel.GPU\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectChannel_GPU.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the channel id which indicates what type of data is used in this channel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PostEffects_PostEffectChannel_Id.htm"
+    },
+    {
+      "name": "PixelSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the pixel size in bytes for this channel.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_PostEffects_PostEffectChannel_PixelSize.htm"
+    },
+    {
+      "name": "m_cpp",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_Render_PostEffects_PostEffectChannel_m_cpp.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

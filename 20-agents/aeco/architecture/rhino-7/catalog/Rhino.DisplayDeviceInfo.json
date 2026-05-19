@@ -1,0 +1,51 @@
+{
+  "name": "DisplayDeviceInfo",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Get information about display devices found on this machine (GPUs).",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DisplayDeviceInfo.htm",
+  "constructors": [
+    {
+      "name": "DisplayDeviceInfo",
+      "signature": "public DisplayDeviceInfo()",
+      "summary": "Initializes a new instance of the DisplayDeviceInfo class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DisplayDeviceInfo__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GpuDeviceInfos",
+      "signature": "public static List\u003CGpuDeviceInfo\u003E GpuDeviceInfos()",
+      "summary": "Get a list of GpuDeviceInfo for GPUs found on this machine.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CGpuDeviceInfo\u003E",
+        "doc": "List of GpuDeviceInfo"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DisplayDeviceInfo_GpuDeviceInfos.htm"
+    },
+    {
+      "name": "GpuNames",
+      "signature": "public static List\u003Cstring\u003E GpuNames()",
+      "summary": "Get a list with the names of all GPUs on this machine.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CString\u003E",
+        "doc": "List of strings"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DisplayDeviceInfo_GpuNames.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,47 @@
+{
+  "name": "RhinoModifyObjectAttributesEventArgs",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.RhinoModifyObjectAttributesEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_RhinoModifyObjectAttributesEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoModifyObjectAttributesEventArgs_Document.htm"
+    },
+    {
+      "name": "NewAttributes",
+      "type": "ObjectAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoModifyObjectAttributesEventArgs_NewAttributes.htm"
+    },
+    {
+      "name": "OldAttributes",
+      "type": "ObjectAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoModifyObjectAttributesEventArgs_OldAttributes.htm"
+    },
+    {
+      "name": "RhinoObject",
+      "type": "RhinoObject",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_RhinoModifyObjectAttributesEventArgs_RhinoObject.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

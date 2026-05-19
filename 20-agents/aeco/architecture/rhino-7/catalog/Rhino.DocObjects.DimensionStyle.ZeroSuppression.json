@@ -1,0 +1,49 @@
+{
+  "name": "DimensionStyle.ZeroSuppression",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Marks leading and trailing zeros for removal.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_ZeroSuppression.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No zero suppression."
+    },
+    {
+      "name": "SuppressLeading",
+      "value": 1,
+      "summary": "Suppress leading zeros."
+    },
+    {
+      "name": "SuppressTrailing",
+      "value": 2,
+      "summary": "Suppress trailing zeros."
+    },
+    {
+      "name": "SuppressLeadingAndTrailing",
+      "value": 3,
+      "summary": "Suppress leading and trailing zeros."
+    },
+    {
+      "name": "SuppressZeroFeet",
+      "value": 4,
+      "summary": "Suppress zero feet."
+    },
+    {
+      "name": "SuppressZeroInches",
+      "value": 8,
+      "summary": "Suppress zero inches."
+    },
+    {
+      "name": "SuppressZeroFeetAndZeroInches",
+      "value": 12,
+      "summary": "Suppress zero feet and zero inches."
+    }
+  ]
+}

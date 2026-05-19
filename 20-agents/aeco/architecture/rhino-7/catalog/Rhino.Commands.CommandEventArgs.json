@@ -1,0 +1,71 @@
+{
+  "name": "CommandEventArgs",
+  "namespace": "Rhino.Commands",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Commands.CommandEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Commands_CommandEventArgs.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CommandEnglishName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the English name of the command that raised this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_CommandEnglishName.htm"
+    },
+    {
+      "name": "CommandId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the ID of the command that raised this event.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_CommandId.htm"
+    },
+    {
+      "name": "CommandLocalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the command that raised this event in the local language.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_CommandLocalName.htm"
+    },
+    {
+      "name": "CommandPluginName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the plug-in that this command belongs to. If the command is internal to Rhino, then this property is an empty string.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_CommandPluginName.htm"
+    },
+    {
+      "name": "CommandResult",
+      "type": "Result",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the result of the command that raised this event. This value is only meaningful during EndCommand events.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_CommandResult.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_Document.htm"
+    },
+    {
+      "name": "DocumentRuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Commands_CommandEventArgs_DocumentRuntimeSerialNumber.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

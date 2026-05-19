@@ -1,0 +1,630 @@
+{
+  "name": "Box",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the value of a plane and three intervals in an orthogonal, oriented box that is not necessarily parallel to the world Y, X, Z axes.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Box.htm",
+  "constructors": [
+    {
+      "name": "Box(BoundingBox)",
+      "signature": "public Box(BoundingBox bbox)",
+      "summary": "Initializes a new Box that mimics a BoundingBox struct. The orientation plane of the Box is coincident with the World XY plane.",
+      "params": [
+        {
+          "name": "bbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "BoundingBox to mimic.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box__ctor.htm"
+    },
+    {
+      "name": "Box(Box)",
+      "signature": "public Box(Box other)",
+      "summary": "Copy constructor.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Box",
+          "doc": "The source plane value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box__ctor_1.htm"
+    },
+    {
+      "name": "Box(Plane, BoundingBox)",
+      "signature": "public Box(Plane basePlane, BoundingBox boundingbox)",
+      "summary": "Initializes a world aligned box from a base plane and a bounding box.",
+      "params": [
+        {
+          "name": "basePlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane of bounding box.",
+          "optional": false
+        },
+        {
+          "name": "boundingbox",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Bounding Box in plane coordinates.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box__ctor_2.htm"
+    },
+    {
+      "name": "Box(Plane, GeometryBase)",
+      "signature": "public Box(Plane basePlane, GeometryBase geometry)",
+      "summary": "Initializes a box that contains a generic piece of geometry. This box will be aligned with an arbitrary plane.",
+      "params": [
+        {
+          "name": "basePlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane for aligned bounding box.",
+          "optional": false
+        },
+        {
+          "name": "geometry",
+          "type": "Rhino.Geometry.GeometryBase",
+          "doc": "Geometry to box.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box__ctor_3.htm"
+    },
+    {
+      "name": "Box(Plane, IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public Box(Plane basePlane, IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Initializes the smallest box that contains a set of points.",
+      "params": [
+        {
+          "name": "basePlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation of the box.",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to include, Invalid points will be ignored.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box__ctor_5.htm"
+    },
+    {
+      "name": "Box(Plane, Interval, Interval, Interval)",
+      "signature": "public Box(Plane basePlane, Interval xSize, Interval ySize, Interval zSize)",
+      "summary": "Initializes a new box from a base Plane and three Intervals.",
+      "params": [
+        {
+          "name": "basePlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Orientation plane of the box.",
+          "optional": false
+        },
+        {
+          "name": "xSize",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Dimensions along the base plane X-Axis.",
+          "optional": false
+        },
+        {
+          "name": "ySize",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Dimensions along the base plane Y-Axis.",
+          "optional": false
+        },
+        {
+          "name": "zSize",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Dimensions along the base plane Z-Axis.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d point)",
+      "summary": "Finds the closest point on or in the Box. The box should be Valid for this to work.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Sample point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on or in the box that is closest to the sample point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_ClosestPoint.htm"
+    },
+    {
+      "name": "Contains(BoundingBox)",
+      "signature": "public bool Contains(BoundingBox box)",
+      "summary": "Test a bounding box for Box inclusion. This is the same as calling Contains(box,false)",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box is on the inside of or coincident with this Box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Contains.htm"
+    },
+    {
+      "name": "Contains(Box)",
+      "signature": "public bool Contains(Box box)",
+      "summary": "Test a box for Box inclusion. This is the same as calling Contains(box,false)",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Box to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box is on the inside of or coincident with this Box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Contains_2.htm"
+    },
+    {
+      "name": "Contains(Point3d)",
+      "signature": "public bool Contains(Point3d point)",
+      "summary": "Determines whether a point is included in this box. This is the same as calling Contains(point,false)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the point is on the inside of or coincident with this Box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Contains_4.htm"
+    },
+    {
+      "name": "Contains(BoundingBox, Boolean)",
+      "signature": "public bool Contains(BoundingBox box, bool strict)",
+      "summary": "Test a bounding box for Box inclusion.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the bounding box needs to be fully on the inside of this Box. I.e. coincident boxes will be considered \u0027outside\u0027.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box is (strictly) on the inside of this Box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Contains_1.htm"
+    },
+    {
+      "name": "Contains(Box, Boolean)",
+      "signature": "public bool Contains(Box box, bool strict)",
+      "summary": "Test a box for Box inclusion.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Box to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the box needs to be fully on the inside of this Box. I.e. coincident boxes will be considered \u0027outside\u0027.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box is (strictly) on the inside of this Box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Contains_3.htm"
+    },
+    {
+      "name": "Contains(Point3d, Boolean)",
+      "signature": "public bool Contains(Point3d point, bool strict)",
+      "summary": "Determines whether a point is included in this box.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to test.",
+          "optional": false
+        },
+        {
+          "name": "strict",
+          "type": "System.Boolean",
+          "doc": "If true, the point needs to be fully on the inside of the Box. I.e. coincident points will be considered \u0027outside\u0027.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the point is (strictly) on the inside of this Box."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Contains_5.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Box other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Box",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Box.EpsilonEquals(Rhino.Geometry.Box,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Box.EpsilonEquals(Rhino.Geometry.Box,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Box.EpsilonEquals(Rhino.Geometry.Box,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_EpsilonEquals.htm"
+    },
+    {
+      "name": "FurthestPoint",
+      "signature": "public Point3d FurthestPoint(Point3d point)",
+      "summary": "Finds the furthest point on the Box. The Box should be Valid for this to work properly.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Sample point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the box that is furthest from the sample point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_FurthestPoint.htm"
+    },
+    {
+      "name": "GetCorners",
+      "signature": "public Point3d[] GetCorners()",
+      "summary": "Gets an array of the 8 corner points of this box.",
+      "params": [],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of 8 corners."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_GetCorners.htm"
+    },
+    {
+      "name": "Inflate(Double)",
+      "signature": "public void Inflate(double amount)",
+      "summary": "Inflates the box by a given offset in each direction. Inflating with negative amounts may result in decreasing boxes. InValid boxes cannot be inflated.",
+      "params": [
+        {
+          "name": "amount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in all directions.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Inflate.htm"
+    },
+    {
+      "name": "Inflate(Double, Double, Double)",
+      "signature": "public void Inflate(double xAmount, double yAmount, double zAmount)",
+      "summary": "Inflates the box by a given offset in each direction. Inflating with negative amounts may result in decreasing boxes. InValid boxes cannot be inflated.",
+      "params": [
+        {
+          "name": "xAmount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in the x direction.",
+          "optional": false
+        },
+        {
+          "name": "yAmount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in the y direction.",
+          "optional": false
+        },
+        {
+          "name": "zAmount",
+          "type": "System.Double",
+          "doc": "Amount (in model units) to inflate this box in the z direction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Inflate_1.htm"
+    },
+    {
+      "name": "MakeValid",
+      "signature": "public bool MakeValid()",
+      "summary": "Attempts to make the Box valid. This is not always possible.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the box was made valid, or if it was valid to begin with. false if the box remains unchanged."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_MakeValid.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double x, double y, double z)",
+      "summary": "Evaluates the box volume at the given unitized parameters. The box has idealized side length of 1x1x1.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Unitized parameter (between 0 and 1 is inside the box) along box X direction.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Unitized parameter (between 0 and 1 is inside the box) along box Y direction.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Unitized parameter (between 0 and 1 is inside the box) along box Z direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at (x,y,z)."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_PointAt.htm"
+    },
+    {
+      "name": "RepositionBasePlane",
+      "signature": "public void RepositionBasePlane(Point3d origin)",
+      "summary": "Repositions the origin of the Base plane for this box without affecting the physical dimensions.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The new base plane origin.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_RepositionBasePlane.htm"
+    },
+    {
+      "name": "ToBrep",
+      "signature": "public Brep ToBrep()",
+      "summary": "Constructs a brep representation of this box.",
+      "params": [],
+      "returns": {
+        "type": "Brep",
+        "doc": "A Brep representation of this box or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_ToBrep.htm"
+    },
+    {
+      "name": "ToExtrusion",
+      "signature": "public Extrusion ToExtrusion()",
+      "summary": "Constructs an extrusion representation of this box.",
+      "params": [],
+      "returns": {
+        "type": "Extrusion",
+        "doc": "An Extrusion representation of this box or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_ToExtrusion.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms this Box using a Transformation matrix. If the Transform does not preserve Similarity, the dimensions of the resulting box cannot be trusted.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation matrix to apply to this Box.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the Box was successfully transformed, false if otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Transform.htm"
+    },
+    {
+      "name": "Union",
+      "signature": "public void Union(Point3d point)",
+      "summary": "Constructs a union between this Box and the given point. This grows the box in directions so it contains the point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to include.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Box_Union.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Area",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total surface area of this box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Area.htm"
+    },
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the world axis aligned Bounding box for this oriented box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_BoundingBox.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point that is in the center of the box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Center.htm"
+    },
+    {
+      "name": "Empty",
+      "type": "Box",
+      "getter": true,
+      "setter": false,
+      "summary": "Empty Box. Empty boxes are considered to be invalid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Empty.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the validity of this Box. Boxes are invalid when the base plane or any of the dimension intervals are invalid or decreasing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_IsValid.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the orientation plane for this Box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Plane.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Box",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a Box whose base plane and axis dimensions are all Unset.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Unset.htm"
+    },
+    {
+      "name": "Volume",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the total volume of this box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Volume.htm"
+    },
+    {
+      "name": "X",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Interval that describes the dimension of the Box along the orientation plane X-Axis. Otherwise known as the Width of the Box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Interval that describes the dimension of the Box along the orientation plane Y-Axis. Otherwise known as the Depth of the Box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Interval that describes the dimension of the Box along the orientation plane Z-Axis. Otherwise known as the Height of the Box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Box_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

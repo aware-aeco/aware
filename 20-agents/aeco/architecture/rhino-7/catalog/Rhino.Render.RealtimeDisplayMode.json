@@ -1,0 +1,1082 @@
+{
+  "name": "RealtimeDisplayMode",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "Base class for implementing real-time display modes in .NET. Pay special attention that in StartRenderer the RenderWindow.SetSize() function is called if the implementation relies on the RenderWindow to do the drawing to the viewport. If i.e. OpenGL is used to draw render results to the viewport then SetSize() doesn\u0027t have to be called, nor should the implementation then access channels on the RenderWindow, as those then don\u0027t exist. For OpenGL-based drawing the RenderWindow is used as a container for ViewInfo management, nothing else.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RealtimeDisplayMode.htm",
+  "constructors": [
+    {
+      "name": "RealtimeDisplayMode",
+      "signature": "protected RealtimeDisplayMode()",
+      "summary": "Initializes a new instance of the RealtimeDisplayMode class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CaptureProgress",
+      "signature": "public virtual double CaptureProgress()",
+      "summary": "Override to communicate the progress of a capture.",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "A number between 0.0 and 1.0 inclusive. 1.0 means 100%."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_CaptureProgress.htm"
+    },
+    {
+      "name": "ComputeViewportCrc",
+      "signature": "public uint ComputeViewportCrc(ViewInfo view)",
+      "summary": "Compute viewport CRC for the given ViewInfo",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.ComputeViewportCrc(Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "the CRC for the given view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_ComputeViewportCrc.htm"
+    },
+    {
+      "name": "CreateWorld",
+      "signature": "public virtual void CreateWorld(RhinoDoc doc, ViewInfo viewInfo, DisplayPipelineAttributes displayPipelineAttributes)",
+      "summary": "Implement if you need to handle the initial CreateWorld call initiated by the display pipeline system. Note that this is not the same as the CreateWorld call in Rhino.Render.ChangeQueue.ChangeQueue, although related.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Rhino document",
+          "optional": false
+        },
+        {
+          "name": "viewInfo",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "active viewport info",
+          "optional": false
+        },
+        {
+          "name": "displayPipelineAttributes",
+          "type": "Rhino.Display.DisplayPipelineAttributes",
+          "doc": "display pipeline attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_CreateWorld.htm"
+    },
+    {
+      "name": "DrawOpenGl",
+      "signature": "public virtual bool DrawOpenGl()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.DrawOpenGl\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_DrawOpenGl.htm"
+    },
+    {
+      "name": "GetRealtimeViewport(IntPtr)",
+      "signature": "public static RealtimeDisplayMode GetRealtimeViewport(IntPtr realtimeViewport)",
+      "summary": "Retrieve RealtimeDisplayMode instance that the IntPtr refers to.",
+      "params": [
+        {
+          "name": "realtimeViewport",
+          "type": "System.IntPtr",
+          "doc": "IntPtr of the instance searched for. If the instance doesn\u0027t exist, a new one is created.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RealtimeDisplayMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.GetRealtimeViewport(System.IntPtr)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_GetRealtimeViewport.htm"
+    },
+    {
+      "name": "GetRealtimeViewport(IntPtr, Boolean)",
+      "signature": "public static RealtimeDisplayMode GetRealtimeViewport(IntPtr realtimeViewport, bool create)",
+      "summary": "Retrieve RealtimeDisplayMode instance. If create is set to true then a new instance is created if not found, null is returned for false.",
+      "params": [
+        {
+          "name": "realtimeViewport",
+          "type": "System.IntPtr",
+          "doc": "IntPtr",
+          "optional": false
+        },
+        {
+          "name": "create",
+          "type": "System.Boolean",
+          "doc": "true to create if not found, false to return null if not found.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RealtimeDisplayMode",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.GetRealtimeViewport(System.IntPtr,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_GetRealtimeViewport_1.htm"
+    },
+    {
+      "name": "GetRenderSize",
+      "signature": "public abstract void GetRenderSize(out int width, out int height)",
+      "summary": "Get the current render resolution for the running render session.",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.GetRenderSize(System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.GetRenderSize(System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_GetRenderSize.htm"
+    },
+    {
+      "name": "GetView",
+      "signature": "public ViewInfo GetView()",
+      "summary": "Get ViewInfo that has been registered with this RealtimeDisplayMode instance.",
+      "params": [],
+      "returns": {
+        "type": "ViewInfo",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.GetView\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_GetView.htm"
+    },
+    {
+      "name": "HudAllowEditMaxPasses",
+      "signature": "public virtual bool HudAllowEditMaxPasses()",
+      "summary": "Override to allow maximum pass editing. By default disabled.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true to allow users to edit the maximum pass count."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudAllowEditMaxPasses.htm"
+    },
+    {
+      "name": "HudCustomStatusText",
+      "signature": "public virtual string HudCustomStatusText()",
+      "summary": "Override to display status of the render engine.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Status text to display"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudCustomStatusText.htm"
+    },
+    {
+      "name": "HudLastRenderedPass",
+      "signature": "public virtual int HudLastRenderedPass()",
+      "summary": "Override to communicate the last completed pass. Can be shown in the HUD",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "Last completed pass"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudLastRenderedPass.htm"
+    },
+    {
+      "name": "HudMaximumPasses",
+      "signature": "public virtual int HudMaximumPasses()",
+      "summary": "Override to communicate the maximum passes count currently in use for the render session. Can be shown in the HUD",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "Maximum passes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudMaximumPasses.htm"
+    },
+    {
+      "name": "HudProductName",
+      "signature": "public virtual string HudProductName()",
+      "summary": "Override to return the name of your product. This will be printed in the HUD.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "Name of the product."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudProductName.htm"
+    },
+    {
+      "name": "HudRendererLocked",
+      "signature": "public virtual bool HudRendererLocked()",
+      "summary": "Implement to support locking in the viewport",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the render engine is locked."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudRendererLocked.htm"
+    },
+    {
+      "name": "HudRendererPaused",
+      "signature": "public virtual bool HudRendererPaused()",
+      "summary": "Implement to support pausing and resuming in the viewport",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if the render engine is paused."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudRendererPaused.htm"
+    },
+    {
+      "name": "HudShow",
+      "signature": "public virtual bool HudShow()",
+      "summary": "Override if you want to hide the HUD. Shown by default",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return false to hide the HUD."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudShow.htm"
+    },
+    {
+      "name": "HudShowControls",
+      "signature": "public virtual bool HudShowControls()",
+      "summary": "Show control buttons on the realtime display HUD. By default these are shown, override this function and return false if HUD controls aren\u0027t needed.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.HudShowControls\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudShowControls.htm"
+    },
+    {
+      "name": "HudShowCustomStatusText",
+      "signature": "public virtual bool HudShowCustomStatusText()",
+      "summary": "Override to show status text in HUD. By default disabled.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true to show status text in HUD"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudShowCustomStatusText.htm"
+    },
+    {
+      "name": "HudShowMaxPasses",
+      "signature": "public virtual bool HudShowMaxPasses()",
+      "summary": "Override to show maximum passes in HUD. By default disabled.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true to show maximum passes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudShowMaxPasses.htm"
+    },
+    {
+      "name": "HudShowPasses",
+      "signature": "public virtual bool HudShowPasses()",
+      "summary": "Override to show current pass in HUD. By default disabled.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true to show current pass in HUD."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudShowPasses.htm"
+    },
+    {
+      "name": "HudStartTime",
+      "signature": "public virtual DateTime HudStartTime()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "DateTime",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.HudStartTime\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudStartTime.htm"
+    },
+    {
+      "name": "IsCompleted",
+      "signature": "public abstract bool IsCompleted()",
+      "summary": "Implement to tell if your render engine has completed a frame for drawing into the viewport",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.IsCompleted\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_IsCompleted.htm"
+    },
+    {
+      "name": "IsFrameBufferAvailable",
+      "signature": "public abstract bool IsFrameBufferAvailable(ViewInfo view)",
+      "summary": "Implement to tell the render pipeline that a framebuffer is ready",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "[Missing \u003Cparam name=\u0022view\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.IsFrameBufferAvailable(Rhino.DocObjects.ViewInfo)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true when a framebuffer is ready. This is generally the case when StartRenderer as returned successfully."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_IsFrameBufferAvailable.htm"
+    },
+    {
+      "name": "IsRendererStarted",
+      "signature": "public abstract bool IsRendererStarted()",
+      "summary": "Override to tell the started state of your render engine.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if render engine is ready and rendering"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_IsRendererStarted.htm"
+    },
+    {
+      "name": "LastRenderedPass",
+      "signature": "public virtual int LastRenderedPass()",
+      "summary": "Implement to communicate last completed pass to the underlying system.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "the last completed pass"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_LastRenderedPass.htm"
+    },
+    {
+      "name": "OnRenderSizeChanged",
+      "signature": "public virtual bool OnRenderSizeChanged(int width, int height)",
+      "summary": "Override to restart your render engine",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.OnRenderSizeChanged(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.OnRenderSizeChanged(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.OnRenderSizeChanged(System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_OnRenderSizeChanged.htm"
+    },
+    {
+      "name": "OpenGlVersion",
+      "signature": "public int OpenGlVersion()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.OpenGlVersion\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_OpenGlVersion.htm"
+    },
+    {
+      "name": "PostConstruct",
+      "signature": "public virtual void PostConstruct()",
+      "summary": "Override PostConstruct if you need to initialize where the underlying RealtimeDisplayMode is available. The connection is made right after RealtimeDisplayMode has been instantiated, but just before PostConstruct is called. For instance finding out OpenGL information can be done in PostConstruct.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_PostConstruct.htm"
+    },
+    {
+      "name": "RegisterDisplayModes(PlugIn)",
+      "signature": "public static RealtimeDisplayModeClassInfo[] RegisterDisplayModes(PlugIn plugin)",
+      "summary": "Find and register classes that derive from RealtimeDisplayMode from the given plug-in.",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.RegisterDisplayModes(Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RealtimeDisplayModeClassInfo[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.RegisterDisplayModes(Rhino.PlugIns.PlugIn)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_RegisterDisplayModes.htm"
+    },
+    {
+      "name": "RegisterDisplayModes(Assembly, Guid)",
+      "signature": "public static RealtimeDisplayModeClassInfo[] RegisterDisplayModes(Assembly assembly, Guid pluginId)",
+      "summary": "Find and register classes that derive from RealtimeDisplayMode from the given plug-in. The plug-in is found in the given assembly",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.RegisterDisplayModes(System.Reflection.Assembly,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.RegisterDisplayModes(System.Reflection.Assembly,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RealtimeDisplayModeClassInfo[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.RegisterDisplayModes(System.Reflection.Assembly,System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_RegisterDisplayModes_1.htm"
+    },
+    {
+      "name": "RemoveRealtimeViewport",
+      "signature": "public static void RemoveRealtimeViewport(IntPtr realtimeViewport)",
+      "summary": "Remove RealtimeDisplayMode instance from internal dictionary.",
+      "params": [
+        {
+          "name": "realtimeViewport",
+          "type": "System.IntPtr",
+          "doc": "IntPtr to the RealtimeDisplayMode instance to remove.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_RemoveRealtimeViewport.htm"
+    },
+    {
+      "name": "SetUseDrawOpenGl",
+      "signature": "public virtual void SetUseDrawOpenGl(bool use)",
+      "summary": "During run-time change whether to use OpenGL drawing of results or not. For instance offline rendering (viewcapture* with different resolution than viewport) could use RenderWindow instead of direct OpenGL drawing.",
+      "params": [
+        {
+          "name": "use",
+          "type": "System.Boolean",
+          "doc": "Set to true if OpenGL drawing is wanted, set to false if RenderWindow method is needed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_SetUseDrawOpenGl.htm"
+    },
+    {
+      "name": "SetView",
+      "signature": "public void SetView(ViewInfo view)",
+      "summary": "Set ViewInfo for this RealtimeDisplayMode instance.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "The ViewInfo to set for subsequent tests.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_SetView.htm"
+    },
+    {
+      "name": "ShowCaptureProgress",
+      "signature": "public virtual bool ShowCaptureProgress()",
+      "summary": "Override if you want to i.e. hide the progress dialog for capture progress.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true to show, false to hide"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_ShowCaptureProgress.htm"
+    },
+    {
+      "name": "ShutdownRenderer",
+      "signature": "public abstract void ShutdownRenderer()",
+      "summary": "Override to shutdown your render engine",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_ShutdownRenderer.htm"
+    },
+    {
+      "name": "SignalRedraw",
+      "signature": "public void SignalRedraw()",
+      "summary": "Use to signal the underlying pipeline a redraw is wanted. This can be used for instance when a renderer has completed a pass which should be updated in the associated viewport.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_SignalRedraw.htm"
+    },
+    {
+      "name": "StartRenderer",
+      "signature": "public abstract bool StartRenderer(int w, int h, RhinoDoc doc, ViewInfo view, ViewportInfo viewportInfo, bool forCapture, RenderWindow renderWindow)",
+      "summary": "Override to start your render engine. Note that before using the RenderWindow you *must* call SetSize to properly initialize the underlying DIB.",
+      "params": [
+        {
+          "name": "w",
+          "type": "System.Int32",
+          "doc": "Width of resolution",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "System.Int32",
+          "doc": "Height of resolution",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "Rhino document",
+          "optional": false
+        },
+        {
+          "name": "view",
+          "type": "Rhino.DocObjects.ViewInfo",
+          "doc": "active view",
+          "optional": false
+        },
+        {
+          "name": "viewportInfo",
+          "type": "Rhino.DocObjects.ViewportInfo",
+          "doc": "active viewport info",
+          "optional": false
+        },
+        {
+          "name": "forCapture",
+          "type": "System.Boolean",
+          "doc": "true if renderer is started for capture purposes (ViewCaptureTo*), false for regular interactive rendering",
+          "optional": false
+        },
+        {
+          "name": "renderWindow",
+          "type": "Rhino.Render.RenderWindow",
+          "doc": "RenderWindow to hold render results in.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true when your render engine started correctly, false when that failed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_StartRenderer.htm"
+    },
+    {
+      "name": "UnregisterDisplayModes(PlugIn)",
+      "signature": "public static void UnregisterDisplayModes(PlugIn plugin)",
+      "summary": "",
+      "params": [
+        {
+          "name": "plugin",
+          "type": "Rhino.PlugIns.PlugIn",
+          "doc": "[Missing \u003Cparam name=\u0022plugin\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.UnregisterDisplayModes(Rhino.PlugIns.PlugIn)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_UnregisterDisplayModes.htm"
+    },
+    {
+      "name": "UnregisterDisplayModes(Assembly, Guid)",
+      "signature": "public static void UnregisterDisplayModes(Assembly assembly, Guid pluginId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "[Missing \u003Cparam name=\u0022assembly\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.UnregisterDisplayModes(System.Reflection.Assembly,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "pluginId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022pluginId\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.UnregisterDisplayModes(System.Reflection.Assembly,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_UnregisterDisplayModes_1.htm"
+    },
+    {
+      "name": "UseFastDraw",
+      "signature": "public virtual bool UseFastDraw()",
+      "summary": "Implement and return true if you want the display pipeline to not wait for IsFramebufferAvailable during the MiddleGround draw phase. This will also tell the pipeline to draw a complete middleground pass in OpenGL.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.UseFastDraw\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_UseFastDraw.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LinearWorkflow",
+      "type": "LinearWorkflow",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the LinearWorkflow data for this realitime display mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_LinearWorkflow.htm"
+    },
+    {
+      "name": "Locked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_Locked.htm"
+    },
+    {
+      "name": "MaxPasses",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_MaxPasses.htm"
+    },
+    {
+      "name": "Paused",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_Paused.htm"
+    },
+    {
+      "name": "PostEffectsOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_PostEffectsOn.htm"
+    }
+  ],
+  "events": [
+    {
+      "name": "HudLockButtonDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudLockButtonDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudLockButtonDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudLockButtonLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudLockButtonLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudLockButtonLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudLockButtonPressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDLockButtonLeftClicked instead\u0022)] public event EventHandler HudLockButtonPressed",
+      "summary": "Listen tot his event if you want to handle the lock button control",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudLockButtonPressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudLockButtonRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudLockButtonRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudLockButtonRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPauseButtonDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPauseButtonDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPauseButtonDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPauseButtonLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPauseButtonLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPauseButtonLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPauseButtonPressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDPauseButtonLeftClicked instead\u0022)] public event EventHandler HudPauseButtonPressed",
+      "summary": "Listen tot his event if you want to handle the pause button control",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPauseButtonPressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPauseButtonRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPauseButtonRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPauseButtonRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPlayButtonDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPlayButtonDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPlayButtonDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPlayButtonLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPlayButtonLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPlayButtonLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPlayButtonPressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDPlayButtonLeftClicked instead\u0022)] public event EventHandler HudPlayButtonPressed",
+      "summary": "Listen to this event if you want to handle the play button control.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPlayButtonPressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPlayButtonRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPlayButtonRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPlayButtonRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPostEffectsOffButtonDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPostEffectsOffButtonDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPostEffectsOffButtonDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPostEffectsOffButtonLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPostEffectsOffButtonLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPostEffectsOffButtonLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPostEffectsOffButtonRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPostEffectsOffButtonRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPostEffectsOffButtonRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPostEffectsOnButtonDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPostEffectsOnButtonDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPostEffectsOnButtonDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPostEffectsOnButtonLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPostEffectsOnButtonLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPostEffectsOnButtonLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudPostEffectsOnButtonRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudPostEffectsOnButtonRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudPostEffectsOnButtonRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudProductNameDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudProductNameDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudProductNameDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudProductNameLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudProductNameLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudProductNameLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudProductNamePressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDProductNameLeftClicked instead\u0022)] public event EventHandler HudProductNamePressed",
+      "summary": "Listen tot his event if you want to handle a press on the product name component",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudProductNamePressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudProductNameRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudProductNameRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudProductNameRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudStatusTextDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudStatusTextDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudStatusTextDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudStatusTextLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudStatusTextLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudStatusTextLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudStatusTextPressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDStatusTextLeftClicked instead\u0022)] public event EventHandler HudStatusTextPressed",
+      "summary": "Listen tot his event if you want to handle a press on the status text component",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudStatusTextPressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudStatusTextRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudStatusTextRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudStatusTextRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudTimeDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudTimeDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudTimeDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudTimeLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudTimeLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudTimeLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudTimePressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDTimeLeftClicked instead\u0022)] public event EventHandler HudTimePressed",
+      "summary": "Listen tot his event if you want to handle a press press on the time component",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudTimePressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudTimeRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudTimeRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudTimeRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudUnlockButtonDoubleClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudUnlockButtonDoubleClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudUnlockButtonDoubleClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudUnlockButtonLeftClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudUnlockButtonLeftClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudUnlockButtonLeftClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudUnlockButtonPressed",
+      "delegate": "System.EventHandler",
+      "signature": "[ObsoleteAttribute(\u0022Use HUDUnlockButtonLeftClicked instead\u0022)] public event EventHandler HudUnlockButtonPressed",
+      "summary": "Listen tot his event if you want to handle the unlock button control",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudUnlockButtonPressed.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "HudUnlockButtonRightClicked",
+      "delegate": "System.EventHandler",
+      "signature": "public event EventHandler HudUnlockButtonRightClicked",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_HudUnlockButtonRightClicked.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MaxPassesChanged",
+      "delegate": "System.EventHandler\u003CRealtimeDisplayMode.HudMaxPassesChangedEventArgs\u003E",
+      "signature": "public event EventHandler\u003CRealtimeDisplayMode.HudMaxPassesChangedEventArgs\u003E MaxPassesChanged",
+      "summary": "Listen to this if you want to handle changes in maximum pass count through the HUD.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_MaxPassesChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "OnDisplayPipelineSettingsChanged",
+      "delegate": "System.EventHandler\u003CRealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs\u003E",
+      "signature": "public event EventHandler\u003CRealtimeDisplayMode.DisplayPipelineSettingsChangedEventArgs\u003E OnDisplayPipelineSettingsChanged",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_OnDisplayPipelineSettingsChanged.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "OnDrawMiddleground",
+      "delegate": "System.EventHandler\u003CRealtimeDisplayMode.DrawMiddlegroundEventArgs\u003E",
+      "signature": "public event EventHandler\u003CRealtimeDisplayMode.DrawMiddlegroundEventArgs\u003E OnDrawMiddleground",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_OnDrawMiddleground.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "OnInitFramebuffer",
+      "delegate": "System.EventHandler\u003CRealtimeDisplayMode.InitFramebufferEventArgs\u003E",
+      "signature": "public event EventHandler\u003CRealtimeDisplayMode.InitFramebufferEventArgs\u003E OnInitFramebuffer",
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/E_Rhino_Render_RealtimeDisplayMode_OnInitFramebuffer.htm",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,55 @@
+{
+  "name": "ThumbnailViewModelFactory",
+  "namespace": "Rhino.UI.Controls.ThumbnailUI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ThumbnailUI.ThumbnailViewModelFactory\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_ThumbnailUI_ThumbnailViewModelFactory.htm",
+  "constructors": [
+    {
+      "name": "ThumbnailViewModelFactory",
+      "signature": "public ThumbnailViewModelFactory()",
+      "summary": "Initializes a new instance of the ThumbnailViewModelFactory class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_ThumbnailViewModelFactory__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_FactoryBase_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public override IntPtr Get(Guid id)",
+      "summary": "(Overrides FactoryBase.Get(Guid).)",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.ThumbnailViewModelFactory.Get(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.ThumbnailViewModelFactory.Get(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_ThumbnailViewModelFactory_Get.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

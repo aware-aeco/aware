@@ -1,0 +1,34 @@
+{
+  "name": "TextHorizontalAlignment",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Horizontal location of text attach point relative to text",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_TextHorizontalAlignment.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Left",
+      "value": 0,
+      "summary": "Attach at left of text lines (Independent of glyphs being displayed.)"
+    },
+    {
+      "name": "Center",
+      "value": 1,
+      "summary": "Attach point at center of text horizontal advance (not glyph bounding box)"
+    },
+    {
+      "name": "Right",
+      "value": 2,
+      "summary": "Attach point at right text horizontal advance (not glyph bounding box)"
+    },
+    {
+      "name": "Auto",
+      "value": 3,
+      "summary": "Used for Leaders only Attach point adjusts to Right or Left depending on leader tail direction in view If tail direction is to the Left, alignment is Right If tail direction is to the Right, alignment is Left"
+    }
+  ]
+}

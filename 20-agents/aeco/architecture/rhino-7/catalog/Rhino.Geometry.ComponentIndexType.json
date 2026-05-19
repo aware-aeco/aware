@@ -1,0 +1,164 @@
+{
+  "name": "ComponentIndexType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Defines enumerated values to represent component index types.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_ComponentIndexType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "InvalidType",
+      "value": 0,
+      "summary": "Not used. This is the default value of the enumeration type."
+    },
+    {
+      "name": "BrepVertex",
+      "value": 1,
+      "summary": "Targets a brep vertex index."
+    },
+    {
+      "name": "BrepEdge",
+      "value": 2,
+      "summary": "Targets a brep edge index."
+    },
+    {
+      "name": "BrepFace",
+      "value": 3,
+      "summary": "Targets a brep face index."
+    },
+    {
+      "name": "BrepTrim",
+      "value": 4,
+      "summary": "Targets a brep trim index."
+    },
+    {
+      "name": "BrepLoop",
+      "value": 5,
+      "summary": "Targets a brep loop index."
+    },
+    {
+      "name": "MeshVertex",
+      "value": 11,
+      "summary": "Targets a mesh vertex index."
+    },
+    {
+      "name": "MeshTopologyVertex",
+      "value": 12,
+      "summary": "Targets a mesh topology vertex index."
+    },
+    {
+      "name": "MeshTopologyEdge",
+      "value": 13,
+      "summary": "Targets a mesh topology edge index."
+    },
+    {
+      "name": "MeshFace",
+      "value": 14,
+      "summary": "Targets a mesh face index."
+    },
+    {
+      "name": "MeshNgon",
+      "value": 15,
+      "summary": "Targets a mesh n-gon index."
+    },
+    {
+      "name": "InstanceDefinitionPart",
+      "value": 21,
+      "summary": "Targets an instance definition part index."
+    },
+    {
+      "name": "PolycurveSegment",
+      "value": 31,
+      "summary": "Targets a polycurve segment index."
+    },
+    {
+      "name": "PointCloudPoint",
+      "value": 41,
+      "summary": "Targets a point cloud point index."
+    },
+    {
+      "name": "GroupMember",
+      "value": 51,
+      "summary": "Targets a group member index."
+    },
+    {
+      "name": "ExtrusionBottomProfile",
+      "value": 61,
+      "summary": "3d bottom profile curves. Index identifies profile component"
+    },
+    {
+      "name": "ExtrusionTopProfile",
+      "value": 62,
+      "summary": "3d top profile curves. Index identifies profile component"
+    },
+    {
+      "name": "ExtrusionWallEdge",
+      "value": 63,
+      "summary": "3d wall edge curve. Index/2: identifies profile component Index%2: 0=start, 1=end"
+    },
+    {
+      "name": "ExtrusionWallSurface",
+      "value": 64,
+      "summary": "Side wall surfaces. Index identifies profile component"
+    },
+    {
+      "name": "ExtrusionCapSurface",
+      "value": 65,
+      "summary": "Bottom and top cap surfaces. Index 0=bottom, 1=top"
+    },
+    {
+      "name": "ExtrusionPath",
+      "value": 66,
+      "summary": "Extrusion path (axis line). Index -1=entire path, 0=start point, 1=endpoint"
+    },
+    {
+      "name": "SubdVertex",
+      "value": 71,
+      "summary": "Targets a SubD vertex pointer Id. Ids are not guaranteed to be sequential."
+    },
+    {
+      "name": "SubdEdge",
+      "value": 72,
+      "summary": "Targets a SubD edge pointer Id. Ids are not guaranteed to be sequential."
+    },
+    {
+      "name": "SubdFace",
+      "value": 73,
+      "summary": "Targets a SubD face pointer Id. Ids are not guaranteed to be sequential."
+    },
+    {
+      "name": "DimLinearPoint",
+      "value": 100,
+      "summary": "Targets a linear dimension point index."
+    },
+    {
+      "name": "DimRadialPoint",
+      "value": 101,
+      "summary": "Targets a radial dimension point index."
+    },
+    {
+      "name": "DimAngularPoint",
+      "value": 102,
+      "summary": "Targets an angular dimension point index."
+    },
+    {
+      "name": "DimOrdinatePoint",
+      "value": 103,
+      "summary": "Targets an ordinate dimension point index."
+    },
+    {
+      "name": "DimTextPoint",
+      "value": 104,
+      "summary": "Targets a text point index."
+    },
+    {
+      "name": "NoType",
+      "value": 268435455,
+      "summary": "Targets no specific type."
+    }
+  ]
+}

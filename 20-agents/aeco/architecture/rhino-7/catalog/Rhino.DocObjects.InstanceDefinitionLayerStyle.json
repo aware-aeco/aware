@@ -1,0 +1,29 @@
+{
+  "name": "InstanceDefinitionLayerStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "InstanceDefinition.LayerStyle specifies how model components (layers, materials, dimension styles, etc.) from linked instance definition files appear in the active model.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_InstanceDefinitionLayerStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "This is the only valid layer style when the instance definition type is InstanceDefinitionUpdateType.Static or InstanceDefinitionUpdateType.LinkedAndEmbedded. This style is not valid when the instance definition type is InstanceDefinitionUpdateType.Linked."
+    },
+    {
+      "name": "Active",
+      "value": 1,
+      "summary": "Model components (layers, materials, dimension styles, etc.) from linked instance definition files are embedded as ordinary components in the active model. This layer style may be used when the instance definition type is InstanceDefinitionUpdateType.Linked."
+    },
+    {
+      "name": "Reference",
+      "value": 2,
+      "summary": "Layers from the linked instance definition are reference components in the model. This is the default layer style when the instance definition type is InstanceDefinitionUpdateType.Linked. This layer style may be used when the instance definition type is is InstanceDefinitionUpdateType.Linked."
+    }
+  ]
+}

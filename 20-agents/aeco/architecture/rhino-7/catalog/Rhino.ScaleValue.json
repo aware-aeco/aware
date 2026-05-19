@@ -1,0 +1,174 @@
+{
+  "name": "ScaleValue",
+  "namespace": "Rhino",
+  "kind": "class",
+  "summary": "Represents a scale with associated LengthValues and string representations of the scale. This allows for going back and forth from numerical representations of a scale and a string representation without \u0022guessing\u0022 at the initial scale.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ScaleValue.htm",
+  "constructors": [
+    {
+      "name": "ScaleValue",
+      "signature": "public ScaleValue()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Create(String, StringParserSettings)",
+      "signature": "public static ScaleValue Create(string s, StringParserSettings ps)",
+      "summary": "Create from string",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022s\u0022/\u003E documentation for \u0022M:Rhino.ScaleValue.Create(System.String,Rhino.Input.StringParserSettings)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ps",
+          "type": "Rhino.Input.StringParserSettings",
+          "doc": "[Missing \u003Cparam name=\u0022ps\u0022/\u003E documentation for \u0022M:Rhino.ScaleValue.Create(System.String,Rhino.Input.StringParserSettings)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ScaleValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ScaleValue.Create(System.String,Rhino.Input.StringParserSettings)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_Create_1.htm"
+    },
+    {
+      "name": "Create(LengthValue, LengthValue, ScaleValue.ScaleStringFormat)",
+      "signature": "public static ScaleValue Create(LengthValue left, LengthValue right, ScaleValue.ScaleStringFormat format)",
+      "summary": "Create from 2 length values",
+      "params": [
+        {
+          "name": "left",
+          "type": "Rhino.LengthValue",
+          "doc": "[Missing \u003Cparam name=\u0022left\u0022/\u003E documentation for \u0022M:Rhino.ScaleValue.Create(Rhino.LengthValue,Rhino.LengthValue,Rhino.ScaleValue.ScaleStringFormat)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.LengthValue",
+          "doc": "[Missing \u003Cparam name=\u0022right\u0022/\u003E documentation for \u0022M:Rhino.ScaleValue.Create(Rhino.LengthValue,Rhino.LengthValue,Rhino.ScaleValue.ScaleStringFormat)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Rhino.ScaleValue.ScaleStringFormat",
+          "doc": "[Missing \u003Cparam name=\u0022format\u0022/\u003E documentation for \u0022M:Rhino.ScaleValue.Create(Rhino.LengthValue,Rhino.LengthValue,Rhino.ScaleValue.ScaleStringFormat)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ScaleValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ScaleValue.Create(Rhino.LengthValue,Rhino.LengthValue,Rhino.ScaleValue.ScaleStringFormat)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_Create.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "actively reclaim native allocated ON_SacleValue*",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "passively reclaim native allocated ON_ScaleValue*",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_Finalize.htm"
+    },
+    {
+      "name": "IsUnset",
+      "signature": "public bool IsUnset()",
+      "summary": "Test IsUnset",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ScaleValue.IsUnset\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_IsUnset.htm"
+    },
+    {
+      "name": "LeftLengthValue",
+      "signature": "public LengthValue LeftLengthValue()",
+      "summary": "Get the Left LengthValue from Scale",
+      "params": [],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ScaleValue.LeftLengthValue\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_LeftLengthValue.htm"
+    },
+    {
+      "name": "OneToOne",
+      "signature": "public static ScaleValue OneToOne()",
+      "summary": "Make a new ScaleValue set to OneToOne",
+      "params": [],
+      "returns": {
+        "type": "ScaleValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ScaleValue.OneToOne\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_OneToOne.htm"
+    },
+    {
+      "name": "RightLengthValue",
+      "signature": "public LengthValue RightLengthValue()",
+      "summary": "Get the Right LengthValue from Scale",
+      "params": [],
+      "returns": {
+        "type": "LengthValue",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ScaleValue.RightLengthValue\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ScaleValue_RightLengthValue.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LeftToRightScale",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "LeftLengthValue / RightLengthValue",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ScaleValue_LeftToRightScale.htm"
+    },
+    {
+      "name": "RightToLeftScale",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "RightLengthValue / LeftLengthValue",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ScaleValue_RightToLeftScale.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

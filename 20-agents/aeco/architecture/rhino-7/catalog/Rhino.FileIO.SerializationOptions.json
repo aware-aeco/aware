@@ -1,0 +1,41 @@
+{
+  "name": "SerializationOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "Contains options for serializing -or storing- data, such as Rhino version and user data.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_SerializationOptions.htm",
+  "constructors": [
+    {
+      "name": "SerializationOptions",
+      "signature": "public SerializationOptions()",
+      "summary": "Initializes a new instance of the SerializationOptions class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_SerializationOptions__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "RhinoVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating the Rhino version.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_SerializationOptions_RhinoVersion.htm"
+    },
+    {
+      "name": "WriteUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether to write user data.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_SerializationOptions_WriteUserData.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

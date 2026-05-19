@@ -1,0 +1,1471 @@
+{
+  "name": "DimensionStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Can also be considered an annotation style since it is used for more than just dimensions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle.htm",
+  "constructors": [
+    {
+      "name": "DimensionStyle()",
+      "signature": "public DimensionStyle()",
+      "summary": "Create a new non-document controlled annotation style",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle__ctor.htm"
+    },
+    {
+      "name": "DimensionStyle(SerializationInfo, StreamingContext)",
+      "signature": "protected DimensionStyle(SerializationInfo info, StreamingContext context)",
+      "summary": "Initializes a new instance of the DimensionStyle class",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AlternateDimensionLengthDisplayUnit",
+      "signature": "public UnitSystem AlternateDimensionLengthDisplayUnit(uint model_serial_number)",
+      "summary": "",
+      "params": [
+        {
+          "name": "model_serial_number",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022model_serial_number\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.AlternateDimensionLengthDisplayUnit(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UnitSystem",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.AlternateDimensionLengthDisplayUnit(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_AlternateDimensionLengthDisplayUnit.htm"
+    },
+    {
+      "name": "ClearAllFieldOverrides",
+      "signature": "public void ClearAllFieldOverrides()",
+      "summary": "Sets all the fields in this DimensionStyle to be not overridden Does not change any dimstyle_id\u0027s or parent_id\u0027s",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_ClearAllFieldOverrides.htm"
+    },
+    {
+      "name": "ClearFieldOverride",
+      "signature": "public void ClearFieldOverride(DimensionStyle.Field field)",
+      "summary": "Set the field as not overridden",
+      "params": [
+        {
+          "name": "field",
+          "type": "Rhino.DocObjects.DimensionStyle.Field",
+          "doc": "[Missing \u003Cparam name=\u0022field\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.ClearFieldOverride(Rhino.DocObjects.DimensionStyle.Field)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_ClearFieldOverride.htm"
+    },
+    {
+      "name": "ClearId",
+      "signature": "public void ClearId()",
+      "summary": "Resets the HasId property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the ID is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearId.htm"
+    },
+    {
+      "name": "ClearIndex",
+      "signature": "public void ClearIndex()",
+      "summary": "Resets the HasIndex property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the index is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearIndex.htm"
+    },
+    {
+      "name": "ClearName",
+      "signature": "public void ClearName()",
+      "summary": "Resets the HasName property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the name is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearName.htm"
+    },
+    {
+      "name": "ConstructConstObject",
+      "signature": "protected void ConstructConstObject(Object parentObject, int subobjectIndex)",
+      "summary": "Assigns a parent object and a sub-object index to this.",
+      "params": [
+        {
+          "name": "parentObject",
+          "type": "System.Object",
+          "doc": "The parent object.",
+          "optional": false
+        },
+        {
+          "name": "subobjectIndex",
+          "type": "System.Int32",
+          "doc": "The sub-object index.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ConstructConstObject.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public void CopyFrom(DimensionStyle source)",
+      "summary": "Copy settings from source dimension style without changing the name, Id or index of this DimensionStyle.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Rhino.DocObjects.DimensionStyle",
+          "doc": "DimensionStyle to copy settings from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_CopyFrom.htm"
+    },
+    {
+      "name": "CreatePreviewBitmap",
+      "signature": "public Bitmap CreatePreviewBitmap(int width, int height)",
+      "summary": "",
+      "params": [
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.CreatePreviewBitmap(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.CreatePreviewBitmap(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.CreatePreviewBitmap(System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_CreatePreviewBitmap.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Increments the Cyclic Redundancy Check value by this instance.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The updated remainder value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_DataCRC.htm"
+    },
+    {
+      "name": "DimensionLengthDisplayUnit",
+      "signature": "public UnitSystem DimensionLengthDisplayUnit(uint model_serial_number)",
+      "summary": "",
+      "params": [
+        {
+          "name": "model_serial_number",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022model_serial_number\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.DimensionLengthDisplayUnit(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UnitSystem",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.DimensionLengthDisplayUnit(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_DimensionLengthDisplayUnit.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose_1.htm"
+    },
+    {
+      "name": "Duplicate()",
+      "signature": "public DimensionStyle Duplicate()",
+      "summary": "Construct a deep (full) copy of this object.",
+      "params": [],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "An object of the same type as this, with the same properties and behavior."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_Duplicate.htm"
+    },
+    {
+      "name": "Duplicate(String, Guid, Guid)",
+      "signature": "public DimensionStyle Duplicate(string newName, Guid newId, Guid newParentId)",
+      "summary": "Construct a deep (full) copy of this object.",
+      "params": [
+        {
+          "name": "newName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022newName\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.Duplicate(System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022newId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.Duplicate(System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "newParentId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022newParentId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.Duplicate(System.String,System.Guid,System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DimensionStyle",
+        "doc": "An object of the same type as this, with the same properties and behavior."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_Duplicate_1.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Finalize.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "IsChildOf",
+      "signature": "public bool IsChildOf(Guid parentId)",
+      "summary": "Tests if this DimensionStyle is a child of a specific DimensionStyle",
+      "params": [
+        {
+          "name": "parentId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022parentId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.IsChildOf(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if this is a child of the DimensionStyle with Parent False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_IsChildOf.htm"
+    },
+    {
+      "name": "IsFieldOverriden",
+      "signature": "public bool IsFieldOverriden(DimensionStyle.Field field)",
+      "summary": "",
+      "params": [
+        {
+          "name": "field",
+          "type": "Rhino.DocObjects.DimensionStyle.Field",
+          "doc": "[Missing \u003Cparam name=\u0022field\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.IsFieldOverriden(Rhino.DocObjects.DimensionStyle.Field)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the field corresponding to field_id is overridden in this AnnotationStyle False if the field is not overridden"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_IsFieldOverriden.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LockId",
+      "signature": "public void LockId()",
+      "summary": "Locks the component Id property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockId.htm"
+    },
+    {
+      "name": "LockIndex",
+      "signature": "public void LockIndex()",
+      "summary": "Locks the component Index property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockIndex.htm"
+    },
+    {
+      "name": "LockName",
+      "signature": "public void LockName()",
+      "summary": "Locks the component Name property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockName.htm"
+    },
+    {
+      "name": "NonConstOperation",
+      "signature": "protected virtual void NonConstOperation()",
+      "summary": "For derived classes implementers. Defines the necessary implementation to free the instance from being constant.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_NonConstOperation.htm"
+    },
+    {
+      "name": "OnSwitchToNonConst",
+      "signature": "protected virtual void OnSwitchToNonConst()",
+      "summary": "Is called when a non-constant operation first occurs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_OnSwitchToNonConst.htm"
+    },
+    {
+      "name": "ScaleLengthValues",
+      "signature": "public void ScaleLengthValues(double scale)",
+      "summary": "Scales all length values by \u0027scale\u0027",
+      "params": [
+        {
+          "name": "scale",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022scale\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.ScaleLengthValues(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_ScaleLengthValues.htm"
+    },
+    {
+      "name": "SetFieldOverride",
+      "signature": "public void SetFieldOverride(DimensionStyle.Field field)",
+      "summary": "Set a field as overridden",
+      "params": [
+        {
+          "name": "field",
+          "type": "Rhino.DocObjects.DimensionStyle.Field",
+          "doc": "[Missing \u003Cparam name=\u0022field\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.DimensionStyle.SetFieldOverride(Rhino.DocObjects.DimensionStyle.Field)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_DimensionStyle_SetFieldOverride.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "Returns the name of the model component type, and then its name and index.",
+      "remarks": "This is provided as a visual aid. Do not rely on this for serialization.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ModelComponent.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ToString.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AlternateBelowLine",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateBelowLine.htm"
+    },
+    {
+      "name": "AlternateDimensionLengthDisplay",
+      "type": "DimensionStyle.LengthDisplay",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateDimensionLengthDisplay.htm"
+    },
+    {
+      "name": "AlternateLengthFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateLengthFactor.htm"
+    },
+    {
+      "name": "AlternateLengthResolution",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateLengthResolution.htm"
+    },
+    {
+      "name": "AlternatePrefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternatePrefix.htm"
+    },
+    {
+      "name": "AlternateRoundoff",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateRoundoff.htm"
+    },
+    {
+      "name": "AlternateSuffix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateSuffix.htm"
+    },
+    {
+      "name": "AlternateToleranceResolution",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateToleranceResolution.htm"
+    },
+    {
+      "name": "AlternateUnitsDisplay",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateUnitsDisplay.htm"
+    },
+    {
+      "name": "AlternateZeroSuppress",
+      "type": "DimensionStyle.ZeroSuppression",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AlternateZeroSuppress.htm"
+    },
+    {
+      "name": "AngleFormat",
+      "type": "DimensionStyle.AngleDisplayFormat",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AngleFormat.htm"
+    },
+    {
+      "name": "AngleResolution",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AngleResolution.htm"
+    },
+    {
+      "name": "AngleZeroSuppress",
+      "type": "DimensionStyle.ZeroSuppression",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AngleZeroSuppress.htm"
+    },
+    {
+      "name": "AngularRoundoff",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_AngularRoundoff.htm"
+    },
+    {
+      "name": "ArcLengthSymbol",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ArcLengthSymbol.htm"
+    },
+    {
+      "name": "ArrowBlockId1",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ArrowBlockId1.htm"
+    },
+    {
+      "name": "ArrowBlockId2",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ArrowBlockId2.htm"
+    },
+    {
+      "name": "ArrowLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ArrowLength.htm"
+    },
+    {
+      "name": "ArrowType1",
+      "type": "DimensionStyle.ArrowType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ArrowType1.htm"
+    },
+    {
+      "name": "ArrowType2",
+      "type": "DimensionStyle.ArrowType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ArrowType2.htm"
+    },
+    {
+      "name": "BaselineSpacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_BaselineSpacing.htm"
+    },
+    {
+      "name": "CentermarkSize",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_CentermarkSize.htm"
+    },
+    {
+      "name": "CenterMarkType",
+      "type": "DimensionStyle.CenterMarkStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_CenterMarkType.htm"
+    },
+    {
+      "name": "ComponentStatus",
+      "type": "ComponentStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the component status of the model component.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ComponentStatus.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns ModelGeometry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ComponentType.htm"
+    },
+    {
+      "name": "DecimalSeparator",
+      "type": "Char",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DecimalSeparator.htm"
+    },
+    {
+      "name": "DeletedName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of a component that is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_DeletedName.htm"
+    },
+    {
+      "name": "DimensionLengthDisplay",
+      "type": "DimensionStyle.LengthDisplay",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimensionLengthDisplay.htm"
+    },
+    {
+      "name": "DimensionLineExtension",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimensionLineExtension.htm"
+    },
+    {
+      "name": "DimensionScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimensionScale.htm"
+    },
+    {
+      "name": "DimensionScaleValue",
+      "type": "ScaleValue",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimensionScaleValue.htm"
+    },
+    {
+      "name": "DimRadialTextAngleType",
+      "type": "DimensionStyle.LeaderContentAngleStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimRadialTextAngleType.htm"
+    },
+    {
+      "name": "DimRadialTextLocation",
+      "type": "DimensionStyle.TextLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimRadialTextLocation.htm"
+    },
+    {
+      "name": "DimRadialTextOrientation",
+      "type": "TextOrientation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimRadialTextOrientation.htm"
+    },
+    {
+      "name": "DimTextAngleType",
+      "type": "DimensionStyle.LeaderContentAngleStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimTextAngleType.htm"
+    },
+    {
+      "name": "DimTextLocation",
+      "type": "DimensionStyle.TextLocation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimTextLocation.htm"
+    },
+    {
+      "name": "DimTextOrientation",
+      "type": "TextOrientation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DimTextOrientation.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "DrawForward",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DrawForward.htm"
+    },
+    {
+      "name": "DrawTextMask",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_DrawTextMask.htm"
+    },
+    {
+      "name": "ExtensionLineExtension",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ExtensionLineExtension.htm"
+    },
+    {
+      "name": "ExtensionLineOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ExtensionLineOffset.htm"
+    },
+    {
+      "name": "FitArrow",
+      "type": "DimensionStyle.ArrowFit",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_FitArrow.htm"
+    },
+    {
+      "name": "FitText",
+      "type": "DimensionStyle.TextFit",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_FitText.htm"
+    },
+    {
+      "name": "FixedExtensionLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_FixedExtensionLength.htm"
+    },
+    {
+      "name": "FixedExtensionOn",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_FixedExtensionOn.htm"
+    },
+    {
+      "name": "Font",
+      "type": "Font",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_Font.htm"
+    },
+    {
+      "name": "ForceDimensionLineBetweenExtensionLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ForceDimensionLineBetweenExtensionLines.htm"
+    },
+    {
+      "name": "HasFieldOverrides",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Checks if any fields in this DimensionStyle are overrides",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_HasFieldOverrides.htm"
+    },
+    {
+      "name": "HasId",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasId.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an Index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has a Name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasName.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ID of the current instance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_Id.htm"
+    },
+    {
+      "name": "IdIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component ID is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IdIsLocked.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model component index attribute.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_Index.htm"
+    },
+    {
+      "name": "IndexIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Index is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IndexIsLocked.htm"
+    },
+    {
+      "name": "InstanceDefinitionModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model as part of the information required for a linked instance definition, this value identifies the linked instance definition reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_InstanceDefinitionModelSerialNumber.htm"
+    },
+    {
+      "name": "IsChild",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests if this DimensionStyle is a child of any other DimensionStyle",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_IsChild.htm"
+    },
+    {
+      "name": "IsComponentStatusLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The component status itself can be locked. This returns an indication.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IsComponentStatusLocked.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_IsDeleted.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsReference",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_IsReference.htm"
+    },
+    {
+      "name": "IsSystemComponent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this model component is a system constant. An incomplete list of system constant model components is below:ON_ModelComponent::Unset ON_InstanceDefinition::Empty ON_Linetype::UnsetON_Linetype::ContinuousON_Linetype::ByLayerON_Linetype::ByParent ON_Layer::UnsetON_Layer::Default ON_TextStyle::UnsetON_TextStyle::DefaultON_TextStyle::ByLayerON_TextStyle::ByParent ON_DimStyle::UnsetON_DimStyle::DefaultON_DimStyle::DefaultInchDecimalON_DimStyle::DefaultInchFractionalON_DimStyle::DefaultFootInchArchitectureON_DimStyle::DefaultMillimeterSmallON_DimStyle::DefaultMillimeterLargeON_DimStyle::DefaultMillimeterArchitecture",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IsSystemComponent.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "LeaderArrowBlockId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderArrowBlockId.htm"
+    },
+    {
+      "name": "LeaderArrowLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderArrowLength.htm"
+    },
+    {
+      "name": "LeaderArrowType",
+      "type": "DimensionStyle.ArrowType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderArrowType.htm"
+    },
+    {
+      "name": "LeaderContentAngleType",
+      "type": "DimensionStyle.LeaderContentAngleStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Style of leader content angle Horizontal Aligned Rotated",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderContentAngleType.htm"
+    },
+    {
+      "name": "LeaderCurveType",
+      "type": "DimensionStyle.LeaderCurveStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderCurveType.htm"
+    },
+    {
+      "name": "LeaderHasLanding",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderHasLanding.htm"
+    },
+    {
+      "name": "LeaderLandingLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderLandingLength.htm"
+    },
+    {
+      "name": "LeaderTextHorizontalAlignment",
+      "type": "TextHorizontalAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderTextHorizontalAlignment.htm"
+    },
+    {
+      "name": "LeaderTextOrientation",
+      "type": "TextOrientation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderTextOrientation.htm"
+    },
+    {
+      "name": "LeaderTextRotationDegrees",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderTextRotationDegrees.htm"
+    },
+    {
+      "name": "LeaderTextRotationRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Angle of leader text for Rotated style",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderTextRotationRadians.htm"
+    },
+    {
+      "name": "LeaderTextVerticalAlignment",
+      "type": "TextVerticalAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LeaderTextVerticalAlignment.htm"
+    },
+    {
+      "name": "LengthFactor",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LengthFactor.htm"
+    },
+    {
+      "name": "LengthResolution",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_LengthResolution.htm"
+    },
+    {
+      "name": "MaskColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_MaskColor.htm"
+    },
+    {
+      "name": "MaskColorSource",
+      "type": "DimensionStyle.MaskType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_MaskColorSource.htm"
+    },
+    {
+      "name": "MaskFrameType",
+      "type": "DimensionStyle.MaskFrame",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_MaskFrameType.htm"
+    },
+    {
+      "name": "MaskOffset",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_MaskOffset.htm"
+    },
+    {
+      "name": "ModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "A value identifying the model that manages this component.",
+      "remarks": "If the component is being managed by a model, this value identifies the model. In Rhino, this value is the document runtime serial number. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ModelSerialNumber.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_Name.htm"
+    },
+    {
+      "name": "NameIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Name is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_NameIsLocked.htm"
+    },
+    {
+      "name": "ParentId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or Set the Id of this DimensionStyle\u0027s parent. If ParentId is Guid.Empty, this DimensionStyle has no parent",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ParentId.htm"
+    },
+    {
+      "name": "Prefix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_Prefix.htm"
+    },
+    {
+      "name": "ReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model for reference, this value identifies the reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ReferenceModelSerialNumber.htm"
+    },
+    {
+      "name": "Roundoff",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_Roundoff.htm"
+    },
+    {
+      "name": "ScaleLeftLengthMillimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ScaleLeftLengthMillimeters.htm"
+    },
+    {
+      "name": "ScaleRightLengthMillimeters",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ScaleRightLengthMillimeters.htm"
+    },
+    {
+      "name": "StackFractionFormat",
+      "type": "DimensionStyle.StackDisplayFormat",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_StackFractionFormat.htm"
+    },
+    {
+      "name": "StackHeightScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_StackHeightScale.htm"
+    },
+    {
+      "name": "Suffix",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_Suffix.htm"
+    },
+    {
+      "name": "SuppressArrow1",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_SuppressArrow1.htm"
+    },
+    {
+      "name": "SuppressArrow2",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_SuppressArrow2.htm"
+    },
+    {
+      "name": "SuppressExtension1",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_SuppressExtension1.htm"
+    },
+    {
+      "name": "SuppressExtension2",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_SuppressExtension2.htm"
+    },
+    {
+      "name": "TextGap",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextGap.htm"
+    },
+    {
+      "name": "TextHeight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextHeight.htm"
+    },
+    {
+      "name": "TextHorizontalAlignment",
+      "type": "TextHorizontalAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextHorizontalAlignment.htm"
+    },
+    {
+      "name": "TextMoveLeader",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextMoveLeader.htm"
+    },
+    {
+      "name": "TextOrientation",
+      "type": "TextOrientation",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextOrientation.htm"
+    },
+    {
+      "name": "TextRotation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextRotation.htm"
+    },
+    {
+      "name": "TextUnderlined",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextUnderlined.htm"
+    },
+    {
+      "name": "TextVerticalAlignment",
+      "type": "TextVerticalAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_TextVerticalAlignment.htm"
+    },
+    {
+      "name": "ToleranceFormat",
+      "type": "DimensionStyle.ToleranceDisplayFormat",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ToleranceFormat.htm"
+    },
+    {
+      "name": "ToleranceHeightScale",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ToleranceHeightScale.htm"
+    },
+    {
+      "name": "ToleranceLowerValue",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ToleranceLowerValue.htm"
+    },
+    {
+      "name": "ToleranceResolution",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ToleranceResolution.htm"
+    },
+    {
+      "name": "ToleranceUpperValue",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ToleranceUpperValue.htm"
+    },
+    {
+      "name": "ToleranceZeroSuppress",
+      "type": "DimensionStyle.ZeroSuppression",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ToleranceZeroSuppress.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "ZeroSuppress",
+      "type": "DimensionStyle.ZeroSuppression",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_DimensionStyle_ZeroSuppress.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

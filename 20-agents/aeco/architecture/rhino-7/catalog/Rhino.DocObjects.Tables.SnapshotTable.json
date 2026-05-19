@@ -1,0 +1,30 @@
+{
+  "name": "SnapshotTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "All snapshots in a rhino document.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_SnapshotTable.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_SnapshotTable_Document.htm"
+    },
+    {
+      "name": "Names",
+      "type": "String[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Array of Snapshot names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_SnapshotTable_Names.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

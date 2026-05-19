@@ -1,0 +1,339 @@
+{
+  "name": "Unroller",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents the operation of unrolling a single surface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Unroller.htm",
+  "constructors": [
+    {
+      "name": "Unroller(Brep)",
+      "signature": "public Unroller(Brep brep)",
+      "summary": "Initializes a new instance of the Unroller class with a brep.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "A brep to be unrolled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller__ctor.htm"
+    },
+    {
+      "name": "Unroller(Surface)",
+      "signature": "public Unroller(Surface surface)",
+      "summary": "Initializes a new instance of the Unroller class with surface.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "A surface to be unrolled.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddFollowingGeometry(Curve)",
+      "signature": "public void AddFollowingGeometry(Curve curve)",
+      "summary": "Adds a curve that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The curve.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(IEnumerable\u003CCurve\u003E)",
+      "signature": "public void AddFollowingGeometry(IEnumerable\u003CCurve\u003E curves)",
+      "summary": "Adds curves that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "curves",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "An array, a list or any enumerable set of curves.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_5.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(Point)",
+      "signature": "public void AddFollowingGeometry(Point point)",
+      "summary": "Adds a point that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_1.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(Point3d)",
+      "signature": "public void AddFollowingGeometry(Point3d point)",
+      "summary": "Adds a point that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_2.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public void AddFollowingGeometry(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Adds points that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "An array, a list or any enumerable set of points.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_6.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(TextDot)",
+      "signature": "public void AddFollowingGeometry(TextDot dot)",
+      "summary": "Adds a text dot that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "dot",
+          "type": "Rhino.Geometry.TextDot",
+          "doc": "A text dot.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_4.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(IEnumerable\u003CTextDot\u003E)",
+      "signature": "public void AddFollowingGeometry(IEnumerable\u003CTextDot\u003E dots)",
+      "summary": "Adds text dots that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "dots",
+          "type": "System.Collections.Generic.IEnumerable\u003CTextDot\u003E",
+          "doc": "An array, a list or any enumerable set of text dots.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_8.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(Point3d, String)",
+      "signature": "public void AddFollowingGeometry(Point3d dotLocation, string dotText)",
+      "summary": "Adds a text dot that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "dotLocation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A dot point.",
+          "optional": false
+        },
+        {
+          "name": "dotText",
+          "type": "System.String",
+          "doc": "A dot text.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_3.htm"
+    },
+    {
+      "name": "AddFollowingGeometry(IEnumerable\u003CPoint3d\u003E, IEnumerable\u003CString\u003E)",
+      "signature": "public void AddFollowingGeometry(IEnumerable\u003CPoint3d\u003E dotLocations, IEnumerable\u003Cstring\u003E dotText)",
+      "summary": "Adds text dots that should be unrolled along with the surface/brep.",
+      "params": [
+        {
+          "name": "dotLocations",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "An array, a list, or any enumerable set of dot locations.",
+          "optional": false
+        },
+        {
+          "name": "dotText",
+          "type": "System.Collections.Generic.IEnumerable\u003CString\u003E",
+          "doc": "An array, a list, or any enumerable set of dot strings.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_AddFollowingGeometry_7.htm"
+    },
+    {
+      "name": "FollowingGeometryIndex(Curve)",
+      "signature": "public int FollowingGeometryIndex(Curve curve)",
+      "summary": "Given an unrolled curve, returns the index of the source, or following curve.",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "An unrolled curve returned by Unroller.PerformUnroll.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the curve added by Unroller.AddFollowingGeometry if successful, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_FollowingGeometryIndex.htm"
+    },
+    {
+      "name": "FollowingGeometryIndex(TextDot)",
+      "signature": "public int FollowingGeometryIndex(TextDot dot)",
+      "summary": "Given an unrolled text dot, returns the index of the source, or following text dot.",
+      "params": [
+        {
+          "name": "dot",
+          "type": "Rhino.Geometry.TextDot",
+          "doc": "An unrolled text dot returned by Unroller.PerformUnroll.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the text dot added by Unroller.AddFollowingGeometry if successful, otherwise -1."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_FollowingGeometryIndex_1.htm"
+    },
+    {
+      "name": "PerformUnroll(List\u003CBrep\u003E)",
+      "signature": "public int PerformUnroll(List\u003CBrep\u003E flatbreps)",
+      "summary": "Executes unrolling operations.",
+      "params": [
+        {
+          "name": "flatbreps",
+          "type": "System.Collections.Generic.List\u003CBrep\u003E",
+          "doc": "List of breps containing flattened results.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of breps in result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_PerformUnroll_1.htm"
+    },
+    {
+      "name": "PerformUnroll(Curve[], Point3d[], TextDot[])",
+      "signature": "public Brep[] PerformUnroll(out Curve[] unrolledCurves, out Point3d[] unrolledPoints, out TextDot[] unrolledDots)",
+      "summary": "Executes unrolling operations.",
+      "params": [
+        {
+          "name": "unrolledCurves",
+          "type": "Rhino.Geometry.Curve[]",
+          "doc": "An array of unrolled curves is assigned during the call in this out parameter.",
+          "optional": false
+        },
+        {
+          "name": "unrolledPoints",
+          "type": "Rhino.Geometry.Point3d[]",
+          "doc": "An array of unrolled points is assigned during the call in this out parameter.",
+          "optional": false
+        },
+        {
+          "name": "unrolledDots",
+          "type": "Rhino.Geometry.TextDot[]",
+          "doc": "An array of unrolled text dots is assigned during the call in this out parameter.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "An array of breps. This array can be empty."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Unroller_PerformUnroll.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsoluteTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the absolute tolerance for the unrolling operation. Absolute tolerance is used in the evaluation of new entities, such as intersections, re-projections and splits.In the current implementation, absolute tolerance is used in tessellating rails, fitting curves and pulling back trims.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Unroller_AbsoluteTolerance.htm"
+    },
+    {
+      "name": "ExplodeOutput",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value determining whether geometry should be exploded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Unroller_ExplodeOutput.htm"
+    },
+    {
+      "name": "ExplodeSpacing",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value determining whether spacing should be exploded.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Unroller_ExplodeSpacing.htm"
+    },
+    {
+      "name": "RelativeTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the relative tolerance for the unrolling operation. Relative tolerance is used in the evaluation of intrinsic properties, such as computations \u0022along\u0022 the surface or brep.In the current implementation, relative tolerance is used to decide if a surface is flat enough to try to unroll. That helps ease the scale dependency. The surface has to be linear in one direction within (length * RelativeTolerance) to be considered linear for that purpose. Otherwise smash will ignore that tolerance and unroll anything.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Unroller_RelativeTolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

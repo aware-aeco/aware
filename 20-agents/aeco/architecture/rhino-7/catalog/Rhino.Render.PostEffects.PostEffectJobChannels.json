@@ -1,0 +1,56 @@
+{
+  "name": "PostEffectJobChannels",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectJobChannels\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectJobChannels.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectJobChannels",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJobChannels_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJobChannels_Finalize.htm"
+    },
+    {
+      "name": "GetChannel",
+      "signature": "public PostEffectChannel GetChannel(Guid channelId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "channelId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022channelId\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectJobChannels.GetChannel(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PostEffectChannel",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectJobChannels.GetChannel(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJobChannels_GetChannel.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

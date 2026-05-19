@@ -1,0 +1,240 @@
+{
+  "name": "CurveBooleanRegions",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents the results of a Curve.CreateBooleanRegions calculation.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_CurveBooleanRegions.htm",
+  "constructors": [
+    {
+      "name": "CurveBooleanRegions",
+      "signature": "protected CurveBooleanRegions(SerializationInfo info, StreamingContext context)",
+      "summary": "Protected constructor used in serialization.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "Serialization data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "Serialization stream.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BoundaryCount",
+      "signature": "public int BoundaryCount(int regionIndex)",
+      "summary": "Returns the number of boundary curves in a curve region.",
+      "params": [
+        {
+          "name": "regionIndex",
+          "type": "System.Int32",
+          "doc": "The curve region index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of boundary curves in the curve region."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_BoundaryCount.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method. You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true. Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_Dispose_1.htm"
+    },
+    {
+      "name": "PlanarCurve",
+      "signature": "public Curve PlanarCurve(int planarCurveIndex)",
+      "summary": "Returns a planar curve that was calculated by Curve.CreateBooleanRegions.",
+      "params": [
+        {
+          "name": "planarCurveIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022planarCurveIndex\u0022/\u003E documentation for \u0022M:Rhino.Geometry.CurveBooleanRegions.PlanarCurve(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve",
+        "doc": "The planar curve if successful, null if not successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_PlanarCurve.htm"
+    },
+    {
+      "name": "RegionCurves",
+      "signature": "public Curve[] RegionCurves(int regionIndex)",
+      "summary": "Returns the boundary curves in a curve region. A curve region is a collection of curves that bound a single connected region of the plane. Note, the first curve is always the outer boundary.",
+      "params": [
+        {
+          "name": "regionIndex",
+          "type": "System.Int32",
+          "doc": "The curve region index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Curve[]",
+        "doc": "An array of boundary curves if successful, an empty array if not successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_RegionCurves.htm"
+    },
+    {
+      "name": "RegionPointIndex",
+      "signature": "public int RegionPointIndex(int pointIndex)",
+      "summary": "If this object were created using the Curve.CreateBooleanRegions override that accepts a collection of points as input, then you this method to retrieve the index of the point contained in a curve region. If this.RegionPointIndex(i) = n, then points[i] is contained in this.RegionCurves(n). If points[i] is not in any region, then this.RegionPointIndex(i) = -1.",
+      "params": [
+        {
+          "name": "pointIndex",
+          "type": "System.Int32",
+          "doc": "The point index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the input point contained in the specified region if successful, or -1 if points[i] was not used in any region or if not successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_RegionPointIndex.htm"
+    },
+    {
+      "name": "SegmentCount",
+      "signature": "public int SegmentCount(int regionIndex, int boundaryIndex)",
+      "summary": "Returns the number of segments in a boundary curve in a curve region.",
+      "params": [
+        {
+          "name": "regionIndex",
+          "type": "System.Int32",
+          "doc": "The curve region index.",
+          "optional": false
+        },
+        {
+          "name": "boundaryIndex",
+          "type": "System.Int32",
+          "doc": "The boundary curve index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of curve segments in th boundary curves."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_SegmentCount.htm"
+    },
+    {
+      "name": "SegmentDetails",
+      "signature": "public int SegmentDetails(int regionIndex, int boundaryIndex, int segmmentIndex, out Interval subDomain, out bool reversed)",
+      "summary": "Returns the details of a segment in a boundary curve in a curve region.",
+      "params": [
+        {
+          "name": "regionIndex",
+          "type": "System.Int32",
+          "doc": "The curve region index.",
+          "optional": false
+        },
+        {
+          "name": "boundaryIndex",
+          "type": "System.Int32",
+          "doc": "The boundary curve index.",
+          "optional": false
+        },
+        {
+          "name": "segmmentIndex",
+          "type": "System.Int32",
+          "doc": "The segment index.",
+          "optional": false
+        },
+        {
+          "name": "subDomain",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "The sub-domain of the planar curve used by the segment.",
+          "optional": false
+        },
+        {
+          "name": "reversed",
+          "type": "System.Boolean",
+          "doc": "true if the piece of the planar curve should be reversed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the planar curve used by the specified segment if successful, -1 if not successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_CurveBooleanRegions_SegmentDetails.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PlanarCurveCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns number of planar curves that were calculated by Curve.CreateBooleanRegions.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_CurveBooleanRegions_PlanarCurveCount.htm"
+    },
+    {
+      "name": "PointCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "If this object were created using the Curve.CreateBooleanRegions override that accepts a collection of points as input, then this value will be equal to the length of the points collection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_CurveBooleanRegions_PointCount.htm"
+    },
+    {
+      "name": "RegionCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the number of curve regions. A curve region is a collection of curves that bound a single connected region of the plane.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_CurveBooleanRegions_RegionCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Utilities.ContentChooserFlags",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.Utilities.ContentChooserFlags\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Utilities_ContentChooserFlags.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No flags; normal usage."
+    },
+    {
+      "name": "HideNewTab",
+      "value": 1,
+      "summary": "Hides the \u0027New\u0027 tab."
+    },
+    {
+      "name": "HideExistingTab",
+      "value": 2,
+      "summary": "Hides the \u0027Existing\u0027 tab."
+    },
+    {
+      "name": "MultipleSelection",
+      "value": 4,
+      "summary": "Enables multiple selection."
+    },
+    {
+      "name": "DisableImportButton",
+      "value": 16,
+      "summary": "Disables the import button."
+    }
+  ]
+}

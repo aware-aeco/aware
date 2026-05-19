@@ -1,0 +1,162 @@
+{
+  "name": "SubDEdgeList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "All edges in a SubD",
+  "interfaces": [
+    "IEnumerable\u003CSubDEdge\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_SubDEdgeList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public SubDEdge Add(SubDEdgeTag tag, SubDVertex v0, SubDVertex v1)",
+      "summary": "Add a new edge to the list.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "Rhino.Geometry.SubDEdgeTag",
+          "doc": "The type of edge tag, such as smooth or corner.",
+          "optional": false
+        },
+        {
+          "name": "v0",
+          "type": "Rhino.Geometry.SubDVertex",
+          "doc": "First vertex.",
+          "optional": false
+        },
+        {
+          "name": "v1",
+          "type": "Rhino.Geometry.SubDVertex",
+          "doc": "Second vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDEdgeList.Add(Rhino.Geometry.SubDEdgeTag,Rhino.Geometry.SubDVertex,Rhino.Geometry.SubDVertex)\u0022]"
+      },
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If tag is unset or non-defined."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDEdgeList_Add.htm"
+    },
+    {
+      "name": "Find(Int32)",
+      "signature": "public SubDEdge Find(int id)",
+      "summary": "Find an edge in this SubD with a given id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDEdgeList.Find(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDEdgeList.Find(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDEdgeList_Find.htm"
+    },
+    {
+      "name": "Find(UInt32)",
+      "signature": "public SubDEdge Find(uint id)",
+      "summary": "Find an edge in this SubD with a given id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDEdgeList.Find(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SubDEdge",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDEdgeList.Find(System.UInt32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDEdgeList_Find_1.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CSubDEdge\u003E GetEnumerator()",
+      "summary": "Implementation of IEnumerable",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CSubDEdge\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Collections.SubDEdgeList.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDEdgeList_GetEnumerator.htm"
+    },
+    {
+      "name": "SetEdgeTags(IEnumerable\u003CInt32\u003E, SubDEdgeTag)",
+      "signature": "public void SetEdgeTags(IEnumerable\u003Cint\u003E edgeIndices, SubDEdgeTag tag)",
+      "summary": "Set edge tags for a list of edges. Useful for adding creases to SubDs",
+      "params": [
+        {
+          "name": "edgeIndices",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "list of indices for the edges to set tags on",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "Rhino.Geometry.SubDEdgeTag",
+          "doc": "The type of edge tag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDEdgeList_SetEdgeTags_1.htm"
+    },
+    {
+      "name": "SetEdgeTags(IEnumerable\u003CSubDEdge\u003E, SubDEdgeTag)",
+      "signature": "public void SetEdgeTags(IEnumerable\u003CSubDEdge\u003E edges, SubDEdgeTag tag)",
+      "summary": "Set edge tags for a list of edges. Useful for adding creases to SubDs",
+      "params": [
+        {
+          "name": "edges",
+          "type": "System.Collections.Generic.IEnumerable\u003CSubDEdge\u003E",
+          "doc": "list of edges to set a specific tag on",
+          "optional": false
+        },
+        {
+          "name": "tag",
+          "type": "Rhino.Geometry.SubDEdgeTag",
+          "doc": "The type of edge tag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_SubDEdgeList_SetEdgeTags.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of SubD edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_SubDEdgeList_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

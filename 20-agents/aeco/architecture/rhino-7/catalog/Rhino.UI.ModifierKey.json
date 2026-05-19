@@ -1,0 +1,26 @@
+{
+  "name": "ModifierKey",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ModifierKey\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ModifierKey.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Control",
+      "value": 1
+    },
+    {
+      "name": "Shift",
+      "value": 2
+    }
+  ]
+}

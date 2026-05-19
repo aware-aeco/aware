@@ -1,0 +1,46 @@
+{
+  "name": "ShowMessageResult",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ShowMessageResult\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ShowMessageResult.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "OK",
+      "value": 1
+    },
+    {
+      "name": "Cancel",
+      "value": 2
+    },
+    {
+      "name": "Abort",
+      "value": 3
+    },
+    {
+      "name": "Retry",
+      "value": 4
+    },
+    {
+      "name": "Ignore",
+      "value": 5
+    },
+    {
+      "name": "Yes",
+      "value": 6
+    },
+    {
+      "name": "No",
+      "value": 7
+    }
+  ]
+}

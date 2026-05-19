@@ -1,0 +1,549 @@
+{
+  "name": "SweepOneRail",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Utility class for generating Breps by sweeping cross section curves over a single rail curve. Note, this class has been superseded by the Rhino.Geometry.Brep.CreateFromSweep static functions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SweepOneRail.htm",
+  "constructors": [
+    {
+      "name": "SweepOneRail",
+      "signature": "public SweepOneRail()",
+      "summary": "Initializes a new instance of the SweepOneRail class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PerformSweep(Curve, Curve)",
+      "signature": "public Brep[] PerformSweep(Curve rail, Curve crossSection)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022crossSection\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweep.htm"
+    },
+    {
+      "name": "PerformSweep(Curve, IEnumerable\u003CCurve\u003E)",
+      "signature": "public Brep[] PerformSweep(Curve rail, IEnumerable\u003CCurve\u003E crossSections)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweep_2.htm"
+    },
+    {
+      "name": "PerformSweep(Curve, Curve, Double)",
+      "signature": "public Brep[] PerformSweep(Curve rail, Curve crossSection, double crossSectionParameter)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022crossSection\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameter",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022crossSectionParameter\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweep_1.htm"
+    },
+    {
+      "name": "PerformSweep(Curve, IEnumerable\u003CCurve\u003E, IEnumerable\u003CDouble\u003E)",
+      "signature": "public Brep[] PerformSweep(Curve rail, IEnumerable\u003CCurve\u003E crossSections, IEnumerable\u003Cdouble\u003E crossSectionParameters)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double})\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSectionParameters\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double})\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweep(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double})\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweep_3.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, Curve, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail, Curve crossSection, int rebuildCount)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022crossSection\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022rebuildCount\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRebuild_1.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, IEnumerable\u003CCurve\u003E, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail, IEnumerable\u003CCurve\u003E crossSections, int rebuildCount)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022rebuildCount\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRebuild_3.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, Curve, Double, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail, Curve crossSection, double crossSectionParameter, int rebuildCount)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022crossSection\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameter",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022crossSectionParameter\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022rebuildCount\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRebuild.htm"
+    },
+    {
+      "name": "PerformSweepRebuild(Curve, IEnumerable\u003CCurve\u003E, IEnumerable\u003CDouble\u003E, Int32)",
+      "signature": "public Brep[] PerformSweepRebuild(Curve rail, IEnumerable\u003CCurve\u003E crossSections, IEnumerable\u003Cdouble\u003E crossSectionParameters, int rebuildCount)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSectionParameters\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "rebuildCount",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022rebuildCount\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRebuild(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRebuild_2.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, Curve, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail, Curve crossSection, double refitTolerance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022crossSection\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022refitTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRefit.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, IEnumerable\u003CCurve\u003E, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail, IEnumerable\u003CCurve\u003E crossSections, double refitTolerance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022refitTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRefit_3.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, Curve, Double, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail, Curve crossSection, double crossSectionParameter, double refitTolerance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSection",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022crossSection\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameter",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022crossSectionParameter\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022refitTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,Rhino.Geometry.Curve,System.Double,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRefit_1.htm"
+    },
+    {
+      "name": "PerformSweepRefit(Curve, IEnumerable\u003CCurve\u003E, IEnumerable\u003CDouble\u003E, Double)",
+      "signature": "public Brep[] PerformSweepRefit(Curve rail, IEnumerable\u003CCurve\u003E crossSections, IEnumerable\u003Cdouble\u003E crossSectionParameters, double refitTolerance)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rail",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "[Missing \u003Cparam name=\u0022rail\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSections",
+          "type": "System.Collections.Generic.IEnumerable\u003CCurve\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSections\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "crossSectionParameters",
+          "type": "System.Collections.Generic.IEnumerable\u003CDouble\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022crossSectionParameters\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "refitTolerance",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022refitTolerance\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Brep[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.PerformSweepRefit(Rhino.Geometry.Curve,System.Collections.Generic.IEnumerable{Rhino.Geometry.Curve},System.Collections.Generic.IEnumerable{System.Double},System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_PerformSweepRefit_2.htm"
+    },
+    {
+      "name": "SetRoadlikeUpDirection",
+      "signature": "public void SetRoadlikeUpDirection(Vector3d up)",
+      "summary": "",
+      "params": [
+        {
+          "name": "up",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022up\u0022/\u003E documentation for \u0022M:Rhino.Geometry.SweepOneRail.SetRoadlikeUpDirection(Rhino.Geometry.Vector3d)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_SetRoadlikeUpDirection.htm"
+    },
+    {
+      "name": "SetToRoadlikeFront",
+      "signature": "public void SetToRoadlikeFront()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_SetToRoadlikeFront.htm"
+    },
+    {
+      "name": "SetToRoadlikeRight",
+      "signature": "public void SetToRoadlikeRight()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_SetToRoadlikeRight.htm"
+    },
+    {
+      "name": "SetToRoadlikeTop",
+      "signature": "public void SetToRoadlikeTop()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_SweepOneRail_SetToRoadlikeTop.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AngleToleranceRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_AngleToleranceRadians.htm"
+    },
+    {
+      "name": "ClosedSweep",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If the input rail is closed, ClosedSweep determines if the swept breps will also be closed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_ClosedSweep.htm"
+    },
+    {
+      "name": "GlobalShapeBlending",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, the sweep is linearly blended from one end to the other, creating sweeps that taper from one cross-section curve to the other. If false, the sweep stays constant at the ends and changes more rapidly in the middle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_GlobalShapeBlending.htm"
+    },
+    {
+      "name": "IsFreeform",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_IsFreeform.htm"
+    },
+    {
+      "name": "IsRoadlike",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_IsRoadlike.htm"
+    },
+    {
+      "name": "IsRoadlikeFront",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_IsRoadlikeFront.htm"
+    },
+    {
+      "name": "IsRoadlikeTop",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_IsRoadlikeTop.htm"
+    },
+    {
+      "name": "IsRoadlineRight",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_IsRoadlineRight.htm"
+    },
+    {
+      "name": "MiterType",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "0: don\u0027t miter, 1: intersect surfaces and trim sweeps, 2: rotate shapes at kinks and don\u0027t trim.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_MiterType.htm"
+    },
+    {
+      "name": "SweepTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_SweepOneRail_SweepTolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

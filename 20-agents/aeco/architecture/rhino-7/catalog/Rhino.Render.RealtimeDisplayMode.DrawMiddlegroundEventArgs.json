@@ -1,0 +1,41 @@
+{
+  "name": "RealtimeDisplayMode.DrawMiddlegroundEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RealtimeDisplayMode.DrawMiddlegroundEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RealtimeDisplayMode_DrawMiddlegroundEventArgs.htm",
+  "constructors": [
+    {
+      "name": "RealtimeDisplayMode.DrawMiddlegroundEventArgs",
+      "signature": "public DrawMiddlegroundEventArgs(DisplayPipeline dp)",
+      "summary": "Initializes a new instance of the RealtimeDisplayMode.DrawMiddlegroundEventArgs class",
+      "params": [
+        {
+          "name": "dp",
+          "type": "Rhino.Display.DisplayPipeline",
+          "doc": "[Missing \u003Cparam name=\u0022dp\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.DrawMiddlegroundEventArgs.#ctor(Rhino.Display.DisplayPipeline)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_DrawMiddlegroundEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Pipeline",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_DrawMiddlegroundEventArgs_Pipeline.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

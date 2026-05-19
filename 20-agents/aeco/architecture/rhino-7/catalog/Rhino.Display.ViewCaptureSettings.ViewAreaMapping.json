@@ -1,0 +1,29 @@
+{
+  "name": "ViewCaptureSettings.ViewAreaMapping",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "Defines how a viewport is mapped to output.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_ViewCaptureSettings_ViewAreaMapping.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "View",
+      "value": 0,
+      "summary": "Best fit rectangle of what is displayed in a viewport"
+    },
+    {
+      "name": "Extents",
+      "value": 1,
+      "summary": "Zoom projection to all visible geometry in a viewport"
+    },
+    {
+      "name": "Window",
+      "value": 2,
+      "summary": "Use window rectangle defined by user"
+    }
+  ]
+}

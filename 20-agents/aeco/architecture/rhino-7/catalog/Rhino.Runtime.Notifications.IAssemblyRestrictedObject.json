@@ -1,0 +1,27 @@
+{
+  "name": "IAssemblyRestrictedObject",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "interface",
+  "summary": "A class that implements this interface signals its clients that its instances can only be modified by certain assemblies. This is useful in cases where only certain assemblies should be able to modify an object. The actual members of an instance that are restricted are left to the discretion of the instance\u0027s class, and should be documented.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_Notifications_IAssemblyRestrictedObject.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Editable",
+      "signature": "bool Editable()",
+      "summary": "Determines whether an assembly can modify the instance.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the instance can be edited by the assembly, otherwise returns false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_IAssemblyRestrictedObject_Editable.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "SelectionMethod",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for several kinds of selection methods.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_SelectionMethod.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Other",
+      "value": 0,
+      "summary": "Selected by non-mouse method (SelAll, etc.)"
+    },
+    {
+      "name": "MousePick",
+      "value": 1,
+      "summary": "Selected by a mouse click on the object."
+    },
+    {
+      "name": "WindowBox",
+      "value": 2,
+      "summary": "Selected by a mouse selection window box. Window selection indicates the object is completely contained by the selection rectangle."
+    },
+    {
+      "name": "CrossingBox",
+      "value": 3,
+      "summary": "Selected by a mouse selection crossing box. A crossing selection indicates the object intersects with the selection rectangle."
+    }
+  ]
+}

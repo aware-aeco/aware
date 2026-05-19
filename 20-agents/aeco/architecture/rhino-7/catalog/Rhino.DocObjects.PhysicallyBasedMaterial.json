@@ -1,0 +1,268 @@
+{
+  "name": "PhysicallyBasedMaterial",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.PhysicallyBasedMaterial\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_PhysicallyBasedMaterial.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetTexture",
+      "signature": "public Texture GetTexture(TextureType which)",
+      "summary": "Get the texture that corresponds with the specified texture type for this material.",
+      "params": [
+        {
+          "name": "which",
+          "type": "Rhino.DocObjects.TextureType",
+          "doc": "[Missing \u003Cparam name=\u0022which\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.PhysicallyBasedMaterial.GetTexture(Rhino.DocObjects.TextureType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Texture",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.PhysicallyBasedMaterial.GetTexture(Rhino.DocObjects.TextureType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_PhysicallyBasedMaterial_GetTexture.htm"
+    },
+    {
+      "name": "GetTextures",
+      "signature": "public Texture[] GetTextures()",
+      "summary": "Get array of textures that this material uses",
+      "params": [],
+      "returns": {
+        "type": "Texture[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.PhysicallyBasedMaterial.GetTextures\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_PhysicallyBasedMaterial_GetTextures.htm"
+    },
+    {
+      "name": "SetTexture",
+      "signature": "public bool SetTexture(Texture texture, TextureType which)",
+      "summary": "Set the texture that corresponds with the specified texture type for this material.",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "An instance of Rhino.DocObjects.Texture",
+          "optional": false
+        },
+        {
+          "name": "which",
+          "type": "Rhino.DocObjects.TextureType",
+          "doc": "Use Rhino.DocObjects.TextureType",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.PhysicallyBasedMaterial.SetTexture(Rhino.DocObjects.Texture,Rhino.DocObjects.TextureType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_PhysicallyBasedMaterial_SetTexture.htm"
+    },
+    {
+      "name": "SynchronizeLegacyMaterial",
+      "signature": "public void SynchronizeLegacyMaterial()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_PhysicallyBasedMaterial_SynchronizeLegacyMaterial.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alpha",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Alpha.htm"
+    },
+    {
+      "name": "Anisotropic",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Anisotropic.htm"
+    },
+    {
+      "name": "AnisotropicRotation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_AnisotropicRotation.htm"
+    },
+    {
+      "name": "BaseColor",
+      "type": "Color4f",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_BaseColor.htm"
+    },
+    {
+      "name": "BRDF",
+      "type": "PhysicallyBasedMaterial.BRDFs",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_BRDF.htm"
+    },
+    {
+      "name": "Clearcoat",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Clearcoat.htm"
+    },
+    {
+      "name": "ClearcoatRoughness",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_ClearcoatRoughness.htm"
+    },
+    {
+      "name": "Emission",
+      "type": "Color4f",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Emission.htm"
+    },
+    {
+      "name": "Material",
+      "type": "Material",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Material.htm"
+    },
+    {
+      "name": "Metallic",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Metallic.htm"
+    },
+    {
+      "name": "Opacity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Opacity.htm"
+    },
+    {
+      "name": "OpacityIOR",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_OpacityIOR.htm"
+    },
+    {
+      "name": "OpacityRoughness",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_OpacityRoughness.htm"
+    },
+    {
+      "name": "ReflectiveIOR",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_ReflectiveIOR.htm"
+    },
+    {
+      "name": "Roughness",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Roughness.htm"
+    },
+    {
+      "name": "Sheen",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Sheen.htm"
+    },
+    {
+      "name": "SheenTint",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_SheenTint.htm"
+    },
+    {
+      "name": "Specular",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Specular.htm"
+    },
+    {
+      "name": "SpecularTint",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_SpecularTint.htm"
+    },
+    {
+      "name": "Subsurface",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_Subsurface.htm"
+    },
+    {
+      "name": "SubsurfaceScatteringColor",
+      "type": "Color4f",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_SubsurfaceScatteringColor.htm"
+    },
+    {
+      "name": "SubsurfaceScatteringRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_SubsurfaceScatteringRadius.htm"
+    },
+    {
+      "name": "UseBaseColorTextureAlphaForObjectAlphaTransparencyTexture",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_PhysicallyBasedMaterial_UseBaseColorTextureAlphaForObjectAlphaTransparencyTexture.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

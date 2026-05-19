@@ -1,0 +1,137 @@
+{
+  "name": "Torus",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the value of a plane and two radii in a torus that is oriented in three-dimensional space.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Torus.htm",
+  "constructors": [
+    {
+      "name": "Torus",
+      "signature": "public Torus(Plane basePlane, double majorRadius, double minorRadius)",
+      "summary": "Initializes a new Torus from base pane and two radii.",
+      "params": [
+        {
+          "name": "basePlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane for major radius circle.",
+          "optional": false
+        },
+        {
+          "name": "majorRadius",
+          "type": "System.Double",
+          "doc": "Radius of circle that lies at the heart of the torus.",
+          "optional": false
+        },
+        {
+          "name": "minorRadius",
+          "type": "System.Double",
+          "doc": "Radius of torus section.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Torus__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Torus other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Torus",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Torus.EpsilonEquals(Rhino.Geometry.Torus,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Torus.EpsilonEquals(Rhino.Geometry.Torus,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Torus.EpsilonEquals(Rhino.Geometry.Torus,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Torus_EpsilonEquals.htm"
+    },
+    {
+      "name": "ToNurbsSurface",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Converts this torus to its NURBS surface representation. This is synonymous with calling NurbsSurface.CreateFromTorus().",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A NURBS surface representation of this torus, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Torus_ToNurbsSurface.htm"
+    },
+    {
+      "name": "ToRevSurface",
+      "signature": "public RevSurface ToRevSurface()",
+      "summary": "Convert this torus to a surface of revolution representation. This is synonymous with calling RevSurface.CreateFromTorus().",
+      "params": [],
+      "returns": {
+        "type": "RevSurface",
+        "doc": "A surface of revolution representation of this torus, or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Torus_ToRevSurface.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this torus is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Torus_IsValid.htm"
+    },
+    {
+      "name": "MajorRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the circle that lies at the heart of the torus.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Torus_MajorRadius.htm"
+    },
+    {
+      "name": "MinorRadius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the radius of the torus section.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Torus_MinorRadius.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the plane for the torus large circle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Torus_Plane.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Torus",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets an invalid Torus.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Torus_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,356 @@
+{
+  "name": "RenderContentCollection",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "A collection of Render content",
+  "interfaces": [
+    "IDisposable",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RenderContentCollection.htm",
+  "constructors": [
+    {
+      "name": "RenderContentCollection()",
+      "signature": "public RenderContentCollection()",
+      "summary": "Construct an empty collection of RenderContent objects",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection__ctor.htm"
+    },
+    {
+      "name": "RenderContentCollection(IntPtr)",
+      "signature": "public RenderContentCollection(IntPtr nativePtr)",
+      "summary": "Internal function to create collection from native pointer",
+      "params": [
+        {
+          "name": "nativePtr",
+          "type": "System.IntPtr",
+          "doc": "Native pointer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public void Add(RenderContentCollection collection)",
+      "summary": "Add an array of non-const contents to the collection.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "The array of contents to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Add.htm"
+    },
+    {
+      "name": "Append",
+      "signature": "public void Append(RenderContent content)",
+      "summary": "Append a RenderContent to the collection",
+      "params": [
+        {
+          "name": "content",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "The array of contents to append.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Append.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clear the collection.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Clear.htm"
+    },
+    {
+      "name": "ContentAt",
+      "signature": "public RenderContent ContentAt(int index)",
+      "summary": "Content at index",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022index\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.ContentAt(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.ContentAt(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_ContentAt.htm"
+    },
+    {
+      "name": "ContentNeedsPreviewThumbnail",
+      "signature": "public bool ContentNeedsPreviewThumbnail(RenderContent c, bool includeChildren)",
+      "summary": "To be documented",
+      "params": [
+        {
+          "name": "c",
+          "type": "Rhino.Render.RenderContent",
+          "doc": "[Missing \u003Cparam name=\u0022c\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.ContentNeedsPreviewThumbnail(Rhino.Render.RenderContent,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "includeChildren",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022includeChildren\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.ContentNeedsPreviewThumbnail(Rhino.Render.RenderContent,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.ContentNeedsPreviewThumbnail(Rhino.Render.RenderContent,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_ContentNeedsPreviewThumbnail.htm"
+    },
+    {
+      "name": "Count",
+      "signature": "public int Count()",
+      "summary": "The number of items in the collection.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of items in the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Count.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose function for RenderContentCollection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Finalizer for RenderContentCollection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Finalize.htm"
+    },
+    {
+      "name": "Find_Sel",
+      "signature": "public RenderContent Find_Sel(Guid uuid)",
+      "summary": "TODO",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuid\u0022/\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.Find_Sel(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RenderContent",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.Find_Sel(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Find_Sel.htm"
+    },
+    {
+      "name": "FirstTag",
+      "signature": "public string FirstTag()",
+      "summary": "Gets the first tag",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The first tag"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_FirstTag.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_GetEnumerator.htm"
+    },
+    {
+      "name": "GetFilterContentByUsage",
+      "signature": "public FilterContentByUsage GetFilterContentByUsage()",
+      "summary": "Gets usage filter type for collection",
+      "params": [],
+      "returns": {
+        "type": "FilterContentByUsage",
+        "doc": "Usage filter type for collection"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_GetFilterContentByUsage.htm"
+    },
+    {
+      "name": "GetForcedVaries",
+      "signature": "public bool GetForcedVaries()",
+      "summary": "See SetForcedVaries",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Forced varies"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_GetForcedVaries.htm"
+    },
+    {
+      "name": "GetSearchPattern",
+      "signature": "public string GetSearchPattern()",
+      "summary": "See SetSearchPattern",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.GetSearchPattern\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_GetSearchPattern.htm"
+    },
+    {
+      "name": "Iterator",
+      "signature": "public ContentCollectionIterator Iterator()",
+      "summary": "Gets an iterator for the collection",
+      "params": [],
+      "returns": {
+        "type": "ContentCollectionIterator",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.RenderContentCollection.Iterator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Iterator.htm"
+    },
+    {
+      "name": "NextTag",
+      "signature": "public string NextTag()",
+      "summary": "Call FirstTag first - this gets the next tag",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The next tag"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_NextTag.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public void Remove(RenderContentCollection collection)",
+      "summary": "Remove an array of contents from the collection.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "Collection of contents to remove",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Remove.htm"
+    },
+    {
+      "name": "Set",
+      "signature": "public void Set(RenderContentCollection collection)",
+      "summary": "Set an array of const contents as the collection.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "Rhino.Render.RenderContentCollection",
+          "doc": "The array of contents to set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_Set.htm"
+    },
+    {
+      "name": "SetForcedVaries",
+      "signature": "public void SetForcedVaries(bool b)",
+      "summary": "Set the collection to \u0027varies\u0027. Only valid if the collection is a \u0027selection\u0027 collection. Useful for clients that only support single content selections.",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "Varies if true",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_SetForcedVaries.htm"
+    },
+    {
+      "name": "SetSearchPattern",
+      "signature": "public void SetSearchPattern(string pattern)",
+      "summary": "Sets a search pattern for filtering contents. This is not actually used by the iterator, but is stored for use by any UI that wants to filter contents based on a search string by using the function RhRdkCheckSearchPattern()",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "System.String",
+          "doc": "The search pattern. See RhRdkCheckSearchPattern() for details",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RenderContentCollection_SetSearchPattern.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "Internal function to get native pointer",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RenderContentCollection_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

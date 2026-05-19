@@ -1,0 +1,875 @@
+{
+  "name": "Line",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the value of start and end points in a single line segment.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Line.htm",
+  "constructors": [
+    {
+      "name": "Line(Point3d, Point3d)",
+      "signature": "public Line(Point3d from, Point3d to)",
+      "summary": "Constructs a new line segment between two points.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start point of line.",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "End point of line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line__ctor.htm"
+    },
+    {
+      "name": "Line(Point3d, Vector3d)",
+      "signature": "public Line(Point3d start, Vector3d span)",
+      "summary": "Constructs a new line segment from start point and span vector.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start point of line segment.",
+          "optional": false
+        },
+        {
+          "name": "span",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction and length of line segment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line__ctor_1.htm"
+    },
+    {
+      "name": "Line(Point3d, Vector3d, Double)",
+      "signature": "public Line(Point3d start, Vector3d direction, double length)",
+      "summary": "Constructs a new line segment from start point, direction and length.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Start point of line segment.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Direction of line segment.",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "System.Double",
+          "doc": "Length of line segment.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line__ctor_2.htm"
+    },
+    {
+      "name": "Line(Double, Double, Double, Double, Double, Double)",
+      "signature": "public Line(double x0, double y0, double z0, double x1, double y1, double z1)",
+      "summary": "Constructs a new line segment between two points.",
+      "params": [
+        {
+          "name": "x0",
+          "type": "System.Double",
+          "doc": "The X coordinate of the first point.",
+          "optional": false
+        },
+        {
+          "name": "y0",
+          "type": "System.Double",
+          "doc": "The Y coordinate of the first point.",
+          "optional": false
+        },
+        {
+          "name": "z0",
+          "type": "System.Double",
+          "doc": "The Z coordinate of the first point.",
+          "optional": false
+        },
+        {
+          "name": "x1",
+          "type": "System.Double",
+          "doc": "The X coordinate of the second point.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "System.Double",
+          "doc": "The Y coordinate of the second point.",
+          "optional": false
+        },
+        {
+          "name": "z1",
+          "type": "System.Double",
+          "doc": "The Z coordinate of the second point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestParameter",
+      "signature": "public double ClosestParameter(Point3d testPoint)",
+      "summary": "Finds the parameter on the infinite line segment that is closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project onto the line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The parameter on the line that is closest to testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ClosestParameter.htm"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d testPoint, bool limitToFiniteSegment)",
+      "summary": "Finds the point on the (in)finite line segment that is closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project onto the line.",
+          "optional": false
+        },
+        {
+          "name": "limitToFiniteSegment",
+          "type": "System.Boolean",
+          "doc": "If true, the projection is limited to the finite line segment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the (in)finite line that is closest to testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ClosestPoint.htm"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "public double DistanceTo(Point3d testPoint, bool limitToFiniteSegment)",
+      "summary": "Compute the shortest distance between this line segment and a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point for distance computation.",
+          "optional": false
+        },
+        {
+          "name": "limitToFiniteSegment",
+          "type": "System.Boolean",
+          "doc": "If true, the distance is limited to the finite line segment.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The shortest distance between this line segment and testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_DistanceTo.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Line other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Line",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Line.EpsilonEquals(Rhino.Geometry.Line,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Line.EpsilonEquals(Rhino.Geometry.Line,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Line.EpsilonEquals(Rhino.Geometry.Line,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether an object is a line that has the same value as this line.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "An object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a Line and has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Line)",
+      "signature": "public bool Equals(Line other)",
+      "summary": "Determines whether a line has the same value as this line.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if other has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_Equals.htm"
+    },
+    {
+      "name": "Extend",
+      "signature": "public bool Extend(double startLength, double endLength)",
+      "summary": "Extend the line by custom distances on both sides.",
+      "params": [
+        {
+          "name": "startLength",
+          "type": "System.Double",
+          "doc": "Distance to extend the line at the start point. Positive distance result in longer lines.",
+          "optional": false
+        },
+        {
+          "name": "endLength",
+          "type": "System.Double",
+          "doc": "Distance to extend the line at the end point. Positive distance result in longer lines.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_Extend.htm"
+    },
+    {
+      "name": "ExtendThroughBox(BoundingBox)",
+      "signature": "public bool ExtendThroughBox(BoundingBox box)",
+      "summary": "Ensure the line extends all the way through a box. Note, this does not result in the shortest possible line that overlaps the box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to extend through.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ExtendThroughBox.htm"
+    },
+    {
+      "name": "ExtendThroughBox(Box)",
+      "signature": "public bool ExtendThroughBox(Box box)",
+      "summary": "Ensure the line extends all the way through a box. Note, this does not result in the shortest possible line that overlaps the box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Box to extend through.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ExtendThroughBox_2.htm"
+    },
+    {
+      "name": "ExtendThroughBox(BoundingBox, Double)",
+      "signature": "public bool ExtendThroughBox(BoundingBox box, double additionalLength)",
+      "summary": "Ensure the line extends all the way through a box. Note, this does not result in the shortest possible line that overlaps the box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "Box to extend through.",
+          "optional": false
+        },
+        {
+          "name": "additionalLength",
+          "type": "System.Double",
+          "doc": "Additional length to append at both sides of the line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ExtendThroughBox_1.htm"
+    },
+    {
+      "name": "ExtendThroughBox(Box, Double)",
+      "signature": "public bool ExtendThroughBox(Box box, double additionalLength)",
+      "summary": "Ensure the line extends all the way through a box. Note, this does not result in the shortest possible line that overlaps the box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.Box",
+          "doc": "Box to extend through.",
+          "optional": false
+        },
+        {
+          "name": "additionalLength",
+          "type": "System.Double",
+          "doc": "Additional length to append at both sides of the line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ExtendThroughBox_3.htm"
+    },
+    {
+      "name": "Flip",
+      "signature": "public void Flip()",
+      "summary": "Flip the endpoints of the line segment.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_Flip.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes a hash number that represents this line.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A number that is not unique to the value of this line."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_GetHashCode.htm"
+    },
+    {
+      "name": "MaximumDistanceTo(Line)",
+      "signature": "public double MaximumDistanceTo(Line testLine)",
+      "summary": "Finds the largest distance between this line as a finite segment and another finite segment.",
+      "params": [
+        {
+          "name": "testLine",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The maximum distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_MaximumDistanceTo.htm"
+    },
+    {
+      "name": "MaximumDistanceTo(Point3d)",
+      "signature": "public double MaximumDistanceTo(Point3d testPoint)",
+      "summary": "Finds the largest distance between this line as a finite segment and a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The maximum distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_MaximumDistanceTo_1.htm"
+    },
+    {
+      "name": "MinimumDistanceTo(Line)",
+      "signature": "public double MinimumDistanceTo(Line testLine)",
+      "summary": "Finds the shortest distance between this line as a finite segment and another finite segment.",
+      "params": [
+        {
+          "name": "testLine",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The minimum distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_MinimumDistanceTo.htm"
+    },
+    {
+      "name": "MinimumDistanceTo(Point3d)",
+      "signature": "public double MinimumDistanceTo(Point3d testPoint)",
+      "summary": "Finds the shortest distance between this line as a finite segment and a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point to test.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The minimum distance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_MinimumDistanceTo_1.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Evaluates the line at the specified parameter.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter to evaluate line segment at. Line parameters are normalized parameters.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at the specified parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_PointAt.htm"
+    },
+    {
+      "name": "PointAtLength",
+      "signature": "public Point3d PointAtLength(double distance)",
+      "summary": "Computes a point located at a specific metric distance from the line origin (From). If line start and end coincide, then the start point is always returned.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "System.Double",
+          "doc": "A positive, 0, or a negative value that will be the distance from From.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The newly found point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_PointAtLength.htm"
+    },
+    {
+      "name": "ToNurbsCurve",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Constructs a nurbs curve representation of this line. This amounts to the same as calling NurbsCurve.CreateFromLine().",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A nurbs curve representation of this line or null if no such representation could be made."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ToNurbsCurve.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Constructs the string representation of this line, in the form \u0022From,To\u0022.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "A text string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transform the line using a Transformation matrix.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transform to apply to this line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_Transform.htm"
+    },
+    {
+      "name": "TryCreateBetweenCurves",
+      "signature": "public static bool TryCreateBetweenCurves(Curve curve0, Curve curve1, ref double t0, ref double t1, bool perpendicular0, bool perpendicular1, out Line line)",
+      "summary": "Creates a line segment between a pair of curves such that the line segment is either tangent or perpendicular to each of the curves.",
+      "params": [
+        {
+          "name": "curve0",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The first curve.",
+          "optional": false
+        },
+        {
+          "name": "curve1",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "The second curve.",
+          "optional": false
+        },
+        {
+          "name": "t0",
+          "type": "System.Double",
+          "doc": "Parameter value of point on curve0. Seed value at input and solution at output.",
+          "optional": false
+        },
+        {
+          "name": "t1",
+          "type": "System.Double",
+          "doc": "Parameter value of point on curve 0. Seed value at input and solution at output.",
+          "optional": false
+        },
+        {
+          "name": "perpendicular0",
+          "type": "System.Boolean",
+          "doc": "Find line perpendicular to (true) or tangent to (false) curve0.",
+          "optional": false
+        },
+        {
+          "name": "perpendicular1",
+          "type": "System.Boolean",
+          "doc": "Find line Perpendicular to (true) or tangent to (false) curve1.",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "Rhino.Geometry.Line",
+          "doc": "The line segment if successful.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_TryCreateBetweenCurves.htm"
+    },
+    {
+      "name": "TryFitLineToPoints",
+      "signature": "public static bool TryFitLineToPoints(IEnumerable\u003CPoint3d\u003E points, out Line fitLine)",
+      "summary": "Attempt to fit a line through a set of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "The points through which to fit.",
+          "optional": false
+        },
+        {
+          "name": "fitLine",
+          "type": "Rhino.Geometry.Line",
+          "doc": "The resulting line on success.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_TryFitLineToPoints.htm"
+    },
+    {
+      "name": "TryGetPlane",
+      "signature": "public bool TryGetPlane(out Plane plane)",
+      "summary": "Gets a plane that contains the line. The origin of the plane is at the start of the line. If possible, a plane parallel to the world XY, YZ, or ZX plane is returned.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "If the return value is true, the plane out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_TryGetPlane.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Line a, Line b)",
+      "summary": "Determines whether two lines have the same value.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Another line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a has the same coordinates as b; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Line a, Line b)",
+      "summary": "Determines whether two lines have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Line",
+          "doc": "A line.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Line",
+          "doc": "Another line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a has any coordinate that distinguishes it from b; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Line_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the line\u0027s 3d axis aligned bounding box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_BoundingBox.htm"
+    },
+    {
+      "name": "Direction",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the direction of this line segment. The length of the direction vector equals the length of the line segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_Direction.htm"
+    },
+    {
+      "name": "From",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Start point of line segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_From.htm"
+    },
+    {
+      "name": "FromX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X coordinate of the line From point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_FromX.htm"
+    },
+    {
+      "name": "FromY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y coordinate of the line From point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_FromY.htm"
+    },
+    {
+      "name": "FromZ",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z coordinate of the line From point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_FromZ.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this line is valid. Valid lines must have valid start and end points, and the points must not be equal.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_IsValid.htm"
+    },
+    {
+      "name": "Length",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the length of this line segment. Note that a negative length will invert the line segment without making the actual length negative. The line From point will remain fixed when a new Length is set.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_Length.htm"
+    },
+    {
+      "name": "To",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "End point of line segment.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_To.htm"
+    },
+    {
+      "name": "ToX",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X coordinate of the line To point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_ToX.htm"
+    },
+    {
+      "name": "ToY",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y coordinate of the line To point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_ToY.htm"
+    },
+    {
+      "name": "ToZ",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z coordinate of the line To point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_ToZ.htm"
+    },
+    {
+      "name": "UnitTangent",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the tangent of the line segment. Note that tangent vectors are always unit vectors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_UnitTangent.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Line",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a line segment which has Unset end points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Line_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

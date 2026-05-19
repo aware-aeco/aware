@@ -1,0 +1,14 @@
+{
+  "name": "CollapsibleSectionHolderImpl.CREATEFROMCPPPROC",
+  "namespace": "Rhino.UI.Controls",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.CollapsibleSectionHolderImpl.CREATEFROMCPPPROC\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_CollapsibleSectionHolderImpl_CREATEFROMCPPPROC.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate IntPtr CREATEFROMCPPPROC( IntPtr hwndParent )"
+}

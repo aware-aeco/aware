@@ -1,0 +1,30 @@
+{
+  "name": "FileObjWriteOptions.VertexWelding",
+  "namespace": "Rhino.FileIO",
+  "kind": "enum",
+  "summary": "Determines how/if vertexes of the mesh in Rhino will be modified in the output",
+  "remarks": "The actual values of any vertex, normal or texture coordinate are not modified, this setting determines whether they are duplicated or merged.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileObjWriteOptions_VertexWelding.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0,
+      "summary": "Mesh is exported in existing state"
+    },
+    {
+      "name": "Welded",
+      "value": 1,
+      "summary": "Mesh topology vertex indexing is used for the v in the OBJ output file normals and texture coordinates, if they exist, come from the mesh"
+    },
+    {
+      "name": "Unwelded",
+      "value": 2,
+      "summary": "Each face gets it\u0027s own vertex, and normal and texture coordinates if they exist, in the output"
+    }
+  ]
+}

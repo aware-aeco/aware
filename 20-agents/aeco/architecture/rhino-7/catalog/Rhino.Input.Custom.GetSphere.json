@@ -1,0 +1,151 @@
+{
+  "name": "GetSphere",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "class",
+  "summary": "Class provides user interface to define a sphere.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetSphere.htm",
+  "constructors": [
+    {
+      "name": "GetSphere",
+      "signature": "public GetSphere()",
+      "summary": "Initializes a new instance of the GetSphere class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetSphere__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetSphere_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetSphere_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetSphere_Finalize.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "public Result Get(out Sphere sphere)",
+      "summary": "Prompt for the getting of a sphere.",
+      "params": [
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "The sphere geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetSphere_Get.htm"
+    },
+    {
+      "name": "GetMesh",
+      "signature": "public Result GetMesh(ref GetSphere.MeshSphereStyle style, ref int verticalFaces, ref int aroundFaces, ref int triangleSubdivisions, ref int quadSubdivisions, out Sphere sphere)",
+      "summary": "Prompt for the getting of a mesh sphere.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Rhino.Input.Custom.GetSphere.MeshSphereStyle",
+          "doc": "The style of the mesh sphere.",
+          "optional": false
+        },
+        {
+          "name": "verticalFaces",
+          "type": "System.Int32",
+          "doc": "The number of UV mesh faces in the vertical direction.",
+          "optional": false
+        },
+        {
+          "name": "aroundFaces",
+          "type": "System.Int32",
+          "doc": "The number of UV mesh faces in the around direction.",
+          "optional": false
+        },
+        {
+          "name": "triangleSubdivisions",
+          "type": "System.Int32",
+          "doc": "The number of triangle mesh subdivisions.",
+          "optional": false
+        },
+        {
+          "name": "quadSubdivisions",
+          "type": "System.Int32",
+          "doc": "The number of quad mesh subdivisions.",
+          "optional": false
+        },
+        {
+          "name": "sphere",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "The sphere geometry defined by the user.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Result",
+        "doc": "The result of the getting operation."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Input_Custom_GetSphere_GetMesh.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultSize",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Default radius or diameter (based on InDiameterMode)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetSphere_DefaultSize.htm"
+    },
+    {
+      "name": "InDiameterMode",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the \u0022size\u0022 value is representing a radius or diameter",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Input_Custom_GetSphere_InDiameterMode.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

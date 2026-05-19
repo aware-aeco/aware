@@ -1,0 +1,138 @@
+{
+  "name": "UserDataList",
+  "namespace": "Rhino.DocObjects.Custom",
+  "kind": "class",
+  "summary": "Represents a collection of user data.",
+  "interfaces": [
+    "IEnumerable\u003CUserData\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Custom_UserDataList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public bool Add(UserData userdata)",
+      "summary": "If the user-data is already in a different UserDataList, it will be removed from that list and added to this list.",
+      "params": [
+        {
+          "name": "userdata",
+          "type": "Rhino.DocObjects.Custom.UserData",
+          "doc": "Data element.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Whether this operation succeeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDataList_Add.htm"
+    },
+    {
+      "name": "Contains",
+      "signature": "public bool Contains(Guid userdataId)",
+      "summary": "Checks for the existence of a specific type of user-data in this list Both .NET and native user-data is checked",
+      "params": [
+        {
+          "name": "userdataId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022userdataId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.UserDataList.Contains(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Custom.UserDataList.Contains(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDataList_Contains.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "public UserData Find(Type userdataType)",
+      "summary": "Finds a specific data type in this regulated collection.",
+      "params": [
+        {
+          "name": "userdataType",
+          "type": "System.Type",
+          "doc": "A data type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UserData",
+        "doc": "The found data, or null of nothing was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDataList_Find.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CUserData\u003E GetEnumerator()",
+      "summary": "Get enumerator for UserDataList",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CUserData\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Custom.UserDataList.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDataList_GetEnumerator.htm"
+    },
+    {
+      "name": "Purge",
+      "signature": "public void Purge()",
+      "summary": "Removes all user data from this geometry.",
+      "remarks": "User Remove(UserData) to delete a single, known, item.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDataList_Purge.htm"
+    },
+    {
+      "name": "Remove",
+      "signature": "public bool Remove(UserData userdata)",
+      "summary": "Remove the user-data from this list",
+      "params": [
+        {
+          "name": "userdata",
+          "type": "Rhino.DocObjects.Custom.UserData",
+          "doc": "[Missing \u003Cparam name=\u0022userdata\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Custom.UserDataList.Remove(Rhino.DocObjects.Custom.UserData)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the user data was successfully removed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Custom_UserDataList_Remove.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of UserData objects in this list.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_UserDataList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "UserData",
+      "getter": true,
+      "setter": false,
+      "summary": "Retrieve through indexer. Read-only access.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Custom_UserDataList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

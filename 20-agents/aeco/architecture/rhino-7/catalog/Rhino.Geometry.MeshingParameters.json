@@ -1,0 +1,352 @@
+{
+  "name": "MeshingParameters",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Represents settings used for creating a mesh representation of a brep or surface.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshingParameters.htm",
+  "constructors": [
+    {
+      "name": "MeshingParameters()",
+      "signature": "public MeshingParameters()",
+      "summary": "Initializes a new instance with default values. Initial values are same as Default.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters__ctor.htm"
+    },
+    {
+      "name": "MeshingParameters(Double)",
+      "signature": "public MeshingParameters(double density)",
+      "summary": "Initializes a new instance with simple values, similar to that of Rhino\u0027s meshing slider interface.",
+      "params": [
+        {
+          "name": "density",
+          "type": "System.Double",
+          "doc": "The density and number of mesh polygons, where 0.0 \u003C= density \u003C= 1.0, where 0 quickly creates coarse meshes, and 1 slowly creates dense meshes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters__ctor_1.htm"
+    },
+    {
+      "name": "MeshingParameters(Double, Double)",
+      "signature": "public MeshingParameters(double density, double minimumEdgeLength)",
+      "summary": "Initializes a new instance with simple values, similar to that of Rhino\u0027s meshing slider interface.",
+      "params": [
+        {
+          "name": "density",
+          "type": "System.Double",
+          "doc": "The density and number of mesh polygons, where 0.0 \u003C= density \u003C= 1.0, where 0 quickly creates coarse meshes, and 1 slowly creates dense meshes.",
+          "optional": false
+        },
+        {
+          "name": "minimumEdgeLength",
+          "type": "System.Double",
+          "doc": "The minimum allowed mesh edge length.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters_Dispose_1.htm"
+    },
+    {
+      "name": "DocumentCurrentSetting",
+      "signature": "public static MeshingParameters DocumentCurrentSetting(RhinoDoc doc)",
+      "summary": "Gets the MeshingParameters that are currently set for a document. These are the same settings that are shown in the DocumentProperties \u0022mesh settings\u0022 user interface.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "A Rhino document to query.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshingParameters",
+        "doc": "Meshing parameters of the document."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "If doc is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters_DocumentCurrentSetting.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters_Finalize.htm"
+    },
+    {
+      "name": "SetSubDDisplayParameters",
+      "signature": "public void SetSubDDisplayParameters(SubDDisplayParameters subDDisplayParameters)",
+      "summary": "Sets the SubD display parameters.",
+      "params": [
+        {
+          "name": "subDDisplayParameters",
+          "type": "Rhino.Geometry.SubDDisplayParameters",
+          "doc": "The SubD display parameters.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters_SetSubDDisplayParameters.htm"
+    },
+    {
+      "name": "SubDDisplayParameters",
+      "signature": "public SubDDisplayParameters SubDDisplayParameters()",
+      "summary": "Gets the SubD display parameters.",
+      "params": [],
+      "returns": {
+        "type": "SubDDisplayParameters",
+        "doc": "The SubD display parameters."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshingParameters_SubDDisplayParameters.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClosedObjectPostProcess",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not to post process non-closed meshes that should be closed. If the Brep being meshed is closed, JaggedSeams = false, and ClosedObjectPostProcess = true, and the resulting mesh is not closed, then a post meshing process is applied to find and close gaps in the mesh. Typically the resulting mesh is not closed because the input Brep has a geometric flaw, like loops in trimming curve.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_ClosedObjectPostProcess.htm"
+    },
+    {
+      "name": "Coarse",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets mesh creation parameters for coarse meshing. This corresponds with the \u0022Jagged and Faster\u0022 default in Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_Coarse.htm"
+    },
+    {
+      "name": "ComputeCurvature",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not surface curvature data will be embedded in the mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_ComputeCurvature.htm"
+    },
+    {
+      "name": "Default",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets mesh creation parameters to create the default render mesh. Only use this if you plan on specifying your own custom meshing parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_Default.htm"
+    },
+    {
+      "name": "DefaultAnalysisMesh",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets mesh creation parameters to create the default analysis mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_DefaultAnalysisMesh.htm"
+    },
+    {
+      "name": "FastRenderMesh",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets mesh creation parameters to create the a render mesh when meshing speed is preferred over mesh quality.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_FastRenderMesh.htm"
+    },
+    {
+      "name": "GridAmplification",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the grid amplification factor. Values lower than 1.0 will decrease the number of initial quads, values higher than 1.0 will increase the number of initial quads.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_GridAmplification.htm"
+    },
+    {
+      "name": "GridAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum allowed angle difference (in radians) for a single sampling quad. The angle pertains to the surface normals.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_GridAngle.htm"
+    },
+    {
+      "name": "GridAspectRatio",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum allowed aspect ratio of sampling quads.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_GridAspectRatio.htm"
+    },
+    {
+      "name": "GridMaxCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum number of grid quads in the initial sampling grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_GridMaxCount.htm"
+    },
+    {
+      "name": "GridMinCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum number of grid quads in the initial sampling grid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_GridMinCount.htm"
+    },
+    {
+      "name": "JaggedSeams",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether or not the mesh is allowed to have jagged seams. When this flag is set to true, meshes on either side of a Brep Edge will not match up.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_JaggedSeams.htm"
+    },
+    {
+      "name": "MaximumEdgeLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum allowed mesh edge length.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_MaximumEdgeLength.htm"
+    },
+    {
+      "name": "Minimal",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets minimal meshing parameters.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_Minimal.htm"
+    },
+    {
+      "name": "MinimumEdgeLength",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum allowed mesh edge length.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_MinimumEdgeLength.htm"
+    },
+    {
+      "name": "MinimumTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_MinimumTolerance.htm"
+    },
+    {
+      "name": "QualityRenderMesh",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets mesh creation parameters to create the a render mesh when mesh quality is preferred over meshing speed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_QualityRenderMesh.htm"
+    },
+    {
+      "name": "RefineAngle",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the mesh parameter refine angle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_RefineAngle.htm"
+    },
+    {
+      "name": "RefineGrid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not the sampling grid can be refined when certain tolerances are not met.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_RefineGrid.htm"
+    },
+    {
+      "name": "RelativeTolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the relative tolerance.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_RelativeTolerance.htm"
+    },
+    {
+      "name": "SimplePlanes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether or not planar areas are allowed to be meshed in a simplified manner.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_SimplePlanes.htm"
+    },
+    {
+      "name": "Smooth",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets mesh creation parameters for smooth meshing. This corresponds with the \u0022Smooth and Slower\u0022 default in Rhino.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_Smooth.htm"
+    },
+    {
+      "name": "TextureRange",
+      "type": "MeshingParameterTextureRange",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets how and if textures will be packed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_TextureRange.htm"
+    },
+    {
+      "name": "Tolerance",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the maximum allowed edge deviation. This tolerance is measured between the center of the mesh edge and the surface.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshingParameters_Tolerance.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

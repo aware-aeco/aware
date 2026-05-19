@@ -1,0 +1,174 @@
+{
+  "name": "RhinoList",
+  "namespace": "Rhino.Collections",
+  "kind": "class",
+  "summary": "Provides helper methods to work with RhinoList\u003CT\u003E and other collections.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Collections_RhinoList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Point2dKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E Point2dKNeighbors(IEnumerable\u003CPoint2d\u003E hayPoints, IEnumerable\u003CPoint2d\u003E needlePoints, int amount)",
+      "summary": "Finds a certain amour of points in a list of single-precision 2D points that are the k-closest to a test point. This method searches needlePoints by computing all distances from each point cloud point and keeping a \u0022short list\u0022.",
+      "params": [
+        {
+          "name": "hayPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Collections_RhinoList_Point2dKNeighbors.htm"
+    },
+    {
+      "name": "Point2fKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E Point2fKNeighbors(IEnumerable\u003CPoint2f\u003E hayPoints, IEnumerable\u003CPoint2f\u003E needlePoints, int amount)",
+      "summary": "Finds a certain amour of points in a list of single-precision 2D points that are the k-closest to a test point. This method searches needlePoints by computing all distances from each point cloud point and keeping a \u0022short list\u0022.",
+      "params": [
+        {
+          "name": "hayPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2f\u003E",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint2f\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Collections_RhinoList_Point2fKNeighbors.htm"
+    },
+    {
+      "name": "Point3dKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E Point3dKNeighbors(IEnumerable\u003CPoint3d\u003E hayPoints, IEnumerable\u003CPoint3d\u003E needlePoints, int amount)",
+      "summary": "Finds a certain amour of points in a list of 3D points that are the k-closest to a test point. This method searches needlePoints by computing all distances from each point cloud point and keeping a \u0022short list\u0022. See RTree KNeighbors for alternatives.",
+      "params": [
+        {
+          "name": "hayPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Collections_RhinoList_Point3dKNeighbors.htm"
+    },
+    {
+      "name": "Point3fKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E Point3fKNeighbors(IEnumerable\u003CPoint3f\u003E hayPoints, IEnumerable\u003CPoint3f\u003E needlePoints, int amount)",
+      "summary": "Finds a certain amour of points in a list of single-precision 3D points that are the k-closest to a test point. This method searches needlePoints by computing all distances from each point cloud point and keeping a \u0022short list\u0022.",
+      "params": [
+        {
+          "name": "hayPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3f\u003E",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3f\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Collections_RhinoList_Point3fKNeighbors.htm"
+    },
+    {
+      "name": "PointCloudKNeighbors",
+      "signature": "public static IEnumerable\u003Cint[]\u003E PointCloudKNeighbors(PointCloud pointcloud, IEnumerable\u003CPoint3d\u003E needlePoints, int amount)",
+      "summary": "Finds a certain amount of points in a list of 3D points that are the k-closest to a test point. This method searches needlePoints by computing all distances from each point cloud point and keeping a short list.",
+      "params": [
+        {
+          "name": "pointcloud",
+          "type": "Rhino.Geometry.PointCloud",
+          "doc": "A point cloud to be searched.",
+          "optional": false
+        },
+        {
+          "name": "needlePoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to search for.",
+          "optional": false
+        },
+        {
+          "name": "amount",
+          "type": "System.Int32",
+          "doc": "The required amount of closest neighbors to find.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IEnumerable\u003CInt32[]\u003E",
+        "doc": "An enumerable of arrays of indices; each array contains the indices for each of the needlePts."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Collections_RhinoList_PointCloudKNeighbors.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

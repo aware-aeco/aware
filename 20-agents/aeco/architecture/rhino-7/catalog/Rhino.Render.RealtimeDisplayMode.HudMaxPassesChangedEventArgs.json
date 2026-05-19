@@ -1,0 +1,41 @@
+{
+  "name": "RealtimeDisplayMode.HudMaxPassesChangedEventArgs",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.RealtimeDisplayMode.HudMaxPassesChangedEventArgs\u0022]",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_RealtimeDisplayMode_HudMaxPassesChangedEventArgs.htm",
+  "constructors": [
+    {
+      "name": "RealtimeDisplayMode.HudMaxPassesChangedEventArgs",
+      "signature": "public HudMaxPassesChangedEventArgs(int mp)",
+      "summary": "Initializes a new instance of the RealtimeDisplayMode.HudMaxPassesChangedEventArgs class",
+      "params": [
+        {
+          "name": "mp",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022mp\u0022/\u003E documentation for \u0022M:Rhino.Render.RealtimeDisplayMode.HudMaxPassesChangedEventArgs.#ctor(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_RealtimeDisplayMode_HudMaxPassesChangedEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MaxPasses",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_RealtimeDisplayMode_HudMaxPassesChangedEventArgs_MaxPasses.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

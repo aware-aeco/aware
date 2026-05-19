@@ -1,0 +1,42 @@
+{
+  "name": "PythonCompiledCode",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "Represents scripting compiled code.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_PythonCompiledCode.htm",
+  "constructors": [
+    {
+      "name": "PythonCompiledCode",
+      "signature": "protected PythonCompiledCode()",
+      "summary": "Initializes a new instance of the PythonCompiledCode class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonCompiledCode__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Execute",
+      "signature": "public abstract void Execute(PythonScript scope)",
+      "summary": "Executes the script in a specific scope.",
+      "params": [
+        {
+          "name": "scope",
+          "type": "Rhino.Runtime.PythonScript",
+          "doc": "The scope where the script should be executed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_PythonCompiledCode_Execute.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

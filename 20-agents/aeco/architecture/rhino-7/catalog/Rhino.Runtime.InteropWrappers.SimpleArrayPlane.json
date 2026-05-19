@@ -1,0 +1,95 @@
+{
+  "name": "SimpleArrayPlane",
+  "namespace": "Rhino.Runtime.InteropWrappers",
+  "kind": "class",
+  "summary": "Wrapper for ON_SimpleArray\u003CON_Plane\u003E. If you are not writing C\u002B\u002B code then this class is not for you.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_InteropWrappers_SimpleArrayPlane.htm",
+  "constructors": [
+    {
+      "name": "SimpleArrayPlane",
+      "signature": "public SimpleArrayPlane()",
+      "summary": "Initializes a new SimpleArrayLine instance.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayPlane__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "Gets the constant (immutable) pointer of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayPlane_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayPlane_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayPlane_Finalize.htm"
+    },
+    {
+      "name": "NonConstPointer",
+      "signature": "public IntPtr NonConstPointer()",
+      "summary": "Gets the non-constant pointer (for modification) of this array.",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "The non-constant pointer."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayPlane_NonConstPointer.htm"
+    },
+    {
+      "name": "ToArray",
+      "signature": "public Plane[] ToArray()",
+      "summary": "Copies the unmanaged array to a managed counterpart.",
+      "params": [],
+      "returns": {
+        "type": "Plane[]",
+        "doc": "The managed array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_InteropWrappers_SimpleArrayPlane_ToArray.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of lines in this array.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_InteropWrappers_SimpleArrayPlane_Count.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

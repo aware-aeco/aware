@@ -1,0 +1,577 @@
+{
+  "name": "DisplayPipelineAttributes",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "Represents display pipeline settings, such as \u0022show transparency\u0022 and \u0022show grips\u0022.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_DisplayPipelineAttributes.htm",
+  "constructors": [
+    {
+      "name": "DisplayPipelineAttributes",
+      "signature": "protected DisplayPipelineAttributes(SerializationInfo info, StreamingContext context)",
+      "summary": "Initializes a new instance of the DisplayPipelineAttributes class",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the DisplayPipelineAttributes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the DisplayPipelineAttributes and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_Finalize.htm"
+    },
+    {
+      "name": "GetFill",
+      "signature": "public void GetFill(out Color topLeft, out Color bottomLeft, out Color topRight, out Color bottomRight)",
+      "summary": "Get fill colors used for clearing the frame buffer",
+      "params": [
+        {
+          "name": "topLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022topLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottomLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottomLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "topRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022topRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bottomRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022bottomRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetFill(System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@,System.Drawing.Color@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_GetFill.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "[Missing \u003Cparam name=\u0022info\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "[Missing \u003Cparam name=\u0022context\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_GetObjectData.htm"
+    },
+    {
+      "name": "SetFill(Color)",
+      "signature": "public void SetFill(Color singleColor)",
+      "summary": "Set fill mode to solid color and set the fill color",
+      "params": [
+        {
+          "name": "singleColor",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022singleColor\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_SetFill.htm"
+    },
+    {
+      "name": "SetFill(Color, Color)",
+      "signature": "public void SetFill(Color gradientTop, Color gradientBottom)",
+      "summary": "Set fill mode to two color and set the colors",
+      "params": [
+        {
+          "name": "gradientTop",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientTop\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientBottom",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientBottom\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_SetFill_1.htm"
+    },
+    {
+      "name": "SetFill(Color, Color, Color, Color)",
+      "signature": "public void SetFill(Color gradientTopLeft, Color gradientBottomLeft, Color gradientTopRight, Color gradientBottomRight)",
+      "summary": "Set the fill mode to four color gradient and set the colors",
+      "params": [
+        {
+          "name": "gradientTopLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientTopLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientBottomLeft",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientBottomLeft\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientTopRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientTopRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "gradientBottomRight",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022gradientBottomRight\u0022/\u003E documentation for \u0022M:Rhino.Display.DisplayPipelineAttributes.SetFill(System.Drawing.Color,System.Drawing.Color,System.Drawing.Color,System.Drawing.Color)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_DisplayPipelineAttributes_SetFill_2.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AmbientLightingColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_AmbientLightingColor.htm"
+    },
+    {
+      "name": "BoundingBoxMode",
+      "type": "DisplayPipelineAttributes.BoundingBoxDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_BoundingBoxMode.htm"
+    },
+    {
+      "name": "CastShadows",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Cast shadows.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_CastShadows.htm"
+    },
+    {
+      "name": "ContextForDraw",
+      "type": "DisplayPipelineAttributes.ContextsForDraw",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ContextForDraw.htm"
+    },
+    {
+      "name": "CurveColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Color used for drawing curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_CurveColor.htm"
+    },
+    {
+      "name": "CurveThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Pixel thickness for curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_CurveThickness.htm"
+    },
+    {
+      "name": "DisableConduits",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_DisableConduits.htm"
+    },
+    {
+      "name": "DisableTransparency",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_DisableTransparency.htm"
+    },
+    {
+      "name": "EnglishName",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_EnglishName.htm"
+    },
+    {
+      "name": "FillMode",
+      "type": "DisplayPipelineAttributes.FrameBufferFillMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the frame buffer fill mode.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_FillMode.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_Id.htm"
+    },
+    {
+      "name": "IgnoreHighlights",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_IgnoreHighlights.htm"
+    },
+    {
+      "name": "LocalName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_LocalName.htm"
+    },
+    {
+      "name": "LockedObjectsDrawBehindOthers",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Locked object are drawn behind other objects",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_LockedObjectsDrawBehindOthers.htm"
+    },
+    {
+      "name": "MeshSpecificAttributes",
+      "type": "DisplayPipelineAttributes.MeshDisplayAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_MeshSpecificAttributes.htm"
+    },
+    {
+      "name": "ObjectColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ObjectColor.htm"
+    },
+    {
+      "name": "PointRadius",
+      "type": "Single",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_PointRadius.htm"
+    },
+    {
+      "name": "PointStyle",
+      "type": "PointStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_PointStyle.htm"
+    },
+    {
+      "name": "RealtimeDisplayId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the ID of the real-time display engine attached to the view. This will be Guid.Empty if no real-time display engine is in use. This can be the case for instance when starting a _Render session for a real-time viewport integration. That still would cause this ID to be Guid.Empty.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_RealtimeDisplayId.htm"
+    },
+    {
+      "name": "RealtimeRenderPasses",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the real-time passes amount",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_RealtimeRenderPasses.htm"
+    },
+    {
+      "name": "ShadeVertexColors",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Shade using vertex colors.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShadeVertexColors.htm"
+    },
+    {
+      "name": "ShadingEnabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw shaded meshes and surfaces. Set to false to use Flat Shading.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShadingEnabled.htm"
+    },
+    {
+      "name": "ShadowColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShadowColor.htm"
+    },
+    {
+      "name": "ShowAnnotations",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show annotations.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowAnnotations.htm"
+    },
+    {
+      "name": "ShowClippingPlanes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show clipping planes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowClippingPlanes.htm"
+    },
+    {
+      "name": "ShowCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowCurves.htm"
+    },
+    {
+      "name": "ShowGrips",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowGrips.htm"
+    },
+    {
+      "name": "ShowIsoCurves",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Draw surface ISO curves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowIsoCurves.htm"
+    },
+    {
+      "name": "ShowLights",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show light widgets.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowLights.htm"
+    },
+    {
+      "name": "ShowPointClouds",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show point clouds.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowPointClouds.htm"
+    },
+    {
+      "name": "ShowPoints",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show points.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowPoints.htm"
+    },
+    {
+      "name": "ShowRealtimeRenderProgressBar",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set whether the display is used for preview rendering or not.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowRealtimeRenderProgressBar.htm"
+    },
+    {
+      "name": "ShowSurfaceEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show surface edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowSurfaceEdges.htm"
+    },
+    {
+      "name": "ShowTangentEdges",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show tangent edges.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowTangentEdges.htm"
+    },
+    {
+      "name": "ShowTangentSeams",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show tangent seams.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowTangentSeams.htm"
+    },
+    {
+      "name": "ShowText",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Show text.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ShowText.htm"
+    },
+    {
+      "name": "StereoContext",
+      "type": "StereoContext",
+      "getter": true,
+      "setter": true,
+      "summary": "Get or set the stereo render context.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_StereoContext.htm"
+    },
+    {
+      "name": "SurfaceEdgeThickness",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness for surface edges",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_SurfaceEdgeThickness.htm"
+    },
+    {
+      "name": "UseAssignedObjectMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using their assigned rendering material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_UseAssignedObjectMaterial.htm"
+    },
+    {
+      "name": "UseCustomObjectColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom color.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectColor.htm"
+    },
+    {
+      "name": "UseCustomObjectColorBackfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom color for back faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectColorBackfaces.htm"
+    },
+    {
+      "name": "UseCustomObjectMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom material.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectMaterial.htm"
+    },
+    {
+      "name": "UseCustomObjectMaterialBackfaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets whether objects ought to be drawn using a custom material on backfaces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_UseCustomObjectMaterialBackfaces.htm"
+    },
+    {
+      "name": "UseSingleCurveColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use a single color for drawing curves",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_UseSingleCurveColor.htm"
+    },
+    {
+      "name": "ViewSpecificAttributes",
+      "type": "DisplayPipelineAttributes.ViewDisplayAttributes",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_ViewSpecificAttributes.htm"
+    },
+    {
+      "name": "XrayAllObjects",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DisplayPipelineAttributes_XrayAllObjects.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

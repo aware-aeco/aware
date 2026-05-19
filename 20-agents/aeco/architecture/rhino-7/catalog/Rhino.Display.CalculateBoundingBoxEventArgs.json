@@ -1,0 +1,65 @@
+{
+  "name": "CalculateBoundingBoxEventArgs",
+  "namespace": "Rhino.Display",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.CalculateBoundingBoxEventArgs\u0022]",
+  "base": "DrawEventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_CalculateBoundingBoxEventArgs.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IncludeBoundingBox",
+      "signature": "public void IncludeBoundingBox(BoundingBox box)",
+      "summary": "Unites a bounding box with the current display bounding box in order to ensure dynamic objects in \u0022box\u0022 are drawn.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Rhino.Geometry.BoundingBox",
+          "doc": "The box to unite.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Display_CalculateBoundingBoxEventArgs_IncludeBoundingBox.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the current bounding box.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_CalculateBoundingBoxEventArgs_BoundingBox.htm"
+    },
+    {
+      "name": "Display",
+      "type": "DisplayPipeline",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_Display.htm"
+    },
+    {
+      "name": "RhinoDoc",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_RhinoDoc.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "(Inherited from DrawEventArgs.)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Display_DrawEventArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

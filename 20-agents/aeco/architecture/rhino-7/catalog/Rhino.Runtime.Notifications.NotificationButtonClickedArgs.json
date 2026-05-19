@@ -1,0 +1,55 @@
+{
+  "name": "NotificationButtonClickedArgs",
+  "namespace": "Rhino.Runtime.Notifications",
+  "kind": "class",
+  "summary": "Used when a button is clicked for a notification.",
+  "base": "EventArgs",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_Notifications_NotificationButtonClickedArgs.htm",
+  "constructors": [
+    {
+      "name": "NotificationButtonClickedArgs",
+      "signature": "public NotificationButtonClickedArgs(Notification notification, ButtonType buttonClicked)",
+      "summary": "Creates a new instance.",
+      "params": [
+        {
+          "name": "notification",
+          "type": "Rhino.Runtime.Notifications.Notification",
+          "doc": "The notification whose button was clicked.",
+          "optional": false
+        },
+        {
+          "name": "buttonClicked",
+          "type": "Rhino.Runtime.Notifications.ButtonType",
+          "doc": "The button that was clicked.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_Notifications_NotificationButtonClickedArgs__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ButtonClicked",
+      "type": "ButtonType",
+      "getter": true,
+      "setter": false,
+      "summary": "The button that was clicked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_NotificationButtonClickedArgs_ButtonClicked.htm"
+    },
+    {
+      "name": "Notification",
+      "type": "Notification",
+      "getter": true,
+      "setter": false,
+      "summary": "The notification whose button was clicked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_Notifications_NotificationButtonClickedArgs_Notification.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

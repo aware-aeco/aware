@@ -1,0 +1,878 @@
+{
+  "name": "TextFields",
+  "namespace": "Rhino.Runtime",
+  "kind": "class",
+  "summary": "This Class Processes Text Field Functions",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Runtime_TextFields.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Area(String)",
+      "signature": "public static double Area(string id)",
+      "summary": "Returns the area value for a selected object id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Area(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Area(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Area.htm"
+    },
+    {
+      "name": "Area(String, String)",
+      "signature": "public static double Area(string id, string unitSystem)",
+      "summary": "Returns the area value for a selected object id in a specified unit system",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Area(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "unitSystem",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022unitSystem\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Area(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Area(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Area_1.htm"
+    },
+    {
+      "name": "BlockAttributeText",
+      "signature": "public static string BlockAttributeText(string key, string prompt, string defaultValue)",
+      "summary": "User text associated with a block",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockAttributeText(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022prompt\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockAttributeText(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockAttributeText(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockAttributeText(System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_BlockAttributeText.htm"
+    },
+    {
+      "name": "BlockInstanceCount",
+      "signature": "public static int BlockInstanceCount(string instanceDefinitionNameOrId)",
+      "summary": "Returns the number of block instances found in the document with the specified block definition name or the instance reference id.",
+      "params": [
+        {
+          "name": "instanceDefinitionNameOrId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022instanceDefinitionNameOrId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockInstanceCount(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockInstanceCount(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_BlockInstanceCount.htm"
+    },
+    {
+      "name": "BlockInstanceName",
+      "signature": "public static string BlockInstanceName(string blockId)",
+      "summary": "Returns the block definition name of a block instance",
+      "params": [
+        {
+          "name": "blockId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022blockId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockInstanceName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.BlockInstanceName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_BlockInstanceName.htm"
+    },
+    {
+      "name": "CurveLength(String)",
+      "signature": "public static double CurveLength(string id)",
+      "summary": "Get length of a curve given a string id",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.CurveLength(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.CurveLength(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_CurveLength.htm"
+    },
+    {
+      "name": "CurveLength(String, String)",
+      "signature": "public static double CurveLength(string id, string unitSystem)",
+      "summary": "Get length of a curve given a string id in a specified unit system. UnitSystem enumeration as string",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.CurveLength(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "unitSystem",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022unitSystem\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.CurveLength(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.CurveLength(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_CurveLength_1.htm"
+    },
+    {
+      "name": "Date()",
+      "signature": "public static string Date()",
+      "summary": "Current date",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Date\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Date.htm"
+    },
+    {
+      "name": "Date(String)",
+      "signature": "public static string Date(string dateFormat)",
+      "summary": "Current date in a specified format",
+      "params": [
+        {
+          "name": "dateFormat",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022dateFormat\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Date(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Date(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Date_1.htm"
+    },
+    {
+      "name": "Date(String, String)",
+      "signature": "public static string Date(string dateFormat, string languageId)",
+      "summary": "Current Date in a specific format and language",
+      "params": [
+        {
+          "name": "dateFormat",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022dateFormat\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Date(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "languageId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022languageId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Date(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Date(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Date_2.htm"
+    },
+    {
+      "name": "DateModified()",
+      "signature": "public static string DateModified()",
+      "summary": "Date the document was last edited",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DateModified\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_DateModified.htm"
+    },
+    {
+      "name": "DateModified(String)",
+      "signature": "public static string DateModified(string dateFormat)",
+      "summary": "Date the document was last edited in a specified format",
+      "params": [
+        {
+          "name": "dateFormat",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022dateFormat\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DateModified(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DateModified(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_DateModified_1.htm"
+    },
+    {
+      "name": "DateModified(String, String)",
+      "signature": "public static string DateModified(string dateFormat, string languageId)",
+      "summary": "Date the document was last edited in a specific format and language in local time",
+      "params": [
+        {
+          "name": "dateFormat",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022dateFormat\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DateModified(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "languageId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022languageId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DateModified(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DateModified(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_DateModified_2.htm"
+    },
+    {
+      "name": "DetailScale",
+      "signature": "public static string DetailScale(string detailId, string scaleFormat)",
+      "summary": "Returns a detail views scale",
+      "params": [
+        {
+          "name": "detailId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022detailId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DetailScale(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "scaleFormat",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022scaleFormat\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DetailScale(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DetailScale(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_DetailScale.htm"
+    },
+    {
+      "name": "DocumentText",
+      "signature": "public static string DocumentText(string key)",
+      "summary": "Return document user string for a given key",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DocumentText(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.DocumentText(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_DocumentText.htm"
+    },
+    {
+      "name": "FileName()",
+      "signature": "public static string FileName()",
+      "summary": "Return full path to the document",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.FileName\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_FileName.htm"
+    },
+    {
+      "name": "FileName(String)",
+      "signature": "public static string FileName(string options)",
+      "summary": "Return path to the document",
+      "params": [
+        {
+          "name": "options",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.FileName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.FileName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_FileName_1.htm"
+    },
+    {
+      "name": "GetInstanceAttributeFields(String)",
+      "signature": "public static TextFields.InstanceAttributeField[] GetInstanceAttributeFields(string str)",
+      "summary": "Gets an array of block attribute definitions associated with a TextObject.",
+      "params": [
+        {
+          "name": "str",
+          "type": "System.String",
+          "doc": "TextObject to check for block attribute definitions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextFields.InstanceAttributeField[]",
+        "doc": "Will return a empty array if text is null or there is no attributes otherwise; returns a list of one or more attribute definitions embedded in the text string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_GetInstanceAttributeFields_2.htm"
+    },
+    {
+      "name": "GetInstanceAttributeFields(InstanceDefinition)",
+      "signature": "public static TextFields.InstanceAttributeField[] GetInstanceAttributeFields(InstanceDefinition idef)",
+      "summary": "",
+      "params": [
+        {
+          "name": "idef",
+          "type": "Rhino.DocObjects.InstanceDefinition",
+          "doc": "[Missing \u003Cparam name=\u0022idef\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.GetInstanceAttributeFields(Rhino.DocObjects.InstanceDefinition)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextFields.InstanceAttributeField[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.GetInstanceAttributeFields(Rhino.DocObjects.InstanceDefinition)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_GetInstanceAttributeFields.htm"
+    },
+    {
+      "name": "GetInstanceAttributeFields(TextObject)",
+      "signature": "public static TextFields.InstanceAttributeField[] GetInstanceAttributeFields(TextObject text)",
+      "summary": "Gets an array of block attribute definitions associated with a TextObject.",
+      "params": [
+        {
+          "name": "text",
+          "type": "Rhino.DocObjects.TextObject",
+          "doc": "TextObject to check for block attribute definitions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextFields.InstanceAttributeField[]",
+        "doc": "Will return a empty array if text is null or there is no attributes otherwise; returns a list of one or more attribute definitions embedded in the text string."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_GetInstanceAttributeFields_1.htm"
+    },
+    {
+      "name": "LayerName",
+      "signature": "public static string LayerName(string layerId)",
+      "summary": "Returns the name of a layer based on the layers guid",
+      "params": [
+        {
+          "name": "layerId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022layerId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayerName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayerName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_LayerName.htm"
+    },
+    {
+      "name": "LayoutUserText(String)",
+      "signature": "public static string LayoutUserText(string key)",
+      "summary": "Returns a value from the active layouts user text strings for the specified key.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayoutUserText(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayoutUserText(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_LayoutUserText.htm"
+    },
+    {
+      "name": "LayoutUserText(String, String)",
+      "signature": "public static string LayoutUserText(string layoutId, string key)",
+      "summary": "Returns user text value from a layout id Key",
+      "params": [
+        {
+          "name": "layoutId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022layoutId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayoutUserText(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayoutUserText(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.LayoutUserText(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_LayoutUserText_1.htm"
+    },
+    {
+      "name": "ModelUnits",
+      "signature": "public static string ModelUnits()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.ModelUnits\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_ModelUnits.htm"
+    },
+    {
+      "name": "Notes",
+      "signature": "public static string Notes()",
+      "summary": "Notes for a RhinoDoc",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Notes\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Notes.htm"
+    },
+    {
+      "name": "NumPages",
+      "signature": "public static int NumPages()",
+      "summary": "Number of layout pages in a document",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.NumPages\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_NumPages.htm"
+    },
+    {
+      "name": "ObjectLayer",
+      "signature": "public static string ObjectLayer(string id)",
+      "summary": "Return an object\u0027s layer name",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.ObjectLayer(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.ObjectLayer(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_ObjectLayer.htm"
+    },
+    {
+      "name": "ObjectName()",
+      "signature": "public static string ObjectName()",
+      "summary": "Returns an attached Text objects attribute name.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.ObjectName\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_ObjectName.htm"
+    },
+    {
+      "name": "ObjectName(String)",
+      "signature": "public static string ObjectName(string id)",
+      "summary": "Return an object\u0027s name",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.ObjectName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.ObjectName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_ObjectName_1.htm"
+    },
+    {
+      "name": "PageHeight",
+      "signature": "public static double PageHeight()",
+      "summary": "Return the current layout page height in the layout units",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PageHeight\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PageHeight.htm"
+    },
+    {
+      "name": "PageName()",
+      "signature": "public static string PageName()",
+      "summary": "Return the current layout page name",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PageName\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PageName.htm"
+    },
+    {
+      "name": "PageName(String)",
+      "signature": "public static string PageName(string id)",
+      "summary": "Return the page name for the specified View ID",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PageName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PageName(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PageName_1.htm"
+    },
+    {
+      "name": "PageNumber",
+      "signature": "public static int PageNumber()",
+      "summary": "Returns the current layouts page number",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PageNumber\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PageNumber.htm"
+    },
+    {
+      "name": "PageWidth",
+      "signature": "public static double PageWidth()",
+      "summary": "Return the current layout page width in the layout units",
+      "params": [],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PageWidth\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PageWidth.htm"
+    },
+    {
+      "name": "PaperName",
+      "signature": "public static string PaperName()",
+      "summary": "Returns the layouts selected paper name example Letter / A4 / A6",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PaperName\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PaperName.htm"
+    },
+    {
+      "name": "PointCoordinate",
+      "signature": "public static string PointCoordinate(string pointId, string axis)",
+      "summary": "returns the location of a 3d point",
+      "params": [
+        {
+          "name": "pointId",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022pointId\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PointCoordinate(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022axis\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PointCoordinate(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.PointCoordinate(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_PointCoordinate.htm"
+    },
+    {
+      "name": "UserText(String, String)",
+      "signature": "public static string UserText(string id, string key)",
+      "summary": "User text associated with an object, block or layout",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_UserText.htm"
+    },
+    {
+      "name": "UserText(String, String, String)",
+      "signature": "public static string UserText(string id, string key, string prompt)",
+      "summary": "User text associated with an object, block or layout",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022prompt\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_UserText_1.htm"
+    },
+    {
+      "name": "UserText(String, String, String, String)",
+      "signature": "public static string UserText(string id, string key, string prompt, string defaultValue)",
+      "summary": "User text associated with an object, block or layout",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022key\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "prompt",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022prompt\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022defaultValue\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.UserText(System.String,System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_UserText_2.htm"
+    },
+    {
+      "name": "Volume(String)",
+      "signature": "public static double Volume(string id)",
+      "summary": "Returns the volume for the selected object id open objects return 0 volume",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Volume.htm"
+    },
+    {
+      "name": "Volume(String, String)",
+      "signature": "public static double Volume(string id, string opt)",
+      "summary": "Returns a volume; if the opt param is a bool \u0022true/false\u0022 or \u00221/0\u0022 then open objects are inspected or ignored. if the opt param is a unit system as a string \u0022millimeter\u0022 then the volume will be returned if the object is closed and in the specified unit system. Open objects return 0",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "opt",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022opt\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Volume_1.htm"
+    },
+    {
+      "name": "Volume(String, String, String)",
+      "signature": "public static double Volume(string id, string unitSystem, string allowOpenObjects)",
+      "summary": "Returns a volume from an object Id. If allowOpenObjects = false objects which are open will return 0.0 as a volume.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "unitSystem",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022unitSystem\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "allowOpenObjects",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022allowOpenObjects\u0022/\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.TextFields.Volume(System.String,System.String,System.String)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_TextFields_Volume_2.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

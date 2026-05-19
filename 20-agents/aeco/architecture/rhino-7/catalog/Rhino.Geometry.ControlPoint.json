@@ -1,0 +1,233 @@
+{
+  "name": "ControlPoint",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents control point geometry with three-dimensional position and weight.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_ControlPoint.htm",
+  "constructors": [
+    {
+      "name": "ControlPoint(Point3d)",
+      "signature": "public ControlPoint(Point3d pt)",
+      "summary": "Constructs a new world 3-D, or Euclidean, control point. The 4-D representation of this is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinates of the control point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint__ctor.htm"
+    },
+    {
+      "name": "ControlPoint(Point4d)",
+      "signature": "public ControlPoint(Point4d pt)",
+      "summary": "Constructs a new homogeneous control point, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use an override that accepts world 3-D, or Euclidean, coordinates as input.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "Coordinates of the control point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint__ctor_2.htm"
+    },
+    {
+      "name": "ControlPoint(Point3d, Double)",
+      "signature": "public ControlPoint(Point3d euclideanPt, double weight)",
+      "summary": "Constructs a control point from a world 3-D, or Euclidean, location and a weight. The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "params": [
+        {
+          "name": "euclideanPt",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Coordinates of the control point.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "Weight factor of the control point. You should not use weights less than or equal to zero.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint__ctor_1.htm"
+    },
+    {
+      "name": "ControlPoint(Double, Double, Double)",
+      "signature": "public ControlPoint(double x, double y, double z)",
+      "summary": "Constructs a new world 3-D, or Euclidean, control point. The 4-D representation is (x, y, z, 1.0).",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X coordinate of the control point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y coordinate of the control point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z coordinate of the control point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint__ctor_3.htm"
+    },
+    {
+      "name": "ControlPoint(Double, Double, Double, Double)",
+      "signature": "public ControlPoint(double x, double y, double z, double weight)",
+      "summary": "Constructs a new homogeneous control point, where the 4-D representation is (x, y, z, w). The world 3-D, or Euclidean, representation is (x/w, y/w, z/w).",
+      "remarks": "For expert use only. If you do not understand homogeneous coordinates, then use an override that accepts world 3-D, or Euclidean, coordinates as input.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X coordinate of the control point.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y coordinate of the control point.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z coordinate of the control point.",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "System.Double",
+          "doc": "Weight factor of the control point. You should not use weights less than or equal to zero.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(ControlPoint other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.ControlPoint",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.ControlPoint.EpsilonEquals(Rhino.Geometry.ControlPoint,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.ControlPoint.EpsilonEquals(Rhino.Geometry.ControlPoint,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.ControlPoint.EpsilonEquals(Rhino.Geometry.ControlPoint,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(ControlPoint)",
+      "signature": "public bool Equals(ControlPoint other)",
+      "summary": "Determines if two points exactly match.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.ControlPoint",
+          "doc": "The other point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the other control point exactly matches this one."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_ControlPoint_Equals.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Location",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets world 3-D, or Euclidean location of the control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ControlPoint_Location.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "ControlPoint",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the predefined, unset control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ControlPoint_Unset.htm"
+    },
+    {
+      "name": "Weight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weight of this control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ControlPoint_Weight.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X coordinate of the control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ControlPoint_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y coordinate of the control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ControlPoint_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z coordinate of the control point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_ControlPoint_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

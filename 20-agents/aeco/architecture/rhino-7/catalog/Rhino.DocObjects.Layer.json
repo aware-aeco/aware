@@ -1,0 +1,1403 @@
+{
+  "name": "Layer",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.DocObjects.Layer\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Layer.htm",
+  "constructors": [
+    {
+      "name": "Layer",
+      "signature": "public Layer()",
+      "summary": "Initializes a new instance of the Layer class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearId",
+      "signature": "public void ClearId()",
+      "summary": "Resets the HasId property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the ID is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearId.htm"
+    },
+    {
+      "name": "ClearIndex",
+      "signature": "public void ClearIndex()",
+      "summary": "Resets the HasIndex property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the index is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearIndex.htm"
+    },
+    {
+      "name": "ClearName",
+      "signature": "public void ClearName()",
+      "summary": "Resets the HasName property of the model component to false, if possible.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "If the name is locked."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_ClearName.htm"
+    },
+    {
+      "name": "CopyAttributesFrom",
+      "signature": "public void CopyAttributesFrom(Layer otherLayer)",
+      "summary": "Copy typical attributes from another layer",
+      "params": [
+        {
+          "name": "otherLayer",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022otherLayer\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.CopyAttributesFrom(Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_CopyAttributesFrom.htm"
+    },
+    {
+      "name": "DataCRC",
+      "signature": "public uint DataCRC(uint currentRemainder)",
+      "summary": "Increments the Cyclic Redundancy Check value by this instance.",
+      "params": [
+        {
+          "name": "currentRemainder",
+          "type": "System.UInt32",
+          "doc": "The current remainder value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "UInt32",
+        "doc": "The updated remainder value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_DataCRC.htm"
+    },
+    {
+      "name": "Default",
+      "signature": "public void Default()",
+      "summary": "Sets layer to default settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_Default.htm"
+    },
+    {
+      "name": "DeletePerViewportColor",
+      "signature": "public void DeletePerViewportColor(Guid viewportId)",
+      "summary": "Remove any per viewport layer color setting so the layer\u0027s overall setting will be used for all viewports.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting for this viewport will be deleted. If Guid.Empty, the all per viewport layer color settings will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_DeletePerViewportColor.htm"
+    },
+    {
+      "name": "DeletePerViewportPlotColor",
+      "signature": "public void DeletePerViewportPlotColor(Guid viewportId)",
+      "summary": "Remove any per viewport layer plot color setting so the layer\u0027s overall setting will be used for all viewports.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting for this viewport will be deleted. If Guid.Empty, the all per viewport layer color settings will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_DeletePerViewportPlotColor.htm"
+    },
+    {
+      "name": "DeletePerViewportPlotWeight",
+      "signature": "public void DeletePerViewportPlotWeight(Guid viewportId)",
+      "summary": "Remove any per viewport layer plot weight setting so the layer\u0027s overall setting will be used for all viewports.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting for this viewport will be deleted. If Guid.Empty, the all per viewport layer color settings will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_DeletePerViewportPlotWeight.htm"
+    },
+    {
+      "name": "DeletePerViewportSettings",
+      "signature": "public void DeletePerViewportSettings(Guid viewportId)",
+      "summary": "Deletes per viewport layer settings.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the settings for that viewport are deleted. If Guid.Empty, then all per viewport settings are deleted.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_DeletePerViewportSettings.htm"
+    },
+    {
+      "name": "DeletePerViewportVisible",
+      "signature": "public void DeletePerViewportVisible(Guid viewportId)",
+      "summary": "Remove any per viewport visibility setting so the layer\u0027s overall setting will be used for all viewports.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting for this viewport will be deleted. If Guid.Empty, the all per viewport visibility settings will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_DeletePerViewportVisible.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_Dispose.htm"
+    },
+    {
+      "name": "EnsurePrivateCopy",
+      "signature": "public void EnsurePrivateCopy()",
+      "summary": "If you want to keep a copy of this class around by holding onto it in a variable after a command completes, call EnsurePrivateCopy to make sure that this class is not tied to the document. You can call this function as many times as you want.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_EnsurePrivateCopy.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "(Overrides Object.Equals(Object).)",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "[Missing \u003Cparam name=\u0022obj\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.Equals(System.Object)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.Equals(System.Object)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Layer)",
+      "signature": "public bool Equals(Layer other)",
+      "summary": "",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.Equals(Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.Equals(Rhino.DocObjects.Layer)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_Equals.htm"
+    },
+    {
+      "name": "GetChildren",
+      "signature": "public Layer[] GetChildren()",
+      "summary": "Gets immediate children of this layer. Note that child layers may have their own children.",
+      "params": [],
+      "returns": {
+        "type": "Layer[]",
+        "doc": "Array of child layers. null if this layer does not have any children."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetChildren.htm"
+    },
+    {
+      "name": "GetDefaultLayerProperties",
+      "signature": "public static Layer GetDefaultLayerProperties()",
+      "summary": "Constructs a layer with the current default properties. The default layer properties are: color = Rhino.ApplicationSettings.AppearanceSettings.DefaultLayerColorline style = Rhino.ApplicationSettings.AppearanceSettings.DefaultLayerLineStylematerial index = -1IGES level = -1mode = NormalLayername = emptylayer index = 0 (ignored by AddLayer)",
+      "params": [],
+      "returns": {
+        "type": "Layer",
+        "doc": "A new layer instance."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetDefaultLayerProperties.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "(Overrides Object.GetHashCode().)",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetHashCode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetHashCode.htm"
+    },
+    {
+      "name": "GetLeafName(String)",
+      "signature": "public static string GetLeafName(string fullPath)",
+      "summary": "Get a layer name\u0027s \u0022leaf\u0022 level name",
+      "params": [
+        {
+          "name": "fullPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022fullPath\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetLeafName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "leaf name or String.Empty if fullPath does not contain a leaf"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetLeafName_1.htm"
+    },
+    {
+      "name": "GetLeafName(Layer)",
+      "signature": "public static string GetLeafName(Layer layer)",
+      "summary": "Get a layer name\u0027s \u0022leaf\u0022 level name",
+      "params": [
+        {
+          "name": "layer",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022layer\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetLeafName(Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "leaf name or String.Empty if fullPath does not contain a leaf"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetLeafName.htm"
+    },
+    {
+      "name": "GetObjectData",
+      "signature": "public virtual void GetObjectData(SerializationInfo info, StreamingContext context)",
+      "summary": "Populates a System.Runtime.Serialization.SerializationInfo with the data needed to serialize the target object.",
+      "params": [
+        {
+          "name": "info",
+          "type": "System.Runtime.Serialization.SerializationInfo",
+          "doc": "The System.Runtime.Serialization.SerializationInfo to populate with data.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "System.Runtime.Serialization.StreamingContext",
+          "doc": "The destination (see System.Runtime.Serialization.StreamingContext) for this serialization.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_GetObjectData.htm"
+    },
+    {
+      "name": "GetParentName(String)",
+      "signature": "public static string GetParentName(string fullPath)",
+      "summary": "Get a layer\u0027s \u0022parent\u0022 path name",
+      "params": [
+        {
+          "name": "fullPath",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022fullPath\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetParentName(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "parent name or String.Empty"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetParentName_1.htm"
+    },
+    {
+      "name": "GetParentName(Layer)",
+      "signature": "public static string GetParentName(Layer layer)",
+      "summary": "Get a layer\u0027s \u0022parent\u0022 path name",
+      "params": [
+        {
+          "name": "layer",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022layer\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetParentName(Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "parent name or String.Empty"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetParentName.htm"
+    },
+    {
+      "name": "GetPersistentLocking",
+      "signature": "public bool GetPersistentLocking()",
+      "summary": "The persistent locking setting is used for layers that can be locked by a \u0022parent\u0022 object. A common case is when a layer is a child layer (Layer.ParentI is not nil). In this case, when a parent layer is locked, then child layers are also locked. The persistent locking setting determines what happens when the parent is unlocked again.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetPersistentLocking\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetPersistentLocking.htm"
+    },
+    {
+      "name": "GetPersistentVisibility",
+      "signature": "public bool GetPersistentVisibility()",
+      "summary": "The persistent viability setting is used for layers whose visibility can be changed by a \u0022parent\u0022 object. A common case is when a layer is a child layer (ParentId is not nil). In this case, when a parent layer is turned off, then child layers are also turned off. The persistent visibility setting determines what happens when the parent is turned on again.",
+      "remarks": "Returns true if this layer\u0027s visibility is controlled by a parent object and the parent is turned on (after being off), then this layer will also be turned on. Returns false if this layer\u0027s visibility is controlled by a parent object and the parent layer is turned on (after being off), then this layer will continue to be off. When the persistent viability is not explicitly set, this property returns the current value of IsVisible",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.GetPersistentVisibility\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetPersistentVisibility.htm"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "public string GetUserString(string key)",
+      "summary": "Gets user string from this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve the string.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "string associated with the key if successful. null if no key was found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetUserString.htm"
+    },
+    {
+      "name": "GetUserStrings",
+      "signature": "public NameValueCollection GetUserStrings()",
+      "summary": "Gets a copy of all (user key string, user value string) pairs attached to this geometry.",
+      "params": [],
+      "returns": {
+        "type": "NameValueCollection",
+        "doc": "A new collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_GetUserStrings.htm"
+    },
+    {
+      "name": "HasPerViewportSettings",
+      "signature": "public bool HasPerViewportSettings(Guid viewportId)",
+      "summary": "Verifies that a layer has per viewport settings.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then checks for settings for that specific viewport. If Guid.Empty, then checks for any viewport settings.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "True if the layer has per viewport settings, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_HasPerViewportSettings.htm"
+    },
+    {
+      "name": "IsChildOf(Guid)",
+      "signature": "public bool IsChildOf(Guid otherlayerId)",
+      "summary": "",
+      "params": [
+        {
+          "name": "otherlayerId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022otherlayerId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsChildOf(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsChildOf(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsChildOf_1.htm"
+    },
+    {
+      "name": "IsChildOf(Int32)",
+      "signature": "public bool IsChildOf(int layerIndex)",
+      "summary": "",
+      "params": [
+        {
+          "name": "layerIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022layerIndex\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsChildOf(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsChildOf(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsChildOf_2.htm"
+    },
+    {
+      "name": "IsChildOf(Layer)",
+      "signature": "public bool IsChildOf(Layer otherLayer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "otherLayer",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022otherLayer\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsChildOf(Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsChildOf(Rhino.DocObjects.Layer)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsChildOf.htm"
+    },
+    {
+      "name": "IsParentOf(Guid)",
+      "signature": "public bool IsParentOf(Guid otherLayer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "otherLayer",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022otherLayer\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsParentOf(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsParentOf(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsParentOf_1.htm"
+    },
+    {
+      "name": "IsParentOf(Int32)",
+      "signature": "public bool IsParentOf(int layerIndex)",
+      "summary": "",
+      "params": [
+        {
+          "name": "layerIndex",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022layerIndex\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsParentOf(System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsParentOf(System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsParentOf_2.htm"
+    },
+    {
+      "name": "IsParentOf(Layer)",
+      "signature": "public bool IsParentOf(Layer otherLayer)",
+      "summary": "",
+      "params": [
+        {
+          "name": "otherLayer",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022otherLayer\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsParentOf(Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.IsParentOf(Rhino.DocObjects.Layer)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsParentOf.htm"
+    },
+    {
+      "name": "IsValidName",
+      "signature": "public static bool IsValidName(string name)",
+      "summary": "Determines if a given string is valid for a layer name.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "A name to be validated.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the name is valid for a layer name; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_IsValidName.htm"
+    },
+    {
+      "name": "IsValidWithLog",
+      "signature": "public bool IsValidWithLog(out string log)",
+      "summary": "Determines if an object is valid. Also provides a report on errors if this object happens not to be valid.",
+      "params": [
+        {
+          "name": "log",
+          "type": "System.String",
+          "doc": "A textual log. This out parameter is assigned during this call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if this object is valid; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_IsValidWithLog.htm"
+    },
+    {
+      "name": "LockId",
+      "signature": "public void LockId()",
+      "summary": "Locks the component Id property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockId.htm"
+    },
+    {
+      "name": "LockIndex",
+      "signature": "public void LockIndex()",
+      "summary": "Locks the component Index property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockIndex.htm"
+    },
+    {
+      "name": "LockName",
+      "signature": "public void LockName()",
+      "summary": "Locks the component Name property.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ModelComponent_LockName.htm"
+    },
+    {
+      "name": "PerViewportColor",
+      "signature": "public Color PerViewportColor(Guid viewportId)",
+      "summary": "Gets the display color for this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The display color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_PerViewportColor.htm"
+    },
+    {
+      "name": "PerViewportIsVisible",
+      "signature": "public bool PerViewportIsVisible(Guid viewportId)",
+      "summary": "Gets the per viewport visibility of this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the visibility setting for that viewport is returned. If Guid.Empty, the IsVisible property is returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if objects on layer are visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_PerViewportIsVisible.htm"
+    },
+    {
+      "name": "PerViewportPersistentVisibility",
+      "signature": "public bool PerViewportPersistentVisibility(Guid viewportId)",
+      "summary": "Gets the per layer persistent visibility. The persistent viability setting is used for layers whose visibility can be changed by a parent layer. In this case, when a parent layer is turned off, then child layers are also turned off. The persistent visibility setting determines what happens when the parent is turned on again.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022viewportId\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.PerViewportPersistentVisibility(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Return true if this layer\u0027s visibility in the specified viewport is controlled by a parent object and the parent is turned on (after being off), then this layer will also be turned on in the specified viewport. Returns false if this layer\u0027s visibility in the specified viewport is controlled by a parent object and the parent layer is turned on(after being off), then this layer will continue to be off in the specified viewport."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_PerViewportPersistentVisibility.htm"
+    },
+    {
+      "name": "PerViewportPlotColor",
+      "signature": "public Color PerViewportPlotColor(Guid viewportId)",
+      "summary": "Gets the plot color for this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Color",
+        "doc": "The plot color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_PerViewportPlotColor.htm"
+    },
+    {
+      "name": "PerViewportPlotWeight",
+      "signature": "public double PerViewportPlotWeight(Guid viewportId)",
+      "summary": "Gets the plot weight, in millimeters, for this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The plot color."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_PerViewportPlotWeight.htm"
+    },
+    {
+      "name": "SetPersistentLocking",
+      "signature": "public void SetPersistentLocking(bool persistentLocking)",
+      "summary": "Set the persistent locking setting for this layer",
+      "params": [
+        {
+          "name": "persistentLocking",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022persistentLocking\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.SetPersistentLocking(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPersistentLocking.htm"
+    },
+    {
+      "name": "SetPersistentVisibility",
+      "signature": "public void SetPersistentVisibility(bool persistentVisibility)",
+      "summary": "Set the persistent visibility setting for this layer",
+      "params": [
+        {
+          "name": "persistentVisibility",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022persistentVisibility\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.SetPersistentVisibility(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPersistentVisibility.htm"
+    },
+    {
+      "name": "SetPerViewportColor",
+      "signature": "public void SetPerViewportColor(Guid viewportId, Color color)",
+      "summary": "Sets the display color for this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "The display color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPerViewportColor.htm"
+    },
+    {
+      "name": "SetPerViewportPersistentVisibility",
+      "signature": "public void SetPerViewportPersistentVisibility(Guid viewportId, bool persistentVisibility)",
+      "summary": "Sets the per layer persistent visibility. The persistent viability setting is used for layers whose visibility can be changed by a parent layer. In this case, when a parent layer is turned off, then child layers are also turned off. The persistent visibility setting determines what happens when the parent is turned on again.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id. If Guid.Empty, then the setting applies to all viewports with per viewport layer settings.",
+          "optional": false
+        },
+        {
+          "name": "persistentVisibility",
+          "type": "System.Boolean",
+          "doc": "If true, this layer\u0027s visibility in the specified viewport is controlled by a parent object and the parent is turned on (after being off), then this layer will also be turned on in the specified viewport. If false, this layer\u0027s visibility in the specified viewport is controlled by a parent object and the parent layer is turned on (after being off), then this layer will continue to be off in the specified viewport.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPerViewportPersistentVisibility.htm"
+    },
+    {
+      "name": "SetPerViewportPlotColor",
+      "signature": "public void SetPerViewportPlotColor(Guid viewportId, Color color)",
+      "summary": "Sets the plot color for this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "The plot color.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPerViewportPlotColor.htm"
+    },
+    {
+      "name": "SetPerViewportPlotWeight",
+      "signature": "public void SetPerViewportPlotWeight(Guid viewportId, double plotWeight)",
+      "summary": "Sets the plot weight, in millimeters, for this layer.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id.",
+          "optional": false
+        },
+        {
+          "name": "plotWeight",
+          "type": "System.Double",
+          "doc": "The plot weight in millimeters. A weight of 0.0 indicates the \u0022default\u0022 pen weight should be used. A weight of -1.0 indicates the layer should not be printed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPerViewportPlotWeight.htm"
+    },
+    {
+      "name": "SetPerViewportVisible",
+      "signature": "public void SetPerViewportVisible(Guid viewportId, bool visible)",
+      "summary": "Controls layer visibility in specific viewports.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting applies only to the viewport with the specified id. If Guid.Empty, then the setting applies to all viewports with per viewport layer settings.",
+          "optional": false
+        },
+        {
+          "name": "visible",
+          "type": "System.Boolean",
+          "doc": "true to make layer visible, false to make layer invisible.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetPerViewportVisible.htm"
+    },
+    {
+      "name": "SetUserString",
+      "signature": "public bool SetUserString(string key, string value)",
+      "summary": "Attach a user string (key,value combination) to this geometry.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.String",
+          "doc": "id used to retrieve this string.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "string associated with key.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_SetUserString.htm"
+    },
+    {
+      "name": "ToJSON",
+      "signature": "public string ToJSON(SerializationOptions options)",
+      "summary": "Create a JSON string representation of this object",
+      "params": [
+        {
+          "name": "options",
+          "type": "Rhino.FileIO.SerializationOptions",
+          "doc": "[Missing \u003Cparam name=\u0022options\u0022/\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Runtime.CommonObject.ToJSON(Rhino.FileIO.SerializationOptions)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Runtime_CommonObject_ToJSON.htm"
+    },
+    {
+      "name": "ToString",
+      "signature": "public override string ToString()",
+      "summary": "(Overrides ModelComponent.ToString().)",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.ToString\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_ToString.htm"
+    },
+    {
+      "name": "UnsetPersistentLocking",
+      "signature": "public void UnsetPersistentLocking()",
+      "summary": "Remove any explicitly persistent locking settings from this layer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_UnsetPersistentLocking.htm"
+    },
+    {
+      "name": "UnsetPersistentVisibility",
+      "signature": "public void UnsetPersistentVisibility()",
+      "summary": "Remove any explicit persistent visibility setting from this layer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_UnsetPersistentVisibility.htm"
+    },
+    {
+      "name": "UnsetPerViewportPersistentVisibility",
+      "signature": "public void UnsetPerViewportPersistentVisibility(Guid viewportId)",
+      "summary": "Remove any per viewport persistent visibility setting so the layer\u0027s overall setting will be used for all viewports.",
+      "params": [
+        {
+          "name": "viewportId",
+          "type": "System.Guid",
+          "doc": "If not Guid.Empty, then the setting for this viewport will be deleted. If Guid.Empty, the all per viewport visibility settings will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_UnsetPerViewportPersistentVisibility.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Layer left, Layer right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022left\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.op_Equality(Rhino.DocObjects.Layer,Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022right\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.op_Equality(Rhino.DocObjects.Layer,Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.op_Equality(Rhino.DocObjects.Layer,Rhino.DocObjects.Layer)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_op_Equality.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Layer left, Layer right)",
+      "summary": "",
+      "params": [
+        {
+          "name": "left",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022left\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.op_Inequality(Rhino.DocObjects.Layer,Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "Rhino.DocObjects.Layer",
+          "doc": "[Missing \u003Cparam name=\u0022right\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.Layer.op_Inequality(Rhino.DocObjects.Layer,Rhino.DocObjects.Layer)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Layer.op_Inequality(Rhino.DocObjects.Layer,Rhino.DocObjects.Layer)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Layer_op_Inequality.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the display color for this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_Color.htm"
+    },
+    {
+      "name": "ComponentStatus",
+      "type": "ComponentStatus",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the status of the layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_ComponentStatus.htm"
+    },
+    {
+      "name": "ComponentType",
+      "type": "ModelComponentType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_ComponentType.htm"
+    },
+    {
+      "name": "DeletedName",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of a component that is deleted.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_DeletedName.htm"
+    },
+    {
+      "name": "Disposed",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if this object has been disposed or the document it originally belonged to has been disposed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_Disposed.htm"
+    },
+    {
+      "name": "FullPath",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the full path to this layer. The full path includes nesting information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_FullPath.htm"
+    },
+    {
+      "name": "HasId",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasId.htm"
+    },
+    {
+      "name": "HasIndex",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has an Index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasIndex.htm"
+    },
+    {
+      "name": "HasName",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component has a Name.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_HasName.htm"
+    },
+    {
+      "name": "HasUserData",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets true if this class has any custom information attached to it through UserData.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_HasUserData.htm"
+    },
+    {
+      "name": "Id",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the ID of this layer object. You typically do not need to assign a custom ID.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_Id.htm"
+    },
+    {
+      "name": "IdIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component ID is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IdIsLocked.htm"
+    },
+    {
+      "name": "IgesLevel",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the IGES level for this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_IgesLevel.htm"
+    },
+    {
+      "name": "Index",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the model component index attribute.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_Index.htm"
+    },
+    {
+      "name": "IndexIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Index is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IndexIsLocked.htm"
+    },
+    {
+      "name": "InstanceDefinitionModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model as part of the information required for a linked instance definition, this value identifies the linked instance definition reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_InstanceDefinitionModelSerialNumber.htm"
+    },
+    {
+      "name": "IsComponentStatusLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "The component status itself can be locked. This returns an indication.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IsComponentStatusLocked.htm"
+    },
+    {
+      "name": "IsDeleted",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this layer has been deleted and is currently in the Undo buffer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_IsDeleted.htm"
+    },
+    {
+      "name": "IsDocumentControlled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "If true this object may not be modified. Any properties or functions that attempt to modify this object when it is set to \u0022IsReadOnly\u0022 will throw a NotSupportedException.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsDocumentControlled.htm"
+    },
+    {
+      "name": "IsExpanded",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether this layer is expanded in the Rhino Layer dialog.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_IsExpanded.htm"
+    },
+    {
+      "name": "IsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating the locked state of this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_IsLocked.htm"
+    },
+    {
+      "name": "IsReference",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicting whether this layer is a referenced layer. Referenced layers are part of referenced documents.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_IsReference.htm"
+    },
+    {
+      "name": "IsSystemComponent",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "True if this model component is a system constant. An incomplete list of system constant model components is below:ON_ModelComponent::Unset ON_InstanceDefinition::Empty ON_Linetype::UnsetON_Linetype::ContinuousON_Linetype::ByLayerON_Linetype::ByParent ON_Layer::UnsetON_Layer::Default ON_TextStyle::UnsetON_TextStyle::DefaultON_TextStyle::ByLayerON_TextStyle::ByParent ON_DimStyle::UnsetON_DimStyle::DefaultON_DimStyle::DefaultInchDecimalON_DimStyle::DefaultInchFractionalON_DimStyle::DefaultFootInchArchitectureON_DimStyle::DefaultMillimeterSmallON_DimStyle::DefaultMillimeterLargeON_DimStyle::DefaultMillimeterArchitecture",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_IsSystemComponent.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Tests an object to see if it is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_IsValid.htm"
+    },
+    {
+      "name": "IsVisible",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the visibility of this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_IsVisible.htm"
+    },
+    {
+      "name": "LayerIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the index of this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_LayerIndex.htm"
+    },
+    {
+      "name": "LinetypeIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the line-type index for this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_LinetypeIndex.htm"
+    },
+    {
+      "name": "ModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "A value identifying the model that manages this component.",
+      "remarks": "If the component is being managed by a model, this value identifies the model. In Rhino, this value is the document runtime serial number. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ModelSerialNumber.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the name of this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_Name.htm"
+    },
+    {
+      "name": "NameIsLocked",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a value indicating whether the component Name is already locked.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_NameIsLocked.htm"
+    },
+    {
+      "name": "ParentLayerId",
+      "type": "Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the ID of the parent layer. Layers can be organized in a hierarchical structure, in which case this returns the parent layer ID. If the layer has no parent, Guid.Empty will be returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_ParentLayerId.htm"
+    },
+    {
+      "name": "PathSeparator",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "The string \u0022::\u0022 (colon,colon) is used to separate parent and child layer names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_PathSeparator.htm"
+    },
+    {
+      "name": "PlotColor",
+      "type": "Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the plot color for this layer.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_PlotColor.htm"
+    },
+    {
+      "name": "PlotWeight",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the weight of the plotting pen in millimeters. A weight of 0.0 indicates the \u0022default\u0022 pen weight should be used. A weight of -1.0 indicates the layer should not be printed.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_PlotWeight.htm"
+    },
+    {
+      "name": "ReferenceModelSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "When a component is in a model for reference, this value identifies the reference model.",
+      "remarks": "Reference components are not saved in .3dm archives. Typically this value is set and locked by the code that adds a component to a model. This value is not saved in .3dm archives.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ModelComponent_ReferenceModelSerialNumber.htm"
+    },
+    {
+      "name": "RenderMaterial",
+      "type": "RenderMaterial",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the RenderMaterial for objects on this layer that have MaterialSource() == MaterialFromLayer. A null result indicates that no RenderMaterial has been assigned and the material created by the default Material constructor or the RenderMaterialIndex should be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_RenderMaterial.htm"
+    },
+    {
+      "name": "RenderMaterialIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the index of render material for objects on this layer that have MaterialSource() == MaterialFromLayer. A material index of -1 indicates no material has been assigned and the material created by the default Material constructor should be used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_RenderMaterialIndex.htm"
+    },
+    {
+      "name": "SortIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Runtime index used to sort layers in layer dialog.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_SortIndex.htm"
+    },
+    {
+      "name": "UserData",
+      "type": "UserDataList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of custom information that is attached to this class.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserData.htm"
+    },
+    {
+      "name": "UserDictionary",
+      "type": "ArchivableDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Dictionary of custom information attached to this class. The dictionary is actually user data provided as an easy to use sharable set of information.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Runtime_CommonObject_UserDictionary.htm"
+    },
+    {
+      "name": "UserStringCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the amount of user strings.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Layer_UserStringCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "GetObjectGeometryFilter",
+  "namespace": "Rhino.Input.Custom",
+  "kind": "delegate",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Input.Custom.GetObjectGeometryFilter\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Input_Custom_GetObjectGeometryFilter.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate bool GetObjectGeometryFilter( RhinoObject rhObject, GeometryBase geometry, ComponentIndex componentIndex )"
+}

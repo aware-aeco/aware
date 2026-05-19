@@ -1,0 +1,985 @@
+{
+  "name": "MeshFaceList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the faces and Face related functionality of a Mesh.",
+  "interfaces": [
+    "IResizableList\u003CMeshFace\u003E",
+    "IList\u003CMeshFace\u003E",
+    "ICollection\u003CMeshFace\u003E",
+    "IEnumerable\u003CMeshFace\u003E",
+    "IEnumerable",
+    "IList",
+    "ICollection",
+    "IReadOnlyList\u003CMeshFace\u003E",
+    "IReadOnlyCollection\u003CMeshFace\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_MeshFaceList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddFace(MeshFace)",
+      "signature": "public int AddFace(MeshFace face)",
+      "summary": "Appends a new mesh face to the end of the mesh face list.",
+      "params": [
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "Face to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_AddFace.htm"
+    },
+    {
+      "name": "AddFace(Int32, Int32, Int32)",
+      "signature": "public int AddFace(int vertex1, int vertex2, int vertex3)",
+      "summary": "Appends a new triangular face to the end of the mesh face list.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "System.Int32",
+          "doc": "Index of first face corner.",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "System.Int32",
+          "doc": "Index of second face corner.",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "System.Int32",
+          "doc": "Index of third face corner.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added triangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_AddFace_1.htm"
+    },
+    {
+      "name": "AddFace(Int32, Int32, Int32, Int32)",
+      "signature": "public int AddFace(int vertex1, int vertex2, int vertex3, int vertex4)",
+      "summary": "Appends a new quadrangular face to the end of the mesh face list.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "System.Int32",
+          "doc": "Index of first face corner.",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "System.Int32",
+          "doc": "Index of second face corner.",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "System.Int32",
+          "doc": "Index of third face corner.",
+          "optional": false
+        },
+        {
+          "name": "vertex4",
+          "type": "System.Int32",
+          "doc": "Index of fourth face corner.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added quad."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_AddFace_2.htm"
+    },
+    {
+      "name": "AddFaces",
+      "signature": "public int[] AddFaces(IEnumerable\u003CMeshFace\u003E faces)",
+      "summary": "Appends a list of faces to the end of the mesh face list.",
+      "params": [
+        {
+          "name": "faces",
+          "type": "System.Collections.Generic.IEnumerable\u003CMeshFace\u003E",
+          "doc": "Faces to add.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Indices of the newly created faces"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_AddFaces.htm"
+    },
+    {
+      "name": "AdjacentFaces",
+      "signature": "public int[] AdjacentFaces(int faceIndex)",
+      "summary": "Gets all faces that share a topological edge with a given face.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "All indices that share an edge."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_AdjacentFaces.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the Face list on the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_Clear.htm"
+    },
+    {
+      "name": "ConvertNonPlanarQuadsToTriangles",
+      "signature": "public int ConvertNonPlanarQuadsToTriangles(double planarTolerance, double angleToleranceRadians, int splitMethod)",
+      "summary": "Splits non-planar quads into two triangles based on given parameters.",
+      "remarks": "If both planarTolerance = Rhino.RhinoMath.UnsetValue and angleToleranceRadians = Rhino.RhinoMath.UnsetValue, then all quads are split.",
+      "params": [
+        {
+          "name": "planarTolerance",
+          "type": "System.Double",
+          "doc": "If planarTolerance \u003E= 0, then a quad is split if its vertices are not coplanar. If both planarTolerance = Rhino.RhinoMath.UnsetValue and angleToleranceRadians \u003E= 0.0, then the planarity test is skipped.",
+          "optional": false
+        },
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "If angleToleranceRadians \u003E= 0.0, then a quad is split if the angle between opposite corner normals is \u003E angleToleranceRadians. The corner normal is the normal to the triangle formed by two adjacent edges and the diagonal connecting their endpoints. A quad has four corner normals. If both angleToleranceRadians = Rhino.RhinoMath.UnsetValue and planarTolerance \u003E= 0.0, then the corner normal angle test is skipped.",
+          "optional": false
+        },
+        {
+          "name": "splitMethod",
+          "type": "System.Int32",
+          "doc": "0 default Currently divides along the short diagonal. This may be changed as better methods are found or preferences change. By passing zero, you let the developers of this code decide what\u0027s best for you over time. 1 divide along the short diagonal 2 divide along the long diagonal 3 minimize resulting area 4 maximize resulting area 5 minimize angle between triangle normals 6 maximize angle between triangle normals",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of quads that were converted to triangles."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ConvertNonPlanarQuadsToTriangles.htm"
+    },
+    {
+      "name": "ConvertQuadsToTriangles",
+      "signature": "public bool ConvertQuadsToTriangles()",
+      "summary": "Splits all quads along the short diagonal.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ConvertQuadsToTriangles.htm"
+    },
+    {
+      "name": "ConvertTrianglesToQuads",
+      "signature": "public bool ConvertTrianglesToQuads(double angleToleranceRadians, double minimumDiagonalLengthRatio)",
+      "summary": "Joins adjacent triangles into quads if the resulting quad is \u0027nice\u0027.",
+      "params": [
+        {
+          "name": "angleToleranceRadians",
+          "type": "System.Double",
+          "doc": "Used to compare adjacent triangles\u0027 face normals. For two triangles to be considered, the angle between their face normals has to be \u003C= angleToleranceRadians. When in doubt use RhinoMath.PI/90.0 (2 degrees).",
+          "optional": false
+        },
+        {
+          "name": "minimumDiagonalLengthRatio",
+          "type": "System.Double",
+          "doc": "( \u003C= 1.0) For two triangles to be considered the ratio of the resulting quad\u0027s diagonals (length of the shortest diagonal)/(length of longest diagonal). has to be \u003E= minimumDiagonalLengthRatio. When in doubt us .875.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ConvertTrianglesToQuads.htm"
+    },
+    {
+      "name": "CullDegenerateFaces",
+      "signature": "public int CullDegenerateFaces()",
+      "summary": "Attempts to removes degenerate faces from the mesh. Degenerate faces are faces that contains such a combination of indices, that their final shape collapsed in a line or point.Before returning, this method also attempts to repair faces by juggling vertex indices.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of degenerate faces that were removed."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_CullDegenerateFaces.htm"
+    },
+    {
+      "name": "DeleteFaces(IEnumerable\u003CInt32\u003E)",
+      "signature": "public int DeleteFaces(IEnumerable\u003Cint\u003E faceIndexes)",
+      "summary": "Removes a collection of faces from the mesh without affecting the remaining geometry.",
+      "params": [
+        {
+          "name": "faceIndexes",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "An array containing all the face indices to be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of faces deleted on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_DeleteFaces.htm"
+    },
+    {
+      "name": "DeleteFaces(IEnumerable\u003CInt32\u003E, Boolean)",
+      "signature": "public int DeleteFaces(IEnumerable\u003Cint\u003E faceIndexes, bool compact)",
+      "summary": "Removes a collection of faces from the mesh without affecting the remaining geometry.",
+      "params": [
+        {
+          "name": "faceIndexes",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "An array containing all the face indices to be removed.",
+          "optional": false
+        },
+        {
+          "name": "compact",
+          "type": "System.Boolean",
+          "doc": "If true, removes vertices that are no longer referenced.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The number of faces deleted on success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_DeleteFaces_1.htm"
+    },
+    {
+      "name": "Destroy",
+      "signature": "public void Destroy()",
+      "summary": "Releases all memory allocated to store faces. The list capacity will be 0 after this call. Subsequent calls can add new items.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_Destroy.htm"
+    },
+    {
+      "name": "ExtractDuplicateFaces",
+      "signature": "public Mesh ExtractDuplicateFaces()",
+      "summary": "Extracts, or removes, duplicate faces.",
+      "params": [],
+      "returns": {
+        "type": "Mesh",
+        "doc": "A mesh containing the extracted duplicate faces if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ExtractDuplicateFaces.htm"
+    },
+    {
+      "name": "ExtractFaces",
+      "signature": "public Mesh ExtractFaces(IEnumerable\u003Cint\u003E faceIndices)",
+      "summary": "Extracts, or removes, faces.",
+      "params": [
+        {
+          "name": "faceIndices",
+          "type": "System.Collections.Generic.IEnumerable\u003CInt32\u003E",
+          "doc": "The face indices to be extracted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Mesh",
+        "doc": "A mesh containing the extracted faces if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ExtractFaces.htm"
+    },
+    {
+      "name": "GetClashingFacePairs",
+      "signature": "public IndexPair[] GetClashingFacePairs(int maxPairCount)",
+      "summary": "Gets an array of pairs of mesh faces that clash.",
+      "params": [
+        {
+          "name": "maxPairCount",
+          "type": "System.Int32",
+          "doc": "If \u003E0, then at most this many pairs will be added to the output array. If \u003C=0, then all clashing pairs will be added to the output array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IndexPair[]",
+        "doc": "Array of pairs of mesh face indices."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetClashingFacePairs.htm"
+    },
+    {
+      "name": "GetConnectedFaces(Int32)",
+      "signature": "public int[] GetConnectedFaces(int faceIndex)",
+      "summary": "Find all connected face indices",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "face index to start from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "list of connected face indices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetConnectedFaces.htm"
+    },
+    {
+      "name": "GetConnectedFaces(Int32, Double, Boolean)",
+      "signature": "public int[] GetConnectedFaces(int faceIndex, double angleRadians, bool greaterThanAngle)",
+      "summary": "Find all connected face indices where adjacent face normals meet the criteria of angleRadians and greaterThanAngle",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "face index to start from",
+          "optional": false
+        },
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "angle to use for comparison of what is connected",
+          "optional": false
+        },
+        {
+          "name": "greaterThanAngle",
+          "type": "System.Boolean",
+          "doc": "If true angles greater than or equal to are considered connected. If false, angles less than or equal to are considered connected.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "list of connected face indices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetConnectedFaces_1.htm"
+    },
+    {
+      "name": "GetConnectedFacesToEdges",
+      "signature": "public int[] GetConnectedFacesToEdges(int startFaceIndex, bool treatNonmanifoldLikeUnwelded)",
+      "summary": "Uses startFaceIndex and finds all connected face indexes up to unwelded or naked edges. If treatNonmanifoldLikeUnwelded is true then non-manifold edges will be considered as unwelded or naked",
+      "params": [
+        {
+          "name": "startFaceIndex",
+          "type": "System.Int32",
+          "doc": "Initial face index",
+          "optional": false
+        },
+        {
+          "name": "treatNonmanifoldLikeUnwelded",
+          "type": "System.Boolean",
+          "doc": "True means non-manifold edges will be handled like unwelded edges, False means they aren\u0027t considered",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "Array of connected face indexes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetConnectedFacesToEdges.htm"
+    },
+    {
+      "name": "GetDuplicateFaces",
+      "signature": "public int[] GetDuplicateFaces()",
+      "summary": "Finds all of the duplicate faces.",
+      "params": [],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "The indexes that are duplicates of other indexes if successful. If there are no duplicate, then an empty array is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetDuplicateFaces.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CMeshFace\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all faces in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CMeshFace\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetEnumerator.htm"
+    },
+    {
+      "name": "GetFace",
+      "signature": "public MeshFace GetFace(int index)",
+      "summary": "Returns the mesh face at the given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of face to get. Must be larger than or equal to zero and smaller than the Face Count of the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshFace",
+        "doc": "The mesh face at the given index on success or MeshFace.Unset if the index is out of range."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetFace.htm"
+    },
+    {
+      "name": "GetFaceAspectRatio",
+      "signature": "public double GetFaceAspectRatio(int index)",
+      "summary": "Returns the mesh face at the given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of face to get. Must be larger than or equal to zero and smaller than the Face Count of the mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The mesh face at the given index on success or MeshFace.Unset if the index is out of range."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetFaceAspectRatio.htm"
+    },
+    {
+      "name": "GetFaceBoundingBox",
+      "signature": "public BoundingBox GetFaceBoundingBox(int faceIndex)",
+      "summary": "Gets the bounding box of a face.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BoundingBox",
+        "doc": "A new bounding box, or Empty on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetFaceBoundingBox.htm"
+    },
+    {
+      "name": "GetFaceCenter",
+      "signature": "public Point3d GetFaceCenter(int faceIndex)",
+      "summary": "Gets the center point of a face. For a triangular face, this is the centroid or barycenter.For a quad, this is the average of four comer points.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The center point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetFaceCenter.htm"
+    },
+    {
+      "name": "GetFaceVertices",
+      "signature": "public bool GetFaceVertices(int faceIndex, out Point3f a, out Point3f b, out Point3f c, out Point3f d)",
+      "summary": "Gets the 3D location of the vertices forming a face.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A first point. This out argument is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A second point. This out argument is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "c",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A third point. This out argument is assigned during the call.",
+          "optional": false
+        },
+        {
+          "name": "d",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A fourth point. This out argument is assigned during the call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetFaceVertices.htm"
+    },
+    {
+      "name": "GetTopologicalVertices",
+      "signature": "public int[] GetTopologicalVertices(int faceIndex)",
+      "summary": "Gets the topology vertex indices of a face.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "An array of integers."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetTopologicalVertices.htm"
+    },
+    {
+      "name": "GetZeroAreaFaces",
+      "signature": "public bool GetZeroAreaFaces(out int[] whollyDegenerateFaces, out int[] partiallyDegenerateFaces)",
+      "summary": "Examines and adds face indexes to whollyDegenerateFaces if the face is a triangle with zero area or a quad both triangles have zero area. Face indexes are added to partiallyDegenerateFaces when a quad has one triangle with zero area.",
+      "params": [
+        {
+          "name": "whollyDegenerateFaces",
+          "type": "System.Int32[]",
+          "doc": "Array of indexes for faces, both triangles and quads, that have zero area.",
+          "optional": false
+        },
+        {
+          "name": "partiallyDegenerateFaces",
+          "type": "System.Int32[]",
+          "doc": "Array of indexes for quad faces, that have one triangle with zero area.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "Returns true if the mesh has wholly or partially degenerate faces, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_GetZeroAreaFaces.htm"
+    },
+    {
+      "name": "HasNakedEdges",
+      "signature": "public bool HasNakedEdges(int faceIndex)",
+      "summary": "Returns true if at least one of the face edges are not topologically connected to any other faces.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if that face makes the mesh open, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_HasNakedEdges.htm"
+    },
+    {
+      "name": "Insert",
+      "signature": "public void Insert(int index, MeshFace face)",
+      "summary": "Inserts a mesh face at a defined index in this list.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "An index.",
+          "optional": false
+        },
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "A face.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If index is negative or \u003E= Count."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_Insert.htm"
+    },
+    {
+      "name": "IsHidden",
+      "signature": "public bool IsHidden(int faceIndex)",
+      "summary": "Gets a value indicating whether a face is hidden. A face is hidden if, and only if, at least one of its vertices is hidden.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "System.Int32",
+          "doc": "A face index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if hidden, false if fully visible."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_IsHidden.htm"
+    },
+    {
+      "name": "MergeAdjacentFaces",
+      "signature": "public bool MergeAdjacentFaces(int edgeIndex)",
+      "summary": "Merges two triangular mesh faces that share an edge into one quadrangular face.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "System.Int32",
+          "doc": "The common topological edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_MergeAdjacentFaces.htm"
+    },
+    {
+      "name": "RemoveAt(Int32)",
+      "signature": "public void RemoveAt(int index)",
+      "summary": "Removes a face from the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the face that will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If index is \u003C 0 or \u003E= Count."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_RemoveAt.htm"
+    },
+    {
+      "name": "RemoveAt(Int32, Boolean)",
+      "signature": "public void RemoveAt(int index, bool compact)",
+      "summary": "Removes a face from the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "The index of the face that will be removed.",
+          "optional": false
+        },
+        {
+          "name": "compact",
+          "type": "System.Boolean",
+          "doc": "If true, removes vertices that are no longer referenced.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ArgumentOutOfRangeException",
+          "when": "If index is \u003C 0 or \u003E= Count."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_RemoveAt_1.htm"
+    },
+    {
+      "name": "RemoveZeroAreaFaces",
+      "signature": "public int RemoveZeroAreaFaces(ref int fixedFaceCount)",
+      "summary": "Deletes or fixes mesh faces that have zero area.",
+      "params": [
+        {
+          "name": "fixedFaceCount",
+          "type": "System.Int32",
+          "doc": "Number of fixed partially degenerate faces.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "Number of removed wholly degenerate faces."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_RemoveZeroAreaFaces.htm"
+    },
+    {
+      "name": "SetFace(Int32, MeshFace)",
+      "signature": "public bool SetFace(int index, MeshFace face)",
+      "summary": "Sets a face at a specific index of the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "A position in the list.",
+          "optional": false
+        },
+        {
+          "name": "face",
+          "type": "Rhino.Geometry.MeshFace",
+          "doc": "A face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_SetFace.htm"
+    },
+    {
+      "name": "SetFace(Int32, Int32, Int32, Int32)",
+      "signature": "public bool SetFace(int index, int vertex1, int vertex2, int vertex3)",
+      "summary": "Sets a triangular face at a specific index of the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "A position in the list.",
+          "optional": false
+        },
+        {
+          "name": "vertex1",
+          "type": "System.Int32",
+          "doc": "The first vertex index.",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "System.Int32",
+          "doc": "The second vertex index.",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "System.Int32",
+          "doc": "The third vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_SetFace_1.htm"
+    },
+    {
+      "name": "SetFace(Int32, Int32, Int32, Int32, Int32)",
+      "signature": "public bool SetFace(int index, int vertex1, int vertex2, int vertex3, int vertex4)",
+      "summary": "Sets a quadrangular face at a specific index of the mesh.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "A position in the list.",
+          "optional": false
+        },
+        {
+          "name": "vertex1",
+          "type": "System.Int32",
+          "doc": "The first vertex index.",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "System.Int32",
+          "doc": "The second vertex index.",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "System.Int32",
+          "doc": "The third vertex index.",
+          "optional": false
+        },
+        {
+          "name": "vertex4",
+          "type": "System.Int32",
+          "doc": "The fourth vertex index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the operation succeeded, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_SetFace_2.htm"
+    },
+    {
+      "name": "ToIntArray(Boolean)",
+      "signature": "public int[] ToIntArray(bool asTriangles)",
+      "summary": "Copies all of the face indices to a linear array of indices per face. Note that this includes indices from invalid faces too.",
+      "params": [
+        {
+          "name": "asTriangles",
+          "type": "System.Boolean",
+          "doc": "If set to true as triangles.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "The int array. This method never returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ToIntArray.htm"
+    },
+    {
+      "name": "ToIntArray(Boolean, List\u003CInt32\u003E)",
+      "signature": "public int[] ToIntArray(bool asTriangles, ref List\u003Cint\u003E replacedIndices)",
+      "summary": "Copies all of the faces to a linear array of indices. Clean-up of vertex indices if replacedIndices is a valid List\u003Cint\u003E ///",
+      "params": [
+        {
+          "name": "asTriangles",
+          "type": "System.Boolean",
+          "doc": "If set to true as triangles.",
+          "optional": false
+        },
+        {
+          "name": "replacedIndices",
+          "type": "System.Collections.Generic.List\u003CInt32\u003E",
+          "doc": "List is populated with vertex indices that were replaced with 0. If replacedIndices is null there will be no cleanup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32[]",
+        "doc": "The int array. This method never returns null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshFaceList_ToIntArray_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capacity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the total number of mesh triangles and quads the internal data structure can hold without resizing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshFaceList_Capacity.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of mesh faces. When getting this can includes invalid faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshFaceList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "MeshFace",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the mesh face at the given index.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshFaceList_Item.htm"
+    },
+    {
+      "name": "QuadCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of faces that are valid quads (4 corners).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshFaceList_QuadCount.htm"
+    },
+    {
+      "name": "TriangleCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of faces that are valid triangles (3 corners).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshFaceList_TriangleCount.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

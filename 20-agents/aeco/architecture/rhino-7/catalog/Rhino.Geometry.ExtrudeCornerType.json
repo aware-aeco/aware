@@ -1,0 +1,35 @@
+{
+  "name": "ExtrudeCornerType",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "Corner types used for creating a tapered extrusion",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_ExtrudeCornerType.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No Corner"
+    },
+    {
+      "name": "Sharp",
+      "value": 1
+    },
+    {
+      "name": "Round",
+      "value": 2
+    },
+    {
+      "name": "Smooth",
+      "value": 3
+    },
+    {
+      "name": "Chamfer",
+      "value": 4
+    }
+  ]
+}

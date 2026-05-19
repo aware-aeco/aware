@@ -1,0 +1,54 @@
+{
+  "name": "FileType",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileType\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileType.htm",
+  "constructors": [
+    {
+      "name": "FileType",
+      "signature": "public FileType(string extension, string description)",
+      "summary": "Initializes a new instance of the FileType class",
+      "params": [
+        {
+          "name": "extension",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022extension\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileType.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022description\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileType.#ctor(System.String,System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FileType__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileType_Description.htm"
+    },
+    {
+      "name": "Extension",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileType_Extension.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

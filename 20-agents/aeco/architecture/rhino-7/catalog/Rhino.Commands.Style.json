@@ -1,0 +1,44 @@
+{
+  "name": "Style",
+  "namespace": "Rhino.Commands",
+  "kind": "enum",
+  "summary": "Defines bitwise mask flags for different styles of commands, such as Hidden or DoNotRepeat.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Commands_Style.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No flag is defined."
+    },
+    {
+      "name": "Hidden",
+      "value": 1,
+      "summary": "Also known as a \u0022test\u0022 command. The command name does not auto-complete when typed on the command line an is therefore not discoverable. Useful for writing commands that users don\u0027t normally have access to."
+    },
+    {
+      "name": "ScriptRunner",
+      "value": 2,
+      "summary": "For commands that want to run scripts as if they were typed at the command line (like RhinoScript\u0027s RunScript command)"
+    },
+    {
+      "name": "Transparent",
+      "value": 4,
+      "summary": "Transparent commands can be run inside of other commands. The command does not modify the contents of the model\u0027s geometry in any way. Examples of transparent commands include commands that change views and toggle snap states. Any command that adds or deletes, a view cannot be transparent."
+    },
+    {
+      "name": "DoNotRepeat",
+      "value": 8,
+      "summary": "The command should not be repeated by pressing \u0022ENTER\u0022 immediately after the command finishes."
+    },
+    {
+      "name": "NotUndoable",
+      "value": 16,
+      "summary": "By default, all commands are undo-able."
+    }
+  ]
+}

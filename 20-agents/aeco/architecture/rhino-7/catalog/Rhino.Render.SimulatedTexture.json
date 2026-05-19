@@ -1,0 +1,381 @@
+{
+  "name": "SimulatedTexture",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.SimulatedTexture\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_SimulatedTexture.htm",
+  "constructors": [
+    {
+      "name": "SimulatedTexture()",
+      "signature": "[ObsoleteAttribute] public SimulatedTexture()",
+      "summary": "Initializes a new instance of the SimulatedTexture class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture__ctor.htm"
+    },
+    {
+      "name": "SimulatedTexture(RhinoDoc)",
+      "signature": "public SimulatedTexture(RhinoDoc doc)",
+      "summary": "Initializes a new instance of the SimulatedTexture class",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.#ctor(Rhino.RhinoDoc)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture__ctor_2.htm"
+    },
+    {
+      "name": "SimulatedTexture(Texture)",
+      "signature": "[ObsoleteAttribute] public SimulatedTexture(Texture texture)",
+      "summary": "Initializes a new instance of the SimulatedTexture class",
+      "params": [
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.#ctor(Rhino.DocObjects.Texture)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture__ctor_1.htm"
+    },
+    {
+      "name": "SimulatedTexture(RhinoDoc, Texture)",
+      "signature": "public SimulatedTexture(RhinoDoc doc, Texture texture)",
+      "summary": "Initializes a new instance of the SimulatedTexture class",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.#ctor(Rhino.RhinoDoc,Rhino.DocObjects.Texture)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "texture",
+          "type": "Rhino.DocObjects.Texture",
+          "doc": "[Missing \u003Cparam name=\u0022texture\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.#ctor(Rhino.RhinoDoc,Rhino.DocObjects.Texture)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture__ctor_3.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstPointer",
+      "signature": "public IntPtr ConstPointer()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IntPtr",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.ConstPointer\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_ConstPointer.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the SimulatedTexture",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "Releases the unmanaged resources used by the SimulatedTexture and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_Finalize.htm"
+    },
+    {
+      "name": "MetersToUnits(Double)",
+      "signature": "[ObsoleteAttribute(\u0022Obsolete, use version that requires a document\u0022)] public double MetersToUnits(double units)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "units",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.MetersToUnits(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.MetersToUnits(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_MetersToUnits_1.htm"
+    },
+    {
+      "name": "MetersToUnits(RhinoDoc, Double)",
+      "signature": "public double MetersToUnits(RhinoDoc doc, double units)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.MetersToUnits(Rhino.RhinoDoc,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.MetersToUnits(Rhino.RhinoDoc,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.MetersToUnits(Rhino.RhinoDoc,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_MetersToUnits.htm"
+    },
+    {
+      "name": "SetMappingChannelAndProjectionMode",
+      "signature": "public void SetMappingChannelAndProjectionMode(SimulatedTexture.ProjectionModes pm, int mappingChannel, SimulatedTexture.EnvironmentMappingModes emm)",
+      "summary": "",
+      "params": [
+        {
+          "name": "pm",
+          "type": "Rhino.Render.SimulatedTexture.ProjectionModes",
+          "doc": "[Missing \u003Cparam name=\u0022pm\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.SetMappingChannelAndProjectionMode(Rhino.Render.SimulatedTexture.ProjectionModes,System.Int32,Rhino.Render.SimulatedTexture.EnvironmentMappingModes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "mappingChannel",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022mappingChannel\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.SetMappingChannelAndProjectionMode(Rhino.Render.SimulatedTexture.ProjectionModes,System.Int32,Rhino.Render.SimulatedTexture.EnvironmentMappingModes)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "emm",
+          "type": "Rhino.Render.SimulatedTexture.EnvironmentMappingModes",
+          "doc": "[Missing \u003Cparam name=\u0022emm\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.SetMappingChannelAndProjectionMode(Rhino.Render.SimulatedTexture.ProjectionModes,System.Int32,Rhino.Render.SimulatedTexture.EnvironmentMappingModes)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_SetMappingChannelAndProjectionMode.htm"
+    },
+    {
+      "name": "Texture",
+      "signature": "public Texture Texture()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Texture",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.Texture\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_Texture.htm"
+    },
+    {
+      "name": "UnitsToMeters(Double)",
+      "signature": "[ObsoleteAttribute(\u0022Obsolete, use version that requires a document\u0022)] public double UnitsToMeters(double units)",
+      "summary": "Obsolete.",
+      "params": [
+        {
+          "name": "units",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.UnitsToMeters(System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.UnitsToMeters(System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_UnitsToMeters_1.htm"
+    },
+    {
+      "name": "UnitsToMeters(RhinoDoc, Double)",
+      "signature": "public double UnitsToMeters(RhinoDoc doc, double units)",
+      "summary": "",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "[Missing \u003Cparam name=\u0022doc\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.UnitsToMeters(Rhino.RhinoDoc,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022units\u0022/\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.UnitsToMeters(Rhino.RhinoDoc,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.SimulatedTexture.UnitsToMeters(Rhino.RhinoDoc,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_SimulatedTexture_UnitsToMeters.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BitmapSize",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_BitmapSize.htm"
+    },
+    {
+      "name": "Filename",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_Filename.htm"
+    },
+    {
+      "name": "Filtered",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_Filtered.htm"
+    },
+    {
+      "name": "HasTransparentColor",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_HasTransparentColor.htm"
+    },
+    {
+      "name": "LocalMappingTransform",
+      "type": "Transform",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_LocalMappingTransform.htm"
+    },
+    {
+      "name": "MappingChannel",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_MappingChannel.htm"
+    },
+    {
+      "name": "Offset",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_Offset.htm"
+    },
+    {
+      "name": "OriginalFilename",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_OriginalFilename.htm"
+    },
+    {
+      "name": "ProjectionMode",
+      "type": "SimulatedTexture.ProjectionModes",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_ProjectionMode.htm"
+    },
+    {
+      "name": "Repeat",
+      "type": "Vector2d",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_Repeat.htm"
+    },
+    {
+      "name": "Repeating",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_Repeating.htm"
+    },
+    {
+      "name": "Rotation",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_Rotation.htm"
+    },
+    {
+      "name": "TransparentColor",
+      "type": "Color4f",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_TransparentColor.htm"
+    },
+    {
+      "name": "TransparentColorSensitivity",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_SimulatedTexture_TransparentColorSensitivity.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

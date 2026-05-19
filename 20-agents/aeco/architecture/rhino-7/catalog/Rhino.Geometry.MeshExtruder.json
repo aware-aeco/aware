@@ -1,0 +1,184 @@
+{
+  "name": "MeshExtruder",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Extrudes a mesh and provides preview",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshExtruder.htm",
+  "constructors": [
+    {
+      "name": "MeshExtruder",
+      "signature": "public MeshExtruder(Mesh inputMesh, IEnumerable\u003CComponentIndex\u003E componentIndices)",
+      "summary": "Construct object to extrude given mesh faces, edges and ngons.",
+      "params": [
+        {
+          "name": "inputMesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to use as starting point. Will not be modified.",
+          "optional": false
+        },
+        {
+          "name": "componentIndices",
+          "type": "System.Collections.Generic.IEnumerable\u003CComponentIndex\u003E",
+          "doc": "Mesh faces, edges and ngons to extrude.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshExtruder__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Dispose of this object and any unmanaged memory associated with it.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshExtruder_Dispose.htm"
+    },
+    {
+      "name": "ExtrudedMesh(Mesh)",
+      "signature": "public bool ExtrudedMesh(out Mesh extrudedMeshOut)",
+      "summary": "Creates new extruded mesh. Returns true if any edges or faces were extruded.",
+      "params": [
+        {
+          "name": "extrudedMeshOut",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Extruded mesh",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.MeshExtruder.ExtrudedMesh(Rhino.Geometry.Mesh@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshExtruder_ExtrudedMesh.htm"
+    },
+    {
+      "name": "ExtrudedMesh(Mesh, List\u003CComponentIndex\u003E)",
+      "signature": "public bool ExtrudedMesh(out Mesh extrudedMeshOut, out List\u003CComponentIndex\u003E componentIndicesOut)",
+      "summary": "Creates new extruded mesh. Returns true if any edges or faces were extruded.",
+      "params": [
+        {
+          "name": "extrudedMeshOut",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Extruded mesh",
+          "optional": false
+        },
+        {
+          "name": "componentIndicesOut",
+          "type": "System.Collections.Generic.List\u003CComponentIndex\u003E",
+          "doc": "Component indices of extruded faces and vertices",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.MeshExtruder.ExtrudedMesh(Rhino.Geometry.Mesh@,System.Collections.Generic.List{Rhino.Geometry.ComponentIndex}@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshExtruder_ExtrudedMesh_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Destructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshExtruder_Finalize.htm"
+    },
+    {
+      "name": "GetWallFaces",
+      "signature": "public List\u003Cint\u003E GetWallFaces()",
+      "summary": "Return list of faces that were added to connect transformed edges/faces to non-transformed edges/faces.",
+      "params": [],
+      "returns": {
+        "type": "List\u003CInt32\u003E",
+        "doc": "List of wall faces"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshExtruder_GetWallFaces.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EdgeBasedUVN",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Edge based UVN defines UVN directions according to boundary edge directions",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_EdgeBasedUVN.htm"
+    },
+    {
+      "name": "FaceDirectionMode",
+      "type": "MeshExtruderFaceDirectionMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Face direction mode determines how faces are oriented",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_FaceDirectionMode.htm"
+    },
+    {
+      "name": "KeepOriginalFaces",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether or not to keep original faces.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_KeepOriginalFaces.htm"
+    },
+    {
+      "name": "PreviewLines",
+      "type": "Line[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets Line objects to preview extruded mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_PreviewLines.htm"
+    },
+    {
+      "name": "SurfaceParameterMode",
+      "type": "MeshExtruderParameterMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Mode for creating surface parameters for extruded areas",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_SurfaceParameterMode.htm"
+    },
+    {
+      "name": "TextureCoordinateMode",
+      "type": "MeshExtruderParameterMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Mode for creating texture coordinates for extruded areas",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_TextureCoordinateMode.htm"
+    },
+    {
+      "name": "Transform",
+      "type": "Transform",
+      "getter": true,
+      "setter": true,
+      "summary": "Transform of extrusion",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_Transform.htm"
+    },
+    {
+      "name": "UVN",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether or not to perform extrude in UVN basis.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_MeshExtruder_UVN.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

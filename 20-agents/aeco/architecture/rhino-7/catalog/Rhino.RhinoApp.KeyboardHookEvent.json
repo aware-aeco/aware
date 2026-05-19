@@ -1,0 +1,14 @@
+{
+  "name": "RhinoApp.KeyboardHookEvent",
+  "namespace": "Rhino",
+  "kind": "delegate",
+  "summary": "KeyboardEvent delegate",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_RhinoApp_KeyboardHookEvent.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "public delegate void KeyboardHookEvent( int key )"
+}

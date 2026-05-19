@@ -1,0 +1,129 @@
+{
+  "name": "MeshUnsafeLock",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Permits access to the underlying mesh raw data structures in an unsafe way.",
+  "remarks": "This lock object needs to be disposed before using the Mesh in other calculations and this can be achieved with the using keyword (Using in VB.Net).",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_MeshUnsafeLock.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FacesArray",
+      "signature": "public MeshFace* FacesArray(out int length)",
+      "summary": "Retrieves a pointer to the raw faces array, which uses 4 integers for each face. MeshFace.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MeshFace*",
+        "doc": "The beginning of the vertex array. Item 0 is the first vertex, and item length-1 is the last valid one."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "The mesh does not have face normals."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshUnsafeLock_FacesArray.htm"
+    },
+    {
+      "name": "NormalVector3fArray",
+      "signature": "public Vector3f* NormalVector3fArray(out int length)",
+      "summary": "Retrieves a pointer to the raw mesh vertex normal array, which uses vectors defined with single precision floating point numbers, or throws an exception if none is available.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3f*",
+        "doc": "The beginning of the vertex array. Item 0 is the first vertex, and item length-1 is the last valid one."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "The mesh does not have vertex normals."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshUnsafeLock_NormalVector3fArray.htm"
+    },
+    {
+      "name": "Release",
+      "signature": "public void Release()",
+      "summary": "Releases the lock and updates the underlying unmanaged data structures.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshUnsafeLock_Release.htm"
+    },
+    {
+      "name": "VertexPoint3dArray",
+      "signature": "public Point3d* VertexPoint3dArray(out int length)",
+      "summary": "Retrieves a pointer to the raw mesh vertex array, which uses coordinates defined with double precision floating point numbers, or throws an exception if none is available.",
+      "remarks": "When running this method for writing and if the mesh has also a single precision array, the array is synchronized if the pointer to the single precision array was not requested. Otherwise, it is up to the caller to ensure that the mesh vertices are kept synchronized, by setting both arrays to the required values.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d*",
+        "doc": "The beginning of the vertex array. Item 0 is the first vertex, and item length-1 is the last valid one. If no array is available, null is returned."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "The mesh does not use double precision vertices."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshUnsafeLock_VertexPoint3dArray.htm"
+    },
+    {
+      "name": "VertexPoint3fArray",
+      "signature": "public Point3f* VertexPoint3fArray(out int length)",
+      "summary": "Retrieves a pointer to the raw mesh vertex array, which uses coordinates defined with single precision floating point numbers, or null if none is available.",
+      "remarks": "When running this method for writing, it is up to the caller to ensure that the mesh has no double precision array that needs to be synchronized. Otherwise, also the double precision array must be synchronized.",
+      "params": [
+        {
+          "name": "length",
+          "type": "System.Int32",
+          "doc": "The length of the array. This value is returned by reference (out in C#). 0 is returned when there is no single precision array.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3f*",
+        "doc": "The beginning of the vertex array. Item 0 is the first vertex, and item length-1 is the last valid one. If no array is available, null is returned."
+      },
+      "throws": [
+        {
+          "type": "InvalidOperationException",
+          "when": "The mesh does not use single precision vertices."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_MeshUnsafeLock_VertexPoint3fArray.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

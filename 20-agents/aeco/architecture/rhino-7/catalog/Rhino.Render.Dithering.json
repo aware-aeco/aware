@@ -1,0 +1,107 @@
+{
+  "name": "Dithering",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "This is the interface to linear workflow settings.",
+  "base": "DocumentOrFreeFloatingBase",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_Dithering.htm",
+  "constructors": [
+    {
+      "name": "Dithering()",
+      "signature": "public Dithering()",
+      "summary": "Create a utility object not associated with any document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Dithering__ctor.htm"
+    },
+    {
+      "name": "Dithering(Dithering)",
+      "signature": "public Dithering(Dithering d)",
+      "summary": "Create a utility object not associated with any document from another object",
+      "params": [
+        {
+          "name": "d",
+          "type": "Rhino.Render.Dithering",
+          "doc": "[Missing \u003Cparam name=\u0022d\u0022/\u003E documentation for \u0022M:Rhino.Render.Dithering.#ctor(Rhino.Render.Dithering)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Dithering__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginChange",
+      "signature": "public void BeginChange(RenderContent.ChangeContexts cc)",
+      "summary": "Call this function before making any change to this object (calling a setter) otherwise undo will not work correctly. Calls to BeginChange must be paired with a call to EndChange.",
+      "params": [
+        {
+          "name": "cc",
+          "type": "Rhino.Render.RenderContent.ChangeContexts",
+          "doc": "Change context",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DocumentOrFreeFloatingBase_BeginChange.htm"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "public override void CopyFrom(FreeFloatingBase src)",
+      "summary": "(Overrides FreeFloatingBase.CopyFrom(FreeFloatingBase).)",
+      "params": [
+        {
+          "name": "src",
+          "type": "Rhino.Render.FreeFloatingBase",
+          "doc": "[Missing \u003Cparam name=\u0022src\u0022/\u003E documentation for \u0022M:Rhino.Render.Dithering.CopyFrom(Rhino.Render.FreeFloatingBase)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_Dithering_CopyFrom.htm"
+    },
+    {
+      "name": "EndChange",
+      "signature": "public bool EndChange()",
+      "summary": "See BeginChange",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the object has returned to no-changes mode."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_DocumentOrFreeFloatingBase_EndChange.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Method",
+      "type": "Dithering.Methods",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Dithering_Method.htm"
+    },
+    {
+      "name": "On",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_Dithering_On.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

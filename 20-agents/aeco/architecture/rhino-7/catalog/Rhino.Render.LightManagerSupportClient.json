@@ -1,0 +1,280 @@
+{
+  "name": "LightManagerSupportClient",
+  "namespace": "Rhino.Render",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.LightManagerSupportClient\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_LightManagerSupportClient.htm",
+  "constructors": [
+    {
+      "name": "LightManagerSupportClient",
+      "signature": "public LightManagerSupportClient(uint doc_uuid)",
+      "summary": "Initializes a new instance of the LightManagerSupportClient class",
+      "params": [
+        {
+          "name": "doc_uuid",
+          "type": "System.UInt32",
+          "doc": "[Missing \u003Cparam name=\u0022doc_uuid\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.#ctor(System.UInt32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeleteLight",
+      "signature": "public void DeleteLight(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.DeleteLight(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_DeleteLight.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the LightManagerSupportClient",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_Finalize.htm"
+    },
+    {
+      "name": "GetLightFromId",
+      "signature": "public Light GetLightFromId(Guid uuid)",
+      "summary": "",
+      "params": [
+        {
+          "name": "uuid",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022uuid\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.GetLightFromId(System.Guid)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Light",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.GetLightFromId(System.Guid)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_GetLightFromId.htm"
+    },
+    {
+      "name": "GetLights",
+      "signature": "public LightArray GetLights()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "LightArray",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.GetLights\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_GetLights.htm"
+    },
+    {
+      "name": "GetLightSolo",
+      "signature": "public bool GetLightSolo(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.GetLightSolo(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.GetLightSolo(Rhino.Geometry.Light)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_GetLightSolo.htm"
+    },
+    {
+      "name": "GroupLights",
+      "signature": "public void GroupLights(LightArray lights)",
+      "summary": "",
+      "params": [
+        {
+          "name": "lights",
+          "type": "Rhino.Render.LightArray",
+          "doc": "[Missing \u003Cparam name=\u0022lights\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.GroupLights(Rhino.Render.LightArray)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_GroupLights.htm"
+    },
+    {
+      "name": "LightDescription",
+      "signature": "public string LightDescription(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.LightDescription(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.LightDescription(Rhino.Geometry.Light)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_LightDescription.htm"
+    },
+    {
+      "name": "LightsInSoloStorage",
+      "signature": "public int LightsInSoloStorage()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.LightsInSoloStorage\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_LightsInSoloStorage.htm"
+    },
+    {
+      "name": "ModifyLight",
+      "signature": "public void ModifyLight(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.ModifyLight(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_ModifyLight.htm"
+    },
+    {
+      "name": "ObjectFromLight",
+      "signature": "public RhinoObject ObjectFromLight(Light light)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.ObjectFromLight(Rhino.Geometry.Light)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.ObjectFromLight(Rhino.Geometry.Light)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_ObjectFromLight.htm"
+    },
+    {
+      "name": "OnEditLight",
+      "signature": "public void OnEditLight(LightArray lights)",
+      "summary": "",
+      "params": [
+        {
+          "name": "lights",
+          "type": "Rhino.Render.LightArray",
+          "doc": "[Missing \u003Cparam name=\u0022lights\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.OnEditLight(Rhino.Render.LightArray)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_OnEditLight.htm"
+    },
+    {
+      "name": "SetLightSolo",
+      "signature": "public bool SetLightSolo(Light light, bool bSolo)",
+      "summary": "",
+      "params": [
+        {
+          "name": "light",
+          "type": "Rhino.Geometry.Light",
+          "doc": "[Missing \u003Cparam name=\u0022light\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.SetLightSolo(Rhino.Geometry.Light,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bSolo",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022bSolo\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.SetLightSolo(Rhino.Geometry.Light,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.SetLightSolo(Rhino.Geometry.Light,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_SetLightSolo.htm"
+    },
+    {
+      "name": "UnGroup",
+      "signature": "public void UnGroup(LightArray lights)",
+      "summary": "",
+      "params": [
+        {
+          "name": "lights",
+          "type": "Rhino.Render.LightArray",
+          "doc": "[Missing \u003Cparam name=\u0022lights\u0022/\u003E documentation for \u0022M:Rhino.Render.LightManagerSupportClient.UnGroup(Rhino.Render.LightArray)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_LightManagerSupportClient_UnGroup.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CppPointer",
+      "type": "IntPtr",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_LightManagerSupportClient_CppPointer.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

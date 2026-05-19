@@ -1,0 +1,38 @@
+{
+  "name": "PostEffectStyles",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectStyles\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectStyles.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ExecuteForProductionRendering",
+      "value": 1
+    },
+    {
+      "name": "ExecuteForRealtimeRendering",
+      "value": 2
+    },
+    {
+      "name": "ExecuteForViewportDisplay",
+      "value": 4
+    },
+    {
+      "name": "Fixed",
+      "value": 256
+    },
+    {
+      "name": "DefaultShown",
+      "value": 512
+    },
+    {
+      "name": "DefaultOn",
+      "value": 1024
+    }
+  ]
+}

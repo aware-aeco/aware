@@ -1,0 +1,59 @@
+{
+  "name": "PreviewSceneQuality",
+  "namespace": "Rhino.Render",
+  "kind": "enum",
+  "summary": "Quality levels when creating preview images",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PreviewSceneQuality.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "RealtimeQuick",
+      "value": 1,
+      "summary": "Obsolete. Very fast preview. Typically using the internal OpenGL preview generator."
+    },
+    {
+      "name": "RefineFirstPass",
+      "value": 1,
+      "summary": "Obsolete. Low quality rendering for quick preview."
+    },
+    {
+      "name": "RefineSecondPass",
+      "value": 2,
+      "summary": "Obsolete. Medium quality rendering for intermediate preview."
+    },
+    {
+      "name": "RefineThirdPass",
+      "value": 4,
+      "summary": "Obsolete. Full quality rendering (quality comes from user settings)"
+    },
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No quality set."
+    },
+    {
+      "name": "Low",
+      "value": 1,
+      "summary": "Low quality rendering for quick preview."
+    },
+    {
+      "name": "Medium",
+      "value": 2,
+      "summary": "Medium quality rendering for intermediate preview."
+    },
+    {
+      "name": "IntermediateProgressive",
+      "value": 3,
+      "summary": "Intermediate update, always considered better quality than the previous IntermediateProgressive, but not as high as Full."
+    },
+    {
+      "name": "Full",
+      "value": 4,
+      "summary": "Full quality rendering (quality comes from user settings)."
+    }
+  ]
+}

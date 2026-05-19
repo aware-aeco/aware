@@ -1,0 +1,70 @@
+{
+  "name": "RuntimeDocumentDataTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "Collection of document runtime data. This is a good place to put non-serialized, per document data.",
+  "base": "Dictionary\u003CObject, Object\u003E",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_RuntimeDocumentDataTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetValue\u003CT\u003E",
+      "signature": "public T GetValue\u003CT\u003E(Object key, Func\u003CRhinoDoc, T\u003E newT) where T : class",
+      "summary": "Checks the dictionary for the specified key, if found and the value is not null then the value is returned. If the key is not found or its value is null then newT(Document) is called to create a new value instance which is put in the dictionary and returned.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Object",
+          "doc": "Key to search for.",
+          "optional": false
+        },
+        {
+          "name": "newT",
+          "type": "System.Func\u003CRhinoDoc,T\u003E",
+          "doc": "Function called to create new value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Returns the document specific instance of type T using the specified dictionary key."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_RuntimeDocumentDataTable_GetValue__1.htm"
+    },
+    {
+      "name": "TryGetValue\u003CT\u003E(Object)",
+      "signature": "public T TryGetValue\u003CT\u003E(Object key) where T : class",
+      "summary": "Check dictionary for value and return it properly cast if found.",
+      "params": [
+        {
+          "name": "key",
+          "type": "System.Object",
+          "doc": "Key to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": "Returns the document specific instance of type T using the specified dictionary key or null if not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_RuntimeDocumentDataTable_TryGetValue__1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_RuntimeDocumentDataTable_Document.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

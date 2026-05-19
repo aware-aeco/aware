@@ -1,0 +1,134 @@
+{
+  "name": "CurvatureAnalysisSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Contains static methods and properties to modify curvature analysis-related commands.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_CurvatureAnalysisSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CalculateCurvatureAutoRange",
+      "signature": "public static bool CalculateCurvatureAutoRange(IEnumerable\u003CMesh\u003E meshes, ref CurvatureAnalysisSettingsState settings)",
+      "summary": "",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "[Missing \u003Cparam name=\u0022meshes\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureAnalysisSettings.CalculateCurvatureAutoRange(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.ApplicationSettings.CurvatureAnalysisSettingsState@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "Rhino.ApplicationSettings.CurvatureAnalysisSettingsState",
+          "doc": "[Missing \u003Cparam name=\u0022settings\u0022/\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureAnalysisSettings.CalculateCurvatureAutoRange(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.ApplicationSettings.CurvatureAnalysisSettingsState@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureAnalysisSettings.CalculateCurvatureAutoRange(System.Collections.Generic.IEnumerable{Rhino.Geometry.Mesh},Rhino.ApplicationSettings.CurvatureAnalysisSettingsState@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CurvatureAnalysisSettings_CalculateCurvatureAutoRange.htm"
+    },
+    {
+      "name": "GetCurrentState",
+      "signature": "public static CurvatureAnalysisSettingsState GetCurrentState()",
+      "summary": "Gets the current settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "CurvatureAnalysisSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureAnalysisSettings.GetCurrentState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CurvatureAnalysisSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static CurvatureAnalysisSettingsState GetDefaultState()",
+      "summary": "Gets the factory settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "CurvatureAnalysisSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.CurvatureAnalysisSettings.GetDefaultState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CurvatureAnalysisSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Commits the default settings as the current settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CurvatureAnalysisSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(CurvatureAnalysisSettingsState state)",
+      "summary": "Sets all settings to a particular defined joined state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.CurvatureAnalysisSettingsState",
+          "doc": "The particular state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_CurvatureAnalysisSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GaussRange",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Gaussian curvature range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CurvatureAnalysisSettings_GaussRange.htm"
+    },
+    {
+      "name": "MaxRadiusRange",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Maximum Radius curvature range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CurvatureAnalysisSettings_MaxRadiusRange.htm"
+    },
+    {
+      "name": "MeanRange",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Mean curvature range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CurvatureAnalysisSettings_MeanRange.htm"
+    },
+    {
+      "name": "MinRadiusRange",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Minimum Radius curvature range.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CurvatureAnalysisSettings_MinRadiusRange.htm"
+    },
+    {
+      "name": "Style",
+      "type": "CurvatureAnalysisSettings.CurvatureStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the curvature analysis style.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_CurvatureAnalysisSettings_Style.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

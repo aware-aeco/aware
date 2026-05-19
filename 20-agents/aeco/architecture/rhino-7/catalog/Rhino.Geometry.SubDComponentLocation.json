@@ -1,0 +1,29 @@
+{
+  "name": "SubDComponentLocation",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "The ON_SubDComponentLocation enum is used when an ON_SubD component is referenced and it is important to distinguish between the component\u0027s location in the SubD control net and its location in the SubD limit surface.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SubDComponentLocation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unset",
+      "value": 0,
+      "summary": "Not a valid component location and used to indicate the value is not initialized. Note well: This value is saved in 3dm archives and cannot be changed."
+    },
+    {
+      "name": "ControlNet",
+      "value": 1,
+      "summary": "The component\u0027s location in the SubD control net. Note well: This value is saved in 3dm archives and cannot be changed."
+    },
+    {
+      "name": "Surface",
+      "value": 2,
+      "summary": "The component\u0027s location in the SubD limit surface. Note well: This value is saved in 3dm archives and cannot be changed."
+    }
+  ]
+}

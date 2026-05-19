@@ -1,0 +1,846 @@
+{
+  "name": "AreaMassProperties",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "Contains static initialization methods and allows access to the computed metrics of area, area centroid and area moments in closed planar curves, in meshes, in surfaces, in hatches and in boundary representations.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_AreaMassProperties.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CentroidCoordinatesPrincipalMoments",
+      "signature": "public bool CentroidCoordinatesPrincipalMoments(out double x, out Vector3d xaxis, out double y, out Vector3d yaxis, out double z, out Vector3d zaxis)",
+      "summary": "Calculates the eigenvalues and eigenvectors of the moments matrix with repect to centroid coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "xaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for x.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "yaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for y.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "zaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for z.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesPrincipalMoments.htm"
+    },
+    {
+      "name": "CentroidCoordinatesPrincipalMomentsOfInertia",
+      "signature": "public bool CentroidCoordinatesPrincipalMomentsOfInertia(out double x, out Vector3d xaxis, out double y, out Vector3d yaxis, out double z, out Vector3d zaxis)",
+      "summary": "Calculates the principal moments of inertia and principal axes with repect to centroid coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "xaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for x.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "yaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for y.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "zaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for z.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesPrincipalMomentsOfInertia.htm"
+    },
+    {
+      "name": "Compute(Brep)",
+      "signature": "public static AreaMassProperties Compute(Brep brep)",
+      "summary": "Computes an AreaMassProperties for a brep.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep to measure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Brep or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When brep is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute.htm"
+    },
+    {
+      "name": "Compute(Curve)",
+      "signature": "public static AreaMassProperties Compute(Curve closedPlanarCurve)",
+      "summary": "Computes an AreaMassProperties for a closed planar curve.",
+      "params": [
+        {
+          "name": "closedPlanarCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve to measure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given curve or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When closedPlanarCurve is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_3.htm"
+    },
+    {
+      "name": "Compute(IEnumerable\u003CGeometryBase\u003E)",
+      "signature": "public static AreaMassProperties Compute(IEnumerable\u003CGeometryBase\u003E geometry)",
+      "summary": "Computes the Area properties for a collection of geometric objects. At present only Breps, Surfaces, Meshes and Planar Closed Curves are supported.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "Objects to include in the area computation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The Area properties for the entire collection or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_10.htm"
+    },
+    {
+      "name": "Compute(Hatch)",
+      "signature": "public static AreaMassProperties Compute(Hatch hatch)",
+      "summary": "Computes an AreaMassProperties for a hatch.",
+      "params": [
+        {
+          "name": "hatch",
+          "type": "Rhino.Geometry.Hatch",
+          "doc": "Hatch to measure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given hatch or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When hatch is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_5.htm"
+    },
+    {
+      "name": "Compute(Mesh)",
+      "signature": "public static AreaMassProperties Compute(Mesh mesh)",
+      "summary": "Computes an AreaMassProperties for a mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to measure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Mesh or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When mesh is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_6.htm"
+    },
+    {
+      "name": "Compute(Surface)",
+      "signature": "public static AreaMassProperties Compute(Surface surface)",
+      "summary": "Computes an AreaMassProperties for a surface.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface to measure.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Surface or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When surface is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_8.htm"
+    },
+    {
+      "name": "Compute(Curve, Double)",
+      "signature": "public static AreaMassProperties Compute(Curve closedPlanarCurve, double planarTolerance)",
+      "summary": "Computes an AreaMassProperties for a closed planar curve.",
+      "params": [
+        {
+          "name": "closedPlanarCurve",
+          "type": "Rhino.Geometry.Curve",
+          "doc": "Curve to measure.",
+          "optional": false
+        },
+        {
+          "name": "planarTolerance",
+          "type": "System.Double",
+          "doc": "absolute tolerance used to insure the closed curve is planar",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given curve or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When closedPlanarCurve is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_4.htm"
+    },
+    {
+      "name": "Compute(Brep, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public static AreaMassProperties Compute(Brep brep, bool area, bool firstMoments, bool secondMoments, bool productMoments)",
+      "summary": "Compute the AreaMassProperties for a single Brep.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep to measure.",
+          "optional": false
+        },
+        {
+          "name": "area",
+          "type": "System.Boolean",
+          "doc": "true to calculate area.",
+          "optional": false
+        },
+        {
+          "name": "firstMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area first moments, area, and area centroid.",
+          "optional": false
+        },
+        {
+          "name": "secondMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area second moments.",
+          "optional": false
+        },
+        {
+          "name": "productMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area product moments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Brep or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When brep is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_1.htm"
+    },
+    {
+      "name": "Compute(IEnumerable\u003CGeometryBase\u003E, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public static AreaMassProperties Compute(IEnumerable\u003CGeometryBase\u003E geometry, bool area, bool firstMoments, bool secondMoments, bool productMoments)",
+      "summary": "Computes the AreaMassProperties for a collection of geometric objects. At present only Breps, Surfaces, Meshes and Planar Closed Curves are supported.",
+      "params": [
+        {
+          "name": "geometry",
+          "type": "System.Collections.Generic.IEnumerable\u003CGeometryBase\u003E",
+          "doc": "Objects to include in the area computation.",
+          "optional": false
+        },
+        {
+          "name": "area",
+          "type": "System.Boolean",
+          "doc": "true to calculate area.",
+          "optional": false
+        },
+        {
+          "name": "firstMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area first moments, area, and area centroid.",
+          "optional": false
+        },
+        {
+          "name": "secondMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area second moments.",
+          "optional": false
+        },
+        {
+          "name": "productMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area product moments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the entire collection or null on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_11.htm"
+    },
+    {
+      "name": "Compute(Mesh, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public static AreaMassProperties Compute(Mesh mesh, bool area, bool firstMoments, bool secondMoments, bool productMoments)",
+      "summary": "Compute the AreaMassProperties for a single Mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "Mesh to measure.",
+          "optional": false
+        },
+        {
+          "name": "area",
+          "type": "System.Boolean",
+          "doc": "true to calculate area.",
+          "optional": false
+        },
+        {
+          "name": "firstMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area first moments, area, and area centroid.",
+          "optional": false
+        },
+        {
+          "name": "secondMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area second moments.",
+          "optional": false
+        },
+        {
+          "name": "productMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area product moments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Mesh or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When mesh is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_7.htm"
+    },
+    {
+      "name": "Compute(Surface, Boolean, Boolean, Boolean, Boolean)",
+      "signature": "public static AreaMassProperties Compute(Surface surface, bool area, bool firstMoments, bool secondMoments, bool productMoments)",
+      "summary": "Compute the AreaMassProperties for a single Surface.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "Rhino.Geometry.Surface",
+          "doc": "Surface to measure.",
+          "optional": false
+        },
+        {
+          "name": "area",
+          "type": "System.Boolean",
+          "doc": "true to calculate area.",
+          "optional": false
+        },
+        {
+          "name": "firstMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area first moments, area, and area centroid.",
+          "optional": false
+        },
+        {
+          "name": "secondMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area second moments.",
+          "optional": false
+        },
+        {
+          "name": "productMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area product moments.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Surface or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When surface is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_9.htm"
+    },
+    {
+      "name": "Compute(Brep, Boolean, Boolean, Boolean, Boolean, Double, Double)",
+      "signature": "public static AreaMassProperties Compute(Brep brep, bool area, bool firstMoments, bool secondMoments, bool productMoments, double relativeTolerance, double absoluteTolerance)",
+      "summary": "Compute the AreaMassProperties for a single Brep.",
+      "params": [
+        {
+          "name": "brep",
+          "type": "Rhino.Geometry.Brep",
+          "doc": "Brep to measure.",
+          "optional": false
+        },
+        {
+          "name": "area",
+          "type": "System.Boolean",
+          "doc": "true to calculate area.",
+          "optional": false
+        },
+        {
+          "name": "firstMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area first moments, area, and area centroid.",
+          "optional": false
+        },
+        {
+          "name": "secondMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area second moments.",
+          "optional": false
+        },
+        {
+          "name": "productMoments",
+          "type": "System.Boolean",
+          "doc": "true to calculate area product moments.",
+          "optional": false
+        },
+        {
+          "name": "relativeTolerance",
+          "type": "System.Double",
+          "doc": "The relative tolerance used for the calculation. In overloads of this function where tolerances are not specified, 1.0e-6 is used.",
+          "optional": false
+        },
+        {
+          "name": "absoluteTolerance",
+          "type": "System.Double",
+          "doc": "The absolute tolerancwe used for the calculation. In overloads of this function where tolerances are not specified, 1.0e-6 is used.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AreaMassProperties",
+        "doc": "The AreaMassProperties for the given Brep or null on failure."
+      },
+      "throws": [
+        {
+          "type": "ArgumentNullException",
+          "when": "When brep is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Compute_2.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Actively reclaims unmanaged resources that this instance uses.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "protected virtual void Dispose(bool disposing)",
+      "summary": "For derived class implementers. This method is called with argument true when class user calls Dispose(), while with argument false when the Garbage Collector invokes the finalizer, or Finalize() method.You must reclaim all used unmanaged resources in both cases, and can use this chance to call Dispose on disposable fields if the argument is true.Also, you must call the base virtual method within your overriding method.",
+      "params": [
+        {
+          "name": "disposing",
+          "type": "System.Boolean",
+          "doc": "true if the call comes from the Dispose() method; false if it comes from the Garbage Collector finalizer.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Dispose_1.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "Passively reclaims unmanaged resources when the class user did not explicitly call Dispose().",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_Finalize.htm"
+    },
+    {
+      "name": "WorldCoordinatesPrincipalMoments",
+      "signature": "public bool WorldCoordinatesPrincipalMoments(out double x, out Vector3d xaxis, out double y, out Vector3d yaxis, out double z, out Vector3d zaxis)",
+      "summary": "Calculates the eigenvalues and eigenvectors of moments matrix in world coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "xaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for x.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "yaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for y.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "zaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for z.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_WorldCoordinatesPrincipalMoments.htm"
+    },
+    {
+      "name": "WorldCoordinatesPrincipalMomentsOfInertia",
+      "signature": "public bool WorldCoordinatesPrincipalMomentsOfInertia(out double x, out Vector3d xaxis, out double y, out Vector3d yaxis, out double z, out Vector3d zaxis)",
+      "summary": "Calculates the principal moments of inertia and principal axes with repect to world coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "xaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for x.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "yaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for y.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Principal moment.",
+          "optional": false
+        },
+        {
+          "name": "zaxis",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Principal axis for z.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_AreaMassProperties_WorldCoordinatesPrincipalMomentsOfInertia.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Area",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the area solution.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_Area.htm"
+    },
+    {
+      "name": "AreaError",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the uncertainty in the area calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_AreaError.htm"
+    },
+    {
+      "name": "Centroid",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the area centroid in the world coordinate system.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_Centroid.htm"
+    },
+    {
+      "name": "CentroidCoordinatesMomentsOfInertia",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Moments of inertia with respect to centroid coordinate system. X = integral of ((y-y0)^2 \u002B (z-z0)^2) dm Y = integral of ((z-z0)^2 \u002B (x-x0)^2) dm Z = integral of ((z-z0)^2 \u002B (y-y0)^2) dm where (x0,y0,z0) = centroid.",
+      "remarks": "What is meant by \u0022moments of inertia\u0022 varies widely in textbooks and papers. The values returned here are the integrals listed in the Summary section. Some applications may want the values from WorldCoordinatesSecondMoments instead of the values returned here.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesMomentsOfInertia.htm"
+    },
+    {
+      "name": "CentroidCoordinatesMomentsOfInertiaError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in centroid coordinates moments of inertia calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesMomentsOfInertiaError.htm"
+    },
+    {
+      "name": "CentroidCoordinatesProductMoments",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Product moments with respect to centroid coordinate system.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesProductMoments.htm"
+    },
+    {
+      "name": "CentroidCoordinatesProductMomentsError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in product moments with respect to centroid coordinate system.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesProductMomentsError.htm"
+    },
+    {
+      "name": "CentroidCoordinatesRadiiOfGyration",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Radii of gyration with respect to centroid coordinate system. X = sqrt(integral of ((y-y0)^2 \u002B (z-z0)^2) dm/M) Y = sqrt(integral of ((z-z0)^2 \u002B (x-x0)^2) dm/M) Z = sqrt(integral of ((z-z0)^2 \u002B (y-y0)^2) dm/M) where (x0,y0,z0) = centroid.",
+      "remarks": "What is meant by \u0022radii of gyration\u0022 varies widely in textbooks and papers. The values returned here are the integrals listed in the Returns section.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesRadiiOfGyration.htm"
+    },
+    {
+      "name": "CentroidCoordinatesSecondMoments",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Second moments with respect to centroid coordinate system. X = integral of (x-x0)^2 dm Y = integral of (y-y0)^2 dm Z = integral of (z-z0)^2 dm where (x0,y0,z0) = centroid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesSecondMoments.htm"
+    },
+    {
+      "name": "CentroidCoordinatesSecondMomentsError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in centroid coordinates second moments calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidCoordinatesSecondMomentsError.htm"
+    },
+    {
+      "name": "CentroidError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the uncertainty in the centroid calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_CentroidError.htm"
+    },
+    {
+      "name": "WorldCoordinatesFirstMoments",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the world coordinate first moments if they were able to be calculated. X is integral of \u0022x dm\u0022 over the area Y is integral of \u0022y dm\u0022 over the area Z is integral of \u0022z dm\u0022 over the area.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesFirstMoments.htm"
+    },
+    {
+      "name": "WorldCoordinatesFirstMomentsError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in world coordinates first moments calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesFirstMomentsError.htm"
+    },
+    {
+      "name": "WorldCoordinatesMomentsOfInertia",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "The moments of inertia about the world coordinate axes. X = integral of (y^2 \u002B z^2) dm Y = integral of (z^2 \u002B x^2) dm Z = integral of (z^2 \u002B y^2) dm.",
+      "remarks": "What is meant by \u0022moments of inertia\u0022 varies widely in textbooks and papers. The values returned here are the integrals listed in the Summary section. Some applications may want the values from WorldCoordinatesSecondMoments instead of the values returned here.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesMomentsOfInertia.htm"
+    },
+    {
+      "name": "WorldCoordinatesMomentsOfInertiaError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in world coordinates moments of inertia calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesMomentsOfInertiaError.htm"
+    },
+    {
+      "name": "WorldCoordinatesProductMoments",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the world coordinate product moments if they were able to be calculated. X is integral of \u0022xy dm\u0022 over the area Y is integral of \u0022yz dm\u0022 over the area Z is integral of \u0022zx dm\u0022 over the area.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesProductMoments.htm"
+    },
+    {
+      "name": "WorldCoordinatesProductMomentsError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in world coordinates second moments calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesProductMomentsError.htm"
+    },
+    {
+      "name": "WorldCoordinatesRadiiOfGyration",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Radii of gyration with respect to world coordinate system. X = sqrt(integral of (y^2 \u002B z^2) dm/M) Y = sqrt(integral of (z^2 \u002B x^2) dm/M) Z = sqrt(integral of (z^2 \u002B y^2) dm/M)",
+      "remarks": "What is meant by \u0022radii of gyration\u0022 varies widely in textbooks and papers. The values returned here are the integrals listed in the Returns section.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesRadiiOfGyration.htm"
+    },
+    {
+      "name": "WorldCoordinatesSecondMoments",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the world coordinate second moments if they were able to be calculated. X is integral of \u0022xx dm\u0022 over the area Y is integral of \u0022yy dm\u0022 over the area Z is integral of \u0022zz dm\u0022 over the area.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesSecondMoments.htm"
+    },
+    {
+      "name": "WorldCoordinatesSecondMomentsError",
+      "type": "Vector3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Uncertainty in world coordinates second moments calculation.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_AreaMassProperties_WorldCoordinatesSecondMomentsError.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

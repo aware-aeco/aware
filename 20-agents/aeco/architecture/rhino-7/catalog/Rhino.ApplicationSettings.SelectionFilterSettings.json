@@ -1,0 +1,100 @@
+{
+  "name": "SelectionFilterSettings",
+  "namespace": "Rhino.ApplicationSettings",
+  "kind": "class",
+  "summary": "Selection filter settings restrict any selection mode (SelWindow, SelCrossing, SelAll, etc.) to specified object types. Note, selection filter settings are not persistent.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_ApplicationSettings_SelectionFilterSettings.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentState",
+      "signature": "public static SelectionFilterSettingsState GetCurrentState()",
+      "summary": "Gets the current settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "SelectionFilterSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.SelectionFilterSettings.GetCurrentState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_SelectionFilterSettings_GetCurrentState.htm"
+    },
+    {
+      "name": "GetDefaultState",
+      "signature": "public static SelectionFilterSettingsState GetDefaultState()",
+      "summary": "Gets the factory settings of the application.",
+      "params": [],
+      "returns": {
+        "type": "SelectionFilterSettingsState",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.ApplicationSettings.SelectionFilterSettings.GetDefaultState\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_SelectionFilterSettings_GetDefaultState.htm"
+    },
+    {
+      "name": "RestoreDefaults",
+      "signature": "public static void RestoreDefaults()",
+      "summary": "Commits the default settings as the current settings.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_SelectionFilterSettings_RestoreDefaults.htm"
+    },
+    {
+      "name": "UpdateFromState",
+      "signature": "public static void UpdateFromState(SelectionFilterSettingsState state)",
+      "summary": "Sets all settings to a particular defined joined state.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Rhino.ApplicationSettings.SelectionFilterSettingsState",
+          "doc": "The particular state.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_ApplicationSettings_SelectionFilterSettings_UpdateFromState.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disables the global object selection filter.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_SelectionFilterSettings_Enabled.htm"
+    },
+    {
+      "name": "GlobalGeometryFilter",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": true,
+      "summary": "The global geometry type filter controls which types of geometry will be filtered. Note, the filter can be a bitwise combination of multiple object types.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_SelectionFilterSettings_GlobalGeometryFilter.htm"
+    },
+    {
+      "name": "OneShotGeometryFilter",
+      "type": "ObjectType",
+      "getter": true,
+      "setter": true,
+      "summary": "The one-shot geometry type filter controls which types of geometry will be filtered for one selection. Note, the filter can be a bitwise combination of multiple object types.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_SelectionFilterSettings_OneShotGeometryFilter.htm"
+    },
+    {
+      "name": "SubObjectSelect",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enables or disabled sub-object selection.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_ApplicationSettings_SelectionFilterSettings_SubObjectSelect.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,517 @@
+{
+  "name": "Rectangle3d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the values of a plane and two intervals that form an oriented rectangle in three dimensions.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Rectangle3d.htm",
+  "constructors": [
+    {
+      "name": "Rectangle3d(Plane, Interval, Interval)",
+      "signature": "public Rectangle3d(Plane plane, Interval width, Interval height)",
+      "summary": "Initializes a new rectangle from dimensions.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane for Rectangle.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Dimension of rectangle along the base plane x-axis.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "Rhino.Geometry.Interval",
+          "doc": "Dimension of rectangle along the base plane y-axis.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d__ctor.htm"
+    },
+    {
+      "name": "Rectangle3d(Plane, Point3d, Point3d)",
+      "signature": "public Rectangle3d(Plane plane, Point3d cornerA, Point3d cornerB)",
+      "summary": "Initializes a new rectangle from a base plane and two corner points.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane for Rectangle.",
+          "optional": false
+        },
+        {
+          "name": "cornerA",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First corner of Rectangle (will be projected onto plane).",
+          "optional": false
+        },
+        {
+          "name": "cornerB",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second corner of Rectangle (will be projected onto plane).",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d__ctor_1.htm"
+    },
+    {
+      "name": "Rectangle3d(Plane, Double, Double)",
+      "signature": "public Rectangle3d(Plane plane, double width, double height)",
+      "summary": "Initializes a new rectangle from width and height.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "Base plane for Rectangle.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Double",
+          "doc": "Width (as measured along the base plane x-axis) of rectangle.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Double",
+          "doc": "Height (as measured along the base plane y-axis) of rectangle.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d__ctor_2.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestPoint(Point3d)",
+      "signature": "public Point3d ClosestPoint(Point3d point)",
+      "summary": "Gets the point on the rectangle that is closest to a test-point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on or in the rectangle closest to the test point or Point3d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_ClosestPoint.htm"
+    },
+    {
+      "name": "ClosestPoint(Point3d, Boolean)",
+      "signature": "public Point3d ClosestPoint(Point3d point, bool includeInterior)",
+      "summary": "Gets the point on the rectangle that is closest to a test-point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project.",
+          "optional": false
+        },
+        {
+          "name": "includeInterior",
+          "type": "System.Boolean",
+          "doc": "If false, the point is projected onto the boundary edge only, otherwise the interior of the rectangle is also taken into consideration.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point on the rectangle closest to the test point or Point3d.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_ClosestPoint_1.htm"
+    },
+    {
+      "name": "Contains(Point3d)",
+      "signature": "public PointContainment Contains(Point3d pt)",
+      "summary": "Determines if a point is included in this rectangle.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to test. The point will be projected onto the Rectangle plane before inclusion is determined.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointContainment",
+        "doc": "Point Rectangle relationship."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_Contains.htm"
+    },
+    {
+      "name": "Contains(Double, Double)",
+      "signature": "public PointContainment Contains(double x, double y)",
+      "summary": "Determines if two plane parameters are included in this rectangle.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Parameter along base plane X direction.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Parameter along base plane Y direction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PointContainment",
+        "doc": "Parameter Rectangle relationship."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_Contains_1.htm"
+    },
+    {
+      "name": "Corner",
+      "signature": "public Point3d Corner(int index)",
+      "summary": "Gets the corner at the given index.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of corner, valid values are: 0 = lower left (min-x, min-y)1 = lower right (max-x, min-y)2 = upper right (max-x, max-y)3 = upper left (min-x, max-y)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at the given corner index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_Corner.htm"
+    },
+    {
+      "name": "CreateFromPolyline(IEnumerable\u003CPoint3d\u003E)",
+      "signature": "public static Rectangle3d CreateFromPolyline(IEnumerable\u003CPoint3d\u003E polyline)",
+      "summary": "Attempts to create a rectangle from a polyline. This method only works well for polylines that already closely resemble rectangles. If the polyline contains more than four vertices, the least significant ones will be ignored. If the polylines is non-orthogonal, the discrepancies will be averaged away. This method should not be used as a Rectangle fitter.",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Polyline to parse.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle3d",
+        "doc": "A rectangle that is shaped similarly to the polyline or Rectangle3d.Unset if the polyline does not represent a rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_CreateFromPolyline.htm"
+    },
+    {
+      "name": "CreateFromPolyline(IEnumerable\u003CPoint3d\u003E, Double, Double)",
+      "signature": "public static Rectangle3d CreateFromPolyline(IEnumerable\u003CPoint3d\u003E polyline, out double deviation, out double angleDeviation)",
+      "summary": "Attempts to create a rectangle from a polyline. This method only works well for polylines that already closely resemble rectangles. If the polyline contains more than four vertices, the least significant ones will be ignored. If the polylines is non-orthogonal, the discrepancies will be averaged away. This method should not be used as a Rectangle fitter.",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Polyline to parse.",
+          "optional": false
+        },
+        {
+          "name": "deviation",
+          "type": "System.Double",
+          "doc": "On success, the deviation will contain the largest deviation between the polyline and the rectangle.",
+          "optional": false
+        },
+        {
+          "name": "angleDeviation",
+          "type": "System.Double",
+          "doc": "On success, the angleDeviation will contain the largest deviation (in radians) between the polyline edges and the rectangle edges.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Rectangle3d",
+        "doc": "A rectangle that is shaped similarly to the polyline or Rectangle3d.Unset if the polyline does not represent a rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_CreateFromPolyline_1.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Rectangle3d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Rectangle3d",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Rectangle3d.EpsilonEquals(Rhino.Geometry.Rectangle3d,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Rectangle3d.EpsilonEquals(Rhino.Geometry.Rectangle3d,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Rectangle3d.EpsilonEquals(Rhino.Geometry.Rectangle3d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_EpsilonEquals.htm"
+    },
+    {
+      "name": "MakeIncreasing",
+      "signature": "public void MakeIncreasing()",
+      "summary": "Ensures the X and Y dimensions are increasing or singleton intervals.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_MakeIncreasing.htm"
+    },
+    {
+      "name": "PointAt(Double)",
+      "signature": "public Point3d PointAt(double t)",
+      "summary": "Gets a point along the rectangle boundary.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Parameter along rectangle boundary. Valid values range from 0.0 to 4.0, where each integer domain represents a single boundary edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at the given boundary parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_PointAt.htm"
+    },
+    {
+      "name": "PointAt(Double, Double)",
+      "signature": "public Point3d PointAt(double x, double y)",
+      "summary": "Gets a point in Rectangle space.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "Normalized parameter along Rectangle width.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Normalized parameter along Rectangle height.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The point at the given x,y parameter."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_PointAt_1.htm"
+    },
+    {
+      "name": "RecenterPlane(Int32)",
+      "signature": "public void RecenterPlane(int index)",
+      "summary": "Re-centers the base plane on one of the corners.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of corner, valid values are: 0 = lower left (min-x, min-y)1 = lower right (max-x, min-y)2 = upper right (max-x, max-y)3 = upper left (min-x, max-y)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_RecenterPlane_1.htm"
+    },
+    {
+      "name": "RecenterPlane(Point3d)",
+      "signature": "public void RecenterPlane(Point3d origin)",
+      "summary": "Re-centers the base plane on a new origin.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "New origin for plane.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_RecenterPlane.htm"
+    },
+    {
+      "name": "ToNurbsCurve",
+      "signature": "public NurbsCurve ToNurbsCurve()",
+      "summary": "Constructs a nurbs curve representation of this rectangle.",
+      "params": [],
+      "returns": {
+        "type": "NurbsCurve",
+        "doc": "A nurbs curve with the same shape as this rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_ToNurbsCurve.htm"
+    },
+    {
+      "name": "ToPolyline",
+      "signature": "public Polyline ToPolyline()",
+      "summary": "Constructs a polyline from this rectangle.",
+      "params": [],
+      "returns": {
+        "type": "Polyline",
+        "doc": "A polyline with the same shape as this rectangle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_ToPolyline.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms this rectangle. Note that rectangles cannot be skewed or tapered.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Rectangle3d.Transform(Rhino.Geometry.Transform)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Rectangle3d_Transform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Area",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the unsigned Area of the rectangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Area.htm"
+    },
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the world aligned bounding box for this rectangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_BoundingBox.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point in the center of the rectangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Center.htm"
+    },
+    {
+      "name": "Circumference",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the circumference of the rectangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Circumference.htm"
+    },
+    {
+      "name": "Height",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the signed height of the rectangle. If the Y dimension is decreasing, the height will be negative.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Height.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether or not this is a valid rectangle. A rectangle is considered to be valid when the base plane and both dimensions are valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_IsValid.htm"
+    },
+    {
+      "name": "Plane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the base plane of the rectangle.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Plane.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Rectangle3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a rectangle with Unset components.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Unset.htm"
+    },
+    {
+      "name": "Width",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the signed width of the rectangle. If the X dimension is decreasing, the width will be negative.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Width.htm"
+    },
+    {
+      "name": "X",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the dimensions of the rectangle along the base plane X-Axis (i.e. the width).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Interval",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the dimensions of the rectangle along the base plane Y-Axis (i.e. the height).",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Rectangle3d_Y.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

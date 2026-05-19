@@ -1,0 +1,54 @@
+{
+  "name": "NamedColor",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "An entry with name and color for the NamedColorList",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_NamedColor.htm",
+  "constructors": [
+    {
+      "name": "NamedColor",
+      "signature": "public NamedColor(string name, Color color)",
+      "summary": "Initializes a new instance of the ColorListEntry with the specified name and color.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of this color",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "Color value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_NamedColor__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the color for this entry.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_NamedColor_Color.htm"
+    },
+    {
+      "name": "Name",
+      "type": "String",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of this color to show to the user.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_NamedColor_Name.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

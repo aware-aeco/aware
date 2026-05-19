@@ -1,0 +1,571 @@
+{
+  "name": "Sphere",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the plane and radius values of a sphere.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Sphere.htm",
+  "constructors": [
+    {
+      "name": "Sphere(Plane, Double)",
+      "signature": "public Sphere(Plane equatorialPlane, double radius)",
+      "summary": "Initializes a new sphere given the plane of the equator circle and radius.",
+      "params": [
+        {
+          "name": "equatorialPlane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "A plane that will be intersecting the sphere at the same distance from both poles (parameterization singularities).",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "A radius value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere__ctor.htm"
+    },
+    {
+      "name": "Sphere(Point3d, Double)",
+      "signature": "public Sphere(Point3d center, double radius)",
+      "summary": "Initializes a new sphere given center point and radius.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A center point.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "System.Double",
+          "doc": "A radius value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere__ctor_1.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClosestParameter",
+      "signature": "public bool ClosestParameter(Point3d testPoint, out double longitudeRadians, out double latitudeRadians)",
+      "summary": "Finds the angle parameters on this sphere that are closest to a test point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project onto the sphere.",
+          "optional": false
+        },
+        {
+          "name": "longitudeRadians",
+          "type": "System.Double",
+          "doc": "The longitudinal angle (in radians; 0.0 to 2pi) where the sphere approaches testPoint best.",
+          "optional": false
+        },
+        {
+          "name": "latitudeRadians",
+          "type": "System.Double",
+          "doc": "The latitudinal angle (in radians; -0.5pi to \u002B0.5pi) where the sphere approaches testPoint best.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure. This function will fail if the point it coincident with the sphere center."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_ClosestParameter.htm"
+    },
+    {
+      "name": "ClosestPoint",
+      "signature": "public Point3d ClosestPoint(Point3d testPoint)",
+      "summary": "Returns point on sphere that is closest to given point.",
+      "params": [
+        {
+          "name": "testPoint",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Point to project onto Sphere.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "Point on sphere surface closest to testPoint."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_ClosestPoint.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Sphere other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Sphere",
+          "doc": "[Missing \u003Cparam name=\u0022other\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Sphere.EpsilonEquals(Rhino.Geometry.Sphere,System.Double)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022epsilon\u0022/\u003E documentation for \u0022M:Rhino.Geometry.Sphere.EpsilonEquals(Rhino.Geometry.Sphere,System.Double)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Sphere.EpsilonEquals(Rhino.Geometry.Sphere,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_EpsilonEquals.htm"
+    },
+    {
+      "name": "FitSphereToPoints",
+      "signature": "public static Sphere FitSphereToPoints(IEnumerable\u003CPoint3d\u003E points)",
+      "summary": "Attempts to fit a sphere to a collection of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "Points to fit. The collection must contain at least two points.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Sphere",
+        "doc": "The Sphere that best approximates the points or Sphere.Unset on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_FitSphereToPoints.htm"
+    },
+    {
+      "name": "LatitudeDegrees",
+      "signature": "public Circle LatitudeDegrees(double degrees)",
+      "summary": "Computes the parallel at a specific latitude angle. The angle is specified in degrees.",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "System.Double",
+          "doc": "An angle in degrees for the meridian.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "A circle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_LatitudeDegrees.htm"
+    },
+    {
+      "name": "LatitudeRadians",
+      "signature": "public Circle LatitudeRadians(double radians)",
+      "summary": "Computes the parallel at a specific latitude angle. The angle is specified in radians.",
+      "params": [
+        {
+          "name": "radians",
+          "type": "System.Double",
+          "doc": "An angle in radians for the parallel.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "A circle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_LatitudeRadians.htm"
+    },
+    {
+      "name": "LongitudeDegrees",
+      "signature": "public Circle LongitudeDegrees(double degrees)",
+      "summary": "Computes the meridian at a specific longitude angle. The angle is specified in degrees.",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "System.Double",
+          "doc": "An angle in degrees.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "A circle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_LongitudeDegrees.htm"
+    },
+    {
+      "name": "LongitudeRadians",
+      "signature": "public Circle LongitudeRadians(double radians)",
+      "summary": "Computes the meridian at a specific longitude angle. The angle is specified in radians.",
+      "params": [
+        {
+          "name": "radians",
+          "type": "System.Double",
+          "doc": "An angle in radians.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Circle",
+        "doc": "A circle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_LongitudeRadians.htm"
+    },
+    {
+      "name": "NormalAt",
+      "signature": "public Vector3d NormalAt(double longitudeRadians, double latitudeRadians)",
+      "summary": "Computes the normal at a specific angular location on the sphere.",
+      "params": [
+        {
+          "name": "longitudeRadians",
+          "type": "System.Double",
+          "doc": "A number within the interval [0, 2pi].",
+          "optional": false
+        },
+        {
+          "name": "latitudeRadians",
+          "type": "System.Double",
+          "doc": "A number within the interval [-pi/2, pi/2].",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_NormalAt.htm"
+    },
+    {
+      "name": "PointAt",
+      "signature": "public Point3d PointAt(double longitudeRadians, double latitudeRadians)",
+      "summary": "Evaluates the sphere at specific longitude and latitude angles.",
+      "params": [
+        {
+          "name": "longitudeRadians",
+          "type": "System.Double",
+          "doc": "A number within the interval [0, 2pi].",
+          "optional": false
+        },
+        {
+          "name": "latitudeRadians",
+          "type": "System.Double",
+          "doc": "A number within the interval [-pi/2,pi/2].",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A point value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_PointAt.htm"
+    },
+    {
+      "name": "Rotate(Double, Vector3d)",
+      "signature": "public bool Rotate(double angleRadians, Vector3d axisOfRotation)",
+      "summary": "Rotates the sphere about the center point.",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Angle of rotation (in radians)",
+          "optional": false
+        },
+        {
+          "name": "axisOfRotation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Rotation axis.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success; false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_Rotate.htm"
+    },
+    {
+      "name": "Rotate(Double, Vector3d, Point3d)",
+      "signature": "public bool Rotate(double angleRadians, Vector3d axisOfRotation, Point3d centerOfRotation)",
+      "summary": "Rotates this sphere about a point and an axis.",
+      "params": [
+        {
+          "name": "angleRadians",
+          "type": "System.Double",
+          "doc": "Rotation angle (in Radians)",
+          "optional": false
+        },
+        {
+          "name": "axisOfRotation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "centerOfRotation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success; false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_Rotate_1.htm"
+    },
+    {
+      "name": "Rotate(Double, Double, Vector3d)",
+      "signature": "public bool Rotate(double sinAngle, double cosAngle, Vector3d axisOfRotation)",
+      "summary": "Rotates this sphere about the center point.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "sin(angle)",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "cos(angle)",
+          "optional": false
+        },
+        {
+          "name": "axisOfRotation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The direction of the axis of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success; false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_Rotate_2.htm"
+    },
+    {
+      "name": "Rotate(Double, Double, Vector3d, Point3d)",
+      "signature": "public bool Rotate(double sinAngle, double cosAngle, Vector3d axisOfRotation, Point3d centerOfRotation)",
+      "summary": "Rotates this sphere about a point and an axis.",
+      "params": [
+        {
+          "name": "sinAngle",
+          "type": "System.Double",
+          "doc": "sin(angle)",
+          "optional": false
+        },
+        {
+          "name": "cosAngle",
+          "type": "System.Double",
+          "doc": "cod(angle)",
+          "optional": false
+        },
+        {
+          "name": "axisOfRotation",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "centerOfRotation",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Center of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success; false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_Rotate_3.htm"
+    },
+    {
+      "name": "ToBrep",
+      "signature": "public Brep ToBrep()",
+      "summary": "Converts this sphere is it Brep representation",
+      "params": [],
+      "returns": {
+        "type": "Brep",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Sphere.ToBrep\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_ToBrep.htm"
+    },
+    {
+      "name": "ToNurbsSurface",
+      "signature": "public NurbsSurface ToNurbsSurface()",
+      "summary": "Converts this sphere to its NurbsSurface representation. This is synonymous with calling NurbsSurface.CreateFromSphere().",
+      "params": [],
+      "returns": {
+        "type": "NurbsSurface",
+        "doc": "A nurbs surface representation of this sphere or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_ToNurbsSurface.htm"
+    },
+    {
+      "name": "ToRevSurface",
+      "signature": "public RevSurface ToRevSurface()",
+      "summary": "Converts this Sphere to a RevSurface representation. This is synonymous with calling RevSurface.CreateFromSphere().",
+      "params": [],
+      "returns": {
+        "type": "RevSurface",
+        "doc": "A surface of revolution representation of this sphere or null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_ToRevSurface.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public bool Transform(Transform xform)",
+      "summary": "Transforms this sphere. Note that non-similarity preserving transformations cannot be applied to a sphere as that would result in an ellipsoid.",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation matrix to apply.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_Transform.htm"
+    },
+    {
+      "name": "Translate",
+      "signature": "public bool Translate(Vector3d delta)",
+      "summary": "Moves this sphere along a motion vector.",
+      "params": [
+        {
+          "name": "delta",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "Motion vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success; false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Sphere_Translate.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the world aligned bounding box for this Sphere. If the Sphere is Invalid, an empty box is returned.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_BoundingBox.htm"
+    },
+    {
+      "name": "Center",
+      "type": "Point3d",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the center point of the sphere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_Center.htm"
+    },
+    {
+      "name": "Diameter",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the diameter for this sphere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_Diameter.htm"
+    },
+    {
+      "name": "EquatorialPlane",
+      "type": "Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Equatorial plane for this sphere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_EquatorialPlane.htm"
+    },
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value that indicates whether the sphere is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_IsValid.htm"
+    },
+    {
+      "name": "NorthPole",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point at the North Pole of the sphere. This is the parameterization singularity that can be obtained, at V value \u002BMath.Pi/2.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_NorthPole.htm"
+    },
+    {
+      "name": "Radius",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Radius for this sphere.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_Radius.htm"
+    },
+    {
+      "name": "SouthPole",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the point at the South Pole of the sphere. This is the parameterization singularity that can be obtained, at V value -Math.Pi/2.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_SouthPole.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Sphere",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a sphere with invalid members.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Sphere_Unset.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

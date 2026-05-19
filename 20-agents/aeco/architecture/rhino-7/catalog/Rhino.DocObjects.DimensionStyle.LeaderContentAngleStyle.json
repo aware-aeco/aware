@@ -1,0 +1,29 @@
+{
+  "name": "DimensionStyle.LeaderContentAngleStyle",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Angle for text or other leader or dimension content",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DimensionStyle_LeaderContentAngleStyle.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Horizontal",
+      "value": 0,
+      "summary": "Annotation text is horizontal in annotation object\u0027s plane"
+    },
+    {
+      "name": "Aligned",
+      "value": 1,
+      "summary": "Aligned with last leader direction or dimension line"
+    },
+    {
+      "name": "Rotated",
+      "value": 2,
+      "summary": "Explicit angle"
+    }
+  ]
+}

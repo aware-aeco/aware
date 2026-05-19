@@ -1,0 +1,29 @@
+{
+  "name": "OptionPageButtons",
+  "namespace": "Rhino.UI",
+  "kind": "enum",
+  "summary": "Standard IRhinoOptionsPageButton",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_OptionPageButtons.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Don\u0027t display any of the standard buttons."
+    },
+    {
+      "name": "DefaultButton",
+      "value": 1,
+      "summary": "The \u0022Restore Defaults\u0022 button located at the bottom of the host."
+    },
+    {
+      "name": "ApplyButton",
+      "value": 2,
+      "summary": "The \u0022Apply\u0022 button located at the bottom of the host."
+    }
+  ]
+}

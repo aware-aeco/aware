@@ -1,0 +1,204 @@
+{
+  "name": "MouseCallback",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "Used for intercepting mouse events in the Rhino views.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_MouseCallback.htm",
+  "constructors": [
+    {
+      "name": "MouseCallback",
+      "signature": "protected MouseCallback()",
+      "summary": "Initializes a new instance of the MouseCallback class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnEndMouseDown",
+      "signature": "protected virtual void OnEndMouseDown(MouseCallbackEventArgs e)",
+      "summary": "Called at the end of handling of a mouse down event in Rhino. All of the default Rhino mouse down functionality has already been executed unless a MouseCallback has set Cancel to true for the event arguments. You can tell if this is the case by inspecting the Cancel property in the event arguments parameter. Base class implementation of this function does nothing",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnEndMouseDown(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnEndMouseDown.htm"
+    },
+    {
+      "name": "OnEndMouseMove",
+      "signature": "protected virtual void OnEndMouseMove(MouseCallbackEventArgs e)",
+      "summary": "Called at the end of handling of a mouse move event in Rhino. All of the default Rhino mouse move functionality has already been executed unless a MouseCallback has set Cancel to true for the event arguments. You can tell if this is the case by inspecting the Cancel property in the event arguments parameter. Base class implementation of this function does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnEndMouseMove(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnEndMouseMove.htm"
+    },
+    {
+      "name": "OnEndMouseUp",
+      "signature": "protected virtual void OnEndMouseUp(MouseCallbackEventArgs e)",
+      "summary": "Called at the end of handling of a mouse up event in Rhino. All of the default Rhino mouse down functionality has already been executed unless a MouseCallback has set Cancel to true for the event arguments. You can tell if this is the case by inspecting the Cancel property in the event arguments parameter. Base class implementation of this function does nothing",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnEndMouseUp(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnEndMouseUp.htm"
+    },
+    {
+      "name": "OnMouseDoubleClick",
+      "signature": "protected virtual void OnMouseDoubleClick(MouseCallbackEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseDoubleClick(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseDoubleClick.htm"
+    },
+    {
+      "name": "OnMouseDown",
+      "signature": "protected virtual void OnMouseDown(MouseCallbackEventArgs e)",
+      "summary": "Called at the beginning of handling of a mouse down event in Rhino. If you don\u0027t want the default Rhino functionality to be run, then set Cancel to true on the passed in event arguments Base class implementation of this function does nothing",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseDown(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseDown.htm"
+    },
+    {
+      "name": "OnMouseEnter",
+      "signature": "protected virtual void OnMouseEnter(MouseCallbackEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseEnter(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseEnter.htm"
+    },
+    {
+      "name": "OnMouseHover",
+      "signature": "protected virtual void OnMouseHover(MouseCallbackEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseHover(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseHover.htm"
+    },
+    {
+      "name": "OnMouseLeave",
+      "signature": "protected virtual void OnMouseLeave(MouseCallbackEventArgs e)",
+      "summary": "",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseLeave(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseLeave.htm"
+    },
+    {
+      "name": "OnMouseMove",
+      "signature": "protected virtual void OnMouseMove(MouseCallbackEventArgs e)",
+      "summary": "Called at the beginning of handling of a mouse move event in Rhino. If you don\u0027t want the default Rhino functionality to be run, then set Cancel to true on the passed in event arguments. Base class implementation of this function does nothing.",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseMove(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseMove.htm"
+    },
+    {
+      "name": "OnMouseUp",
+      "signature": "protected virtual void OnMouseUp(MouseCallbackEventArgs e)",
+      "summary": "Called at the beginning of handling of a mouse up event in Rhino. If you don\u0027t want the default Rhino functionality to be run, then set Cancel to true on the passed in event arguments Base class implementation of this function does nothing",
+      "params": [
+        {
+          "name": "e",
+          "type": "Rhino.UI.MouseCallbackEventArgs",
+          "doc": "[Missing \u003Cparam name=\u0022e\u0022/\u003E documentation for \u0022M:Rhino.UI.MouseCallback.OnMouseUp(Rhino.UI.MouseCallbackEventArgs)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_MouseCallback_OnMouseUp.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Enabled",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_MouseCallback_Enabled.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

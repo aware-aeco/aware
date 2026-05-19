@@ -1,0 +1,403 @@
+{
+  "name": "MeshVertexNormalList",
+  "namespace": "Rhino.Geometry.Collections",
+  "kind": "class",
+  "summary": "Provides access to the Vertex Normals of a Mesh.",
+  "interfaces": [
+    "IResizableList\u003CVector3f\u003E",
+    "IList\u003CVector3f\u003E",
+    "ICollection\u003CVector3f\u003E",
+    "IEnumerable\u003CVector3f\u003E",
+    "IEnumerable",
+    "IList",
+    "ICollection",
+    "IReadOnlyList\u003CVector3f\u003E",
+    "IReadOnlyCollection\u003CVector3f\u003E"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Collections_MeshVertexNormalList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add(Vector3d)",
+      "signature": "public int Add(Vector3d normal)",
+      "summary": "Adds a new vertex normal at the end of the list.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "new vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex normal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Add.htm"
+    },
+    {
+      "name": "Add(Vector3f)",
+      "signature": "public int Add(Vector3f normal)",
+      "summary": "Adds a new vertex normal at the end of the list.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "new vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex normal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Add_1.htm"
+    },
+    {
+      "name": "Add(Double, Double, Double)",
+      "signature": "public int Add(double x, double y, double z)",
+      "summary": "Adds a new vertex normal at the end of the list.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X component of new vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y component of new vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z component of new vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex normal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Add_2.htm"
+    },
+    {
+      "name": "Add(Single, Single, Single)",
+      "signature": "public int Add(float x, float y, float z)",
+      "summary": "Adds a new vertex normal at the end of the list.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "X component of new vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "Y component of new vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Single",
+          "doc": "Z component of new vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "The index of the newly added vertex normal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Add_3.htm"
+    },
+    {
+      "name": "AddRange",
+      "signature": "public bool AddRange(Vector3f[] normals)",
+      "summary": "Appends a collection of normal vectors.",
+      "params": [
+        {
+          "name": "normals",
+          "type": "Rhino.Geometry.Vector3f[]",
+          "doc": "Normals to append.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_AddRange.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "public void Clear()",
+      "summary": "Clears the vertex normal collection on the mesh.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Clear.htm"
+    },
+    {
+      "name": "ComputeNormals",
+      "signature": "public bool ComputeNormals()",
+      "summary": "Computes the vertex normals based on the physical shape of the mesh.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_ComputeNormals.htm"
+    },
+    {
+      "name": "Destroy",
+      "signature": "public void Destroy()",
+      "summary": "Releases all memory allocated to store vertex normals. The list capacity will be 0 after this call. Subsequent calls can add new items.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Destroy.htm"
+    },
+    {
+      "name": "Flip",
+      "signature": "public void Flip()",
+      "summary": "Reverses direction of all vertex normals This is the same as Mesh.Flip(true, false, false)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_Flip.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CVector3f\u003E GetEnumerator()",
+      "summary": "Gets an enumerator that yields all normals (vectors) in this collection.",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CVector3f\u003E",
+        "doc": "The enumerator."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_GetEnumerator.htm"
+    },
+    {
+      "name": "SetNormal(Int32, Vector3d)",
+      "signature": "public bool SetNormal(int index, Vector3d normal)",
+      "summary": "Sets or adds a vertex normal to the list. If [index] is less than [Count], the existing vertex normal at [index] will be modified.If [index] equals [Count], a new vertex normal is appended to the end of the list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex normal to set.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "The new normal at the index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_SetNormal.htm"
+    },
+    {
+      "name": "SetNormal(Int32, Vector3f)",
+      "signature": "public bool SetNormal(int index, Vector3f normal)",
+      "summary": "Sets or adds a vertex normal to the list. If [index] is less than [Count], the existing vertex normal at [index] will be modified.If [index] equals [Count], a new vertex normal is appended to the end of the vertex list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex normal to set.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "The new normal at the index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_SetNormal_1.htm"
+    },
+    {
+      "name": "SetNormal(Int32, Double, Double, Double)",
+      "signature": "public bool SetNormal(int index, double x, double y, double z)",
+      "summary": "Sets or adds a vertex normal to the list. If [index] is less than [Count], the existing vertex normal at [index] will be modified.If [index] equals [Count], a new vertex normal is appended to the end of the list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex normal to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "X component of vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "Y component of vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "Z component of vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_SetNormal_2.htm"
+    },
+    {
+      "name": "SetNormal(Int32, Single, Single, Single)",
+      "signature": "public bool SetNormal(int index, float x, float y, float z)",
+      "summary": "Sets or adds a normal to the list. If [index] is less than [Count], the existing vertex normal at [index] will be modified.If [index] equals [Count], a new vertex normal is appended to the end of the list.If [index] is larger than [Count], the function will return false.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "Index of vertex normal to set.",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "System.Single",
+          "doc": "X component of vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Single",
+          "doc": "Y component of vertex normal.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Single",
+          "doc": "Z component of vertex normal.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_SetNormal_3.htm"
+    },
+    {
+      "name": "SetNormals",
+      "signature": "public bool SetNormals(Vector3f[] normals)",
+      "summary": "Sets all normal vectors in one go. This method destroys the current normal array if it exists.",
+      "params": [
+        {
+          "name": "normals",
+          "type": "Rhino.Geometry.Vector3f[]",
+          "doc": "Normals for the entire mesh.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_SetNormals.htm"
+    },
+    {
+      "name": "ToFloatArray",
+      "signature": "public float[] ToFloatArray()",
+      "summary": "Copies all vertex normals to a linear array of float in x,y,z order",
+      "params": [],
+      "returns": {
+        "type": "Single[]",
+        "doc": "The float array."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_ToFloatArray.htm"
+    },
+    {
+      "name": "UnitizeNormals",
+      "signature": "public bool UnitizeNormals()",
+      "summary": "Unitizes all vertex normals.",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true on success, false on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Collections_MeshVertexNormalList_UnitizeNormals.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Capacity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the amount of vertex normals that the list can hold without resizing.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexNormalList_Capacity.htm"
+    },
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the number of mesh vertex normals.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexNormalList_Count.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Vector3f",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the vertex at the given index. The index must be valid or an IndexOutOfRangeException will be thrown.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Collections_MeshVertexNormalList_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

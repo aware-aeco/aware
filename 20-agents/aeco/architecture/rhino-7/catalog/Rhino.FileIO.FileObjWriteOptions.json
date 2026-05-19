@@ -1,0 +1,317 @@
+{
+  "name": "FileObjWriteOptions",
+  "namespace": "Rhino.FileIO",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.FileIO.FileObjWriteOptions\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_FileIO_FileObjWriteOptions.htm",
+  "constructors": [
+    {
+      "name": "FileObjWriteOptions",
+      "signature": "public FileObjWriteOptions(FileWriteOptions writeOptions)",
+      "summary": "Initializes a new instance of the FileObjWriteOptions class",
+      "params": [
+        {
+          "name": "writeOptions",
+          "type": "Rhino.FileIO.FileWriteOptions",
+          "doc": "[Missing \u003Cparam name=\u0022writeOptions\u0022/\u003E documentation for \u0022M:Rhino.FileIO.FileObjWriteOptions.#ctor(Rhino.FileIO.FileWriteOptions)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FileObjWriteOptions__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTransform",
+      "signature": "public Transform GetTransform()",
+      "summary": "Calculates the transform combination of ZToY and any the translation that might occur in a SavewithOrigin.",
+      "params": [],
+      "returns": {
+        "type": "Transform",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.FileIO.FileObjWriteOptions.GetTransform\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_FileIO_FileObjWriteOptions_GetTransform.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActualFilePathOnMac",
+      "type": "String",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "remarks": "The path passed to FileExportPlugIn::WriteFile on the Mac is a temporary path. The calling function takes care of moving the temp (.obj) file to it\u0027s appropriate location. We can\u0027t use that to write that path to construct the .mat file because the calling function doesn\u0027t know anything about it. ActualFilePathOnMac is the path of the obj file\u0027s ultimate destination. It\u0027s only meaningful on the Mac platform.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ActualFilePathOnMac.htm"
+    },
+    {
+      "name": "CreateNgons",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to enable/disable the creation of ngons for the output",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_CreateNgons.htm"
+    },
+    {
+      "name": "CullUnnecessaryVertexesInNgons",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to determine whether interior collinear vertexes are part of the ngon.",
+      "remarks": "Imagine a plane that has been split and then rejoined. If IncludeUnweldedEdgesInNgons is set to true then you would get an ngon with 6 vertexes, the corners and one on each edge that was split. Setting this to true would remove those 2 vertexes from the interior of the edge. TODO This is not hooked up yet, Dale hasn\u0027t made this available yet. See RH-30673.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_CullUnnecessaryVertexesInNgons.htm"
+    },
+    {
+      "name": "EolType",
+      "type": "FileObjWriteOptions.AsciiEol",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "remarks": "Alias/Wavefront OBJ files are ASCII files. Generally they should have a LF (UNIX) as the end-of-line marker.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_EolType.htm"
+    },
+    {
+      "name": "ExportAsTriangles",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable/disable export of faces as triangles.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportAsTriangles.htm"
+    },
+    {
+      "name": "ExportGroupNameLayerNames",
+      "type": "FileObjWriteOptions.ObjGroupNames",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to determine whether object, group or layer names will become \u0022g\u0022s in the OBJ output file",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportGroupNameLayerNames.htm"
+    },
+    {
+      "name": "ExportMaterialDefinitions",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to write an .mtl file and \u0022usemtl\u0022s in the obj file",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportMaterialDefinitions.htm"
+    },
+    {
+      "name": "ExportNormals",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable/disable export of vertex normals, if they exist.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportNormals.htm"
+    },
+    {
+      "name": "ExportObjectNames",
+      "type": "FileObjWriteOptions.ObjObjectNames",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to determine what object names in Rhino will become in the OBJ output file",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportObjectNames.htm"
+    },
+    {
+      "name": "ExportOpenMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable/Disable bailing when an open mesh is encountered.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportOpenMeshes.htm"
+    },
+    {
+      "name": "ExportTcs",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable/disable export of texture coordinates, if they exist.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportTcs.htm"
+    },
+    {
+      "name": "ExportVcs",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable/disable export of vertex colors, if they exist.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ExportVcs.htm"
+    },
+    {
+      "name": "IncludeUnweldedEdgesInNgons",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to determine whether unwelded edges are ignored in the creation of an ngon.",
+      "remarks": "Imagine a plane that has been split and then rejoined. This setting determines if you will get one or two ngons in the output. TODO This is not hooked up yet, Dale hasn\u0027t made this available yet. See RH-30673.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_IncludeUnweldedEdgesInNgons.htm"
+    },
+    {
+      "name": "MapZtoY",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to transform Rhino\u0027s Z axis to OBJ\u0027s Y axis",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_MapZtoY.htm"
+    },
+    {
+      "name": "MergeNestedGroupingNames",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to merge nested layer or group names into a single OBJ group name",
+      "remarks": "Setting this to true will take a layer setup like this in Rhino Grandparent Parent Child and make a group name of Grandparent__Parent__Child in obj. If false it will be 3 separate group names in obj and will look like this in the file. g Grandparent Parent Child",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_MergeNestedGroupingNames.htm"
+    },
+    {
+      "name": "MeshParameters",
+      "type": "MeshingParameters",
+      "getter": true,
+      "setter": true,
+      "summary": "Mesh parameters to use when meshing geometry that is not already a mesh.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_MeshParameters.htm"
+    },
+    {
+      "name": "MeshType",
+      "type": "FileObjWriteOptions.VertexWelding",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_MeshType.htm"
+    },
+    {
+      "name": "MinNgonFaceCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Minimum number of faces to consider creation of ngon",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_MinNgonFaceCount.htm"
+    },
+    {
+      "name": "NgonMode",
+      "type": "FileObjWriteOptions.NGons",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_NgonMode.htm"
+    },
+    {
+      "name": "ObjectType",
+      "type": "FileObjWriteOptions.GeometryType",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_ObjectType.htm"
+    },
+    {
+      "name": "SignificantDigits",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Number of significant digits to write out for floating point numbers",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_SignificantDigits.htm"
+    },
+    {
+      "name": "SortObjGroups",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to enable/disable sorting of OBJ groups",
+      "remarks": "This is mainly for the sake of making an obj file more human readable, however, it is important that it happens when a user has opted to write Rhino groups as OBJ \u0022g\u0022s since it is not necessary for every object in Rhino to be part of a group.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_SortObjGroups.htm"
+    },
+    {
+      "name": "SubDMeshType",
+      "type": "FileObjWriteOptions.SubDMeshing",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_SubDMeshType.htm"
+    },
+    {
+      "name": "SubDSurfaceMeshingDensity",
+      "type": "Int32",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines how coarse the mesh output will be when surface meshing subd objects See comments for ON_SubDDisplayParameters in opennurbs_mesh.h for details regarding numbers used.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_SubDSurfaceMeshingDensity.htm"
+    },
+    {
+      "name": "TrimCurveType",
+      "type": "FileObjWriteOptions.CurveType",
+      "getter": true,
+      "setter": true,
+      "summary": "trimming curve option",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_TrimCurveType.htm"
+    },
+    {
+      "name": "UnderbarMaterialNames",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable/disable replacing white space with under-bars in material names.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_UnderbarMaterialNames.htm"
+    },
+    {
+      "name": "UseDisplayColorForMaterial",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to display color as material when material index for object is -1.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_UseDisplayColorForMaterial.htm"
+    },
+    {
+      "name": "UseRelativeIndexing",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to use relative indexing. TRUE = use relative (negative) indexing FALSE = use absolute (positive) indexing",
+      "remarks": "This only has an impact on non-mesh output. There is also no interface in the OBJ export plug-in so code executed when set to true has not been thoroughly tested. It has been there forever and migrated with each successive revision of OBJ export code.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_UseRelativeIndexing.htm"
+    },
+    {
+      "name": "UseRenderMeshes",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Use existing or generate render meshes instead of calling RhinoObject.MeshObjects.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_UseRenderMeshes.htm"
+    },
+    {
+      "name": "UseSimpleDialog",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines whether to use the simple or detailed meshing dialog.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_UseSimpleDialog.htm"
+    },
+    {
+      "name": "WrapLongLines",
+      "type": "Boolean",
+      "getter": true,
+      "setter": true,
+      "summary": "Setting to enable/disable line wrapping with \u0022\\\u0022s",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_FileIO_FileObjWriteOptions_WrapLongLines.htm"
+    },
+    {
+      "name": "AngleTolRadians",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "If trim is TL_OBJ_FILE_TRIM_POLYLINE, angle_tol (in radians) controls the level of linearization on parameter space trimming curves.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_FileIO_FileObjWriteOptions_AngleTolRadians.htm"
+    },
+    {
+      "name": "WriteOptions",
+      "type": "FileWriteOptions",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/F_Rhino_FileIO_FileObjWriteOptions_WriteOptions.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,364 @@
+{
+  "name": "DrawingUtilities",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "RhinoCommon Drawing Utilities",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_DrawingUtilities.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BitmapFromIconResource(String, Assembly)",
+      "signature": "public static Bitmap BitmapFromIconResource(string resourceName, Assembly assembly = null)",
+      "summary": "Load a Icon from an embedded resource and convert it to a bitmap of the specified size. Will look for a icon image that is greater than or equal to the requested size, if all images are less than the requested size the largest image will be used.",
+      "params": [
+        {
+          "name": "resourceName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022resourceName\u0022/\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromIconResource(System.String,System.Reflection.Assembly)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource, will use the calling assembly if null.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromIconResource(System.String,System.Reflection.Assembly)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_BitmapFromIconResource_1.htm"
+    },
+    {
+      "name": "BitmapFromIconResource(String, Size, Assembly)",
+      "signature": "public static Bitmap BitmapFromIconResource(string resourceName, Size bitmapSize, Assembly assembly = null)",
+      "summary": "Load a Icon from an embedded resource and convert it to a bitmap of the specified size. Will look for a icon image that is greater than or equal to the requested size, if all images are less than the requested size the largest image will be used.",
+      "params": [
+        {
+          "name": "resourceName",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022resourceName\u0022/\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromIconResource(System.String,System.Drawing.Size,System.Reflection.Assembly)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "bitmapSize",
+          "type": "System.Drawing.Size",
+          "doc": "Desired bitmap size",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource, will use the calling assembly if null.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromIconResource(System.String,System.Drawing.Size,System.Reflection.Assembly)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_BitmapFromIconResource.htm"
+    },
+    {
+      "name": "BitmapFromSvg",
+      "signature": "public static Bitmap BitmapFromSvg(string svg, int width, int height)",
+      "summary": "Create bitmap of a given size from an svg string",
+      "params": [
+        {
+          "name": "svg",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022svg\u0022/\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromSvg(System.String,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022width\u0022/\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromSvg(System.String,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022height\u0022/\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromSvg(System.String,System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.DrawingUtilities.BitmapFromSvg(System.String,System.Int32,System.Int32)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_BitmapFromSvg.htm"
+    },
+    {
+      "name": "CreateMeshPreviewImage(Mesh, Color, Size)",
+      "signature": "public static Bitmap CreateMeshPreviewImage(Mesh mesh, Color color, Size size)",
+      "summary": "Creates a preview image of a mesh.",
+      "params": [
+        {
+          "name": "mesh",
+          "type": "Rhino.Geometry.Mesh",
+          "doc": "The mesh.",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "System.Drawing.Color",
+          "doc": "The draw color.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The size of the preview image.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_CreateMeshPreviewImage.htm"
+    },
+    {
+      "name": "CreateMeshPreviewImage(IEnumerable\u003CMesh\u003E, IEnumerable\u003CColor\u003E, Size)",
+      "signature": "public static Bitmap CreateMeshPreviewImage(IEnumerable\u003CMesh\u003E meshes, IEnumerable\u003CColor\u003E colors, Size size)",
+      "summary": "Creates a preview image of one or more meshes.",
+      "params": [
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "The meshes.",
+          "optional": false
+        },
+        {
+          "name": "colors",
+          "type": "System.Collections.Generic.IEnumerable\u003CColor\u003E",
+          "doc": "The draw colors, one for each mesh.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The size of the preview image.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_CreateMeshPreviewImage_2.htm"
+    },
+    {
+      "name": "CreateMeshPreviewImage(RhinoDoc, IEnumerable\u003CMesh\u003E, IEnumerable\u003CColor\u003E, Size)",
+      "signature": "public static Bitmap CreateMeshPreviewImage(RhinoDoc doc, IEnumerable\u003CMesh\u003E meshes, IEnumerable\u003CColor\u003E colors, Size size)",
+      "summary": "Creates a preview image of one or more meshes.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Rhino.RhinoDoc",
+          "doc": "The active document.",
+          "optional": false
+        },
+        {
+          "name": "meshes",
+          "type": "System.Collections.Generic.IEnumerable\u003CMesh\u003E",
+          "doc": "The meshes.",
+          "optional": false
+        },
+        {
+          "name": "colors",
+          "type": "System.Collections.Generic.IEnumerable\u003CColor\u003E",
+          "doc": "The draw colors, one for each mesh.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The size of the preview image.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "A bitmap if successful, null otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_CreateMeshPreviewImage_1.htm"
+    },
+    {
+      "name": "IconFromResource(String, Assembly)",
+      "signature": "public static Icon IconFromResource(string resourceName, Assembly assembly = null)",
+      "summary": "Load a Icon from an embedded resource.",
+      "params": [
+        {
+          "name": "resourceName",
+          "type": "System.String",
+          "doc": "The case-sensitive name of the icon manifest resource being requested.",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource, will use the calling assembly if null.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Icon",
+        "doc": "The Icon resource if found and loaded otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_IconFromResource_1.htm"
+    },
+    {
+      "name": "IconFromResource(String, Size, Assembly)",
+      "signature": "public static Icon IconFromResource(string resourceName, Size size, Assembly assembly = null)",
+      "summary": "Load a Icon from an embedded resource.",
+      "params": [
+        {
+          "name": "resourceName",
+          "type": "System.String",
+          "doc": "The case-sensitive name of the icon manifest resource being requested.",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "System.Drawing.Size",
+          "doc": "The desired size of the icon.",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource, will use the calling assembly if null.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Icon",
+        "doc": "The Icon resource if found and loaded otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_IconFromResource.htm"
+    },
+    {
+      "name": "ImageFromResource",
+      "signature": "public static Image ImageFromResource(string resourceName, Assembly assembly = null)",
+      "summary": "Load a Image from an embedded resource.",
+      "params": [
+        {
+          "name": "resourceName",
+          "type": "System.String",
+          "doc": "The case-sensitive name of the image manifest resource being requested.",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource, will use the calling assembly if null.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Image",
+        "doc": "The Image resource if found and loaded otherwise null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_ImageFromResource.htm"
+    },
+    {
+      "name": "LoadBitmapWithScaleDown",
+      "signature": "public static Bitmap LoadBitmapWithScaleDown(string iconName, int sizeDesired, Assembly assembly = null)",
+      "summary": "Loads an icon from an embedded resource and converts it to a bitmap. If the icon is not a standard size, this function scales down a larger image.",
+      "params": [
+        {
+          "name": "iconName",
+          "type": "System.String",
+          "doc": "The case-sensitive name of the icon manifest resource being requested.",
+          "optional": false
+        },
+        {
+          "name": "sizeDesired",
+          "type": "System.Int32",
+          "doc": "The desired size, in pixels, of the icon.",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Bitmap",
+        "doc": "The icon converted to a bitmap if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when iconName is not found as an embedded resource in the specified assembly."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_LoadBitmapWithScaleDown.htm"
+    },
+    {
+      "name": "LoadIconWithScaleDown",
+      "signature": "public static Icon LoadIconWithScaleDown(string iconName, int sizeDesired, Assembly assembly = null)",
+      "summary": "Loads an icon from an embedded resource. If the icon is not a standard size, this function scales down a larger image.",
+      "params": [
+        {
+          "name": "iconName",
+          "type": "System.String",
+          "doc": "The case-sensitive name of the icon manifest resource being requested.",
+          "optional": false
+        },
+        {
+          "name": "sizeDesired",
+          "type": "System.Int32",
+          "doc": "The desired size, in pixels, of the icon.",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "doc": "The assembly containing the manifest resource.",
+          "optional": true
+        }
+      ],
+      "returns": {
+        "type": "Icon",
+        "doc": "The icon if successful, null otherwise."
+      },
+      "throws": [
+        {
+          "type": "ArgumentException",
+          "when": "Thrown when iconName is not found as an embedded resource in the specified assembly."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_DrawingUtilities_LoadIconWithScaleDown.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

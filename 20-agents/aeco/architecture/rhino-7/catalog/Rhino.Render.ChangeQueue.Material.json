@@ -1,0 +1,38 @@
+{
+  "name": "Material",
+  "namespace": "Rhino.Render.ChangeQueue",
+  "kind": "class",
+  "summary": "Representation of a Material through the change queue",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_ChangeQueue_Material.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the material ID (crc)",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_Material_Id.htm"
+    },
+    {
+      "name": "MeshIndex",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get mesh index",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_Material_MeshIndex.htm"
+    },
+    {
+      "name": "MeshInstanceId",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the material InstanceAncestry",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Render_ChangeQueue_Material_MeshInstanceId.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

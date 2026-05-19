@@ -1,0 +1,53 @@
+{
+  "name": "PostEffectUI",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "PostEffectUI class provides a way for pep plugins to add ui sections",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectUI.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddSection",
+      "signature": "public void AddSection(ICollapsibleSection section)",
+      "summary": "Add a section to the UI.",
+      "params": [
+        {
+          "name": "section",
+          "type": "Rhino.UI.Controls.ICollapsibleSection",
+          "doc": "[Missing \u003Cparam name=\u0022section\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectUI.AddSection(Rhino.UI.Controls.ICollapsibleSection)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectUI_AddSection.htm"
+    },
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectUI",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectUI_Dispose.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectUI_Finalize.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

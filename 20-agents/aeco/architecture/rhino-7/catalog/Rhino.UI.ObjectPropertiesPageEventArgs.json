@@ -1,0 +1,217 @@
+{
+  "name": "ObjectPropertiesPageEventArgs",
+  "namespace": "Rhino.UI",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.ObjectPropertiesPageEventArgs\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_ObjectPropertiesPageEventArgs.htm",
+  "constructors": [
+    {
+      "name": "ObjectPropertiesPageEventArgs",
+      "signature": "public ObjectPropertiesPageEventArgs(ObjectPropertiesPage page)",
+      "summary": "Used by ObjectPropertiesPage to notify the page when updating, modifying or determining if the page should be included in the navigation bar",
+      "params": [
+        {
+          "name": "page",
+          "type": "Rhino.UI.ObjectPropertiesPage",
+          "doc": "Page sending the message",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetObjects(ObjectType)",
+      "signature": "public RhinoObject[] GetObjects(ObjectType filter)",
+      "summary": "Get selected objects that match a given filter",
+      "params": [
+        {
+          "name": "filter",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "[Missing \u003Cparam name=\u0022filter\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.GetObjects(Rhino.DocObjects.ObjectType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "RhinoObject[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.GetObjects(Rhino.DocObjects.ObjectType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs_GetObjects.htm"
+    },
+    {
+      "name": "GetObjects\u003CT\u003E()",
+      "signature": "public T[] GetObjects\u003CT\u003E() where T : RhinoObject",
+      "summary": "Get selected objects of a given type",
+      "params": [],
+      "returns": {
+        "type": "T[]",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.GetObjects\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs_GetObjects__1.htm"
+    },
+    {
+      "name": "IncludesObjectsType(ObjectType)",
+      "signature": "public bool IncludesObjectsType(ObjectType objectTypes)",
+      "summary": "",
+      "params": [
+        {
+          "name": "objectTypes",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "[Missing \u003Cparam name=\u0022objectTypes\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.IncludesObjectsType(Rhino.DocObjects.ObjectType)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.IncludesObjectsType(Rhino.DocObjects.ObjectType)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs_IncludesObjectsType.htm"
+    },
+    {
+      "name": "IncludesObjectsType(ObjectType, Boolean)",
+      "signature": "public bool IncludesObjectsType(ObjectType objectTypes, bool allMustMatch)",
+      "summary": "",
+      "params": [
+        {
+          "name": "objectTypes",
+          "type": "Rhino.DocObjects.ObjectType",
+          "doc": "[Missing \u003Cparam name=\u0022objectTypes\u0022/\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.IncludesObjectsType(Rhino.DocObjects.ObjectType,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "allMustMatch",
+          "type": "System.Boolean",
+          "doc": "If true then every selected object must match the object type otherwise; only a single object has to be of the specified type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.IncludesObjectsType(Rhino.DocObjects.ObjectType,System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs_IncludesObjectsType_1.htm"
+    },
+    {
+      "name": "IncludesObjectsType\u003CT\u003E()",
+      "signature": "public bool IncludesObjectsType\u003CT\u003E() where T : RhinoObject",
+      "summary": "Return true if any of the selected objects match the given type",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.IncludesObjectsType\u0060\u00601\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs_IncludesObjectsType__1.htm"
+    },
+    {
+      "name": "IncludesObjectsType\u003CT\u003E(Boolean)",
+      "signature": "public bool IncludesObjectsType\u003CT\u003E(bool allMustMatch) where T : RhinoObject",
+      "summary": "Return true if any of the selected objects match the given type",
+      "params": [
+        {
+          "name": "allMustMatch",
+          "type": "System.Boolean",
+          "doc": "If true then every selected object must match the object type otherwise; only a single object has to be of the specified type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.ObjectPropertiesPageEventArgs.IncludesObjectsType\u0060\u00601(System.Boolean)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_ObjectPropertiesPageEventArgs_IncludesObjectsType__1_1.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DocRuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Document containing the objects and views",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_DocRuntimeSerialNumber.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Document containing the objects and views",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_Document.htm"
+    },
+    {
+      "name": "EventRuntimeSerialNumber",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the runtime serial number.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_EventRuntimeSerialNumber.htm"
+    },
+    {
+      "name": "ObjectCount",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_ObjectCount.htm"
+    },
+    {
+      "name": "Objects",
+      "type": "RhinoObject[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Return a list of Rhino objects to be processed by this object properties page",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_Objects.htm"
+    },
+    {
+      "name": "ObjectTypes",
+      "type": "UInt32",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_ObjectTypes.htm"
+    },
+    {
+      "name": "Page",
+      "type": "ObjectPropertiesPage",
+      "getter": true,
+      "setter": false,
+      "summary": "The page sending these arguments",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_Page.htm"
+    },
+    {
+      "name": "View",
+      "type": "RhinoView",
+      "getter": true,
+      "setter": false,
+      "summary": "Active view",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_View.htm"
+    },
+    {
+      "name": "Viewport",
+      "type": "RhinoViewport",
+      "getter": true,
+      "setter": false,
+      "summary": "Active viewport",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_UI_ObjectPropertiesPageEventArgs_Viewport.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

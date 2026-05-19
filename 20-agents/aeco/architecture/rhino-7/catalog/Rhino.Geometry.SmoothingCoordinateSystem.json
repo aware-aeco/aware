@@ -1,0 +1,29 @@
+{
+  "name": "SmoothingCoordinateSystem",
+  "namespace": "Rhino.Geometry",
+  "kind": "enum",
+  "summary": "The direction of the smoothing used by Curve, Surface, and Mesh Smooth.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_SmoothingCoordinateSystem.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "World",
+      "value": 0,
+      "summary": "World coordinates"
+    },
+    {
+      "name": "CPlane",
+      "value": 1,
+      "summary": "Construction plane coordinates"
+    },
+    {
+      "name": "Object",
+      "value": 2,
+      "summary": "Object u, v, and n coordinates"
+    }
+  ]
+}

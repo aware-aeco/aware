@@ -1,0 +1,32 @@
+{
+  "name": "InvalidDimensionStyleIdException",
+  "namespace": "Rhino.Geometry",
+  "kind": "class",
+  "summary": "General exception that can be thrown by annotations",
+  "base": "InvalidOperationException",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_InvalidDimensionStyleIdException.htm",
+  "constructors": [
+    {
+      "name": "InvalidDimensionStyleIdException",
+      "signature": "public InvalidDimensionStyleIdException(string msg)",
+      "summary": "Initializes a new instance of the InvalidDimensionStyleIdException class",
+      "params": [
+        {
+          "name": "msg",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022msg\u0022/\u003E documentation for \u0022M:Rhino.Geometry.InvalidDimensionStyleIdException.#ctor(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_InvalidDimensionStyleIdException__ctor.htm"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

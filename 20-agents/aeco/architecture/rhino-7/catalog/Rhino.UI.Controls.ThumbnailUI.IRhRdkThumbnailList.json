@@ -1,0 +1,251 @@
+{
+  "name": "IRhRdkThumbnailList",
+  "namespace": "Rhino.UI.Controls.ThumbnailUI",
+  "kind": "interface",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "void Add(Thumbnail t)",
+      "summary": "",
+      "params": [
+        {
+          "name": "t",
+          "type": "Rhino.UI.Controls.ThumbnailUI.Thumbnail",
+          "doc": "[Missing \u003Cparam name=\u0022t\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.Add(Rhino.UI.Controls.ThumbnailUI.Thumbnail)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_Add.htm"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_Clear.htm"
+    },
+    {
+      "name": "Get",
+      "signature": "IRhRdkThumbnail Get(ref Guid u)",
+      "summary": "",
+      "params": [
+        {
+          "name": "u",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022u\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.Get(System.Guid@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IRhRdkThumbnail",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.Get(System.Guid@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_Get.htm"
+    },
+    {
+      "name": "GetGridMetrics",
+      "signature": "void GetGridMetrics(ref int w, ref int h, ref int ox, ref int oy)",
+      "summary": "",
+      "params": [
+        {
+          "name": "w",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022w\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.GetGridMetrics(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022h\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.GetGridMetrics(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "ox",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022ox\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.GetGridMetrics(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "oy",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022oy\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.GetGridMetrics(System.Int32@,System.Int32@,System.Int32@,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_GetGridMetrics.htm"
+    },
+    {
+      "name": "GetSize",
+      "signature": "IRhRdkContentThumbnailList_Sizes GetSize()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IRhRdkContentThumbnailList_Sizes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.GetSize\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_GetSize.htm"
+    },
+    {
+      "name": "GetStatisticsHeaderHeight",
+      "signature": "void GetStatisticsHeaderHeight()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_GetStatisticsHeaderHeight.htm"
+    },
+    {
+      "name": "Mode",
+      "signature": "IRhRdkThumbnailList_Modes Mode()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IRhRdkThumbnailList_Modes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.Mode\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_Mode.htm"
+    },
+    {
+      "name": "SetClientText",
+      "signature": "void SetClientText(string w)",
+      "summary": "",
+      "params": [
+        {
+          "name": "w",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022w\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.SetClientText(System.String)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_SetClientText.htm"
+    },
+    {
+      "name": "SetCustomBitmapSize",
+      "signature": "void SetCustomBitmapSize(int w, int h)",
+      "summary": "",
+      "params": [
+        {
+          "name": "w",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022w\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.SetCustomBitmapSize(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022h\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.SetCustomBitmapSize(System.Int32,System.Int32)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_SetCustomBitmapSize.htm"
+    },
+    {
+      "name": "SetMode",
+      "signature": "void SetMode(IRhRdkThumbnailList_Modes m, bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "m",
+          "type": "Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList_Modes",
+          "doc": "[Missing \u003Cparam name=\u0022m\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.SetMode(Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList_Modes,System.Boolean)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.SetMode(Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList_Modes,System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_SetMode.htm"
+    },
+    {
+      "name": "SetShowLabels",
+      "signature": "void SetShowLabels(bool b)",
+      "summary": "",
+      "params": [
+        {
+          "name": "b",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022b\u0022/\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.SetShowLabels(System.Boolean)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_SetShowLabels.htm"
+    },
+    {
+      "name": "Shape",
+      "signature": "IRhRdkThumbnailList_Shapes Shape()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IRhRdkThumbnailList_Shapes",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.Shape\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_Shape.htm"
+    },
+    {
+      "name": "ShowLabels",
+      "signature": "bool ShowLabels()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.ShowLabels\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_ShowLabels.htm"
+    },
+    {
+      "name": "UUID",
+      "signature": "Guid UUID()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "Guid",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.UI.Controls.ThumbnailUI.IRhRdkThumbnailList.UUID\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_UI_Controls_ThumbnailUI_IRhRdkThumbnailList_UUID.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,103 @@
+{
+  "name": "PostEffectJob",
+  "namespace": "Rhino.Render.PostEffects",
+  "kind": "class",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Render.PostEffects.PostEffectJob\u0022]",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Render_PostEffects_PostEffectJob.htm",
+  "constructors": [
+    {
+      "name": "PostEffectJob",
+      "signature": "public PostEffectJob()",
+      "summary": "Initializes a new instance of the PostEffectJob class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJob__ctor.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "public abstract PostEffectJob Clone()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "PostEffectJob",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectJob.Clone\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJob_Clone.htm"
+    },
+    {
+      "name": "Dispose()",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the PostEffectJob",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJob_Dispose.htm"
+    },
+    {
+      "name": "Dispose(Boolean)",
+      "signature": "public virtual void Dispose(bool bDisposing)",
+      "summary": "Releases the unmanaged resources used by the PostEffectJob and optionally releases the managed resources",
+      "params": [
+        {
+          "name": "bDisposing",
+          "type": "System.Boolean",
+          "doc": "True to release both managed and unmanaged resources; false to release only unmanaged resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJob_Dispose_1.htm"
+    },
+    {
+      "name": "Execute",
+      "signature": "public abstract bool Execute(Rectangle rect, PostEffectJobChannels access)",
+      "summary": "",
+      "params": [
+        {
+          "name": "rect",
+          "type": "System.Drawing.Rectangle",
+          "doc": "[Missing \u003Cparam name=\u0022rect\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectJob.Execute(System.Drawing.Rectangle,Rhino.Render.PostEffects.PostEffectJobChannels)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Rhino.Render.PostEffects.PostEffectJobChannels",
+          "doc": "[Missing \u003Cparam name=\u0022access\u0022/\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectJob.Execute(System.Drawing.Rectangle,Rhino.Render.PostEffects.PostEffectJobChannels)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Render.PostEffects.PostEffectJob.Execute(System.Drawing.Rectangle,Rhino.Render.PostEffects.PostEffectJobChannels)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJob_Execute.htm"
+    },
+    {
+      "name": "Finalize",
+      "signature": "protected override void Finalize()",
+      "summary": "(Overrides Object.Finalize().)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Render_PostEffects_PostEffectJob_Finalize.htm"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

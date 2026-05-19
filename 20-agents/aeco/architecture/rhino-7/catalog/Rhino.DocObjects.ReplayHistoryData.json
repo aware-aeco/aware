@@ -1,0 +1,365 @@
+{
+  "name": "ReplayHistoryData",
+  "namespace": "Rhino.DocObjects",
+  "kind": "class",
+  "summary": "Provides history information to commands that will repeat history construction. Generally, a developer using this class will not construct a new instance, but receive one.",
+  "interfaces": [
+    "IDisposable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_ReplayHistoryData.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "public void Dispose()",
+      "summary": "Releases all resources used by the ReplayHistoryData",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_Dispose.htm"
+    },
+    {
+      "name": "GetRhinoObjRef",
+      "signature": "public ObjRef GetRhinoObjRef(int id)",
+      "summary": "In ReplayHistory, use GetRhinoObjRef to convert the information in a history record into the ObjRef that has up to date RhinoObject pointers",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "HistoryRecord value id",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ObjRef",
+        "doc": "ObjRef on success, null if not successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_GetRhinoObjRef.htm"
+    },
+    {
+      "name": "TryGetBool",
+      "signature": "public bool TryGetBool(int id, out bool value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetBool(System.Int32,System.Boolean@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Boolean",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetBool(System.Int32,System.Boolean@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetBool(System.Int32,System.Boolean@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetBool.htm"
+    },
+    {
+      "name": "TryGetColor",
+      "signature": "public bool TryGetColor(int id, out Color value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetColor(System.Int32,System.Drawing.Color@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Drawing.Color",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetColor(System.Int32,System.Drawing.Color@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetColor(System.Int32,System.Drawing.Color@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetColor.htm"
+    },
+    {
+      "name": "TryGetDouble",
+      "signature": "public bool TryGetDouble(int id, out double value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetDouble(System.Int32,System.Double@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Double",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetDouble(System.Int32,System.Double@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetDouble(System.Int32,System.Double@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetDouble.htm"
+    },
+    {
+      "name": "TryGetDoubles",
+      "signature": "public bool TryGetDoubles(int id, out double[] values)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetDoubles(System.Int32,System.Double[]@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Double[]",
+          "doc": "[Missing \u003Cparam name=\u0022values\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetDoubles(System.Int32,System.Double[]@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetDoubles(System.Int32,System.Double[]@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetDoubles.htm"
+    },
+    {
+      "name": "TryGetGuid",
+      "signature": "public bool TryGetGuid(int id, out Guid value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetGuid(System.Int32,System.Guid@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetGuid(System.Int32,System.Guid@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetGuid(System.Int32,System.Guid@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetGuid.htm"
+    },
+    {
+      "name": "TryGetInt",
+      "signature": "public bool TryGetInt(int id, out int value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetInt(System.Int32,System.Int32@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetInt(System.Int32,System.Int32@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetInt(System.Int32,System.Int32@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetInt.htm"
+    },
+    {
+      "name": "TryGetPoint3d",
+      "signature": "public bool TryGetPoint3d(int id, out Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetPoint3d(System.Int32,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetPoint3d(System.Int32,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetPoint3d(System.Int32,Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetPoint3d.htm"
+    },
+    {
+      "name": "TryGetPoint3dOnObject",
+      "signature": "public bool TryGetPoint3dOnObject(int id, out Point3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetPoint3dOnObject(System.Int32,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetPoint3dOnObject(System.Int32,Rhino.Geometry.Point3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetPoint3dOnObject(System.Int32,Rhino.Geometry.Point3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetPoint3dOnObject.htm"
+    },
+    {
+      "name": "TryGetString",
+      "signature": "public bool TryGetString(int id, out string value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetString(System.Int32,System.String@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.String",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetString(System.Int32,System.String@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetString(System.Int32,System.String@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetString.htm"
+    },
+    {
+      "name": "TryGetTransform",
+      "signature": "public bool TryGetTransform(int id, out Transform value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetTransform(System.Int32,Rhino.Geometry.Transform@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetTransform(System.Int32,Rhino.Geometry.Transform@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetTransform(System.Int32,Rhino.Geometry.Transform@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetTransform.htm"
+    },
+    {
+      "name": "TryGetVector3d",
+      "signature": "public bool TryGetVector3d(int id, out Vector3d value)",
+      "summary": "",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Int32",
+          "doc": "[Missing \u003Cparam name=\u0022id\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetVector3d(System.Int32,Rhino.Geometry.Vector3d@)\u0022]",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "[Missing \u003Cparam name=\u0022value\u0022/\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetVector3d(System.Int32,Rhino.Geometry.Vector3d@)\u0022]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.ReplayHistoryData.TryGetVector3d(System.Int32,Rhino.Geometry.Vector3d@)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_ReplayHistoryData_TryGetVector3d.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "The document this record belongs to",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ReplayHistoryData_Document.htm"
+    },
+    {
+      "name": "HistoryVersion",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "ReplayHistory overrides check the version number to ensure the information saved in the history record is compatible with the current implementation of ReplayHistory",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ReplayHistoryData_HistoryVersion.htm"
+    },
+    {
+      "name": "RecordId",
+      "type": "Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Each history record has a unique id that Rhino assigns when it adds the history record to the history record table",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ReplayHistoryData_RecordId.htm"
+    },
+    {
+      "name": "Results",
+      "type": "ReplayHistoryResult[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Provides access to BOTH inputs and outputs of the replay history operation. Use this property to then call an appropriate UpdateToX() method and make your custom history support work.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_ReplayHistoryData_Results.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

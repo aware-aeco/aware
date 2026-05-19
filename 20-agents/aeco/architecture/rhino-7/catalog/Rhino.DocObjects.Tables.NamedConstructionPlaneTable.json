@@ -1,0 +1,141 @@
+{
+  "name": "NamedConstructionPlaneTable",
+  "namespace": "Rhino.DocObjects.Tables",
+  "kind": "class",
+  "summary": "Contains all named construction planes in a rhino document. This class cannot be inherited.",
+  "interfaces": [
+    "IEnumerable\u003CConstructionPlane\u003E",
+    "IEnumerable"
+  ],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_Tables_NamedConstructionPlaneTable.htm",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "public int Add(string name, Plane plane)",
+      "summary": "Adds named construction plane to document.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "If name is empty, a unique name is automatically created. If there is already a named construction plane with the same name, that construction plane is replaced.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Rhino.Geometry.Plane",
+          "doc": "The plane value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0 based index of named construction plane. -1 on failure."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Add.htm"
+    },
+    {
+      "name": "Delete(Int32)",
+      "signature": "public bool Delete(int index)",
+      "summary": "Remove named construction plane from the document.",
+      "params": [
+        {
+          "name": "index",
+          "type": "System.Int32",
+          "doc": "zero based array index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Delete.htm"
+    },
+    {
+      "name": "Delete(String)",
+      "signature": "public bool Delete(string name)",
+      "summary": "Remove named construction plane from the document.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "name of the construction plane.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Delete_1.htm"
+    },
+    {
+      "name": "Find",
+      "signature": "public int Find(string name)",
+      "summary": "Finds a named construction plane.",
+      "params": [
+        {
+          "name": "name",
+          "type": "System.String",
+          "doc": "Name of construction plane to search for.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "\u003E=0 index of the construction plane with the given name. -1 no construction plane found with the given name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Find.htm"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "public IEnumerator\u003CConstructionPlane\u003E GetEnumerator()",
+      "summary": "",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator\u003CConstructionPlane\u003E",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.DocObjects.Tables.NamedConstructionPlaneTable.GetEnumerator\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_GetEnumerator.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "Int32",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of construction planes in the table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Count.htm"
+    },
+    {
+      "name": "Document",
+      "type": "RhinoDoc",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the document that owns this table.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Document.htm"
+    },
+    {
+      "name": "Item",
+      "type": "ConstructionPlane",
+      "getter": true,
+      "setter": false,
+      "summary": "Conceptually, the named construction plane table is an array of ConstructionPlanes and their associated names. The operator[] can be used to get individual ConstructionPlanes.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_DocObjects_Tables_NamedConstructionPlaneTable_Item.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "ViewCaptureSettings.AnchorLocation",
+  "namespace": "Rhino.Display",
+  "kind": "enum",
+  "summary": "[Missing \u003Csummary\u003E documentation for \u0022T:Rhino.Display.ViewCaptureSettings.AnchorLocation\u0022]",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Display_ViewCaptureSettings_AnchorLocation.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LowerLeft",
+      "value": 0
+    },
+    {
+      "name": "LowerRight",
+      "value": 2
+    },
+    {
+      "name": "UpperLeft",
+      "value": 1
+    },
+    {
+      "name": "UpperRight",
+      "value": 3
+    },
+    {
+      "name": "Center",
+      "value": 4
+    }
+  ]
+}

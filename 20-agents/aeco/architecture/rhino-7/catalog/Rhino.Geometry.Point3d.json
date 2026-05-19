@@ -1,0 +1,1255 @@
+{
+  "name": "Point3d",
+  "namespace": "Rhino.Geometry",
+  "kind": "struct",
+  "summary": "Represents the three coordinates of a point in three-dimensional space, using Double-precision floating point values.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_Geometry_Point3d.htm",
+  "constructors": [
+    {
+      "name": "Point3d(Point3d)",
+      "signature": "public Point3d(Point3d point)",
+      "summary": "Initializes a new point by copying coordinates from another point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d__ctor.htm"
+    },
+    {
+      "name": "Point3d(Point3f)",
+      "signature": "public Point3d(Point3f point)",
+      "summary": "Initializes a new point by copying coordinates from a single-precision point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d__ctor_1.htm"
+    },
+    {
+      "name": "Point3d(Point4d)",
+      "signature": "public Point3d(Point4d point)",
+      "summary": "Initializes a new point by copying coordinates from a four-dimensional point. The first three coordinates are divided by the last one. If the W (fourth) dimension of the input point is zero, then it will be just discarded.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point4d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d__ctor_2.htm"
+    },
+    {
+      "name": "Point3d(Vector3d)",
+      "signature": "public Point3d(Vector3d vector)",
+      "summary": "Initializes a new point by copying coordinates from the components of a vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d__ctor_3.htm"
+    },
+    {
+      "name": "Point3d(Double, Double, Double)",
+      "signature": "public Point3d(double x, double y, double z)",
+      "summary": "Initializes a new point by defining the X, Y and Z coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "System.Double",
+          "doc": "The value of the X (first) coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "System.Double",
+          "doc": "The value of the Y (second) coordinate.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "System.Double",
+          "doc": "The value of the Z (third) coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d__ctor_4.htm"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(Point3d, Point3d)",
+      "signature": "public static Point3d Add(Point3d point1, Point3d point2)",
+      "summary": "Sums two Point3d instances. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point1 and point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Add.htm"
+    },
+    {
+      "name": "Add(Point3d, Vector3d)",
+      "signature": "public static Point3d Add(Point3d point, Vector3d vector)",
+      "summary": "Sums up a point and a vector, and returns a new point. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point and vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Add_1.htm"
+    },
+    {
+      "name": "Add(Point3d, Vector3f)",
+      "signature": "public static Point3d Add(Point3d point, Vector3f vector)",
+      "summary": "Sums up a point and a vector, and returns a new point. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point and vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Add_2.htm"
+    },
+    {
+      "name": "Add(Vector3d, Point3d)",
+      "signature": "public static Point3d Add(Vector3d vector, Point3d point)",
+      "summary": "Sums up a point and a vector, and returns a new point. (Provided for languages that do not support operator overloading. You can use the \u002B operator otherwise)",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point and vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Add_3.htm"
+    },
+    {
+      "name": "ArePointsCoplanar",
+      "signature": "public static bool ArePointsCoplanar(IEnumerable\u003CPoint3d\u003E points, double tolerance)",
+      "summary": "Determines whether a set of points is coplanar within a given tolerance.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable of Point3d.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "A tolerance value. A default might be RhinoMath.ZeroTolerance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if points are on the same plane; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_ArePointsCoplanar.htm"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "public int CompareTo(Point3d other)",
+      "summary": "Compares this Point3d with another Point3d. Component evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The other Point3d to use in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Int32",
+        "doc": "0: if this is identical to other-1: if this.X \u003C other.X-1: if this.X == other.X and this.Y \u003C other.Y-1: if this.X == other.X and this.Y == other.Y and this.Z \u003C other.Z\u002B1: otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_CompareTo.htm"
+    },
+    {
+      "name": "CullDuplicates",
+      "signature": "public static Point3d[] CullDuplicates(IEnumerable\u003CPoint3d\u003E points, double tolerance)",
+      "summary": "Removes duplicates in the supplied set of points.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable of Point3d.",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "System.Double",
+          "doc": "The minimum distance between points. Points that fall within this tolerance will be discarded. .",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "An array of points without duplicates; or null on error."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_CullDuplicates.htm"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "public double DistanceTo(Point3d other)",
+      "summary": "Computes the distance between two points.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Other point for distance measurement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The length of the line between this and the other point; or 0 if any of the points is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_DistanceTo.htm"
+    },
+    {
+      "name": "DistanceToSquared",
+      "signature": "public double DistanceToSquared(Point3d other)",
+      "summary": "Computes the square of the distance between two points. This method is usually largely faster than DistanceTo().",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Other point for squared distance measurement.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Double",
+        "doc": "The squared length of the line between this and the other point; or 0 if any of the points is not valid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_DistanceToSquared.htm"
+    },
+    {
+      "name": "Divide",
+      "signature": "public static Point3d Divide(Point3d point, double t)",
+      "summary": "Divides a Point3d by a number. (Provided for languages that do not support operator overloading. You can use the / operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is coordinate-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Divide.htm"
+    },
+    {
+      "name": "EpsilonEquals",
+      "signature": "public bool EpsilonEquals(Point3d other, double epsilon)",
+      "summary": "Check that all values in other are within epsilon of the values in this",
+      "params": [
+        {
+          "name": "other",
+          "type": "Rhino.Geometry.Point3d",
+          "optional": false
+        },
+        {
+          "name": "epsilon",
+          "type": "System.Double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "[Missing \u003Creturns\u003E documentation for \u0022M:Rhino.Geometry.Point3d.EpsilonEquals(Rhino.Geometry.Point3d,System.Double)\u0022]"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_EpsilonEquals.htm"
+    },
+    {
+      "name": "Equals(Object)",
+      "signature": "public override bool Equals(Object obj)",
+      "summary": "Determines whether the specified Object is a Point3d and has the same values as the present point.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "System.Object",
+          "doc": "The specified object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if obj is a Point3d and has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Equals_1.htm"
+    },
+    {
+      "name": "Equals(Point3d)",
+      "signature": "public bool Equals(Point3d point)",
+      "summary": "Determines whether the specified Point3d has the same values as the present point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The specified point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if point has the same coordinates as this; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Equals.htm"
+    },
+    {
+      "name": "FromPoint3f",
+      "signature": "public static Point3d FromPoint3f(Point3f point)",
+      "summary": "Converts a single-precision point in a double-precision point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The resulting point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_FromPoint3f.htm"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "public override int GetHashCode()",
+      "summary": "Computes a hash code for the present point.",
+      "params": [],
+      "returns": {
+        "type": "Int32",
+        "doc": "A non-unique integer that represents this point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_GetHashCode.htm"
+    },
+    {
+      "name": "Interpolate",
+      "signature": "public void Interpolate(Point3d pA, Point3d pB, double t)",
+      "summary": "Interpolate between two points.",
+      "params": [
+        {
+          "name": "pA",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "First point.",
+          "optional": false
+        },
+        {
+          "name": "pB",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Second point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "Interpolation parameter. If t=0 then this point is set to pA. If t=1 then this point is set to pB. Values of t in between 0.0 and 1.0 result in points between pA and pB.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Interpolate.htm"
+    },
+    {
+      "name": "Multiply(Double, Point3d)",
+      "signature": "public static Point3d Multiply(double t, Point3d point)",
+      "summary": "Multiplies a Point3d by a number. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Point3d, Double)",
+      "signature": "public static Point3d Multiply(Point3d point, double t)",
+      "summary": "Multiplies a Point3d by a number. (Provided for languages that do not support operator overloading. You can use the * operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Multiply.htm"
+    },
+    {
+      "name": "SortAndCullPointList",
+      "signature": "public static Point3d[] SortAndCullPointList(IEnumerable\u003CPoint3d\u003E points, double minimumDistance)",
+      "summary": "Orders a set of points so they will be connected in a \u0022reasonable polyline\u0022 order. Also, removes points from the list if their common distance exceeds a specified threshold.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CPoint3d\u003E",
+          "doc": "A list, an array or any enumerable of Point3d.",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "System.Double",
+          "doc": "Minimum allowed distance among a pair of points. If points are closer than this, only one of them will be kept.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d[]",
+        "doc": "The new array of sorted and culled points."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_SortAndCullPointList.htm"
+    },
+    {
+      "name": "Subtract(Point3d, Point3d)",
+      "signature": "public static Vector3d Subtract(Point3d point1, Point3d point2)",
+      "summary": "Subtracts a point from another point. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Another point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is the difference of point minus vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Subtract.htm"
+    },
+    {
+      "name": "Subtract(Point3d, Vector3d)",
+      "signature": "public static Point3d Subtract(Point3d point, Vector3d vector)",
+      "summary": "Subtracts a vector from a point. (Provided for languages that do not support operator overloading. You can use the - operator otherwise)",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is the difference of point minus vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Subtract_1.htm"
+    },
+    {
+      "name": "ToString()",
+      "signature": "public override string ToString()",
+      "summary": "Constructs the string representation for the current point.",
+      "params": [],
+      "returns": {
+        "type": "String",
+        "doc": "The point representation in the form X,Y,Z."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_ToString.htm"
+    },
+    {
+      "name": "ToString(String, IFormatProvider)",
+      "signature": "public string ToString(string format, IFormatProvider formatProvider)",
+      "summary": "Formats the value of the current instance using the specified format.",
+      "params": [
+        {
+          "name": "format",
+          "type": "System.String",
+          "doc": "The format to use. -or- A null reference (null in Visual Basic) to use the default format defined for the type of the IFormattable implementation.",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "doc": "The provider to use to format the value. -or- A null reference (null in Visual Basic) to obtain the numeric format information from the current locale setting of the operating system.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "String",
+        "doc": "The value of the current instance in the specified format."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_ToString_1.htm"
+    },
+    {
+      "name": "Transform",
+      "signature": "public void Transform(Transform xform)",
+      "summary": "Transforms the present point in place. The transformation matrix acts on the left of the point. i.e., result = transformation*point",
+      "params": [
+        {
+          "name": "xform",
+          "type": "Rhino.Geometry.Transform",
+          "doc": "Transformation to apply.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_Transform.htm"
+    },
+    {
+      "name": "TryParse",
+      "signature": "public static bool TryParse(string input, out Point3d result)",
+      "summary": "Converts the string representation of a point to the equivalent Point3d structure.",
+      "params": [
+        {
+          "name": "input",
+          "type": "System.String",
+          "doc": "The point to convert.",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The structure that will contain the parsed value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if successful, false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_TryParse.htm"
+    },
+    {
+      "name": "Addition(Point3d, Point3d)",
+      "signature": "public static Point3d operator \u002B(Point3d point1, Point3d point2)",
+      "summary": "Sums two Point3d instances.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point1 and point2."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Addition.htm"
+    },
+    {
+      "name": "Addition(Point3d, Vector3d)",
+      "signature": "public static Point3d operator \u002B(Point3d point, Vector3d vector)",
+      "summary": "Sums up a point and a vector, and returns a new point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point and vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Addition_1.htm"
+    },
+    {
+      "name": "Addition(Point3d, Vector3f)",
+      "signature": "public static Point3d operator \u002B(Point3d point, Vector3f vector)",
+      "summary": "Sums up a point and a vector, and returns a new point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3f",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point and vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Addition_2.htm"
+    },
+    {
+      "name": "Addition(Vector3d, Point3d)",
+      "signature": "public static Point3d operator \u002B(Vector3d vector, Point3d point)",
+      "summary": "Sums up a point and a vector, and returns a new point.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that results from the addition of point and vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Addition_3.htm"
+    },
+    {
+      "name": "Division",
+      "signature": "public static Point3d operator /(Point3d point, double t)",
+      "summary": "Divides a Point3d by a number.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is coordinate-wise divided by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Division.htm"
+    },
+    {
+      "name": "Equality",
+      "signature": "public static bool operator ==(Point3d a, Point3d b)",
+      "summary": "Determines whether two Point3d have equal values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the coordinates of the two points are exactly equal; otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Equality.htm"
+    },
+    {
+      "name": "Explicit(Point3d to Vector3d)",
+      "signature": "public static explicit operator Vector3d (Point3d point)",
+      "summary": "Converts a point in a vector, needing casting.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "The resulting vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Explicit.htm"
+    },
+    {
+      "name": "Explicit(Vector3d to Point3d)",
+      "signature": "public static explicit operator Point3d (Vector3d vector)",
+      "summary": "Converts a vector in a point, needing casting.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The resulting point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Explicit_1.htm"
+    },
+    {
+      "name": "GreaterThan",
+      "signature": "public static bool operator \u003E(Point3d a, Point3d b)",
+      "summary": "Determines whether the first specified point comes after (has superior sorting value than) the second point. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y, or a.X == b.X and a.Y == b.Y and a.Z is larger than b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_GreaterThan.htm"
+    },
+    {
+      "name": "GreaterThanOrEqual",
+      "signature": "public static bool operator \u003E=(Point3d a, Point3d b)",
+      "summary": "Determines whether the first specified point comes after (has superior sorting value than) the second point, or it is equal to it. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is larger than b.X, or a.X == b.X and a.Y is larger than b.Y, or a.X == b.X and a.Y == b.Y and a.Z \u003E= b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_GreaterThanOrEqual.htm"
+    },
+    {
+      "name": "Implicit(Point3d to ControlPoint)",
+      "signature": "public static implicit operator ControlPoint (Point3d pt)",
+      "summary": "Converts a point in a control point, without needing casting.",
+      "params": [
+        {
+          "name": "pt",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ControlPoint",
+        "doc": "The control point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Implicit.htm"
+    },
+    {
+      "name": "Implicit(Point3f to Point3d)",
+      "signature": "public static implicit operator Point3d (Point3f point)",
+      "summary": "Converts a single-precision point in a double-precision point, without needing casting.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3f",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "The resulting point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Implicit_1.htm"
+    },
+    {
+      "name": "Inequality",
+      "signature": "public static bool operator !=(Point3d a, Point3d b)",
+      "summary": "Determines whether two Point3d have different values.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if the two points differ in any coordinate; false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Inequality.htm"
+    },
+    {
+      "name": "LessThan",
+      "signature": "public static bool operator \u003C(Point3d a, Point3d b)",
+      "summary": "Determines whether the first specified point comes before (has inferior sorting value than) the second point. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y, or a.X == b.X and a.Y == b.Y and a.Z is smaller than b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_LessThan.htm"
+    },
+    {
+      "name": "LessThanOrEqual",
+      "signature": "public static bool operator \u003C=(Point3d a, Point3d b)",
+      "summary": "Determines whether the first specified point comes before (has inferior sorting value than) the second point, or it is equal to it. Coordinates evaluation priority is first X, then Y, then Z.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The first point.",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "The second point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Boolean",
+        "doc": "true if a.X is smaller than b.X, or a.X == b.X and a.Y is smaller than b.Y, or a.X == b.X and a.Y == b.Y and a.Z \u003C= b.Z; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_LessThanOrEqual.htm"
+    },
+    {
+      "name": "Multiply(Double, Point3d)",
+      "signature": "public static Point3d operator *(double t, Point3d point)",
+      "summary": "Multiplies a Point3d by a number.",
+      "params": [
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Multiply_1.htm"
+    },
+    {
+      "name": "Multiply(Point3d, Double)",
+      "signature": "public static Point3d operator *(Point3d point, double t)",
+      "summary": "Multiplies a Point3d by a number.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "System.Double",
+          "doc": "A number.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is coordinate-wise multiplied by t."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Multiply.htm"
+    },
+    {
+      "name": "Subtraction(Point3d, Point3d)",
+      "signature": "public static Vector3d operator -(Point3d point1, Point3d point2)",
+      "summary": "Subtracts a point from another point.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "Another point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3d",
+        "doc": "A new vector that is the difference of point minus vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Subtraction.htm"
+    },
+    {
+      "name": "Subtraction(Point3d, Vector3d)",
+      "signature": "public static Point3d operator -(Point3d point, Vector3d vector)",
+      "summary": "Subtracts a vector from a point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Rhino.Geometry.Vector3d",
+          "doc": "A vector.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A new point that is the difference of point minus vector."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_Subtraction_1.htm"
+    },
+    {
+      "name": "UnaryNegation",
+      "signature": "public static Point3d operator -(Point3d point)",
+      "summary": "Computes the additive inverse of all coordinates in the point, and returns the new point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Rhino.Geometry.Point3d",
+          "doc": "A point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3d",
+        "doc": "A point value that, when summed with the point input, yields the Origin."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/M_Rhino_Geometry_Point3d_op_UnaryNegation.htm"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsValid",
+      "type": "Boolean",
+      "getter": true,
+      "setter": false,
+      "summary": "Each coordinate of the point must pass the IsValidDouble(Double) test.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_IsValid.htm"
+    },
+    {
+      "name": "Item",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets an indexed coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_Item.htm"
+    },
+    {
+      "name": "MaximumCoordinate",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the largest (both positive and negative) valid coordinate in this point, or RhinoMath.UnsetValue if no coordinate is valid.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_MaximumCoordinate.htm"
+    },
+    {
+      "name": "MinimumCoordinate",
+      "type": "Double",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the smallest (both positive and negative) coordinate value in this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_MinimumCoordinate.htm"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of a point at location 0,0,0.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_Origin.htm"
+    },
+    {
+      "name": "Unset",
+      "type": "Point3d",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the value of a point at location RhinoMath.UnsetValue,RhinoMath.UnsetValue,RhinoMath.UnsetValue.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_Unset.htm"
+    },
+    {
+      "name": "X",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the X (first) coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_X.htm"
+    },
+    {
+      "name": "Y",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Y (second) coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_Y.htm"
+    },
+    {
+      "name": "Z",
+      "type": "Double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the Z (third) coordinate of this point.",
+      "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/P_Rhino_Geometry_Point3d_Z.htm"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

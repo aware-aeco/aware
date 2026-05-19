@@ -1,0 +1,34 @@
+{
+  "name": "DisplayMode",
+  "namespace": "Rhino.DocObjects",
+  "kind": "enum",
+  "summary": "Defines enumerated values for display modes, such as wireframe or shaded.",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/T_Rhino_DocObjects_DisplayMode.htm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0,
+      "summary": "The default display mode."
+    },
+    {
+      "name": "Wireframe",
+      "value": 1,
+      "summary": "The wireframe display mode. Objects are generally only outlined by their corresponding isocurves and edges."
+    },
+    {
+      "name": "Shaded",
+      "value": 2,
+      "summary": "The shaded display mode. Objects are generally displayed with their corresponding isocurves and edges, and are filled with their display colors."
+    },
+    {
+      "name": "RenderPreview",
+      "value": 3,
+      "summary": "The render display mode. Objects are generally displayed in a similar way to the one that will be resulting from rendering."
+    }
+  ]
+}
