@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nmodel.start_operation('AWARE add circle', true)\ncenter = Geom::Point3d.new(0, 0, 0)\nnormal = Geom::Vector3d.new(0, 0, 1)\nedges = model.entities.add_circle(center, normal, 500.mm)\nmodel.commit_operation\n{ 'edge_count' => edges.length, 'first_id' => edges.first.persistent_id.to_s }",
+  "args": {}
+}

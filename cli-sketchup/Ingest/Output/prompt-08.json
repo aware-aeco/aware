@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nmodel.start_operation('AWARE add face', true)\npts = [Geom::Point3d.new(0, 0, 0), Geom::Point3d.new(1000.mm, 0, 0), Geom::Point3d.new(0, 1000.mm, 0)]\nface = model.entities.add_face(pts)\nmodel.commit_operation\n{ 'added' => !face.nil?, 'id' => face && face.persistent_id.to_s, 'area' => face && face.area.to_f }",
+  "args": {}
+}

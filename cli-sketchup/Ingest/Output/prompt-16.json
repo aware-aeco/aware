@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\ntarget = File.join(ENV['TEMP'] || Dir.tmpdir, 'aware-drill.skp')\nok = model.save(target)\n{ 'ok' => ok, 'path' => target }",
+  "args": {}
+}

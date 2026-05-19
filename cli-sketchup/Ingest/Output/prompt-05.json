@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nrows = model.layers.map do |l|\n  { 'name' => l.name, 'visible' => l.visible? }\nend\n{ 'count' => model.layers.length, 'layers' => rows }",
+  "args": {}
+}

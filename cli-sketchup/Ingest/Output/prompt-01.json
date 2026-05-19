@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nbuckets = Hash.new(0)\nmodel.entities.each { |e| buckets[e.class.to_s] += 1 }\n{ 'total' => model.entities.size, 'by_class' => buckets }",
+  "args": {}
+}

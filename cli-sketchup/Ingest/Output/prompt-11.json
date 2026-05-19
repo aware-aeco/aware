@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nsel = model.selection.to_a\nif sel.empty?\n  { 'ok' => false, 'error' => 'no objects selected' }\nelse\n  model.start_operation('AWARE move selected', true)\n  t = Geom::Transformation.translation(Geom::Vector3d.new(100.mm, 100.mm, 0))\n  model.entities.transform_entities(t, sel)\n  model.commit_operation\n  { 'ok' => true, 'moved' => sel.length, 'dx_mm' => 100, 'dy_mm' => 100 }\nend",
+  "args": {}
+}
