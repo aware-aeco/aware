@@ -1,0 +1,22 @@
+{
+  "name": "CommentType",
+  "namespace": "ProtoCore.AST.AssociativeAST.CommentNode",
+  "kind": "enum",
+  "summary": "Type CommentType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Block",
+      "value": 1
+    },
+    {
+      "name": "Inline",
+      "value": 0
+    }
+  ]
+}

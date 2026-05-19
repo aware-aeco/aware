@@ -1,0 +1,117 @@
+{
+  "name": "SelectModelCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type SelectModelCommand",
+  "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "SelectModelCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, Dynamo.Utilities.ModifierKeys)",
+      "signature": "void SelectModelCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E modelGuids, Dynamo.Utilities.ModifierKeys modifiers)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelGuids",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Dynamo.Utilities.ModifierKeys",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SelectModelCommand(System.Guid, Dynamo.Utilities.ModifierKeys)",
+      "signature": "void SelectModelCommand(System.Guid modelGuid, Dynamo.Utilities.ModifierKeys modifiers)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Dynamo.Utilities.ModifierKeys",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SelectModelCommand(string, Dynamo.Utilities.ModifierKeys)",
+      "signature": "void SelectModelCommand(string modelGuid, Dynamo.Utilities.ModifierKeys modifiers)",
+      "summary": "",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Dynamo.Utilities.ModifierKeys",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "SelectModelCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "SelectModelCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

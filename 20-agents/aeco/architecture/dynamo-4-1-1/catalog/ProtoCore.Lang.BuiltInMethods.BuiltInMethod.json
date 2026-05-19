@@ -1,0 +1,57 @@
+{
+  "name": "BuiltInMethod",
+  "namespace": "ProtoCore.Lang.BuiltInMethods",
+  "kind": "class",
+  "summary": "Type BuiltInMethod",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs",
+  "constructors": [
+    {
+      "name": "BuiltInMethod()",
+      "signature": "void BuiltInMethod()",
+      "summary": "BuiltInMethod.BuiltInMethod",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ID",
+      "type": "ProtoCore.Lang.BuiltInMethods.MethodID",
+      "getter": true,
+      "setter": true,
+      "summary": "BuiltInMethod.ID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    },
+    {
+      "name": "MethodAttributes",
+      "type": "ProtoCore.AST.AssociativeAST.MethodAttributes",
+      "getter": true,
+      "setter": true,
+      "summary": "BuiltInMethod.MethodAttributes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    },
+    {
+      "name": "Parameters",
+      "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.KeyValuePair\u003Cstring, ProtoCore.Type\u003E\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "BuiltInMethod.Parameters",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    },
+    {
+      "name": "ReturnType",
+      "type": "ProtoCore.Type",
+      "getter": true,
+      "setter": true,
+      "summary": "BuiltInMethod.ReturnType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/BuiltInMethods.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

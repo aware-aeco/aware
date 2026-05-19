@@ -1,0 +1,24 @@
+{
+  "name": "Operation",
+  "namespace": "Dynamo.Models.DynamoModel.DragSelectionCommand",
+  "kind": "enum",
+  "summary": "Type Operation",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModelEventArgs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BeginDrag",
+      "value": 0,
+      "summary": "Begin dragging."
+    },
+    {
+      "name": "EndDrag",
+      "value": 1,
+      "summary": "End dragging."
+    }
+  ]
+}

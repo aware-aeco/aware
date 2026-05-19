@@ -1,0 +1,29 @@
+{
+  "name": "Decision",
+  "namespace": "Dynamo.Migration.MigrationManager",
+  "kind": "enum",
+  "summary": "Type Decision",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Migration/Migration.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Abort",
+      "value": 0,
+      "summary": "The migration should not proceed and the file open operation should be aborted. This can be used to indicate that a version of file that is no longer supported and no migration path is provided."
+    },
+    {
+      "name": "Migrate",
+      "value": 1,
+      "summary": "File migration should proceed to migrate the older file version to a newer one."
+    },
+    {
+      "name": "Retain",
+      "value": 2,
+      "summary": "The file version is up-to-date and the file can be used as-is without migration."
+    }
+  ]
+}

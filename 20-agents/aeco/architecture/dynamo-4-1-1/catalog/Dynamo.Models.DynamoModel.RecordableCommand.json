@@ -1,0 +1,76 @@
+{
+  "name": "RecordableCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type RecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "RecordableCommand()",
+      "signature": "void RecordableCommand()",
+      "summary": "Constructs an instance of RecordableCommand derived class. This constructor is made protected to indicate that the class instance can only be instantiated through a derived class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "RecordableCommand(string)",
+      "signature": "void RecordableCommand(string tag)",
+      "summary": "Constructs an instance of RecordableCommand derived class, assigning a new tag to it.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "string",
+          "doc": "A string tag to be assigned to the command. This parameter can be any string, even an empty one. However, it should not be null. A null \u0022tag\u0022 parameter causes the ArgumentNullException to be thrown.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "Derived classes must implement this method to perform the actual command execution. A typical implementation of this method involves calling a corresponding method on DynamoModel by passing itself as the only argument.",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "doc": "The DynamoModel object on which this command should be executed.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "Derived classes must implement this method to serialize all relevant information into the XmlElement supplied to it. Typically the method is a direct mirror of DeserializeCore.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "doc": "All arguments that are required for this command are written into this XmlElement. The information written here must be exactly what DeserializeCore method expects.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "StackFrameFlagOptions",
+  "namespace": "ProtoCore.DebugProperties",
+  "kind": "enum",
+  "summary": "Type StackFrameFlagOptions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FepRun",
+      "value": 1
+    },
+    {
+      "name": "IsExternalFunction",
+      "value": 3
+    },
+    {
+      "name": "IsFunctionStepOver",
+      "value": 4
+    },
+    {
+      "name": "IsReplicating",
+      "value": 2
+    }
+  ]
+}

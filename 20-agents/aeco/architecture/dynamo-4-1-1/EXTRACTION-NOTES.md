@@ -3,8 +3,14 @@
 **Vendor:** Autodesk (DynamoBIM)
 **Version:** 4.1.1.4941 (NuGet `DynamoVisualProgramming.Core@4.1.1.4941`)
 **Source kind:** `hybrid` (NuGet XML doc + .NET DLL reflection + GitHub source tree)
-**Extracted at:** 2026-05-19
+**Extracted at:** 2026-05-19 (re-extracted 2026-05-19 with nested-type fix)
 **GitHub ref:** `RC4.1.1_master` (release-candidate branch — see caveat #1)
+
+## Correction — 2026-05-19 nested-type re-extraction
+
+Same as `dynamo-4-1-0/EXTRACTION-NOTES.md` (read that for the full story): the original extraction collapsed 6 nested types (5 `State` enums, 3 `Operation` enums — last-emitted survived, the rest were lost) onto 3 colliding catalog filenames. Fix landed in commits `c0ec8ecd0` (CatalogWriter collision-throw) and `b39925435` (AssemblyReflector nested-type namespace). 4.1.1 was affected identically because the API surface is byte-identical with 4.1.0 (see caveat #2).
+
+Post-fix counts: **707 IR types, 707 distinct catalog files**, 121 skills, 1 manifest.
 
 ## Source landscape
 

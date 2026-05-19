@@ -1,0 +1,13 @@
+{
+  "name": "Categories",
+  "namespace": "Dynamo.Engine.LibraryServices",
+  "kind": "static-class",
+  "summary": "Type Categories",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/LibraryServices.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,97 @@
+{
+  "name": "CreateProxyNodeCommand",
+  "namespace": "Dynamo.Models.DynamoModel",
+  "kind": "class",
+  "summary": "Type CreateProxyNodeCommand",
+  "base": "Dynamo.Models.DynamoModel.CreateNodeCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "CreateProxyNodeCommand(string, string, double, double, bool, bool, string, int, int)",
+      "signature": "void CreateProxyNodeCommand(string nodeId, string customnodeFunctionId, double x, double y, bool defaultPosition, bool transformCoordinates, string name, int inputs, int outputs)",
+      "summary": "",
+      "params": [
+        {
+          "name": "nodeId",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "customnodeFunctionId",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "defaultPosition",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "transformCoordinates",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "inputs",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "outputs",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "CreateProxyNodeCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,108 @@
+{
+  "name": "LogWarningHandler",
+  "namespace": "ProtoCore.MigrationRewriter",
+  "kind": "delegate",
+  "summary": "Type LogWarningHandler",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs",
+  "constructors": [
+    {
+      "name": "LogWarningHandler(object, IntPtr)",
+      "signature": "void LogWarningHandler(object object, IntPtr method)",
+      "summary": "LogWarningHandler.LogWarningHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(string, string, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(string oldNodeName, string newNodeName, System.AsyncCallback callback, object object)",
+      "summary": "LogWarningHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "oldNodeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "newNodeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "LogWarningHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    },
+    {
+      "name": "Invoke(string, string)",
+      "signature": "void Invoke(string oldNodeName, string newNodeName)",
+      "summary": "LogWarningHandler.Invoke",
+      "params": [
+        {
+          "name": "oldNodeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "newNodeName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/MigrationRewriter.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(string oldNodeName, string newNodeName)"
+}

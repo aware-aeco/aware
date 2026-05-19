@@ -1,0 +1,13 @@
+{
+  "name": "ErrorEntry",
+  "namespace": "ProtoCore.Core",
+  "kind": "struct",
+  "summary": "Type ErrorEntry",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

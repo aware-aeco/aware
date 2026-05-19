@@ -1,7 +1,7 @@
-agent:        dynamo-4-1-1
+agent:        dynamo-4.1.1
 version:      0.30.0
 sdk-target:   4.1.1
-display-name: dynamo-4-1-1 (raw — 707 types, full coverage)
+display-name: dynamo-4.1.1 (raw — 707 types, full coverage)
 
 description: |
   Auto-generated from vendor docs (hybrid: https://www.nuget.org/packages/DynamoVisualProgramming.Core/4.1.1.4941, https://github.com/DynamoDS/Dynamo/tree/RC4.1.1_master)
@@ -15,10 +15,10 @@ description: |
 
 stateful: false
 
-vendor:   autodesk
+vendor:   unknown
 license:  Apache-2.0
-homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/dynamo-4-1-1
-keywords: [aeco, architecture, dynamo, autodesk, generated, raw, v0.30, full-coverage]
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/dynamo-4.1.1
+keywords: [aeco, architecture, dynamo, unknown, generated, raw, v0.30, full-coverage]
 
 provenance:
   generated-by:     aware-agent-builder
@@ -26,313 +26,13 @@ provenance:
   source:
     type: hybrid
     urls: ["https://www.nuget.org/packages/DynamoVisualProgramming.Core/4.1.1.4941", "https://github.com/DynamoDS/Dynamo/tree/RC4.1.1_master"]
-  generated-at: 2026-05-19T07:01:21.8394386Z
+  generated-at: 2026-05-19T08:36:26.6454017Z
 
 transport:
   cli:
     binary: aware-dynamo
 
 commands:
-  add-group-to-group-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: AddGroupToGroupCommand.ExecuteCore
-  add-group-to-group-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: AddGroupToGroupCommand.SerializeCore
-  add-model-to-group-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: AddModelToGroupCommand.ExecuteCore
-  add-model-to-group-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: AddModelToGroupCommand.SerializeCore
-  add-preset-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: AddPresetCommand.ExecuteCore
-  add-preset-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: AddPresetCommand.SerializeCore
-  apply-preset-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: ApplyPresetCommand.ExecuteCore
-  apply-preset-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: ApplyPresetCommand.SerializeCore
-  assembly-loaded-handler-begin-invoke(dynamo.models.node-model-assembly-loader.assembly-loaded-event-args, system.async-callback, object):
-    lifecycle: single
-    description: AssemblyLoadedHandler.BeginInvoke
-  assembly-loaded-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: AssemblyLoadedHandler.EndInvoke
-  assembly-loaded-handler-invoke(dynamo.models.node-model-assembly-loader.assembly-loaded-event-args):
-    lifecycle: single
-    description: AssemblyLoadedHandler.Invoke
-  browser-item-handler-begin-invoke(dynamo.search.browser-item, system.async-callback, object):
-    lifecycle: single
-    description: BrowserItemHandler.BeginInvoke
-  browser-item-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: BrowserItemHandler.EndInvoke
-  browser-item-handler-invoke(dynamo.search.browser-item):
-    lifecycle: single
-    description: BrowserItemHandler.Invoke
-  command-line-arguments-parse(string[]):
-    lifecycle: single
-    description: CommandLineArguments.Parse
-  convert-nodes-to-code-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: ConvertNodesToCodeCommand.ExecuteCore
-  convert-nodes-to-code-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: ConvertNodesToCodeCommand.SerializeCore
-  crash-prompt-handler-begin-invoke(object, dynamo.core.crash-prompt-args, system.async-callback, object):
-    lifecycle: single
-    description: CrashPromptHandler.BeginInvoke
-  crash-prompt-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: CrashPromptHandler.EndInvoke
-  crash-prompt-handler-invoke(object, dynamo.core.crash-prompt-args):
-    lifecycle: single
-    description: CrashPromptHandler.Invoke
-  create-and-connect-node-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: CreateAndConnectNodeCommand.ExecuteCore
-  create-and-connect-node-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: CreateAndConnectNodeCommand.SerializeCore
-  create-annotation-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: CreateAnnotationCommand.ExecuteCore
-  create-annotation-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: CreateAnnotationCommand.SerializeCore
-  create-custom-node-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: CreateCustomNodeCommand.ExecuteCore
-  create-custom-node-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: CreateCustomNodeCommand.SerializeCore
-  create-node-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: CreateNodeCommand.ExecuteCore
-  create-node-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: CreateNodeCommand.SerializeCore
-  create-note-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: CreateNoteCommand.ExecuteCore
-  create-note-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: CreateNoteCommand.SerializeCore
-  create-proxy-node-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: CreateProxyNodeCommand.SerializeCore
-  delete-model-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: DeleteModelCommand.ExecuteCore
-  delete-model-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: DeleteModelCommand.SerializeCore
-  dispose-delegate-begin-invoke(proto-core.runtime-core, system.async-callback, object):
-    lifecycle: single
-    description: DisposeDelegate.BeginInvoke
-  dispose-delegate-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: DisposeDelegate.EndInvoke
-  dispose-delegate-invoke(proto-core.runtime-core):
-    lifecycle: single
-    description: DisposeDelegate.Invoke
-  drag-selection-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: DragSelectionCommand.ExecuteCore
-  drag-selection-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: DragSelectionCommand.SerializeCore
-  force-run-cancel-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: ForceRunCancelCommand.ExecuteCore
-  future-file-callback-begin-invoke(string, system.version, system.version, system.async-callback, object):
-    lifecycle: single
-    description: FutureFileCallback.BeginInvoke
-  future-file-callback-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: FutureFileCallback.EndInvoke
-  future-file-callback-invoke(string, system.version, system.version):
-    lifecycle: single
-    description: FutureFileCallback.Invoke
-  insert-file-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: InsertFileCommand.ExecuteCore
-  insert-file-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: InsertFileCommand.SerializeCore
-  log-warning-handler-begin-invoke(string, string, system.async-callback, object):
-    lifecycle: single
-    description: LogWarningHandler.BeginInvoke
-  log-warning-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: LogWarningHandler.EndInvoke
-  log-warning-handler-invoke(string, string):
-    lifecycle: single
-    description: LogWarningHandler.Invoke
-  make-connection-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: MakeConnectionCommand.ExecuteCore
-  make-connection-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: MakeConnectionCommand.SerializeCore
-  model-based-recordable-command-deserialize-guid(system.xml.xml-element, dynamo.utilities.xml-element-helper):
-    lifecycle: single
-    description: ModelBasedRecordableCommand.DeserializeGuid
-  model-based-recordable-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: ModelBasedRecordableCommand.SerializeCore
-  model-event-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: ModelEventCommand.ExecuteCore
-  model-event-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: ModelEventCommand.SerializeCore
-  mutate-test-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: MutateTestCommand.ExecuteCore
-  mutate-test-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: MutateTestCommand.SerializeCore
-  obsolete-file-callback-begin-invoke(string, system.version, system.version, system.async-callback, object):
-    lifecycle: single
-    description: ObsoleteFileCallback.BeginInvoke
-  obsolete-file-callback-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: ObsoleteFileCallback.EndInvoke
-  obsolete-file-callback-invoke(string, system.version, system.version):
-    lifecycle: single
-    description: ObsoleteFileCallback.Invoke
-  open-file-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: OpenFileCommand.ExecuteCore
-  open-file-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: OpenFileCommand.SerializeCore
-  open-file-from-json-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: OpenFileFromJsonCommand.ExecuteCore
-  open-file-from-json-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: OpenFileFromJsonCommand.SerializeCore
-  pause-playback-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: PausePlaybackCommand.ExecuteCore
-  pause-playback-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: PausePlaybackCommand.SerializeCore
-  point-event-handler-begin-invoke(object, system.event-args, system.async-callback, object):
-    lifecycle: single
-    description: PointEventHandler.BeginInvoke
-  point-event-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: PointEventHandler.EndInvoke
-  point-event-handler-invoke(object, system.event-args):
-    lifecycle: single
-    description: PointEventHandler.Invoke
-  recordable-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: Derived classes must implement this method to perform the actual command execution. A typical implementation of this method involves calling a corresponding method on DynamoModel by passing itself ...
-  recordable-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: Derived classes must implement this method to serialize all relevant information into the XmlElement supplied to it. Typically the method is a direct mirror of DeserializeCore.
-  run-cancel-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: RunCancelCommand.ExecuteCore
-  run-cancel-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: RunCancelCommand.SerializeCore
-  run-completed-handler-begin-invoke(object, bool, system.async-callback, object):
-    lifecycle: single
-    description: RunCompletedHandler.BeginInvoke
-  run-completed-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: RunCompletedHandler.EndInvoke
-  run-completed-handler-invoke(object, bool):
-    lifecycle: single
-    description: RunCompletedHandler.Invoke
-  search-element-handler-begin-invoke(dynamo.search.search-elements.search-element-base, system.async-callback, object):
-    lifecycle: single
-    description: SearchElementHandler.BeginInvoke
-  search-element-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: SearchElementHandler.EndInvoke
-  search-element-handler-invoke(dynamo.search.search-elements.search-element-base):
-    lifecycle: single
-    description: SearchElementHandler.Invoke
-  select-in-region-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: SelectInRegionCommand.ExecuteCore
-  select-in-region-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: SelectInRegionCommand.SerializeCore
-  select-model-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: SelectModelCommand.ExecuteCore
-  select-model-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: SelectModelCommand.SerializeCore
-  single-run-trace-data-contains(string):
-    lifecycle: single
-    description: SingleRunTraceData.Contains
-  single-run-trace-data-get-left-most-data:
-    lifecycle: single
-    description: This gets the zero-most, left most index null if no data
-  single-run-trace-data-recursive-get-nested-data:
-    lifecycle: single
-    description: SingleRunTraceData.RecursiveGetNestedData
-  switch-tab-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: SwitchTabCommand.ExecuteCore
-  switch-tab-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: SwitchTabCommand.SerializeCore
-  symbol-conflict-warning-handler-begin-invoke(string, string[], system.async-callback, object):
-    lifecycle: single
-    description: SymbolConflictWarningHandler.BeginInvoke
-  symbol-conflict-warning-handler-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: SymbolConflictWarningHandler.EndInvoke
-  symbol-conflict-warning-handler-invoke(string, string[]):
-    lifecycle: single
-    description: SymbolConflictWarningHandler.Invoke
-  undo-redo-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: UndoRedoCommand.ExecuteCore
-  undo-redo-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: UndoRedoCommand.SerializeCore
-  ungroup-model-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: UngroupModelCommand.ExecuteCore
-  ungroup-model-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: UngroupModelCommand.SerializeCore
-  update-model-value-command-execute-core(dynamo.models.dynamo-model):
-    lifecycle: single
-    description: UpdateModelValueCommand.ExecuteCore
-  update-model-value-command-serialize-core(system.xml.xml-element):
-    lifecycle: single
-    description: UpdateModelValueCommand.SerializeCore
-  update-model-value-command-to-string:
-    lifecycle: single
-    description: UpdateModelValueCommand.ToString
-  win-trust-verify-embedded-signature(string):
-    lifecycle: single
-    description: WinTrust.VerifyEmbeddedSignature
-  workspace-saved-event-begin-invoke(dynamo.graph.workspaces.workspace-model, system.async-callback, object):
-    lifecycle: single
-    description: WorkspaceSavedEvent.BeginInvoke
-  workspace-saved-event-end-invoke(system.iasync-result):
-    lifecycle: single
-    description: WorkspaceSavedEvent.EndInvoke
-  workspace-saved-event-invoke(dynamo.graph.workspaces.workspace-model):
-    lifecycle: single
-    description: WorkspaceSavedEvent.Invoke
   dictionary-by-keys-values(system.collections.generic.ilist<string>, system.collections.generic.ilist<object>):
     lifecycle: single
     description: Produces a Dictionary with the supplied keys and values. The number of entries is the shorter of keys or values.
@@ -393,6 +93,9 @@ commands:
   startup-utils-set-locale(dynamo.applications.startup-utils.command-line-arguments):
     lifecycle: single
     description: StartupUtils.SetLocale
+  command-line-arguments-parse(string[]):
+    lifecycle: single
+    description: CommandLineArguments.Parse
   preference-settings-ask-for-trusted-location(bool, bool, bool, bool, bool):
     lifecycle: single
     description: AskForTrustedLocation function
@@ -1551,6 +1254,24 @@ commands:
   workspace-write-converter-write-json(newtonsoft.json.json-writer, object, newtonsoft.json.json-serializer):
     lifecycle: single
     description: WorkspaceWriteConverter.WriteJson
+  point-event-handler-begin-invoke(object, system.event-args, system.async-callback, object):
+    lifecycle: single
+    description: PointEventHandler.BeginInvoke
+  point-event-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: PointEventHandler.EndInvoke
+  point-event-handler-invoke(object, system.event-args):
+    lifecycle: single
+    description: PointEventHandler.Invoke
+  workspace-saved-event-begin-invoke(dynamo.graph.workspaces.workspace-model, system.async-callback, object):
+    lifecycle: single
+    description: WorkspaceSavedEvent.BeginInvoke
+  workspace-saved-event-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: WorkspaceSavedEvent.EndInvoke
+  workspace-saved-event-invoke(dynamo.graph.workspaces.workspace-model):
+    lifecycle: single
+    description: WorkspaceSavedEvent.Invoke
   ipath-manager-add-resolution-path(string):
     lifecycle: single
     description: Call this method to add additional path for consideration when path resolution take place.
@@ -1791,6 +1512,24 @@ commands:
   workspace-migrations-migrate-0-5-3-to-0-6-0(system.xml.xml-document):
     lifecycle: single
     description: Performs migration of a workspace from 0.5.3.0 to 0.6.1.0.
+  future-file-callback-begin-invoke(string, system.version, system.version, system.async-callback, object):
+    lifecycle: single
+    description: FutureFileCallback.BeginInvoke
+  future-file-callback-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: FutureFileCallback.EndInvoke
+  future-file-callback-invoke(string, system.version, system.version):
+    lifecycle: single
+    description: FutureFileCallback.Invoke
+  obsolete-file-callback-begin-invoke(string, system.version, system.version, system.async-callback, object):
+    lifecycle: single
+    description: ObsoleteFileCallback.BeginInvoke
+  obsolete-file-callback-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: ObsoleteFileCallback.EndInvoke
+  obsolete-file-callback-invoke(string, system.version, system.version):
+    lifecycle: single
+    description: ObsoleteFileCallback.Invoke
   action-handler-begin-invoke(system.action, system.async-callback, object):
     lifecycle: single
     description: ActionHandler.BeginInvoke
@@ -2001,6 +1740,201 @@ commands:
   workspace-save-handler-invoke(dynamo.graph.workspaces.workspace-model, dynamo.graph.save-context):
     lifecycle: single
     description: WorkspaceSaveHandler.Invoke
+  add-group-to-group-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: AddGroupToGroupCommand.ExecuteCore
+  add-group-to-group-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: AddGroupToGroupCommand.SerializeCore
+  add-model-to-group-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: AddModelToGroupCommand.ExecuteCore
+  add-model-to-group-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: AddModelToGroupCommand.SerializeCore
+  add-preset-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: AddPresetCommand.ExecuteCore
+  add-preset-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: AddPresetCommand.SerializeCore
+  apply-preset-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: ApplyPresetCommand.ExecuteCore
+  apply-preset-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: ApplyPresetCommand.SerializeCore
+  convert-nodes-to-code-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: ConvertNodesToCodeCommand.ExecuteCore
+  convert-nodes-to-code-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: ConvertNodesToCodeCommand.SerializeCore
+  crash-prompt-handler-begin-invoke(object, dynamo.core.crash-prompt-args, system.async-callback, object):
+    lifecycle: single
+    description: CrashPromptHandler.BeginInvoke
+  crash-prompt-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: CrashPromptHandler.EndInvoke
+  crash-prompt-handler-invoke(object, dynamo.core.crash-prompt-args):
+    lifecycle: single
+    description: CrashPromptHandler.Invoke
+  create-and-connect-node-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: CreateAndConnectNodeCommand.ExecuteCore
+  create-and-connect-node-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: CreateAndConnectNodeCommand.SerializeCore
+  create-annotation-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: CreateAnnotationCommand.ExecuteCore
+  create-annotation-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: CreateAnnotationCommand.SerializeCore
+  create-custom-node-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: CreateCustomNodeCommand.ExecuteCore
+  create-custom-node-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: CreateCustomNodeCommand.SerializeCore
+  create-node-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: CreateNodeCommand.ExecuteCore
+  create-node-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: CreateNodeCommand.SerializeCore
+  create-note-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: CreateNoteCommand.ExecuteCore
+  create-note-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: CreateNoteCommand.SerializeCore
+  create-proxy-node-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: CreateProxyNodeCommand.SerializeCore
+  delete-model-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: DeleteModelCommand.ExecuteCore
+  delete-model-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: DeleteModelCommand.SerializeCore
+  drag-selection-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: DragSelectionCommand.ExecuteCore
+  drag-selection-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: DragSelectionCommand.SerializeCore
+  force-run-cancel-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: ForceRunCancelCommand.ExecuteCore
+  insert-file-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: InsertFileCommand.ExecuteCore
+  insert-file-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: InsertFileCommand.SerializeCore
+  make-connection-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: MakeConnectionCommand.ExecuteCore
+  make-connection-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: MakeConnectionCommand.SerializeCore
+  model-based-recordable-command-deserialize-guid(system.xml.xml-element, dynamo.utilities.xml-element-helper):
+    lifecycle: single
+    description: ModelBasedRecordableCommand.DeserializeGuid
+  model-based-recordable-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: ModelBasedRecordableCommand.SerializeCore
+  model-event-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: ModelEventCommand.ExecuteCore
+  model-event-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: ModelEventCommand.SerializeCore
+  mutate-test-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: MutateTestCommand.ExecuteCore
+  mutate-test-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: MutateTestCommand.SerializeCore
+  open-file-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: OpenFileCommand.ExecuteCore
+  open-file-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: OpenFileCommand.SerializeCore
+  open-file-from-json-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: OpenFileFromJsonCommand.ExecuteCore
+  open-file-from-json-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: OpenFileFromJsonCommand.SerializeCore
+  pause-playback-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: PausePlaybackCommand.ExecuteCore
+  pause-playback-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: PausePlaybackCommand.SerializeCore
+  recordable-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: Derived classes must implement this method to perform the actual command execution. A typical implementation of this method involves calling a corresponding method on DynamoModel by passing itself ...
+  recordable-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: Derived classes must implement this method to serialize all relevant information into the XmlElement supplied to it. Typically the method is a direct mirror of DeserializeCore.
+  run-cancel-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: RunCancelCommand.ExecuteCore
+  run-cancel-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: RunCancelCommand.SerializeCore
+  run-completed-handler-begin-invoke(object, bool, system.async-callback, object):
+    lifecycle: single
+    description: RunCompletedHandler.BeginInvoke
+  run-completed-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: RunCompletedHandler.EndInvoke
+  run-completed-handler-invoke(object, bool):
+    lifecycle: single
+    description: RunCompletedHandler.Invoke
+  select-in-region-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: SelectInRegionCommand.ExecuteCore
+  select-in-region-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: SelectInRegionCommand.SerializeCore
+  select-model-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: SelectModelCommand.ExecuteCore
+  select-model-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: SelectModelCommand.SerializeCore
+  switch-tab-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: SwitchTabCommand.ExecuteCore
+  switch-tab-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: SwitchTabCommand.SerializeCore
+  undo-redo-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: UndoRedoCommand.ExecuteCore
+  undo-redo-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: UndoRedoCommand.SerializeCore
+  ungroup-model-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: UngroupModelCommand.ExecuteCore
+  ungroup-model-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: UngroupModelCommand.SerializeCore
+  update-model-value-command-execute-core(dynamo.models.dynamo-model):
+    lifecycle: single
+    description: UpdateModelValueCommand.ExecuteCore
+  update-model-value-command-serialize-core(system.xml.xml-element):
+    lifecycle: single
+    description: UpdateModelValueCommand.SerializeCore
+  update-model-value-command-to-string:
+    lifecycle: single
+    description: UpdateModelValueCommand.ToString
   python-engine-upgrade-service-build-backup-file-path(dynamo.graph.workspaces.workspace-model, string):
     lifecycle: single
     description: Build a backup file path for a .dyn or .dyf backup
@@ -2013,6 +1947,15 @@ commands:
   python-engine-upgrade-service-upgrade-nodes-in-memory(system.collections.generic.ienumerable<dynamo.graph.nodes.node-model>, dynamo.graph.workspaces.workspace-model, system.action<dynamo.graph.nodes.node-model, dynamo.graph.workspaces.workspace-model>):
     lifecycle: single
     description: Upgrade the engine for a set of python nodes in memory and return the count changed.
+  assembly-loaded-handler-begin-invoke(dynamo.models.node-model-assembly-loader.assembly-loaded-event-args, system.async-callback, object):
+    lifecycle: single
+    description: AssemblyLoadedHandler.BeginInvoke
+  assembly-loaded-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: AssemblyLoadedHandler.EndInvoke
+  assembly-loaded-handler-invoke(dynamo.models.node-model-assembly-loader.assembly-loaded-event-args):
+    lifecycle: single
+    description: AssemblyLoadedHandler.Invoke
   dynamo-model-extensions-get-package-manager-extension(dynamo.models.dynamo-model):
     lifecycle: single
     description: DynamoModelExtensions.GetPackageManagerExtension
@@ -2304,6 +2247,15 @@ commands:
   search-library<tentry, titem>-on-item-produced(titem):
     lifecycle: single
     description: SearchLibrary.OnItemProduced
+  browser-item-handler-begin-invoke(dynamo.search.browser-item, system.async-callback, object):
+    lifecycle: single
+    description: BrowserItemHandler.BeginInvoke
+  browser-item-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: BrowserItemHandler.EndInvoke
+  browser-item-handler-invoke(dynamo.search.browser-item):
+    lifecycle: single
+    description: BrowserItemHandler.Invoke
   code-block-node-search-element-construct-new-node-model:
     lifecycle: single
     description: CodeBlockNodeSearchElement.ConstructNewNodeModel
@@ -2343,6 +2295,15 @@ commands:
   zero-touch-search-element-construct-new-node-model:
     lifecycle: single
     description: ZeroTouchSearchElement.ConstructNewNodeModel
+  search-element-handler-begin-invoke(dynamo.search.search-elements.search-element-base, system.async-callback, object):
+    lifecycle: single
+    description: SearchElementHandler.BeginInvoke
+  search-element-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: SearchElementHandler.EndInvoke
+  search-element-handler-invoke(dynamo.search.search-elements.search-element-base):
+    lifecycle: single
+    description: SearchElementHandler.Invoke
   iselectable-deselect:
     lifecycle: single
     description: Deselect object.
@@ -3018,6 +2979,9 @@ commands:
   xml-helper-create-document(string):
     lifecycle: single
     description: XmlHelper.CreateDocument
+  win-trust-verify-embedded-signature(string):
+    lifecycle: single
+    description: WinTrust.VerifyEmbeddedSignature
   backpatch-table-append(int, int):
     lifecycle: single
     description: BackpatchTable.Append
@@ -4839,6 +4803,15 @@ commands:
   update-node-ref-push-update-node-ref(proto-core.associative-graph.update-node-ref):
     lifecycle: single
     description: UpdateNodeRef.PushUpdateNodeRef
+  single-run-trace-data-contains(string):
+    lifecycle: single
+    description: SingleRunTraceData.Contains
+  single-run-trace-data-get-left-most-data:
+    lifecycle: single
+    description: This gets the zero-most, left most index null if no data
+  single-run-trace-data-recursive-get-nested-data:
+    lifecycle: single
+    description: SingleRunTraceData.RecursiveGetNestedData
   code-file-op-equality(proto-core.code-model.code-file, proto-core.code-model.code-file):
     lifecycle: single
     description: CodeFile.op_Equality
@@ -5583,6 +5556,15 @@ commands:
   replicator-reduction-to-instructions(system.collections.generic.list<int>, system.collections.generic.list<proto-core.lang.replication.replication-instruction>):
     lifecycle: single
     description: Convert reduction to instruction. Using zip-first strategy. For example, 0 2 4 > Zip on 1,2 0 1 3 > Zip on 1,2 0 0 2 > Cartesian on 2 0 0 1 > Cartesian on 2
+  log-warning-handler-begin-invoke(string, string, system.async-callback, object):
+    lifecycle: single
+    description: LogWarningHandler.BeginInvoke
+  log-warning-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: LogWarningHandler.EndInvoke
+  log-warning-handler-invoke(string, string):
+    lifecycle: single
+    description: LogWarningHandler.Invoke
   class-mirror-get-class-attributes:
     lifecycle: single
     description: ClassMirror.GetClassAttributes
@@ -5715,6 +5697,15 @@ commands:
   symbol-op-inequality(proto-core.namespace.symbol, proto-core.namespace.symbol):
     lifecycle: single
     description: Inequality operator overload is needed for every equality operator overload
+  symbol-conflict-warning-handler-begin-invoke(string, string[], system.async-callback, object):
+    lifecycle: single
+    description: SymbolConflictWarningHandler.BeginInvoke
+  symbol-conflict-warning-handler-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: SymbolConflictWarningHandler.EndInvoke
+  symbol-conflict-warning-handler-invoke(string, string[]):
+    lifecycle: single
+    description: SymbolConflictWarningHandler.Invoke
   runtime-memory-align-stack-for-expr-interpreter:
     lifecycle: single
     description: RuntimeMemory.AlignStackForExprInterpreter
@@ -5772,6 +5763,15 @@ commands:
   runtime-memory-validate-stack-frame:
     lifecycle: single
     description: RuntimeMemory.ValidateStackFrame
+  dispose-delegate-begin-invoke(proto-core.runtime-core, system.async-callback, object):
+    lifecycle: single
+    description: DisposeDelegate.BeginInvoke
+  dispose-delegate-end-invoke(system.iasync-result):
+    lifecycle: single
+    description: DisposeDelegate.EndInvoke
+  dispose-delegate-invoke(proto-core.runtime-core):
+    lifecycle: single
+    description: DisposeDelegate.Invoke
   associative-ast-replacer-default-visit(proto-core.ast.associative-ast.associative-node):
     lifecycle: single
     description: AssociativeAstReplacer.DefaultVisit
@@ -7328,15 +7328,22 @@ commands:
     description: Unregisters a callback for a given GUID.
 
 skills:
-  - _root.md
   - designscript-builtin.md
   - dynamo.md
   - dynamo-annotations.md
   - dynamo-applications.md
+  - dynamo-applications-startuputils.md
   - dynamo-configuration.md
+  - dynamo-configuration-luceneconfig.md
+  - dynamo-configuration-preferencesettings.md
   - dynamo-core.md
+  - dynamo-core-crashpromptargs.md
+  - dynamo-core-pathmanager.md
+  - dynamo-core-undoredorecorder.md
   - dynamo-engine.md
+  - dynamo-engine-codecompletion-completiondata.md
   - dynamo-engine-codegeneration.md
+  - dynamo-engine-libraryservices.md
   - dynamo-engine-nodetocode.md
   - dynamo-engine-profiling.md
   - dynamo-exceptions.md
@@ -7346,11 +7353,15 @@ skills:
   - dynamo-graph-connectors.md
   - dynamo-graph-nodes.md
   - dynamo-graph-nodes-customnodes.md
+  - dynamo-graph-nodes-dummynode.md
   - dynamo-graph-nodes-nodeloaders.md
+  - dynamo-graph-nodes-statement.md
   - dynamo-graph-nodes-zerotouch.md
   - dynamo-graph-notes.md
+  - dynamo-graph-notes-notemodel.md
   - dynamo-graph-presets.md
   - dynamo-graph-workspaces.md
+  - dynamo-graph-workspaces-workspacemodel.md
   - dynamo-interfaces.md
   - dynamo-library.md
   - dynamo-linting.md
@@ -7358,47 +7369,80 @@ skills:
   - dynamo-linting-rules.md
   - dynamo-logging.md
   - dynamo-migration.md
+  - dynamo-migration-migrationmanager.md
   - dynamo-models.md
+  - dynamo-models-dynamomodel.md
+  - dynamo-models-dynamomodel-dragselectioncommand.md
+  - dynamo-models-dynamomodel-makeconnectioncommand.md
+  - dynamo-models-dynamomodel-undoredocommand.md
   - dynamo-models-migration-python.md
+  - dynamo-models-migration-python-pythonengineupgradeservice.md
+  - dynamo-models-nodemodelassemblyloader.md
+  - dynamo-models-viewoperationeventargs.md
   - dynamo-packagemanager.md
   - dynamo-packagemanager-interfaces.md
+  - dynamo-packagemanager-packagedownloadhandle.md
+  - dynamo-packagemanager-packageloadstate.md
+  - dynamo-packagemanager-packageuploadhandle.md
   - dynamo-properties.md
   - dynamo-scheduler.md
+  - dynamo-scheduler-asynctask.md
+  - dynamo-scheduler-taskstatechangedeventargs.md
   - dynamo-search.md
+  - dynamo-search-browseritem.md
   - dynamo-search-searchelements.md
+  - dynamo-search-searchelements-searchelementbase.md
   - dynamo-selection.md
   - dynamo-updates.md
   - dynamo-utilities.md
+  - dynamo-utilities-debugmodes.md
+  - dynamo-utilities-extensionmethods.md
+  - dynamo-utilities-lucenesearchutility.md
   - dynamo-visualization.md
   - dynamo-wpf-interfaces.md
   - dynamoapplications-properties.md
   - dynamoinstalldetective.md
+  - dynamoinstalldetective-ascsdkwrapper.md
   - dynamopackages-properties.md
   - dynamoshapemanager.md
   - dynamoutilities.md
+  - dynamoutilities-certificateverification.md
+  - dynamoutilities-typeswitch.md
+  - dynamoutilities-wintrustinterop.md
   - protocore.md
   - protocore-ast.md
   - protocore-ast-associativeast.md
+  - protocore-ast-associativeast-commentnode.md
   - protocore-ast-imperativeast.md
   - protocore-associativeengine.md
   - protocore-associativegraph.md
   - protocore-builddata.md
+  - protocore-callsite.md
   - protocore-codemodel.md
   - protocore-compiletime.md
   - protocore-compilerdefinitions.md
+  - protocore-core.md
   - protocore-dsasm.md
   - protocore-dsasm-callingconvention.md
+  - protocore-dsasm-heap.md
   - protocore-dsasm-mirror.md
   - protocore-dsdefinitions.md
+  - protocore-debugproperties.md
   - protocore-debugservices.md
   - protocore-designscriptparser.md
   - protocore-exceptions.md
+  - protocore-executionstateeventargs.md
   - protocore-lang.md
+  - protocore-lang-builtinmethods.md
   - protocore-lang-replication.md
+  - protocore-migrationrewriter.md
   - protocore-mirror.md
   - protocore-namespace.md
+  - protocore-namespace-elementrewriter.md
+  - protocore-outputmessage.md
   - protocore-properties.md
   - protocore-runtime.md
+  - protocore-runtimecore.md
   - protocore-syntaxanalysis.md
   - protocore-syntaxanalysis-associative.md
   - protocore-syntaxanalysis-imperative.md
