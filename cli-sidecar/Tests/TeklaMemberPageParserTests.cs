@@ -286,6 +286,25 @@ TransformationPlane<span id="LSTAAA_0"></span><script type="text/javascript">Add
         Assert.DoesNotContain("&amp;", rendered);
     }
 
+    [Fact]
+    public void LstSubstitution_CppOnlyMarker_Renders_Empty_Not_Dot()
+    {
+        // Codex-coverage review v2 (2026-05-19) flagged: Tekla emits LSTs like
+        // `LSTF1E4234C_12?cpp=%` for `out`-param indirection markers — C++ only, no
+        // `cs=` key at all. The old behaviour fell back to "." and produced trailing
+        // dots like `Validation.` instead of the correct empty rendering. Fix: when
+        // the regex finds no `cs=` token, return empty string. Pins MemberPageParser
+        // line 506 against regression. 0.015% of methods in 2025/2026 hit this case.
+        var html = """
+<!DOCTYPE html><html><body><div>Validation<span id="LSTDDD_0"></span><script type="text/javascript">AddLanguageSpecificTextSet("LSTDDD_0?cpp=%");</script></div></body></html>
+""";
+        using var doc = new HtmlParser().ParseDocument(html);
+        var div = doc.QuerySelector("div")!;
+        var rendered = MemberPageParser.CleanInlineText(div);
+        Assert.Equal("Validation", rendered);
+        Assert.DoesNotContain(".", rendered);
+    }
+
     // ── B1 follow-up — defect 1: ctor names preserve overload disambiguator ────
 
     [Fact]

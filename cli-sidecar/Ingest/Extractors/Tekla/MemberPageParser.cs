@@ -502,8 +502,13 @@ public static class MemberPageParser
         if (!string.IsNullOrEmpty(expectedSpanId) && !scriptText.Contains(expectedSpanId, StringComparison.Ordinal))
             return ".";
 
-        var m = Regex.Match(scriptText, @"cs=([^|""]*)");
-        if (!m.Success) return ".";
+        var m = Regex.Match(scriptText, @"[?|]cs=([^|""]*)");
+        // No `cs=` key at all: the LST is rendering a language-specific marker that has no
+        // C# equivalent (e.g. `cpp=%` for an `out`-param indirection, `cpp=^` for a managed
+        // pointer marker). The C# rendering is intentionally empty, not "." — emitting "."
+        // contaminates the catalog with trailing dots (e.g. `Validation.` instead of `Validation`).
+        // See codex-coverage v2 review of tekla-2025/2026 for the 0.015% method impact.
+        if (!m.Success) return "";
         var raw = m.Groups[1].Value;
         // The script body is rendered as JS — entities are NOT pre-decoded by the HTML parser
         // (script bodies are RAW-text in HTML). So `&lt;` stays as `&lt;`. Decode manually for the

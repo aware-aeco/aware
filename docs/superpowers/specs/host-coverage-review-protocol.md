@@ -33,6 +33,16 @@ silent drops.
    CSS selector defined by the extractor.
 3. Compute the set difference between the vendor's enumerated types and
    the `catalog/*.json` filenames.
+
+   **Filename sanitization**: catalog filenames sanitize characters that
+   Windows rejects in filenames. Generic types use `_of_` for `<` and
+   strip `>` — vendor's `IEnumerable<T>` becomes catalog file
+   `IEnumerable_of_T.json`. Comma-separated type-args render as `__`.
+   The catalog file's `"name"` field always carries the canonical
+   vendor name. Reviewers comparing filename → vendor name MUST either:
+   (a) open each catalog JSON and use its `name` field, or
+   (b) reverse the sanitization in the comparison logic.
+
 4. **PASS** if `missing_types_count == 0`. List any missing types in the
    report.
 
@@ -54,6 +64,43 @@ surface for that type.
    list on the catalog entry.
 6. **PASS** if `deep_check_pass_rate == 50/50`. Report every mismatch
    per type (extra members, missing members, signature drift).
+
+### Reviewer regex helpers (Tekla LST script-substitution)
+
+Vendors that use script-substitution markup for language-specific
+delimiters (Tekla's `LST*` spans, see Tekla's `EXTRACTION-NOTES.md`)
+expose multi-language tokens of the shape:
+
+```
+AddLanguageSpecificTextSet("LSTxxx_N?cs=X|vb=Y|cpp=Z|nu=W|fs=V");
+```
+
+The `cs=` key (C# rendering) can appear anywhere in the pipe-list, NOT
+just first. Reviewers extracting the C# token must use a regex like
+`[?|]cs=([^|"]*)` — anchoring on `?cs=` only mishandles entries where
+`cpp=` or `vb=` precede `cs=`. Tekla emits ~3 of 50 sampled types per
+version in this shape.
+
+If the LST has no `cs=` key at all (e.g. `cpp=%` for a C++-only
+`out`-param marker), the extractor must render the empty string. A
+trailing-dot fallback contaminates the catalog (see PageParser.cs
+LST handling). **0.015% of methods** in Tekla 2025/2026 hit this case.
+
+### Clustered FAIL investigation
+
+When Step 2 surfaces 3+ sampled types failing the same root cause (e.g.
+all generic-typed methods rendering `.X.` instead of `<X>`), DO NOT
+declare FAIL immediately. The cluster may be:
+
+- A REAL parser-systemic bug — verify by spot-checking 1-2 unsampled
+  types matching the pattern; if they also fail, declare FAIL.
+- A REVIEWER bug — your own regex / parser may be mis-interpreting
+  vendor markup. Cross-check against the vendor URL directly before
+  declaring FAIL.
+
+In practice: a Step 2 FAIL with `pass_rate < 47/50` AND a clustered
+root cause is almost always one or the other. Spot-check before
+writing the final report.
 
 ### Known-legitimate exemptions (false-positive whitelist)
 
