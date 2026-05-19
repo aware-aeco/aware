@@ -102,6 +102,50 @@ In practice: a Step 2 FAIL with `pass_rate < 47/50` AND a clustered
 root cause is almost always one or the other. Spot-check before
 writing the final report.
 
+### Sample-size adaptation (vendors with N < 50 types)
+
+For small-surface vendors (Tekla Tedds has 33 types, Solibri may be smaller),
+the "pick 50 random types" rule degenerates. The protocol's adaptation:
+
+- **If vendor surface < 50:** sample the FULL set. The `deep_check_pass_rate`
+  threshold becomes `N/N` where N is the surface size.
+- Step 3 (N=20 random methods) similarly degrades to `min(20, total_methods)`.
+
+The seeded-RNG / Fisher-Yates approach still applies — there's just no
+shuffling needed when the sample is the full set.
+
+### DocFX-style vendor rules (Tekla Tedds, others using DocFX)
+
+DocFX is Microsoft's open-source replacement for Sandcastle. Many vendors who
+migrated off Sandcastle now use DocFX. Reviewers processing DocFX vendors:
+
+- **Title order is reversed.** DocFX renders `<h1>Class <Name></h1>` (kind word
+  leads), Sandcastle renders `<h1><Name> Class</h1>` (kind word trails). The
+  shared `verify-types-strict.ps1` script accepts both orderings.
+- **Alternate kind spellings.** DocFX uses `Enum` (Sandcastle: `Enumeration`)
+  and `Struct` (Sandcastle: `Structure`). Reviewer's `$kindWords` set must
+  accept both.
+- **Constructor pages bundle all overloads.** Multiple `<h4 data-uid="...#ctor(args)">`
+  blocks on one page; the parser uses the type-page row text as disambiguator.
+- **Sidebar tree is the URL source of truth.** Content-hash xref URLs (the
+  `/topic/...` style) 302-redirect; canonical `/doc/<vendor>/<ver>/<slug>-<id>`
+  URLs live only in the sidebar tree.
+
+### Hybrid OpenAPI/markdown vendor rules (IDEA Statica, other REST-first vendors)
+
+Vendors that ship a REST API + SDK use OpenAPI specs as canonical type+signature
+source, with markdown SDK docs supplying prose. Reviewers processing these:
+
+- **No HTML to scrape.** Vendor source URLs in IR point at `.yaml` / `.md`
+  files (often github raw URLs). The strict-verify script's
+  `$isMarkdownSource` branch dispatches to YAML-aware / markdown-aware checks.
+- **Tag-based API-class synthesis.** OpenAPI's `tags: [Calculation]` becomes
+  the SDK's `CalculationApi.cs`. The extractor synthesizes `<Tag>Api` classes
+  with the tag's operations as `Async`-suffixed methods.
+- **Async-suffix mismatch.** Markdown's `## **MethodAsync**` (with Async)
+  vs `<a id="method">` (no Async). Reviewers must strip the `Async` suffix
+  before lookup.
+
 ### Sandcastle-style vendor rules (Rhino, Grasshopper, AutoCAD, Navisworks)
 
 Sandcastle (the Microsoft documentation generator) is used by .NET-focused
