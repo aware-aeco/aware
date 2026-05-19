@@ -35,8 +35,40 @@ provenance:
   generated-at: 2026-05-16T21:55:05.428123700+00:00
 transport:
   cli:
-    binary: aware-revit-2026
+    binary: aware-revit
 commands:
+  # === v0.33 runtime verbs (aware-revit sidecar) =============================
+  exec:
+    lifecycle: single
+    description: |
+      Compile + run an ad-hoc C# script against the active Revit document via
+      the in-Revit AwareRevit add-in over a named pipe. Input: { code, args,
+      version?, host_pid?, transaction? }. Output: { ok, result, ... }.
+      Globals: `dynamic uiapp` (UIApplication), `IDictionary<string,object?> args`.
+      Use transaction="auto" to wrap the body in a Transaction (default: no wrap).
+      Requires AwareRevit add-in installed (cli-revit/install-addin.ps1).
+  list-instances:
+    lifecycle: single
+    description: |
+      List running Revit instances (pid, version, exe_path, addin_loaded).
+      addin_loaded=true means the AwareRevit add-in's named pipe is reachable.
+  send-status:
+    lifecycle: single
+    description: |
+      Show a transient TaskDialog message in Revit (Revit has no status bar
+      equivalent; TaskDialog is the closest attention-getter).
+  launch:
+    lifecycle: single
+    description: |
+      Spawn a Revit instance. Optional model_path opens a model. Returns
+      immediately after Process.Start; poll list-instances for
+      addin_loaded=true to confirm IPC readiness (typically ~20s).
+  close:
+    lifecycle: single
+    description: |
+      Cleanly close a Revit instance via the add-in (PostCommand Close +
+      Application.Exit), waiting up to 30s for Process.HasExited. Pass
+      force=true to bypass (Process.Kill -- WILL LOSE UNSAVED WORK).
   # ---- Curated workflow verbs (v0.10 first wave) -------------------------
   # These are the architect's mental units — promoted from the reflected
   # API surface below into typed, composable workflow commands per the
