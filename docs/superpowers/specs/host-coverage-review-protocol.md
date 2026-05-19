@@ -146,6 +146,49 @@ source, with markdown SDK docs supplying prose. Reviewers processing these:
   vs `<a id="method">` (no Async). Reviewers must strip the `Async` suffix
   before lookup.
 
+### mkdocs-material / mkdocstrings vendor rules (Allplan PythonParts, other Python SDKs)
+
+mkdocs-material (with the mkdocstrings plugin) is the Python-SDK community's
+canonical docs generator. Allplan PythonParts uses it; other Python-first
+vendors (Grasshopper-on-Rhino's Python API ports, FreeCAD, Blender) also
+gravitate to it. Reviewers processing mkdocs-material vendors must apply these
+rules:
+
+- **Class title shape.** The class heading carries the bare type name inside
+  `<span class="doc-object-name doc-class-name">TypeName</span>` — NOT
+  `TypeName Class` (Sandcastle) or `Class TypeName` (DocFX). The strict-verify
+  script's `$isMkdocsSource` branch reads the type name from this span; do not
+  attempt to strip a kind word.
+- **Two template variants in production.** mkdocstrings shipped a major DOM
+  refresh between 2024 and 2025; Allplan publishes BOTH variants at
+  `/2024/` and `/2025/` URLs. Reviewers must detect and handle both:
+  - **2024 legacy.** Member headings use `<h3 class="doc-heading">`; the full
+    signature lives in the `<code>` element inside that heading. Properties,
+    returns, and raises are inside `<table>` rows. Overload groups wrap their
+    variants in `<div class="doc-function-overload">` with nested
+    `<div class="doc-contents doc-contents-overloads">` children.
+  - **2025 current.** Member headings promote to `<h2 class="doc-heading">`
+    with `<span class="doc-object-name doc-function-name">name</span>` (name
+    only, NO signature). The signature lives in a sibling
+    `<div class="doc-signature highlight"><pre><code>…</code></pre></div>`.
+    Properties / returns / raises rendered as `<ul><li class="doc-section-item field-body">`.
+    Overload variants are sibling `<div class="doc doc-object doc-function doc-function-overload">`
+    elements under the same `<h2>` — there is NO outer wrapper.
+- **Detection heuristic.** Presence of `<p class="doc doc-class-full-path">`
+  on the class page distinguishes 2025 from 2024 (which uses a plain
+  `<p>Class full path: <code>FQ.Name</code></p>` line). The strict-verify
+  script branches on this signal.
+- **Inner classes are promoted to top-level IR types.** mkdocstrings renders
+  nested classes under an `<h2>Classes</h2>` section inside the parent's
+  `<div class="doc-children">`. The extractor promotes each inner class to a
+  separate IR type with `@namespace = "<parent-fq-name>"` (Allplan convention).
+  Reviewers verifying Step 1 enumeration must walk the parent's class block
+  for inner-class headings, NOT just the top-level class pages.
+- **Strict-verify branch.** The `verify-types-strict.ps1` script needs an
+  `$isMkdocsSource` branch that accepts the mkdocs-material markup forms
+  above (both the 2024 and 2025 variants). The branch dispatches on the
+  detection heuristic above.
+
 ### Sandcastle-style vendor rules (Rhino, Grasshopper, AutoCAD, Navisworks)
 
 Sandcastle (the Microsoft documentation generator) is used by .NET-focused
