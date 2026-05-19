@@ -12,6 +12,7 @@
       "signature": "public Plane()",
       "summary": "Initializes a new plane instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/52299f5e-19ba-ecfa-74cf-f075e7bd7bd7"

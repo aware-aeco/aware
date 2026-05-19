@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelModalAnalysisProperties()",
       "summary": "Initializes a new instance of the AnalysisModelModalAnalysisProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0a3ea1cc-6393-741a-a1ea-cc3a278ae1ad"

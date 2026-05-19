@@ -12,6 +12,7 @@
       "signature": "public RebarLapping()",
       "summary": "Initializes a new instance of the RebarLapping class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b0d90ade-e0e9-64e7-73ea-760384cc3034"

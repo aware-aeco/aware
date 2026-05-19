@@ -19,6 +19,7 @@
           "optional": true
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/533503cd-dac4-4839-bd5b-73c6706bef29"
@@ -46,7 +47,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9a341c18-e6db-ebe1-2ab9-afcf2ec9ce15"
     },
     {
-      "name": "GetAttributeFile(List.String., String)",
+      "name": "GetAttributeFile(List\u003CString\u003E, String)",
       "signature": "public FileInfo GetAttributeFile(List\u003Cstring\u003E searchDirectories, string fileName)",
       "summary": "Gets a file info representing the first match in the search directories.",
       "params": [

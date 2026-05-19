@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/1f5576c5-859c-2d9b-55f4-5b4d66bbf320",
   "constructors": [
     {
-      "name": "AABB",
+      "name": "AABB()",
       "signature": "public AABB()",
       "summary": "Instantiates a new axis-aligned 3d bounding box with the maximum point initialized to the smallest possible value and the minimum point to the largest possible value.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/37eff7da-019c-5ffc-e62a-9ff10db35787"
     },
     {
-      "name": "AABB",
+      "name": "AABB(AABB)",
       "signature": "public AABB(AABB AABB)",
       "summary": "Instantiates a new axis-aligned 3d bounding box which is a copy of the given axis-aligned 3d bounding box.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b43eb84f-0fcc-f6d5-baf5-84e9a2bfa760"
     },
     {
-      "name": "AABB",
+      "name": "AABB(IEnumerable\u003CPoint\u003E)",
       "signature": "public AABB(IEnumerable\u003CPoint\u003E Points)",
       "summary": "Constructs AABB from given point list.",
       "params": [
@@ -43,12 +45,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/577d83ea-a6c4-11df-7c68-05eef8ad2eef"
     },
     {
-      "name": "AABB",
+      "name": "AABB(Point, Point)",
       "signature": "public AABB(Point MinPoint, Point MaxPoint)",
       "summary": "Instantiates a new axis-aligned 3d bounding box with the given minimum and maximum points.",
       "params": [
@@ -65,6 +68,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3fba0785-cc81-45a8-735f-59b651cea356"

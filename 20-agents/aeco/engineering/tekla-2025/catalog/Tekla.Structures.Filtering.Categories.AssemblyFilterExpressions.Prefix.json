@@ -12,6 +12,7 @@
       "signature": "public Prefix()",
       "summary": "Initializes a new instance of the Prefix class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1c92ea6c-8c92-87e9-967c-ae8de080568a"

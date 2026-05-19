@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/ec2ec811-7205-62fe-315b-c5935a5e20b8",
   "constructors": [
     {
-      "name": "Matrix",
+      "name": "Matrix()",
       "signature": "public Matrix()",
       "summary": "Creates a new indentity matrix.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/654283ac-7d75-b3b8-903a-520e0fe58b2b"
     },
     {
-      "name": "Matrix",
+      "name": "Matrix(Matrix)",
       "signature": "public Matrix(Matrix m)",
       "summary": "Creates a new matrix which is a copy of the given matrix.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c53878b3-9c68-5e56-3b67-b7220e9634de"
@@ -61,7 +63,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/da738b67-6880-722e-9732-116eae2286dc"
     },
     {
-      "name": "Transform(IEnumerable.Point.)",
+      "name": "Transform(IEnumerable\u003CPoint\u003E)",
       "signature": "public IEnumerable\u003CPoint\u003E Transform(IEnumerable\u003CPoint\u003E Points)",
       "summary": "Transforms the given points using the current matrix.",
       "params": [
@@ -105,6 +107,7 @@
       "signature": "public void Transpose()",
       "summary": "Transposes a matrix. The resulting matrix is an inversion of the current matrix, if the current matrix was a valid rotation matrix.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8801696e-5b19-3242-507c-28b3318ee3b4"
@@ -113,7 +116,7 @@
   "properties": [
     {
       "name": "Item",
-      "type": "object",
+      "type": "Double",
       "getter": true,
       "setter": true,
       "summary": "Sets or gets the matrix element values.",

@@ -12,6 +12,7 @@
       "signature": "public AnalysisDeltaZ()",
       "summary": "Creates a new instance of an analysis delta Z.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bf4eaa3e-9c25-11df-e8db-f09ceef83e3d"

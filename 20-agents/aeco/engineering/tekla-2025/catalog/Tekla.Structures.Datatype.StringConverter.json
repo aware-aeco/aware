@@ -12,6 +12,7 @@
       "signature": "public StringConverter()",
       "summary": "Initializes a new instance of the StringConverter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d9c55ea1-583a-bb5a-4436-5945d2598722"

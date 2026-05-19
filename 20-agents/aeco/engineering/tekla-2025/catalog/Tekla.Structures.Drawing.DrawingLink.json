@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/d0fdf906-a890-dba2-03a8-7209a743f5ea",
   "constructors": [
     {
-      "name": "DrawingLink",
+      "name": "DrawingLink(ViewBase, Point, Drawing, String)",
       "signature": "public DrawingLink(ViewBase View, Point InsertionPoint, Drawing Target, string Text)",
       "summary": "Creates a new drawing link instance using standard attributes.",
       "params": [
@@ -37,12 +37,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6a49c24c-44cd-7517-6484-3af8b883af47"
     },
     {
-      "name": "DrawingLink",
+      "name": "DrawingLink(ViewBase, Point, Drawing, String, LinkAttributes)",
       "signature": "public DrawingLink(ViewBase View, Point InsertionPoint, Drawing Target, string Text, LinkAttributes Attributes)",
       "summary": "Creates a new drawing link instance using the given attributes.",
       "params": [
@@ -77,12 +78,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f3f19ea1-439f-c484-7813-2822302c4db5"
     },
     {
-      "name": "DrawingLink",
+      "name": "DrawingLink(ViewBase, Point, Drawing, String, Size)",
       "signature": "public DrawingLink(ViewBase View, Point InsertionPoint, Drawing Target, string Text, Size Size)",
       "summary": "Creates a new drawing link instance of the given size.",
       "params": [
@@ -117,12 +119,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/04ee8cb7-20fa-6cbe-97a6-4f0ce5a31b75"
     },
     {
-      "name": "DrawingLink",
+      "name": "DrawingLink(ViewBase, Point, Drawing, String, Size, LinkAttributes)",
       "signature": "public DrawingLink(ViewBase View, Point InsertionPoint, Drawing Target, string Text, Size Size, LinkAttributes Attributes)",
       "summary": "Creates a new drawing link instance of the given size.",
       "params": [
@@ -163,6 +166,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3fe6b757-7c16-d6f1-b713-dfd45c23ed7e"
@@ -196,7 +200,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/992fb6af-b657-ed89-b5bf-9a8f8854710a"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -216,7 +220,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -255,7 +259,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -275,7 +279,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -314,7 +318,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bec56125-ac08-53b1-3304-39ba38dd409a"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -327,7 +331,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -347,7 +351,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -367,7 +371,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

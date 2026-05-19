@@ -12,6 +12,7 @@
       "signature": "public ProfileItemParameter()",
       "summary": "Initializes a new instance of the ProfileItemParameter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e2b2a7cb-c914-1ac1-f0b5-1f8480b6ca93"

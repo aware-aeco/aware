@@ -12,6 +12,7 @@
       "signature": "public Local()",
       "summary": "Initializes a new instance of the Local class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e2b4d592-0dcb-b2f2-59a5-41834c2e377a"

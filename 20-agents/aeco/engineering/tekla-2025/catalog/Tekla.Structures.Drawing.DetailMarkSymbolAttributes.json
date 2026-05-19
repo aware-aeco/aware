@@ -12,6 +12,7 @@
       "signature": "public DetailMarkSymbolAttributes()",
       "summary": "Initializes a new instance of the DetailMarkSymbolAttributes class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/446f87f6-1a34-8733-6053-c9cb3d21b741"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/8f08f0af-9bc7-d718-4bba-cd6f23c4b0e1",
   "constructors": [
     {
-      "name": "ControlLine",
+      "name": "ControlLine()",
       "signature": "public ControlLine()",
       "summary": "Creates a new control line instance. The default values are as follows: Line = new LineSegment();IsMagnetic = false;Color = ControlLineColorEnum.YELLOW;Extension = 0.0;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ab2a28cc-27f2-e0f8-5950-81800d382505"
     },
     {
-      "name": "ControlLine",
+      "name": "ControlLine(LineSegment, Boolean)",
       "signature": "public ControlLine(LineSegment Line, bool IsMagnetic)",
       "summary": "Creates a new control line instance taking the line segment and magnetism as input.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/17d5c93c-db12-58b1-6466-34127692f68e"
@@ -845,7 +847,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -869,7 +871,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

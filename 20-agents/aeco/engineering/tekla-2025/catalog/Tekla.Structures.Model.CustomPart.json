@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/d49ee520-e614-1f88-32b0-3bd442cfc84c",
   "constructors": [
     {
-      "name": "CustomPart",
+      "name": "CustomPart()",
       "signature": "public CustomPart()",
       "summary": "Creates a new custom part instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5ffdd4f8-d54c-4271-997c-37eb6960180d"
     },
     {
-      "name": "CustomPart",
+      "name": "CustomPart(Point, Point)",
       "signature": "public CustomPart(Point StartPoint, Point EndPoint)",
       "summary": "Creates a new custom part instance with the given input.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/40ca2595-317f-9434-334b-4dacaa7243e5"
@@ -777,6 +779,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/785d0216-df12-53fc-344b-a2e67001cf3c"
@@ -799,6 +802,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/797240ce-567c-bff9-2a60-6359cc909ce0"
@@ -821,6 +825,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6f0f7c8f-c5d2-8012-9faf-f68991966ff5"
@@ -1077,7 +1082,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1085,7 +1090,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

@@ -12,6 +12,7 @@
       "signature": "public ConnectionCode()",
       "summary": "Initializes a new instance of the ConnectionCode class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/559393f9-d161-67a8-012f-82ab4730358e"

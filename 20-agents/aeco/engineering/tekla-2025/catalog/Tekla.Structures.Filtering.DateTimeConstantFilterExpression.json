@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/3f04e5be-a631-37df-c552-5e1ce8c0dd5c",
   "constructors": [
     {
-      "name": "DateTimeConstantFilterExpression",
+      "name": "DateTimeConstantFilterExpression(IEnumerable\u003CDateTime\u003E)",
       "signature": "public DateTimeConstantFilterExpression(IEnumerable\u003CDateTime\u003E Values)",
       "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/235208e5-6d3d-dbb3-090a-f2d57235daea"
     },
     {
-      "name": "DateTimeConstantFilterExpression",
+      "name": "DateTimeConstantFilterExpression(DateTime)",
       "signature": "public DateTimeConstantFilterExpression(DateTime Value)",
       "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
       "params": [
@@ -35,12 +36,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/541bc28c-eb8f-7790-bfce-b585e400f1f7"
     },
     {
-      "name": "DateTimeConstantFilterExpression",
+      "name": "DateTimeConstantFilterExpression(IEnumerable\u003CDateTime\u003E, IFormatProvider)",
       "signature": "public DateTimeConstantFilterExpression(IEnumerable\u003CDateTime\u003E Values, IFormatProvider Provider)",
       "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
       "params": [
@@ -57,12 +59,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/af59f30f-3e3a-c8d6-087b-94926252f9d5"
     },
     {
-      "name": "DateTimeConstantFilterExpression",
+      "name": "DateTimeConstantFilterExpression(DateTime, IFormatProvider)",
       "signature": "public DateTimeConstantFilterExpression(DateTime Value, IFormatProvider Provider)",
       "summary": "Initializes a new instance of the DateTimeConstantFilterExpression class.",
       "params": [
@@ -79,6 +82,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4989eac2-057d-5b26-1782-bcd688c6df87"

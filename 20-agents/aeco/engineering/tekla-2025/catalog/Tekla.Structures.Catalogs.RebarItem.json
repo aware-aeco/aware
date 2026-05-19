@@ -12,6 +12,7 @@
       "signature": "public RebarItem()",
       "summary": "Creates a new rebar item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/17e86085-ff21-f828-ed6b-b79162fae1ee"

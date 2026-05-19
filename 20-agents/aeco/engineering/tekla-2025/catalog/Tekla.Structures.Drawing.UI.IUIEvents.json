@@ -12,6 +12,7 @@
       "signature": "void OnInterrupted()",
       "summary": "Called when uesr interrupts.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/79cef3d6-e028-dde1-dda0-68fab9990ead"
@@ -21,6 +22,7 @@
       "signature": "void Register()",
       "summary": "Registers the instance to listen to the specified events.",
       "params": [],
+      "returns": null,
       "throws": [
         {
           "type": "InvalidOperationException",
@@ -35,6 +37,7 @@
       "signature": "void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dd0db162-4261-8eaf-ac23-56353216b51b"

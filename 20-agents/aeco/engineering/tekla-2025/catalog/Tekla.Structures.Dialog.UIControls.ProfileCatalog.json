@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/6f7b5108-d430-c386-35f7-f64f46760563",
   "constructors": [
     {
-      "name": "ProfileCatalog",
+      "name": "ProfileCatalog()",
       "signature": "public ProfileCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f2f27f77-7cf4-51b8-2101-329082d79a88"
     },
     {
-      "name": "ProfileCatalog",
+      "name": "ProfileCatalog(String)",
       "signature": "public ProfileCatalog(string Profile)",
       "summary": "Initiates a new instance of the control selecting the given profile.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5811c93c-a959-c7f6-9302-313760a9aeb7"
@@ -46,6 +48,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4fd06031-82dd-daa8-6e41-51c76a364bbf"

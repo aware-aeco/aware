@@ -12,6 +12,7 @@
       "signature": "public ExtensionIntersectsWithPlateException()",
       "summary": "Initializes a new instance of the ExtensionIntersectsWithPlateException class with \u0022extension plate clashes with plates\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5e024038-bdbb-739d-f33d-ef0c3c6ca131"

@@ -12,6 +12,7 @@
       "signature": "public TeklaStructuresInfo()",
       "summary": "Initializes a new instance of the TeklaStructuresInfo class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e5bcf3e0-46ec-9727-17c4-80a59b68e737"

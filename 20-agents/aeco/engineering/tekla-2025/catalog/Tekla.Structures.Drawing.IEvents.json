@@ -12,6 +12,7 @@
       "signature": "void Register()",
       "summary": "Registers the instance to listen to the specified events.",
       "params": [],
+      "returns": null,
       "throws": [
         {
           "type": "InvalidOperationException",
@@ -26,6 +27,7 @@
       "signature": "void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/33683b4f-4add-0b6d-6743-3adb3e5088ef"

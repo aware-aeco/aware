@@ -12,6 +12,7 @@
       "signature": "public AnalysisCrossSection()",
       "summary": "Creates a new instance of an analysis cross section.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/69353284-0624-c0df-d4fb-478aa10f3ac2"
@@ -23,6 +24,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes an analysis cross section. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2dda6dcb-28dc-50c6-bba0-e0681d0e086a"
@@ -45,6 +47,7 @@
       "signature": "public void Insert()",
       "summary": "Inserts an analysis cross section. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ec7fbfb2-4c6f-0125-d408-12fd89973166"
@@ -54,6 +57,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis cross section. The AnalysisModelName and ID/Name have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3fb513b9-840d-175c-a250-9e1f2f642a4a"

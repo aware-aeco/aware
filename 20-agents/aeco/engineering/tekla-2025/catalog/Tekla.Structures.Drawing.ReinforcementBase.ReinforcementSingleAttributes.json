@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/106ed442-a9b1-c122-82ad-3540f21968b2",
   "constructors": [
     {
-      "name": "ReinforcementBase.ReinforcementSingleAttributes",
+      "name": "ReinforcementBase.ReinforcementSingleAttributes()",
       "signature": "public ReinforcementSingleAttributes()",
       "summary": "Creates a new default reinforcement attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a0f48398-264c-9c56-4619-e8696e56bca7"
     },
     {
-      "name": "ReinforcementBase.ReinforcementSingleAttributes",
+      "name": "ReinforcementBase.ReinforcementSingleAttributes(String)",
       "signature": "public ReinforcementSingleAttributes(string AttributeFile)",
       "summary": "Creates a new reinforcement attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/89b19b5f-9fc9-df71-8837-bc180f4779b0"

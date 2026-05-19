@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/769dd789-cb81-512f-c2da-32d369b422ad",
   "constructors": [
     {
-      "name": "GraphicObject.GraphicObjectAttributes",
+      "name": "GraphicObject.GraphicObjectAttributes()",
       "signature": "public GraphicObjectAttributes()",
       "summary": "Creates a new graphic object attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bb86d9ab-f988-e24f-6dea-3b32062c7e03"
     },
     {
-      "name": "GraphicObject.GraphicObjectAttributes",
+      "name": "GraphicObject.GraphicObjectAttributes(String)",
       "signature": "public GraphicObjectAttributes(string AttributeFile)",
       "summary": "Creates a new graphic object attributes instance using the given attribute file\u0027s filename.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/196cd0f0-2ac5-3962-5ca0-3c24c765d5bb"

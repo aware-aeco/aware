@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model-history
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Model.History namespace — 4 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ModificationStamp, ModelHistory, ModificationInfo, ModifiedObjectInfo.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Model.History namespace — 4 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ModelHistory, ModificationInfo, ModificationStamp, ModifiedObjectInfo.
 ---
 
 # Tekla.Structures.Model.History

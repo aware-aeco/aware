@@ -1,5 +1,5 @@
 {
-  "name": "CustomObservableCollection.T.",
+  "name": "CustomObservableCollection\u003CT\u003E",
   "namespace": "Tekla.Structures.Dialog.UIControls",
   "kind": "class",
   "summary": "CustomObservableCollection for synchronizing UI controls.",
@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/4ca922b0-cea2-2be2-ca5b-2dd603c8c10e",
   "constructors": [
     {
-      "name": "CustomObservableCollection.T.",
+      "name": "CustomObservableCollection\u003CT\u003E()",
       "signature": "public CustomObservableCollection()",
       "summary": "CustomObservableCollection constructor.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d2305bf8-efd0-8000-8831-3c07e0b9602f"
     },
     {
-      "name": "CustomObservableCollection.T.",
+      "name": "CustomObservableCollection\u003CT\u003E(IEnumerable\u003CT\u003E)",
       "signature": "public CustomObservableCollection(IEnumerable\u003CT\u003E collection)",
       "summary": "CustomObservableCollection constructor.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/466b759c-5f04-ce9c-51a2-3f9dacc87138"
     },
     {
-      "name": "CustomObservableCollection.T.",
+      "name": "CustomObservableCollection\u003CT\u003E(List\u003CT\u003E)",
       "signature": "public CustomObservableCollection(List\u003CT\u003E list)",
       "summary": "CustomObservableCollection constructor.",
       "params": [
@@ -44,6 +46,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b8d57eb0-d577-2757-a14e-95d4028e3025"
@@ -62,6 +65,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9c83ef1c-6b7b-1aa3-da5b-9fdd9a28309a"

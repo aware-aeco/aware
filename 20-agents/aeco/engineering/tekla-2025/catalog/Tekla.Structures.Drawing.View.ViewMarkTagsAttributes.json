@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/9066f94e-5bf0-17fa-79ab-5e44c3c90ba7",
   "constructors": [
     {
-      "name": "View.ViewMarkTagsAttributes",
+      "name": "View.ViewMarkTagsAttributes()",
       "signature": "public ViewMarkTagsAttributes()",
       "summary": "Creates a new mark tags attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6e01563d-e2b1-fd8c-a871-38059fe0bf35"
     },
     {
-      "name": "View.ViewMarkTagsAttributes",
+      "name": "View.ViewMarkTagsAttributes(View.ViewMarkTagAttributes, View.ViewMarkTagAttributes, View.ViewMarkTagAttributes, View.ViewMarkTagAttributes, View.ViewMarkTagAttributes)",
       "signature": "public ViewMarkTagsAttributes(View.ViewMarkTagAttributes tagA1, View.ViewMarkTagAttributes tagA2, View.ViewMarkTagAttributes tagA3, View.ViewMarkTagAttributes tagA4, View.ViewMarkTagAttributes tagA5)",
       "summary": "Creates a new mark tags attributes instance.",
       "params": [
@@ -52,6 +53,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/871e0980-3d07-741c-7ed9-04b01dfa6da5"

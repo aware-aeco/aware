@@ -12,6 +12,7 @@
       "signature": "public Position()",
       "summary": "Initializes a new instance of the Position class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/98dcc789-cf76-1cfc-c573-0bb50994f062"

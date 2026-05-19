@@ -3,7 +3,9 @@
   "namespace": "Tekla.Structures.Datatype",
   "kind": "interface",
   "summary": "The IIntDataType interface is an interface for the Tekla.Structures.Datatype.* types whose value is an integer.",
-  "interfaces": [],
+  "interfaces": [
+    "IDataType"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/bc1bc7c1-9f61-cd7d-99f7-c672f396f53b",
   "constructors": [],
   "methods": [],

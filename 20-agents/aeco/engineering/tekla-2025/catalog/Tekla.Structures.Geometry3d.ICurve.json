@@ -3,7 +3,9 @@
   "namespace": "Tekla.Structures.Geometry3d",
   "kind": "interface",
   "summary": "Interface that represents an abstract curved geometry defined by a set of points. This interface is intended to be the base class of 3D curves.",
-  "interfaces": [],
+  "interfaces": [
+    "IEquatable\u003CICurve\u003E"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/101740ff-cebe-b199-47f4-7dbaa88045d6",
   "constructors": [],
   "methods": [

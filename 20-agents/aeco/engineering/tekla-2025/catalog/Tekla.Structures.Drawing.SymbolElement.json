@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/ec0e7aaa-df5c-48a8-bded-69228d9b9b11",
   "constructors": [
     {
-      "name": "SymbolElement",
+      "name": "SymbolElement()",
       "signature": "public SymbolElement()",
       "summary": "Creates a new symbol element instance with the default symbol.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a2f0a562-309b-e6c2-50ea-b70556aa95df"
     },
     {
-      "name": "SymbolElement",
+      "name": "SymbolElement(SymbolInfo)",
       "signature": "public SymbolElement(SymbolInfo Symbol)",
       "summary": "Creates a new symbol element instance with the given symbol.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/424e6f06-9fef-caa5-818a-525a864acf53"
     },
     {
-      "name": "SymbolElement",
+      "name": "SymbolElement(SymbolInfo, DrawingColors, Double)",
       "signature": "public SymbolElement(SymbolInfo Symbol, DrawingColors Color, double Height)",
       "summary": "Creates a new symbol element instance with the given symbol, color and height.",
       "params": [
@@ -56,12 +58,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4a6356f8-9823-32c9-d600-98d4eb3e47be"
     },
     {
-      "name": "SymbolElement",
+      "name": "SymbolElement(SymbolInfo, TeklaDrawingColor, Double)",
       "signature": "public SymbolElement(SymbolInfo Symbol, TeklaDrawingColor Color, double Height)",
       "summary": "Creates a new symbol element instance with the given symbol, the RGB color and height.",
       "params": [
@@ -84,6 +87,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a3151a9f-6e1d-cfb7-7c17-efc6754ca3c3"

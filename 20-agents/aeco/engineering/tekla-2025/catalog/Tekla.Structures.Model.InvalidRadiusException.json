@@ -12,6 +12,7 @@
       "signature": "public InvalidRadiusException()",
       "summary": "Initializes a new instance of the InvalidRadiusException class with \u0022Cannot connect parts with a cylindrical section having the provided radius\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/33751956-d5b3-22dc-72c2-9540f9bc88aa"

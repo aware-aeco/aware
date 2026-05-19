@@ -12,6 +12,7 @@
       "signature": "public RebarLengthAdjustmentDataNullable()",
       "summary": "Initializes a new instance of the RebarLengthAdjustmentDataNullable class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cf72ee7d-5c4f-fe42-202a-f623d68330c3"

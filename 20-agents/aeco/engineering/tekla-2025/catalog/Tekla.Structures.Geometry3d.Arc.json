@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/90601fc6-a64e-ea9f-c0e5-46edcf1909e9",
   "constructors": [
     {
-      "name": "Arc",
+      "name": "Arc(Point, Point, Point)",
       "signature": "public Arc(Point startPoint, Point endPoint, Point pointOnArc)",
       "summary": "Constructs a new arc geometry",
       "params": [
@@ -31,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -41,7 +42,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a33eb806-7ba2-c1c2-5006-3e05facaf053"
     },
     {
-      "name": "Arc",
+      "name": "Arc(Point, Point, Vector, Double)",
       "signature": "public Arc(Point centerPoint, Point startPoint, Vector normal, double deltaAngleRadians)",
       "summary": "Constructs a new arc geometry",
       "params": [
@@ -70,6 +71,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -80,7 +82,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6f4f82e6-22b4-4f89-edca-e1e058e74131"
     },
     {
-      "name": "Arc",
+      "name": "Arc(Point, Vector, Vector, Double, Double)",
       "signature": "public Arc(Point centerPoint, Vector startDirection, Vector startTangent, double radius, double deltaAngleRadians)",
       "summary": "Constructs a new arc geometry",
       "params": [
@@ -115,6 +117,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",

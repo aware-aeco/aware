@@ -12,6 +12,7 @@
       "signature": "public Profile()",
       "summary": "Instantiates an empty profile.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f7afe7eb-9c88-5431-bb40-410b2ea1c417"

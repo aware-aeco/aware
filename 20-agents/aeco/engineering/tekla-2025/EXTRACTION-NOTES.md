@@ -6,7 +6,7 @@ This agent is generated from a coverage IR scraped from `developer.tekla.com`. T
 
 - **Site:** `https://developer.tekla.com`
 - **Version root:** `https://developer.tekla.com/doc/tekla-structures/2025/tekla-structures-45473`
-- **Extraction date:** 2026-05-19 (type-page pass + per-member enrichment pass)
+- **Extraction date:** 2026-05-19 (re-extracted from scratch after the codex-coverage FAIL feedback identified ctor-name + generic-bracket + returns-key + Property-Value/Return-Value parser defects)
 - **Source kind:** `scrape` (HttpClient + AngleSharp)
 
 ## Reproduction
@@ -62,7 +62,7 @@ The 2025 extraction produced **0 skipped pages**.
 
 None. All 1282 type URLs were fetched and parsed successfully.
 
-The per-member enrichment pass on 2025 required **4 sidecar restarts** because Tekla's CDN throttled the connection mid-run (after ~2000-3000 fetches per session). Each restart resumed from the last 200-enrichment snapshot. The auto-restart wrapper handles this transparently. Final run completed with 0 errors across all 12131 member fetches.
+The per-member enrichment pass on the re-extraction completed in a single uninterrupted sidecar process (no restarts), running in parallel with the 2026 extraction against the same CDN. Total: 12131 member fetches with 0 errors and 0 retries.
 
 ## IR / catalog counts
 
@@ -78,23 +78,17 @@ The per-member enrichment pass on 2025 required **4 sidecar restarts** because T
 | field | filled / total | % |
 |-------|---------------:|--:|
 | Methods + constructors with real signature | 7937 / 7937 | 100% |
-| Properties with non-`object` type | 3871 / 4045 | 95.7% |
+| Properties with non-`object` type | 4033 / 4045 | 99.7% |
 | Events with non-`EventHandler` delegate | 149 / 149 | 100% |
-| **Total members enriched** | **11957 / 12131** | **98.6%** |
+| **Total members enriched** | **12119 / 12131** | **99.9%** |
 
-The 174 properties remaining at `type="object"` are predominantly `SyncRoot` / `ICollection.SyncRoot` properties that **legitimately** return `System.Object` per the .NET BCL contract — they are not parser failures. A spot check confirms each such property's vendor page does say `Type: Object`.
+The 12 properties remaining at `type="object"` are `SyncRoot` / `ICollection.SyncRoot` properties that **legitimately** return `System.Object` per the .NET BCL contract — they are not parser failures. A spot check confirms each such property's vendor page does say `Type: Object`. The remaining 162 properties that were `object` in the previous extraction now carry their real types thanks to the Property Value/Return Value subheading-fallback parser fix shipped alongside this re-extraction.
 
 ## Strict 50-type self-verification
 
-A deterministic sample of 50 types was drawn from the IR using a Fisher-Yates shuffle seeded by the SHA-256 hash of `tekla-2025.0.ir.json` (script: `cli-sidecar/Ingest/Output/verify-types-strict.ps1`). Each sample was checked at the **type level** (name + kind word present in HTML) AND the **member level** (3 random methods, 3 random properties, 1 random event each pass the placeholder check).
+A deterministic sample of 50 types was drawn from the IR using a Fisher-Yates shuffle seeded by the SHA-256 hash of `tekla-2025.0.ir.json` (script: `cli-sidecar/Ingest/Output/verify-types-strict.ps1`). Each sample was checked at the **type level** (name + kind word present in HTML, with generic-parameter stripping for types like `Enum<E>`) AND the **member level** (3 random methods, 3 random properties, 1 random event each pass the placeholder check).
 
-Result: **48 / 50 PASS** (seed = 1456662254).
-
-The two failures are both `property-placeholder-type(SyncRoot)`:
-- `Tekla.Structures.Model.UI.PickInput.SyncRoot` (idx 1221)
-- `Tekla.Structures.Model.PhaseCollection.SyncRoot` (idx 988)
-
-Both are legitimate `object`-typed properties per the .NET BCL `ICollection.SyncRoot` contract — the verifier flags `type="object"` as suspicious, but for these specific properties it IS the correct type. **This is a known false-positive class of the verifier, not a parser bug.** Spot-check: Tekla's vendor page for `PickInput.SyncRoot` does say `Type: Object`.
+Result: **50 / 50 PASS** (seed = 1293876521, IR sha256 = `4d1efd29e27f12626611d980929c1ad56006f26b45b82cd4d121fd26e865270c`).
 
 The full output is at `cli-sidecar/Ingest/Output/tekla-2025-strict-verify.txt`.
 

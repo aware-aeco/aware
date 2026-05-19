@@ -23,6 +23,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c37bfe9c-c675-7019-fce7-92e7e00ac0d3"
@@ -32,6 +33,7 @@
       "signature": "void OnHiddenObjectsChanged()",
       "summary": "Called when objects are set to hidden or view is redrawn",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/98996a2a-e743-b61f-672f-24d68eb39832"
@@ -41,6 +43,7 @@
       "signature": "void OnInterrupted()",
       "summary": "Called when user interrupts.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/adb85435-860d-1fe0-0075-337112cfa0ce"
@@ -63,6 +66,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a583e0b1-10d5-7a6c-f68f-43a06553236d"
@@ -72,6 +76,7 @@
       "signature": "void OnTemporaryStatesChanged()",
       "summary": "Called when the temporary states are changed.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c5c53a9a-e57f-7f37-0322-047d8aef2e1c"
@@ -81,6 +86,7 @@
       "signature": "void OnUndoClicked()",
       "summary": "Called when user clicks undo.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/69c17382-2e77-f635-a3a8-5765de998eda"
@@ -96,6 +102,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1400ea41-9ffe-d039-2935-970c210d98b0"
@@ -105,6 +112,7 @@
       "signature": "void Register()",
       "summary": "Registers the instance to listen to the specified events. More event delegates should not be added without calling UnRegister first.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d0730bc4-a833-068f-d632-6916bd501832"
@@ -114,6 +122,7 @@
       "signature": "void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f3c67e22-daa9-f10a-68d7-eeda79d6c10f"

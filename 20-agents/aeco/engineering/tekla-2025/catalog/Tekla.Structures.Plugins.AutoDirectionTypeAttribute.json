@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/6319f80e-cec4-116d-6232-c66ff4de6101",
   "constructors": [
     {
-      "name": "AutoDirectionTypeAttribute",
+      "name": "AutoDirectionTypeAttribute(Int32)",
       "signature": "public AutoDirectionTypeAttribute(int Type)",
       "summary": "The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c0c04832-4ad6-3068-8670-6789aa1eada2"
     },
     {
-      "name": "AutoDirectionTypeAttribute",
+      "name": "AutoDirectionTypeAttribute(AutoDirectionTypeEnum)",
       "signature": "public AutoDirectionTypeAttribute(AutoDirectionTypeEnum Type)",
       "summary": "The custom attribute [AutoDirectionType()] uses this to store the auto direction type to the system. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a5da30dd-f786-115d-b68c-16c8e9913572"

@@ -12,6 +12,7 @@
       "signature": "public Level()",
       "summary": "Initializes a new instance of the Level class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/50e91ec4-4dc8-e5d3-e5e4-b11106ca032f"

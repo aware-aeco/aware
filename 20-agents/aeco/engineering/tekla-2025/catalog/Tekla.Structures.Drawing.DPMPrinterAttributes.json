@@ -12,6 +12,7 @@
       "signature": "public DPMPrinterAttributes()",
       "summary": "Creates a new PrintAttributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4e28ab92-189a-5654-823a-7a7ec528ea2e"

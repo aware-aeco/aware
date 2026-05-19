@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The StructuresExtender class is for binding controls to datatypes. The bindings are needed to transfer the dialog values to Tekla Structures and onwards to plug-ins.",
   "base": "System.ComponentModel.Component",
-  "interfaces": [],
+  "interfaces": [
+    "IExtenderProvider"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/b3cdfd5b-1b70-d1fd-9714-2d5a3426be95",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public StructuresExtender()",
       "summary": "Initializes a new instance of the StructuresExtender class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c88c26f1-8096-cd46-cd8f-337ffd2ba35a"
@@ -136,6 +139,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/be684d7c-2d8e-23f8-2322-f613569ab409"
@@ -158,6 +162,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/caf131b4-139f-c16e-adce-aaf58eeb48a1"
@@ -180,6 +185,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d9bc1d5e-9a6e-a099-f857-1a2f5af61a47"
@@ -202,6 +208,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/938428a6-0561-e6ae-5376-ded7218ff601"

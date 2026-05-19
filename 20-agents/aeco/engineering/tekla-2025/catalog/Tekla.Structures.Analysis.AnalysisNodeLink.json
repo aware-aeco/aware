@@ -12,6 +12,7 @@
       "signature": "public AnalysisNodeLink()",
       "summary": "Initializes a new instance of the AnalysisNodeLink class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0e022a2d-ecf3-f0e2-9379-8ddc1f864515"
@@ -23,6 +24,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes a user analysis node link. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fad6764e-4f78-b6e3-335a-11d701e5ac43"
@@ -32,6 +34,7 @@
       "signature": "public void Insert()",
       "summary": "Inserts a user analysis node link. The AnalysisModelName has to be set. The StartNodeID has to be set. The EndNodeID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a6f7596c-cf99-b230-4184-fdd8692c8522"
@@ -41,6 +44,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis node link. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6ea9ed3b-10e2-94bf-43ee-4d899bdb8371"
@@ -50,6 +54,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis node link. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6ff1a838-95ce-325d-1630-0783a93ecd60"

@@ -26,6 +26,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f0907ea0-c4f0-ac68-6a87-d3c37260e066"

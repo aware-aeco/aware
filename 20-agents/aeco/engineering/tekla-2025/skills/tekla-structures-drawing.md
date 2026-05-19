@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-drawing
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Drawing namespace — 341 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType, AlongLinePlacing, AlongLineOrWithLeaderLinePlacingType, AlongLinePlacingType, AlongPartCenteredPlacingType, AngleDimensionAttributes, AngleDimension, Arc, and 333 more types.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Drawing namespace — 341 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType, AlongLineOrWithLeaderLinePlacingType, AlongLinePlacing, AlongLinePlacingType, AlongPartCenteredPlacingType, AngleDimension, AngleDimensionAttributes, Arc, and 333 more types.
 ---
 
 # Tekla.Structures.Drawing
@@ -97,6 +97,14 @@ Gets the angle value (in degrees).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/ac0311b8-f59b-bea7-5d4b-b9ac1f54d81f)
 
+#### `public override DimensionSetBase GetDimensionSet()`
+
+The angle dimension doesn't have a dimension set.
+
+**Returns:** `DimensionSetBase` — An exception.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/5800f661-0cf8-5da1-f904-35a9cba888b4)
+
 #### `public override DimensionSetBase GetDimensionSet(bool Select)`
 
 The angle dimension doesn't have a dimension set.
@@ -107,14 +115,6 @@ The angle dimension doesn't have a dimension set.
 **Returns:** `DimensionSetBase` — An exception.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/899bcaed-102c-53b2-c66a-cd0d267802a9)
-
-#### `public override DimensionSetBase GetDimensionSet()`
-
-The angle dimension doesn't have a dimension set.
-
-**Returns:** `DimensionSetBase` — An exception.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/5800f661-0cf8-5da1-f904-35a9cba888b4)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -170,6 +170,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -180,14 +188,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -489,6 +489,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -499,14 +507,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -776,6 +776,14 @@ The AssemblyDrawing class is for handling assembly drawings.
 - `public AssemblyDrawing(Identifier assemblyIdentifier, int sheetNumber, string AttributeFile)` — Instantiates a new assembly drawing with given attributes and with a specified sheet number.
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
@@ -786,14 +794,6 @@ Commits the changes made to the drawings database so far. Commit inserts a kind 
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
 
 #### `public override bool Delete()`
 
@@ -1209,6 +1209,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -1219,14 +1227,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -1610,6 +1610,14 @@ The CastUnitDrawing class is for handling cast unit drawings.
 - `public CastUnitDrawing(Identifier castUnitIdentifier, CastUnitDrawing.CastUnitDrawingCreationType castUnitDrawingCreationType, int sheetNumber, string AttributeFile)` — Instantiates a new cast unit drawing by id with given attributes and with a specified sheet number for a given cast unit.
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
@@ -1620,14 +1628,6 @@ Commits the changes made to the drawings database so far. Commit inserts a kind 
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
 
 #### `public override bool Delete()`
 
@@ -1966,6 +1966,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -1976,14 +1984,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -2256,6 +2256,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -2266,14 +2274,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -2544,6 +2544,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -2554,14 +2562,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -2834,6 +2834,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -2844,14 +2852,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -3107,6 +3107,14 @@ Deletes the view and its children objects from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c7b5ef15-0c29-6a2a-ef92-99fb8e0ed0b3)
 
+#### `public DrawingObjectEnumerator GetAllObjects()`
+
+Gets all the objects and their children objects in the view.
+
+**Returns:** `DrawingObjectEnumerator` — All the objects in the view.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6c8f0774-654d-498b-93d5-904797569fd5)
+
 #### `public DrawingObjectEnumerator GetAllObjects(Type[] TypeFilter)`
 
 Gets all the objects and their children objects in the view that are of certain types.
@@ -3128,14 +3136,6 @@ Gets all the objects and their children objects in the view that are of a certai
 **Returns:** `DrawingObjectEnumerator` — All the objects in the view that are of a certain type.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/d8756000-215b-c1e0-49c7-d36dc245bec8)
-
-#### `public DrawingObjectEnumerator GetAllObjects()`
-
-Gets all the objects and their children objects in the view.
-
-**Returns:** `DrawingObjectEnumerator` — All the objects in the view.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/6c8f0774-654d-498b-93d5-904797569fd5)
 
 #### `public DrawingObjectEnumerator GetAllViews()`
 
@@ -3218,6 +3218,14 @@ Gets the drawing model objects based on given model object identifier. If used f
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c59be515-bde2-42ef-2e58-fa8a4e0173ba)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).
+
+**Returns:** `DrawingObjectEnumerator` — The objects in the view.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bd691388-4a5f-d33f-3364-d516c037cb21)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the objects in the view that are of certain types. Does not return child objects (single dimensions, grid lines, views).
@@ -3229,14 +3237,6 @@ Gets the objects in the view that are of certain types. Does not return child ob
 
 [Docs](https://developer.tekla.com/topic/en/18/43/e64fef01-3761-6798-cd3f-d5e5d006a37f)
 
-#### `public DrawingObjectEnumerator GetObjects()`
-
-Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).
-
-**Returns:** `DrawingObjectEnumerator` — The objects in the view.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bd691388-4a5f-d33f-3364-d516c037cb21)
-
 #### `public Drawing GetOriginalDrawing()`
 
 Gets the drawing on which the view was originally created. @see DrawingObject.GetDrawing() for retrieving the current drawing the object resides on.
@@ -3244,6 +3244,14 @@ Gets the drawing on which the view was originally created. @see DrawingObject.Ge
 **Returns:** `Drawing` — The drawing from which the view was made, or NULL if it is not from another drawing.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b34f08ba-6799-5511-dd98-8654ffbc1ebd)
+
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -3255,14 +3263,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -3454,6 +3454,14 @@ Deletes the straight dimension from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0fe9e404-f4b0-1b76-9e4a-e4c0a5e7367c)
 
+#### `public override DimensionSetBase GetDimensionSet()`
+
+Gets the dimension set the current dimension belongs to.
+
+**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c)
+
 #### `public abstract DimensionSetBase GetDimensionSet(bool Select)`
 
 Gets the dimension set the current dimension belongs to.
@@ -3464,14 +3472,6 @@ Gets the dimension set the current dimension belongs to.
 **Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c6436216-db95-d799-f218-b48db2bb953e)
-
-#### `public override DimensionSetBase GetDimensionSet()`
-
-Gets the dimension set the current dimension belongs to.
-
-**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -3527,6 +3527,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -3537,14 +3545,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -3733,6 +3733,14 @@ Deletes the straight dimension from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0fe9e404-f4b0-1b76-9e4a-e4c0a5e7367c)
 
+#### `public override DimensionSetBase GetDimensionSet()`
+
+Gets the dimension set the current dimension belongs to.
+
+**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c)
+
 #### `public override DimensionSetBase GetDimensionSet(bool Select)`
 
 Gets the dimension set the current dimension belongs to.
@@ -3743,14 +3751,6 @@ Gets the dimension set the current dimension belongs to.
 **Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/5b00bfdf-f6a1-c3a8-577b-518f67fcabd9)
-
-#### `public override DimensionSetBase GetDimensionSet()`
-
-Gets the dimension set the current dimension belongs to.
-
-**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -3806,6 +3806,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -3816,14 +3824,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -4012,6 +4012,14 @@ Deletes the straight dimension from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0fe9e404-f4b0-1b76-9e4a-e4c0a5e7367c)
 
+#### `public override DimensionSetBase GetDimensionSet()`
+
+Gets the dimension set the current dimension belongs to.
+
+**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c)
+
 #### `public override DimensionSetBase GetDimensionSet(bool Select)`
 
 Gets the dimension set the current dimension belongs to.
@@ -4022,14 +4030,6 @@ Gets the dimension set the current dimension belongs to.
 **Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/42d0cdfc-a52f-74e8-948d-f41699e2507e)
-
-#### `public override DimensionSetBase GetDimensionSet()`
-
-Gets the dimension set the current dimension belongs to.
-
-**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/397b6ec6-423b-5262-4f0e-b1a277a5315c)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -4085,6 +4085,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -4095,14 +4103,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -4352,6 +4352,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children straight dimensions of the current straight dimension set.
+
+**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children straight dimensions of the current straight dimension set that are of certain types.
@@ -4363,13 +4371,13 @@ Gets the children straight dimensions of the current straight dimension set that
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0ec2481b-08c7-d5e3-41e4-291bfbb31bbc)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children straight dimensions of the current straight dimension set.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -4381,14 +4389,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -4755,6 +4755,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children straight dimensions of the current straight dimension set.
+
+**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children straight dimensions of the current straight dimension set that are of certain types.
@@ -4766,13 +4774,13 @@ Gets the children straight dimensions of the current straight dimension set that
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0ec2481b-08c7-d5e3-41e4-291bfbb31bbc)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children straight dimensions of the current straight dimension set.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -4784,14 +4792,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -5082,6 +5082,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children straight dimensions of the current straight dimension set.
+
+**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children straight dimensions of the current straight dimension set that are of certain types.
@@ -5093,13 +5101,13 @@ Gets the children straight dimensions of the current straight dimension set that
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0ec2481b-08c7-d5e3-41e4-291bfbb31bbc)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children straight dimensions of the current straight dimension set.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -5111,14 +5119,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -5401,6 +5401,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -5411,14 +5419,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -5649,6 +5649,14 @@ The CustomLineTypeCatalog provides accessors to fetch the possible custom line t
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/b16ef3b5-7c9a-f06f-2fa7-e3d8bc687323)
 
 ### Methods
+#### `public static List<CustomLineType> Get()`
+
+Gets all the available CustomLineType's.
+
+**Returns:** `List<CustomLineType>` — List of CustomLineType's.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/79c1407b-4793-aae6-b25d-78b4ce92167c)
+
 #### `public static CustomLineType Get(int CustomLineTypeId)`
 
 Gets the CustomLineType with the specified ID.
@@ -5670,14 +5678,6 @@ Gets the CustomLineType with the specified Name.
 **Returns:** `CustomLineType` — The requested CustomLineType or null if not found.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/67d83194-02c4-4ea0-60cf-a2c822e7299b)
-
-#### `public static List<CustomLineType> Get()`
-
-Gets all the available CustomLineType's.
-
-**Returns:** `List<CustomLineType>` — List of CustomLineType's.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/79c1407b-4793-aae6-b25d-78b4ce92167c)
 
 ## DPMPrinterAttributes (class)
 
@@ -5980,6 +5980,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -5990,14 +5998,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -6287,6 +6287,14 @@ Deletes the instance from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/f13a6c17-3cc9-d9cb-5393-7ef5795760c1)
 
+#### `public abstract DimensionSetBase GetDimensionSet()`
+
+Gets the dimension set the current dimension belongs to.
+
+**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8508b7b5-5f8f-c2e4-fe1f-4b4e391f3143)
+
 #### `public abstract DimensionSetBase GetDimensionSet(bool Select)`
 
 Gets the dimension set the current dimension belongs to.
@@ -6297,14 +6305,6 @@ Gets the dimension set the current dimension belongs to.
 **Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c6436216-db95-d799-f218-b48db2bb953e)
-
-#### `public abstract DimensionSetBase GetDimensionSet()`
-
-Gets the dimension set the current dimension belongs to.
-
-**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/8508b7b5-5f8f-c2e4-fe1f-4b4e391f3143)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -6360,6 +6360,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -6370,14 +6378,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -6629,6 +6629,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -6639,14 +6647,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -6889,6 +6889,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children straight dimensions of the current straight dimension set.
+
+**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children straight dimensions of the current straight dimension set that are of certain types.
@@ -6900,13 +6908,13 @@ Gets the children straight dimensions of the current straight dimension set that
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0ec2481b-08c7-d5e3-41e4-291bfbb31bbc)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children straight dimensions of the current straight dimension set.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -6918,14 +6926,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -7519,6 +7519,14 @@ The Drawing class represents a drawing in Tekla Structures.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/7b690fe6-8004-2c5d-aa07-f60af8ea16f8)
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
@@ -7529,14 +7537,6 @@ Commits the changes made to the drawings database so far. Commit inserts a kind 
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
 
 #### `public override bool Delete()`
 
@@ -7916,6 +7916,14 @@ The DrawingHandler class initializes the interface from a .NET application to Te
 - `public DrawingHandler()` — Creates a new drawing handler instance, a "handle" to Tekla.Structures.Drawing. When a drawing handler object is created, it is possible to ask the current active drawing in Tekla Structures, get a list of drawings or create a new drawing.
 
 ### Methods
+#### `public bool CloseActiveDrawing()`
+
+Closes the drawing editor.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/28a51c2a-f66c-7516-857a-c28c7e8c0737)
+
 #### `public bool CloseActiveDrawing(bool save)`
 
 Closes the drawing editor.
@@ -7926,14 +7934,6 @@ Closes the drawing editor.
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/3b137222-7773-704a-d875-fbdbb1257ca6)
-
-#### `public bool CloseActiveDrawing()`
-
-Closes the drawing editor.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/28a51c2a-f66c-7516-857a-c28c7e8c0737)
 
 #### `public Drawing GetActiveDrawing()`
 
@@ -8183,6 +8183,8 @@ Updates the drawing. This is the same as pressing Update on the drawing list for
 
 The message execution modes of Tekla Structures.
 
+**Remarks:** The message execution mode of Tekla Structures controls whether messages are executed after each database operation or by an explicit call to execute messages.There may be some speed benefits if the BY_COMMIT mode is used when inserting a lot of objects. The messages are then executed once after the objects have been inserted.
+
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/d857408b-12df-e503-3481-cbed0e9cc540)
 
 ### Values
@@ -8307,6 +8309,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/bec56125-ac08-53b1-3304-39ba38dd409a)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -8317,14 +8327,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -8582,6 +8584,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -8592,14 +8602,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -8949,6 +8951,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/2057db75-e1b4-d5cc-5ba4-5849af223043)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -8959,14 +8969,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -9224,6 +9226,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -9234,14 +9244,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -9600,6 +9602,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/2057db75-e1b4-d5cc-5ba4-5849af223043)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -9610,14 +9620,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -9865,6 +9867,8 @@ The options for controlling the scaling of the objects in the drawing.
 ## Events (class)
 
 The Events class allows the user to register event listeners for drawing events.
+
+**Remarks:** Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft's documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft's documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft's documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/70b96e37-c90a-f11f-1554-a4bf7c4147e4)
 
@@ -10125,6 +10129,14 @@ The GADrawing class is for handling general arrangement drawings in Tekla Struct
 - `public GADrawing(string AttributeFile, Size SheetSize)` — Instantiates a new GA drawing with attributes. Loads the specified attribute file and overrides with the given layout attributes.
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
@@ -10135,14 +10147,6 @@ Commits the changes made to the drawings database so far. Commit inserts a kind 
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
 
 #### `public override bool Delete()`
 
@@ -10482,6 +10486,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -10492,14 +10504,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -10800,6 +10804,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Retrieves a DrawingObjectEnumerator for all the grid lines of the grid.
+
+**Returns:** `DrawingObjectEnumerator` — A DrawingObjectEnumerator for all the grid lines of the grid.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ad9dbd39-6586-982a-23b1-44e1c81c9c47)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Retrieves a DrawingObjectEnumerator for all the grid lines of the grid that are of certain TypeFilter.
@@ -10811,13 +10823,13 @@ Retrieves a DrawingObjectEnumerator for all the grid lines of the grid that are 
 
 [Docs](https://developer.tekla.com/topic/en/18/43/58a490eb-40f4-d826-7a4a-19840a7ddd4c)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Retrieves a DrawingObjectEnumerator for all the grid lines of the grid.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — A DrawingObjectEnumerator for all the grid lines of the grid.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/ad9dbd39-6586-982a-23b1-44e1c81c9c47)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -10829,14 +10841,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -11115,6 +11119,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -11125,14 +11137,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -11573,6 +11577,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/bec56125-ac08-53b1-3304-39ba38dd409a)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -11583,14 +11595,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -11869,6 +11873,14 @@ The IHasChildren interface is implemented by objects that have child objects.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/c8afa60b-3959-4d13-a047-c2a2b6450171)
 
 ### Methods
+#### `DrawingObjectEnumerator GetObjects()`
+
+Gets the children of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e548034d-415e-3fc3-844f-780bc5d2e7c2)
+
 #### `DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children of the current object that are of certain types.
@@ -11879,14 +11891,6 @@ Gets the children of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The children of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/7b2c4ae3-77ab-3ff9-2e07-a39e04badc8f)
-
-#### `DrawingObjectEnumerator GetObjects()`
-
-Gets the children of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The children of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/e548034d-415e-3fc3-844f-780bc5d2e7c2)
 
 ## IHideable (interface)
 
@@ -11955,6 +11959,14 @@ The IPlacing interface is for objects that can have different placings.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/560a76d0-1e87-ff6f-4905-ed9bfb167eb8)
 
 ### Methods
+#### `DrawingObjectEnumerator GetObjects()`
+
+Gets the children of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e548034d-415e-3fc3-844f-780bc5d2e7c2)
+
 #### `DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children of the current object that are of certain types.
@@ -11965,14 +11977,6 @@ Gets the children of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The children of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/7b2c4ae3-77ab-3ff9-2e07-a39e04badc8f)
-
-#### `DrawingObjectEnumerator GetObjects()`
-
-Gets the children of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The children of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/e548034d-415e-3fc3-844f-780bc5d2e7c2)
 
 ### Properties
 - `Placing` (PlacingBase, get/set) — The current placing of the object. See PlacingTypes for different placing options.
@@ -11993,6 +11997,14 @@ The IRelatedObjects interface is implemented by objects that have related object
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/418d8ffc-af61-6647-0028-9b76311ea27f)
 
 ### Methods
+#### `DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/003820ed-f0fb-31db-bd7b-9e29af26c9ea)
+
 #### `DrawingObjectEnumerator GetRelatedObjects(Type[] TypeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -12003,14 +12015,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01f07387-e7a7-4074-792a-d94e64785249)
-
-#### `DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/003820ed-f0fb-31db-bd7b-9e29af26c9ea)
 
 ## IResizeable (interface)
 
@@ -12121,6 +12125,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/2057db75-e1b4-d5cc-5ba4-5849af223043)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -12131,14 +12143,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -12678,6 +12682,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -12688,14 +12700,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -13011,6 +13015,14 @@ Returns the bounding box of the level mark (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/3f4fc5f4-2b3a-d410-68ea-e7dd6af1d96f)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/e697d436-dbc5-daf0-5f23-441f0ed1d3f0)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -13022,13 +13034,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/6345f693-40cb-39a3-cd7d-2ca032df473b)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/e697d436-dbc5-daf0-5f23-441f0ed1d3f0)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -13040,14 +13052,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -13361,6 +13365,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -13371,14 +13383,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -13815,6 +13819,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/bec56125-ac08-53b1-3304-39ba38dd409a)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -13825,14 +13837,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -14150,6 +14154,14 @@ Returns the object aligned bounding box of the text (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/7c35501a-be1b-5b35-69e5-70cd3010ff93)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b1bf3deb-7012-dcc6-8bf4-6edc9b5cad4f)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -14161,13 +14173,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/75151c19-9f40-2e6f-8da8-8691595f4ea1)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/b1bf3deb-7012-dcc6-8bf4-6edc9b5cad4f)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -14179,14 +14191,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -14494,6 +14498,14 @@ Returns the object aligned bounding box of the text (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/7c35501a-be1b-5b35-69e5-70cd3010ff93)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b1bf3deb-7012-dcc6-8bf4-6edc9b5cad4f)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -14505,13 +14517,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/75151c19-9f40-2e6f-8da8-8691595f4ea1)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/b1bf3deb-7012-dcc6-8bf4-6edc9b5cad4f)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -14523,14 +14535,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -14848,6 +14852,14 @@ Returns the object aligned bounding box of the text (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/7c35501a-be1b-5b35-69e5-70cd3010ff93)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/b1bf3deb-7012-dcc6-8bf4-6edc9b5cad4f)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -14859,13 +14871,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/75151c19-9f40-2e6f-8da8-8691595f4ea1)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/b1bf3deb-7012-dcc6-8bf4-6edc9b5cad4f)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -14877,14 +14889,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -15186,6 +15190,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -15196,14 +15208,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -15406,6 +15410,14 @@ The MultiDrawing class is for handling multidrawings.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/fc3ba5fd-4ff0-8683-dcb2-929e61446a07)
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
@@ -15416,14 +15428,6 @@ Commits the changes made to the drawings database so far. Commit inserts a kind 
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
 
 #### `public override bool Delete()`
 
@@ -15835,6 +15839,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -15845,14 +15857,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -16118,6 +16122,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -16128,14 +16140,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -16924,6 +16928,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -16934,14 +16946,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public string GetStringAttribute(string FieldName)`
 
@@ -17546,6 +17550,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -17556,14 +17568,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -17841,6 +17845,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -17851,14 +17863,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -18131,6 +18135,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -18141,14 +18153,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -18420,6 +18424,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -18430,14 +18442,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -20070,6 +20074,14 @@ Deletes the dimension from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/35f59670-a535-3441-b6d3-bfd79adb418c)
 
+#### `public override DimensionSetBase GetDimensionSet()`
+
+Radius dimensions don't have dimension sets.
+
+**Returns:** `DimensionSetBase` — An exception.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/8f7eb088-aace-b802-9371-e18d7f8f262b)
+
 #### `public override DimensionSetBase GetDimensionSet(bool Select)`
 
 Radius dimensions don't have dimension sets.
@@ -20080,14 +20092,6 @@ Radius dimensions don't have dimension sets.
 **Returns:** `DimensionSetBase` — An exception.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/bb7ae1f7-a0be-f198-69ca-33f905958f5d)
-
-#### `public override DimensionSetBase GetDimensionSet()`
-
-Radius dimensions don't have dimension sets.
-
-**Returns:** `DimensionSetBase` — An exception.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/8f7eb088-aace-b802-9371-e18d7f8f262b)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -20143,6 +20147,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -20153,14 +20165,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -20445,6 +20449,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -20455,14 +20467,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -20839,6 +20843,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -20849,14 +20861,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -21127,6 +21131,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -21137,14 +21149,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -21694,6 +21698,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -21704,14 +21716,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -21946,6 +21950,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -21956,14 +21968,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -22283,6 +22287,14 @@ Gets the model identifiers of the single rebars in this reinforcement set group.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/1fb35643-b806-ac06-2bec-0753fdb9817a)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -22293,14 +22305,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -22535,6 +22539,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -22545,14 +22557,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -22787,6 +22791,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -22797,14 +22809,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -23094,6 +23098,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -23104,14 +23116,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -23345,6 +23349,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -23355,14 +23367,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -23714,6 +23718,14 @@ The SinglePartDrawing class is for handling single part drawings.
 - `public SinglePartDrawing(Identifier partIdentifier, int sheetNumber, string AttributeFile)` — Instantiates a new single part drawing with standard attributes and with a specified sheet number.
 
 ### Methods
+#### `public bool CommitChanges()`
+
+Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
+
+**Returns:** `Boolean` — True on success.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
+
 #### `public bool CommitChanges(string Message)`
 
 Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
@@ -23724,14 +23736,6 @@ Commits the changes made to the drawings database so far. Commit inserts a kind 
 **Returns:** `Boolean` — True on success.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/92109855-5313-7446-bef4-ab6dde6875f1)
-
-#### `public bool CommitChanges()`
-
-Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.
-
-**Returns:** `Boolean` — True on success.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bc26a611-bd6a-535a-4461-943b8bf5351c)
 
 #### `public override bool Delete()`
 
@@ -23997,6 +24001,14 @@ The Size class contains the width and height properties.
 - `public Size(double Width, double Height)` — Creates a new size instance with the specified width and height.
 
 ### Methods
+#### `public override string ToString()`
+
+Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).
+
+**Returns:** `String` — A string that represents this instance using default separator character "x".
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1ef52bd4-9074-7210-56ff-6c3cf681ca06)
+
 #### `public string ToString(IFormatProvider formatProvider, string separator = null)`
 
 Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).
@@ -24019,14 +24031,6 @@ Returns a string that represents this instance (in fractional inches if advanced
 **Returns:** `String` — A string that represents this instance using the specified separator character(s).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/9731ad65-0f62-db52-cba4-b742413b369b)
-
-#### `public override string ToString()`
-
-Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).
-
-**Returns:** `String` — A string that represents this instance using default separator character "x".
-
-[Docs](https://developer.tekla.com/topic/en/18/43/1ef52bd4-9074-7210-56ff-6c3cf681ca06)
 
 ### Properties
 - `Height` (Double, get/set) — Gets or sets the height value of the size instance.
@@ -24098,6 +24102,14 @@ Deletes the straight dimension from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/4245f304-e8dd-4749-3eeb-4411721f478e)
 
+#### `public override DimensionSetBase GetDimensionSet()`
+
+Gets the dimension set the current dimension belongs to.
+
+**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/29ac1286-a4b2-3119-7f4f-4d050ad1cc2f)
+
 #### `public override DimensionSetBase GetDimensionSet(bool Select)`
 
 Gets the dimension set the current dimension belongs to.
@@ -24108,14 +24120,6 @@ Gets the dimension set the current dimension belongs to.
 **Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/815002cc-f8bb-e90c-4768-f44d44a95d74)
-
-#### `public override DimensionSetBase GetDimensionSet()`
-
-Gets the dimension set the current dimension belongs to.
-
-**Returns:** `DimensionSetBase` — The dimension set the current dimension belongs to.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/29ac1286-a4b2-3119-7f4f-4d050ad1cc2f)
 
 #### `public bool GetDoubleUserProperties(out Dictionary<string, double> values)`
 
@@ -24171,6 +24175,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -24181,14 +24193,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -24483,6 +24487,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children straight dimensions of the current straight dimension set.
+
+**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children straight dimensions of the current straight dimension set that are of certain types.
@@ -24494,13 +24506,13 @@ Gets the children straight dimensions of the current straight dimension set that
 
 [Docs](https://developer.tekla.com/topic/en/18/43/0ec2481b-08c7-d5e3-41e4-291bfbb31bbc)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children straight dimensions of the current straight dimension set.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children straight dimensions of the current straight dimension set.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/a5b00ccb-a302-c9bd-b940-6b64af7bccdc)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -24512,14 +24524,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -25059,6 +25063,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -25069,14 +25081,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -25389,6 +25393,14 @@ Returns the bounding box of the symbol (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/d222a75a-6250-447b-2904-44b9617ec57b)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/dccf780b-3136-ff9b-60cc-c26c9730906c)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -25400,13 +25412,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/bda97323-4f4d-38e2-0164-17919a253bd8)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/dccf780b-3136-ff9b-60cc-c26c9730906c)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -25418,14 +25430,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -25723,6 +25727,14 @@ The SymbolLibrary class is for handling symbol libraries.
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/83f5e488-a939-d16f-cb31-7b27f36d8886)
 
 ### Methods
+#### `public static StringList GetSymbolLibraries()`
+
+Gets the names of the available symbol files in the current Tekla Structures environment, in the "symbols" directory, without the suffix.
+
+**Returns:** `StringList` — A list of symbol file names or null if failed.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/1a52bc25-6891-60fb-c459-d8531a91f5ae)
+
 #### `public static StringList GetSymbolLibraries(bool forceRefresh)`
 
 Gets the names of the available symbol files in the current Tekla Structures environment, in the "symbols" directory, without the suffix.
@@ -25733,14 +25745,6 @@ Gets the names of the available symbol files in the current Tekla Structures env
 **Returns:** `StringList` — A list of symbol file names or null if failed.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/d0213ef2-9232-62f2-9c58-ba7b53e5f454)
-
-#### `public static StringList GetSymbolLibraries()`
-
-Gets the names of the available symbol files in the current Tekla Structures environment, in the "symbols" directory, without the suffix.
-
-**Returns:** `StringList` — A list of symbol file names or null if failed.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/1a52bc25-6891-60fb-c459-d8531a91f5ae)
 
 ## TagLocation (enum)
 
@@ -25897,6 +25901,14 @@ Returns the object aligned bounding box of the text (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/df12c0cc-3b69-b142-0716-7c196694f0db)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/59774d78-87e8-44c4-a0c8-d38d85c81bd5)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -25908,13 +25920,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/2e30931a-cc02-c1f4-2a59-27f44ff519b2)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/59774d78-87e8-44c4-a0c8-d38d85c81bd5)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -25926,14 +25938,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -26215,6 +26219,8 @@ Compares the current object with an object of the same type.
 
 The TextFile class defines a text file object in a drawing.
 
+**Remarks:** A text file object can be inserted as-is without scaling or it can be forced to fit inside the given space. The content is scaled in the Y direction, but it can overflow in the X direction.
+
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/d6c4338c-95d8-e22d-c7cd-44d9ca5daef5)
 
 ### Constructors
@@ -26302,6 +26308,14 @@ Gets the bounding box for the current object in its local coordinate system.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/2057db75-e1b4-d5cc-5ba4-5849af223043)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -26312,14 +26326,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -26811,6 +26817,14 @@ Deletes the view and its children objects from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c7b5ef15-0c29-6a2a-ef92-99fb8e0ed0b3)
 
+#### `public DrawingObjectEnumerator GetAllObjects()`
+
+Gets all the objects and their children objects in the view.
+
+**Returns:** `DrawingObjectEnumerator` — All the objects in the view.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6c8f0774-654d-498b-93d5-904797569fd5)
+
 #### `public DrawingObjectEnumerator GetAllObjects(Type[] TypeFilter)`
 
 Gets all the objects and their children objects in the view that are of certain types.
@@ -26832,14 +26846,6 @@ Gets all the objects and their children objects in the view that are of a certai
 **Returns:** `DrawingObjectEnumerator` — All the objects in the view that are of a certain type.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/d8756000-215b-c1e0-49c7-d36dc245bec8)
-
-#### `public DrawingObjectEnumerator GetAllObjects()`
-
-Gets all the objects and their children objects in the view.
-
-**Returns:** `DrawingObjectEnumerator` — All the objects in the view.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/6c8f0774-654d-498b-93d5-904797569fd5)
 
 #### `public RectangleBoundingBox GetAxisAlignedBoundingBox()`
 
@@ -26903,6 +26909,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetModelObjects()`
+
+Gets the model objects that are in the view.
+
+**Returns:** `DrawingObjectEnumerator` — The model objects that are in the view.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/ec48c4dd-923d-2eae-4243-5454aa07e042)
+
 #### `public DrawingObjectEnumerator GetModelObjects(Identifier ModelIdentifier)`
 
 Gets the drawing model objects based on given model object identifier. If used from sheet model objects from all views are returned.
@@ -26914,13 +26928,13 @@ Gets the drawing model objects based on given model object identifier. If used f
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c59be515-bde2-42ef-2e58-fa8a4e0173ba)
 
-#### `public DrawingObjectEnumerator GetModelObjects()`
+#### `public DrawingObjectEnumerator GetObjects()`
 
-Gets the model objects that are in the view.
+Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).
 
-**Returns:** `DrawingObjectEnumerator` — The model objects that are in the view.
+**Returns:** `DrawingObjectEnumerator` — The objects in the view.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/ec48c4dd-923d-2eae-4243-5454aa07e042)
+[Docs](https://developer.tekla.com/topic/en/18/43/bd691388-4a5f-d33f-3364-d516c037cb21)
 
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
@@ -26933,14 +26947,6 @@ Gets the objects in the view that are of certain types. Does not return child ob
 
 [Docs](https://developer.tekla.com/topic/en/18/43/e64fef01-3761-6798-cd3f-d5e5d006a37f)
 
-#### `public DrawingObjectEnumerator GetObjects()`
-
-Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).
-
-**Returns:** `DrawingObjectEnumerator` — The objects in the view.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bd691388-4a5f-d33f-3364-d516c037cb21)
-
 #### `public Drawing GetOriginalDrawing()`
 
 Gets the drawing on which the view was originally created. @see DrawingObject.GetDrawing() for retrieving the current drawing the object resides on.
@@ -26948,6 +26954,14 @@ Gets the drawing on which the view was originally created. @see DrawingObject.Ge
 **Returns:** `Drawing` — The drawing from which the view was made, or NULL if it is not from another drawing.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b34f08ba-6799-5511-dd98-8654ffbc1ebd)
+
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -26959,14 +26973,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -27439,6 +27445,14 @@ Deletes the view and its children objects from the database.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c7b5ef15-0c29-6a2a-ef92-99fb8e0ed0b3)
 
+#### `public DrawingObjectEnumerator GetAllObjects()`
+
+Gets all the objects and their children objects in the view.
+
+**Returns:** `DrawingObjectEnumerator` — All the objects in the view.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/6c8f0774-654d-498b-93d5-904797569fd5)
+
 #### `public DrawingObjectEnumerator GetAllObjects(Type[] TypeFilter)`
 
 Gets all the objects and their children objects in the view that are of certain types.
@@ -27460,14 +27474,6 @@ Gets all the objects and their children objects in the view that are of a certai
 **Returns:** `DrawingObjectEnumerator` — All the objects in the view that are of a certain type.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/d8756000-215b-c1e0-49c7-d36dc245bec8)
-
-#### `public DrawingObjectEnumerator GetAllObjects()`
-
-Gets all the objects and their children objects in the view.
-
-**Returns:** `DrawingObjectEnumerator` — All the objects in the view.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/6c8f0774-654d-498b-93d5-904797569fd5)
 
 #### `public RectangleBoundingBox GetAxisAlignedBoundingBox()`
 
@@ -27542,6 +27548,14 @@ Gets the drawing model objects based on given model object identifier. If used f
 
 [Docs](https://developer.tekla.com/topic/en/18/43/c59be515-bde2-42ef-2e58-fa8a4e0173ba)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).
+
+**Returns:** `DrawingObjectEnumerator` — The objects in the view.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/bd691388-4a5f-d33f-3364-d516c037cb21)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the objects in the view that are of certain types. Does not return child objects (single dimensions, grid lines, views).
@@ -27553,14 +27567,6 @@ Gets the objects in the view that are of certain types. Does not return child ob
 
 [Docs](https://developer.tekla.com/topic/en/18/43/e64fef01-3761-6798-cd3f-d5e5d006a37f)
 
-#### `public DrawingObjectEnumerator GetObjects()`
-
-Gets the objects in the view. Does not return child objects (single dimensions, grid lines, views).
-
-**Returns:** `DrawingObjectEnumerator` — The objects in the view.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/bd691388-4a5f-d33f-3364-d516c037cb21)
-
 #### `public Drawing GetOriginalDrawing()`
 
 Gets the drawing on which the view was originally created. @see DrawingObject.GetDrawing() for retrieving the current drawing the object resides on.
@@ -27568,6 +27574,14 @@ Gets the drawing on which the view was originally created. @see DrawingObject.Ge
 **Returns:** `Drawing` — The drawing from which the view was made, or NULL if it is not from another drawing.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b34f08ba-6799-5511-dd98-8654ffbc1ebd)
+
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -27579,14 +27593,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -27877,6 +27883,14 @@ Retrieves all integer user properties for the object with the given list of name
 
 [Docs](https://developer.tekla.com/topic/en/18/43/b485bd81-5ccf-68e4-0453-caea6b1d0dde)
 
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
+
+Gets the related objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
+
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
 Gets the related objects of the current object that are of certain types.
@@ -27887,14 +27901,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 
@@ -28195,6 +28201,14 @@ Returns the object aligned bounding box of the weld mark (rectangle format).
 
 [Docs](https://developer.tekla.com/topic/en/18/43/ddbc4ec3-4fff-620f-fd09-e743318185b6)
 
+#### `public DrawingObjectEnumerator GetObjects()`
+
+Gets the children objects of the current object.
+
+**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/41fc1a14-869d-313a-134b-6abba011a1e9)
+
 #### `public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)`
 
 Gets the children objects of the current object that are of certain types.
@@ -28206,13 +28220,13 @@ Gets the children objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/4f27ba0a-4880-f09e-d734-82fea5b72200)
 
-#### `public DrawingObjectEnumerator GetObjects()`
+#### `public DrawingObjectEnumerator GetRelatedObjects()`
 
-Gets the children objects of the current object.
+Gets the related objects of the current object.
 
-**Returns:** `DrawingObjectEnumerator` — The children objects of the current object.
+**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
 
-[Docs](https://developer.tekla.com/topic/en/18/43/41fc1a14-869d-313a-134b-6abba011a1e9)
+[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)`
 
@@ -28224,14 +28238,6 @@ Gets the related objects of the current object that are of certain types.
 **Returns:** `DrawingObjectEnumerator` — The related objects of the current object that are of certain types.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415)
-
-#### `public DrawingObjectEnumerator GetRelatedObjects()`
-
-Gets the related objects of the current object.
-
-**Returns:** `DrawingObjectEnumerator` — The related objects of the current object.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149)
 
 #### `public bool GetStringUserProperties(out Dictionary<string, string> values)`
 

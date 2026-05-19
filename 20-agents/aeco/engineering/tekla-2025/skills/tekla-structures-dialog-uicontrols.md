@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-dialog-uicontrols
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Dialog.UIControls namespace — 52 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BoltCatalogStandard, BoltCatalogSize, BindableRadioButton, CommitAction, ComponentCatalog, CreateApplyCancel, CreateDialog, CustomObservableCollection.T., and 44 more types.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Dialog.UIControls namespace — 52 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: BindableRadioButton, BoltCatalogSize, BoltCatalogStandard, CommitAction, ComponentCatalog, CreateApplyCancel, CreateDialog, CustomObservableCollection<T>, and 44 more types.
 ---
 
 # Tekla.Structures.Dialog.UIControls
@@ -52,7 +52,7 @@ The CommitAction class represents a "template" dialog for commit actions.
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -84,7 +84,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -202,7 +202,7 @@ The CreateDialog class represents a "template" dialog for creating something fro
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -234,7 +234,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -275,7 +275,7 @@ Rereads and updates all the field values on the form.
 ### Properties
 - `Localization` (Localization, get) — The localization instance for the dialog. Each dialog has its own localization instance that has read the localization files needed for that dialog.
 
-## CustomObservableCollection.T. (class)
+## CustomObservableCollection<T> (class)
 
 CustomObservableCollection for synchronizing UI controls.
 
@@ -625,7 +625,7 @@ The MeshSelectionForm class represents a dialog to select meshes using the mesh 
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -657,7 +657,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -710,6 +710,14 @@ The ModelAccess class contains helper methods for connecting to and accessing th
 - `public ModelAccess()` — Initializes a new instance of the ModelAccess class
 
 ### Methods
+#### `public static Model ConnectToModel()`
+
+Gets a model connnection.
+
+**Returns:** `Model` — The model or null if unable to connect.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/112f2b0f-baa5-60ee-0a52-93a9cfaf4c93)
+
 #### `public static Model ConnectToModel(out bool ConnectedToModel)`
 
 Gets a model connection.
@@ -731,14 +739,6 @@ Gets a model connection.
 **Returns:** `Boolean` — True on success. False otherwise.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/a013c153-5759-8c07-4ca8-d60053b82bc6)
-
-#### `public static Model ConnectToModel()`
-
-Gets a model connnection.
-
-**Returns:** `Model` — The model or null if unable to connect.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/112f2b0f-baa5-60ee-0a52-93a9cfaf4c93)
 
 ## OkApplyCancel (class)
 
@@ -870,7 +870,7 @@ The OrganizerDialog class represents a "template" of an organizer dialog.
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -902,7 +902,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1009,7 +1009,7 @@ The PropertiesDialog class represents a "template" of a properties dialog.
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1041,7 +1041,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1310,7 +1310,7 @@ The TreeViewDialog class represents a "template" of a tree view dialog.
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1342,7 +1342,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.

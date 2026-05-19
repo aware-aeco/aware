@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/59e6e3c9-3096-fa15-6c87-984312b000dd",
   "constructors": [
     {
-      "name": "DetailMark.DetailMarkAttributes",
+      "name": "DetailMark.DetailMarkAttributes()",
       "signature": "public DetailMarkAttributes()",
       "summary": "Creates a new default DetailMarkAttributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cd4359cf-5a73-f0f1-ba20-5904a1a63a24"
     },
     {
-      "name": "DetailMark.DetailMarkAttributes",
+      "name": "DetailMark.DetailMarkAttributes(String)",
       "signature": "public DetailMarkAttributes(string attributesFile)",
       "summary": "Creates a new DetailMarkAttributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/17dbc94f-d484-ec22-f00a-778ed8913a9b"

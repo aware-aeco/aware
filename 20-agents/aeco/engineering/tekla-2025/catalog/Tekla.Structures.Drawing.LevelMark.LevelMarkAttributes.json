@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/ac4e8119-c21c-dd94-2a5c-f7537c74525d",
   "constructors": [
     {
-      "name": "LevelMark.LevelMarkAttributes",
+      "name": "LevelMark.LevelMarkAttributes()",
       "signature": "public LevelMarkAttributes()",
       "summary": "Initializes a new instance of the LevelMark.LevelMarkAttributes class that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5fd59191-ad39-876f-7b23-9dc90974c4e0"
     },
     {
-      "name": "LevelMark.LevelMarkAttributes",
+      "name": "LevelMark.LevelMarkAttributes(String)",
       "signature": "public LevelMarkAttributes(string AttributesFile)",
       "summary": "Initializes a new instance of the LevelMark.LevelMarkAttributes class that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb5f0415-7413-d048-445a-747a349da511"

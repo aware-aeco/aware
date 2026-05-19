@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/c71a59d4-6836-e9f2-a51e-09c64d4ed72d",
   "constructors": [
     {
-      "name": "PlacingQuarterAttributes",
+      "name": "PlacingQuarterAttributes()",
       "signature": "public PlacingQuarterAttributes()",
       "summary": "Creates a new placing quarter attributes instance. The default parameters are: TopLeft = true, TopRight = true, BottomLeft = true, BottomRight = true.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d26de711-bfa8-a2cc-b89c-c6128e6c130d"
     },
     {
-      "name": "PlacingQuarterAttributes",
+      "name": "PlacingQuarterAttributes(Boolean, Boolean, Boolean, Boolean)",
       "signature": "public PlacingQuarterAttributes(bool TopLeft, bool TopRight, bool BottomLeft, bool BottomRight)",
       "summary": "Creates a new placing quarter attributes instance with the given parameters.",
       "params": [
@@ -46,6 +47,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5e018245-f171-cd9d-fdcf-c7edbff412cb"

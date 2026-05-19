@@ -12,6 +12,7 @@
       "signature": "public CannotSetAttributeForPluginDueToInexistantFieldException()",
       "summary": "Creates a new CannotSetAttributeForPluginDueToInexistantFieldException instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/831d282c-a20a-23a8-9fd0-91a404256bb2"

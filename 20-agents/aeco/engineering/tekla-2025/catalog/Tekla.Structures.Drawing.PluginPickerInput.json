@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/1fbe56ff-0633-90a5-ef51-20307ee497cb",
   "constructors": [
     {
-      "name": "PluginPickerInput",
+      "name": "PluginPickerInput()",
       "signature": "public PluginPickerInput()",
       "summary": "Initializes a new instance of the PluginPickerInput class with an empty list of picker inputs.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f019f7ce-ff2b-12cb-ea56-a56f59b02ecd"
     },
     {
-      "name": "PluginPickerInput",
+      "name": "PluginPickerInput(List\u003CPickerInput\u003E)",
       "signature": "public PluginPickerInput(List\u003CPickerInput\u003E inputs)",
       "summary": "Initializes a new instance of the PluginPickerInput class which contains a predefined sequence of inputs.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2374b83e-753e-6642-5ead-aeac0224baef"
@@ -46,6 +48,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2e8405d4-bef2-bbf7-c056-e1f6c63c8352"
@@ -62,6 +65,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e5b2b352-1609-2d51-f946-15a3d19593a8"

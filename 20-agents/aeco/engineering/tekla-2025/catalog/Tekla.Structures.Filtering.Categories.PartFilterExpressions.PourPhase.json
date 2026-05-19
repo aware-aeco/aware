@@ -12,6 +12,7 @@
       "signature": "public PourPhase()",
       "summary": "Initializes a new instance of the PourPhase class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/12ec0199-d335-5a4c-c2ae-53ef6c0c4e10"

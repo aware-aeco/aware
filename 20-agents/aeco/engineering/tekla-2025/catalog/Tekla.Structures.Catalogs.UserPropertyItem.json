@@ -12,6 +12,7 @@
       "signature": "public UserPropertyItem()",
       "summary": "Creates a new user property item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4159e4ec-53ea-1507-ff7c-0faa843ac973"
@@ -112,7 +113,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9aee87ff-94be-8506-3db5-025c3ffee451"
     },
     {
-      "name": "GetLabel.",
+      "name": "GetLabel()",
       "signature": "public string GetLabel()",
       "summary": "Gets the label of the user property. Labels are translated when translation is available.",
       "params": [],
@@ -165,7 +166,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dc091818-71be-e6e4-b292-73185fafeedc"
     },
     {
-      "name": "GetOptions(List.KeyValuePair.Double, String...)",
+      "name": "GetOptions(List\u003CKeyValuePair\u003CDouble, String\u003E\u003E.)",
       "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cdouble, string\u003E\u003E DoubleOptions)",
       "summary": "Gets the value options of a double property. Option strings are translated when translation is available.",
       "params": [
@@ -185,7 +186,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/508fd0e9-fe08-eb93-fedd-4f3b52e073b2"
     },
     {
-      "name": "GetOptions(List.KeyValuePair.Int32, String...)",
+      "name": "GetOptions(List\u003CKeyValuePair\u003CInt32, String\u003E\u003E.)",
       "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cint, string\u003E\u003E IntOptions)",
       "summary": "Gets the value options of an integer property. Option strings are translated when translation is available.",
       "params": [
@@ -205,7 +206,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/00d0baf4-c0ce-d26e-d037-f0c342d92103"
     },
     {
-      "name": "GetOptions(List.KeyValuePair.String, String...)",
+      "name": "GetOptions(List\u003CKeyValuePair\u003CString, String\u003E\u003E.)",
       "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cstring, string\u003E\u003E StringOptions)",
       "summary": "Gets the value options of a string property. Option strings are translated when translation is available.",
       "params": [
@@ -225,7 +226,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a4c8794d-754a-accd-a966-e934fcdc7514"
     },
     {
-      "name": "GetOptions(List.KeyValuePair.Double, String..., Boolean)",
+      "name": "GetOptions(List\u003CKeyValuePair\u003CDouble, String\u003E\u003E., Boolean)",
       "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cdouble, string\u003E\u003E DoubleOptions, bool translatedLabels)",
       "summary": "Gets the value options of a double property.",
       "params": [
@@ -251,7 +252,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4f65183f-06de-d81c-48a9-ec1d346fc50d"
     },
     {
-      "name": "GetOptions(List.KeyValuePair.Int32, String..., Boolean)",
+      "name": "GetOptions(List\u003CKeyValuePair\u003CInt32, String\u003E\u003E., Boolean)",
       "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cint, string\u003E\u003E IntOptions, bool translatedLabels)",
       "summary": "Gets the value options of an integer property.",
       "params": [
@@ -277,7 +278,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a9d61eee-15e4-687e-5ddf-1983dcc071ce"
     },
     {
-      "name": "GetOptions(List.KeyValuePair.String, String..., Boolean)",
+      "name": "GetOptions(List\u003CKeyValuePair\u003CString, String\u003E\u003E., Boolean)",
       "signature": "public bool GetOptions(ref List\u003CKeyValuePair\u003Cstring, string\u003E\u003E StringOptions, bool translatedLabels)",
       "summary": "Gets the value options of a string property.",
       "params": [
@@ -433,12 +434,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/682151bd-ed6f-08dc-c84d-d0f91bb708a7"
     },
     {
-      "name": "SetOptions(List.KeyValuePair.Double, String..)",
+      "name": "SetOptions(List\u003CKeyValuePair\u003CDouble, String\u003E\u003E)",
       "signature": "public bool SetOptions(List\u003CKeyValuePair\u003Cdouble, string\u003E\u003E DoubleOptions)",
       "summary": "Sets the value options of a double property. The maximum count of options is 400.",
       "params": [
@@ -458,7 +460,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/20d1c30f-74a1-995d-9972-fb0907950eab"
     },
     {
-      "name": "SetOptions(List.KeyValuePair.Int32, String..)",
+      "name": "SetOptions(List\u003CKeyValuePair\u003CInt32, String\u003E\u003E)",
       "signature": "public bool SetOptions(List\u003CKeyValuePair\u003Cint, string\u003E\u003E IntOptions)",
       "summary": "Sets the value options of an integer property. The maximum count of options is 400.",
       "params": [
@@ -478,7 +480,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d27524ad-3dad-136a-19b7-fb462072afda"
     },
     {
-      "name": "SetOptions(List.KeyValuePair.String, String..)",
+      "name": "SetOptions(List\u003CKeyValuePair\u003CString, String\u003E\u003E)",
       "signature": "public bool SetOptions(List\u003CKeyValuePair\u003Cstring, string\u003E\u003E StringOptions)",
       "summary": "Sets the value options of a string property. The maximum count of options is 400.",
       "params": [

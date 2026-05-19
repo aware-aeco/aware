@@ -12,6 +12,7 @@
       "signature": "public ImageListComboBox()",
       "summary": "Initializes a new instance of the ImageListComboBox class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5e1e0090-f3e4-fce3-d297-86a477ae4bed"
@@ -23,6 +24,7 @@
       "signature": "public void RefreshOptionList()",
       "summary": "Refreshes the option list content.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c78dae68-5e4f-7944-27a9-eb944ef62b38"

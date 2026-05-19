@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Drawing",
   "kind": "class",
   "summary": "The Events class allows the user to register event listeners for drawing events.",
+  "remarks": "Asynchronous event handling Registered event handlers are called asynchronously so that many handlers may be running simultaneously. Event handlers are not guaranteed to be run in the same thread where they were registered. The asynchronous nature of the events requires the use of synchronization constructs on objects and data structures that are not defined to be thread safe.Microsoft\u0027s documentation about the lock statement: http://msdn.microsoft.com/en-us/library/c5kehkcz.aspxMicrosoft\u0027s documentation about delegates: http://msdn.microsoft.com/en-us/library/900fyy8e.aspxMicrosoft\u0027s documentation about managed threading: http://msdn.microsoft.com/en-us/library/1c9txz50.aspx",
   "base": "System.MarshalByRefObject",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/70b96e37-c90a-f11f-1554-a4bf7c4147e4",
@@ -12,6 +13,7 @@
       "signature": "public Events()",
       "summary": "Constructs a new instance of Events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/440e228c-47af-3808-420e-53d5017956be"
@@ -23,6 +25,7 @@
       "signature": "public void Dispose()",
       "summary": "Disposes of the Events instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d79d261-bcf1-d034-f6d8-6c413402a2a8"
@@ -45,6 +48,7 @@
       "signature": "public void Register()",
       "summary": "Registers the instance to listen to the specified events.",
       "params": [],
+      "returns": null,
       "throws": [
         {
           "type": "InvalidOperationException",
@@ -59,6 +63,7 @@
       "signature": "public void UnRegister()",
       "summary": "Unregisters the instance from listening to events.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aaab4b70-a62a-2f51-bca6-3926ab0b156b"

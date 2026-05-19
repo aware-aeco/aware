@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The PluginWindowBase class is the base class for plug-in WPF dialogs. The class extends the WindowBase class by adding communications with Tekla Structures.",
   "base": "System.Windows.Window",
-  "interfaces": [],
+  "interfaces": [
+    "IDisposable"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/a9f51cb5-f0b6-bef3-d11f-ba0a18cef07e",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public PluginWindowBase()",
       "summary": "Runs the WindowBase constructor and loads the default .NET localization file (DotNetDialogStrings.ail). Datastorage is built based on given viewmodel object",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ad495462-290a-45da-4d04-902738d62a47"
@@ -21,7 +24,7 @@
     {
       "name": "ApplyValues",
       "signature": "public void ApplyValues(string FileName)",
-      "summary": "Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "summary": "Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
       "params": [
         {
           "name": "FileName",
@@ -30,6 +33,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/76f35628-b668-e741-3bfe-e761a95e178b"
@@ -39,6 +43,7 @@
       "signature": "public void Dispose()",
       "summary": "Cleans up any resources being used.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f3c50357-af2a-4ef0-d579-68f74c93597d"
@@ -48,6 +53,7 @@
       "signature": "public void Get()",
       "summary": "Gets the dialog values from the part that is currently selected in Tekla Structures.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9ddaebb1-667a-29df-9e7f-097e0b546689"
@@ -70,6 +76,7 @@
       "signature": "public void InitializeWindow()",
       "summary": "Prepares the data storage for the dialog and scans through the fields.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/716e8a1f-2eaa-7a43-faa8-fa816c0733fc"
@@ -86,6 +93,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fec236f4-fc77-fe84-6719-0f260217336c"
@@ -93,7 +101,7 @@
     {
       "name": "ModifyValues",
       "signature": "public void ModifyValues(string FileName)",
-      "summary": "Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "summary": "Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
       "params": [
         {
           "name": "FileName",
@@ -102,6 +110,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/51224621-7902-e1c1-1a2b-16aa41986f8f"
@@ -111,6 +120,7 @@
       "signature": "public void ReloadWindow()",
       "summary": "Reloads the dialog values.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/89465fc0-e969-1e83-112f-6173a1ec6c41"
@@ -127,6 +137,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8a54d96d-6630-b17e-f547-8f78776f9a79"
@@ -136,6 +147,7 @@
       "signature": "public void ShowWindow()",
       "summary": "Displays the window.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/982b1878-5d0d-cbd6-6f7c-00ae2ea754b1"
@@ -151,6 +163,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e3436e31-3a09-9c03-dba7-d531beb44a15"

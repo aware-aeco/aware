@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelDesignProperties()",
       "summary": "Initializes a new instance of the AnalysisModelDesignProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5644c606-acf5-c3fc-eb96-2aa61211f80b"

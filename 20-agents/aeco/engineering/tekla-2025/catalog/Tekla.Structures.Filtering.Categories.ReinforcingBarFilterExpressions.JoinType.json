@@ -12,6 +12,7 @@
       "signature": "public JoinType()",
       "summary": "Initializes a new instance of the JoinType class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2a1ee326-9f76-ac87-10a2-8788ebc6c34c"

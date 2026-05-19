@@ -12,6 +12,7 @@
       "signature": "public AnalysisCurvature()",
       "summary": "Initializes a new instance of the AnalysisCurvature class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2870f896-593d-5c75-582b-d70fa9316ae4"

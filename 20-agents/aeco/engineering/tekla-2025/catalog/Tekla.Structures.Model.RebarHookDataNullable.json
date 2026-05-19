@@ -12,6 +12,7 @@
       "signature": "public RebarHookDataNullable()",
       "summary": "Initializes a new instance of the RebarHookDataNullable class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4313d378-c1b3-fadf-5bea-51e63824571a"

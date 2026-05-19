@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/2f45ba74-99dc-bd5c-bef3-221281f1d833",
   "constructors": [
     {
-      "name": "ShapeSelectionForm",
+      "name": "ShapeSelectionForm(List\u003CShapeItem\u003E)",
       "signature": "public ShapeSelectionForm(List\u003CShapeItem\u003E shapes)",
       "summary": "Initializes a new instance of the ShapeSelectionForm class.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2dc4e422-ad1a-e1bb-bdab-0bf929e2bd5b"
     },
     {
-      "name": "ShapeSelectionForm",
+      "name": "ShapeSelectionForm(List\u003CShapeItem\u003E, String)",
       "signature": "public ShapeSelectionForm(List\u003CShapeItem\u003E shapes, string shape)",
       "summary": "Initializes a new instance of the ShapeSelectionForm class, selecting the given Shape in the tree control.",
       "params": [
@@ -41,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c2d56104-f064-232e-898b-51d0807239bb"

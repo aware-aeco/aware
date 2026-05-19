@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedBarLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedBarLoad class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/51332039-a8a0-d311-b1cd-786a67fc9274"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis decomposed bar load.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8394bba1-db92-0c3a-9b53-032465b48ed5"

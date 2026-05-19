@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The EdgeEnumerator class is used to enumerate the edges of a solid.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IEnumerator"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/7edcc94f-9b44-d752-6310-c162d76eda59",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1a21b63a-93bf-480d-e258-981e7de33612"

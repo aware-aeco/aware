@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/79e12062-9cfd-f132-b719-45e61c809615",
   "constructors": [
     {
-      "name": "CylindricalSurface",
+      "name": "CylindricalSurface(Arc, Double)",
       "signature": "public CylindricalSurface(Arc baseArc, double height)",
       "summary": "Initializes a new instance of the CylindricalSurface class from a base arc and a height. This is the recommended constructor if no intermediate points are desired along the lateral boundaries of the bend surface.",
       "params": [
@@ -25,6 +25,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -35,7 +36,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3c6f5866-86be-7bac-6d2b-1f35ae9eacb0"
     },
     {
-      "name": "CylindricalSurface",
+      "name": "CylindricalSurface(List\u003CPoint\u003E, List\u003CPoint\u003E, Line, Vector)",
       "signature": "public CylindricalSurface(List\u003CPoint\u003E lateralBoundary1, List\u003CPoint\u003E lateralBoundary2, Line centerLine, Vector rotationAxis)",
       "summary": "Initializes a new instance of the CylindricalSurface class from the cone lateral boundaries and the center line. This is the recommended constructor if fine grained control is desired over the lateral boundaries of the surface.",
       "params": [
@@ -64,12 +65,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d815ca4f-444f-b830-e5c1-c97f5fd00233"
     },
     {
-      "name": "CylindricalSurface",
+      "name": "CylindricalSurface(Vector, Vector, List\u003CPoint\u003E, List\u003CPoint\u003E)",
       "signature": "public CylindricalSurface(Vector endFaceNormal1, Vector endFaceNormal2, List\u003CPoint\u003E lateralBoundary1, List\u003CPoint\u003E lateralBoundary2)",
       "summary": "Initializes a new instance of the CylindricalSurface class with given parameters. The boundaries are defined by the lateral boundaries (i.e. the points on the sides of the curved part of the cylinder). The side boundaries are defined by the two first points and the two last points of the lateral boundaries.",
       "remarks": "This constructor may be numerically instable if the end faces are very close",
@@ -99,6 +101,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -113,7 +116,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ca941dbf-3913-4716-d523-3632fa7b6dba"
     },
     {
-      "name": "CylindricalSurface",
+      "name": "CylindricalSurface(Vector, Vector, LineSegment, LineSegment)",
       "signature": "public CylindricalSurface(Vector endFaceNormal1, Vector endFaceNormal2, LineSegment sideBoundary1, LineSegment sideBoundary2)",
       "summary": "Initializes a new instance of the CylindricalSurface class with given parameters. The boundaries are defined by the side boundaries (i.e. generator lines of the cylinder).",
       "remarks": "This constructor may be numerically instable if the end faces are very close",
@@ -143,6 +146,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

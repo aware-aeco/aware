@@ -12,6 +12,7 @@
       "signature": "public ViewHandler()",
       "summary": "Initializes a new instance of the ViewHandler class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d3b3479a-9107-c6d5-0938-f19d21950d50"

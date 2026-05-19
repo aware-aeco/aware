@@ -19,6 +19,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/34e55a9f-7474-29a7-dc05-f03a69bfedea"
@@ -660,7 +661,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f4110460-c769-2e5f-6e93-b5393091c033"
     },
     {
-      "name": "Select.",
+      "name": "Select()",
       "signature": "public override bool Select()",
       "summary": "Selects a logical weld from the model database. The logical weld identifier must be set.",
       "params": [],
@@ -1082,7 +1083,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1114,7 +1115,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

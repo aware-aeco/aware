@@ -12,6 +12,7 @@
       "signature": "public SpaceElement()",
       "summary": "Initializes a new instance of the SpaceElement class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c6ef447b-11d1-da94-7d19-81b65a074dda"

@@ -12,6 +12,7 @@
       "signature": "public DrawingItem()",
       "summary": "Creates a new drawing item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/242395d8-20d5-d2ca-2490-d11111b0811c"

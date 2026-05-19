@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/3b434c42-0064-df39-c5b6-891eb1ded242",
   "constructors": [
     {
-      "name": "CannotGetAttributeForPluginException",
+      "name": "CannotGetAttributeForPluginException()",
       "signature": "public CannotGetAttributeForPluginException()",
       "summary": "Creates a new CannotGetAttributeForPluginException instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d9b92a45-6c84-8049-6854-f6adb2539663"
     },
     {
-      "name": "CannotGetAttributeForPluginException",
+      "name": "CannotGetAttributeForPluginException(String)",
       "signature": "public CannotGetAttributeForPluginException(string Description)",
       "summary": "Creates a new CannotGetAttributeForPluginException instance.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/98e31fa6-0fb7-3a31-3178-c07f52780e11"

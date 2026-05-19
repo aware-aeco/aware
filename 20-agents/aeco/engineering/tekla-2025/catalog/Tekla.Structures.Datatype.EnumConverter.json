@@ -12,6 +12,7 @@
       "signature": "public EnumConverter()",
       "summary": "Initializes a new instance of the EnumConverter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e8c55b6b-b197-9c21-01ac-e6397ccbd663"

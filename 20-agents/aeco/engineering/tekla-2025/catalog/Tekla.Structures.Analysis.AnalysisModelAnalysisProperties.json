@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelAnalysisProperties()",
       "summary": "Creates a new analysis model analysis properties instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bc62f9ec-5844-9bf2-43ea-fcbc407d82e9"

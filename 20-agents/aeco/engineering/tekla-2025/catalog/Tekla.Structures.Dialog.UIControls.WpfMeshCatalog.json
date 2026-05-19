@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The WpfMeshCatalog class represents a group of controls to select meshes using the mesh catalog.",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/c4e9da66-f927-b2d4-39c4-88086a35be0b",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public WpfMeshCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4c0bdcb7-c172-2a09-a993-5ee5573e160f"
@@ -23,6 +26,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cd0c4661-c259-a999-918b-24a5bbb524a0"

@@ -12,6 +12,7 @@
       "signature": "public PositionNumber()",
       "summary": "Initializes a new instance of the PositionNumber class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5c171fed-e221-3bfc-d2ae-977066ed3234"

@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The GeometrySectionEnumerator class is used to enumerate the geometry sections of a bent plate geometry.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IEnumerator"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/fabaac2a-bb59-e3d1-b60d-38f638e7bf6e",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2735ca0c-35d3-991b-c53b-d3ea666301b8"

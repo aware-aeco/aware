@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/a5f43557-02c7-1312-8b14-e3def23c5741",
   "constructors": [
     {
-      "name": "ReinforcementBase.ReinforcementStrandAttributes",
+      "name": "ReinforcementBase.ReinforcementStrandAttributes()",
       "signature": "public ReinforcementStrandAttributes()",
       "summary": "Creates a new default reinforcement attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/94f71d8b-4d8d-ce7f-fa33-f0989fd1920d"
     },
     {
-      "name": "ReinforcementBase.ReinforcementStrandAttributes",
+      "name": "ReinforcementBase.ReinforcementStrandAttributes(Boolean)",
       "signature": "public ReinforcementStrandAttributes(bool SkipLoadingAttributes)",
       "summary": "Creates a new default reinforcement attributes instance that loads standard attributes. If it set to true attributes won\u0027t be lodaded.",
       "params": [
@@ -27,12 +28,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e18d0bc5-de53-86f1-963b-6a6b59dae844"
     },
     {
-      "name": "ReinforcementBase.ReinforcementStrandAttributes",
+      "name": "ReinforcementBase.ReinforcementStrandAttributes(String)",
       "signature": "public ReinforcementStrandAttributes(string AttributeFile)",
       "summary": "Creates a new reinforcement attributes instance that loads the specified attributes.",
       "params": [
@@ -43,6 +45,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/73f7fd7a-b8c8-2331-ddca-2ce6e45701c2"

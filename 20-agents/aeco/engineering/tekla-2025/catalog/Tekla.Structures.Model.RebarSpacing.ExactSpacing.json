@@ -12,6 +12,7 @@
       "signature": "public ExactSpacing()",
       "summary": "Initializes a new instance of the RebarSpacing.ExactSpacing class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fa5531dd-c9e0-bebd-5f86-b3a425b2b826"

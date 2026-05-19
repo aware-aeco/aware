@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The Edge class represents a single global edge in a solid.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "ICloneable"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/4d366e24-93b4-cd9e-139b-06c8be0434f1",
   "constructors": [],
   "methods": [

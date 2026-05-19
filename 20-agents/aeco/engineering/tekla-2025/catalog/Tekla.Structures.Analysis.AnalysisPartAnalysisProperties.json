@@ -12,6 +12,7 @@
       "signature": "public AnalysisPartAnalysisProperties()",
       "summary": "Initializes a new instance of the AnalysisPartAnalysisProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/18dfbb8f-5098-d057-83a7-0784719fbbab"

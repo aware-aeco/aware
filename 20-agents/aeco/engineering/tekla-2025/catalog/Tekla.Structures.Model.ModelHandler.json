@@ -12,6 +12,7 @@
       "signature": "public ModelHandler()",
       "summary": "Creates a new ModelHandler instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/547facd5-1135-304b-b726-0b67633cce01"
@@ -23,6 +24,7 @@
       "signature": "public void Close()",
       "summary": "Closes current model.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8f0e93e3-83f2-50b9-9c60-5a6ac54c5764"

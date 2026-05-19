@@ -9,7 +9,7 @@
   "constructors": [],
   "methods": [
     {
-      "name": "GetSymbolLibraries.",
+      "name": "GetSymbolLibraries()",
       "signature": "public static StringList GetSymbolLibraries()",
       "summary": "Gets the names of the available symbol files in the current Tekla Structures environment, in the \u0022symbols\u0022 directory, without the suffix.",
       "params": [],

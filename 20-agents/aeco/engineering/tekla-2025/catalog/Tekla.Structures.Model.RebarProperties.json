@@ -12,6 +12,7 @@
       "signature": "public RebarProperties()",
       "summary": "Initializes a new instance of the RebarProperties class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2e723b4d-5252-fce0-1082-83b76fa6cb3a"

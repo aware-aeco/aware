@@ -12,6 +12,7 @@
       "signature": "public PrintAttributes()",
       "summary": "Creates a new PrintAttributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/da55cdb2-b443-2f32-283d-e540fb163fd9"

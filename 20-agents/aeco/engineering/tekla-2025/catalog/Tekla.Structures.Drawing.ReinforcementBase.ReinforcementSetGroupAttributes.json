@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/a614dcaa-9005-9783-8b6a-0b22e4eca438",
   "constructors": [
     {
-      "name": "ReinforcementBase.ReinforcementSetGroupAttributes",
+      "name": "ReinforcementBase.ReinforcementSetGroupAttributes()",
       "signature": "public ReinforcementSetGroupAttributes()",
       "summary": "Initializes a new instance of the ReinforcementBase.ReinforcementSetGroupAttributes class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a99135bf-6d36-6188-af71-3647cbe562b6"
     },
     {
-      "name": "ReinforcementBase.ReinforcementSetGroupAttributes",
+      "name": "ReinforcementBase.ReinforcementSetGroupAttributes(String)",
       "signature": "public ReinforcementSetGroupAttributes(string AttributeFile)",
       "summary": "Initializes a new instance of the ReinforcementBase.ReinforcementSetGroupAttributes class that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8cd5ffeb-1043-29f3-41c0-e5b102826b63"

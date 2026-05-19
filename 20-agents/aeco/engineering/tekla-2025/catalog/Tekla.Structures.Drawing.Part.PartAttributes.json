@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/08d50d99-aaab-1778-91d0-0deab85b3dff",
   "constructors": [
     {
-      "name": "Part.PartAttributes",
+      "name": "Part.PartAttributes()",
       "signature": "public PartAttributes()",
       "summary": "Creates a new default part attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/60065781-eb22-2a88-97da-31bb4c425a85"
     },
     {
-      "name": "Part.PartAttributes",
+      "name": "Part.PartAttributes(String)",
       "signature": "public PartAttributes(string AttributeFile)",
       "summary": "Creates a new part attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/46b39eb5-5f67-f762-0b60-681831505702"

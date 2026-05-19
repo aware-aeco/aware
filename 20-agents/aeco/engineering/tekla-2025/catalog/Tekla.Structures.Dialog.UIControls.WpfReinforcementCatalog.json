@@ -4,20 +4,23 @@
   "kind": "class",
   "summary": "The WpfReinforcementCatalog class represents a group of controls to select rebars using the reinforcement catalog.",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/cfa74af2-43e5-d7fa-1636-2a2ed941df68",
   "constructors": [
     {
-      "name": "WpfReinforcementCatalog",
+      "name": "WpfReinforcementCatalog()",
       "signature": "public WpfReinforcementCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/906fb5dc-9fba-f2a3-1b1f-33329c646239"
     },
     {
-      "name": "WpfReinforcementCatalog",
+      "name": "WpfReinforcementCatalog(String, String, Double)",
       "signature": "public WpfReinforcementCatalog(string Size, string Grade, double BendRadius)",
       "summary": "Creates a new instance of the ReinforcementCatalog and will select in the tree the rebar that contains the given parameters (if possible).",
       "params": [
@@ -40,6 +43,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/78e30c25-ba67-6f0b-671c-70bf9fec2272"
@@ -51,6 +55,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/22908876-e22a-7b17-50fb-09fbf6790d38"
@@ -67,6 +72,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/75b7e280-d530-bad4-bfd3-5cfc3fdb61d5"

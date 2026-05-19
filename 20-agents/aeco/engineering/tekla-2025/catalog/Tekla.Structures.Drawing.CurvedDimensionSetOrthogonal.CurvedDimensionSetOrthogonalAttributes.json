@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/16c36036-7daa-fd1f-f952-c51698a43051",
   "constructors": [
     {
-      "name": "CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes",
+      "name": "CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes()",
       "signature": "public CurvedDimensionSetOrthogonalAttributes()",
       "summary": "Creates a new curved dimension set orthogonal attributes instance which loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e169d8dc-a4dc-6640-4922-0e67d43d8893"
     },
     {
-      "name": "CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes",
+      "name": "CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes(String)",
       "signature": "public CurvedDimensionSetOrthogonalAttributes(string AttributesFile)",
       "summary": "Creates a new curved dimension set orthogonal attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5681b8a1-65c2-259e-bd9b-47312827567e"

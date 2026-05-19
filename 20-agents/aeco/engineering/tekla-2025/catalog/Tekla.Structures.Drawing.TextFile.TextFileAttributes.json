@@ -12,6 +12,7 @@
       "signature": "public TextFileAttributes()",
       "summary": "Creates a new text file attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/76a15905-680a-2f92-5313-78d75952724a"

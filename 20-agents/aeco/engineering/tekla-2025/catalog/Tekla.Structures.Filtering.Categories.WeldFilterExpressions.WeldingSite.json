@@ -12,6 +12,7 @@
       "signature": "public WeldingSite()",
       "summary": "Initializes a new instance of the WeldingSite class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d74be835-0605-52c6-c505-68ccd5f9ba6a"

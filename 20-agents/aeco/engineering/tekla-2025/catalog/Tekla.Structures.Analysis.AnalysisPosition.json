@@ -12,6 +12,7 @@
       "signature": "public AnalysisPosition()",
       "summary": "Initializes a new instance of the AnalysisPosition class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/99c1aa89-2a1f-ebab-8640-7502b9a63c4f"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis position.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/365ea44a-0b65-d4ce-9977-bf4dd7bfe713"

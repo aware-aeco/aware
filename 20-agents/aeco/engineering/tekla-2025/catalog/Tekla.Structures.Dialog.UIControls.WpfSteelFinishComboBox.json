@@ -12,6 +12,7 @@
       "signature": "public WpfSteelFinishComboBox()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fa34e0ec-844a-2630-5d01-3b7fa6922923"

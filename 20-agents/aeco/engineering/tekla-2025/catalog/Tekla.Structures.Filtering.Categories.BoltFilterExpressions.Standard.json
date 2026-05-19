@@ -12,6 +12,7 @@
       "signature": "public Standard()",
       "summary": "Initializes a new instance of the Standard class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d75bb89-619c-aa54-65f5-5d537ecf59ba"

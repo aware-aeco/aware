@@ -12,6 +12,7 @@
       "signature": "public EntityName()",
       "summary": "Initializes a new instance of the EntityName class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fe56c9ff-dcc6-cbc1-c99c-daf24becda6c"

@@ -7,16 +7,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/6e7f1080-8544-0c94-f532-8ab243698da9",
   "constructors": [
     {
-      "name": "TeklaDrawingColor",
+      "name": "TeklaDrawingColor()",
       "signature": "public TeklaDrawingColor()",
       "summary": "Default constructor for the struct. Assigns color to standard black.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1426a65d-52e4-aa8f-1fdd-d0f7637dfd01"
     },
     {
-      "name": "TeklaDrawingColor",
+      "name": "TeklaDrawingColor(Color)",
       "signature": "public TeklaDrawingColor(Color RGB)",
       "summary": "Construct a TeklaDrawingColor instance by passing in an RGB System.Drawing.Color value. This is the safe non-throwing constructor to use.",
       "params": [
@@ -27,12 +28,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b8716d70-6d0f-cfe1-8c99-01cb603e7dec"
     },
     {
-      "name": "TeklaDrawingColor",
+      "name": "TeklaDrawingColor(DrawingColors)",
       "signature": "public TeklaDrawingColor(DrawingColors ColorEnum)",
       "summary": "Construct a TeklaDrawingColor instance by passing in a Tekla standard color enum value. Use of this constructor is discouraged, please use TeklaDrawingColor(Color RGB)",
       "params": [
@@ -43,6 +45,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentOutOfRangeException",
@@ -53,7 +56,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8f37d92a-09b6-24a7-d5ae-1a49f90d48c0"
     },
     {
-      "name": "TeklaDrawingColor",
+      "name": "TeklaDrawingColor(DrawingHatchColors)",
       "signature": "public TeklaDrawingColor(DrawingHatchColors ColorEnum)",
       "summary": "Construct a TeklaDrawingColor instance by passing in a Tekla standard color hatch enum value. Use only for hatches.",
       "params": [
@@ -64,6 +67,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cc5e7c1d-0898-6f57-73e1-87d79bc7c477"

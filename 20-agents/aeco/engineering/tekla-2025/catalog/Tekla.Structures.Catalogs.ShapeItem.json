@@ -12,6 +12,7 @@
       "signature": "public ShapeItem()",
       "summary": "Creates a new shape instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f7ccc361-1d5d-442f-75a4-78cfce2559fb"
@@ -267,7 +268,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e5d7d104-0f1a-2437-122c-c95d57bc1ecd"
     },
     {
-      "name": "Select.",
+      "name": "Select()",
       "signature": "public bool Select()",
       "summary": "Selects the shape from the database based on the name given in this instance.",
       "params": [],

@@ -12,6 +12,7 @@
       "signature": "public FormBase()",
       "summary": "The default constructor that does not need parameters. Initializes the form and registers property bindings.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f22910cb-328a-c19d-29c6-4b2918b10951"
@@ -21,7 +22,7 @@
     {
       "name": "ApplyValues",
       "signature": "public void ApplyValues(string FileName)",
-      "summary": "Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "summary": "Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
       "params": [
         {
           "name": "FileName",
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c4096cdf-60d9-f7b8-1daf-e71de20cf47d"
@@ -98,6 +100,7 @@
       "signature": "public void InitializeForm()",
       "summary": "Prepares the data storage for the dialog and scans through the fields.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/70881deb-ea45-96c7-ee73-399bc7b76a90"
@@ -127,6 +130,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/df11f56f-8372-2886-e011-b4fcad4ac3de"
@@ -134,7 +138,7 @@
     {
       "name": "ModifyValues",
       "signature": "public void ModifyValues(string FileName)",
-      "summary": "Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
+      "summary": "Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type\u0027s name.",
       "params": [
         {
           "name": "FileName",
@@ -143,6 +147,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d20a7c4e-e913-92e5-0925-44015cc68ebf"
@@ -159,6 +164,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a817a258-86a2-8616-be00-eda92c7e5f8e"
@@ -181,6 +187,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/30e56a80-1c86-4606-781c-2a91b7bb8884"
@@ -190,6 +197,7 @@
       "signature": "public void ShowForm()",
       "summary": "Displays the form.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/79258182-6491-e7e6-99d0-de2072cb85a5"
@@ -199,6 +207,7 @@
       "signature": "[ObsoleteAttribute(\u0022Does currently nothing. Will be removed in near future.\u0022)] public void UpdateValues()",
       "summary": "Rereads and updates all the field values on the form.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5ab0c9d1-4ddf-1e05-29ca-560e387350e5"

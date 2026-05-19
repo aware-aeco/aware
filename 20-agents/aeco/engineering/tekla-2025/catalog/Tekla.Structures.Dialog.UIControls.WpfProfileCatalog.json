@@ -4,20 +4,24 @@
   "kind": "class",
   "summary": "The WpfProfileCatalog class represents a group of controls to select profiles using the profile catalog.",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IDisposable",
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/b31164fe-c4cf-bc39-b324-180485e312e7",
   "constructors": [
     {
-      "name": "WpfProfileCatalog",
+      "name": "WpfProfileCatalog()",
       "signature": "public WpfProfileCatalog()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c78602fb-fbbf-97b6-7521-6dc2ff146845"
     },
     {
-      "name": "WpfProfileCatalog",
+      "name": "WpfProfileCatalog(String)",
       "signature": "public WpfProfileCatalog(string Profile)",
       "summary": "Initiates a new instance of the control selecting the given profile.",
       "params": [
@@ -28,6 +32,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9cd4bf5a-0905-f1ea-514d-c77da79e9499"
@@ -39,6 +44,7 @@
       "signature": "public void Dispose()",
       "summary": "Cleans up any resources being used.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/288dfed8-4aa5-35fb-5fa6-3966427ea546"
@@ -48,6 +54,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/46888b24-6470-9c28-0ead-4e290291fe4c"
@@ -64,6 +71,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6e26d06b-7e86-57c4-8fed-e82d758a689f"

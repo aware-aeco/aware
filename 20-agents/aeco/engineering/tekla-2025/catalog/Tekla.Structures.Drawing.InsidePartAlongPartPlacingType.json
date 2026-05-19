@@ -12,6 +12,7 @@
       "signature": "public InsidePartAlongPartPlacingType()",
       "summary": "Creates a new inside part along part placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7bd0caed-bb59-421f-e5eb-73d2fa3285f5"

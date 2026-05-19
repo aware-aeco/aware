@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/dc665636-f4f7-758f-1e69-414de20de61c",
   "constructors": [
     {
-      "name": "Symbol",
+      "name": "Symbol(ViewBase, Point)",
       "signature": "public Symbol(ViewBase View, Point InsertionPoint)",
       "summary": "Creates a new symbol instance using the default symbol information and standard attributes.",
       "params": [
@@ -25,12 +25,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/92139903-c0f8-edba-4d33-7f1d3cc33ea5"
     },
     {
-      "name": "Symbol",
+      "name": "Symbol(ViewBase, Point, PlacingBase)",
       "signature": "public Symbol(ViewBase View, Point InsertionPoint, PlacingBase Placing)",
       "summary": "Creates a new symbol instance using the default symbol information, standard attributes and the given placing.",
       "params": [
@@ -53,12 +54,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b36a1e7f-abf0-80fa-078f-2f348eb2f487"
     },
     {
-      "name": "Symbol",
+      "name": "Symbol(ViewBase, Point, SymbolInfo)",
       "signature": "public Symbol(ViewBase View, Point InsertionPoint, SymbolInfo SymbolInfo)",
       "summary": "Creates a new symbol instance using standard attributes.",
       "params": [
@@ -81,12 +83,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3439182f-17d5-f570-fcac-3ce1d68ab645"
     },
     {
-      "name": "Symbol",
+      "name": "Symbol(ViewBase, Point, SymbolInfo, PlacingBase)",
       "signature": "public Symbol(ViewBase View, Point InsertionPoint, SymbolInfo SymbolInfo, PlacingBase Placing)",
       "summary": "Creates a new symbol instance using standard attributes.",
       "params": [
@@ -115,12 +118,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d1132db-e0c4-a4d1-048c-c7b7bfae60cb"
     },
     {
-      "name": "Symbol",
+      "name": "Symbol(ViewBase, Point, SymbolInfo, Symbol.SymbolAttributes)",
       "signature": "public Symbol(ViewBase View, Point InsertionPoint, SymbolInfo SymbolInfo, Symbol.SymbolAttributes Attributes)",
       "summary": "Creates a new symbol instance using the given attributes.",
       "params": [
@@ -149,12 +153,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b3648075-881e-b379-1ba6-cf17d21ef199"
     },
     {
-      "name": "Symbol",
+      "name": "Symbol(ViewBase, Point, SymbolInfo, Symbol.SymbolAttributes, PlacingBase)",
       "signature": "public Symbol(ViewBase View, Point InsertionPoint, SymbolInfo SymbolInfo, Symbol.SymbolAttributes Attributes, PlacingBase Placing)",
       "summary": "Creates a new symbol instance using the given attributes and placing.",
       "params": [
@@ -189,6 +194,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2011121a-1310-2fa5-9c96-81c39bf8ba99"
@@ -222,7 +228,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/733aed46-70c1-2a60-a37d-b127a4d74e1b"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -242,7 +248,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -281,7 +287,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4e9beef3-2188-ab45-9f07-dbde351915bf"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -301,7 +307,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -340,7 +346,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d222a75a-6250-447b-2904-44b9617ec57b"
     },
     {
-      "name": "GetObjects.",
+      "name": "GetObjects()",
       "signature": "public DrawingObjectEnumerator GetObjects()",
       "summary": "Gets the children objects of the current object.",
       "params": [],
@@ -353,7 +359,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dccf780b-3136-ff9b-60cc-c26c9730906c"
     },
     {
-      "name": "GetObjects(.Type.)",
+      "name": "GetObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetObjects(Type[] TypeFilter)",
       "summary": "Gets the children objects of the current object that are of certain types.",
       "params": [
@@ -373,7 +379,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bda97323-4f4d-38e2-0164-17919a253bd8"
     },
     {
-      "name": "GetRelatedObjects.",
+      "name": "GetRelatedObjects()",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects()",
       "summary": "Gets the related objects of the current object.",
       "params": [],
@@ -386,7 +392,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/50820387-cee1-637a-318e-fb3e06780149"
     },
     {
-      "name": "GetRelatedObjects(.Type.)",
+      "name": "GetRelatedObjects(.Type[])",
       "signature": "public DrawingObjectEnumerator GetRelatedObjects(Type[] typeFilter)",
       "summary": "Gets the related objects of the current object that are of certain types.",
       "params": [
@@ -406,7 +412,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/01d5e137-fa4b-92d7-328b-69c974dc7415"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -426,7 +432,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

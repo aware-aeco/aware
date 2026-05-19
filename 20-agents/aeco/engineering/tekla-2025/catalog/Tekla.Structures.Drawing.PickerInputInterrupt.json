@@ -12,6 +12,7 @@
       "signature": "public PickerInputInterrupt()",
       "summary": "Creates a new PickerInputInterrupt instance representing the interruption of picking by the user.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c761485e-721b-956f-793a-6928f05a3e33"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/0c652346-d920-5590-e777-e1edf097c620",
   "constructors": [
     {
-      "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes()",
       "signature": "public DimensionPlacingAttributes()",
       "summary": "Creates a new dimension placing attributes instance. The placing is set to the free placing.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/db0c8ec8-cc12-d64a-d89b-6a0b6c037399"
     },
     {
-      "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionPlacingAttributes(DimensionSetBaseAttributes.Placings, PlacingDirectionAttributes, PlacingDistanceAttributes)",
       "signature": "public DimensionPlacingAttributes(DimensionSetBaseAttributes.Placings placing, PlacingDirectionAttributes direction, PlacingDistanceAttributes distance)",
       "summary": "Creates a new dimension placing attributes instance with the given parameters.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c058ae87-e978-0c00-d9ac-ac062eede407"

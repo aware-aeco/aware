@@ -12,6 +12,7 @@
       "signature": "public BoltGroup()",
       "summary": "Creates a new bolt group instance with the given shape.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6d58f658-88b8-43df-c0b7-3803057e6d5d"
@@ -470,7 +471,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
     },
     {
-      "name": "GetSolid.",
+      "name": "GetSolid()",
       "signature": "public Solid GetSolid()",
       "summary": "Method for getting the solid information of the bolt group.",
       "params": [],
@@ -1055,7 +1056,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1071,7 +1072,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

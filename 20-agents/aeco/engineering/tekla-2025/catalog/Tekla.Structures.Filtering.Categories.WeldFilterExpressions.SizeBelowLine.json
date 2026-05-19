@@ -12,6 +12,7 @@
       "signature": "public SizeBelowLine()",
       "summary": "Initializes a new instance of the SizeBelowLine class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f91d8994-7818-7205-fe6a-c4af156e8053"

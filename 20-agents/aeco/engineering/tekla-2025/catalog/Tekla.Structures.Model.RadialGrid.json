@@ -12,6 +12,7 @@
       "signature": "public RadialGrid()",
       "summary": "Creates a new radial grid instance. Overrides the default creation parameters by forcing the angular coordinates to be \u00220.0 6*15.0\u0022",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bcc5d838-4f39-0897-ed36-b84117b0aeef"
@@ -904,7 +905,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -920,7 +921,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/7a8f20c3-67f0-3571-d11c-1ca129c00738",
   "constructors": [
     {
-      "name": "Size",
+      "name": "Size()",
       "signature": "public Size()",
       "summary": "Creates a new size instance with zero width and height.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6429fcb9-80cd-9e59-6c7c-4b865dd85822"
     },
     {
-      "name": "Size",
+      "name": "Size(Double, Double)",
       "signature": "public Size(double Width, double Height)",
       "summary": "Creates a new size instance with the specified width and height.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/30392ec6-0648-8c8e-ef73-83e540b5b2a9"
@@ -41,7 +43,7 @@
   ],
   "methods": [
     {
-      "name": "ToString.",
+      "name": "ToString()",
       "signature": "public override string ToString()",
       "summary": "Returns a string that represents this instance (in fractional inches if advanced option XS_USE_ONLY_INCHES_IN_SHEET_SIZES set to true).",
       "params": [],

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/a20d3504-8756-95d2-a1e5-e4813005771d",
   "constructors": [
     {
-      "name": "SinglePartDrawing",
+      "name": "SinglePartDrawing(Identifier)",
       "signature": "public SinglePartDrawing(Identifier partIdentifier)",
       "summary": "Instantiates a new single part drawing with standard attributes.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9f88949b-a8fd-50b4-945d-ed9a13360165"
     },
     {
-      "name": "SinglePartDrawing",
+      "name": "SinglePartDrawing(Identifier, Int32)",
       "signature": "public SinglePartDrawing(Identifier partIdentifier, int sheetNumber)",
       "summary": "Instantiates a new single part drawing with standard attributes and with a specified sheet number.",
       "params": [
@@ -41,12 +42,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/147873f8-a6f9-9ad3-6f51-8bee4f5d580f"
     },
     {
-      "name": "SinglePartDrawing",
+      "name": "SinglePartDrawing(Identifier, String)",
       "signature": "public SinglePartDrawing(Identifier partIdentifier, string AttributeFile)",
       "summary": "Instantiates a new single part drawing with given attributes.",
       "params": [
@@ -63,12 +65,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7e4b60c8-68a1-41f8-5130-deb293d9ee7e"
     },
     {
-      "name": "SinglePartDrawing",
+      "name": "SinglePartDrawing(Identifier, Int32, String)",
       "signature": "public SinglePartDrawing(Identifier partIdentifier, int sheetNumber, string AttributeFile)",
       "summary": "Instantiates a new single part drawing with standard attributes and with a specified sheet number.",
       "params": [
@@ -91,6 +94,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/39a33c12-abdf-4b4e-80be-02bdc2c940c6"
@@ -98,7 +102,7 @@
   ],
   "methods": [
     {
-      "name": "CommitChanges.",
+      "name": "CommitChanges()",
       "signature": "public bool CommitChanges()",
       "summary": "Commits the changes made to the drawings database so far. Commit inserts a kind of save-point into the database and the save-point will be retrieved if the user does undo. Commit also executes all messages. Please note that you need to also to save the drawings database to persists the changes to disk.",
       "params": [],
@@ -149,7 +153,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4bcff604-27c4-487f-bb7d-5d80a2d87d8b"
     },
     {
-      "name": "GetDoubleUserProperties(Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -169,7 +173,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b25f0e6b-ab5c-154a-a45c-4f5868a20599"
     },
     {
-      "name": "GetDoubleUserProperties(List.String., Dictionary.String, Double..)",
+      "name": "GetDoubleUserProperties(List\u003CString\u003E, Dictionary\u003CString, Double\u003E.)",
       "signature": "public bool GetDoubleUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, double\u003E values)",
       "summary": "Retrieves all double user properties for the object with the given list of names.",
       "params": [
@@ -195,7 +199,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7f327fc5-14b5-f534-da39-b68d3f87124a"
     },
     {
-      "name": "GetIntegerUserProperties(Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -215,7 +219,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/20a7d099-ebee-b016-ffc7-0181a1219405"
     },
     {
-      "name": "GetIntegerUserProperties(List.String., Dictionary.String, Int32..)",
+      "name": "GetIntegerUserProperties(List\u003CString\u003E, Dictionary\u003CString, Int32\u003E.)",
       "signature": "public bool GetIntegerUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, int\u003E values)",
       "summary": "Retrieves all integer user properties for the object with the given list of names.",
       "params": [
@@ -296,7 +300,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fe921886-00b9-57d3-0488-92bd25014c66"
     },
     {
-      "name": "GetStringUserProperties(Dictionary.String, String..)",
+      "name": "GetStringUserProperties(Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [
@@ -316,7 +320,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a0039213-2e79-912f-5bdf-5e6dd417c092"
     },
     {
-      "name": "GetStringUserProperties(List.String., Dictionary.String, String..)",
+      "name": "GetStringUserProperties(List\u003CString\u003E, Dictionary\u003CString, String\u003E.)",
       "signature": "public bool GetStringUserProperties(List\u003Cstring\u003E names, out Dictionary\u003Cstring, string\u003E values)",
       "summary": "Retrieves all string user properties for the object with the given list of names.",
       "params": [

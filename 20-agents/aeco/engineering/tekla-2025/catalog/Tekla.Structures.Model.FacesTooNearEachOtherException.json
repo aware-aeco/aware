@@ -12,6 +12,7 @@
       "signature": "public FacesTooNearEachOtherException()",
       "summary": "Initializes a new instance of the ExtensionIntersectsWithPlateException class with \u0022faces to be connected overlap\u0022 error message.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/785b7590-da23-6e89-e206-1051ad98e71a"

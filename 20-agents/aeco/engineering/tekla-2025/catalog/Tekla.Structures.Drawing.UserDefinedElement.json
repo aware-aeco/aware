@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/d2294ddd-0810-2f6c-e414-9e64867bc2e1",
   "constructors": [
     {
-      "name": "UserDefinedElement",
+      "name": "UserDefinedElement(String)",
       "signature": "public UserDefinedElement(string Name)",
       "summary": "Creates a new user-defined element instance with the given name.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aac9be57-cd98-16d8-23a8-20273baa47fb"
     },
     {
-      "name": "UserDefinedElement",
+      "name": "UserDefinedElement(String, FontAttributes)",
       "signature": "public UserDefinedElement(string Name, FontAttributes Font)",
       "summary": "Creates a new user-defined element instance with the given name and font.",
       "params": [
@@ -41,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0f57f5a7-69e4-de71-2d1f-e22a3bc08cc2"

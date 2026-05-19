@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/9eb486dc-e9c5-8674-7844-e74d53d50333",
   "constructors": [
     {
-      "name": "AngleDimensionAttributes",
+      "name": "AngleDimensionAttributes()",
       "signature": "public AngleDimensionAttributes()",
       "summary": "Creates a new angle dimension attributes instance which loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f8e7cf26-97c5-591f-f72c-1c76a56bacab"
     },
     {
-      "name": "AngleDimensionAttributes",
+      "name": "AngleDimensionAttributes(String)",
       "signature": "public AngleDimensionAttributes(string AttributesFile)",
       "summary": "Creates a new angle dimension attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6bbe2e71-0c46-632c-c552-df141f5221fd"

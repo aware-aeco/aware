@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/17b1c7e5-f3c2-f128-ba48-d25e5c1618b4",
   "constructors": [
     {
-      "name": "View.ViewShorteningAttributes",
+      "name": "View.ViewShorteningAttributes()",
       "signature": "public ViewShorteningAttributes()",
       "summary": "Creates a new default view shortening attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b40ab003-2e5e-0825-2d21-55785c4b5a4f"
     },
     {
-      "name": "View.ViewShorteningAttributes",
+      "name": "View.ViewShorteningAttributes(Boolean, Boolean, Double, Double, View.ShorteningCutPartType)",
       "signature": "public ViewShorteningAttributes(bool CutParts, bool CutSkewParts, double MinimumLength, double Offset, View.ShorteningCutPartType CutPartType = View.ShorteningCutPartType.BothDirections)",
       "summary": "Creates a new view shortening attributes instance with the given parameters.",
       "params": [
@@ -52,6 +53,7 @@
           "optional": true
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/818cc220-920d-4c94-a5dc-f98a642a3175"

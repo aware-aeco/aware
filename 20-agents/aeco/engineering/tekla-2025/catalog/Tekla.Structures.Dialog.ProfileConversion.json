@@ -12,6 +12,7 @@
       "signature": "public ProfileConversion()",
       "summary": "Initializes a new instance of the ProfileConversion class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/324ec53a-97a8-5fb3-7d00-4cd2f6af6ad5"

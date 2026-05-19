@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/8621e658-a496-c1b9-49d0-4076c20779f7",
   "constructors": [
     {
-      "name": "Beam",
+      "name": "Beam()",
       "signature": "public Beam()",
       "summary": "Initializes a new instance of the Beam class. The start and end points are in the origin.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/10c4e19e-05ab-c787-0a9b-c0d9160127cc"
     },
     {
-      "name": "Beam",
+      "name": "Beam(Beam.BeamTypeEnum)",
       "signature": "public Beam(Beam.BeamTypeEnum beamType)",
       "summary": "Initializes a new instance of the Beam class by using the defined type.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c3d51df5-d178-20ca-70d9-67859761677a"
     },
     {
-      "name": "Beam",
+      "name": "Beam(Point, Point)",
       "signature": "public Beam(Point startPoint, Point endPoint)",
       "summary": "Initializes a new instance of the Beam class with the given start and end points.",
       "params": [
@@ -50,6 +52,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/19288237-52ff-dbc1-94ff-cfff15a38ccf"
@@ -614,7 +617,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
     },
     {
-      "name": "GetSolid.",
+      "name": "GetSolid()",
       "signature": "public Solid GetSolid()",
       "summary": "Returns the solid of the part.",
       "params": [],
@@ -1150,7 +1153,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1166,7 +1169,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

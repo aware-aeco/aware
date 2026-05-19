@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-model-operations
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Model.Operations namespace — 9 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: GuidConversion, Operation, Operation.ProgressBar, Operation.IFCExportFlags, Operation.ExportBasePoint, Operation.IFCExportViewTypeEnum, Operation.MISExportTypeEnum, Operation.ShapeMetadataResult, and 1 more types.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Model.Operations namespace — 9 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: GuidConversion, Operation.ProgressBar, Operation, Operation.IFCExportFlags, Operation.ExportBasePoint, Operation.IFCExportViewTypeEnum, Operation.MISExportTypeEnum, Operation.UnselectedModeEnum, and 1 more types.
 ---
 
 # Tekla.Structures.Model.Operations
@@ -39,6 +39,8 @@ Gets the new GUID.
 ## Operation (class)
 
 The Operation class implements Tekla Structures level operations.
+
+**Remarks:** Using this method is much faster than checking each object individually.
 
 [Vendor docs](https://developer.tekla.com/topic/en/18/43/d5bbc096-a164-49ea-16a8-3820e40b00be)
 
@@ -182,7 +184,7 @@ Modifies the first plate by adding a bend that connects it to the second plate c
 
 #### `public static BentPlate CreateBentPlateByFaces(Part part1, IList<Point> face1, Part part2, IList<Point> face2)`
 
-Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape).
+Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList<Point>, Part, IList<Point>, BentPlate.BendShape).
 
 **Parameters:**
 - `part1` (Tekla.Structures.Model.Part) — The first part.

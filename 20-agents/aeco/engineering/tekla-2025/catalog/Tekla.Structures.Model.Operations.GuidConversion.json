@@ -12,6 +12,7 @@
       "signature": "public GuidConversion()",
       "summary": "Initializes a new instance of the GuidConversion class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e392eec1-cb90-c389-077a-3b6132aa4c7e"

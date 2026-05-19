@@ -12,6 +12,7 @@
       "signature": "public IndirectPolymeshEdge()",
       "summary": "Initializes a new instance of the IndirectPolymeshEdge class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e88cab0a-1898-9ba0-6d99-1e2183af2eda"

@@ -12,6 +12,7 @@
       "signature": "public AnalysisDecomposedMemberLoad()",
       "summary": "Initializes a new instance of the AnalysisDecomposedMemberLoad class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/03baae94-c19b-fd13-bfa0-8b3ea3d23a2b"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects the analysis decomposed member load.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9018b6b7-89b2-b1cc-8a51-d9dafcb7c0d6"

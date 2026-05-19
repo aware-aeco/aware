@@ -12,6 +12,7 @@
       "signature": "public MarkSetAttributes()",
       "summary": "Initializes a new instance of the MarkSet.MarkSetAttributes class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f2a3fa86-8468-0361-95f6-866e22cf2643"

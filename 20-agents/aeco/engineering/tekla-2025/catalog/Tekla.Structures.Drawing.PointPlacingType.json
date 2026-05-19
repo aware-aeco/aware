@@ -12,6 +12,7 @@
       "signature": "public PointPlacingType()",
       "summary": "Creates a new point placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a011c1c7-ec3a-b33a-3257-c525cab0c4b9"

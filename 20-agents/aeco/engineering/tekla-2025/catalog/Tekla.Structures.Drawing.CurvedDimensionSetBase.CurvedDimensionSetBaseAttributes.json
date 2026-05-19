@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/0f753e4c-b5ed-87df-f138-16e63f6dd96b",
   "constructors": [
     {
-      "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes",
+      "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes()",
       "signature": "public CurvedDimensionSetBaseAttributes()",
       "summary": "Creates a new curved dimension set base attributes instance which loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a42acefd-4eac-141b-c030-878666e51be6"
     },
     {
-      "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes",
+      "name": "CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes(String)",
       "signature": "public CurvedDimensionSetBaseAttributes(string AttributesFile)",
       "summary": "Creates a new curved dimension set base attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2f900dde-9d7d-57a3-9da7-794e82753ecd"

@@ -12,6 +12,7 @@
       "signature": "public Length()",
       "summary": "Initializes a new instance of the Length class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/90577cef-2548-a819-4783-323d02906bc5"

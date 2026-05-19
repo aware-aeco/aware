@@ -12,6 +12,7 @@
       "signature": "public BoltName()",
       "summary": "Initializes a new instance of the BoltName class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/df7caabd-9d40-39ff-684d-6ebc28d4f0c7"

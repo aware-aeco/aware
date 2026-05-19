@@ -12,6 +12,7 @@
       "signature": "public BindableRadioButton()",
       "summary": "Initializes a new instance of the BindableRadioButton class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/383cc264-ce02-00ef-6c20-926a9d1ea7c5"

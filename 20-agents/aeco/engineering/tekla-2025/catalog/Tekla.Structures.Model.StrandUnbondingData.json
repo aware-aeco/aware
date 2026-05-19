@@ -12,6 +12,7 @@
       "signature": "public StrandUnbondingData()",
       "summary": "Initializes a new strand unbonding data instance with empty attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5684df7a-066b-253a-bcb5-25fdc43f78c3"

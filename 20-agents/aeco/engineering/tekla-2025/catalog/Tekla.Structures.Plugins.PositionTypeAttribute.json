@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/85869afb-56cb-102f-dc01-3c8aa94b473c",
   "constructors": [
     {
-      "name": "PositionTypeAttribute",
+      "name": "PositionTypeAttribute(Int32)",
       "signature": "public PositionTypeAttribute(int Type)",
       "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/36e2152e-276f-da8a-f0ac-f36c39129a6e"
     },
     {
-      "name": "PositionTypeAttribute",
+      "name": "PositionTypeAttribute(PositionTypeEnum)",
       "signature": "public PositionTypeAttribute(PositionTypeEnum Type)",
       "summary": "The custom attribute [PositionType()] uses this to store the position type to the system. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5f6d7530-60a1-008f-378a-1cbedd8c5a2a"

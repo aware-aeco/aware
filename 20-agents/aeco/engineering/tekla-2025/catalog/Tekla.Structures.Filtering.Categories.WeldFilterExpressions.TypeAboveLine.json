@@ -12,6 +12,7 @@
       "signature": "public TypeAboveLine()",
       "summary": "Initializes a new instance of the TypeAboveLine class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/878e7c84-3909-547b-c53f-9e1db6a2f812"

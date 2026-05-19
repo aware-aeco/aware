@@ -12,6 +12,7 @@
       "signature": "public ImageComboBox()",
       "summary": "Initializes a new instance of the ImageComboBox class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/79fb9f29-842e-a891-450a-61afa744dea8"

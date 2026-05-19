@@ -12,6 +12,7 @@
       "signature": "public AnalysisSupport()",
       "summary": "Initializes a new instance of the AnalysisSupport class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0c04b2b1-43fa-041c-d1b7-7e95c5d52f76"

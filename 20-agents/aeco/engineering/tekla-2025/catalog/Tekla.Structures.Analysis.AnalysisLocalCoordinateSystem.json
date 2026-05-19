@@ -12,6 +12,7 @@
       "signature": "public AnalysisLocalCoordinateSystem()",
       "summary": "Creates a new analysis local coordinate system instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8d47baa7-0a56-8e66-f5d4-788cca76b7c6"

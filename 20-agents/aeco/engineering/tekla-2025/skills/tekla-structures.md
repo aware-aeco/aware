@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures namespace — 20 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Assertion, ClashCheckOptions, Identifier, ComponentOptions, ModuleManager, TeklaStructuresFiles, TeklaStructuresInfo, TeklaStructuresSettings, and 12 more types.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures namespace — 20 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Assertion, ClashCheckOptions, ComponentOptions, Identifier, TeklaStructuresFiles, ModuleManager, TeklaStructuresInfo, TeklaStructuresSettings, and 12 more types.
 ---
 
 # Tekla.Structures

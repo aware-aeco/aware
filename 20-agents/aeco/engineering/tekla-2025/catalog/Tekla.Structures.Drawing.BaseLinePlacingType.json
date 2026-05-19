@@ -12,6 +12,7 @@
       "signature": "public BaseLinePlacingType()",
       "summary": "Creates a new base line placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b463bc25-5b0e-77d9-4f8f-b317de884ed7"

@@ -12,6 +12,7 @@
       "signature": "public Grid()",
       "summary": "Creates a new grid instance. The default values are as follows: Name = \u0022Grid\u0022;CoordinateX = \u00220.00 4*3000.00\u0022;CoordinateY = \u00220.00 5*6000.00\u0022;CoordinateZ = \u00220.00 6000.00 8000.00 9000.00\u0022;LabelX = \u0022A B C D E\u0022;LabelY = \u00221 2 3 4 5 6\u0022;LabelZ = \u0022\u002B0 \u002B6000 \u002B8000 \u002B9000\u0022;ExtensionLeftX = 2000.0;ExtensionLeftY = 2000.0;ExtensionLeftZ = 2000.0;ExtensionRightX = 2000.0;ExtensionRightY = 2000.0;ExtensionRightZ = 2000.0;IsMagnetic = false;",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ab985a9b-19ed-0da9-821d-b23cdda34808"
@@ -911,7 +912,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -943,7 +944,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

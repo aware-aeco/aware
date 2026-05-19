@@ -12,6 +12,7 @@
       "signature": "public AnalysisLabel()",
       "summary": "Initializes a new instance of the AnalysisLabel class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b230ba6f-5181-d987-957d-971a98a8d7a3"

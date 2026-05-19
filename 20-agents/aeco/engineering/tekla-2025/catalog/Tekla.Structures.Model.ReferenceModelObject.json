@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/98ca59de-9a53-e939-e397-12158eb2f840",
   "constructors": [
     {
-      "name": "ReferenceModelObject",
+      "name": "ReferenceModelObject()",
       "signature": "public ReferenceModelObject()",
       "summary": "Creates a new reference model object instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/e0702ae8-e431-6a70-f9cc-919c60f49b02"
     },
     {
-      "name": "ReferenceModelObject",
+      "name": "ReferenceModelObject(Int32, Identifier)",
       "signature": "public ReferenceModelObject(int ReferenceModelId, Identifier ID)",
       "summary": "Creates a new reference model object instance using the given parameters.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4ccd90a7-a939-7afe-36c4-f4281a8f11bd"
@@ -847,7 +849,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -855,7 +857,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

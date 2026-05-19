@@ -127,7 +127,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/285dde88-c699-5213-abc8-fa5f4c951bfe"
     },
     {
-      "name": "GetProfileItemSubTypes.",
+      "name": "GetProfileItemSubTypes()",
       "signature": "public List\u003CProfileItemSubType\u003E GetProfileItemSubTypes()",
       "summary": "Selects the profile item and updates the sub types in the profile database.",
       "params": [],
@@ -358,7 +358,7 @@
     },
     {
       "name": "IsMultiCrossSectionUserParametric",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Whether the profile is a parametric user-defined multi cross section profile.",
@@ -366,7 +366,7 @@
     },
     {
       "name": "IsSketchedUserParametric",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Whether the profile is a parametric user-defined sketched profile.",

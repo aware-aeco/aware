@@ -12,6 +12,7 @@
       "signature": "public ConcreteMixture()",
       "summary": "Initializes a new instance of the ConcreteMixture class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6f04f53b-776b-0cf1-c43e-142c65327c0e"

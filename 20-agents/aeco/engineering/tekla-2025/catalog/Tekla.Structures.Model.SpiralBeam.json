@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/2b829f38-d9b1-d5ea-f9b5-68801bbfdcd3",
   "constructors": [
     {
-      "name": "SpiralBeam",
+      "name": "SpiralBeam()",
       "signature": "public SpiralBeam()",
       "summary": "Initializes a new instance of the SpiralBeam class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7a994db4-73b6-71b5-a447-f3b509e165ea"
     },
     {
-      "name": "SpiralBeam",
+      "name": "SpiralBeam(Point, Point, Double, Double)",
       "signature": "public SpiralBeam(Point startPoint, Point rotationAxisPoint, double totalRise, double rotationAngle)",
       "summary": "Initializes a new instance of the SpiralBeam class with the given parameters. Rotation axis direction is current positive Z direction.",
       "params": [
@@ -46,12 +47,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c15b3e25-43a1-ffd3-6a75-61abd2d24c5c"
     },
     {
-      "name": "SpiralBeam",
+      "name": "SpiralBeam(Point, Point, Point, Double, Double)",
       "signature": "public SpiralBeam(Point startPoint, Point rotationAxisBasePoint, Point rotationAxisUpPoint, double totalRise, double rotationAngle)",
       "summary": "Initializes a new instance of the SpiralBeam class with the given parameters.",
       "params": [
@@ -86,12 +88,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/14d590f9-c72a-af3b-51db-29dffe418730"
     },
     {
-      "name": "SpiralBeam",
+      "name": "SpiralBeam(Point, Point, Point, Double, Double, Double, Double)",
       "signature": "public SpiralBeam(Point startPoint, Point rotationAxisBasePoint, Point rotationAxisUpPoint, double totalRise, double rotationAngle, double twistAngleAtStart, double twistAngleAtEnd)",
       "summary": "Initializes a new instance of the SpiralBeam class with the given parameters.",
       "params": [
@@ -138,6 +141,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7e4e7105-2a10-d500-1426-8a72b7f7296d"
@@ -702,7 +706,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
     },
     {
-      "name": "GetSolid.",
+      "name": "GetSolid()",
       "signature": "public Solid GetSolid()",
       "summary": "Returns the solid of the part.",
       "params": [],
@@ -1240,7 +1244,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1256,7 +1260,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The MainWindow class is a class for binding the .NET dialogs under the Tekla Structures main window.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IWin32Window"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/0e7f0921-9e97-2c96-9ea6-6a34e1552ec5",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/92595806-5cd0-f58c-9ecb-569eac5bcfc0"
@@ -48,6 +51,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9e63470d-b3c6-e44c-eba7-619d7e7e1015"

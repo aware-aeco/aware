@@ -12,6 +12,7 @@
       "signature": "public WpfBoltCatalogStandard()",
       "summary": "Initiates a new instance of the control.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a5e1dd0a-a323-a998-b264-abcb911224d7"

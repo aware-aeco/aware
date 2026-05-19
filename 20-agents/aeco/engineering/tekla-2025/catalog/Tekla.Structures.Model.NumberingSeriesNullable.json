@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/e2273fc8-03bf-259b-a74a-ae85efeca9e6",
   "constructors": [
     {
-      "name": "NumberingSeriesNullable",
+      "name": "NumberingSeriesNullable()",
       "signature": "public NumberingSeriesNullable()",
       "summary": "Initializes a new instance of the NumberingSeriesNullable class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bca0517c-44eb-8154-fa02-addb3b429f04"
     },
     {
-      "name": "NumberingSeriesNullable",
+      "name": "NumberingSeriesNullable(String, Int32)",
       "signature": "public NumberingSeriesNullable(string prefix, int number)",
       "summary": "Initializes a new instance of the NumberingSeriesNullable class with the given arguments.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dccc9eaa-d434-9789-d28e-713abc7f194a"

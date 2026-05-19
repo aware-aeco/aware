@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/77e7ce8e-76cd-c1d8-1814-1b02750fa9bc",
   "constructors": [
     {
-      "name": "Brep",
+      "name": "Brep()",
       "signature": "public Brep()",
       "summary": "Initializes a new instance of the Brep class. The start and end points are in the origin.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5df3c1dc-fb12-2ceb-9afe-af0a30c5a8b1"
     },
     {
-      "name": "Brep",
+      "name": "Brep(Point, Point)",
       "signature": "public Brep(Point startPoint, Point endPoint)",
       "summary": "Initializes a new instance of the Brep class with the given start and end points.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/352f97f7-0516-7942-4761-75fb9f386eab"
@@ -598,7 +600,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/70f212bb-ee70-e9e9-7ab6-d6a9d46f8de6"
     },
     {
-      "name": "GetSolid.",
+      "name": "GetSolid()",
       "signature": "public Solid GetSolid()",
       "summary": "Returns the solid of the part.",
       "params": [],
@@ -1134,7 +1136,7 @@
     },
     {
       "name": "IsUpToDate",
-      "type": "object",
+      "type": "Boolean",
       "getter": true,
       "setter": false,
       "summary": "Gets if the object does not have a modification which is not shared.",
@@ -1150,7 +1152,7 @@
     },
     {
       "name": "ModificationTime",
-      "type": "object",
+      "type": "Nullable\u003CDateTime\u003E",
       "getter": true,
       "setter": false,
       "summary": "Gets latest time of the object was modified or created.",

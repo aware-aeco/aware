@@ -12,6 +12,7 @@
       "signature": "public RebarCrankingNullable()",
       "summary": "Initializes a new instance of the RebarCrankingNullable class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ee820f69-553c-9535-4fb7-5bf6433f054d"

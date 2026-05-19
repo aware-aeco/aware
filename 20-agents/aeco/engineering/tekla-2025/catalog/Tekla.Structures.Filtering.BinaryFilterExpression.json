@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/10ff0aa1-1cac-1cde-56ea-5239f32794b0",
   "constructors": [
     {
-      "name": "BinaryFilterExpression",
+      "name": "BinaryFilterExpression(BooleanFilterExpression, BooleanOperatorType, BooleanConstantFilterExpression)",
       "signature": "public BinaryFilterExpression(BooleanFilterExpression Left, BooleanOperatorType Oper, BooleanConstantFilterExpression Right)",
       "summary": "Initializes a new instance of the BinaryFilterExpression class.",
       "params": [
@@ -31,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -41,7 +42,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1cc0baa9-cacd-302e-fab3-0de3190daf0f"
     },
     {
-      "name": "BinaryFilterExpression",
+      "name": "BinaryFilterExpression(DateTimeFilterExpression, DateTimeOperatorType, DateTimeConstantFilterExpression)",
       "signature": "public BinaryFilterExpression(DateTimeFilterExpression Left, DateTimeOperatorType Oper, DateTimeConstantFilterExpression Right)",
       "summary": "Initializes a new instance of the BinaryFilterExpression class.",
       "params": [
@@ -64,6 +65,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -74,7 +76,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bbb4eaa5-8205-ebec-36d8-db5c873df7cb"
     },
     {
-      "name": "BinaryFilterExpression",
+      "name": "BinaryFilterExpression(NumericFilterExpression, NumericOperatorType, NumericConstantFilterExpression)",
       "signature": "public BinaryFilterExpression(NumericFilterExpression Left, NumericOperatorType Oper, NumericConstantFilterExpression Right)",
       "summary": "Initializes a new instance of the BinaryFilterExpression class.",
       "params": [
@@ -97,6 +99,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -107,7 +110,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f74eaac0-7d11-56bb-b694-c63cc7f05309"
     },
     {
-      "name": "BinaryFilterExpression",
+      "name": "BinaryFilterExpression(StringFilterExpression, StringOperatorType, StringConstantFilterExpression)",
       "signature": "public BinaryFilterExpression(StringFilterExpression Left, StringOperatorType Oper, StringConstantFilterExpression Right)",
       "summary": "Initializes a new instance of the BinaryFilterExpression class.",
       "params": [
@@ -130,6 +133,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

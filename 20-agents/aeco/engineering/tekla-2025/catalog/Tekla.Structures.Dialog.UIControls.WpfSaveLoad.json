@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "Interaction logic for WpfSaveload.xaml",
   "base": "System.Windows.Controls.UserControl",
-  "interfaces": [],
+  "interfaces": [
+    "IComponentConnector"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/6af15825-83ac-b471-8428-dce47a36c5aa",
   "constructors": [
     {
@@ -12,6 +14,7 @@
       "signature": "public WpfSaveLoad()",
       "summary": "Initializes a new instance of the WpfSaveLoad class with the default language and file extensions.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7cc9cb4f-62ec-e498-7bdb-c6b8527c5ec9"
@@ -23,6 +26,7 @@
       "signature": "public void InitializeComponent()",
       "summary": "InitializeComponent",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8ac86348-7a2a-a276-0956-4af37c0c03dd"

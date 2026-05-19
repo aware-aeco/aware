@@ -12,6 +12,7 @@
       "signature": "public Finish()",
       "summary": "Initializes a new instance of the Finish class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/25885538-9e71-a038-c45e-96481141c2e4"

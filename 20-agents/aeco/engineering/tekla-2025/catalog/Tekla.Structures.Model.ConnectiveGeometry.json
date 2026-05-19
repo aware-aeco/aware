@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/f376b309-e3fe-c8f6-d8cd-805695550b9d",
   "constructors": [
     {
-      "name": "ConnectiveGeometry",
+      "name": "ConnectiveGeometry(BendSurface)",
       "signature": "public ConnectiveGeometry(BendSurface bendSurface)",
       "summary": "Initializes a new instance of the ConnectiveGeometry class for a stand-alone bend creation.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bd7311ef-d792-d20f-12e8-9254b3aaba33"
     },
     {
-      "name": "ConnectiveGeometry",
+      "name": "ConnectiveGeometry(Contour)",
       "signature": "public ConnectiveGeometry(Contour contour)",
       "summary": "Initializes a new instance of the ConnectiveGeometry class.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8593a028-2b6d-e56f-11d8-48be5efc3b93"

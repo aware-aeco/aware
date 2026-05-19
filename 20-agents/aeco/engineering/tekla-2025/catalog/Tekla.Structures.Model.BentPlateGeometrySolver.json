@@ -12,6 +12,7 @@
       "signature": "public BentPlateGeometrySolver()",
       "summary": "Initializes a new instance of the BentPlateGeometrySolver class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fd8af369-d18d-821f-2a59-be7b6f97e022"

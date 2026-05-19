@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/cfcb353e-74cf-bffb-3b89-9b22f9d5e2e4",
   "constructors": [
     {
-      "name": "GeometricPlane",
+      "name": "GeometricPlane()",
       "signature": "public GeometricPlane()",
       "summary": "Instantiates an XY-plane with the origin at (0,0,0).",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/68219778-db02-bba3-d8b4-c639a0e84528"
     },
     {
-      "name": "GeometricPlane",
+      "name": "GeometricPlane(CoordinateSystem)",
       "signature": "public GeometricPlane(CoordinateSystem CoordSys)",
       "summary": "Instantiates a plane defined by the given coordinate system.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8fc2061f-88af-4f7a-700e-82b208d463aa"
     },
     {
-      "name": "GeometricPlane",
+      "name": "GeometricPlane(Point, Vector)",
       "signature": "public GeometricPlane(Point Origin, Vector Normal)",
       "summary": "Instantiates a plane defined by the given origin point and normal vector.",
       "params": [
@@ -50,12 +52,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb8134d9-731a-4efb-ec8e-2c1400d0b5a8"
     },
     {
-      "name": "GeometricPlane",
+      "name": "GeometricPlane(Point, Vector, Vector)",
       "signature": "public GeometricPlane(Point Origin, Vector Xaxis, Vector Yaxis)",
       "summary": "Instantiates a plane defined by the given origin, X-axis vector and Y-axis vector.",
       "params": [
@@ -78,6 +81,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3050d844-f011-429c-7570-9b07cf9d8af4"

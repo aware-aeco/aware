@@ -12,6 +12,7 @@
       "signature": "public OkCancel()",
       "summary": "Initializes a new instance of the OkCancel class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/52023490-96a6-7300-56d7-56670e970183"

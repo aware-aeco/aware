@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/c0fcd085-a3df-192b-9afe-5328bbc2b9d3",
   "constructors": [
     {
-      "name": "Cloud.CloudAttributes",
+      "name": "Cloud.CloudAttributes()",
       "signature": "public CloudAttributes()",
       "summary": "Creates a new default cloud attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5c72eaa4-673e-731d-0cce-6222476d4fc0"
     },
     {
-      "name": "Cloud.CloudAttributes",
+      "name": "Cloud.CloudAttributes(String)",
       "signature": "public CloudAttributes(string AttributesFile)",
       "summary": "Creates a new cloud attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/08d0660a-f3ff-0b05-179e-06812b2fb226"

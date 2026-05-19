@@ -26,6 +26,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -36,7 +37,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4c2c999d-3234-5abd-04ba-b9eb664972c6"
     },
     {
-      "name": "Show(String, List.String., ErrorDialog.Severity)",
+      "name": "Show(String, List\u003CString\u003E, ErrorDialog.Severity)",
       "signature": "public static void Show(string Message, List\u003Cstring\u003E Details, ErrorDialog.Severity Severity)",
       "summary": "Shows a new error dialog.",
       "params": [
@@ -59,6 +60,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -92,6 +94,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5292fa06-3a04-0624-86ac-2c1d1f0e7385"

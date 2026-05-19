@@ -12,6 +12,7 @@
       "signature": "public Settings()",
       "summary": "Initializes a new instance of the Settings class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cb350206-d31b-553d-fa35-2394d59889ac"
@@ -56,6 +57,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2903c000-7c5f-df96-9a7f-9556d992d4aa"
@@ -87,7 +89,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9ebbbc0c-626d-6f2b-2c3f-e58c9509bcf5"
     },
     {
-      "name": "TryGetValue.T.(String, T.)",
+      "name": "TryGetValue\u003CT\u003E(String, T.)",
       "signature": "public static bool TryGetValue\u003CT\u003E(string name, out T obj)",
       "summary": "Tries to get the value of the setting with the given name and given object type.",
       "params": [

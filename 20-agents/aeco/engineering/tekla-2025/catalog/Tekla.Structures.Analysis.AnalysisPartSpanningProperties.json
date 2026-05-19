@@ -12,6 +12,7 @@
       "signature": "public AnalysisPartSpanningProperties()",
       "summary": "Initializes a new instance of the AnalysisPartSpanningProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/84c17cd4-5912-a9a7-9b79-e2ad041ce1da"

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/3fe566dd-d704-1455-1c24-352a7d77ec85",
   "constructors": [
     {
-      "name": "Filter",
+      "name": "Filter(FilterExpression)",
       "signature": "public Filter(FilterExpression FilterExpression)",
       "summary": "Initializes a new instance of the Filter class.",
       "params": [
@@ -19,6 +19,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",
@@ -29,7 +30,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/08b840d5-75e6-e69d-1033-31e32a983d07"
     },
     {
-      "name": "Filter",
+      "name": "Filter(String, IFormatProvider)",
       "signature": "public Filter(string FullFileName, IFormatProvider Provider = null)",
       "summary": "Initializes a new instance of the Filter class.",
       "params": [
@@ -46,6 +47,7 @@
           "optional": true
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

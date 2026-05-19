@@ -12,6 +12,7 @@
       "signature": "public AnalysisResult()",
       "summary": "Creates a new analysis result instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/21e50959-a6b5-d3ae-931d-edfbeaee49a8"

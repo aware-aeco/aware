@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/1f158311-3d42-5ee3-4074-7cb13d653826",
   "constructors": [
     {
-      "name": "ContourPoint",
+      "name": "ContourPoint()",
       "signature": "public ContourPoint()",
       "summary": "Creates a new contour point instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/6165cd4c-ccf0-d8bb-fb62-ef607b3bb017"
     },
     {
-      "name": "ContourPoint",
+      "name": "ContourPoint(Point, Chamfer)",
       "signature": "public ContourPoint(Point P, Chamfer C)",
       "summary": "Creates a new contour point using the given point and chamfer.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7901742b-2a8d-b6d5-3f13-2f9df088f68d"
@@ -105,6 +107,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/caa63223-3fa6-7f07-5e3f-1d8e7b7386d0"
@@ -146,6 +149,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7ad7ecb9-acf3-7ed2-f2bc-aa52b99ceae6"
@@ -155,6 +159,7 @@
       "signature": "public void Zero()",
       "summary": "Zeros all the members of the point.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9bf63e0c-fe71-40ae-e467-306f0a41f315"

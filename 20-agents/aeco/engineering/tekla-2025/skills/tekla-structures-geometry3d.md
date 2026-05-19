@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-geometry3d
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Geometry3d namespace — 27 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AABB, Arc, CoordinateSystem, Distance, FacetedBrep, FacetedBrepFace, FacetedBrepFaceHole, FacetedBrepWithNormals, and 19 more types.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Geometry3d namespace — 27 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AABB, CoordinateSystem, Arc, Distance, FacetedBrep, FacetedBrepFaceHole, FacetedBrepFace, FacetedBrepWithNormals, and 19 more types.
 ---
 
 # Tekla.Structures.Geometry3d
@@ -645,7 +645,7 @@ Transposes a matrix. The resulting matrix is an inversion of the current matrix,
 [Docs](https://developer.tekla.com/topic/en/18/43/8801696e-5b19-3242-507c-28b3318ee3b4)
 
 ### Properties
-- `Item` (object, get/set) — Sets or gets the matrix element values.
+- `Item` (Double, get/set) — Sets or gets the matrix element values.
 
 ## MatrixFactory (class)
 
@@ -1717,6 +1717,14 @@ Returns a new normalized equivalent of the current vector.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/63f639b4-79da-d1b8-ec4e-8017837710d6)
 
+#### `public double Normalize()`
+
+Normalizes the vector using the length 1.0 (the length of a unit vector).
+
+**Returns:** `Double` — The normalized vector's length.
+
+[Docs](https://developer.tekla.com/topic/en/18/43/54721df5-3066-b8b0-a27e-1cad586e287a)
+
 #### `public double Normalize(double NewLength)`
 
 Normalizes the vector using the given length.
@@ -1727,14 +1735,6 @@ Normalizes the vector using the given length.
 **Returns:** `Double` — The normalized vector's length.
 
 [Docs](https://developer.tekla.com/topic/en/18/43/816a0090-f142-ebd4-31fd-1cf78d4ddd53)
-
-#### `public double Normalize()`
-
-Normalizes the vector using the length 1.0 (the length of a unit vector).
-
-**Returns:** `Double` — The normalized vector's length.
-
-[Docs](https://developer.tekla.com/topic/en/18/43/54721df5-3066-b8b0-a27e-1cad586e287a)
 
 #### `public override string ToString()`
 

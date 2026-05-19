@@ -19,6 +19,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f8aab803-2bfe-5ef2-d7ba-cbb6362ca9a5"
@@ -37,6 +38,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dcd56480-7cc2-7ec3-1bcd-bd9cb1cd6baf"
@@ -72,6 +74,7 @@
       "signature": "public void Insert()",
       "summary": "Inserts an analysis area polygon. The AnalysisModelName has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5af081d1-cafd-db09-5aab-aaea9159158a"
@@ -81,6 +84,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis area polygon. The AnalysisObjectType has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/08537d0f-a7c1-bdb6-243b-9fa55b88f3b6"

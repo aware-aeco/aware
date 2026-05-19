@@ -12,6 +12,7 @@
       "signature": "public BaseLineWithArrowAtStartPointPlacingType()",
       "summary": "Creates a new base line with arrow at start point placing type instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/186b234a-b5f9-4e78-047e-2c696db97b0b"

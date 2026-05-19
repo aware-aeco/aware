@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-analysis-ui
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Analysis.UI namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AnalysisObjectSelector, AnalysisObjectPicker, AnalysisObjectPicker.PickObjectType.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Analysis.UI namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AnalysisObjectPicker, AnalysisObjectSelector, AnalysisObjectPicker.PickObjectType.
 ---
 
 # Tekla.Structures.Analysis.UI

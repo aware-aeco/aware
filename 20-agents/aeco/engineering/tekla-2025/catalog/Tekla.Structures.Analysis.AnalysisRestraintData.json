@@ -12,6 +12,7 @@
       "signature": "public AnalysisRestraintData()",
       "summary": "Creates a new instance of an analysis restraint data.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5a65503b-2889-7640-cdcf-d8dc11c6cffd"

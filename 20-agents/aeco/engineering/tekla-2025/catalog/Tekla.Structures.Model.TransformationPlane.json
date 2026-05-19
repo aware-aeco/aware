@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/324b1565-2e6e-8847-6c8b-88ca12e2151d",
   "constructors": [
     {
-      "name": "TransformationPlane",
+      "name": "TransformationPlane()",
       "signature": "public TransformationPlane()",
       "summary": "Creates a new identity transformation using the global coordinate system.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1eb14e8f-4acb-6375-ba8e-298ebe77b9d1"
     },
     {
-      "name": "TransformationPlane",
+      "name": "TransformationPlane(CoordinateSystem)",
       "signature": "public TransformationPlane(CoordinateSystem CoordinateSystem)",
       "summary": "Creates a new transformation plane defined by the given coordinate system.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7bd754a7-a730-4c5f-3600-258e06a8abf3"
     },
     {
-      "name": "TransformationPlane",
+      "name": "TransformationPlane(Point, Vector, Vector)",
       "signature": "public TransformationPlane(Point Origo, Vector Xvector, Vector Yvector)",
       "summary": "Creates a new transformation plane defined by the given origin and two vectors.",
       "params": [
@@ -56,6 +58,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c0b2ecd9-cd91-d8ca-fd95-309c7907b7d3"

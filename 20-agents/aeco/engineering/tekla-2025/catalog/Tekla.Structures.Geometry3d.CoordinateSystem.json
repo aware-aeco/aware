@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/62ca8a5c-4cfe-1fe0-5009-75b994b06a07",
   "constructors": [
     {
-      "name": "CoordinateSystem",
+      "name": "CoordinateSystem()",
       "signature": "public CoordinateSystem()",
       "summary": "Instantiates a coordinate system in the current work plane.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fedd7e89-dcc8-a8f4-2346-09b041190a35"
     },
     {
-      "name": "CoordinateSystem",
+      "name": "CoordinateSystem(Point, Vector, Vector)",
       "signature": "public CoordinateSystem(Point Origin, Vector AxisX, Vector AxisY)",
       "summary": "Instantiates a coordinate system with the given origin, X-axis and Y-axis.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1eaa2ce1-4eaa-4a3f-6e1d-37b6686f995a"

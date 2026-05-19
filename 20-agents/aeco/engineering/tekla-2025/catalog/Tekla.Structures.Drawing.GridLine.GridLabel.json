@@ -12,6 +12,7 @@
       "signature": "public GridLabel()",
       "summary": "Creates a new default grid label instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bf12bd12-c9ab-4dfc-62cc-f3312e0bcf44"

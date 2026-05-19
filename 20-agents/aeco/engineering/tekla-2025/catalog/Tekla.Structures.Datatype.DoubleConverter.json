@@ -12,6 +12,7 @@
       "signature": "public DoubleConverter()",
       "summary": "Initializes a new instance of the DoubleConverter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d7d56fa3-5452-79fe-7a16-8f227a63b9f9"

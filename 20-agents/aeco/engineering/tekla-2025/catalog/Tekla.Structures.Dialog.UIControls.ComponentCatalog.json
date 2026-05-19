@@ -12,6 +12,7 @@
       "signature": "public ComponentCatalog()",
       "summary": "Initializes a new instance of the ComponentCatalog class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8ee45b5b-82ba-4453-fd14-c50f0f7d02b6"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/7c59d106-b059-1d79-d697-33133265f971",
   "constructors": [
     {
-      "name": "UnitAttributes",
+      "name": "UnitAttributes()",
       "signature": "public UnitAttributes()",
       "summary": "Creates a new default UnitAttributes attributes instance. The default values are Units.Automatic, FormatTypes.Automatic.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/420c1824-219f-663a-88fd-87d94742d9a6"
     },
     {
-      "name": "UnitAttributes",
+      "name": "UnitAttributes(Units, FormatTypes)",
       "signature": "public UnitAttributes(Units unit, FormatTypes format)",
       "summary": "Creates a new UnitAttributes attributes instance with the given parameters.",
       "params": [
@@ -34,6 +35,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/55b22f39-99a9-904a-ca37-9560405434f3"

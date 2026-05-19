@@ -12,6 +12,7 @@
       "signature": "public IdNumber()",
       "summary": "Initializes a new instance of the IdNumber class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/afa83eb7-76ed-c6af-be4b-62169f173c8a"

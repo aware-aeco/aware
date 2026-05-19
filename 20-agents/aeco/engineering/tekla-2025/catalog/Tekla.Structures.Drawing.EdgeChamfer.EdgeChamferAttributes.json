@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/21329c5d-35e7-6835-32de-03df1084b0a0",
   "constructors": [
     {
-      "name": "EdgeChamfer.EdgeChamferAttributes",
+      "name": "EdgeChamfer.EdgeChamferAttributes()",
       "signature": "public EdgeChamferAttributes()",
       "summary": "Creates a new default edge chamfer attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/94fea28b-edba-700b-6792-d62427dfce2b"
     },
     {
-      "name": "EdgeChamfer.EdgeChamferAttributes",
+      "name": "EdgeChamfer.EdgeChamferAttributes(String)",
       "signature": "public EdgeChamferAttributes(string AttributeFile)",
       "summary": "Creates a new edge chamfer attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f885c6d4-dfd3-d7d9-1e8e-e1ffeba6791b"

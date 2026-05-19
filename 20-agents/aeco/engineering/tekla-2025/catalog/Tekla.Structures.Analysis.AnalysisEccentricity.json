@@ -12,6 +12,7 @@
       "signature": "public AnalysisEccentricity()",
       "summary": "Creates a new analysis eccentricity instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2441df0f-7dfe-540a-8d32-bbc8983ef94d"

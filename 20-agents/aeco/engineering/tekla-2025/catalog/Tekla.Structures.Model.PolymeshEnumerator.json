@@ -4,7 +4,9 @@
   "kind": "class",
   "summary": "The PolymeshEnumerator class is used to enumerate the polymesh of a pour\u0027s merged faces.",
   "base": "System.Object",
-  "interfaces": [],
+  "interfaces": [
+    "IEnumerator"
+  ],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/03636ab7-e0d2-62e7-0be0-0ec9962228c9",
   "constructors": [],
   "methods": [
@@ -26,6 +28,7 @@
       "signature": "public void Reset()",
       "summary": "Resets the enumerator to the beginning.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0b194b30-9327-5016-a078-7e7ca52171c2"

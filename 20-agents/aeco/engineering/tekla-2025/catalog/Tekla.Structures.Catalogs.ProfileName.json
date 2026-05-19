@@ -12,6 +12,7 @@
       "signature": "public ProfileName()",
       "summary": "Initializes a new instance of the ProfileName class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/b155d838-cb7a-1dce-f500-e789a3e2ee45"

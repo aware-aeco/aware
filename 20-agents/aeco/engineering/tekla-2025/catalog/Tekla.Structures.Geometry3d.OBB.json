@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/5c37ba3e-c3a3-b597-5998-714e46e499c8",
   "constructors": [
     {
-      "name": "OBB",
+      "name": "OBB()",
       "signature": "public OBB()",
       "summary": "Initializes a new instance of the OBB class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/44c1bf4e-913f-84ae-d0f4-ccf6169a5114"
     },
     {
-      "name": "OBB",
+      "name": "OBB(OBB)",
       "signature": "public OBB(OBB obb)",
       "summary": "Initializes a new instance of the OBB class.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -38,7 +40,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bc4f77e4-093e-988e-ae64-5b33f519e0c0"
     },
     {
-      "name": "OBB",
+      "name": "OBB(Point, .Vector[], .Double[])",
       "signature": "public OBB(Point center, Vector[] axis, double[] extent)",
       "summary": "Initializes a new instance of the OBB class.",
       "params": [
@@ -61,6 +63,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -71,7 +74,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1c313fcb-2f22-bf27-fc7e-482e9af4a077"
     },
     {
-      "name": "OBB",
+      "name": "OBB(Point, Vector, Vector, Vector, Double, Double, Double)",
       "signature": "public OBB(Point center, Vector axis0, Vector axis1, Vector axis2, double extent0, double extent1, double extent2)",
       "summary": "Initializes a new instance of the OBB class.",
       "params": [
@@ -118,6 +121,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -546,7 +550,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d81fab1c-b77c-982c-c180-b511b40252e0"
     },
     {
-      "name": "SetAxis(.Vector.)",
+      "name": "SetAxis(.Vector[])",
       "signature": "public void SetAxis(Vector[] axis)",
       "summary": "Sets the Axis to the OBB.",
       "params": [
@@ -557,6 +561,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -590,6 +595,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -600,7 +606,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ef0df18d-695b-93ff-004a-6ff160d3a5b8"
     },
     {
-      "name": "SetExtent(.Double.)",
+      "name": "SetExtent(.Double[])",
       "signature": "public void SetExtent(double[] extent)",
       "summary": "Sets the extents to the OBB.",
       "params": [
@@ -611,6 +617,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",
@@ -644,6 +651,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentException",

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/1e037ad1-c3f9-cdf6-fb5d-3b6fcb191cc9",
   "constructors": [
     {
-      "name": "Circle.CircleAttributes",
+      "name": "Circle.CircleAttributes()",
       "signature": "public CircleAttributes()",
       "summary": "Creates a new default circle attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ee841385-d630-97b5-e5a5-95a7b58a4457"
     },
     {
-      "name": "Circle.CircleAttributes",
+      "name": "Circle.CircleAttributes(String)",
       "signature": "public CircleAttributes(string AttributesFile)",
       "summary": "Creates a new circle attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9130556c-2b21-156d-e13e-7a4b4c7243be"

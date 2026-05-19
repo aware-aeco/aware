@@ -12,6 +12,7 @@
       "signature": "public AnalysisMaterial()",
       "summary": "Initializes a new instance of the AnalysisMaterial class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/86696dee-5d43-afd7-73ca-84d6ceaa7f86"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis material. The AnalysisModelName and Name have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/33e681ec-38e0-1b5a-c4ae-a85d39a266d3"

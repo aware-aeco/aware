@@ -12,6 +12,7 @@
       "signature": "public ClashCheckOptions()",
       "summary": "Initializes a new instance of the ClashCheckOptions class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2e7249b6-7ad6-d8bf-cb10-41d33a9705fb"

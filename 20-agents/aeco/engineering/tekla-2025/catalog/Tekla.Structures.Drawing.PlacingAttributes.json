@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/22655d18-229c-1261-e042-94b9a0bc6cd7",
   "constructors": [
     {
-      "name": "PlacingAttributes",
+      "name": "PlacingAttributes()",
       "signature": "public PlacingAttributes()",
       "summary": "Creates a new placing attributes instance. The default parameters are: IsFixed = true, default PlacingDistanceAttributes, default PlacingQuarterAttributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/65465aa5-3ae9-958c-8ed2-c0e7c65b9a7e"
     },
     {
-      "name": "PlacingAttributes",
+      "name": "PlacingAttributes(Boolean, PlacingDistanceAttributes, PlacingQuarterAttributes)",
       "signature": "public PlacingAttributes(bool IsFixed, PlacingDistanceAttributes PlacingDistance, PlacingQuarterAttributes PlacingQuarter)",
       "summary": "Creates a new placing quarter attributes instance with the given parameters.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb5b2f35-19ab-b3ca-ba98-225e5000a678"

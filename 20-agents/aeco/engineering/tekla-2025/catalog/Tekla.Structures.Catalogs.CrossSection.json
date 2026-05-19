@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/35f56e00-3ebc-f537-971a-78530f8315dc",
   "constructors": [
     {
-      "name": "CrossSection",
+      "name": "CrossSection(String)",
       "signature": "public CrossSection(string ProfileString)",
       "summary": "Creates a new cross section point instance.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1eeba68c-9178-a840-0bc5-2688326f1ee7"
     },
     {
-      "name": "CrossSection",
+      "name": "CrossSection(ProfileName)",
       "signature": "public CrossSection(ProfileName Profile)",
       "summary": "Creates a new cross section point instance.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ed97d96b-f8e7-170b-d24c-b38edfaec080"

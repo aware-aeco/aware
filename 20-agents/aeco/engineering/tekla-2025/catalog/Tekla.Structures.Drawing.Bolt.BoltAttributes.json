@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/7edfee41-9b01-8791-1650-e4b2e91a169b",
   "constructors": [
     {
-      "name": "Bolt.BoltAttributes",
+      "name": "Bolt.BoltAttributes()",
       "signature": "public BoltAttributes()",
       "summary": "Creates a new default bolt attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/542701da-0bbe-cb75-0c28-5aa0e10e4948"
     },
     {
-      "name": "Bolt.BoltAttributes",
+      "name": "Bolt.BoltAttributes(String)",
       "signature": "public BoltAttributes(string AttributeFile)",
       "summary": "Creates a new bolt attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2b963373-96fe-21d5-e914-56f7fab9655c"

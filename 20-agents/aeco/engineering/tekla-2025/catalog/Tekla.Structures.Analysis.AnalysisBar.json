@@ -12,6 +12,7 @@
       "signature": "public AnalysisBar()",
       "summary": "Initializes a new instance of the AnalysisBar class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8c5bff53-a09b-0de8-6315-a7572415c2f1"
@@ -30,6 +31,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/94840bd0-1058-900f-d0d7-e1ce12084405"
@@ -52,6 +54,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7b09f522-a98f-884b-899c-df298172e861"
@@ -61,6 +64,7 @@
       "signature": "public void Delete()",
       "summary": "Deletes an analysis bar. The method is not implemented.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bf807987-579b-264b-fe75-744322dcbcfc"
@@ -96,6 +100,7 @@
       "signature": "public void Modify()",
       "summary": "Modifies an analysis bar. The method is not implemented.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3d7699e4-55da-aac0-c137-f8670077b40b"
@@ -105,6 +110,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis bar. The AnalysisModelName and ID have to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3a0291d9-eb64-9cba-5173-51025d0d1f36"

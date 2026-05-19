@@ -100,7 +100,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/dd1423f6-244d-f32c-ea02-638b7138b190"
     },
     {
-      "name": "SetTemporaryState(List.Identifier., Color)",
+      "name": "SetTemporaryState(List\u003CIdentifier\u003E, Color)",
       "signature": "public static bool SetTemporaryState(List\u003CIdentifier\u003E identifiers, Color color)",
       "summary": "Sets visualization temporary state (red, blue, green and transparency) for given model object identifiers",
       "params": [
@@ -126,7 +126,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/283dae38-1f8e-91a7-4bb6-6766c0cb48b4"
     },
     {
-      "name": "SetTemporaryState(List.ModelObject., Color)",
+      "name": "SetTemporaryState(List\u003CModelObject\u003E, Color)",
       "signature": "public static bool SetTemporaryState(List\u003CModelObject\u003E modelObjects, Color color)",
       "summary": "Sets visualization temporary state (red, blue, green and transparency) for given model objects",
       "params": [
@@ -172,7 +172,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0eb20b32-3c7f-3c69-db53-87bb751d23ac"
     },
     {
-      "name": "SetTransparency(List.Identifier., TemporaryTransparency)",
+      "name": "SetTransparency(List\u003CIdentifier\u003E, TemporaryTransparency)",
       "signature": "public static bool SetTransparency(List\u003CIdentifier\u003E identifiers, TemporaryTransparency transparency)",
       "summary": "Restores permanent representation settings and sets temporary transparency for given model object identifiers",
       "params": [
@@ -198,7 +198,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/205146e9-e809-6b1d-2557-85889ce28a67"
     },
     {
-      "name": "SetTransparency(List.ModelObject., TemporaryTransparency)",
+      "name": "SetTransparency(List\u003CModelObject\u003E, TemporaryTransparency)",
       "signature": "public static bool SetTransparency(List\u003CModelObject\u003E modelObjects, TemporaryTransparency transparency)",
       "summary": "Restores permanent representation settings and sets temporary transparency for given model objects",
       "params": [

@@ -12,6 +12,7 @@
       "signature": "public BoltItem()",
       "summary": "Creates a new bolt item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/58b3c99b-bbed-2c92-916d-37a1ed32c3e4"

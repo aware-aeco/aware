@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelLoad()",
       "summary": "Initializes a new instance of the AnalysisModelLoad class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3f29ab6f-7b3f-ba01-0734-372958c9d77a"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis node. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a493355c-c2ee-eb6b-64cc-94dfff937e34"

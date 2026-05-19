@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelOutputProperties()",
       "summary": "Initializes a new instance of the AnalysisModelOutputProperties class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0e05a1df-a62a-ba67-14df-1494a6654eb0"

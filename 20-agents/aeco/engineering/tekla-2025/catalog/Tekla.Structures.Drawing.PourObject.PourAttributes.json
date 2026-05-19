@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/5b4159f0-d8d8-3643-a751-bc4a891d8816",
   "constructors": [
     {
-      "name": "PourObject.PourAttributes",
+      "name": "PourObject.PourAttributes()",
       "signature": "public PourAttributes()",
       "summary": "Creates a new default pour attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/82d5f205-eb4f-0006-de82-583b1b9681f2"
     },
     {
-      "name": "PourObject.PourAttributes",
+      "name": "PourObject.PourAttributes(String)",
       "signature": "public PourAttributes(string AttributeFile)",
       "summary": "Creates a new pour attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c1187858-dcf4-e656-fc79-d54235677ffa"

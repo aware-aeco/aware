@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/30425d6a-467a-1cf9-a182-0d5859a9b75d",
   "constructors": [
     {
-      "name": "Polycurve",
+      "name": "Polycurve()",
       "signature": "public Polycurve()",
       "summary": "Initializes a new instance of the Polycurve class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/9facaafc-472b-5a61-c790-436e5514568b"
     },
     {
-      "name": "Polycurve",
+      "name": "Polycurve(ICurve)",
       "signature": "public Polycurve(ICurve geometry)",
       "summary": "Initializes a new instance of the Polycurve class from a curve geometry.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/07335fb4-483f-b2b7-08fc-0f70fd8251ec"
     },
     {
-      "name": "Polycurve",
+      "name": "Polycurve(PolyLine)",
       "signature": "public Polycurve(PolyLine polyLine)",
       "summary": "Initializes a new instance of the Polycurve class from a PolyLine. The lines are converted to line segments.",
       "params": [
@@ -44,6 +46,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8a1280e0-7f40-5343-92c2-715880aea375"

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/34a54f53-8840-15d4-9cc6-d7a746bc3f49",
   "constructors": [
     {
-      "name": "PluginSymbolVisiblityAttribute",
+      "name": "PluginSymbolVisiblityAttribute(Int32)",
       "signature": "public PluginSymbolVisiblityAttribute(int Type)",
       "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/96dca74e-eadd-2601-507b-06ab7463a12a"
     },
     {
-      "name": "PluginSymbolVisiblityAttribute",
+      "name": "PluginSymbolVisiblityAttribute(PluginBase.SymbolVisibility)",
       "signature": "public PluginSymbolVisiblityAttribute(PluginBase.SymbolVisibility Type)",
       "summary": "The custom attribute used to define coordinate system of the plug-in. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5b802a7d-3dca-6e69-ef42-9acd7ad1fbda"

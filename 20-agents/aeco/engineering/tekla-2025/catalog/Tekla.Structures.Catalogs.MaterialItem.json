@@ -12,6 +12,7 @@
       "signature": "public MaterialItem()",
       "summary": "Creates a new material item instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0a2c6cf9-5d78-1ffb-618f-70f3875831ac"
@@ -91,7 +92,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8a966994-dbf3-f876-01b4-24a2ce3a609a"
     },
     {
-      "name": "Select.",
+      "name": "Select()",
       "signature": "public bool Select()",
       "summary": "Selects the material item from the database based on the material name and alias name in this instance.",
       "params": [],

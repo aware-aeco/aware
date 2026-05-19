@@ -12,6 +12,7 @@
       "signature": "public AnalysisVolumeItem()",
       "summary": "Initializes a new instance of the AnalysisVolumeItem class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/aa7cfef1-68c2-c526-b3b6-d850b6a6bcb3"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis volume item. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/300d85e1-7dc5-a134-95ad-d7fc147c0fbe"

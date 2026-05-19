@@ -12,6 +12,7 @@
       "signature": "public AnalysisModelConnectivityRule()",
       "summary": "Initializes a new instance of the AnalysisModelConnectivityRule class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2625900a-1313-f402-49d1-6ea7477523a2"
@@ -23,6 +24,7 @@
       "signature": "public override void Select()",
       "summary": "Selects an analysis connectivity rule. The ID has to be set.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/2f473acf-e09d-0c80-08d2-3225114ddc7b"

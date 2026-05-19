@@ -12,6 +12,7 @@
       "signature": "public OverlayModelEvents()",
       "summary": "Initializes a new instance of the OverlayModelEvents class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/77bfed98-31fd-da50-1efc-27c68299fabb"

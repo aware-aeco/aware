@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/039e5970-ac37-24e7-cd99-658f3ede5126",
   "constructors": [
     {
-      "name": "DetailTypeAttribute",
+      "name": "DetailTypeAttribute(Int32)",
       "signature": "public DetailTypeAttribute(int Type)",
       "summary": "The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d3542e9-f44e-4a0e-70da-f4bc3507cfb1"
     },
     {
-      "name": "DetailTypeAttribute",
+      "name": "DetailTypeAttribute(DetailTypeEnum)",
       "signature": "public DetailTypeAttribute(DetailTypeEnum Type)",
       "summary": "The custom attribute [DetailType()] uses this to store the type of the detail to the system. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5c8b4ac7-c1b7-b220-c924-8153281cc741"

@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/36943ef9-e37b-1238-0997-d786e733b781",
   "constructors": [
     {
-      "name": "SectionMarkBase.SectionMarkTagAttributes",
+      "name": "SectionMarkBase.SectionMarkTagAttributes()",
       "signature": "public SectionMarkTagAttributes()",
       "summary": "Creates a new section mark tag attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4183fcd3-94c4-a8a3-9684-1037e3436188"
     },
     {
-      "name": "SectionMarkBase.SectionMarkTagAttributes",
+      "name": "SectionMarkBase.SectionMarkTagAttributes(SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide, TagLocation, Vector, SectionMarkBase.SectionMarkTagAttributes.TagTextRotation, ContainerElement)",
       "signature": "public SectionMarkTagAttributes(SectionMarkBase.SectionMarkTagAttributes.TagShowOnSide showOnSide, TagLocation location, Vector offset, SectionMarkBase.SectionMarkTagAttributes.TagTextRotation rotation, ContainerElement tagContent)",
       "summary": "Creates a new section mark tag attributes instance with the given information.",
       "params": [
@@ -52,6 +53,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ae47ed5e-ab27-7dd6-cb4a-c20a7d5ec898"

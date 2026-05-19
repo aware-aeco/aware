@@ -12,6 +12,7 @@
       "signature": "public Lot()",
       "summary": "Initializes a new instance of the Lot class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/cd61bc2e-7a73-21de-581c-dcab7a6a6601"

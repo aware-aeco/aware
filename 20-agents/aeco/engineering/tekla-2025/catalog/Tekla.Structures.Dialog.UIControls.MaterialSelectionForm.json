@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/c171b4db-6ad7-65a7-5659-3d3a409427f7",
   "constructors": [
     {
-      "name": "MaterialSelectionForm",
+      "name": "MaterialSelectionForm(List\u003CMaterialItem\u003E)",
       "signature": "public MaterialSelectionForm(List\u003CMaterialItem\u003E Materials)",
       "summary": "Creates a new instance of the MaterialSelectionForm.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/45c347cb-181a-a431-c824-3ccaa6f05a05"
     },
     {
-      "name": "MaterialSelectionForm",
+      "name": "MaterialSelectionForm(List\u003CMaterialItem\u003E, String)",
       "signature": "public MaterialSelectionForm(List\u003CMaterialItem\u003E Materials, string Material)",
       "summary": "Creates a new instance of the MaterialSelectionForm, selecting the given material in the tree control.",
       "params": [
@@ -41,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4599154a-2939-7aac-b798-85eb751acae6"

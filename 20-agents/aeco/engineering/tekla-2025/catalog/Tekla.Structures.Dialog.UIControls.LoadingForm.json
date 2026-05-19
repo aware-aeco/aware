@@ -12,6 +12,7 @@
       "signature": "public LoadingForm()",
       "summary": "Creates a new instance of the form.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7d0ae714-9a25-6672-bacc-d8e57ebc3ec5"

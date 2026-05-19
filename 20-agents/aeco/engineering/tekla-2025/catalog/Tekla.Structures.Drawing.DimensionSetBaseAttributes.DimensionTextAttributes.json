@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/561bf2b6-be3f-4ceb-1ecc-e3423a4d8e4e",
   "constructors": [
     {
-      "name": "DimensionSetBaseAttributes.DimensionTextAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionTextAttributes()",
       "signature": "public DimensionTextAttributes()",
       "summary": "Creates a new dimension text attributes instance. By default the default font is used, no frame is drawn and the value text is above the dimension line.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/36f24bf5-4879-e54c-63d3-15c4d6e645d4"
     },
     {
-      "name": "DimensionSetBaseAttributes.DimensionTextAttributes",
+      "name": "DimensionSetBaseAttributes.DimensionTextAttributes(FontAttributes, DimensionSetBaseAttributes.FrameTypes, DimensionSetBaseAttributes.DimensionTextPlacings)",
       "signature": "public DimensionTextAttributes(FontAttributes font, DimensionSetBaseAttributes.FrameTypes frame, DimensionSetBaseAttributes.DimensionTextPlacings textPlacing)",
       "summary": "Creates a new dimension text attributes instance with the given parameters.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/02b259ae-d3a7-7fc1-5749-397ded0f862f"

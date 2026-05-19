@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/624aa0ff-13ca-e29c-8b7e-91338f265e8a",
   "constructors": [
     {
-      "name": "Weld.WeldAttributes",
+      "name": "Weld.WeldAttributes()",
       "signature": "public WeldAttributes()",
       "summary": "Creates a new default weld attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/952b80fc-e7a8-059c-9cb2-17798a91deab"
     },
     {
-      "name": "Weld.WeldAttributes",
+      "name": "Weld.WeldAttributes(String)",
       "signature": "public WeldAttributes(string AttributeFile)",
       "summary": "Creates a new weld attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8e310c2f-e972-ef8b-7389-20cee98f7c41"

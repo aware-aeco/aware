@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/2d4746c9-dc38-07d8-c644-b450af02d77d",
   "constructors": [
     {
-      "name": "Phase",
+      "name": "Phase()",
       "signature": "public Phase()",
       "summary": "Instantiates a new phase with the phase number 0.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c76d3958-23ff-8663-e97b-d9e4bb93fb18"
     },
     {
-      "name": "Phase",
+      "name": "Phase(Int32)",
       "signature": "public Phase(int PhaseNumber)",
       "summary": "Instantiates a new phase with the given phase number.",
       "params": [
@@ -28,12 +29,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1344d189-4729-3984-4cd2-7155e9be62f1"
     },
     {
-      "name": "Phase",
+      "name": "Phase(Int32, String, String, Int32)",
       "signature": "public Phase(int PhaseNumber, string PhaseName, string PhaseComment, int IsCurrentPhase)",
       "summary": "Instantiates a new phase with the given parameters.",
       "params": [
@@ -62,6 +64,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/70da8fdf-5c15-5203-0274-c40564d23d17"

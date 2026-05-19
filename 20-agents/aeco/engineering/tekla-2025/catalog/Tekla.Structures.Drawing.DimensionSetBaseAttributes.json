@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/c618d777-d2a2-5505-c866-dd12e531fa33",
   "constructors": [
     {
-      "name": "DimensionSetBaseAttributes",
+      "name": "DimensionSetBaseAttributes()",
       "signature": "public DimensionSetBaseAttributes()",
       "summary": "Creates a new default dimension set base attributes instance that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a14aa3a3-aa27-5f8c-0cf5-ce5ebbf3a735"
     },
     {
-      "name": "DimensionSetBaseAttributes",
+      "name": "DimensionSetBaseAttributes(String)",
       "signature": "public DimensionSetBaseAttributes(string AttributesFile)",
       "summary": "Creates a new dimension set base attributes instance that loads the specified attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/0e55346d-df64-75b9-1689-0464661b7382"

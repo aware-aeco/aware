@@ -12,6 +12,7 @@
       "signature": "public Type()",
       "summary": "Initializes a new instance of the Type class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/eb753554-de15-4b42-f56b-a9ec1c5b3991"

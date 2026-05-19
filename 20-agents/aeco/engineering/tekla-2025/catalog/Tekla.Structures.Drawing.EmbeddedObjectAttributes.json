@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/596ae9f6-fcde-e827-a806-61f33418be18",
   "constructors": [
     {
-      "name": "EmbeddedObjectAttributes",
+      "name": "EmbeddedObjectAttributes()",
       "signature": "public EmbeddedObjectAttributes()",
       "summary": "Initializes a new instance of the EmbeddedObjectAttributes class that loads standard attributes.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5940f55d-83b2-32f4-ffc5-c48ec9431923"
     },
     {
-      "name": "EmbeddedObjectAttributes",
+      "name": "EmbeddedObjectAttributes(String)",
       "signature": "public EmbeddedObjectAttributes(string AttributeFile)",
       "summary": "Initializes a new instance of the EmbeddedObjectAttributes class that loads given attributes.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/de94d88c-4d99-e8d5-1499-9a6105f39ddf"

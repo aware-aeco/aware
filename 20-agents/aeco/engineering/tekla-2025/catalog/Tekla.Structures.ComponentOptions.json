@@ -12,6 +12,7 @@
       "signature": "public ComponentOptions()",
       "summary": "Initializes a new instance of the ComponentOptions class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bcc8d2c4-bdfb-49f6-f564-ed445ec29cde"

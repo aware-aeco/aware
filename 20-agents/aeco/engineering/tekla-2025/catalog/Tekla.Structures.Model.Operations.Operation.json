@@ -3,6 +3,7 @@
   "namespace": "Tekla.Structures.Model.Operations",
   "kind": "class",
   "summary": "The Operation class implements Tekla Structures level operations.",
+  "remarks": "Using this method is much faster than checking each object individually.",
   "base": "System.Object",
   "interfaces": [],
   "doc_url": "https://developer.tekla.com/topic/en/18/43/d5bbc096-a164-49ea-16a8-3820e40b00be",
@@ -220,9 +221,9 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d67c7649-00ef-f48a-bbf8-5bedf53ce30d"
     },
     {
-      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point.)",
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E)",
       "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2)",
-      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape).",
+      "summary": "Modifies the first plate by adding a cylindrical bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. See CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, BentPlate.BendShape).",
       "params": [
         {
           "name": "part1",
@@ -296,7 +297,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f401c9ed-80c1-f692-6736-73d779c8577e"
     },
     {
-      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double)",
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, Double)",
       "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, double radius)",
       "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
       "params": [
@@ -349,7 +350,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/c7e50f00-b8cd-3418-4bfb-561fdf9bae0c"
     },
     {
-      "name": "CreateBentPlateByFaces(Part, IList.Point., Part, IList.Point., BentPlate.BendShape)",
+      "name": "CreateBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, BentPlate.BendShape)",
       "signature": "public static BentPlate CreateBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, BentPlate.BendShape bendShape)",
       "summary": "Modifies the first plate by adding a bend that connects it to the second plate creating a new BentPlate instance based on two parts and selected faces in each part. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, BentPlate.BendShape).",
       "params": [
@@ -616,7 +617,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a9f4e2ea-0881-3278-a468-ff1d483544d3"
     },
     {
-      "name": "CreateConicalBentPlateByFaces(Part, IList.Point., Part, IList.Point., Double, Double)",
+      "name": "CreateConicalBentPlateByFaces(Part, IList\u003CPoint\u003E, Part, IList\u003CPoint\u003E, Double, Double)",
       "signature": "public static BentPlate CreateConicalBentPlateByFaces(Part part1, IList\u003CPoint\u003E face1, Part part2, IList\u003CPoint\u003E face2, double largestRadius, double halfAperture)",
       "summary": "Modifies the first plate by adding a conical bend that connects it to the second plate creating a new BentPlate instance based on two parts, selected faces in each part and radius. This method can change GUID when using from plug-ins. To keep GUID, use AddLeg(ConnectiveGeometry, LineSegment, ConnectiveGeometry, LineSegment, Double).",
       "params": [
@@ -1982,6 +1983,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ef58f1d7-1bc2-ad42-f1f5-21f092444369"

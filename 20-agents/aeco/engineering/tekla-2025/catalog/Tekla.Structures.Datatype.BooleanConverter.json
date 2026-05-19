@@ -12,6 +12,7 @@
       "signature": "public BooleanConverter()",
       "summary": "Initializes a new instance of the BooleanConverter class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/3266a55a-37f7-ad81-d8c5-aa84fc887032"

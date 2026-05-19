@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/8704f981-6637-a70e-e44f-13a39aebd86c",
   "constructors": [
     {
-      "name": "PolycurveGeometryBuilder",
+      "name": "PolycurveGeometryBuilder()",
       "signature": "public PolycurveGeometryBuilder()",
       "summary": "Creates an empty geometry builder. This builder contains no geometries",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/8dcd3b1e-c6f6-46b2-bbe9-ef5f87074e9f"
     },
     {
-      "name": "PolycurveGeometryBuilder",
+      "name": "PolycurveGeometryBuilder(Polycurve)",
       "signature": "public PolycurveGeometryBuilder(Polycurve geometries)",
       "summary": "Constructs a geometry builder from an existing geometry list",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f0392613-f949-50f1-af2f-184be5a9f228"

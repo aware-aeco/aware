@@ -1,56 +1,56 @@
 ﻿
- idx ns                                           name                                                                         kind   result issues                             
- --- --                                           ----                                                                         ----   ------ ------                             
-1221 Tekla.Structures.Model.UI                    PickInput                                                                    class  FAIL   property-placeholder-type(SyncRoot)
- 688 Tekla.Structures.Filtering.Categories        AssemblyFilterExpressions.CustomDateTime                                     class  PASS                                      
- 513 Tekla.Structures.Drawing                     ReinforcementStrand                                                          class  PASS                                      
- 432 Tekla.Structures.Drawing                     MarkSet.MarkSetAttributes                                                    class  PASS                                      
-1083 Tekla.Structures.Model                       BooleanPart.BooleanTypeEnum                                                  enum   PASS                                      
- 495 Tekla.Structures.Drawing                     RadiusDimensionAttributes                                                    class  PASS                                      
- 202 Tekla.Structures.Datatype                    DistanceConverter                                                            class  PASS                                      
- 794 Tekla.Structures.Filtering.Categories        PourUnitFilterExpressions                                                    class  PASS                                      
-1206 Tekla.Structures.Model.Operations            Operation.IFCExportFlags                                                     struct PASS                                      
- 730 Tekla.Structures.Filtering.Categories        LoadFilterExpressions.CustomNumber                                           class  PASS                                      
- 611 Tekla.Structures.Drawing                     LeaderLine.LeaderLineTypes                                                   enum   PASS                                      
- 403 Tekla.Structures.Drawing                     HyperLink                                                                    class  PASS                                      
- 407 Tekla.Structures.Drawing                     InsidePartHorizontalOrWithLeaderLinePlacingType                              class  PASS                                      
- 127 Tekla.Structures.Analysis                    AnalysisPartPositionProperties.LongitudinalOffsetEnum                        enum   PASS                                      
- 492 Tekla.Structures.Drawing                     PropertyElement.PropertyElementType.SectionViewLabelMarkPropertyElementTypes class  PASS                                      
-  39 Tekla.Structures.Analysis                    AnalysisDesignParameterBase                                                  class  PASS                                      
-1277 Tekla.Structures.Solid                       Shell                                                                        class  PASS                                      
- 489 Tekla.Structures.Drawing                     PropertyElement.PropertyElementType.ReinforcementMarkPropertyElementTypes    class  PASS                                      
- 146 Tekla.Structures.Catalogs                    BoltName                                                                     class  PASS                                      
- 636 Tekla.Structures.Drawing                     Weld.Representation                                                          enum   PASS                                      
- 257 Tekla.Structures.Dialog.UIControls           DataGrid                                                                     class  PASS                                      
- 845 Tekla.Structures.Filtering.Categories        TaskFilterExpressions.PlannedStartDate                                       class  PASS                                      
- 758 Tekla.Structures.Filtering.Categories        ObjectTypesFilterExpressions.CustomString                                    class  PASS                                      
- 867 Tekla.Structures.Forming                     WrappingType                                                                 enum   PASS                                      
-1106 Tekla.Structures.Model                       LoftedPlate.LoftedPlateFaceTypeEnum                                          enum   PASS                                      
-  88 Tekla.Structures.Analysis                    DotAnalysisModelObjectOperation                                              struct PASS                                      
-1137 Tekla.Structures.Model                       RebarSpacingZone.SpacingEnum                                                 enum   PASS                                      
- 383 Tekla.Structures.Drawing                     EdgeChamfer.EdgeChamferAttributes                                            class  PASS                                      
- 773 Tekla.Structures.Filtering.Categories        PartFilterExpressions.NumberingSeries                                        class  PASS                                      
- 668 Tekla.Structures.Filtering                   DateTimeConstantFilterExpression                                             class  PASS                                      
-1201 Tekla.Structures.Model.Internal.OverlayModel OverlayModelCollectionChangesAction                                          enum   PASS                                      
- 988 Tekla.Structures.Model                       PhaseCollection                                                              class  FAIL   property-placeholder-type(SyncRoot)
- 412 Tekla.Structures.Drawing                     InvalidTypeException                                                         class  PASS                                      
-1048 Tekla.Structures.Model                       UndefinedCurveDirectionException                                             class  PASS                                      
-  45 Tekla.Structures.Analysis                    AnalysisFace                                                                 class  PASS                                      
-1095 Tekla.Structures.Model                       ControlObjectColorEnum                                                       enum   PASS                                      
-  64 Tekla.Structures.Analysis                    AnalysisNode                                                                 class  PASS                                      
-1217 Tekla.Structures.Model.UI                    Mesh                                                                         class  PASS                                      
- 269 Tekla.Structures.Dialog.UIControls           MeshSelectionForm                                                            class  PASS                                      
- 989 Tekla.Structures.Model                       Plane                                                                        class  PASS                                      
- 504 Tekla.Structures.Drawing                     ReinforcementBase.ReinforcementSetGroupAttributes                            class  PASS                                      
-  21 Tekla.Structures.Analysis                    Analysis                                                                     class  PASS                                      
- 404 Tekla.Structures.Drawing                     Image                                                                        class  PASS                                      
- 704 Tekla.Structures.Filtering.Categories        BoltFilterExpressions.CustomNumber                                           class  PASS                                      
- 647 Tekla.Structures.Drawing.Tools               InputDefinitionFactory                                                       class  PASS                                      
- 362 Tekla.Structures.Drawing                     DetailMarkTagsAttributes                                                     class  PASS                                      
- 724 Tekla.Structures.Filtering.Categories        ConstructionObjectFilterExpressions.CustomString                             class  PASS                                      
-1279 Tekla.Structures.Solid                       VertexEnumerator                                                             class  PASS                                      
- 445 Tekla.Structures.Drawing                     PickerInputObject                                                            class  PASS                                      
-  87 Tekla.Structures.Analysis                    AnalysisVolumeItem                                                           class  PASS                                      
+ idx ns                                    name                                                         kind  result issues
+ --- --                                    ----                                                         ----  ------ ------
+ 475 Tekla.Structures.Drawing              PreferredTextPlacingTypes                                    class PASS         
+ 424 Tekla.Structures.Drawing              LinkAttributes                                               class PASS         
+ 455 Tekla.Structures.Drawing              PlacingDistanceAttributes                                    class PASS         
+  38 Tekla.Structures.Analysis             AnalysisDesignParameter                                      class PASS         
+1240 Tekla.Structures.Plugins              CustomPartInputTypeAttribute                                 class PASS         
+ 104 Tekla.Structures.Analysis             AnalysisModelGeneralProperties.MemberAxisLocationEnum        enum  PASS         
+ 554 Tekla.Structures.Drawing              ViewMarkBasicSymbolAttributes                                class PASS         
+ 746 Tekla.Structures.Filtering.Categories ObjectFilterExpressions.CustomDateTime                       class PASS         
+ 754 Tekla.Structures.Filtering.Categories ObjectTypesFilterExpressions                                 class PASS         
+ 515 Tekla.Structures.Drawing              SectionMark                                                  class PASS         
+ 599 Tekla.Structures.Drawing              DrawingColors                                                enum  PASS         
+ 781 Tekla.Structures.Filtering.Categories PourBreakFilterExpressions.CustomDateTime                    class PASS         
+ 592 Tekla.Structures.Drawing              DotPrintAreaType                                             enum  PASS         
+ 848 Tekla.Structures.Filtering.Categories TemplateFilterExpressions.CustomDateTime                     class PASS         
+ 396 Tekla.Structures.Drawing              Grid                                                         class PASS         
+ 299 Tekla.Structures.Dialog.UIControls    SaveLoad.HelpFileTypeEnum                                    enum  PASS         
+1077 Tekla.Structures.Model                BentPlateGeometrySolver.OperationStatus                      enum  PASS         
+1105 Tekla.Structures.Model                LoadGroup.LoadGroupType                                      enum  PASS         
+ 296 Tekla.Structures.Dialog.UIControls    WpfSaveLoad                                                  class PASS         
+ 102 Tekla.Structures.Analysis             AnalysisModel.ConstructionMethodEnum                         enum  PASS         
+ 710 Tekla.Structures.Filtering.Categories BoltFilterExpressions.Size                                   class PASS         
+ 472 Tekla.Structures.Drawing              PreferredMarkPlacingTypes                                    class PASS         
+1092 Tekla.Structures.Model                ControlCircle.ControlCircleColorEnum                         enum  PASS         
+  81 Tekla.Structures.Analysis             AnalysisResultPositions                                      class PASS         
+1072 Tekla.Structures.Model                BaseWeld.WeldPreparationTypeEnum                             enum  PASS         
+ 173 Tekla.Structures.Catalogs             ProfileName                                                  class PASS         
+  72 Tekla.Structures.Analysis             AnalysisPartBarAttributes                                    class PASS         
+ 759 Tekla.Structures.Filtering.Categories ObjectTypesFilterExpressions.CustomString                    class PASS         
+  74 Tekla.Structures.Analysis             AnalysisPartLoadingProperties                                class PASS         
+ 456 Tekla.Structures.Drawing              PlacingBase                                                  class PASS         
+ 301 Tekla.Structures.Drawing              AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType class PASS         
+ 494 Tekla.Structures.Drawing              RadiusDimension                                              class PASS         
+ 277 Tekla.Structures.Dialog.UIControls    PropertiesDialog                                             class PASS         
+ 114 Tekla.Structures.Analysis             AnalysisPart.ItemTypeEnum                                    enum  PASS         
+ 608 Tekla.Structures.Drawing              Hideable.ShouldBeHiddenFlags                                 enum  PASS         
+ 906 Tekla.Structures.Model                BoltArray                                                    class PASS         
+ 615 Tekla.Structures.Drawing              Part.Representation                                          enum  PASS         
+ 617 Tekla.Structures.Drawing              ReinforcementBase.HookedEndSymbolTypes                       enum  PASS         
+ 900 Tekla.Structures.Model                BaseWeld                                                     class PASS         
+ 915 Tekla.Structures.Model                ChangeData                                                   class PASS         
+ 612 Tekla.Structures.Drawing              LineTypesEnum                                                enum  PASS         
+ 305 Tekla.Structures.Drawing              AlongPartCenteredPlacingType                                 class PASS         
+ 333 Tekla.Structures.Drawing              CannotSetAttributeForPluginDueToInexistantFieldException     class PASS         
+ 352 Tekla.Structures.Drawing              CurvedDimensionSetRadial                                     class PASS         
+ 190 Tekla.Structures.Catalogs             ProfileItem.ProfileItemSubTypeEnum                           enum  PASS         
+ 767 Tekla.Structures.Filtering.Categories PartFilterExpressions.Finish                                 class PASS         
+ 821 Tekla.Structures.Filtering.Categories ReinforcingBarFilterExpressions.Prefix                       class PASS         
+ 152 Tekla.Structures.Catalogs             CrossSectionPoint                                            class PASS         
+ 743 Tekla.Structures.Filtering.Categories LogicalAreaFilterExpressions.Story                           class PASS         
+ 709 Tekla.Structures.Filtering.Categories BoltFilterExpressions.Standard                               class PASS         
 
 
 

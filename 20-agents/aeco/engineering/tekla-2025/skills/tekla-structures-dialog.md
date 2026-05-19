@@ -1,6 +1,6 @@
 ---
 name: tekla-tekla-structures-dialog
-description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Dialog namespace — 27 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ApplicationFormBase, ApplicationWindowBase, AttributeTypeNameEditor, BindPropertyNameEditor, Dialogs, ErrorDialog, FormBorders, HelpViewer, and 19 more types.
+description: This skill encodes the tekla 2025.0 surface of the Tekla.Structures.Dialog namespace — 27 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ApplicationWindowBase, ApplicationFormBase, AttributeTypeNameEditor, BindPropertyNameEditor, Dialogs, ErrorDialog, FormBase, HelpViewer, and 19 more types.
 ---
 
 # Tekla.Structures.Dialog
@@ -19,7 +19,7 @@ The ApplicationFormBase class is the base class for all Tekla Structures dialogs
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -51,7 +51,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -104,7 +104,7 @@ The ApplicationWindowBase class is the base class for all Tekla Structures WPF d
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -145,7 +145,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -472,7 +472,7 @@ The FormBase class is the base class for all Tekla Structures dialogs. The class
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -539,7 +539,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -931,7 +931,7 @@ The PluginFormBase class is the base class for plug-in dialogs. The class extend
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -969,7 +969,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1038,7 +1038,7 @@ The PluginWindowBase class is the base class for plug-in WPF dialogs. The class 
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1082,7 +1082,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1421,7 +1421,7 @@ The WindowBase class is the base class for all Tekla Structures WPF dialogs. The
 ### Methods
 #### `public void ApplyValues(string FileName)`
 
-Loads the dialog values from a file and performs Apply. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Apply() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.
@@ -1488,7 +1488,7 @@ Loads the dialog values from a file. To match the files to a certain dialog, the
 
 #### `public void ModifyValues(string FileName)`
 
-Loads the dialog values from a file and performs Modify. on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
+Loads the dialog values from a file and performs Modify() on the loaded values. To match the files to a certain dialog, the file suffix is set as the dialog type's name.
 
 **Parameters:**
 - `FileName` (System.String) — The name of the file.

@@ -12,6 +12,7 @@
       "signature": "public ComponentInput()",
       "summary": "Creates a new component input object.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ecb2502b-3309-5862-98e1-c0214ab99229"
@@ -142,6 +143,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [
         {
           "type": "ArgumentNullException",

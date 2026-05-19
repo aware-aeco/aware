@@ -12,6 +12,7 @@
       "signature": "public GeometryConstants()",
       "summary": "Initializes a new instance of the GeometryConstants class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1f1c4ac2-41de-20a6-22cc-8096bb15abe3"

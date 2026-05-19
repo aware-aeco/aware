@@ -12,6 +12,7 @@
       "signature": "public RebarHookData()",
       "summary": "Instantiates a rebar hook data instance with empty members.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/394e7168-36ac-f820-8e6b-da7212fc3a65"

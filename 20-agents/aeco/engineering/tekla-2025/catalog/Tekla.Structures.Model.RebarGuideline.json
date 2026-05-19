@@ -12,6 +12,7 @@
       "signature": "public RebarGuideline()",
       "summary": "Initializes a new instance of the RebarGuideline class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f68021c3-8116-e21e-8344-232cee35d44f"

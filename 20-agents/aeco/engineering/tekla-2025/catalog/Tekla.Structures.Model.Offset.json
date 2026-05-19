@@ -12,6 +12,7 @@
       "signature": "public Offset()",
       "summary": "Instantiates an offset with zero distance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4532b846-0605-82c7-c6c7-b6911dcc92cc"

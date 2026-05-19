@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/115cdf5c-c4ca-707c-761d-a174175a4682",
   "constructors": [
     {
-      "name": "ViewMarkBasicTagAttributes",
+      "name": "ViewMarkBasicTagAttributes()",
       "signature": "public ViewMarkBasicTagAttributes()",
       "summary": "Creates a new mark tag attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7d5ec4f6-edbd-3e0a-8661-3f62820f38f9"
     },
     {
-      "name": "ViewMarkBasicTagAttributes",
+      "name": "ViewMarkBasicTagAttributes(Vector, TagLocation, ContainerElement)",
       "signature": "public ViewMarkBasicTagAttributes(Vector offset, TagLocation location, ContainerElement tagContent)",
       "summary": "Creates a new mark tag attributes instance with the given offset, location and content.",
       "params": [
@@ -40,6 +41,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/bf9eecc9-18c1-e751-4d3d-cf7980915a38"

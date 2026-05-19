@@ -8,16 +8,17 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/7227e500-8f42-5762-0143-d3eaf00e8c77",
   "constructors": [
     {
-      "name": "DrawingObject.NoAttributes",
+      "name": "DrawingObject.NoAttributes()",
       "signature": "public NoAttributes()",
       "summary": "Creates a new default no attributes instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/37d6cade-a893-a6be-324c-7b718bd5b592"
     },
     {
-      "name": "DrawingObject.NoAttributes",
+      "name": "DrawingObject.NoAttributes(String)",
       "signature": "public NoAttributes(string AttributeFile)",
       "summary": "Creates a new no attributes instance. No attributes are loaded from the attribute file as it is not possible to load attributes for objects of this type.",
       "params": [
@@ -28,6 +29,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/f2e39612-3b0a-6fcd-559e-f75d7dd271d9"

@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/71636693-ebad-f893-1ca0-95a85d63a091",
   "constructors": [
     {
-      "name": "TextElement",
+      "name": "TextElement(String)",
       "signature": "public TextElement(string Text)",
       "summary": "Creates a new text element instance with the given textual value.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/270c56a6-f8e2-c61a-8c44-b910d717a1f2"
     },
     {
-      "name": "TextElement",
+      "name": "TextElement(String, FontAttributes)",
       "signature": "public TextElement(string Text, FontAttributes Font)",
       "summary": "Creates a new text element instance with the given textual value and font.",
       "params": [
@@ -41,6 +42,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/fadfae91-20e9-5281-aef7-190fec0e16c8"

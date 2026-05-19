@@ -12,6 +12,7 @@
       "signature": "public Diameter()",
       "summary": "Initializes a new instance of the Diameter class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/871ebd6b-dab2-df7a-857f-2ca6ab3404a3"

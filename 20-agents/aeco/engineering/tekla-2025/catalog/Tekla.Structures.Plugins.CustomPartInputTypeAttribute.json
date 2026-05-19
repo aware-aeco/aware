@@ -8,7 +8,7 @@
   "doc_url": "https://developer.tekla.com/topic/en/18/43/c53e4a0c-1bda-8552-dd7b-b83017d390ed",
   "constructors": [
     {
-      "name": "CustomPartInputTypeAttribute",
+      "name": "CustomPartInputTypeAttribute(Int32)",
       "signature": "public CustomPartInputTypeAttribute(int Type)",
       "summary": "The custom attribute uses this to store the input type to the system. This is not to be used by itself.",
       "params": [
@@ -19,12 +19,13 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1629c2b3-b55b-5a76-7792-b9e599d3afbe"
     },
     {
-      "name": "CustomPartInputTypeAttribute",
+      "name": "CustomPartInputTypeAttribute(CustomPartBase.CustomPartInputType)",
       "signature": "public CustomPartInputTypeAttribute(CustomPartBase.CustomPartInputType Type)",
       "summary": "The custom attribute uses this to store the input type to the system. This is not to be used by itself.",
       "params": [
@@ -35,6 +36,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/95bb2dfe-e0dd-6ff7-b9bf-b02dbed12f78"

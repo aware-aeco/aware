@@ -12,6 +12,7 @@
       "signature": "public InputDefinitionFactory()",
       "summary": "Initializes a new instance of the InputDefinitionFactory class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4431961b-5e14-7d83-cae0-771460117b0b"
@@ -19,7 +20,7 @@
   ],
   "methods": [
     {
-      "name": "CreateInputDefinition(Tuple.DrawingObject, ViewBase.)",
+      "name": "CreateInputDefinition(Tuple\u003CDrawingObject, ViewBase\u003E)",
       "signature": "public static DrawingPluginBase.InputDefinition CreateInputDefinition(Tuple\u003CDrawingObject, ViewBase\u003E input)",
       "summary": "Creates a single-object input definition.",
       "params": [
@@ -39,7 +40,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/84a089fa-dc54-8a22-f6ff-d912b01dca5c"
     },
     {
-      "name": "CreateInputDefinition(Tuple.Point, ViewBase.)",
+      "name": "CreateInputDefinition(Tuple\u003CPoint, ViewBase\u003E)",
       "signature": "public static DrawingPluginBase.InputDefinition CreateInputDefinition(Tuple\u003CPoint, ViewBase\u003E input)",
       "summary": "Creates a single-point input definition.",
       "params": [
@@ -59,7 +60,7 @@
       "doc_url": "https://developer.tekla.com/topic/en/18/43/09f1de79-d1a5-3da0-368a-5c1e4a69174f"
     },
     {
-      "name": "CreateInputDefinition(Tuple.PointList, ViewBase.)",
+      "name": "CreateInputDefinition(Tuple\u003CPointList, ViewBase\u003E)",
       "signature": "public static DrawingPluginBase.InputDefinition CreateInputDefinition(Tuple\u003CPointList, ViewBase\u003E input)",
       "summary": "Creates a multi-point input definition.",
       "params": [

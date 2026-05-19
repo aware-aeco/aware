@@ -12,6 +12,7 @@
       "signature": "public InvalidCurveCombinationException()",
       "summary": "Constructs an instance of the class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/7133cbd8-961e-be17-49e1-9ce2028883b6"

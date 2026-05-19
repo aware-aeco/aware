@@ -12,6 +12,7 @@
       "signature": "public ProfileItemSubType()",
       "summary": "Initializes a new instance of the ProfileItemSubType class",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d362d93f-ef83-34d6-fc94-c3d15f48f585"

@@ -12,6 +12,7 @@
       "signature": "public Site()",
       "summary": "Initializes a new instance of the Site class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/5dc052b0-fd1d-de86-bdd2-4963a7242f33"

@@ -12,6 +12,7 @@
       "signature": "public GraphicsDrawer()",
       "summary": "Creates a new graphics drawer instance.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/4d8ff2a4-97c4-2248-ef72-09ec20d71b57"
@@ -230,6 +231,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/ed6abf2c-2620-83d6-8236-184adcb99bc6"
@@ -246,6 +248,7 @@
           "optional": false
         }
       ],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/a7735db7-bffa-c22a-cb4b-2af599a0c709"

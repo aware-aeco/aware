@@ -12,6 +12,7 @@
       "signature": "public SizeAboveLine()",
       "summary": "Initializes a new instance of the SizeAboveLine class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/d5e01631-ab91-0dc7-87c3-ab76336b32e4"

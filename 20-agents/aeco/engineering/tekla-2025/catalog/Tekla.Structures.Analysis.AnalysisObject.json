@@ -12,6 +12,7 @@
       "signature": "public AnalysisObject()",
       "summary": "Initializes a new instance of the AnalysisObject class.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/1d8dcd7c-a595-a92d-130b-0a2126ef0a65"
@@ -23,6 +24,7 @@
       "signature": "public abstract void Select()",
       "summary": "Selects an analysis object from the database.",
       "params": [],
+      "returns": null,
       "throws": [],
       "events_related": [],
       "doc_url": "https://developer.tekla.com/topic/en/18/43/838ad5fe-ed14-8f58-d432-efd635e6c7ea"
