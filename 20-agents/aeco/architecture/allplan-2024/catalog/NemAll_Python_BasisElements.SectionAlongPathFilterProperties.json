@@ -1,0 +1,84 @@
+{
+  "name": "SectionAlongPathFilterProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Filter properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathFilterProperties(bInitFromSTW=False)",
+      "signature": "SectionAlongPathFilterProperties(bInitFromSTW=False)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/#NemAll_Python_BasisElements.SectionAlongPathFilterProperties.__init__"
+    },
+    {
+      "name": "SectionAlongPathFilterProperties(B)",
+      "signature": "SectionAlongPathFilterProperties(B)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [
+        {
+          "name": "B",
+          "type": "SectionAlongPathFilterProperties",
+          "doc": "object to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/#NemAll_Python_BasisElements.SectionAlongPathFilterProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DrawingFilesProperties",
+      "type": "SectionDrawingFilesProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Access drawing file params Get the SectionDrawingFilesProperties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/#NemAll_Python_BasisElements.SectionAlongPathFilterProperties.DrawingFilesProperties"
+    },
+    {
+      "name": "IsAssociativityOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the When the section is frozen / associativity is OFF -, no updates are available for it",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/#NemAll_Python_BasisElements.SectionAlongPathFilterProperties.IsAssociativityOn"
+    },
+    {
+      "name": "IsSelectionFilterOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the when == true - only selected elements are included to UVS model / when == false (default value) - selected elements are excluded from UVS model",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/#NemAll_Python_BasisElements.SectionAlongPathFilterProperties.IsSelectionFilterOn"
+    },
+    {
+      "name": "LayerProperties",
+      "type": "SectionLayerProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Access layer params Get the SectionLayerProperties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathFilterProperties/#NemAll_Python_BasisElements.SectionAlongPathFilterProperties.LayerProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

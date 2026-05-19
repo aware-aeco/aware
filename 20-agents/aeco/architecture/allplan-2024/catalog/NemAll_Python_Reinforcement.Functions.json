@@ -1,0 +1,113 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_Reinforcement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None)",
+      "signature": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj, undoRedoService=None)",
+      "summary": "Create the reinforcement labels",
+      "remarks": "Create the reinforcement labels",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Insertion matrix",
+          "optional": false
+        },
+        {
+          "name": "modelEleList",
+          "type": "object",
+          "doc": "List with the model elements",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View projection",
+          "optional": false
+        },
+        {
+          "name": "undoRedoService",
+          "type": "Optional[object]",
+          "doc": "Undo redo service",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/#NemAll_Python_Reinforcement.CreateReinforcementLabeling"
+    },
+    {
+      "name": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)",
+      "signature": "CreateReinforcementLabeling(doc, insertionMat, labelList, viewProj)",
+      "summary": "Create the reinforcement labels",
+      "remarks": "Create the reinforcement labels",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Insertion matrix",
+          "optional": false
+        },
+        {
+          "name": "labelList",
+          "type": "ReinforcementLabelList",
+          "doc": "List with the labels",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/#NemAll_Python_Reinforcement.CreateReinforcementLabeling"
+    },
+    {
+      "name": "InitApplicationtest",
+      "signature": "InitApplicationtest()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/#NemAll_Python_Reinforcement.InitApplicationtest"
+    },
+    {
+      "name": "InitUnitTest",
+      "signature": "InitUnitTest()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/_functions/#NemAll_Python_Reinforcement.InitUnitTest"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

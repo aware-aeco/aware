@@ -1,0 +1,115 @@
+{
+  "name": "ElementsByAttributeService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Implementation of the elements by attribute service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetElements(attributeValue)",
+      "signature": "GetElements(attributeValue)",
+      "summary": "Get the elements for the double attribute value",
+      "remarks": "Get the elements for the double attribute value",
+      "params": [
+        {
+          "name": "attributeValue",
+          "type": "float",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
+    },
+    {
+      "name": "GetElements(attributeValue)",
+      "signature": "GetElements(attributeValue)",
+      "summary": "Get the elements for the integer attribute value",
+      "remarks": "Get the elements for the integer attribute value",
+      "params": [
+        {
+          "name": "attributeValue",
+          "type": "int",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
+    },
+    {
+      "name": "GetElements(attributeValue)",
+      "signature": "GetElements(attributeValue)",
+      "summary": "Get the elements for the string attribute value",
+      "remarks": "Get the elements for the string attribute value",
+      "params": [
+        {
+          "name": "attributeValue",
+          "type": "str",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
+    },
+    {
+      "name": "GetInstance",
+      "signature": "GetInstance()",
+      "summary": "Get the instance",
+      "remarks": "Get the instance",
+      "params": [],
+      "returns": {
+        "type": "ElementsByAttributeService",
+        "doc": "Instance of the singleton"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetInstance"
+    },
+    {
+      "name": "Init",
+      "signature": "Init(attributeID, doc)",
+      "summary": "Initialize the service.",
+      "remarks": "Initialize the service.",
+      "params": [
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID. Used for creating fast element access by an attribute value of this ID",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.Init"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

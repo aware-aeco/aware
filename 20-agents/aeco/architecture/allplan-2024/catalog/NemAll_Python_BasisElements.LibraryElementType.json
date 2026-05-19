@@ -1,0 +1,53 @@
+{
+  "name": "LibraryElementType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BasisElements.LibraryElementType.)",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LibraryElementType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementType/#NemAll_Python_BasisElements.LibraryElementType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFixture",
+      "value": 1
+    },
+    {
+      "name": "eFixtureSingleFile",
+      "value": 3
+    },
+    {
+      "name": "eSmartSymbol",
+      "value": 0
+    },
+    {
+      "name": "eSymbol",
+      "value": 2
+    }
+  ]
+}

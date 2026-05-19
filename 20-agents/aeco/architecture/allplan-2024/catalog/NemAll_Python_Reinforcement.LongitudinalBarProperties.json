@@ -1,0 +1,280 @@
+{
+  "name": "LongitudinalBarProperties",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Implementation of the longitudinal bar properties",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/",
+  "constructors": [
+    {
+      "name": "LongitudinalBarProperties()",
+      "signature": "LongitudinalBarProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.__init__"
+    },
+    {
+      "name": "LongitudinalBarProperties(shape, overlappingAtStartTurnedOn, overlappingAtStart, overlappingAtEndTurnedOn, overlappingAtEnd, overlappingLength, minBarDistance, deliveryShapeType, insideBarsState, startLength)",
+      "signature": "LongitudinalBarProperties(shape, overlappingAtStartTurnedOn, overlappingAtStart, overlappingAtEndTurnedOn, overlappingAtEnd, overlappingLength, minBarDistance, deliveryShapeType, insideBarsState, startLength)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Bar shape",
+          "optional": false
+        },
+        {
+          "name": "overlappingAtStartTurnedOn",
+          "type": "bool",
+          "doc": "Overlapping at start start",
+          "optional": false
+        },
+        {
+          "name": "overlappingAtStart",
+          "type": "float",
+          "doc": "Overlapping at start",
+          "optional": false
+        },
+        {
+          "name": "overlappingAtEndTurnedOn",
+          "type": "bool",
+          "doc": "Overlapping at end state",
+          "optional": false
+        },
+        {
+          "name": "overlappingAtEnd",
+          "type": "float",
+          "doc": "Overlapping at end",
+          "optional": false
+        },
+        {
+          "name": "overlappingLength",
+          "type": "float",
+          "doc": "Overlapping length",
+          "optional": false
+        },
+        {
+          "name": "minBarDistance",
+          "type": "float",
+          "doc": "Minimal bar distance",
+          "optional": false
+        },
+        {
+          "name": "deliveryShapeType",
+          "type": "eDeliveryShapeType",
+          "doc": "Delivery shape type",
+          "optional": false
+        },
+        {
+          "name": "insideBarsState",
+          "type": "eInsideBarsState",
+          "doc": "Inside bars state",
+          "optional": false
+        },
+        {
+          "name": "startLength",
+          "type": "float",
+          "doc": "Start length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBendingShape",
+      "signature": "GetBendingShape()",
+      "summary": "Get the bending shape",
+      "remarks": "Get the bending shape",
+      "params": [],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bending shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetBendingShape"
+    },
+    {
+      "name": "GetDeliveryShapeType",
+      "signature": "GetDeliveryShapeType()",
+      "summary": "Get the delivery shape type",
+      "remarks": "Get the delivery shape type",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetDeliveryShapeType"
+    },
+    {
+      "name": "GetInsideBarsState",
+      "signature": "GetInsideBarsState()",
+      "summary": "Get the insid bars state",
+      "remarks": "Get the insid bars state",
+      "params": [],
+      "returns": {
+        "type": "eInsideBarsState",
+        "doc": "Inside bars state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetInsideBarsState"
+    },
+    {
+      "name": "GetMinBarDistance",
+      "signature": "GetMinBarDistance()",
+      "summary": "Get the minimal bar distance",
+      "remarks": "Get the minimal bar distance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Minimal bar distance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetMinBarDistance"
+    },
+    {
+      "name": "GetOverlappingAtEnd",
+      "signature": "GetOverlappingAtEnd()",
+      "summary": "Get the overlapping at end",
+      "remarks": "Get the overlapping at end",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlapping at end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetOverlappingAtEnd"
+    },
+    {
+      "name": "GetOverlappingAtStart",
+      "signature": "GetOverlappingAtStart()",
+      "summary": "Get the overlapping at start",
+      "remarks": "Get the overlapping at start",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlapping at start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetOverlappingAtStart"
+    },
+    {
+      "name": "GetOverlappingLength",
+      "signature": "GetOverlappingLength()",
+      "summary": "Get the overlapping length",
+      "remarks": "Get the overlapping length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlapping length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetOverlappingLength"
+    },
+    {
+      "name": "GetStartLength",
+      "signature": "GetStartLength()",
+      "summary": "Get the start length",
+      "remarks": "Get the start length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Start length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.GetStartLength"
+    },
+    {
+      "name": "IsOverlappingAtEndTurnedOn",
+      "signature": "IsOverlappingAtEndTurnedOn()",
+      "summary": "Get the overlapping at end state",
+      "remarks": "Get the overlapping at end state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Overlapping at end state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.IsOverlappingAtEndTurnedOn"
+    },
+    {
+      "name": "IsOverlappingAtStartTurnedOn",
+      "signature": "IsOverlappingAtStartTurnedOn()",
+      "summary": "Get the overlapping at start state",
+      "remarks": "Get the overlapping at start state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Overlapping at start state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.IsOverlappingAtStartTurnedOn"
+    },
+    {
+      "name": "SetBendingShape",
+      "signature": "SetBendingShape(shape)",
+      "summary": "Set the bending shape",
+      "remarks": "Set the bending shape",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Shape",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Bending shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.SetBendingShape"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(LongitudinalBarProperties)",
+      "summary": "Compare operator Args:",
+      "remarks": "Compare operator Args:",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Bars are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.__eq__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BendingShape",
+      "type": "BendingShape",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bending shape",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.BendingShape"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

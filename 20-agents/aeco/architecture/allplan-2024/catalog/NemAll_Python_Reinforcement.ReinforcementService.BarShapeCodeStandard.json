@@ -1,0 +1,14 @@
+{
+  "name": "BarShapeCodeStandard",
+  "namespace": "NemAll_Python_Reinforcement.ReinforcementService",
+  "kind": "enum",
+  "summary": "Standard for the bar shape code",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementService/#NemAll_Python_Reinforcement.ReinforcementService.BarShapeCodeStandard",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

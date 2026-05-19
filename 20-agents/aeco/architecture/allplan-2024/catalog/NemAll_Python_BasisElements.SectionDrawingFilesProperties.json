@@ -1,0 +1,69 @@
+{
+  "name": "SectionDrawingFilesProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Drawing files properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/",
+  "constructors": [
+    {
+      "name": "SectionDrawingFilesProperties()",
+      "signature": "SectionDrawingFilesProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__init__"
+    },
+    {
+      "name": "SectionDrawingFilesProperties(A)",
+      "signature": "SectionDrawingFilesProperties(A)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [
+        {
+          "name": "A",
+          "type": "SectionDrawingFilesProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(A)",
+      "summary": "operator ==",
+      "remarks": "operator ==",
+      "params": [
+        {
+          "name": "A",
+          "type": "SectionDrawingFilesProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__eq__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawingNumbers",
+      "type": "[list[int] | VecIntList]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the drawing file numbers",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.DrawingNumbers"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

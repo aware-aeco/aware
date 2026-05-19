@@ -1,0 +1,45 @@
+{
+  "name": "eHiddenCalculationResult",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Result of hidden calculation for line.",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eHiddenCalculationResult/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eHiddenCalculationResult",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eHiddenCalculationResult/#NemAll_Python_Geometry.eHiddenCalculationResult.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eHidden",
+      "value": 1
+    },
+    {
+      "name": "eVisible",
+      "value": 0
+    }
+  ]
+}

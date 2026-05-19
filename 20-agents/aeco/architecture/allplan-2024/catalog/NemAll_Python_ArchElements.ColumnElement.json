@@ -1,0 +1,141 @@
+{
+  "name": "ColumnElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the Column element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/",
+  "constructors": [
+    {
+      "name": "ColumnElement()",
+      "signature": "ColumnElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.__init__"
+    },
+    {
+      "name": "ColumnElement(columnProp, placementPoint)",
+      "signature": "ColumnElement(columnProp, placementPoint)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "columnProp",
+          "type": "ColumnProperties",
+          "doc": "Column properties",
+          "optional": false
+        },
+        {
+          "name": "placementPoint",
+          "type": "object",
+          "doc": "Placement point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.__init__"
+    },
+    {
+      "name": "ColumnElement(element)",
+      "signature": "ColumnElement(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "ColumnElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties()",
+      "summary": "Get the Column properties",
+      "remarks": "Get the Column properties",
+      "params": [],
+      "returns": {
+        "type": "ColumnProperties",
+        "doc": "Column properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.GetProperties"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.SetCommonProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(ColumnProp)",
+      "summary": "Set the Column properties",
+      "remarks": "Set the Column properties",
+      "params": [
+        {
+          "name": "ColumnProp",
+          "type": "ColumnProperties",
+          "doc": "Column properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "ColumnProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Column properties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnElement/#NemAll_Python_ArchElements.ColumnElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

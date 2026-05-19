@@ -1,0 +1,44 @@
+{
+  "name": "ElementConverter",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Element converter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ElementConverter/",
+  "constructors": [
+    {
+      "name": "ElementConverter()",
+      "signature": "ElementConverter()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ElementConverter/#NemAll_Python_ArchElements.ElementConverter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConvertToUDElement",
+      "signature": "ConvertToUDElement(elements)",
+      "summary": "Create UD element from arbitrary 3D elements",
+      "remarks": "Create UD element from arbitrary 3D elements",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ElementConverter/#NemAll_Python_ArchElements.ElementConverter.ConvertToUDElement"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

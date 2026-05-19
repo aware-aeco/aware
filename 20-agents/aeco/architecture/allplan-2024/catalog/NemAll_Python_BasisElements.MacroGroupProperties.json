@@ -1,0 +1,85 @@
+{
+  "name": "MacroGroupProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the macro group element properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/",
+  "constructors": [
+    {
+      "name": "MacroGroupProperties()",
+      "signature": "MacroGroupProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/#NemAll_Python_BasisElements.MacroGroupProperties.__init__"
+    },
+    {
+      "name": "MacroGroupProperties(element)",
+      "signature": "MacroGroupProperties(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "MacroGroupProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/#NemAll_Python_BasisElements.MacroGroupProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "MacroGroupProperties",
+          "doc": "MacroGroupProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/#NemAll_Python_BasisElements.MacroGroupProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/#NemAll_Python_BasisElements.MacroGroupProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Name",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroGroupProperties/#NemAll_Python_BasisElements.MacroGroupProperties.Name"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

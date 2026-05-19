@@ -1,0 +1,179 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.GeneralReinfShapeBuilder",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.GeneralReinfShapeBuilder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_hook_type_from_angle",
+      "signature": "get_hook_type_from_angle(hook_type, hook_angle)",
+      "summary": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "remarks": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.get_hook_type_from_angle"
+    },
+    {
+      "name": "create_longitudinal_shape_with_hooks",
+      "signature": "create_longitudinal_shape_with_hooks(length, model_angles, shape_props, concrete_cover_props, start_hook=0, end_hook=0)",
+      "summary": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "remarks": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_longitudinal_shape_with_hooks"
+    },
+    {
+      "name": "create_longitudinal_shape_with_user_hooks",
+      "signature": "create_longitudinal_shape_with_user_hooks(length, model_angles, shape_props, concrete_cover_props, start_hook=0, end_hook=0, start_hook_angle=90.0, end_hook_angle=90.0, hook_type_start=-1, hook_type_end=-1)",
+      "summary": "Create a longitudinal shape with user defined hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "remarks": "Create a longitudinal shape with user defined hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_longitudinal_shape_with_user_hooks"
+    },
+    {
+      "name": "create_longitudinal_shape_with_anchorage",
+      "signature": "create_longitudinal_shape_with_anchorage(from_point, to_point, shape_props, concrete_cover_props, start_anchorage=0, end_anchorage=0)",
+      "summary": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "remarks": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_longitudinal_shape_with_anchorage"
+    },
+    {
+      "name": "create_l_shape_with_hooks",
+      "signature": "create_l_shape_with_hooks(length, width, model_angles, shape_props, concrete_cover_props, start_hook=0, end_hook=0)",
+      "summary": "Create a L shape with hooks Return: Bar shape of the L shape in world coordinates",
+      "remarks": "Create a L shape with hooks Return: Bar shape of the L shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_l_shape_with_hooks"
+    },
+    {
+      "name": "create_stirrup",
+      "signature": "create_stirrup(length, width, model_angles, shape_props, concrete_cover_props, stirrup_type=Normal, hook_length=0)",
+      "summary": "Create a stirrup Return: Bar shape of the stirrup in world coordinates",
+      "remarks": "Create a stirrup Return: Bar shape of the stirrup in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_stirrup"
+    },
+    {
+      "name": "create_stirrup_with_user_hooks",
+      "signature": "create_stirrup_with_user_hooks(length, width, model_angles, shape_props, concrete_cover_props, stirrup_type, hook_length_start, hook_angle_start, hook_length_end, hook_angle_end)",
+      "summary": "Create a stirrup Return: Bar shape of the stirrup in world coordinates",
+      "remarks": "Create a stirrup Return: Bar shape of the stirrup in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_stirrup_with_user_hooks"
+    },
+    {
+      "name": "create_open_stirrup",
+      "signature": "create_open_stirrup(length, width, model_angles, shape_props, concrete_cover_props, start_hook=0, end_hook=0, start_hook_angle=90.0, end_hook_angle=90.0, hook_type=-1)",
+      "summary": "Create a stirrup Return: Bar shape of the stirrup in world coordinates",
+      "remarks": "Create a stirrup Return: Bar shape of the stirrup in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_open_stirrup"
+    },
+    {
+      "name": "create_s_hook",
+      "signature": "create_s_hook(length, model_angles, shape_props, concrete_cover_props, hook_length=0)",
+      "summary": "Create a S hook Return: Bar shape of the S hook shape in world coordinates",
+      "remarks": "Create a S hook Return: Bar shape of the S hook shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_s_hook"
+    },
+    {
+      "name": "create_hook_stirrup",
+      "signature": "create_hook_stirrup(length, model_angles, shape_props, concrete_cover_props, hook_length=0, hook_start_angle=180.0, hook_end_angle=180.0)",
+      "summary": "Create a hook stirrup Return: Bar shape of the S hook shape in world coordinates",
+      "remarks": "Create a hook stirrup Return: Bar shape of the S hook shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_hook_stirrup"
+    },
+    {
+      "name": "create_spacer",
+      "signature": "create_spacer(length, width, height, model_angles, shape_props)",
+      "summary": "Create a spacer Return: Bar shape of the S hook shape in world coordinates",
+      "remarks": "Create a spacer Return: Bar shape of the S hook shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_spacer"
+    },
+    {
+      "name": "create_u_link",
+      "signature": "create_u_link(width, side_length, model_angles, shape_props, concrete_cover_props, hook_length)",
+      "summary": "Create an u-link (opened stirrup) Return: Bar shape of the u link shape in world coordinates",
+      "remarks": "Create an u-link (opened stirrup) Return: Bar shape of the u link shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_u_link"
+    },
+    {
+      "name": "create_u_link_variable",
+      "signature": "create_u_link_variable(width, side_length_start, side_length_end, model_angles, shape_props, concrete_cover_props, start_hook=0, end_hook=0, start_hook_angle=90.0, end_hook_angle=90.0, hook_type_start=-1, hook_type_end=-1)",
+      "summary": "Create an u-link (opened stirrup) Return: Bar shape of the u link shape in world coordinates",
+      "remarks": "Create an u-link (opened stirrup) Return: Bar shape of the u link shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_u_link_variable"
+    },
+    {
+      "name": "create_freeform_shape_with_hooks",
+      "signature": "create_freeform_shape_with_hooks(points, model_angles, shape_props, concrete_cover, start_hook=0, end_hook=0)",
+      "summary": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "remarks": "Create a longitudinal shape with hooks Return: Bar shape of the longitudinal shape in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_freeform_shape_with_hooks"
+    },
+    {
+      "name": "create_circle_stirrup_with_user_hooks",
+      "signature": "create_circle_stirrup_with_user_hooks(radius, model_angles, shape_props, concrete_cover, overlap, hook_length_start, hook_angle_start, hook_length_end, hook_angle_end)",
+      "summary": "Create a circle stirrup Return: Bar shape of the circle stirrup in world coordinates",
+      "remarks": "Create a circle stirrup Return: Bar shape of the circle stirrup in world coordinates",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/_functions/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_circle_stirrup_with_user_hooks"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

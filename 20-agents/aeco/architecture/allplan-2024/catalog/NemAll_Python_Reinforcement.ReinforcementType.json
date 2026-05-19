@@ -1,0 +1,45 @@
+{
+  "name": "ReinforcementType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the reinforcement",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ReinforcementType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementType/#NemAll_Python_Reinforcement.ReinforcementType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Bar",
+      "value": 0
+    },
+    {
+      "name": "Mesh",
+      "value": 1
+    }
+  ]
+}

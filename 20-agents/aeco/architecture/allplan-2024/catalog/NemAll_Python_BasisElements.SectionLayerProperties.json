@@ -1,0 +1,63 @@
+{
+  "name": "SectionLayerProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Section layer properties",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionLayerProperties/",
+  "constructors": [
+    {
+      "name": "SectionLayerProperties()",
+      "signature": "SectionLayerProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionLayerProperties/#NemAll_Python_BasisElements.SectionLayerProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetLayerProperties",
+      "signature": "SetLayerProperties(iVisibilityFilterMode, bAreInvisibleLyersStored, layerIdVector)",
+      "summary": "Set the layer properties",
+      "remarks": "Set the layer properties",
+      "params": [
+        {
+          "name": "iVisibilityFilterMode",
+          "type": "int",
+          "doc": "Type of selected filter mode",
+          "optional": false
+        },
+        {
+          "name": "bAreInvisibleLyersStored",
+          "type": "bool",
+          "doc": "true -\u003E Elements in excludedLayerList are filtered out",
+          "optional": false
+        },
+        {
+          "name": "false",
+          "type": "object",
+          "doc": "-\u003E Elements in excludedLayerList are taken into consideration",
+          "optional": false
+        },
+        {
+          "name": "layerIdVector",
+          "type": "VecUShortList",
+          "doc": "Elements belonging to these Layers should be filtered (excluded) from source up to flag bAreInvisibleLyersStored",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionLayerProperties/#NemAll_Python_BasisElements.SectionLayerProperties.SetLayerProperties"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

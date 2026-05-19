@@ -1,0 +1,13 @@
+{
+  "name": "Text3DUtil",
+  "namespace": "Utils.Text3DUtil",
+  "kind": "class",
+  "summary": "Implementation of the functions for the 3D text",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/Text3DUtil/Text3DUtil/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

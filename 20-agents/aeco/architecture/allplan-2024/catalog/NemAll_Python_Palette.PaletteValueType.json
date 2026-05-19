@@ -1,0 +1,57 @@
+{
+  "name": "PaletteValueType",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "enum",
+  "summary": "Types of the palette values",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Palette/PaletteValueType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PaletteValueType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Palette/PaletteValueType/#NemAll_Python_Palette.PaletteValueType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANGLE",
+      "value": 2
+    },
+    {
+      "name": "DOUBLE",
+      "value": 6
+    },
+    {
+      "name": "INTEGER",
+      "value": 5
+    },
+    {
+      "name": "LENGTH",
+      "value": 1
+    },
+    {
+      "name": "STRING",
+      "value": 3
+    }
+  ]
+}

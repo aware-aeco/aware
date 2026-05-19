@@ -1,0 +1,84 @@
+{
+  "name": "AssocViewElementAdapter",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.)",
+  "base": "BaseElementAdapter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/",
+  "constructors": [
+    {
+      "name": "AssocViewElementAdapter()",
+      "signature": "AssocViewElementAdapter()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.__init__"
+    },
+    {
+      "name": "AssocViewElementAdapter(object)",
+      "signature": "AssocViewElementAdapter(object)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.__init__"
+    },
+    {
+      "name": "AssocViewElementAdapter(ele)",
+      "signature": "AssocViewElementAdapter(ele)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Base element adapter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTransformationMatrix",
+      "signature": "GetTransformationMatrix()",
+      "summary": "Get the transformation matrix of the associative view",
+      "remarks": "Get the transformation matrix of the associative view",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Transformation matrix of the associative view"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.GetTransformationMatrix"
+    },
+    {
+      "name": "IsNull",
+      "signature": "IsNull()",
+      "summary": "Check for an empty element",
+      "remarks": "Check for an empty element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is empty: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/AssocViewElementAdapter/#NemAll_Python_IFW_ElementAdapter.AssocViewElementAdapter.IsNull"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

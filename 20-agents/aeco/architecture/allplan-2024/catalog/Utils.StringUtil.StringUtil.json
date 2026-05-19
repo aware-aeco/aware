@@ -1,0 +1,52 @@
+{
+  "name": "StringUtil",
+  "namespace": "Utils.StringUtil",
+  "kind": "class",
+  "summary": "implementation of the string utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/StringUtil/StringUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "split_string",
+      "signature": "split_string(string, pattern)",
+      "summary": "split a string by a pattern",
+      "remarks": "split a string by a pattern",
+      "params": [
+        {
+          "name": "string",
+          "type": "str",
+          "doc": "string",
+          "optional": false
+        },
+        {
+          "name": "pattern",
+          "type": "str",
+          "doc": "pattern ... %s ... %n ...",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[int, ...]",
+        "doc": "count of splitted strings, strings"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/StringUtil/StringUtil/#Utils.StringUtil.StringUtil.split_string"
+    },
+    {
+      "name": "to_string",
+      "signature": "to_string(value, length, fractions)",
+      "summary": "convert a value to a string",
+      "remarks": "convert a value to a string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/StringUtil/StringUtil/#Utils.StringUtil.StringUtil.to_string"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

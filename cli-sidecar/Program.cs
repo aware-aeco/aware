@@ -162,6 +162,18 @@ internal static class Program
                             // slug collision. IR stamps host="tedds".
                             "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Allplan extractor (Phase B B10) — Nemetschek's PythonParts API docs
+                            // at pythonparts.allplan.com. mkdocs-material/mkdocstrings layout,
+                            // sitemap-driven crawl, single-pass extraction (every member lives on
+                            // its parent type page). Versions 2024.0 and 2025.0 each have their
+                            // own version-pinned tree (/2024/, /2025/); the 2025 tree is the
+                            // larger surface (795 sitemap URLs vs 646 in 2024). IR stamps
+                            // host="allplan". This is a separate surface from the .NET BIF.Core
+                            // BimPlus integration (the previous "allplan" agent was generated
+                            // via --from-nuget on Allplan.BIF.Core; that surface is the cloud
+                            // integration layer, not the in-app Python plugin API).
+                            "allplan" => Ingest.Extractors.Allplan.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

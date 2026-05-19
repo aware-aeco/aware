@@ -1,0 +1,189 @@
+{
+  "name": "MacroSlideProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the macro slide element properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/",
+  "constructors": [
+    {
+      "name": "MacroSlideProperties()",
+      "signature": "MacroSlideProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.__init__"
+    },
+    {
+      "name": "MacroSlideProperties(element)",
+      "signature": "MacroSlideProperties(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "MacroSlideProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "MacroSlideProperties",
+          "doc": "MacroSlideProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndScaleRange",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Start reference scale of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.EndScaleRange"
+    },
+    {
+      "name": "OffsetOfReferencePoint1",
+      "type": "NemAll_Python_Geometry.Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the First offset value to reference point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.OffsetOfReferencePoint1"
+    },
+    {
+      "name": "OffsetOfReferencePoint2",
+      "type": "NemAll_Python_Geometry.Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Second offset value to reference point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.OffsetOfReferencePoint2"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "NemAll_Python_Geometry.Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Reference point of this slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.ReferencePoint"
+    },
+    {
+      "name": "ResizeSettingVx",
+      "type": "CombinationType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Resize setting for x direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.ResizeSettingVx"
+    },
+    {
+      "name": "ResizeSettingVy",
+      "type": "CombinationType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Resize setting for y direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.ResizeSettingVy"
+    },
+    {
+      "name": "ResizeSettingVz",
+      "type": "CombinationType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Resize setting for z direction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.ResizeSettingVz"
+    },
+    {
+      "name": "StartScaleRange",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Start reference scale of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.StartScaleRange"
+    },
+    {
+      "name": "Type",
+      "type": "MacroSlideType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Type of macro slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.Type"
+    },
+    {
+      "name": "VisibilityGeo2D",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Geometry 2D visibility of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.VisibilityGeo2D"
+    },
+    {
+      "name": "VisibilityGeo3D",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Geometry 3D visibility of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.VisibilityGeo3D"
+    },
+    {
+      "name": "VisibilityLayerA",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer A visibility of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.VisibilityLayerA"
+    },
+    {
+      "name": "VisibilityLayerB",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer B visibility of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.VisibilityLayerB"
+    },
+    {
+      "name": "VisibilityLayerC",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer C visibility of slide",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideProperties/#NemAll_Python_BasisElements.MacroSlideProperties.VisibilityLayerC"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

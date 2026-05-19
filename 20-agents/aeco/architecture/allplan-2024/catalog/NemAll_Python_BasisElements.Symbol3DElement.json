@@ -1,0 +1,105 @@
+{
+  "name": "Symbol3DElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Symbol3DElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/",
+  "constructors": [
+    {
+      "name": "Symbol3DElement()",
+      "signature": "Symbol3DElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/#NemAll_Python_BasisElements.Symbol3DElement.__init__"
+    },
+    {
+      "name": "Symbol3DElement(commonProp, Symbol3DProp, geometryObject)",
+      "signature": "Symbol3DElement(commonProp, Symbol3DProp, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "symbol3DProp",
+          "type": "object",
+          "doc": "Symbol3D properties",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/#NemAll_Python_BasisElements.Symbol3DElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSymbol3DProperties",
+      "signature": "GetSymbol3DProperties()",
+      "summary": "Get the Symbol3D properties",
+      "remarks": "Get the Symbol3D properties",
+      "params": [],
+      "returns": {
+        "type": "Symbol3DProperties",
+        "doc": "Symbol3D properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/#NemAll_Python_BasisElements.Symbol3DElement.GetSymbol3DProperties"
+    },
+    {
+      "name": "SetSymbol3DProperties",
+      "signature": "SetSymbol3DProperties(symbol3DProp)",
+      "summary": "Set the Symbol3D properties",
+      "remarks": "Set the Symbol3D properties",
+      "params": [
+        {
+          "name": "symbol3DProp",
+          "type": "Symbol3DProperties",
+          "doc": "Symbol3D properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/#NemAll_Python_BasisElements.Symbol3DElement.SetSymbol3DProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DElement/#NemAll_Python_BasisElements.Symbol3DElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,138 @@
+{
+  "name": "PythonPartTransaction",
+  "namespace": "PythonPartTransaction",
+  "kind": "class",
+  "summary": "Implementation of the PythonPart transaction",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/",
+  "constructors": [
+    {
+      "name": "PythonPartTransaction()",
+      "signature": "PythonPartTransaction(doc, connect_to_pyp=ConnectToPythonPart())",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document",
+          "optional": false
+        },
+        {
+          "name": "connect_to_pyp",
+          "type": "ConnectToPythonPart",
+          "doc": "element connection data",
+          "optional": true,
+          "default": "ConnectToPythonPart()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/#PythonPartTransaction.PythonPartTransaction.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "create_connection",
+      "signature": "create_connection(connect_ele, pyp_uuid)",
+      "summary": "create the PythonPart connection",
+      "remarks": "create the PythonPart connection",
+      "params": [
+        {
+          "name": "connect_ele",
+          "type": "BaseElementAdapter",
+          "doc": "connection element",
+          "optional": false
+        },
+        {
+          "name": "pyp_uuid",
+          "type": "GUID",
+          "doc": "UUID of the PythonPart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/#PythonPartTransaction.PythonPartTransaction.create_connection"
+    },
+    {
+      "name": "execute",
+      "signature": "execute(placement_matrix, view_world_projection, model_ele_list, modification_ele_list, rearrange_reinf_pos_nr=ReinforcementRearrange(), append_reinf_pos_nr=True, asso_ref_object=None, uuid_parameter_name=\u0027\u0027, _elementation_delete_py=True)",
+      "summary": "execute the transaction",
+      "remarks": "execute the transaction",
+      "params": [
+        {
+          "name": "placement_matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix",
+          "optional": false
+        },
+        {
+          "name": "view_world_projection",
+          "type": "ViewWorldProjection",
+          "doc": "view world projection",
+          "optional": false
+        },
+        {
+          "name": "model_ele_list",
+          "type": "list[Any]",
+          "doc": "list with the model elements",
+          "optional": false
+        },
+        {
+          "name": "modification_ele_list",
+          "type": "ModificationElementList",
+          "doc": "list with the UUID\u0027s of the modified PythonPart elements",
+          "optional": false
+        },
+        {
+          "name": "rearrange_reinf_pos_nr",
+          "type": "ReinforcementRearrange",
+          "doc": "data for the reinforcement rearrange",
+          "optional": true,
+          "default": "ReinforcementRearrange()"
+        },
+        {
+          "name": "append_reinf_pos_nr",
+          "type": "bool",
+          "doc": "True: Append the reinforcement position numbers to the existing position numbers",
+          "optional": true,
+          "default": "True"
+        },
+        {
+          "name": "asso_ref_object",
+          "type": "BaseElementAdapter | None",
+          "doc": "associative view reference object",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "uuid_parameter_name",
+          "type": "str",
+          "doc": "if set, the model object UUID of the created PythonPart is assigned to this name",
+          "optional": true,
+          "default": "\u0027\u0027"
+        },
+        {
+          "name": "_elementation_delete_py",
+          "type": "bool",
+          "doc": "delete the PythonPart after the precast elementation",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "list with the created elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartTransaction/PythonPartTransaction/#PythonPartTransaction.PythonPartTransaction.execute"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

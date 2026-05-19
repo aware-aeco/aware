@@ -1,0 +1,44 @@
+{
+  "name": "Attribute",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Base for all attribute definitions",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attribute/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Attribute",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attribute/#NemAll_Python_BaseElements.Attribute.__eq__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attribute Id",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/Attribute/#NemAll_Python_BaseElements.Attribute.Id"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

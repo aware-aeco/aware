@@ -1,0 +1,969 @@
+{
+  "name": "Matrix3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D matrix",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/",
+  "constructors": [
+    {
+      "name": "Matrix3D()",
+      "signature": "Matrix3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
+    },
+    {
+      "name": "Matrix3D(proj)",
+      "signature": "Matrix3D(proj)",
+      "summary": "Constructor Create a matrix for the required projection.",
+      "remarks": "Constructor Create a matrix for the required projection.",
+      "params": [
+        {
+          "name": "proj",
+          "type": "eProjectionMatrixType",
+          "doc": "The required projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
+    },
+    {
+      "name": "Matrix3D(matrix)",
+      "signature": "Matrix3D(matrix)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Matrix which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
+    },
+    {
+      "name": "Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33)",
+      "signature": "Matrix3D(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33)",
+      "summary": "Constructor setting each matrix-element",
+      "remarks": "Constructor setting each matrix-element",
+      "params": [
+        {
+          "name": "v00",
+          "type": "float",
+          "doc": "first row, first element",
+          "optional": false
+        },
+        {
+          "name": "v01",
+          "type": "float",
+          "doc": "first row, second element",
+          "optional": false
+        },
+        {
+          "name": "v02",
+          "type": "float",
+          "doc": "first row, third element",
+          "optional": false
+        },
+        {
+          "name": "v03",
+          "type": "float",
+          "doc": "first row, fourth element",
+          "optional": false
+        },
+        {
+          "name": "v10",
+          "type": "float",
+          "doc": "second row, first element",
+          "optional": false
+        },
+        {
+          "name": "v11",
+          "type": "float",
+          "doc": "second row, second element",
+          "optional": false
+        },
+        {
+          "name": "v12",
+          "type": "float",
+          "doc": "second row, third element",
+          "optional": false
+        },
+        {
+          "name": "v13",
+          "type": "float",
+          "doc": "second row, fourth element",
+          "optional": false
+        },
+        {
+          "name": "v20",
+          "type": "float",
+          "doc": "third row, first element",
+          "optional": false
+        },
+        {
+          "name": "v21",
+          "type": "float",
+          "doc": "third row, second element",
+          "optional": false
+        },
+        {
+          "name": "v22",
+          "type": "float",
+          "doc": "third row, third element",
+          "optional": false
+        },
+        {
+          "name": "v23",
+          "type": "float",
+          "doc": "third row, fourth element",
+          "optional": false
+        },
+        {
+          "name": "v30",
+          "type": "float",
+          "doc": "fourth row, first element",
+          "optional": false
+        },
+        {
+          "name": "v31",
+          "type": "float",
+          "doc": "fourth row, second element",
+          "optional": false
+        },
+        {
+          "name": "v32",
+          "type": "float",
+          "doc": "fourth row, third element",
+          "optional": false
+        },
+        {
+          "name": "v33",
+          "type": "float",
+          "doc": "fourth row, fourth element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
+    },
+    {
+      "name": "Matrix3D(valuesinrows)",
+      "signature": "Matrix3D(valuesinrows)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "valuesinrows",
+          "type": "list",
+          "doc": "matrix values by rows as Python list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetRotation(axis, angle)",
+      "signature": "SetRotation(axis, angle)",
+      "summary": "Initialize matrix only with rotation",
+      "remarks": "Initialize matrix only with rotation",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Line3D",
+          "doc": "Axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetRotation"
+    },
+    {
+      "name": "SetRotation(startDirection, endDirection)",
+      "signature": "SetRotation(startDirection, endDirection)",
+      "summary": "Initialize matrix only with rotation defined by start and end direction vectors",
+      "remarks": "Initialize matrix only with rotation defined by start and end direction vectors",
+      "params": [
+        {
+          "name": "startDirection",
+          "type": "Vector3D",
+          "doc": "direction vector for start of rotation.",
+          "optional": false
+        },
+        {
+          "name": "endDirection",
+          "type": "Vector3D",
+          "doc": "direction vector for end of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetRotation"
+    },
+    {
+      "name": "Determinant",
+      "signature": "Determinant()",
+      "summary": "Calculate determinant",
+      "remarks": "Calculate determinant",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Determinant."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Determinant"
+    },
+    {
+      "name": "GaussInvert",
+      "signature": "GaussInvert()",
+      "summary": "Inverse matrix by Gauss",
+      "remarks": "Inverse matrix by Gauss",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when operation is successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GaussInvert"
+    },
+    {
+      "name": "GetScaleX",
+      "signature": "GetScaleX()",
+      "summary": "Get scale X",
+      "remarks": "Get scale X",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "scale X"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetScaleX"
+    },
+    {
+      "name": "GetScaleY",
+      "signature": "GetScaleY()",
+      "summary": "Get scale Y",
+      "remarks": "Get scale Y",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "scale Y"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetScaleY"
+    },
+    {
+      "name": "GetScaleZ",
+      "signature": "GetScaleZ()",
+      "summary": "Get scale Z",
+      "remarks": "Get scale Z",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "scale Z"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetScaleZ"
+    },
+    {
+      "name": "GetScaling",
+      "signature": "GetScaling()",
+      "summary": "Calculates the scaling factors from the matrix",
+      "remarks": "Calculates the scaling factors from the matrix",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(Scale in X axis,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetScaling"
+    },
+    {
+      "name": "GetTranslationVector",
+      "signature": "GetTranslationVector()",
+      "summary": "Get translation part of a matrix",
+      "remarks": "Get translation part of a matrix",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "The vector of translation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetTranslationVector"
+    },
+    {
+      "name": "GetVectorX",
+      "signature": "GetVectorX()",
+      "summary": "Get vector X",
+      "remarks": "Get vector X",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector X"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetVectorX"
+    },
+    {
+      "name": "GetVectorY",
+      "signature": "GetVectorY()",
+      "summary": "Get vector Y",
+      "remarks": "Get vector Y",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector Y"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetVectorY"
+    },
+    {
+      "name": "GetVectorZ",
+      "signature": "GetVectorZ()",
+      "summary": "Get vector Z",
+      "remarks": "Get vector Z",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector Z"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.GetVectorZ"
+    },
+    {
+      "name": "IsIdentity",
+      "signature": "IsIdentity()",
+      "summary": "Check to identity matrix",
+      "remarks": "Check to identity matrix",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true when is matrix identity, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.IsIdentity"
+    },
+    {
+      "name": "LaplaceTransform",
+      "signature": "LaplaceTransform()",
+      "summary": "Transformation matrix by Laplace",
+      "remarks": "Transformation matrix by Laplace",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.LaplaceTransform"
+    },
+    {
+      "name": "Multiply",
+      "signature": "Multiply(matrix)",
+      "summary": "Matrix multiplication Formula: A = B or A = AB A is this matrix.",
+      "remarks": "Matrix multiplication Formula: A = B or A = AB A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Product of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Multiply"
+    },
+    {
+      "name": "ReduceZDimension",
+      "signature": "ReduceZDimension()",
+      "summary": "Create a 2D matrix from this 3D matrix",
+      "remarks": "Create a 2D matrix from this 3D matrix",
+      "params": [],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "a 2D matrix from this 3D matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.ReduceZDimension"
+    },
+    {
+      "name": "Reflection",
+      "signature": "Reflection(plane)",
+      "summary": "Reflection across a plane",
+      "remarks": "Reflection across a plane",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Reflection plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Reflection"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse matrix This method provide geometrical inverse matrix and can not be used with regular inverse 4x4 matrix calculations. Geometrical representation: Point3D = { Point3D * Matrix } * Matrix.Reverse()",
+      "remarks": "Reverse matrix This method provide geometrical inverse matrix and can not be used with regular inverse 4x4 matrix calculations. Geometrical representation: Point3D = { Point3D * Matrix } * Matrix.Reverse()",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when operation is successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Reverse"
+    },
+    {
+      "name": "Rotation",
+      "signature": "Rotation(line, angle)",
+      "summary": "Rotate the matrix Rotate current matrix, not created new one.",
+      "remarks": "Rotate the matrix Rotate current matrix, not created new one.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Axis of rotation.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Rotation"
+    },
+    {
+      "name": "Scaling",
+      "signature": "Scaling(scaleX, scaleY, scaleZ)",
+      "summary": "Scale the matrix Scale current matrix, not created new one.",
+      "remarks": "Scale the matrix Scale current matrix, not created new one.",
+      "params": [
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Scale in X axis.",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Scale in Y axis.",
+          "optional": false
+        },
+        {
+          "name": "scaleZ",
+          "type": "float",
+          "doc": "Scale in Z axis.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Scaling"
+    },
+    {
+      "name": "SetIdentity",
+      "signature": "SetIdentity()",
+      "summary": "Initialize identity matrix",
+      "remarks": "Initialize identity matrix",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetIdentity"
+    },
+    {
+      "name": "SetProjection",
+      "signature": "SetProjection(proj)",
+      "summary": "Create a matrix for the required projection Method throw THROW_GEO_EXCEPTION_INCORRECT_PARAMETERS_ geometry exception in case of invalid proj.",
+      "remarks": "Create a matrix for the required projection Method throw THROW_GEO_EXCEPTION_INCORRECT_PARAMETERS_ geometry exception in case of invalid proj.",
+      "params": [
+        {
+          "name": "proj",
+          "type": "eProjectionMatrixType",
+          "doc": "The required projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetProjection"
+    },
+    {
+      "name": "SetReflection",
+      "signature": "SetReflection(plane)",
+      "summary": "Initialize matrix only with reflection",
+      "remarks": "Initialize matrix only with reflection",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Reflection plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetReflection"
+    },
+    {
+      "name": "SetScaling",
+      "signature": "SetScaling(scaleX, scaleY, scaleZ)",
+      "summary": "Initialize matrix only with scaling factors",
+      "remarks": "Initialize matrix only with scaling factors",
+      "params": [
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Scale in X axis.",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Scale in Y axis.",
+          "optional": false
+        },
+        {
+          "name": "scaleZ",
+          "type": "float",
+          "doc": "Scale in Z axis.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetScaling"
+    },
+    {
+      "name": "SetTranslation",
+      "signature": "SetTranslation(vec)",
+      "summary": "Initialize matrix only with translation",
+      "remarks": "Initialize matrix only with translation",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "Vector of translation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetTranslation"
+    },
+    {
+      "name": "SetValue",
+      "signature": "SetValue(index, value)",
+      "summary": "Set the matrix element at a specified position Use this method when you don\u0027t want to catch exception by operator[].",
+      "remarks": "Set the matrix element at a specified position Use this method when you don\u0027t want to catch exception by operator[].",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Position index \u003C0..15\u003E",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value for set",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when operation successful (index is not out of range), otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetValue"
+    },
+    {
+      "name": "SetValues",
+      "signature": "SetValues(v00, v01, v02, v03, v10, v11, v12, v13, v20, v21, v22, v23, v30, v31, v32, v33)",
+      "summary": "Sets each matrix-element",
+      "remarks": "Sets each matrix-element",
+      "params": [
+        {
+          "name": "v00",
+          "type": "float",
+          "doc": "first row, first element",
+          "optional": false
+        },
+        {
+          "name": "v01",
+          "type": "float",
+          "doc": "first row, second element",
+          "optional": false
+        },
+        {
+          "name": "v02",
+          "type": "float",
+          "doc": "first row, third element",
+          "optional": false
+        },
+        {
+          "name": "v03",
+          "type": "float",
+          "doc": "first row, fourth element",
+          "optional": false
+        },
+        {
+          "name": "v10",
+          "type": "float",
+          "doc": "second row, first element",
+          "optional": false
+        },
+        {
+          "name": "v11",
+          "type": "float",
+          "doc": "second row, second element",
+          "optional": false
+        },
+        {
+          "name": "v12",
+          "type": "float",
+          "doc": "second row, third element",
+          "optional": false
+        },
+        {
+          "name": "v13",
+          "type": "float",
+          "doc": "second row, fourth element",
+          "optional": false
+        },
+        {
+          "name": "v20",
+          "type": "float",
+          "doc": "third row, first element",
+          "optional": false
+        },
+        {
+          "name": "v21",
+          "type": "float",
+          "doc": "third row, second element",
+          "optional": false
+        },
+        {
+          "name": "v22",
+          "type": "float",
+          "doc": "third row, third element",
+          "optional": false
+        },
+        {
+          "name": "v23",
+          "type": "float",
+          "doc": "third row, fourth element",
+          "optional": false
+        },
+        {
+          "name": "v30",
+          "type": "float",
+          "doc": "fourth row, first element",
+          "optional": false
+        },
+        {
+          "name": "v31",
+          "type": "float",
+          "doc": "fourth row, second element",
+          "optional": false
+        },
+        {
+          "name": "v32",
+          "type": "float",
+          "doc": "fourth row, third element",
+          "optional": false
+        },
+        {
+          "name": "v33",
+          "type": "float",
+          "doc": "fourth row, fourth element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.SetValues"
+    },
+    {
+      "name": "Translate",
+      "signature": "Translate(vec)",
+      "summary": "Translate the matrix",
+      "remarks": "Translate the matrix",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "Vector of translation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Translate"
+    },
+    {
+      "name": "Transpose",
+      "signature": "Transpose()",
+      "summary": "Transpose matrix All transform-services multiply transformation-matrix from the right side: If you need the result as it would be multiplication from the left side you need the transposed Matrix [x,y,z,1.0] x / 0, 1, 2, 3\\ / 0, 1, 2, 3\\ / x | 4, 5, 6, 7 | | 4, 5, 6, 7 | x | y | | 8, 9,10,11 | | 8, 9,10,11 | | z | \\ 12,13,14,15 / \\ 12,13,14,15 / .0/",
+      "remarks": "Transpose matrix All transform-services multiply transformation-matrix from the right side: If you need the result as it would be multiplication from the left side you need the transposed Matrix [x,y,z,1.0] x / 0, 1, 2, 3\\ / 0, 1, 2, 3\\ / x | 4, 5, 6, 7 | | 4, 5, 6, 7 | x | y | | 8, 9,10,11 | | 8, 9,10,11 | | z | \\ 12,13,14,15 / \\ 12,13,14,15 / .0/",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.Transpose"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(matrix)",
+      "summary": "Matrix addition Formula: Result(new matrix) = A\u002BB A is this matrix.",
+      "remarks": "Matrix addition Formula: Result(new matrix) = A\u002BB A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__add__"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(mat)",
+      "summary": "Comparison of matrices without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of matrices without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "arc",
+          "type": "object",
+          "doc": "Compared arc.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when matrices are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index)",
+      "summary": "Get the matrix element at a specified position This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get the matrix element at a specified position This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Position index \u003C0..15\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Returns an element at a specified position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(matrix)",
+      "summary": "Matrix addition Formula: A \u002B= B or A = A\u002BB A is this matrix.",
+      "remarks": "Matrix addition Formula: A \u002B= B or A = A\u002BB A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__iadd__"
+    },
+    {
+      "name": "__imul__",
+      "signature": "__imul__(matrix)",
+      "summary": "Matrix multiplication Formula: A = B or A = AB. A is this matrix.",
+      "remarks": "Matrix multiplication Formula: A = B or A = AB. A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Product of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__imul__"
+    },
+    {
+      "name": "__isub__",
+      "signature": "__isub__(matrix)",
+      "summary": "Matrix addition Formula: A -= B or A = A-B A is this matrix.",
+      "remarks": "Matrix addition Formula: A -= B or A = A-B A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__isub__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix)",
+      "summary": "Matrix multiplication Formula: Result(new matrix) = A*B A is this matrix.",
+      "remarks": "Matrix multiplication Formula: Result(new matrix) = A*B A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Product of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__repr__"
+    },
+    {
+      "name": "__sub__",
+      "signature": "__sub__(matrix)",
+      "summary": "Matrix addition Formula: Result(new matrix) = A-B A is this matrix.",
+      "remarks": "Matrix addition Formula: Result(new matrix) = A-B A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix3D/#NemAll_Python_Geometry.Matrix3D.__sub__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

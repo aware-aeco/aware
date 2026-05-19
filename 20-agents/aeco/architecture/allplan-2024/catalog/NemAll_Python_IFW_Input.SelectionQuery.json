@@ -1,0 +1,93 @@
+{
+  "name": "SelectionQuery",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the selection query",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/",
+  "constructors": [
+    {
+      "name": "SelectionQuery()",
+      "signature": "SelectionQuery()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__init__"
+    },
+    {
+      "name": "SelectionQuery(query)",
+      "signature": "SelectionQuery(query)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "query",
+          "type": "SelectionQuery",
+          "doc": "Query to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__init__"
+    },
+    {
+      "name": "SelectionQuery(query)",
+      "signature": "SelectionQuery(query)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "query",
+          "type": "Union[List[Union[QueryTypeID, object]], Union[QueryTypeID, object]]",
+          "doc": "Selection query as list with queries or single query.",
+          "optional": false
+        },
+        {
+          "name": "The",
+          "type": "object",
+          "doc": "queries can be a QueryTypeID or a class with a call member",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear the query",
+      "remarks": "Clear the query",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.Clear"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty()",
+      "summary": "Check for an empty query",
+      "remarks": "Check for an empty query",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Filter is empty: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionQuery/#NemAll_Python_IFW_Input.SelectionQuery.IsEmpty"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

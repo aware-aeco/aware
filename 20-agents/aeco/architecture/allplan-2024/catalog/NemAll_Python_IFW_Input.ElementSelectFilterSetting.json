@@ -1,0 +1,321 @@
+{
+  "name": "ElementSelectFilterSetting",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Settings class to control the object selection",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/",
+  "constructors": [
+    {
+      "name": "ElementSelectFilterSetting()",
+      "signature": "ElementSelectFilterSetting()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
+    },
+    {
+      "name": "ElementSelectFilterSetting(bSnoopAllElements)",
+      "signature": "ElementSelectFilterSetting(bSnoopAllElements)",
+      "summary": "Constructor default values: Query is empty",
+      "remarks": "Constructor default values: Query is empty",
+      "params": [
+        {
+          "name": "bSnoopAllElements",
+          "type": "bool",
+          "doc": "true = snoop all elements, false = snoop active elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
+    },
+    {
+      "name": "ElementSelectFilterSetting(filter, bSnoopAllElements)",
+      "signature": "ElementSelectFilterSetting(filter, bSnoopAllElements)",
+      "summary": "Constructor default value for eObjectSelectType == SEL_ALL",
+      "remarks": "Constructor default value for eObjectSelectType == SEL_ALL",
+      "params": [
+        {
+          "name": "filter",
+          "type": "SelectionQuery",
+          "doc": "Filter for the type of the object to search for",
+          "optional": false
+        },
+        {
+          "name": "bSnoopAllElements",
+          "type": "bool",
+          "doc": "true = snoop all elements, false = snoop active elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
+    },
+    {
+      "name": "ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType)",
+      "signature": "ElementSelectFilterSetting(filter, documentSnoopType, layerSnoopType)",
+      "summary": "Constructor default value for eObjectSelectType == SEL_ALL",
+      "remarks": "Constructor default value for eObjectSelectType == SEL_ALL",
+      "params": [
+        {
+          "name": "filter",
+          "type": "SelectionQuery",
+          "doc": "Filter for the type of the object to search for",
+          "optional": false
+        },
+        {
+          "name": "documentSnoopType",
+          "type": "eDocumentSnoopType",
+          "doc": "Selection mode for the document (active, passive or all documents)",
+          "optional": false
+        },
+        {
+          "name": "layerSnoopType",
+          "type": "eLayerSnoopType",
+          "doc": "Selection mode for the layer (active, passive or all layers)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
+    },
+    {
+      "name": "ElementSelectFilterSetting(selectSetting)",
+      "signature": "ElementSelectFilterSetting(selectSetting)",
+      "summary": "Copy Constructor",
+      "remarks": "Copy Constructor",
+      "params": [
+        {
+          "name": "selectSetting",
+          "type": "ElementSelectFilterSetting",
+          "doc": "Copy this ElementSelectFilterSetting",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Reset the settings",
+      "remarks": "Reset the settings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.Clear"
+    },
+    {
+      "name": "GetLayerSelectType",
+      "signature": "GetLayerSelectType()",
+      "summary": "Get the layer selection type",
+      "remarks": "Get the layer selection type",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.GetLayerSelectType"
+    },
+    {
+      "name": "IsBaseClassType",
+      "signature": "IsBaseClassType(typeID)",
+      "summary": "Check, whether the element type is a base class type",
+      "remarks": "Check, whether the element type is a base class type",
+      "params": [
+        {
+          "name": "typeID",
+          "type": "GUID",
+          "doc": "Element type ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.IsBaseClassType"
+    },
+    {
+      "name": "IsClear",
+      "signature": "IsClear()",
+      "summary": "Get the clear state",
+      "remarks": "Get the clear state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if the members contain default values"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.IsClear"
+    },
+    {
+      "name": "IsPointSelect",
+      "signature": "IsPointSelect()",
+      "summary": "Get the point select state",
+      "remarks": "Get the point select state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Point selection is active: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.IsPointSelect"
+    },
+    {
+      "name": "IsSelectPassiveInfoElement",
+      "signature": "IsSelectPassiveInfoElement()",
+      "summary": "Get the selection state of a passive info element",
+      "remarks": "Get the selection state of a passive info element",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Allow to select passive info element if no active element was found: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.IsSelectPassiveInfoElement"
+    },
+    {
+      "name": "SelectPassiveInfoElement",
+      "signature": "SelectPassiveInfoElement()",
+      "summary": "Allow to select passive info element if no active element was found",
+      "remarks": "Allow to select passive info element if no active element was found",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SelectPassiveInfoElement"
+    },
+    {
+      "name": "SetArchitectureFilterQuery",
+      "signature": "SetArchitectureFilterQuery(positive=True)",
+      "summary": "Set a prefabricated filter for all architecture elements",
+      "remarks": "Set a prefabricated filter for all architecture elements",
+      "params": [
+        {
+          "name": "positive",
+          "type": "bool",
+          "doc": "if the filter will true for architecture elements otherwise the filter will be false for architecture elements",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SetArchitectureFilterQuery"
+    },
+    {
+      "name": "SetAssoFilterQuery",
+      "signature": "SetAssoFilterQuery(positive=True)",
+      "summary": "Set a prefabricated filter for all associative view elements",
+      "remarks": "Set a prefabricated filter for all associative view elements",
+      "params": [
+        {
+          "name": "positive",
+          "type": "bool",
+          "doc": "if the filter will true for associative view elements otherwise the filter will be false for associative view elements",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SetAssoFilterQuery"
+    },
+    {
+      "name": "SetDocumentLayerFilter",
+      "signature": "SetDocumentLayerFilter(bSnoopAllElements)",
+      "summary": "Set the document and layer filter",
+      "remarks": "Set the document and layer filter",
+      "params": [
+        {
+          "name": "bSnoopAllElements",
+          "type": "bool",
+          "doc": "Snoop all elements: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SetDocumentLayerFilter"
+    },
+    {
+      "name": "SetDocumentSelectType",
+      "signature": "SetDocumentSelectType(documentSnoopType)",
+      "summary": "Set the selection mode for the document (active, passive or all documents)",
+      "remarks": "Set the selection mode for the document (active, passive or all documents)",
+      "params": [
+        {
+          "name": "documentSnoopType",
+          "type": "eDocumentSnoopType",
+          "doc": "Selection mode for the document (active, passive or all documents)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SetDocumentSelectType"
+    },
+    {
+      "name": "SetLayerSelectType",
+      "signature": "SetLayerSelectType(layerSnoopType)",
+      "summary": "Set the layer selection type",
+      "remarks": "Set the layer selection type",
+      "params": [
+        {
+          "name": "layerSnoopType",
+          "type": "eLayerSnoopType",
+          "doc": "Type of the allowed layers for the selection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SetLayerSelectType"
+    },
+    {
+      "name": "SetPointSelect",
+      "signature": "SetPointSelect()",
+      "summary": "Set the point select state",
+      "remarks": "Set the point select state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.SetPointSelect"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LayerSelectType",
+      "type": "eLayerSnoopType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the layer selection type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementSelectFilterSetting/#NemAll_Python_IFW_Input.ElementSelectFilterSetting.LayerSelectType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,77 @@
+{
+  "name": "TextLocation",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Location of the dimension text",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextLocation/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextLocation",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextLocation/#NemAll_Python_BasisElements.TextLocation.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBASIS_DIM_BOTTOM_CENTER",
+      "value": -2
+    },
+    {
+      "name": "eBASIS_DIM_BOTTOM_LEFT",
+      "value": -1
+    },
+    {
+      "name": "eBASIS_DIM_BOTTOM_RIGHT",
+      "value": -3
+    },
+    {
+      "name": "eBASIS_DIM_CENTER",
+      "value": 0
+    },
+    {
+      "name": "eBASIS_DIM_CENTER_LEFT",
+      "value": -4
+    },
+    {
+      "name": "eBASIS_DIM_CENTER_RIGHT",
+      "value": -5
+    },
+    {
+      "name": "eBASIS_DIM_NONE",
+      "value": 10
+    },
+    {
+      "name": "eBASIS_DIM_TOP_CENTER",
+      "value": 2
+    },
+    {
+      "name": "eBASIS_DIM_TOP_LEFT",
+      "value": 1
+    },
+    {
+      "name": "eBASIS_DIM_TOP_RIGHT",
+      "value": 3
+    }
+  ]
+}

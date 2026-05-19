@@ -1,0 +1,57 @@
+{
+  "name": "LCS_Flags",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "eStandard: standard coordinate system symbol eSmall : small coordinate system symbol eHoverX : the x arrow will be black eHoverY : the y arrow will be black eHoverZ : the z arrow will be black",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/LCS_Flags/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LCS_Flags",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/LCS_Flags/#NemAll_Python_IFW_Input.LCS_Flags.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eHoverX",
+      "value": 2
+    },
+    {
+      "name": "eHoverY",
+      "value": 4
+    },
+    {
+      "name": "eHoverZ",
+      "value": 8
+    },
+    {
+      "name": "eSmall",
+      "value": 1
+    },
+    {
+      "name": "eStandard",
+      "value": 0
+    }
+  ]
+}

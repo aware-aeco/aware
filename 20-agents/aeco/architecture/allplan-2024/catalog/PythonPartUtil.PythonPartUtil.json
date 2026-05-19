@@ -1,0 +1,294 @@
+{
+  "name": "PythonPartUtil",
+  "namespace": "PythonPartUtil",
+  "kind": "class",
+  "summary": "Implementation of the PythonPart utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/",
+  "constructors": [
+    {
+      "name": "PythonPartUtil()",
+      "signature": "PythonPartUtil(common_props=None)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [
+        {
+          "name": "common_props",
+          "type": "CommonProperties | None",
+          "doc": "common properties",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_architecture_elements",
+      "signature": "add_architecture_elements(elements)",
+      "summary": "add the architecture elements to the PythonPart",
+      "remarks": "add the architecture elements to the PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Any",
+          "doc": "architecture elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_architecture_elements"
+    },
+    {
+      "name": "add_attribute_list",
+      "signature": "add_attribute_list(attribute_list)",
+      "summary": "add the attribute list to the PythonPart",
+      "remarks": "add the attribute list to the PythonPart",
+      "params": [
+        {
+          "name": "attribute_list",
+          "type": "BuildingElementAttributeList",
+          "doc": "attribute list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_attribute_list"
+    },
+    {
+      "name": "add_fixture_elements",
+      "signature": "add_fixture_elements(elements)",
+      "summary": "add the fixture elements to the PythonPart",
+      "remarks": "add the fixture elements to the PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Any",
+          "doc": "fixture elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_fixture_elements"
+    },
+    {
+      "name": "add_label_elements",
+      "signature": "add_label_elements(elements)",
+      "summary": "add the label elements to the PythonPart",
+      "remarks": "add the label elements to the PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Any",
+          "doc": "label elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_label_elements"
+    },
+    {
+      "name": "add_library_elements",
+      "signature": "add_library_elements(elements)",
+      "summary": "add the library elements to the PythonPart",
+      "remarks": "add the library elements to the PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Any",
+          "doc": "library elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_library_elements"
+    },
+    {
+      "name": "add_pythonpart_view_2d",
+      "signature": "add_pythonpart_view_2d(elements, view_data=PythonPartViewData())",
+      "summary": "add the elements to a 2D view for the next PythonPart",
+      "remarks": "add the elements to a 2D view for the next PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "ModelElement2D | ModelElement3D | Any",
+          "doc": "elements",
+          "optional": false
+        },
+        {
+          "name": "view_data",
+          "type": "PythonPartViewData",
+          "doc": "view data",
+          "optional": true,
+          "default": "PythonPartViewData()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_pythonpart_view_2d"
+    },
+    {
+      "name": "add_pythonpart_view_2d3d",
+      "signature": "add_pythonpart_view_2d3d(elements, view_data=PythonPartViewData())",
+      "summary": "add the elements to a 2D3D view for the next PythonPart",
+      "remarks": "add the elements to a 2D3D view for the next PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "ModelElement2D | ModelElement3D | Any",
+          "doc": "elements",
+          "optional": false
+        },
+        {
+          "name": "view_data",
+          "type": "PythonPartViewData",
+          "doc": "view data",
+          "optional": true,
+          "default": "PythonPartViewData()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_pythonpart_view_2d3d"
+    },
+    {
+      "name": "add_pythonpart_view_3d",
+      "signature": "add_pythonpart_view_3d(elements, view_data=PythonPartViewData())",
+      "summary": "add the elements to a 3D view for the next PythonPart",
+      "remarks": "add the elements to a 3D view for the next PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "ModelElement2D | ModelElement3D | Any",
+          "doc": "elements",
+          "optional": false
+        },
+        {
+          "name": "view_data",
+          "type": "PythonPartViewData",
+          "doc": "view data",
+          "optional": true,
+          "default": "PythonPartViewData()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_pythonpart_view_3d"
+    },
+    {
+      "name": "add_reinforcement_elements",
+      "signature": "add_reinforcement_elements(elements)",
+      "summary": "add the reinforcement elements to the PythonPart",
+      "remarks": "add the reinforcement elements to the PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "Any",
+          "doc": "reinforcement elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_reinforcement_elements"
+    },
+    {
+      "name": "add_view",
+      "signature": "add_view(elements)",
+      "summary": "add a view for the next PythonPart",
+      "remarks": "add a view for the next PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "View | list[View]",
+          "doc": "elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.add_view"
+    },
+    {
+      "name": "create_pythonpart",
+      "signature": "create_pythonpart(build_ele, local_placement_matrix=Matrix3D(), placement_matrix=Matrix3D())",
+      "summary": "create a PythonPart with the current views",
+      "remarks": "create a PythonPart with the current views",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement | list[BuildingElement]",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        },
+        {
+          "name": "local_placement_matrix",
+          "type": "Matrix3D",
+          "doc": "local placement matrix of the PythonPart, used for the local geometry transformation",
+          "optional": true,
+          "default": "Matrix3D()"
+        },
+        {
+          "name": "placement_matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix of the PythonPart (model placement)",
+          "optional": true,
+          "default": "Matrix3D()"
+        }
+      ],
+      "returns": {
+        "type": "list[Any]",
+        "doc": "list with the created PythonPart elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.create_pythonpart"
+    },
+    {
+      "name": "set_view_data",
+      "signature": "set_view_data(view, view_data)",
+      "summary": "set the view data",
+      "remarks": "set the view data",
+      "params": [
+        {
+          "name": "view",
+          "type": "View",
+          "doc": "view",
+          "optional": false
+        },
+        {
+          "name": "view_data",
+          "type": "PythonPartViewData",
+          "doc": "view data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPartUtil/PythonPartUtil/#PythonPartUtil.PythonPartUtil.set_view_data"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

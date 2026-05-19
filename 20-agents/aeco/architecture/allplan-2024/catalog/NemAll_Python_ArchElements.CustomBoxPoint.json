@@ -1,0 +1,77 @@
+{
+  "name": "CustomBoxPoint",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Emplacement of gripping",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CustomBoxPoint/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CustomBoxPoint",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CustomBoxPoint/#NemAll_Python_ArchElements.CustomBoxPoint.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Center",
+      "value": 5
+    },
+    {
+      "name": "CenterOfGravity",
+      "value": 10
+    },
+    {
+      "name": "LeftBottom",
+      "value": 1
+    },
+    {
+      "name": "LeftTop",
+      "value": 4
+    },
+    {
+      "name": "MiddleBottom",
+      "value": 6
+    },
+    {
+      "name": "MiddleLeft",
+      "value": 9
+    },
+    {
+      "name": "MiddleRight",
+      "value": 7
+    },
+    {
+      "name": "MiddleTop",
+      "value": 8
+    },
+    {
+      "name": "RightBottom",
+      "value": 2
+    },
+    {
+      "name": "RightTop",
+      "value": 3
+    }
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_Utility",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CheckModuleLicence",
+      "signature": "CheckModuleLicence(moduleNumber)",
+      "summary": "Check for a module licence",
+      "remarks": "Check for a module licence",
+      "params": [
+        {
+          "name": "moduleNumber",
+          "type": "int",
+          "doc": "Number of the module",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Licence for the module available: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.CheckModuleLicence"
+    },
+    {
+      "name": "ClearUnitTestDocument",
+      "signature": "ClearUnitTestDocument()",
+      "summary": "Clear the document",
+      "remarks": "Clear the document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.ClearUnitTestDocument"
+    },
+    {
+      "name": "EncryptString",
+      "signature": "EncryptString(stringtoEncrypt, pypName)",
+      "summary": "ImportScript an encrypted PythonPart script",
+      "remarks": "ImportScript an encrypted PythonPart script",
+      "params": [
+        {
+          "name": "script",
+          "type": "object",
+          "doc": "Path of the file",
+          "optional": false
+        },
+        {
+          "name": "pypName",
+          "type": "str",
+          "doc": "Name of the PythonPart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.EncryptString"
+    },
+    {
+      "name": "ImportScript",
+      "signature": "ImportScript(script, global_dict, pypName)",
+      "summary": "ImportScript an encrypted PythonPart script",
+      "remarks": "ImportScript an encrypted PythonPart script",
+      "params": [
+        {
+          "name": "script",
+          "type": "str",
+          "doc": "Path of the file",
+          "optional": false
+        },
+        {
+          "name": "global_dict",
+          "type": "object",
+          "doc": "File name",
+          "optional": false
+        },
+        {
+          "name": "pypName",
+          "type": "str",
+          "doc": "Name of the PythonPart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.ImportScript"
+    },
+    {
+      "name": "InitReinfNormInterpreter",
+      "signature": "InitReinfNormInterpreter()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.InitReinfNormInterpreter"
+    },
+    {
+      "name": "InitUnitTest",
+      "signature": "InitUnitTest(loadResources)",
+      "summary": "Initialize the unit test",
+      "remarks": "Initialize the unit test",
+      "params": [
+        {
+          "name": "loadResources",
+          "type": "bool",
+          "doc": "Load the resources",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.InitUnitTest"
+    },
+    {
+      "name": "IsExecutedByUnitTest",
+      "signature": "IsExecutedByUnitTest()",
+      "summary": "Check, whether the script is executed by a unit test",
+      "remarks": "Check, whether the script is executed by a unit test",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Script is executed by a unit test: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.IsExecutedByUnitTest"
+    },
+    {
+      "name": "LoadSymbolForUnitTest",
+      "signature": "LoadSymbolForUnitTest(file, clearDocument)",
+      "summary": "Load a symbol to the Array",
+      "remarks": "Load a symbol to the Array",
+      "params": [
+        {
+          "name": "file",
+          "type": "str",
+          "doc": "File name",
+          "optional": false
+        },
+        {
+          "name": "clearDocument",
+          "type": "bool",
+          "doc": "Clear the document before symbol loading",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Created elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.LoadSymbolForUnitTest"
+    },
+    {
+      "name": "ShowMessageBox",
+      "signature": "ShowMessageBox(text, flags)",
+      "summary": "Initialize the unit test",
+      "remarks": "Initialize the unit test",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Message box text",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "int",
+          "doc": "Button flags",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Utility/_functions/#NemAll_Python_Utility.ShowMessageBox"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

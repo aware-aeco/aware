@@ -1,0 +1,69 @@
+{
+  "name": "IntersectionRayBRep",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Intersection result of the ray - BRep3D intersection",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayBRep/",
+  "constructors": [
+    {
+      "name": "IntersectionRayBRep()",
+      "signature": "IntersectionRayBRep(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "IntersectionRayBRep",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayBRep/#NemAll_Python_Geometry.IntersectionRayBRep.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayBRep/#NemAll_Python_Geometry.IntersectionRayBRep.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FaceIdx",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayBRep/#NemAll_Python_Geometry.IntersectionRayBRep.FaceIdx"
+    },
+    {
+      "name": "FaceNv",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayBRep/#NemAll_Python_Geometry.IntersectionRayBRep.FaceNv"
+    },
+    {
+      "name": "IntersectionPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectionRayBRep/#NemAll_Python_Geometry.IntersectionRayBRep.IntersectionPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

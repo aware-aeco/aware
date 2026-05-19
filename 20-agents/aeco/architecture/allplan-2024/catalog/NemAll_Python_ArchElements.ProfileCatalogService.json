@@ -1,0 +1,272 @@
+{
+  "name": "ProfileCatalogService",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.ProfileCatalogService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDoubleProfileGap",
+      "signature": "GetDoubleProfileGap(fullProfileName)",
+      "summary": "Gets double profile gap",
+      "remarks": "Gets double profile gap",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Double profile gap"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetDoubleProfileGap"
+    },
+    {
+      "name": "GetFullProfileBoundaryPaths",
+      "signature": "GetFullProfileBoundaryPaths(fullProfileName, overrideDefaultGap=False, overrideGap=0.0)",
+      "summary": "Get the boundary path of the full profile (e.g. in case of double profile).",
+      "remarks": "Get the boundary path of the full profile (e.g. in case of double profile).",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "overrideDefaultGap",
+          "type": "bool",
+          "doc": "Override default gap for double profiles",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "overrideGap",
+          "type": "float",
+          "doc": "Override gap for double profiles",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "Path2DList",
+        "doc": "Profile boundary paths"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetFullProfileBoundaryPaths"
+    },
+    {
+      "name": "GetFullProfileBoundaryPolylines",
+      "signature": "GetFullProfileBoundaryPolylines(fullProfileName, overrideDefaultGap=False, overrideGap=0.0)",
+      "summary": "Get the boundary polylines of the full profile (e.g. in case of double profile).",
+      "remarks": "Get the boundary polylines of the full profile (e.g. in case of double profile).",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "overrideDefaultGap",
+          "type": "bool",
+          "doc": "Override default gap for double profiles",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "overrideGap",
+          "type": "float",
+          "doc": "Override gap for double profiles",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "Polyline2DList",
+        "doc": "Profile boundary polylines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetFullProfileBoundaryPolylines"
+    },
+    {
+      "name": "GetProfileAttributes",
+      "signature": "GetProfileAttributes(fullProfileName, doc)",
+      "summary": "Get the profile attributes",
+      "remarks": "Get the profile attributes",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list",
+        "doc": "Attributes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetProfileAttributes"
+    },
+    {
+      "name": "GetProfileBoundaryPath",
+      "signature": "GetProfileBoundaryPath(fullProfileName, overrideDefaultGap=False, overrideGap=0.0)",
+      "summary": "Get the boundary path of the single profile",
+      "remarks": "Get the boundary path of the single profile",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "overrideDefaultGap",
+          "type": "bool",
+          "doc": "Override default gap for double profiles",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "overrideGap",
+          "type": "float",
+          "doc": "Override gap for double profiles",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "Path2D",
+        "doc": "Profile boundary path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetProfileBoundaryPath"
+    },
+    {
+      "name": "GetProfileBoundaryPolyline",
+      "signature": "GetProfileBoundaryPolyline(fullProfileName, overrideDefaultGap=False, overrideGap=0.0)",
+      "summary": "Get the boundary polyline of the single profile",
+      "remarks": "Get the boundary polyline of the single profile",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "overrideDefaultGap",
+          "type": "bool",
+          "doc": "Override default gap for double profiles",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "overrideGap",
+          "type": "float",
+          "doc": "Override gap for double profiles",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "Polyline2D",
+        "doc": "Profile boundary polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetProfileBoundaryPolyline"
+    },
+    {
+      "name": "GetProfileGeometry",
+      "signature": "GetProfileGeometry(fullProfileName, overrideDefaultGap=False, overrideGap=0.0)",
+      "summary": "Get the profile geometry",
+      "remarks": "Get the profile geometry",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "overrideDefaultGap",
+          "type": "bool",
+          "doc": "Override default gap for double profiles",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "overrideGap",
+          "type": "float",
+          "doc": "Override gap for double profiles",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "Profile geometry as BRep3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetProfileGeometry"
+    },
+    {
+      "name": "GetProfilePlacementPoint",
+      "signature": "GetProfilePlacementPoint(fullProfileName, overrideDefaultGap=False, overrideGap=0.0)",
+      "summary": "Get the profile placement point",
+      "remarks": "Get the profile placement point",
+      "params": [
+        {
+          "name": "fullProfileName",
+          "type": "str",
+          "doc": "Profile name with path",
+          "optional": false
+        },
+        {
+          "name": "overrideDefaultGap",
+          "type": "bool",
+          "doc": "Override default gap for double profiles",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "overrideGap",
+          "type": "float",
+          "doc": "Override gap for double profiles",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Profile placement point as Point3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ProfileCatalogService/#NemAll_Python_ArchElements.ProfileCatalogService.GetProfilePlacementPoint"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

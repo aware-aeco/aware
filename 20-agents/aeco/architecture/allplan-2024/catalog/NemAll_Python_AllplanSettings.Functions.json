@@ -1,0 +1,42 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_AllplanSettings",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAngleUnit",
+      "signature": "GetAngleUnit()",
+      "summary": "Get the angle unit",
+      "remarks": "Get the angle unit",
+      "params": [],
+      "returns": {
+        "type": "AngleUnits",
+        "doc": "Angle unit"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/_functions/#NemAll_Python_AllplanSettings.GetAngleUnit"
+    },
+    {
+      "name": "GetLengthUnit",
+      "signature": "GetLengthUnit()",
+      "summary": "Get the length unit",
+      "remarks": "Get the length unit",
+      "params": [],
+      "returns": {
+        "type": "LengthUnits",
+        "doc": "Length unit"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/_functions/#NemAll_Python_AllplanSettings.GetLengthUnit"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

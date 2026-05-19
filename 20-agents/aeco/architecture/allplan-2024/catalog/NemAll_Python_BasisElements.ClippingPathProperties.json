@@ -1,0 +1,75 @@
+{
+  "name": "ClippingPathProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Clipping properties",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/",
+  "constructors": [
+    {
+      "name": "ClippingPathProperties()",
+      "signature": "ClippingPathProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BottomLevel",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the bottom level :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.BottomLevel"
+    },
+    {
+      "name": "IsClippingLineOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the clipping line state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.IsClippingLineOn"
+    },
+    {
+      "name": "IsHeightFromElementOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the height from element state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.IsHeightFromElementOn"
+    },
+    {
+      "name": "SectionIdentifier",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the section identifier :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.SectionIdentifier"
+    },
+    {
+      "name": "SectionType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for type of section :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.SectionType"
+    },
+    {
+      "name": "TopLevel",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get/set the top level :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.TopLevel"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

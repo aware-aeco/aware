@@ -1,0 +1,135 @@
+{
+  "name": "BaseElementAdapterVector",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/",
+  "constructors": [
+    {
+      "name": "BaseElementAdapterVector()",
+      "signature": "BaseElementAdapterVector()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(arg2)",
+      "summary": "Get a list item",
+      "remarks": "Get a list item",
+      "params": [
+        {
+          "name": "index",
+          "type": "object",
+          "doc": "Index of the item",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Value for the index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(elements)",
+      "summary": "Add elements to the list",
+      "remarks": "Add elements to the list",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterVector",
+          "doc": "Elements.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.__iadd__"
+    },
+    {
+      "name": "__iter__",
+      "signature": "__iter__()",
+      "summary": "List iterator",
+      "remarks": "List iterator",
+      "params": [],
+      "returns": {
+        "type": "Iterator",
+        "doc": "List iterator"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.__iter__"
+    },
+    {
+      "name": "__len__",
+      "signature": "__len__()",
+      "summary": "Get the list length",
+      "remarks": "Get the list length",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Length of the list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.__len__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.__repr__"
+    },
+    {
+      "name": "append",
+      "signature": "append(value)",
+      "summary": "Append a list item",
+      "remarks": "Append a list item",
+      "params": [
+        {
+          "name": "value",
+          "type": "BaseElementAdapter",
+          "doc": "Value to append",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.append"
+    },
+    {
+      "name": "clear",
+      "signature": "clear()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterVector/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterVector.clear"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "eFaceOffsetDirection",
+  "namespace": "NemAll_Python_Geometry.FaceOffset",
+  "kind": "enum",
+  "summary": "Face offset direction",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.eFaceOffsetDirection",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

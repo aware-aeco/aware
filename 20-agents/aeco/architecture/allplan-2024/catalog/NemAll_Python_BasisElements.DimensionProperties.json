@@ -1,0 +1,136 @@
+{
+  "name": "DimensionProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "DimensionProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/",
+  "constructors": [
+    {
+      "name": "DimensionProperties()",
+      "signature": "DimensionProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.__init__"
+    },
+    {
+      "name": "DimensionProperties(arg2, arg3)",
+      "signature": "DimensionProperties(arg2, arg3)",
+      "summary": "Default constructor",
+      "remarks": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.__init__"
+    },
+    {
+      "name": "DimensionProperties(arg2)",
+      "signature": "DimensionProperties(arg2)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ElevationBaseOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the elevation base offset :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.ElevationBaseOffset"
+    },
+    {
+      "name": "FontIDDimensionNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the font ID of the dimension number :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.FontIDDimensionNumber"
+    },
+    {
+      "name": "IsAbsoluteElevation",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the elevation base offset :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.IsAbsoluteElevation"
+    },
+    {
+      "name": "LeadingCharacter",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the leading characters :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.LeadingCharacter"
+    },
+    {
+      "name": "PointSymbol",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the point symbol of the elevation :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.PointSymbol"
+    },
+    {
+      "name": "PointSymbolEnd",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the point symbol at the start of the dimension line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.PointSymbolEnd"
+    },
+    {
+      "name": "PointSymbolStart",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the point symbol at the start of the dimension line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.PointSymbolStart"
+    },
+    {
+      "name": "TailingCharacters",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the tailing characters :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.TailingCharacters"
+    },
+    {
+      "name": "TextHeightDimensionNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the height of the dimension number :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.TextHeightDimensionNumber"
+    },
+    {
+      "name": "TextLocation",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the elevation base offset :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.TextLocation"
+    },
+    {
+      "name": "TextOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Offset of text from dimension line :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/DimensionProperties/#NemAll_Python_BasisElements.DimensionProperties.TextOffset"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

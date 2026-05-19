@@ -1,0 +1,135 @@
+{
+  "name": "BitmapDefinition",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BasisElements.BitmapDefinition.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create",
+      "signature": "Create(bitmapName)",
+      "summary": "Create a bitmap definition",
+      "remarks": "Create a bitmap definition",
+      "params": [
+        {
+          "name": "bitmapName",
+          "type": "str",
+          "doc": "Path and name of the bitmap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BitmapDefinition",
+        "doc": "Bitmap definition"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.Create"
+    },
+    {
+      "name": "Dump",
+      "signature": "Dump(deep)",
+      "summary": "Args: deep:",
+      "remarks": "Args: deep:",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.Dump"
+    },
+    {
+      "name": "GetBitmapName",
+      "signature": "GetBitmapName()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetBitmapName"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetHeight"
+    },
+    {
+      "name": "GetPixel",
+      "signature": "GetPixel(x, y)",
+      "summary": "Args: x: y:",
+      "remarks": "Args: x: y:",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetPixel"
+    },
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.GetWidth"
+    },
+    {
+      "name": "IsHDRI",
+      "signature": "IsHDRI()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.IsHDRI"
+    },
+    {
+      "name": "LoadBitmap",
+      "signature": "LoadBitmap()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.LoadBitmap"
+    },
+    {
+      "name": "setName",
+      "signature": "setName(resourceName)",
+      "summary": "Args: resourceName:",
+      "remarks": "Args: resourceName:",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.setName"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsolutePath",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.AbsolutePath"
+    },
+    {
+      "name": "RelativeName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BitmapDefinition/#NemAll_Python_BasisElements.BitmapDefinition.RelativeName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

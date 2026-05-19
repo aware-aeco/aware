@@ -1,0 +1,91 @@
+{
+  "name": "PythonPartGroup",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of class PythonPartGroup",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPartGroup/",
+  "constructors": [
+    {
+      "name": "PythonPartGroup()",
+      "signature": "PythonPartGroup(name, parameter_list, hash_value, python_file, pythonparts=None)",
+      "summary": "Initialization of class PythonPartGroup",
+      "remarks": "Initialization of class PythonPartGroup",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name",
+          "optional": false
+        },
+        {
+          "name": "parameter_list",
+          "type": "list[str]",
+          "doc": "parameter list",
+          "optional": false
+        },
+        {
+          "name": "hash_value",
+          "type": "str",
+          "doc": "hash value of the parameter",
+          "optional": false
+        },
+        {
+          "name": "python_file",
+          "type": "str",
+          "doc": "name of the pyp file",
+          "optional": false
+        },
+        {
+          "name": "pythonparts",
+          "type": "list[PythonPart] | None",
+          "doc": "list with the PythonParts. Defaults to None.",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "TypeError",
+          "when": "in case of wrong PythonPart element"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__str__",
+      "signature": "__str__()",
+      "summary": "create the element string",
+      "remarks": "create the element string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "element string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.__str__"
+    },
+    {
+      "name": "create",
+      "signature": "create()",
+      "summary": "create the PythonPartGroup",
+      "remarks": "create the PythonPartGroup",
+      "params": [],
+      "returns": {
+        "type": "list[Any]",
+        "doc": "list with the created elements for the PythonPartGroup"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/PythonPartGroup/#PythonPart.PythonPartGroup.create"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

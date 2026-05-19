@@ -1,0 +1,60 @@
+{
+  "name": "ColumnProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the Column properties",
+  "base": "VerticalElementProperties",
+  "interfaces": [
+    "ArchBaseProperties"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/",
+  "constructors": [
+    {
+      "name": "ColumnProperties()",
+      "signature": "ColumnProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/#NemAll_Python_ArchElements.ColumnProperties.__init__"
+    },
+    {
+      "name": "ColumnProperties(columnProp)",
+      "signature": "ColumnProperties(columnProp)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "columnProp",
+          "type": "ColumnProperties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/#NemAll_Python_ArchElements.ColumnProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "ToString()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "String with tier properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ColumnProperties/#NemAll_Python_ArchElements.ColumnProperties.ToString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

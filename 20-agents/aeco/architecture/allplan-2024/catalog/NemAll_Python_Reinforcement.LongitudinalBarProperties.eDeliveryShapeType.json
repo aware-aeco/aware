@@ -1,0 +1,14 @@
+{
+  "name": "eDeliveryShapeType",
+  "namespace": "NemAll_Python_Reinforcement.LongitudinalBarProperties",
+  "kind": "enum",
+  "summary": "Delivery shape types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarProperties/#NemAll_Python_Reinforcement.LongitudinalBarProperties.eDeliveryShapeType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Persistent",
+  "namespace": "ParameterProperty.ParameterProperty",
+  "kind": "enum",
+  "summary": "Definition of class PersistentType",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ParameterProperty/ParameterProperty/#ParameterProperty.ParameterProperty.Persistent",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

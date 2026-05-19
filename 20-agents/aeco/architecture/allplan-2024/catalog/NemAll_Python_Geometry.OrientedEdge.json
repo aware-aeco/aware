@@ -1,0 +1,226 @@
+{
+  "name": "OrientedEdge",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Oriented edge Identification of any edge via edge handle and orientation (positive, negative).",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/",
+  "constructors": [
+    {
+      "name": "OrientedEdge()",
+      "signature": "OrientedEdge()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__init__"
+    },
+    {
+      "name": "OrientedEdge(edgeHandle, positiveOrientation)",
+      "signature": "OrientedEdge(edgeHandle, positiveOrientation)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "edgeHandle",
+          "type": "int",
+          "doc": "Set edge handle.",
+          "optional": false
+        },
+        {
+          "name": "positiveOrientation",
+          "type": "bool",
+          "doc": "Set orientation, true for positive, false for negative",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__init__"
+    },
+    {
+      "name": "OrientedEdge(orientedEdge)",
+      "signature": "OrientedEdge(orientedEdge)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "orientedEdge",
+          "type": "OrientedEdge",
+          "doc": "Edge which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Set(orientedEdge)",
+      "signature": "Set(orientedEdge)",
+      "summary": "Initialize edge from old Allplan structure",
+      "remarks": "Initialize edge from old Allplan structure",
+      "params": [
+        {
+          "name": "orientedEdge",
+          "type": "OrientedEdge",
+          "doc": "Edge which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.Set"
+    },
+    {
+      "name": "Set(edgeHandle, positiveOrientation)",
+      "signature": "Set(edgeHandle, positiveOrientation)",
+      "summary": "Set edge handle and orientation Handle is not checked, you set anything.",
+      "remarks": "Set edge handle and orientation Handle is not checked, you set anything.",
+      "params": [
+        {
+          "name": "edgeHandle",
+          "type": "int",
+          "doc": "Handle to the edge which will be set.",
+          "optional": false
+        },
+        {
+          "name": "positiveOrientation",
+          "type": "bool",
+          "doc": "Set true when orientation is positive, otherwise false.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.Set"
+    },
+    {
+      "name": "GetEdgeHandle",
+      "signature": "GetEdgeHandle()",
+      "summary": "Get handle to the edge",
+      "remarks": "Get handle to the edge",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Edge handle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.GetEdgeHandle"
+    },
+    {
+      "name": "HasPositiveOrientation",
+      "signature": "HasPositiveOrientation()",
+      "summary": "Get the flag of positive orientation.",
+      "remarks": "Get the flag of positive orientation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when edge have positive orientation, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.HasPositiveOrientation"
+    },
+    {
+      "name": "SetEdgeHandle",
+      "signature": "SetEdgeHandle(edgeHandle)",
+      "summary": "Set handle to the edge edgeHandle is not checked, you set anything.",
+      "remarks": "Set handle to the edge edgeHandle is not checked, you set anything.",
+      "params": [
+        {
+          "name": "edgeHandle",
+          "type": "int",
+          "doc": "Handle to the edge which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.SetEdgeHandle"
+    },
+    {
+      "name": "SetOrientation",
+      "signature": "SetOrientation(positiveOrientation)",
+      "summary": "Set orientation",
+      "remarks": "Set orientation",
+      "params": [
+        {
+          "name": "positiveOrientation",
+          "type": "bool",
+          "doc": "Set true when orientation is positive, otherwise false.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.SetOrientation"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(orientedEdge)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "orientedEdge",
+          "type": "OrientedEdge",
+          "doc": "Edge to comparison",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when both edges are equal."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EdgeHandle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the edge handle property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.EdgeHandle"
+    },
+    {
+      "name": "Positive",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the positive orientation property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/OrientedEdge/#NemAll_Python_Geometry.OrientedEdge.Positive"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

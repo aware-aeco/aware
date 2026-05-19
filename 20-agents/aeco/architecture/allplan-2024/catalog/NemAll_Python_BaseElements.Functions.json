@@ -1,0 +1,795 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_BaseElements",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ElementTransform(transMat, modelEleList)",
+      "signature": "ElementTransform(transMat, modelEleList)",
+      "summary": "Transform the model elements",
+      "remarks": "Transform the model elements",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        },
+        {
+          "name": "modelEleList",
+          "type": "list",
+          "doc": "List with the model elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ElementTransform"
+    },
+    {
+      "name": "ElementTransform(transVec, xAngle, yAngle, zAngle, modelEleList)",
+      "signature": "ElementTransform(transVec, xAngle, yAngle, zAngle, modelEleList)",
+      "summary": "Transform the model elements",
+      "remarks": "Transform the model elements",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Transformation vector",
+          "optional": false
+        },
+        {
+          "name": "xAngle",
+          "type": "float",
+          "doc": "Rotation angle around the x-axis",
+          "optional": false
+        },
+        {
+          "name": "yAngle",
+          "type": "float",
+          "doc": "Rotation angle around the y-axis",
+          "optional": false
+        },
+        {
+          "name": "zAngle",
+          "type": "float",
+          "doc": "Rotation angle around the z-axis",
+          "optional": false
+        },
+        {
+          "name": "modelEleList",
+          "type": "list",
+          "doc": "List with the model elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ElementTransform"
+    },
+    {
+      "name": "ClearElementPreview",
+      "signature": "ClearElementPreview()",
+      "summary": "Clear the element preview",
+      "remarks": "Clear the element preview",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ClearElementPreview"
+    },
+    {
+      "name": "CloseElementPreview",
+      "signature": "CloseElementPreview()",
+      "summary": "Close the element preview",
+      "remarks": "Close the element preview",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CloseElementPreview"
+    },
+    {
+      "name": "CopyElements",
+      "signature": "CopyElements(doc, elements, fromPoint, distanceVector, rotationVector, rotationAngle, numberOfCopies, viewProj)",
+      "summary": "Copy the elements",
+      "remarks": "Copy the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the elements",
+          "optional": false
+        },
+        {
+          "name": "fromPoint",
+          "type": "Point3D",
+          "doc": "From point",
+          "optional": false
+        },
+        {
+          "name": "distanceVector",
+          "type": "Vector3D",
+          "doc": "Distance vector",
+          "optional": false
+        },
+        {
+          "name": "rotationVector",
+          "type": "Vector3D",
+          "doc": "Rotation vector",
+          "optional": false
+        },
+        {
+          "name": "rotationAngle",
+          "type": "float",
+          "doc": "Rotation angle in radian",
+          "optional": false
+        },
+        {
+          "name": "numberOfCopies",
+          "type": "int",
+          "doc": "Number for copies",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the copied elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CopyElements"
+    },
+    {
+      "name": "CreateAssociativeViews",
+      "signature": "CreateAssociativeViews(doc, insertionMat, elements, assoViewList, viewProj)",
+      "summary": "Create associative views",
+      "remarks": "Create associative views",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Placment matrix",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the elements",
+          "optional": false
+        },
+        {
+          "name": "assoViewList",
+          "type": "list",
+          "doc": "List with the associative views",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CreateAssociativeViews"
+    },
+    {
+      "name": "CreateBarCoupler",
+      "signature": "CreateBarCoupler(arg2, arg3, arg4, arg5, arg6, arg7)",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CreateBarCoupler"
+    },
+    {
+      "name": "CreateElements",
+      "signature": "CreateElements(doc, insertionMat, modelEleList, modelUuidList, assoRefObj, appendReinfPosNr=True, createUndoStep=True)",
+      "summary": "Create the elements in the data base",
+      "remarks": "Create the elements in the data base",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Matrix with the placement point and the rotation",
+          "optional": false
+        },
+        {
+          "name": "modelEleList",
+          "type": "list",
+          "doc": "List with the model elements modelUuidList List with the model UUIDS in modification mode",
+          "optional": false
+        },
+        {
+          "name": "assoRefObj",
+          "type": "object",
+          "doc": "Associative view reference object",
+          "optional": false
+        },
+        {
+          "name": "appendReinfPosNr",
+          "type": "bool",
+          "doc": "True: Append the reinforcement position numbers to the existing position numbers",
+          "optional": true,
+          "default": "True"
+        },
+        {
+          "name": "False",
+          "type": "object",
+          "doc": ": Try to use the original reinforcement position numbers",
+          "optional": false
+        },
+        {
+          "name": "createUndoStep",
+          "type": "bool",
+          "doc": "Create an undo step after the creation of the PythonPart",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the created elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CreateElements"
+    },
+    {
+      "name": "CreateLayer",
+      "signature": "CreateLayer(doc, groupName, subGroupName, longName, shortName, lineColorID, lineThicknessID, lineStyleID, bVisible, bModifiable)",
+      "summary": "Create a new layer",
+      "remarks": "Create a new layer",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "groupName",
+          "type": "str",
+          "doc": "Group name",
+          "optional": false
+        },
+        {
+          "name": "subGroupName",
+          "type": "str",
+          "doc": "Subgroup name",
+          "optional": false
+        },
+        {
+          "name": "lineColorID",
+          "type": "int",
+          "doc": "Line color ID of the layer",
+          "optional": false
+        },
+        {
+          "name": "lineThicknessID",
+          "type": "int",
+          "doc": "Line thickness ID of the layer",
+          "optional": false
+        },
+        {
+          "name": "lineStyleID",
+          "type": "int",
+          "doc": "Line style ID of the layer",
+          "optional": false
+        },
+        {
+          "name": "bVisible",
+          "type": "bool",
+          "doc": "Layer is visible",
+          "optional": false
+        },
+        {
+          "name": "bModifiable",
+          "type": "bool",
+          "doc": "Layer is modifiable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Created layer number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CreateLayer"
+    },
+    {
+      "name": "CreateLibraryElement",
+      "signature": "CreateLibraryElement(doc, insertionMat, path, elementName)",
+      "summary": "Create a library element in the data base",
+      "remarks": "Create a library element in the data base",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Matrix with the placement point and the rotation",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "Path of the library element",
+          "optional": false
+        },
+        {
+          "name": "elementName",
+          "type": "str",
+          "doc": "Name of the library element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the created elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CreateLibraryElement"
+    },
+    {
+      "name": "CreateSectionsAndViews",
+      "signature": "CreateSectionsAndViews(doc, insertionMat, elements, sectionViewList, viewProj, undoRedoService=None)",
+      "summary": "Create sections and views",
+      "remarks": "Create sections and views",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Placment matrix",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the elements",
+          "optional": false
+        },
+        {
+          "name": "sectionViewList",
+          "type": "list",
+          "doc": "List with the sections and views",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection undoRedoService Undo redo service",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.CreateSectionsAndViews"
+    },
+    {
+      "name": "DeleteElements",
+      "signature": "DeleteElements(doc, elements)",
+      "summary": "Delete the elements",
+      "remarks": "Delete the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the UUIDs of the data base elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.DeleteElements"
+    },
+    {
+      "name": "DrawElementPreview",
+      "signature": "DrawElementPreview(doc, insertionMat, modelEleList, bDirectDraw, assoRefObj, asStaticPreview=False, addToPreviewBoundingBox=True)",
+      "summary": "Draw the preview of the elements",
+      "remarks": "Draw the preview of the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Matrix with the placement point and the rotation",
+          "optional": false
+        },
+        {
+          "name": "modelEleList",
+          "type": "list",
+          "doc": "List with the model elements bDirectDraw Direct draw of the preview elements to the screen",
+          "optional": false
+        },
+        {
+          "name": "assoRefObj",
+          "type": "object",
+          "doc": "Associative view reference object",
+          "optional": false
+        },
+        {
+          "name": "asStaticPreview",
+          "type": "bool",
+          "doc": "Draw as static preview: true/false",
+          "optional": true,
+          "default": "False"
+        },
+        {
+          "name": "addToPreviewBoundingBox",
+          "type": "bool",
+          "doc": "Add the elements to the bounding box of the preview",
+          "optional": true,
+          "default": "True"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.DrawElementPreview"
+    },
+    {
+      "name": "ExecutePreviewDraw",
+      "signature": "ExecutePreviewDraw(doc)",
+      "summary": "Execute the preview drawing",
+      "remarks": "Execute the preview drawing",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ExecutePreviewDraw"
+    },
+    {
+      "name": "ExplodeIFCSmartSymbols",
+      "signature": "ExplodeIFCSmartSymbols(doc, elements)",
+      "summary": "Explode smart symbols with an existing IFC ID oder IFC object type",
+      "remarks": "Explode smart symbols with an existing IFC ID oder IFC object type",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements to explode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the exploded elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ExplodeIFCSmartSymbols"
+    },
+    {
+      "name": "ExplodeSmartSymbols",
+      "signature": "ExplodeSmartSymbols(elements)",
+      "summary": "Explode the smart symbols",
+      "remarks": "Explode the smart symbols",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements to explode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the exploded elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ExplodeSmartSymbols"
+    },
+    {
+      "name": "GetColorById",
+      "signature": "GetColorById(id)",
+      "summary": "Get the ARGB color by the color ID",
+      "remarks": "Get the ARGB color by the color ID",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "doc": "color ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ARGB",
+        "doc": "ARGB color"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.GetColorById"
+    },
+    {
+      "name": "GetElements",
+      "signature": "GetElements(elementsList)",
+      "summary": "Get the PythonParts elements",
+      "remarks": "Get the PythonParts elements",
+      "params": [
+        {
+          "name": "elementsList",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements as BaseElementAdapterList",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list",
+        "doc": "PythonParts elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.GetElements"
+    },
+    {
+      "name": "GetIdByColor",
+      "signature": "GetIdByColor(color)",
+      "summary": "Get the color ID by the ARGB color",
+      "remarks": "Get the color ID by the ARGB color",
+      "params": [
+        {
+          "name": "color",
+          "type": "ARGB",
+          "doc": "ARGB color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "color ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.GetIdByColor"
+    },
+    {
+      "name": "GetMinMaxBox",
+      "signature": "GetMinMaxBox(elements, axisAngle=0.0, only3DElements=0.0)",
+      "summary": "Get the min/max box of the elements Returns: Min/max box of the elements",
+      "remarks": "Get the min/max box of the elements Returns: Min/max box of the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "object",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the elements",
+          "optional": false
+        },
+        {
+          "name": "axisAngle",
+          "type": "float",
+          "doc": "Angle of the x axis for the min/max calculation",
+          "optional": true,
+          "default": "0.0"
+        },
+        {
+          "name": "only3DElements",
+          "type": "bool",
+          "doc": "Use only 3D elements",
+          "optional": true,
+          "default": "0.0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.GetMinMaxBox"
+    },
+    {
+      "name": "GetViewMatrices",
+      "signature": "GetViewMatrices(doc)",
+      "summary": "Get the associative view matrices",
+      "remarks": "Get the associative view matrices",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Associative view matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.GetViewMatrices"
+    },
+    {
+      "name": "ModifyElements",
+      "signature": "ModifyElements(modelEleList)",
+      "summary": "Modify the elements",
+      "remarks": "Modify the elements",
+      "params": [
+        {
+          "name": "modelEleList",
+          "type": "list",
+          "doc": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ModifyElements"
+    },
+    {
+      "name": "RotateElements",
+      "signature": "RotateElements(doc, elements, refPnt, rotAngle, viewProj)",
+      "summary": "Rotate the elements",
+      "remarks": "Rotate the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the elements",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "Point2D",
+          "doc": "Reference point of the rotation",
+          "optional": false
+        },
+        {
+          "name": "rotAngle",
+          "type": "float",
+          "doc": "Rotation angle",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.RotateElements"
+    },
+    {
+      "name": "ScaleElements",
+      "signature": "ScaleElements(doc, elements, refPnt, scaleX, scaleY, scaleZ, theta, viewProj)",
+      "summary": "Scale the elements",
+      "remarks": "Scale the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List with the UUIDs of the data base elements",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point of the scaling",
+          "optional": false
+        },
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Scale factor in x direction",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Scale factor in y direction",
+          "optional": false
+        },
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Scale factor in x direction",
+          "optional": false
+        },
+        {
+          "name": "theta",
+          "type": "Angle",
+          "doc": "Rotation angle in Z-axis",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/_functions/#NemAll_Python_BaseElements.ScaleElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

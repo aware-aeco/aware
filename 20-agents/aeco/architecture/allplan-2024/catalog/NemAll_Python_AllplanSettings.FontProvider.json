@@ -1,0 +1,325 @@
+{
+  "name": "FontProvider",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Provides the methods to obtain the list of the fonts",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCharsetList(nFontID)",
+      "signature": "GetCharsetList(nFontID)",
+      "summary": "Returns the list of available charsets for the given font",
+      "remarks": "Returns the list of available charsets for the given font",
+      "params": [
+        {
+          "name": "nFontID",
+          "type": "int",
+          "doc": "Font ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(Charsets for the given font,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetCharsetList"
+    },
+    {
+      "name": "GetCharsetList(fontName)",
+      "signature": "GetCharsetList(fontName)",
+      "summary": "Returns the list of available charsets for the given font",
+      "remarks": "Returns the list of available charsets for the given font",
+      "params": [
+        {
+          "name": "fontName",
+          "type": "str",
+          "doc": "Font name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "tuple(Charsets for the given font,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetCharsetList"
+    },
+    {
+      "name": "FontMMToPoints",
+      "signature": "FontMMToPoints(mmValue)",
+      "summary": "Converts mm to points",
+      "remarks": "Converts mm to points",
+      "params": [
+        {
+          "name": "mmValue",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.FontMMToPoints"
+    },
+    {
+      "name": "FontMMToTwips",
+      "signature": "FontMMToTwips(mmValue)",
+      "summary": "Font size conversions. It is a font special factor (0.714) being applied in order to associate the mm unit with the real glyph size (like for vector fonts) without sub and superscripts space. So these function do not provide common standard point/twips/millimeter conversions!!! Converts mm to twips",
+      "remarks": "Font size conversions. It is a font special factor (0.714) being applied in order to associate the mm unit with the real glyph size (like for vector fonts) without sub and superscripts space. So these function do not provide common standard point/twips/millimeter conversions!!! Converts mm to twips",
+      "params": [
+        {
+          "name": "mmValue",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.FontMMToTwips"
+    },
+    {
+      "name": "FontPointsToMM",
+      "signature": "FontPointsToMM(twipsValue)",
+      "summary": "Converts points to mm",
+      "remarks": "Converts points to mm",
+      "params": [
+        {
+          "name": "twipsValue",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.FontPointsToMM"
+    },
+    {
+      "name": "FontTwipsToMM",
+      "signature": "FontTwipsToMM(twipsValue)",
+      "summary": "Converts twips to mm",
+      "remarks": "Converts twips to mm",
+      "params": [
+        {
+          "name": "twipsValue",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.FontTwipsToMM"
+    },
+    {
+      "name": "GetFirstValidPredefinedFontID",
+      "signature": "GetFirstValidPredefinedFontID()",
+      "summary": "Returns ID of the first existing predefined TTF font",
+      "remarks": "Returns ID of the first existing predefined TTF font",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetFirstValidPredefinedFontID"
+    },
+    {
+      "name": "GetFontID",
+      "signature": "GetFontID(fontName, bCheckExistence=1)",
+      "summary": "Return ID for the given font Return the ID for the given font name. ID is the index to the table m_PreDefinedFontNameList. etval 0 Dialog Font ID etval 1-20 ID of the hardcoded Allplan\u0027s fonts ( see table m_PreDefinedFontNameList ) etval 21-63 ID of the hardcoded system\u0027s fonts ( see table m_PreDefinedFontNameList ) etval \u003E=SYSTEM_FONT_ID (1000) ID of the system TTF font ( this ID is valid only during Allplan\u0027s session ) etval \u003E=NON_EXISTING_FONT_ID(10000) ID of the font that isn\u0027t installed nor exists in the predefined table( this ID is valid only during Allplan\u0027s session ) etval INVALID_FONT_ID(N_FONT_INTERNAL_MIN_ID - 1) Invalid ID, font with given name doesn\u0027t exist",
+      "remarks": "Return ID for the given font Return the ID for the given font name. ID is the index to the table m_PreDefinedFontNameList. etval 0 Dialog Font ID etval 1-20 ID of the hardcoded Allplan\u0027s fonts ( see table m_PreDefinedFontNameList ) etval 21-63 ID of the hardcoded system\u0027s fonts ( see table m_PreDefinedFontNameList ) etval \u003E=SYSTEM_FONT_ID (1000) ID of the system TTF font ( this ID is valid only during Allplan\u0027s session ) etval \u003E=NON_EXISTING_FONT_ID(10000) ID of the font that isn\u0027t installed nor exists in the predefined table( this ID is valid only during Allplan\u0027s session ) etval INVALID_FONT_ID(N_FONT_INTERNAL_MIN_ID - 1) Invalid ID, font with given name doesn\u0027t exist",
+      "params": [
+        {
+          "name": "fontName",
+          "type": "str",
+          "doc": "Name of the font",
+          "optional": false
+        },
+        {
+          "name": "bCheckExistence",
+          "type": "int",
+          "doc": "When bCheckExistence is TRUE then the font with the particular ID has to be installed. In case, that this font is not installed, the function returns the empty string. When bCheckExistence is FALSE then the function returns the name of the font regardless of it is installed or not.",
+          "optional": true,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "Return",
+        "doc": "int"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetFontID"
+    },
+    {
+      "name": "GetFontName",
+      "signature": "GetFontName(fontID, bCheckExistence=1)",
+      "summary": "Returns the name of the font Returns FontName corresponding to fontID If fontID is invalid then the empty string is returned",
+      "remarks": "Returns the name of the font Returns FontName corresponding to fontID If fontID is invalid then the empty string is returned",
+      "params": [
+        {
+          "name": "fontID",
+          "type": "int",
+          "doc": "ID of the font",
+          "optional": false
+        },
+        {
+          "name": "bCheckExistence",
+          "type": "int",
+          "doc": "When bCheckExistence is TRUE then the font with the particular ID has to be installed. In case, that this font is not installed, the function returns the empty string. When bCheckExistence is FALSE then the function returns the name of the font regardless of it is installed or not.",
+          "optional": true,
+          "default": "1"
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Returns FontName. If fontID is invalid then the empty string is returned."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetFontName"
+    },
+    {
+      "name": "GetNemFontIDs",
+      "signature": "GetNemFontIDs()",
+      "summary": "Returns the list of the IDs of all Allplan\u0027s fonts",
+      "remarks": "Returns the list of the IDs of all Allplan\u0027s fonts",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetNemFontIDs"
+    },
+    {
+      "name": "GetNemFonts",
+      "signature": "GetNemFonts()",
+      "summary": "Returns the list of the names of all Allplan\u0027s fonts",
+      "remarks": "Returns the list of the names of all Allplan\u0027s fonts",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetNemFonts"
+    },
+    {
+      "name": "GetPredefinedFontIDs",
+      "signature": "GetPredefinedFontIDs()",
+      "summary": "Returns the list of then IDs of all installed and predefined TTF fonts",
+      "remarks": "Returns the list of then IDs of all installed and predefined TTF fonts",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetPredefinedFontIDs"
+    },
+    {
+      "name": "GetPredefinedFonts",
+      "signature": "GetPredefinedFonts()",
+      "summary": "Returns the list of then names of all installed and predefined TTF fonts",
+      "remarks": "Returns the list of then names of all installed and predefined TTF fonts",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetPredefinedFonts"
+    },
+    {
+      "name": "GetSystemFontIDs",
+      "signature": "GetSystemFontIDs()",
+      "summary": "Returns the list of the IDs of all installed TTF fonts",
+      "remarks": "Returns the list of the IDs of all installed TTF fonts",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetSystemFontIDs"
+    },
+    {
+      "name": "GetSystemFonts",
+      "signature": "GetSystemFonts()",
+      "summary": "Returns the list of the names of all installed TTF fonts",
+      "remarks": "Returns the list of the names of all installed TTF fonts",
+      "params": [],
+      "returns": {
+        "type": "tuple[bool, list[str]]",
+        "doc": "The function returns TRUE when at least one font is installed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetSystemFonts"
+    },
+    {
+      "name": "GetTTFFontSubtype",
+      "signature": "GetTTFFontSubtype(fontName)",
+      "summary": "Returns type of checked TTF font",
+      "remarks": "Returns type of checked TTF font",
+      "params": [
+        {
+          "name": "fontName",
+          "type": "str",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.GetTTFFontSubtype"
+    },
+    {
+      "name": "Instance",
+      "signature": "Instance()",
+      "summary": "Get the instance of the font provider",
+      "remarks": "Get the instance of the font provider",
+      "params": [],
+      "returns": {
+        "type": "FontProvider",
+        "doc": "Instance of the font provider"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.Instance"
+    },
+    {
+      "name": "NormalizeFontName",
+      "signature": "NormalizeFontName(fontName, CharSet=1)",
+      "summary": "Removes from the fontname script suffix e.g. Arial CE -\u003E Arial",
+      "remarks": "Removes from the fontname script suffix e.g. Arial CE -\u003E Arial",
+      "params": [
+        {
+          "name": "fontName",
+          "type": "str",
+          "optional": false
+        },
+        {
+          "name": "CharSet",
+          "type": "int",
+          "optional": true,
+          "default": "1"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.NormalizeFontName"
+    },
+    {
+      "name": "Refresh",
+      "signature": "Refresh()",
+      "summary": "Reinitialize the fonts It\u0027d be called when some system\u0027s font was changed ( added/removed )",
+      "remarks": "Reinitialize the fonts It\u0027d be called when some system\u0027s font was changed ( added/removed )",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/FontProvider/#NemAll_Python_AllplanSettings.FontProvider.Refresh"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

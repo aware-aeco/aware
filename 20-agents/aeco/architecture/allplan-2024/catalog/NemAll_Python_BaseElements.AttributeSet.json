@@ -1,0 +1,156 @@
+{
+  "name": "AttributeSet",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Attribute set",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/",
+  "constructors": [
+    {
+      "name": "AttributeSet()",
+      "signature": "AttributeSet()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__init__"
+    },
+    {
+      "name": "AttributeSet(elements)",
+      "signature": "AttributeSet(elements)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "elements",
+          "type": "list",
+          "doc": "Attribute elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__init__"
+    },
+    {
+      "name": "AttributeSet(element)",
+      "signature": "AttributeSet(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeSet",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAttributes",
+      "signature": "GetAttributes()",
+      "summary": "Get the AttributeSet vector",
+      "remarks": "Get the AttributeSet vector",
+      "params": [],
+      "returns": {
+        "type": "List[Union[AttributeByteVec, AttributeDate, AttributeDouble, AttributeDoubleVec, AttributeEnum, AttributeInteger, AttributeIntegerVec, AttributeString, AttributeStringVec]]",
+        "doc": "Vector of Attribute elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.GetAttributes"
+    },
+    {
+      "name": "SetAttributes",
+      "signature": "SetAttributes(elements)",
+      "summary": "Set the AttributeSet vector",
+      "remarks": "Set the AttributeSet vector",
+      "params": [
+        {
+          "name": "elements",
+          "type": "List[Union[AttributeByteVec, AttributeDate, AttributeDouble, AttributeDoubleVec, AttributeEnum, AttributeInteger, AttributeIntegerVec, AttributeString, AttributeStringVec]]",
+          "doc": "Attribute elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.SetAttributes"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeSet",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(element)",
+      "summary": "Unequal operator",
+      "remarks": "Unequal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeSet",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are unequal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "typing.List[typing.Union[AttributeByteVec, AttributeDate, AttributeDouble, AttributeDoubleVec, AttributeEnum, AttributeInteger, AttributeIntegerVec, AttributeString, AttributeStringVec]]",
+      "getter": true,
+      "setter": true,
+      "summary": "Return type: typing.List[typing.Union[AttributeByteVec, AttributeDate, AttributeDouble, AttributeDoubleVec, AttributeEnum, AttributeInteger, AttributeIntegerVec, AttributeString, AttributeStringVec]] Get the AttributeSet vector",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeSet/#NemAll_Python_BaseElements.AttributeSet.Attributes"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

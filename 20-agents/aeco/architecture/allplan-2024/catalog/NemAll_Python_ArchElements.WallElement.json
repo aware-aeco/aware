@@ -1,0 +1,141 @@
+{
+  "name": "WallElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the wall element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/",
+  "constructors": [
+    {
+      "name": "WallElement()",
+      "signature": "WallElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.__init__"
+    },
+    {
+      "name": "WallElement(wallProp, axis)",
+      "signature": "WallElement(wallProp, axis)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "wallProp",
+          "type": "WallProperties",
+          "doc": "Wall properties",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "object",
+          "doc": "Axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.__init__"
+    },
+    {
+      "name": "WallElement(element)",
+      "signature": "WallElement(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "WallElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties()",
+      "summary": "Get the wall properties",
+      "remarks": "Get the wall properties",
+      "params": [],
+      "returns": {
+        "type": "WallProperties",
+        "doc": "Wall properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.GetProperties"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.SetCommonProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(wallProp)",
+      "summary": "Set the wall properties",
+      "remarks": "Set the wall properties",
+      "params": [
+        {
+          "name": "wallProp",
+          "type": "WallProperties",
+          "doc": "Wall properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "WallProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the wall properties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallElement/#NemAll_Python_ArchElements.WallElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

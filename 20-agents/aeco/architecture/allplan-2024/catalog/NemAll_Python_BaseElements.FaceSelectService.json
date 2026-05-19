@@ -1,0 +1,206 @@
+{
+  "name": "FaceSelectService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.FaceSelectService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/FaceSelectService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SelectPolyhedronFace",
+      "signature": "SelectPolyhedronFace(polyhedron, pnt, highlightFace, viewProj, doc, includeUVSSelection)",
+      "summary": "Select a polyhedron face",
+      "remarks": "Select a polyhedron face",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "BaseElementAdapter",
+          "doc": "Polyhedron",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Selection view point",
+          "optional": false
+        },
+        {
+          "name": "highlightFace",
+          "type": "bool",
+          "doc": "Highlight the face state",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection of the selected view",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "includeUVSSelection",
+          "type": "bool",
+          "doc": "Include an UVS selection for the face",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polygon3D, IntersectionRayPolyhedron]",
+        "doc": "select state, face polygon, intersection result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/FaceSelectService/#NemAll_Python_BaseElements.FaceSelectService.SelectPolyhedronFace"
+    },
+    {
+      "name": "SelectPolyhedronFaceInUVS",
+      "signature": "SelectPolyhedronFaceInUVS(polyhedron, pnt, highlightFace, viewProj, doc)",
+      "summary": "Select a polyhedron face in an UVS",
+      "remarks": "Select a polyhedron face in an UVS",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "BaseElementAdapter",
+          "doc": "Polyhedron",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Selection view point",
+          "optional": false
+        },
+        {
+          "name": "highlightFace",
+          "type": "bool",
+          "doc": "Highlight the face state",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection of the selected view",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polygon3D, IntersectionRayPolyhedron, Matrix3D]",
+        "doc": "select state, face polygon, intersection result, UVS matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/FaceSelectService/#NemAll_Python_BaseElements.FaceSelectService.SelectPolyhedronFaceInUVS"
+    },
+    {
+      "name": "SelectWallFace",
+      "signature": "SelectWallFace(wallTier, pnt, highlightFace, viewProj, doc, includeUVSSelection)",
+      "summary": "Select a wall face",
+      "remarks": "Select a wall face",
+      "params": [
+        {
+          "name": "wallTier",
+          "type": "BaseElementAdapter",
+          "doc": "Wall tier",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Selection view point",
+          "optional": false
+        },
+        {
+          "name": "highlightFace",
+          "type": "bool",
+          "doc": "Highlight the face state",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection of the selected view",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "includeUVSSelection",
+          "type": "bool",
+          "doc": "Include an UVS selection for the face",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polygon3D, IntersectionRayPolyhedron]",
+        "doc": "select state, face polygon, intersection result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/FaceSelectService/#NemAll_Python_BaseElements.FaceSelectService.SelectWallFace"
+    },
+    {
+      "name": "SelectWallFaceInUVS",
+      "signature": "SelectWallFaceInUVS(wallTier, pnt, highlightFace, viewProj, doc)",
+      "summary": "Select a wall face in an UVS",
+      "remarks": "Select a wall face in an UVS",
+      "params": [
+        {
+          "name": "wallTier",
+          "type": "BaseElementAdapter",
+          "doc": "Wall tier",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Selection view point",
+          "optional": false
+        },
+        {
+          "name": "highlightFace",
+          "type": "bool",
+          "doc": "Highlight the face state",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection of the selected view",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polygon3D, IntersectionRayPolyhedron, Matrix3D]",
+        "doc": "select state, face polygon, intersection result, UVS matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/FaceSelectService/#NemAll_Python_BaseElements.FaceSelectService.SelectWallFaceInUVS"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "PlacementPointPosition",
+  "namespace": "NemAll_Python_BasisElements.SectionGeneralProperties",
+  "kind": "enum",
+  "summary": "Placement point position",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/#NemAll_Python_BasisElements.SectionGeneralProperties.PlacementPointPosition",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

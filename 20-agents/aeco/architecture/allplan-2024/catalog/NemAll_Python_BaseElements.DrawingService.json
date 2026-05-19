@@ -1,0 +1,69 @@
+{
+  "name": "DrawingService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.DrawingService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LockGraphicsEngineUpdate",
+      "signature": "LockGraphicsEngineUpdate(doc, lockUpdate)",
+      "summary": "Lock the update of the graphics engine Args: doc: Document lockUpdate: True: Lock the update of the graphics engine False:: Unlock the update of the graphics engine and update the graphics engine",
+      "remarks": "Lock the update of the graphics engine Args: doc: Document lockUpdate: True: Lock the update of the graphics engine False:: Unlock the update of the graphics engine and update the graphics engine",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.LockGraphicsEngineUpdate"
+    },
+    {
+      "name": "RedrawAll",
+      "signature": "RedrawAll(doc)",
+      "summary": "Redraw all Args: doc: Document",
+      "remarks": "Redraw all Args: doc: Document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.RedrawAll"
+    },
+    {
+      "name": "ResetAndDrawHiddenElement",
+      "signature": "ResetAndDrawHiddenElement(doc, hiddenElement)",
+      "summary": "Reset and draw the hidden elements Args: doc: Document hiddenElement: Hidden element",
+      "remarks": "Reset and draw the hidden elements Args: doc: Document hiddenElement: Hidden element",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.ResetAndDrawHiddenElement"
+    },
+    {
+      "name": "UpdateAllWindows",
+      "signature": "UpdateAllWindows()",
+      "summary": "Update the drawing in all windows",
+      "remarks": "Update the drawing in all windows",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.UpdateAllWindows"
+    },
+    {
+      "name": "UpdateGraphicsEngine",
+      "signature": "UpdateGraphicsEngine(doc)",
+      "summary": "Update the graphics engine Args: doc: Document",
+      "remarks": "Update the graphics engine Args: doc: Document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.UpdateGraphicsEngine"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

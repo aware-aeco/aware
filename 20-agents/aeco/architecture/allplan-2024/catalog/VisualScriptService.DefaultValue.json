@@ -1,0 +1,13 @@
+{
+  "name": "DefaultValue",
+  "namespace": "VisualScriptService",
+  "kind": "class",
+  "summary": "implementation of the data class for the default value",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/VisualScriptService/DefaultValue/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

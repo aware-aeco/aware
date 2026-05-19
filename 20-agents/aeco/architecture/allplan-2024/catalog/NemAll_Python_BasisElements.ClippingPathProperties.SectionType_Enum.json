@@ -1,0 +1,14 @@
+{
+  "name": "SectionType_Enum",
+  "namespace": "NemAll_Python_BasisElements.ClippingPathProperties",
+  "kind": "enum",
+  "summary": "Section type",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ClippingPathProperties/#NemAll_Python_BasisElements.ClippingPathProperties.SectionType_Enum",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

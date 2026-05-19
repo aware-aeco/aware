@@ -1,0 +1,254 @@
+{
+  "name": "CommonProperties",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Implementation of the common properties of the element",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/",
+  "constructors": [
+    {
+      "name": "CommonProperties()",
+      "signature": "CommonProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.__init__"
+    },
+    {
+      "name": "CommonProperties(element)",
+      "signature": "CommonProperties(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "CommonProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetColorPenStrokeByLayerFromLayerNumber",
+      "signature": "GetColorPenStrokeByLayerFromLayerNumber(layernumber)",
+      "summary": "Layer number",
+      "remarks": "Layer number",
+      "params": [],
+      "returns": {
+        "type": "[list[int] | VecIntList]",
+        "doc": "[0] = pen,[1] = stroke, [2] color"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.GetColorPenStrokeByLayerFromLayerNumber"
+    },
+    {
+      "name": "GetGlobalProperties",
+      "signature": "GetGlobalProperties()",
+      "summary": "Get the global properties",
+      "remarks": "Get the global properties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.GetGlobalProperties"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(props)",
+      "summary": "Compare operator",
+      "remarks": "Compare operator",
+      "params": [
+        {
+          "name": "props",
+          "type": "CommonProperties",
+          "doc": "Properties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Properties a equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Activated",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the activated state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Activated"
+    },
+    {
+      "name": "Color",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the color",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Color"
+    },
+    {
+      "name": "ColorByLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the color by layer state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.ColorByLayer"
+    },
+    {
+      "name": "ConstructionLine",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the construction line state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.ConstructionLine"
+    },
+    {
+      "name": "DrawOrder",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the drawOrder",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.DrawOrder"
+    },
+    {
+      "name": "ForceColor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get flag if force color is set",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.ForceColor"
+    },
+    {
+      "name": "HelpConstruction",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get flag if pen and stroke is help construction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.HelpConstruction"
+    },
+    {
+      "name": "InSpecialWindow",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the special window visibility",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.InSpecialWindow"
+    },
+    {
+      "name": "Layer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the layer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Layer"
+    },
+    {
+      "name": "Marked",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the marked state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Marked"
+    },
+    {
+      "name": "PageNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the page number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.PageNumber"
+    },
+    {
+      "name": "Pen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the pen",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Pen"
+    },
+    {
+      "name": "PenByLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the pen by layer state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.PenByLayer"
+    },
+    {
+      "name": "Printable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the printable state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Printable"
+    },
+    {
+      "name": "Stroke",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the stroke",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Stroke"
+    },
+    {
+      "name": "StrokeByLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the stroke by layer state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.StrokeByLayer"
+    },
+    {
+      "name": "Visible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible flag state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.Visible"
+    },
+    {
+      "name": "VisibleInsideZoomwindows",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible inside zoom window state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.VisibleInsideZoomwindows"
+    },
+    {
+      "name": "VisibleOutsideZoomwindows",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible outside zoom window state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CommonProperties/#NemAll_Python_BaseElements.CommonProperties.VisibleOutsideZoomwindows"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

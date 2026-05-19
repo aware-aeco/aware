@@ -1,0 +1,131 @@
+{
+  "name": "SectionAlongPathClippingPathViewProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Clipping path view properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathClippingPathViewProperties(bInitFromSTW=False)",
+      "signature": "SectionAlongPathClippingPathViewProperties(bInitFromSTW=False)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.__init__"
+    },
+    {
+      "name": "SectionAlongPathClippingPathViewProperties(B)",
+      "signature": "SectionAlongPathClippingPathViewProperties(B)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [
+        {
+          "name": "B",
+          "type": "SectionAlongPathClippingPathViewProperties",
+          "doc": "object to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConvertDirectionSymbolNumberFromViewModel",
+      "signature": "ConvertDirectionSymbolNumberFromViewModel(arg2, iPaletteIconNum)",
+      "summary": "Convert icon number used in WPF palette to symbol number used in Allplan for the same graphical representation",
+      "remarks": "Convert icon number used in WPF palette to symbol number used in Allplan for the same graphical representation",
+      "params": [
+        {
+          "name": "iPaletteIconNum",
+          "type": "bool",
+          "doc": "number of icon from palette (view model)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.ConvertDirectionSymbolNumberFromViewModel"
+    },
+    {
+      "name": "ConvertDirectionSymbolNumberToViewModel",
+      "signature": "ConvertDirectionSymbolNumberToViewModel(arg2)",
+      "summary": "Convert symbol number used in Allplan to icon number used in WPF palette for the same graphical representation",
+      "remarks": "Convert symbol number used in Allplan to icon number used in WPF palette for the same graphical representation",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "icon number used in WPF"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.ConvertDirectionSymbolNumberToViewModel"
+    },
+    {
+      "name": "GetDirectionSymbolHeightTolerance",
+      "signature": "GetDirectionSymbolHeightTolerance()",
+      "summary": "Access tolerances",
+      "remarks": "Access tolerances",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "symbol height tolerance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.GetDirectionSymbolHeightTolerance"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DirectionSymbolHeight",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the DirectionSymbolHeight",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.DirectionSymbolHeight"
+    },
+    {
+      "name": "DirectionSymbolNr",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the DirectionSymbolNr",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.DirectionSymbolNr"
+    },
+    {
+      "name": "IsDirectionSymbolOn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the IsDirectionSymbolOn",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.IsDirectionSymbolOn"
+    },
+    {
+      "name": "TextParameterProperties",
+      "type": "SectionAlongPathTextParameterProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Access text params Get the SectionAlongPathTextParameterProperties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathClippingPathViewProperties/#NemAll_Python_BasisElements.SectionAlongPathClippingPathViewProperties.TextParameterProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

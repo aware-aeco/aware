@@ -1,0 +1,14 @@
+{
+  "name": "AttributeControlType",
+  "namespace": "NemAll_Python_BaseElements.AttributeService",
+  "kind": "enum",
+  "summary": "Attribute control types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.AttributeControlType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

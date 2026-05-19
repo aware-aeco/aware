@@ -1,0 +1,61 @@
+{
+  "name": "BuildingElementControlProperties",
+  "namespace": "BuildingElementControlProperties",
+  "kind": "class",
+  "summary": "implementation of the container for the controls properties of the building element",
+  "base": "List[ControlProperties]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementControlProperties/BuildingElementControlProperties/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_property",
+      "signature": "get_property(name)",
+      "summary": "get the control property for the name",
+      "remarks": "get the control property for the name",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[ControlProperties]",
+        "doc": "control property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementControlProperties/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.get_property"
+    },
+    {
+      "name": "is_refresh_control",
+      "signature": "is_refresh_control()",
+      "summary": "get the refresh control state",
+      "remarks": "get the refresh control state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "refresh of the controls state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementControlProperties/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.is_refresh_control"
+    },
+    {
+      "name": "reset_refresh_control",
+      "signature": "reset_refresh_control()",
+      "summary": "set the refresh control state",
+      "remarks": "set the refresh control state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementControlProperties/BuildingElementControlProperties/#BuildingElementControlProperties.BuildingElementControlProperties.reset_refresh_control"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

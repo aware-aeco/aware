@@ -1,0 +1,57 @@
+{
+  "name": "AnchorageType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the anchorage",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AnchorageType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageType/#NemAll_Python_Reinforcement.AnchorageType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAnchorageHook",
+      "value": 2
+    },
+    {
+      "name": "eAnchorageHookOneCrossBar",
+      "value": 4
+    },
+    {
+      "name": "eAnchorageStraight",
+      "value": 1
+    },
+    {
+      "name": "eAnchorageStraightOneCrossBar",
+      "value": 3
+    },
+    {
+      "name": "eAnchorageStraightTwoCrossBars",
+      "value": 5
+    }
+  ]
+}

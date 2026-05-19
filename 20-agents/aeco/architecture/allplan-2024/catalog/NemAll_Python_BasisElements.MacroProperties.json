@@ -1,0 +1,141 @@
+{
+  "name": "MacroProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the macro definition element properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/",
+  "constructors": [
+    {
+      "name": "MacroProperties()",
+      "signature": "MacroProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.__init__"
+    },
+    {
+      "name": "MacroProperties(element)",
+      "signature": "MacroProperties(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "MacroProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "MacroProperties",
+          "doc": "MacroProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CatalogName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Catalog name",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.CatalogName"
+    },
+    {
+      "name": "DomainType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Domain type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.DomainType"
+    },
+    {
+      "name": "InsertionPoint",
+      "type": "NemAll_Python_Geometry.Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Insertion point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.InsertionPoint"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Is macro scale dependent ?",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.IsScaleDependent"
+    },
+    {
+      "name": "Name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Name",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.Name"
+    },
+    {
+      "name": "PositionNr",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Position number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.PositionNr"
+    },
+    {
+      "name": "SubType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Sub type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.SubType"
+    },
+    {
+      "name": "UnitFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Unit factor",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroProperties/#NemAll_Python_BasisElements.MacroProperties.UnitFactor"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

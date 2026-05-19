@@ -1,0 +1,188 @@
+{
+  "name": "ClosedAreaComposite3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D closed area composite Representation class for 3D geometry profile composite",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/",
+  "constructors": [
+    {
+      "name": "ClosedAreaComposite3D()",
+      "signature": "ClosedAreaComposite3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.__init__"
+    },
+    {
+      "name": "ClosedAreaComposite3D(composite)",
+      "signature": "ClosedAreaComposite3D(composite)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "composite",
+          "type": "ClosedAreaComposite3D",
+          "doc": "Profile composite which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Add(profile)",
+      "summary": "Add new profile",
+      "remarks": "Add new profile",
+      "params": [
+        {
+          "name": "profile",
+          "type": "ClosedArea2D",
+          "doc": "New profile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if the operation was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.Add"
+    },
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear contents of this composite",
+      "remarks": "Clear contents of this composite",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.Clear"
+    },
+    {
+      "name": "GetClosedAreaComposite",
+      "signature": "GetClosedAreaComposite()",
+      "summary": "Get constant reference to composite of ClosedArea2D",
+      "remarks": "Get constant reference to composite of ClosedArea2D",
+      "params": [],
+      "returns": {
+        "type": "ClosedAreaComposite2D",
+        "doc": "ClosedAreaComposite2D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.GetClosedAreaComposite"
+    },
+    {
+      "name": "GetRefPlacement",
+      "signature": "GetRefPlacement()",
+      "summary": "Get axis placement",
+      "remarks": "Get axis placement",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "const reference to the reference axis placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.GetRefPlacement"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty()",
+      "summary": "Check if this composite has any contents ( profiles )",
+      "remarks": "Check if this composite has any contents ( profiles )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if it is empty"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.IsEmpty"
+    },
+    {
+      "name": "SetRefPlacement",
+      "signature": "SetRefPlacement(placement)",
+      "summary": "Set axis placement",
+      "remarks": "Set axis placement",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "Reference axis placement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.SetRefPlacement"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(closedAreaComposite)",
+      "summary": "Comparison of closedAreaComposites without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of closedAreaComposites without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "closedAreaComposite",
+          "type": "ClosedAreaComposite3D",
+          "doc": "Compared closedAreaComposite.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when closedAreaComposites are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClosedAreaComposite",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the 2d closed area composite as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.ClosedAreaComposite"
+    },
+    {
+      "name": "RefPlacement",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the reference placement 3d as property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ClosedAreaComposite3D/#NemAll_Python_Geometry.ClosedAreaComposite3D.RefPlacement"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
